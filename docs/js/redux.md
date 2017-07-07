@@ -11,7 +11,7 @@ management - is a complex topic that is too involved to properly discuss here.
 
 ## Removing redux
 
-There are a few reasons why we chose to bundle redux with React Boilerplate, the
+There are a few reasons why we use redux, the
 biggest being that it is widely regarded as the current best Flux implementation
 in terms of architecture, support and documentation.
 
@@ -33,9 +33,3 @@ Here are a couple of great resources for taking a minimal approach:
 
 See above.
 
-### I prefer `(Alt|MobX|SomethingElse)`!
-
-React Boilerplate is a baseline for _your_ app: go for it!
-
-If you feel that we should take a closer look at supporting your preference
-out of the box, please let us know.

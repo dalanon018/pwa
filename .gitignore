@@ -8,3 +8,14 @@ stats.json
 .DS_Store
 npm-debug.log
 .idea
+jsconfig.json
+typings.json
+.env
+.eslintrc
+.vscode
+yarn-error.log
+
+# Semantic
+semantic/dist
+
+app/containers/*/tests/__snapshots__

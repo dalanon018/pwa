@@ -2,15 +2,15 @@
 
 ## State management
 
-This boilerplate manages application state using [Redux](redux.md), makes it
+This React application manages application state using [Redux](redux.md), makes it
 immutable with [`ImmutableJS`](immutablejs.md) and keeps access performant
 via [`reselect`](reselect.md).
 
 For managing asynchronous flows (e.g. logging in) we use [`redux-saga`](redux-saga.md).
 
-For routing, we use [`react-router` in combination with `react-router-redux`](routing.md).
+For routing, it uses [`react-router` in combination with `react-router-redux`](routing.md).
 
-We include a generator for components, containers, sagas, routes and selectors.
+Included as well is a generator for components, containers, sagas, routes and selectors.
 Run `npm run generate` to choose from the available generators, and automatically
 add new parts of your application!
 
@@ -28,8 +28,7 @@ add new parts of your application!
 
 ## Architecture: `components` and `containers`
 
-We adopted a split between stateless, reusable components called (wait for it...)
-`components` and stateful parent components called `containers`.
+We adopted a split between stateless, reusable components called `components` and stateful parent components called `containers`.
 
 ### Learn more
 

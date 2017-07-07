@@ -1,21 +1,3 @@
-# Introduction
-
-The JavaScript ecosystem evolves at incredible speed: staying current can feel
-overwhelming. So, instead of you having to stay on top of every new tool,
-feature and technique to hit the headlines, this project aims to lighten the
-load by providing a curated baseline of the most valuable ones.
-
-Using React Boilerplate, you get to start your app with our community's current
-ideas on what represents optimal developer experience, best practice, most
-efficient tooling and cleanest project structure.
-
-- [**CLI Commands**](commands.md)
-- [Tool Configuration](files.md)
-- [Server Configurations](server-configs.md)
-- [Deployment](deployment.md) *(currently Heroku specific)*
-- [FAQ](faq.md)
-- [Gotchas](gotchas.md)
-
 # Feature overview
 
 ## Quick scaffolding
@@ -27,7 +9,7 @@ Run `npm run generate` in your terminal and choose one of the parts you want
 to generate. They'll automatically be imported in the correct places and have
 everything set up correctly.
 
-> We use [plop] to generate new components, you can find all the logic and
+> [plop] is used to generate new components, you can find all the logic and
 templates for the generation in `internals/generators`.
 
 [plop]: https://github.com/amwmedia/plop
@@ -54,12 +36,12 @@ and `react` presets!
 
 ## Next generation CSS
 
-Write composable CSS that's co-located with your components using [`styled-components`]
+Write composable CSS that's co-located with your components using [CSS modules]
 for complete modularity. Unique generated class names keep the specificity low
 while eliminating style clashes. Ship only the styles that are used on the
 visible page for the best performance.
 
-[`styled-components`]: ../css/styled-components.md
+[Styled Component]: ../css/styled-components.md
 
 ## Industry-standard routing
 
@@ -74,17 +56,7 @@ that's as easy as pie and the url is auto-synced to your application state!
 
 _Don't like any of these features? [Click here](remove.md)_
 
-## Offline-first
-
-The next frontier in performant web apps: availability without a network
-connection from the instant your users load the app. This is done with a
-ServiceWorker and a fallback to AppCache, so this feature even works on older
-browsers!
-
-> All your files are included automatically. No manual intervention needed
-thanks to Webpack's [`offline-plugin`](https://github.com/NekR/offline-plugin)
-
-### Add To Homescreen
+## Add To Homescreen
 
 After repeat visits to your site, users will get a prompt to add your application
 to their homescreen. Combined with offline caching, this means your web app can
@@ -100,14 +72,14 @@ these fonts are downloaded. That means a lot of waiting time in which users
 could already read the content.
 
 [FontFaceObserver](https://github.com/bramstein/fontfaceobserver) adds a class
-to the `body` when the fonts have loaded. (see [`app.js`](../../app/app.js#L26-L36)
-and [`App/styles.css`](../../app/containers/App/styles.css))
+to the `body` when the fonts have loaded. (see `[`app.js`](../../app/app.js#L26-L36)`
+and `[`App/styles.css`](../../app/containers/App/styles.css))`
 
 ### Adding a new font
 
 1. Either add the `@font-face` declaration to `App/styles.css` or add a `<link>`
-tag to the [`index.html`](../../app/index.html). (Don't forget to remove the `<link>`
-for Open Sans from the [`index.html`](../../app/index.html)!)
+tag to the `[`index.html`](../../app/index.html)`. (Don't forget to remove the `<link>`
+for Open Sans from the `[`index.html`](../../app/index.html)!)`
 
 2. In `App/styles.css`, specify your initial `font-family` in the `body` tag
 with only web-save fonts. In the `body.jsFontLoaded` tag, specify your
