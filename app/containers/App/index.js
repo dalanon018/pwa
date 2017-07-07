@@ -23,6 +23,8 @@ const AppWrapper = styled.div`
   flex-direction: column;
 `
 
+const date = 'test'
+
 export function App (props) {
   return (
     <AppWrapper>
