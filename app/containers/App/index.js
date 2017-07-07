@@ -24,6 +24,7 @@ const AppWrapper = styled.div`
 `
 
 const date = 'test'
+const date1 = 'test'
 
 export function App (props) {
   return (
