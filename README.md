@@ -1,153 +1,183 @@
-<img src="https://raw.githubusercontent.com/react-boilerplate/react-boilerplate-brand/master/assets/banner-metal-optimized.jpg" alt="react boilerplate banner" align="center" />
+<div align="center">
+  <img src="https://offshorly.com/7-eleven/images/cliqq.png" alt="7-Eleven cliqq banner"  />
+</div>
+
 
 <br />
 
-<div align="center"><strong>Start your next react project in seconds</strong></div>
-<div align="center">A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices</div>
+<div align="center"><strong>7 Eleven CliQQ Documentation</strong></div>
 
 <br />
 
 <div align="center">
   <!-- Dependency Status -->
-  <a href="https://david-dm.org/react-boilerplate/react-boilerplate">
-    <img src="https://david-dm.org/react-boilerplate/react-boilerplate.svg" alt="Dependency Status" />
-  </a>
+  <!-- <a href="https://david-dm.org/Coapperative/7Eleven">
+    <img src="https://david-dm.org/Coapperative/7Eleven.svg" alt="Dependency Status" />
+  </a> -->
   <!-- devDependency Status -->
-  <a href="https://david-dm.org/react-boilerplate/react-boilerplate#info=devDependencies">
-    <img src="https://david-dm.org/react-boilerplate/react-boilerplate/dev-status.svg" alt="devDependency Status" />
-  </a>
+  <!-- <a href="https://david-dm.org/Coapperative/7Eleven#info=devDependencies">
+    <img src="https://david-dm.org/Coapperative/7Eleven/dev-status.svg" alt="devDependency Status" />
+  </a> -->
   <!-- Build Status -->
-  <a href="https://travis-ci.org/react-boilerplate/react-boilerplate">
-    <img src="https://travis-ci.org/react-boilerplate/react-boilerplate.svg" alt="Build Status" />
-  </a>
+  <!-- <a href="https://travis-ci.org/Coapperative/7Eleven">
+    <img src="https://travis-ci.org/Coapperative/7Eleven.svg" alt="Build Status" />
+  </a> -->
   <!-- Test Coverage -->
-  <a href="https://coveralls.io/r/react-boilerplate/react-boilerplate">
-    <img src="https://coveralls.io/repos/github/react-boilerplate/react-boilerplate/badge.svg" alt="Test Coverage" />
+  <!-- <a href="https://coveralls.io/r/Coapperative/7Eleven">
+    <img src="https://coveralls.io/repos/github/Coapperative/7Eleven/badge.svg" alt="Test Coverage" /> -->
   </a>
 </div>
-<div align="center">
-    <!-- Backers -->
-  <a href="#backers">
-    <img src="https://opencollective.com/react-boilerplate/backers/badge.svg" alt="Backers" />
-  </a>
-      <!-- Sponsors -->
-  <a href="#sponsors">
-    <img src="https://opencollective.com/react-boilerplate/sponsors/badge.svg" alt="Sponsors" />
-  </a>
-  <a href="http://thinkmill.com.au/?utm_source=github&utm_medium=badge&utm_campaign=react-boilerplate">
-    <img alt="Supported by Thinkmill" src="https://thinkmill.github.io/badge/heart.svg" />
-  </a>
-  <!-- Gitter -->
-  <a href="https://gitter.im/mxstbr/react-boilerplate">
-    <img src="https://camo.githubusercontent.com/54dc79dc7da6b76b17bc8013342da9b4266d993c/68747470733a2f2f6261646765732e6769747465722e696d2f6d78737462722f72656163742d626f696c6572706c6174652e737667" alt="Gitter Chat" />
-  </a>
-</div>
+
 
 <br />
 
-<div align="center">
-  <sub>Created by <a href="https://twitter.com/mxstbr">Max Stoiber</a> and maintained with ❤️ by an amazing <a href="https://github.com/orgs/react-boilerplate/teams/core">team of developers</a>.</sub>
-</div>
+## Development Environment Setup
 
-## Features
+1. Make sure you have `nvm`, node `v7.6.0 and up` installed
+2. Install `yarn` - `npm install -g yarn`.
+3. Use a smart `.npmrc`. By default, `npm` doesn’t save installed dependencies to package.json (and you should always track your dependencies!).
+4. `npm install -g standard` # standardjs
+5. `npm install -g babel-eslint`
 
-<dl>
-  <dt>Quick scaffolding</dt>
-  <dd>Create components, containers, routes, selectors and sagas - and their tests - right from the CLI!</dd>
+```bash
+$ npm config set save=true
+$ npm config set save-exact=true
+$ cat ~/.npmrc
+```
 
-  <dt>Instant feedback</dt>
-  <dd>Enjoy the best DX (Developer eXperience) and code your app at the speed of thought! Your saved changes to the CSS and JS are reflected instantaneously without refreshing the page. Preserve application state even when you update something in the underlying code!</dd>
-
-  <dt>Predictable state management</dt>
-  <dd>Unidirectional data flow allows for change logging and time travel debugging.</dd>
-
-  <dt>Next generation JavaScript</dt>
-  <dd>Use template strings, object destructuring, arrow functions, JSX syntax and more, today.</dd>
-
-  <dt>Next generation CSS</dt>
-  <dd>Write composable CSS that's co-located with your components for complete modularity. Unique generated class names keep the specificity low while eliminating style clashes. Ship only the styles that are on the page for the best performance.</dd>
-
-  <dt>Industry-standard routing</dt>
-  <dd>It's natural to want to add pages (e.g. `/about`) to your application, and routing makes this possible.</dd>
-
-  <dt>Industry-standard i18n internationalization support</dt>
-  <dd>Scalable apps need to support multiple languages, easily add and support multiple languages with `react-intl`.</dd>
-
-  <dt>Offline-first</dt>
-  <dd>The next frontier in performant web apps: availability without a network connection from the instant your users load the app.</dd>
-
-  <dt>SEO</dt>
-  <dd>We support SEO (document head tags management) for search engines that support indexing of JavaScript content. (eg. Google)</dd>
-</dl>
-
-But wait... there's more!
-
-  - *The best test setup:* Automatically guarantee code quality and non-breaking
-    changes. (Seen a react app with 99% test coverage before?)
-  - *Native web app:* Your app's new home? The home screen of your users' phones.
-  - *The fastest fonts:* Say goodbye to vacant text.
-  - *Stay fast*: Profile your app's performance from the comfort of your command
-    line!
-  - *Catch problems:* AppVeyor and TravisCI setups included by default, so your
-    tests get run automatically on Windows and Unix.
-
-There’s also a <a href="https://vimeo.com/168648012">fantastic video</a> on how to structure your React.js apps with scalability in mind. It provides rationale for the majority of boilerplate's design decisions.
-
-<sub><i>Keywords: React.js, Redux, Hot Reloading, ESNext, Babel, react-router, Offline First, ServiceWorker, `styled-components`, redux-saga, FontFaceObserver</i></sub>
+When adding new packages, always use `yarn add --exact <package>`. To add a package as a devDependency, use `yarn add --exact -D <package>`. This will ensure the package is always added to the `yarn.lock` file.
 
 ## Quick start
 
-1. Clone this repo using `git clone --depth=1 https://github.com/react-boilerplate/react-boilerplate.git`
-2. Move to the appropriate directory: `cd react-boilerplate`.<br />
-3. Run `npm run setup` in order to install dependencies and clean the git repo.<br />
-   *We auto-detect `yarn` for installing packages by default, if you wish to force `npm` usage do: `USE_YARN=false npm run setup`*<br />
-   *At this point you can run `npm start` to see the example app at `http://localhost:3000`.*
-4. Run `npm run clean` to delete the example app.
+Make sure you have `nvm`, node `v7.6.0`, and `yarn` installed before proceeding with the following steps. Also, ensure :
 
-Now you're ready to rumble!
+1. Clone repo - `git clone git@bitbucket.org:anteraaron/e-commerce-front-end.git`
+2. Run `yarn` to install dependencies and clean the git repo.
+3. Run `yarn start` to see the app at `http://localhost:3000`.
 
-> Please note that this boilerplate is **production-ready and not meant for beginners**! If you're just starting out with react or redux, please refer to https://github.com/petehunt/react-howto instead. If you want a solid, battle-tested base to build your next product upon and have some experience with react, this is the perfect start for you.
+To build and test production build:
 
-## Documentation
+1. Run `yarn run build` to build the app.
+2. Run `yarn run start:prod` to run the app in production mode. Make sure there are no errors in the browser console log.
 
-- [**The Hitchhikers Guide to `react-boilerplate`**](docs/general/introduction.md): An introduction for newcomers to this boilerplate.
-- [Overview](docs/general): A short overview of the included tools
+The application uses [Semantic-UI](http://semantic-ui.com/) and [semantic-ui-react](http://react.semantic-ui.com/) as the UI library. To customize theme and css styles of the application:
+
+1. Run `npm install -g gulp`
+2. Go to `/semantic` folder
+3. Modify the application theme in `/semantic/src/themes/7-eleven`
+4. Build the theme - `gulp build`. This will generate an updated `/semantic/dist/semantic.min.css`, which is the main css file loaded in the application.
+
+ ## Documentation
+
 - [**Commands**](docs/general/commands.md): Getting the most out of this boilerplate
-- [Testing](docs/testing): How to work with the built-in test harness
-- [Styling](docs/css): How to work with the CSS tooling
-- [Your app](docs/js): Supercharging your app with Routing, Redux, simple
+- [Code Style Guide](docs/css/README.md): Code style guide for JavaScript, React, and CSS
+- [Contributing Code](docs/git/github-flow.md): How to contribute code using GitHub Flow
+- [Testing](docs/testing/README.md): How to work with the built-in test harness
+- [CSS](docs/css/README.md): How to work with the CSS tooling
+- [Your app](docs/js/README.md): Supercharging your app with Routing, Redux, simple
   asynchronicity helpers, etc.
+- [Semantic UI](docs/semantic/README.md): The UI library used and how to customize the theming and styles of the library for the app.
 
-## Supporters
+## Overview
 
-This project would not be possible without the support by these amazing folks. [**Become a sponsor**](https://opencollective.com/react-boilerplate) to get your company in front of thousands of engaged react developers and help us out!
+### Application Folder Structure
 
-<a href="https://opencollective.com/react-boilerplate/bronze-sponsor/0/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/bronze-sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/react-boilerplate/bronze-sponsor/1/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/bronze-sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/react-boilerplate/bronze-sponsor/2/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/bronze-sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/react-boilerplate/bronze-sponsor/3/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/bronze-sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/react-boilerplate/bronze-sponsor/4/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/bronze-sponsor/4/avatar.svg"></a>
-<a href="https://opencollective.com/react-boilerplate/bronze-sponsor/5/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/bronze-sponsor/5/avatar.svg"></a>
-<a href="https://opencollective.com/react-boilerplate/bronze-sponsor/6/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/bronze-sponsor/6/avatar.svg"></a>
-<a href="https://opencollective.com/react-boilerplate/bronze-sponsor/7/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/bronze-sponsor/7/avatar.svg"></a>
-<a href="https://opencollective.com/react-boilerplate/bronze-sponsor/8/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/bronze-sponsor/8/avatar.svg"></a>
-<a href="https://opencollective.com/react-boilerplate/bronze-sponsor/9/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/bronze-sponsor/9/avatar.svg"></a>
+The `[`app/`](../../../tree/master/app)` directory contains your entire application code, including CSS, JavaScript, HTML and tests.
 
-----
+The rest of the folders and files only exist to make your life easier, and
+should not need to be touched.
 
-<a href="https://opencollective.com/react-boilerplate/backer/0/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/backer/0/avatar.svg"></a>
-<a href="https://opencollective.com/react-boilerplate/backer/1/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/backer/1/avatar.svg"></a>
-<a href="https://opencollective.com/react-boilerplate/backer/2/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/backer/2/avatar.svg"></a>
-<a href="https://opencollective.com/react-boilerplate/backer/3/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/backer/3/avatar.svg"></a>
-<a href="https://opencollective.com/react-boilerplate/backer/4/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/backer/4/avatar.svg"></a>
-<a href="https://opencollective.com/react-boilerplate/backer/5/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/backer/5/avatar.svg"></a>
-<a href="https://opencollective.com/react-boilerplate/backer/6/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/backer/6/avatar.svg"></a>
-<a href="https://opencollective.com/react-boilerplate/backer/7/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/backer/7/avatar.svg"></a>
-<a href="https://opencollective.com/react-boilerplate/backer/8/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/backer/8/avatar.svg"></a>
-<a href="https://opencollective.com/react-boilerplate/backer/9/website" target="_blank"><img src="https://opencollective.com/react-boilerplate/backer/9/avatar.svg"></a>
+Some files left out for brevity.
+
+```
+.
+├── app/
+|   ├── components
+|   |   └── Button
+|   |       ├── index.js
+|   |       └── tests
+|   |           └── index.test.js
+|   ├── containers
+|   |   ├── App
+|   |   |   ├── tests
+|   |   |   |   ├── actions.js
+|   |   |   |   ├── index.test.js
+|   |   |   |   └── reducer.test.js
+|   |   |   ├── actions.js
+|   |   |   ├── constants.js
+|   |   |   ├── index.js
+|   |   |   ├── sagas.js
+|   |   |   └── reducer.js
+|   |   |
+|   ├── tests
+|   ├── utils
+|   └── index.js
+├── build/
+├── docs/
+├── internals/
+├── semantic/
+├── server/
+├── .editorconfig
+├── .gitattributes
+└── .gitignore
+└── package.json
+```
+
+### Architecture Diagram
+
+![7eleven-diagram](https://offshorly.com/7-eleven/images/arch-diag.png)
 
 
-## License
+### Building & Deploying
 
-This project is licensed under the MIT license, Copyright (c) 2017 Maximilian
-Stoiber. For more information see `LICENSE.md`.
+1. Run `npm run build`, which will compile all the necessary files to the
+`build` folder.
+
+2. Upload the contents of the `build` folder to your web server's root folder.
+
+
+### CSS
+
+This boilerplate uses [styled-components](https://github.com/styled-components/styled-components) allowing you to write your CSS in your JavaScript, removing the mapping between styles and components.
+
+`styled-components` let's us embrace component encapsulation while `sanitize.css` gives us data-driven cross-browser normalization.
+
+See the [CSS documentation](docs/css/README.md) for more information about PostCSS
+and CSS modules.
+
+### JS
+
+The app bundles all your clients-side scripts and chunk them into several files using
+code splitting where possible. Your code is automatically optimized when
+building for production so you don't have to worry about that.
+
+See the [JS documentation](docs/js/README.md) for more information about the
+JavaScript side of things.
+
+### SEO
+
+App uses [react-helmet](https://github.com/nfl/react-helmet) for managing document head tags. Examples on how to
+write head tags can be found [here](https://github.com/nfl/react-helmet#examples).
+
+### Testing
+
+For a thorough explanation of the testing procedure, see the
+[testing documentation](docs/testing/README.md)!
+
+#### Performance testing
+
+With the production server running (i.e. while `npm run start:production` is running in
+another tab), enter `npm run pagespeed` to run Google PageSpeed Insights and
+get a performance check right in your terminal!
+
+#### Browser testing
+
+`npm run start:tunnel` makes your locally-running app globally available on the web
+via a temporary URL: great for testing on different devices, client demos, etc!
+
+#### Unit testing
+
+Unit tests live in `test/` directories right next to the components being tested
+and are run with `npm run test`.
+
+
