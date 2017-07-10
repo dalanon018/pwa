@@ -16,6 +16,7 @@ typings.json
 yarn-error.log
 
 # Semantic
+!semantic/tasks/build
 semantic/dist
 
 app/containers/*/tests/__snapshots__
