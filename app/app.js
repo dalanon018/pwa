@@ -17,6 +17,7 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import FontFaceObserver from 'fontfaceobserver'
 import { useScroll } from 'react-router-scroll'
 import 'sanitize.css/sanitize.css'
+// import FirebaseNotifications from 'utils/firebase-notification'
 
 // Import root app
 import App from 'containers/App'
@@ -127,3 +128,8 @@ if (!window.Intl) {
 if (process.env.NODE_ENV === 'production') {
   require('offline-plugin/runtime').install() // eslint-disable-line global-require
 }
+
+// Register push notification here
+// THIS IS FOR NOTIFICATION UNCOMMENT ONCE READY
+// const Notifications = new FirebaseNotifications()
+// Notifications.install()
