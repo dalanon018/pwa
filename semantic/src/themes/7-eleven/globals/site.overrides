@@ -42,16 +42,21 @@ p {
   }
 
   /* Product Padding */
-  .product__padding {
-    &--none {
+  .padding {
+    &__none {
       padding-left: 0 !important;
       padding-right: 0 !important;
     }
-    &--right {
+    &__right {
       padding-right: 5px;
     }
-    &--left {
+    &__left {
       padding-left: 5px;
+    }
+    &__horizontal {
+      &--14 {
+        padding: 0 14px;     
+      }
     }
   }
 }

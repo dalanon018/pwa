@@ -1,12 +1,11 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import BannerSlider from '../index'
 
-import { HomePage } from '../index'
-
-describe('<HomePage />', () => {
+describe('<BannerSlider />', () => {
   it('should render a div', () => {
     const renderedComponent = shallow(
-      <HomePage />
+      <BannerSlider />
     )
     expect(renderedComponent.find('div').length).toEqual(0)
   })
