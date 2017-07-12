@@ -1,4 +1,4 @@
-import localForage from 'localForage'
+import localForage from 'localforage'
 
 /**
  * Please wrap this instance to a try/catch block
