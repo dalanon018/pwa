@@ -23,11 +23,23 @@ module.exports = (options) => ({
       // Since we require these CSS files in our JS or CSS files,
       // they will be a part of our compilation either way.
       // So, no need for ExtractTextPlugin here.
+      // test: /\.css$/,
+      // include: /node_modules/,
+      // loaders: ['style-loader', 'css-loader']
+    }, {
+      // Preprocess our own .css files
+      // This is the place to add your own loaders (e.g. sass/less etc.)
+      // for a list of loaders, see https://webpack.js.org/loaders/#styling
       test: /\.css$/,
-      include: /node_modules/,
+      exclude: [/node_modules/, /semantic/],
+      use: ['style-loader', 'css-loader']
+    }, {
+      // Preprocess 3rd party .css files located in node_modules
+      test: /\.css$/,
+      include: [/node_modules/, /semantic/],
       loaders: ['style-loader', 'css-loader']
     }, {
-      test: /\.(eot|svg|ttf|woff|woff2)$/,
+      test: /\.(eot|svg|otf|ttf|woff|woff2)$/,
       loader: 'file-loader'
     }, {
       test: /\.(jpg|png|gif)$/,

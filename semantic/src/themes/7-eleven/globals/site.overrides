@@ -1,3 +1,57 @@
 /*******************************
         Global Overrides
 *******************************/
+
+/*******************************
+        Color Overrides
+*******************************/
+
+@primaryColor: #71BA08;
+@lightOrange: #F88728;
+@orange: #F68121;
+@grey: #C5C5C5;
+@darkGrey: #5F5F5F;
+@white: #FFFFFF;
+@lightGrey: #F0F0F0;
+
+/*******************************
+        Element Overrides
+*******************************/
+
+body {
+  color: @grey;
+  font-size: 12px;
+}
+
+p {
+  line-height: 1em;
+}
+
+/*******************************
+        Responsive Overrides
+*******************************/
+
+/* Media 320 */
+@media (min-width: 320px) {
+  /* Global */
+  body {
+    font-size: .9em;
+  }
+  p {
+    margin-bottom: 7px;
+  }
+
+  /* Product Padding */
+  .product__padding {
+    &--none {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+    &--right {
+      padding-right: 5px;
+    }
+    &--left {
+      padding-left: 5px;
+    }
+  }
+}
