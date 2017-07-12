@@ -1,35 +1,7 @@
-<div align="center">
-  <img src="https://offshorly.com/7-eleven/images/cliqq.png" alt="7-Eleven cliqq banner"  />
-</div>
+![7eleven-banner](https://offshorly.com/7-eleven/images/cliqq.png)
 
-
-<br />
-
-<div align="center"><strong>7 Eleven CliQQ Documentation</strong></div>
-
-<br />
-
-<div align="center">
-  <!-- Dependency Status -->
-  <!-- <a href="https://david-dm.org/Coapperative/7Eleven">
-    <img src="https://david-dm.org/Coapperative/7Eleven.svg" alt="Dependency Status" />
-  </a> -->
-  <!-- devDependency Status -->
-  <!-- <a href="https://david-dm.org/Coapperative/7Eleven#info=devDependencies">
-    <img src="https://david-dm.org/Coapperative/7Eleven/dev-status.svg" alt="devDependency Status" />
-  </a> -->
-  <!-- Build Status -->
-  <!-- <a href="https://travis-ci.org/Coapperative/7Eleven">
-    <img src="https://travis-ci.org/Coapperative/7Eleven.svg" alt="Build Status" />
-  </a> -->
-  <!-- Test Coverage -->
-  <!-- <a href="https://coveralls.io/r/Coapperative/7Eleven">
-    <img src="https://coveralls.io/repos/github/Coapperative/7Eleven/badge.svg" alt="Test Coverage" /> -->
-  </a>
-</div>
-
-
-<br />
+# 7 Eleven CliQQ Documentation
+[ ![Codeship Status for anteraaron/e-commerce-front-end](https://app.codeship.com/projects/91e48900-490c-0135-915a-4eee578a9487/status?branch=master)](https://app.codeship.com/projects/232078)
 
 ## Development Environment Setup
 

@@ -13,6 +13,7 @@
   "author": "Offshorly Devs",
   "license": "MIT",
   "scripts": {
+    "set:env": "node setenv.js > .env",
     "analyze:clean": "rimraf stats.json",
     "preanalyze": "npm run analyze:clean",
     "analyze": "node ./internals/scripts/analyze.js",
@@ -21,7 +22,7 @@
     "preinstall": "npm run npmcheckversion",
     "postinstall": "npm run build:dll && npm run build:semantic",
     "prebuild": "npm run build:clean",
-    "build": "cross-env NODE_ENV=production env-cmd .env webpack --config internals/webpack/webpack.prod.babel.js --color -p --progress",
+    "build": "npm run set:env && cross-env NODE_ENV=production env-cmd .env webpack --config internals/webpack/webpack.prod.babel.js --color -p --progress",
     "build:clean": "npm run test:clean && rimraf ./build",
     "build:dll": "node ./internals/scripts/dependencies.js",
     "build:semantic": "cd semantic && gulp build",
@@ -41,7 +42,7 @@
     "lint:staged": "lint-staged",
     "pretest": "npm run test:clean && npm run lint",
     "test:clean": "rimraf ./coverage",
-    "test": "cross-env NODE_ENV=test jest --coverage",
+    "test": "cross-env NODE_ENV=test jest",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "fresh-install": "rm -rf node_modules && npm cache clean && yarn && yarn build"
@@ -235,6 +236,7 @@
     "react-router-scroll": "0.4.1",
     "redux": "3.6.0",
     "redux-immutable": "3.0.11",
+    "redux-logger": "3.0.6",
     "redux-saga": "0.14.3",
     "reselect": "2.5.4",
     "sanitize.css": "4.1.0",
