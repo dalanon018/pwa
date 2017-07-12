@@ -1,47 +1,73 @@
-/**
- * Gets the repositories of the user from Github
- */
-
-import { take, call, put, select, cancel, takeLatest } from 'redux-saga/effects'
+import {
+  call,
+  cancel,
+  fork,
+  put,
+  take
+} from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
-import { LOAD_REPOS } from 'containers/App/constants'
-import { reposLoaded, repoLoadingError } from 'containers/App/actions'
-
 import request from 'utils/request'
-import { makeSelectUsername } from 'containers/HomePage/selectors'
+import { takeLatest } from 'redux-saga'
 
-/**
- * Github repos request/response handler
- */
-export function * getRepos () {
-  // Select username from store
-  const username = yield select(makeSelectUsername())
-  const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`
+import {
+  GET_SAMPLE_API
+} from './constants'
 
-  try {
-    // Call our request helper (see 'utils/request')
-    const repos = yield call(request, requestURL)
-    yield put(reposLoaded(repos, username))
-  } catch (err) {
-    yield put(repoLoadingError(err))
+import {
+  setSampleApiAction
+} from './actions'
+
+export function * initializeAppGlobals () {
+  // code block
+}
+
+export function * getApiTest (data) {
+  const headers = new Headers()
+  const { payload: { resolve, reject } } = data
+  console.log(data)
+
+  headers.append('Content-Type', 'application/json')
+  headers.append('Accept', 'application/json')
+
+  // const url = `https://www.reddit.com/search.json?q=${data.payload.passData}&sort=new`
+  const url = `https://jsonplaceholder.typicode.com/posts`
+  const req = yield call(request, url, {
+    method: 'GET',
+    headers
+  })
+
+  if (!req.err) {
+    yield put(setSampleApiAction(req))
+    resolve()
+  } else {
+    const err = yield req.err.body
+    const { status } = err
+    reject(status)
   }
 }
 
 /**
- * Root saga manages watcher lifecycle
+ * Watches for Every change of locations from router
+ * once this triggers we need to check all the items under `initializeAppGlobals`
  */
-export function * githubData () {
-  // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
-  // By using `takeLatest` only the result of the latest API call is applied.
-  // It returns task descriptor (just like fork) so we can continue execution
-  const watcher = yield takeLatest(LOAD_REPOS, getRepos)
-
-  // Suspend execution until location changes
-  yield take(LOCATION_CHANGE)
-  yield cancel(watcher)
+export function * getLocationChangeWatcher () {
+  yield takeLatest(LOCATION_CHANGE, initializeAppGlobals)
 }
 
-// Bootstrap sagas
+export function * getSampleApiSaga () {
+  yield * takeLatest(GET_SAMPLE_API, getApiTest)
+}
+
+// Individual exports for testing
+export function * homePageSagas () {
+  const watcher = yield [
+    fork(getSampleApiSaga)
+  ]
+  yield take(LOCATION_CHANGE)
+  yield watcher.map(task => cancel(task))
+}
+
+// All sagas to be loaded
 export default [
-  githubData
+  homePageSagas
 ]

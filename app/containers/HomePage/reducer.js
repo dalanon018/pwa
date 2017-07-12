@@ -1,35 +1,28 @@
 /*
- * HomeReducer
  *
- * The reducer takes care of our data. Using actions, we can change our
- * application state.
- * To add a new action, add it to the switch statement in the reducer function
+ * HomePage reducer
  *
- * Example:
- * case YOUR_ACTION_CONSTANT:
- *   return state.set('yourStateVariable', true);
  */
-import { fromJS } from 'immutable'
 
+import { fromJS } from 'immutable'
 import {
-  CHANGE_USERNAME
+  DEFAULT_ACTION,
+  SET_SAMPLE_API
 } from './constants'
 
-// The initial state of the App
 const initialState = fromJS({
-  username: ''
+  sampleApi: {}
 })
 
-function homeReducer (state = initialState, action) {
+function homePageReducer (state = initialState, action) {
   switch (action.type) {
-    case CHANGE_USERNAME:
-
-      // Delete prefixed '@' from the github username
+    case DEFAULT_ACTION:
       return state
-        .set('username', action.name.replace(/@/gi, ''))
+    case SET_SAMPLE_API:
+      return state.set('sampleApi', fromJS(action.payload))
     default:
       return state
   }
 }
 
-export default homeReducer
+export default homePageReducer

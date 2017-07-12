@@ -1,27 +1,23 @@
+
 import { fromJS } from 'immutable'
+import homePageReducer from '../reducer'
+import { GET_SAMPLE_API } from './../constants'
 
-import homeReducer from '../reducer'
-import {
-  changeUsername
-} from '../actions'
-
-describe('homeReducer', () => {
+describe('homePageReducer', () => {
   let state
   beforeEach(() => {
     state = fromJS({
-      username: ''
+      sampleApi: {}
     })
   })
 
-  it('should return the initial state', () => {
+  it('returns the initial state', () => {
     const expectedResult = state
-    expect(homeReducer(undefined, {})).toEqual(expectedResult)
-  })
-
-  it('should handle the changeUsername action correctly', () => {
-    const fixture = 'mxstbr'
-    const expectedResult = state.set('username', fixture)
-
-    expect(homeReducer(state, changeUsername(fixture))).toEqual(expectedResult)
+    expect(homePageReducer(undefined, {
+      type: GET_SAMPLE_API,
+      payload: fromJS([
+        {test: 'passed'}
+      ])
+    })).toEqual(expectedResult)
   })
 })

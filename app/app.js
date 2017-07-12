@@ -16,8 +16,9 @@ import { applyRouterMiddleware, Router, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import FontFaceObserver from 'fontfaceobserver'
 import { useScroll } from 'react-router-scroll'
-import 'sanitize.css/sanitize.css'
-// import FirebaseNotifications from 'utils/firebase-notification'
+
+// import 'sanitize.css/sanitize.css'
+import '../semantic/dist/semantic.min.css'
 
 // Import root app
 import App from 'containers/App'
