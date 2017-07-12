@@ -1,6 +1,7 @@
 ![7eleven-banner](https://offshorly.com/7-eleven/images/cliqq.png)
 
 # 7 Eleven CliQQ Documentation
+[ ![Codeship Status for anteraaron/e-commerce-front-end](https://app.codeship.com/projects/91e48900-490c-0135-915a-4eee578a9487/status?branch=master)](https://app.codeship.com/projects/232078)
 
 ## Development Environment Setup
 
