@@ -7,7 +7,7 @@ describe('<BannerSlider />', () => {
     const renderedComponent = shallow(
       <BannerSlider />
     )
-    expect(renderedComponent.find('div').length).toEqual(0)
+    expect(renderedComponent.find('div').length).toEqual(2)
   })
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(true)

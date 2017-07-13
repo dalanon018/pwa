@@ -185,6 +185,7 @@
     ]
   },
   "jest": {
+    "setupFiles": ["<rootDir>/src/test-setup.js"],
     "collectCoverageFrom": [
       "app/**/*.{js,jsx}",
       "!app/**/*.test.{js,jsx}",
