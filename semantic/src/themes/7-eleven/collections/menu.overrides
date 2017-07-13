@@ -4,10 +4,20 @@
 
 .ui.menu {
   border-radius: 0;
-  border-bottom: 3px solid lightgreen;
-
+  border: 0;
+  box-shadow: none;
 }
 
 .ui.menu:after {
   display: none;
+}
+
+.ui.vertical.menu {
+  box-shadow: none;
+  width: 100%;
+  padding: 20px;
+}
+
+.ui.vertical.menu .item.label > i.icon {
+  float: left;
 }

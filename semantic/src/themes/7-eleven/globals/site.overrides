@@ -23,6 +23,13 @@ body {
   font-size: 12px;
 }
 
+#app,
+div [data-reactroot],
+.container {
+  height: 100%;
+  padding: 0;
+}
+
 p {
   line-height: 1em;
 }
@@ -55,7 +62,7 @@ p {
     }
     &__horizontal {
       &--14 {
-        padding: 0 14px;     
+        padding: 0 14px;
       }
     }
   }

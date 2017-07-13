@@ -6,8 +6,16 @@
 import { defineMessages } from 'react-intl'
 
 export default defineMessages({
-  header: {
-    id: 'app.containers.Bucket.header',
-    defaultMessage: 'This is Bucket container !'
+  menuHome: {
+    id: 'app.containers.Bucket.menuHome',
+    defaultMessage: 'HOME'
+  },
+  menuBarcode: {
+    id: 'app.containers.Bucket.menuBarcode',
+    defaultMessage: 'BARCODE HISTORY'
+  },
+  menuCategories: {
+    id: 'app.containers.Bucket.menuCategories',
+    defaultMessage: 'CATEGORIES'
   }
 })

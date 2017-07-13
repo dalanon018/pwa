@@ -3,22 +3,64 @@ import styled from 'styled-components'
 
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
+import {
+  Sidebar,
+  Segment
+} from 'semantic-ui-react'
 
 import makeSelectBuckets from './selectors'
-import Menu from './Menu'
+import HeaderMenu from './HeaderMenu'
+import SidebarMenu from './SidebarMenu'
 
 const Wrapper = styled.div`
   position: relative;
-  min-height: 100%;
+  height: 100%;
 `
 
 export class Buckets extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  state = {
+    toggleSidebar: false
+  }
+
+  constructor () {
+    super()
+
+    this._handleToggleSideBar = this._handleToggleSideBar.bind(this)
+    this._handleCloseSidebarClickPusher = this._handleCloseSidebarClickPusher.bind(this)
+  }
+
+  _handleToggleSideBar () {
+    const { toggleSidebar } = this.state
+    this.setState({
+      toggleSidebar: !toggleSidebar
+    })
+  }
+
+  /**
+   * work around for closing sidebar on clicking the page
+   */
+  _handleCloseSidebarClickPusher () {
+    const { toggleSidebar } = this.state
+
+    if (toggleSidebar) {
+      this._handleToggleSideBar()
+    }
+
+    return false
+  }
+
   render () {
+    const { toggleSidebar } = this.state
     return (
       <Wrapper>
-        <Menu
-          toggleSidebarAction={() => {}}
-        />
+        <Sidebar.Pushable as={Segment}>
+          <Sidebar animation='overlay' width='thin' visible={toggleSidebar}>
+            <SidebarMenu />
+          </Sidebar>
+          <Sidebar.Pusher dimmed={toggleSidebar} onClick={this._handleCloseSidebarClickPusher}>
+            <HeaderMenu toggleSidebarAction={this._handleToggleSideBar} />
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
       </Wrapper>
     )
   }
