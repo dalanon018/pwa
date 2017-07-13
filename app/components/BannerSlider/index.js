@@ -53,8 +53,8 @@ const HandleBlock = ({loader}) => {
   } else {
     block = <BannerSliderWrapper>
       <Slider {...settings}>
-        <div><Image src='http://placekitten.com/g/450/250' /></div>
-        <div><Image src='http://placekitten.com/g/450/250' /></div>
+        <div><Image src='http://placekitten.com/g/450/200' /></div>
+        <div><Image src='http://placekitten.com/g/450/200' /></div>
       </Slider>
     </BannerSliderWrapper>
   }
