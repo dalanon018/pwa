@@ -9,7 +9,7 @@ import React from 'react'
 
 // import { FormattedMessage } from 'react-intl'
 // import messages from './messages'
-import { Grid, Image, Loader } from 'semantic-ui-react'
+import { Grid, Image } from 'semantic-ui-react'
 
 import {
   ImageWrapper,
@@ -19,6 +19,8 @@ import {
   ProductPriceWrapper,
   ProductWrapper
 } from './styles'
+
+import EmptyDataBlock from 'components/EmptyDataBlock'
 
 import PromoTag from './sections/PromoTag'
 import ProductImage from 'images/test-images/samplebag.png'
@@ -32,8 +34,8 @@ function ProductView ({
     <Grid.Row stretched columns={2}>
       <Grid.Column className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3}>
         {
-          loader === false ? <DefaultState loader={loader} />
-          : <ProductWrapper opacity={loader}>
+          !loader ? <DefaultState loader={loader} />
+          : <ProductWrapper>
             <ImageWrapper>
               <Image src={ProductImage} />
             </ImageWrapper>
@@ -48,8 +50,8 @@ function ProductView ({
 
       <Grid.Column className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3}>
         {
-          loader === false ? <DefaultState loader={loader} />
-          : <ProductWrapper opacity={loader}>
+          !loader ? <DefaultState loader={loader} />
+          : <ProductWrapper>
             { true && <PromoTag text='SALE!' /> }
             <ImageWrapper>
               <Image src={ProductImage} />
@@ -65,8 +67,8 @@ function ProductView ({
 
       <Grid.Column className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3}>
         {
-          loader === false ? <DefaultState loader={loader} />
-          : <ProductWrapper opacity={loader}>
+          !loader ? <DefaultState loader={loader} />
+          : <ProductWrapper>
             { true && <PromoTag text='25% OFF' /> }
             <ImageWrapper>
               <Image src={ProductImage} />
@@ -82,8 +84,8 @@ function ProductView ({
 
       <Grid.Column className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3}>
         {
-          loader === false ? <DefaultState loader={loader} />
-          : <ProductWrapper opacity={loader}>
+          !loader ? <DefaultState loader={loader} />
+          : <ProductWrapper>
             <ImageWrapper>
               <Image src={ProductImage} />
             </ImageWrapper>
@@ -101,13 +103,14 @@ function ProductView ({
 
 const DefaultState = ({loader}) => {
   return (
-    <ProductWrapper opacity>
-      <Loader active>Loading</Loader>
-      <ImageWrapper>
-        <Image src={EmptyImage} />
-      </ImageWrapper>
-      <Image src={ParagraphImage} height={50} />
-    </ProductWrapper>
+    <EmptyDataBlock>
+      <ProductWrapper>
+        <ImageWrapper>
+          <Image src={EmptyImage} />
+        </ImageWrapper>
+        <Image src={ParagraphImage} height={50} />
+      </ProductWrapper>
+    </EmptyDataBlock>
   )
 }
 

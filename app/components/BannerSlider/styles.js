@@ -1,10 +1,14 @@
 import styled from 'styled-components'
 
 const BannerSliderWrapper = styled.div`
+  background: #FFFFFF;
+  color: #333;
   margin: auto auto 20px;
   width: 100%;
-  color: #333;
-  background: #419be0;
+
+  img {
+    width: 100%;
+  }
 
   img {
     width: 100%;

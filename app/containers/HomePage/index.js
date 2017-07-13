@@ -65,7 +65,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           ]}
         />
         <NavCategories />
-        <BannerSlider />
+        <BannerSlider loader={loader} />
         <div className='padding__horizontal--14'>
           <Grid padded>
             <ProductView loader={loader} />

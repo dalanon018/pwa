@@ -5,7 +5,8 @@ const ProductWrapper = styled.div`
   display: block;
   margin-bottom: 20px;
   position: relative;
-  opacity: ${props => props.opacity ? 1 : 0};
+
+  // not included on sorting
   animation:fadeIn ease-in 1;
   animation-duration: .5s;
   animation-delay: 1.5s
@@ -21,11 +22,9 @@ const ProductWrapper = styled.div`
 const ImageWrapper = styled.div`
   background-color: #F0F0F0;
   margin-bottom: 15px;
-  // max-height: 260px;
 
   .image {
     width: 100%;
-    // height: 260px;
   }
 `
 
@@ -76,30 +75,46 @@ const RibbonWrapper = styled.div`
 
   // sorting styles is sensitive on ribbon-tag class
   .ribbon-tag {
-    justify-content: center;
+    background: #9bcb49;
+    border-bottom: 2px solid #9bcb49;
     display: flex;
-    position: relative;
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-    width: 0;
     height: 60px;
-    border: 30px solid #71BA08;
-    border-top: 0 solid;
-    border-bottom: 18px solid rgba(0,0,0,0);
-    -o-text-overflow: clip;
-    text-overflow: clip;
+    justify-content: center;
+    line-height: 60px;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    width: 60px;
+
+    &:after, &:before {
+      content: '';
+      position: absolute;
+      border-top: 25px solid #9bcb49;
+      height: 0;
+      width: 0;
+      top: 100%;
+    }
+
+    &:after {
+      border-left: 50px solid transparent;
+      right: 0px;
+    }
+
+    &:before {
+      border-right: 50px solid transparent;
+      left: 0px;
+    }
 
     .ribbon-text {
       align-items: center;
       color: #FFFFFF;
       display: inline-flex;
+      margin-top: 10px;
       font-size: 1.5em;
       padding: 5px;
       line-height: 1em;
       text-align: center;
     }
-  }
 `
 
 export {
