@@ -13,6 +13,7 @@ import Helmet from 'react-helmet'
 
 import { Grid } from 'semantic-ui-react'
 
+import NavCategories from 'components/NavCategories'
 import BannerSlider from 'components/BannerSlider'
 import ProductView from 'components/ProductView'
 
@@ -63,6 +64,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css' }
           ]}
         />
+        <NavCategories />
         <BannerSlider />
         <div className='padding__horizontal--14'>
           <Grid padded>

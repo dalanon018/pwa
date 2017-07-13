@@ -6,6 +6,10 @@ const BannerSliderWrapper = styled.div`
   color: #333;
   background: #419be0;
 
+  img {
+    width: 100%;
+  }
+
   .slick-dots {
     bottom: 0;
 
