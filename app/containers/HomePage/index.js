@@ -13,6 +13,7 @@ import Helmet from 'react-helmet'
 
 import { Grid } from 'semantic-ui-react'
 
+import BannerSlider from 'components/BannerSlider'
 import ProductView from 'components/ProductView'
 
 import { getSampleApiAction } from './actions'
@@ -57,10 +58,17 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           meta={[
             { name: 'description', content: 'A React.js Boilerplate application homepage' }
           ]}
+          link={[
+            { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css' },
+            { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css' }
+          ]}
         />
-        <Grid padded>
-          <ProductView loader={loader} />
-        </Grid>
+        <BannerSlider />
+        <div className='padding__horizontal--14'>
+          <Grid padded>
+            <ProductView loader={loader} />
+          </Grid>
+        </div>
       </div>
     )
   }

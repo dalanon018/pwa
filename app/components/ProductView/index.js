@@ -30,7 +30,7 @@ function ProductView ({
 }) {
   return (
     <Grid.Row stretched columns={2}>
-      <Grid.Column className='product__padding--none' mobile={8} tablet={4} computer={3} widescreen={3}>
+      <Grid.Column className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3}>
         {
           loader === false ? <DefaultState loader={loader} />
           : <ProductWrapper opacity={loader}>
@@ -46,7 +46,7 @@ function ProductView ({
         }
       </Grid.Column>
 
-      <Grid.Column className='product__padding--none' mobile={8} tablet={4} computer={3} widescreen={3}>
+      <Grid.Column className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3}>
         {
           loader === false ? <DefaultState loader={loader} />
           : <ProductWrapper opacity={loader}>
@@ -63,7 +63,7 @@ function ProductView ({
         }
       </Grid.Column>
 
-      <Grid.Column className='product__padding--none' mobile={8} tablet={4} computer={3} widescreen={3}>
+      <Grid.Column className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3}>
         {
           loader === false ? <DefaultState loader={loader} />
           : <ProductWrapper opacity={loader}>
@@ -80,7 +80,7 @@ function ProductView ({
         }
       </Grid.Column>
 
-      <Grid.Column className='product__padding--none' mobile={8} tablet={4} computer={3} widescreen={3}>
+      <Grid.Column className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3}>
         {
           loader === false ? <DefaultState loader={loader} />
           : <ProductWrapper opacity={loader}>
