@@ -19,6 +19,26 @@ export default function createRoutes (store) {
   return [
     {
       path: '/',
+      name: 'bucket',
+      getComponent (nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/Buckets/reducer'),
+          import('containers/Buckets/sagas'),
+          import('containers/Buckets')
+        ])
+
+        const renderRoute = loadModule(cb)
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('buckets', reducer.default)
+          injectSagas(sagas.default)
+          renderRoute(component)
+        })
+
+        importModules.catch(errorLoading)
+      }
+    }, {
+      path: '/home',
       name: 'home',
       getComponent (nextState, cb) {
         const importModules = Promise.all([

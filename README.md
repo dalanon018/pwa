@@ -2,6 +2,7 @@
 
 # 7 Eleven CliQQ Documentation
 [ ![Codeship Status for anteraaron/e-commerce-front-end](https://app.codeship.com/projects/91e48900-490c-0135-915a-4eee578a9487/status?branch=master)](https://app.codeship.com/projects/232078)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Development Environment Setup
 
