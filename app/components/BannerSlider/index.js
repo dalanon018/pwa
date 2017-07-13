@@ -27,6 +27,19 @@ const ImageWrapper = styled.div`
 `
 
 function BannerSlider ({loader}) {
+  return <HandleBlock loader={loader} />
+}
+
+const DefaultState = () => {
+  return (
+    <EmptyDataBlock>
+      <ImageWrapper />
+    </EmptyDataBlock>
+  )
+}
+
+const HandleBlock = ({loader}) => {
+  let block
   const settings = {
     dots: true,
     infinite: true,
@@ -35,31 +48,17 @@ function BannerSlider ({loader}) {
     slidesToShow: 1,
     slidesToScroll: 1
   }
-
-  const handleBlock = () => {
-    let block
-    if (!loader) {
-      block = <DefaultState loader={loader} />
-    } else {
-      block = <BannerSliderWrapper>
-        <Slider {...settings}>
-          <div><Image src='http://placekitten.com/g/450/250' /></div>
-          <div><Image src='http://placekitten.com/g/450/250' /></div>
-        </Slider>
-      </BannerSliderWrapper>
-    }
-    return block
+  if (!loader) {
+    block = <DefaultState loader={loader} />
+  } else {
+    block = <BannerSliderWrapper>
+      <Slider {...settings}>
+        <div><Image src='http://placekitten.com/g/450/250' /></div>
+        <div><Image src='http://placekitten.com/g/450/250' /></div>
+      </Slider>
+    </BannerSliderWrapper>
   }
-
-  return handleBlock()
-}
-
-const DefaultState = ({loader}) => {
-  return (
-    <EmptyDataBlock>
-      <ImageWrapper />
-    </EmptyDataBlock>
-  )
+  return block
 }
 
 BannerSlider.propTypes = {
