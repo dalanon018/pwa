@@ -1,10 +1,21 @@
-// import { fromJS } from 'immutable';
-// import { makeSelectBucketsDomain } from '../selectors';
+import { fromJS } from 'immutable'
 
-// const selector = makeSelectBucketsDomain();
+import {
+  selectProductCategories
+} from '../selectors'
 
-describe('makeSelectBucketsDomain', () => {
-  it('Expect to have unit tests specified', () => {
-    expect(true).toEqual(true)
+describe('Buckets Selectors', () => {
+  describe('selectProductCategories', () => {
+    const selectProductCategoriesSelectors = selectProductCategories()
+
+    it('should get sector', () => {
+      const categories = fromJS([1, 2, 3])
+      const mockedState = fromJS({
+        buckets: {
+          categories
+        }
+      })
+      expect(selectProductCategoriesSelectors(mockedState)).toEqual(categories)
+    })
   })
 })

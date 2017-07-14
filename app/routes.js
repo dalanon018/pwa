@@ -36,28 +36,32 @@ export default function createRoutes (store) {
         })
 
         importModules.catch(errorLoading)
-      }
-    }, {
-      path: '/home',
-      name: 'home',
-      getComponent (nextState, cb) {
-        const importModules = Promise.all([
-          import('containers/HomePage/reducer'),
-          import('containers/HomePage/sagas'),
-          import('containers/HomePage')
-        ])
+      },
+      indexRoute: { onEnter: (nextState, replace) => replace('/home') },
+      childRoutes: [
+        {
+          path: '/home',
+          name: 'home',
+          getComponent (nextState, cb) {
+            const importModules = Promise.all([
+              import('containers/HomePage/reducer'),
+              import('containers/HomePage/sagas'),
+              import('containers/HomePage')
+            ])
 
-        const renderRoute = loadModule(cb)
+            const renderRoute = loadModule(cb)
 
-        importModules.then(([reducer, sagas, component]) => {
-          injectReducer('home', reducer.default)
-          injectSagas(sagas.default)
+            importModules.then(([reducer, sagas, component]) => {
+              injectReducer('home', reducer.default)
+              injectSagas(sagas.default)
 
-          renderRoute(component)
-        })
+              renderRoute(component)
+            })
 
-        importModules.catch(errorLoading)
-      }
+            importModules.catch(errorLoading)
+          }
+        }
+      ]
     }, {
       path: '/features',
       name: 'features',

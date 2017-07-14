@@ -6,15 +6,17 @@
 
 import { fromJS } from 'immutable'
 import {
-  DEFAULT_ACTION
+  SET_PRODUCT_CATEGORIES
 } from './constants'
 
-const initialState = fromJS({})
+const initialState = fromJS({
+  categories: []
+})
 
 function bucketsReducer (state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state
+    case SET_PRODUCT_CATEGORIES:
+      return state.set('categories', fromJS(action.payload))
     default:
       return state
   }

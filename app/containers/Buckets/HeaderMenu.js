@@ -13,7 +13,13 @@ import MainLogo from 'images/cliqq-logo.svg'
 const Wrapper = styled.div`
   background: #FFF;
   border-bottom: 3px solid lightgreen;
+  height: 49px;
+  left: 0;
   padding: 7px 10px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99;
 `
 
 const LeftWrapper = styled.div`

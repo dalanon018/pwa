@@ -13,12 +13,12 @@ const selectBucketDomain = () => (state) => state.get('buckets')
  * Default selector used by Bucket
  */
 
-const makeSelectBuckets = () => createSelector(
+const selectProductCategories = () => createSelector(
   selectBucketDomain(),
-  (substate) => substate.toJS()
+  (substate) => substate.get('categories')
 )
 
-export default makeSelectBuckets
 export {
-  selectBucketDomain
+  selectBucketDomain,
+  selectProductCategories
 }
