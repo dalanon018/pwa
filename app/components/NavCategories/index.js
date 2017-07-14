@@ -9,35 +9,35 @@ import React from 'react'
 
 // import { FormattedMessage } from 'react-intl'
 // import messages from './messages'
-import { NavCategoriesWrapper } from './styles'
-import { Grid, Image } from 'semantic-ui-react'
+import { NavCategoriesWrapper, CategoryIcon } from './styles'
+import { Grid } from 'semantic-ui-react'
 
-import sampleIconImage from 'images/test-images/mobile-cursor.png'
+import sampleCategoryIcon from 'images/test-images/category-test.svg'
 
 function NavCategories () {
   return (
     <NavCategoriesWrapper>
-      <Grid textAlign='center'>
-        <Grid.Row columns='equal'>
+      <Grid padded textAlign='center'>
+        <Grid.Row columns={5}>
           <Grid.Column>
-            <Image src={sampleIconImage} />
-            <span>APPAREL</span>
+            <CategoryIcon background={sampleCategoryIcon} />
+            <p>APPAREL</p>
           </Grid.Column>
           <Grid.Column>
-            <Image src={sampleIconImage} />
-            <span>ACCESSORIES</span>
+            <CategoryIcon background={sampleCategoryIcon} />
+            <p>ACCESSORIES</p>
           </Grid.Column>
           <Grid.Column>
-            <Image src={sampleIconImage} />
-            <span>FRAGRANCES</span>
+            <CategoryIcon background={sampleCategoryIcon} />
+            <p>FRAGRANCES</p>
           </Grid.Column>
           <Grid.Column>
-            <Image src={sampleIconImage} />
-            <span>GADGETS</span>
+            <CategoryIcon background={sampleCategoryIcon} />
+            <p>GADGETS</p>
           </Grid.Column>
           <Grid.Column>
-            <Image src={sampleIconImage} />
-            <span>MORE</span>
+            <CategoryIcon background={sampleCategoryIcon} />
+            <p>MORE</p>
           </Grid.Column>
         </Grid.Row>
       </Grid>
