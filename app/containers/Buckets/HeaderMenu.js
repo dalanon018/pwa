@@ -7,7 +7,7 @@ import {
   Grid
 } from 'semantic-ui-react'
 
-import BarcodeImage from 'images/icons/barcode-icon.svg'
+import BarcodeImage from 'images/icons/barcode-header.svg'
 import MainLogo from 'images/cliqq-logo.svg'
 
 const Wrapper = styled.div`

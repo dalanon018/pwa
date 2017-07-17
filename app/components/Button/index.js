@@ -7,40 +7,47 @@
  */
 
 import React, { PropTypes, Children } from 'react'
+import styled from 'styled-components'
+import {
+  Button
+} from 'semantic-ui-react'
 
-import A from './A'
-import StyledButton from './StyledButton'
-import Wrapper from './Wrapper'
+import ButtonNext from 'images/icons/button-next.svg'
 
-function Button (props) {
+const Wrapper = styled.div`
+  align-items: center;
+  display: flex;
+  flex: 1 0 auto;
+  justify-content: center;
+  padding: 8px 0;
+`
+const TextWrapper = styled.div`
+  font-size: 19px;
+  margin-right: 10px;
+`
+
+const ImageWrapper = styled.img`
+  width: 19px;
+`
+
+function ElemButton ({ children, ...rest }) {
   // Render an anchor tag
-  let button = (
-    <A href={props.href} onClick={props.onClick}>
-      {Children.toArray(props.children)}
-    </A>
-  )
-
   // If the Button has a handleRoute prop, we want to render a button
-  if (props.handleRoute) {
-    button = (
-      <StyledButton onClick={props.handleRoute}>
-        {Children.toArray(props.children)}
-      </StyledButton>
-    )
-  }
-
   return (
-    <Wrapper>
-      {button}
-    </Wrapper>
+    <Button {...rest} >
+      <Wrapper>
+        <TextWrapper>
+          { Children.toArray(children) }
+        </TextWrapper>
+        <ImageWrapper src={ButtonNext} />
+      </Wrapper>
+    </Button>
   )
 }
 
 Button.propTypes = {
-  handleRoute: PropTypes.func,
-  href: PropTypes.string,
-  onClick: PropTypes.func,
+  onClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired
 }
 
-export default Button
+export default ElemButton

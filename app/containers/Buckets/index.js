@@ -16,6 +16,7 @@ import {
   getProductCategoriesAction
 } from './actions'
 
+import Button from 'components/Button'
 import HeaderMenu from './HeaderMenu'
 import SidebarMenu from './SidebarMenu'
 
@@ -75,7 +76,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     const { toggleSidebar } = this.state
 
     return (
-      <Wrapper>
+      <Wrapper overflow={toggleSidebar}>
         <Sidebar.Pushable as={Segment}>
           <Sidebar animation='overlay' width='thin' visible={toggleSidebar}>
             <SidebarMenu categories={productCategories} />
@@ -83,6 +84,11 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
           <Sidebar.Pusher dimmed={toggleSidebar} onClick={this._handleCloseSidebarClickPusher}>
             <HeaderMenu toggleSidebarAction={this._handleToggleSideBar} />
             <MainContent>
+              <Button
+                onClick={() => {}}
+                primary
+                fluid
+              > ORDER NOW </Button>
               { children }
             </MainContent>
           </Sidebar.Pusher>

@@ -1,3 +1,8 @@
 /*******************************
          Theme Overrides
 *******************************/
+
+.ui.button {
+  border-radius: 0;
+  font-weight: 300;
+}
