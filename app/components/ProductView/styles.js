@@ -14,9 +14,13 @@ const ProductWrapper = styled.div`
 const ImageWrapper = styled.div`
   background: url(${props => props.background}) no-repeat center center / cover;
   margin-bottom: 15px;
+  width: 100%;
 
   .image {
     width: 100%;
+  }
+  &.custom-height {
+    height: 37vh;
   }
 `
 

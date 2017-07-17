@@ -101,11 +101,11 @@ function ProductView ({
   )
 }
 
-const DefaultState = ({loader}) => {
+const DefaultState = () => {
   return (
     <EmptyDataBlock>
       <ProductWrapper>
-        <ImageWrapper background={EmptyImage} />
+        <ImageWrapper background={EmptyImage} className='custom-height' />
         <Image src={ParagraphImage} height={50} />
       </ProductWrapper>
     </EmptyDataBlock>
