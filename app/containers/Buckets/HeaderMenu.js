@@ -12,7 +12,7 @@ import MainLogo from 'images/cliqq-logo.svg'
 
 const Wrapper = styled.div`
   background: #FFF;
-  border-bottom: 3px solid lightgreen;
+  border-bottom: 3px solid #9bcb49;
   height: 49px;
   left: 0;
   padding: 7px 10px;

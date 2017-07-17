@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const NavCategoriesWrapper = styled.div`
-  background-color: #71BA08;
+  background-color: #9bcb49;
   color: #FFFFFF;
   font-size: .6em;
   width: 100%;
@@ -20,9 +20,9 @@ const NavCategoriesWrapper = styled.div`
 const CategoryIcon = styled.div`
   background: url(${props => props.background}) no-repeat center center / cover;
   content: '';
-  height: 35px;
+  height: 30px;
   margin: 0 auto;
-  width: 35px;
+  width: 30px;
 `
 
 export {
