@@ -17,7 +17,6 @@ const EmptyDataBlockWrapper = styled.div`
   // not included on sorting
   animation:fadeIn ease-in 1;
   animation-duration: .5s;
-  animation-delay: 1.5s
 `
 
 function EmptyDataBlock ({children}) {

@@ -3,28 +3,24 @@ import styled from 'styled-components'
 const ProductWrapper = styled.div`
   border-bottom: 3px solid #C5C5C5;
   display: block;
-  margin-bottom: 20px;
+  margin: 0 3px 20px;
   position: relative;
 
   // not included on sorting
   animation:fadeIn ease-in 1;
   animation-duration: .5s;
-  animation-delay: 1.5s
-
-  &:first-child {
-    margin-right: 4px;
-  }
-  &:last-child {
-    margin-left: 4px;
-  }
 `
 
 const ImageWrapper = styled.div`
-  background-color: #F0F0F0;
+  background: url(${props => props.background}) no-repeat center center / cover;
   margin-bottom: 15px;
+  width: 100%;
 
   .image {
     width: 100%;
+  }
+  &.custom-height {
+    height: 37vh;
   }
 `
 

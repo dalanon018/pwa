@@ -16,6 +16,7 @@ import { Grid } from 'semantic-ui-react'
 import NavCategories from 'components/NavCategories'
 import BannerSlider from 'components/BannerSlider'
 import ProductView from 'components/ProductView'
+import Category from 'components/Category'
 
 import { getSampleApiAction } from './actions'
 import { makeSelectHomePage, selectSampleApi } from './selectors'
@@ -66,7 +67,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         />
         <NavCategories />
         <BannerSlider loader={loader} />
-        <div className='padding__horizontal--14'>
+        <div className='padding__horizontal--10'>
+          <Grid padded>
+            <Category loader={loader} />
+          </Grid>
+        </div>
+        <div className='padding__horizontal--10'>
           <Grid padded>
             <ProductView loader={loader} />
           </Grid>

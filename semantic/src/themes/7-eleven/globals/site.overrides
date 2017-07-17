@@ -34,6 +34,10 @@ p {
   line-height: 1em;
 }
 
+.ui.loader {
+  z-index: 2 !important;
+}
+
 /*******************************
         Responsive Overrides
 *******************************/
@@ -61,8 +65,8 @@ p {
       padding-left: 5px;
     }
     &__horizontal {
-      &--14 {
-        padding: 0 14px;
+      &--10 {
+        padding: 0 10px;
       }
     }
   }

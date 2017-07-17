@@ -24,7 +24,7 @@ import EmptyDataBlock from 'components/EmptyDataBlock'
 
 import PromoTag from './sections/PromoTag'
 import ProductImage from 'images/test-images/samplebag.png'
-import EmptyImage from 'images/test-images/empty-image.png'
+import EmptyImage from 'images/broken-image.jpg'
 import ParagraphImage from 'images/test-images/short-paragraph.png'
 
 function ProductView ({
@@ -101,13 +101,11 @@ function ProductView ({
   )
 }
 
-const DefaultState = ({loader}) => {
+const DefaultState = () => {
   return (
     <EmptyDataBlock>
       <ProductWrapper>
-        <ImageWrapper>
-          <Image src={EmptyImage} />
-        </ImageWrapper>
+        <ImageWrapper background={EmptyImage} className='custom-height' />
         <Image src={ParagraphImage} height={50} />
       </ProductWrapper>
     </EmptyDataBlock>
