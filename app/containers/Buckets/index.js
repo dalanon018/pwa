@@ -26,7 +26,14 @@ const Wrapper = styled.div`
 `
 
 const MainContent = styled.div`
-  margin-top: 49px;
+  margin-top: 47px;
+`
+
+const SidebarCustom = styled(Sidebar.Pusher)`
+  padding: 0 !important;
+  &:not(body) {
+    transform: inherit;
+  }
 `
 
 export class Buckets extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -76,8 +83,8 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     const { toggleSidebar } = this.state
 
     return (
-      <Wrapper overflow={toggleSidebar}>
-        <Sidebar.Pushable as={Segment}>
+      <Wrapper>
+        <SidebarCustom as={Segment}>
           <Sidebar animation='overlay' width='thin' visible={toggleSidebar}>
             <SidebarMenu categories={productCategories} />
           </Sidebar>
@@ -92,7 +99,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
               { children }
             </MainContent>
           </Sidebar.Pusher>
-        </Sidebar.Pushable>
+        </SidebarCustom>
       </Wrapper>
     )
   }
