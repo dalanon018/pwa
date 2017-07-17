@@ -8,7 +8,7 @@ describe('<HomePage />', () => {
     const renderedComponent = shallow(
       <HomePage />
     )
-    expect(renderedComponent.find('div').length).toEqual(2)
+    expect(renderedComponent.find('div').length).toEqual(3)
   })
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(true)

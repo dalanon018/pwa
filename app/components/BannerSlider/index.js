@@ -18,7 +18,8 @@ import {
   BannerSliderWrapper
 } from './styles'
 
-import EmptyImage from 'images/test-images/empty-image.png'
+import EmptyImage from 'images/broken-image.jpg'
+import SampleBanner from 'images/test-images/sample_banner.jpg'
 
 const ImageWrapper = styled.div`
   background: url(${props => EmptyImage}) no-repeat center center / cover;
@@ -53,8 +54,8 @@ const HandleBlock = ({loader}) => {
   } else {
     block = <BannerSliderWrapper>
       <Slider {...settings}>
-        <div><Image src='http://placekitten.com/g/450/200' /></div>
-        <div><Image src='http://placekitten.com/g/450/200' /></div>
+        <div><Image src={SampleBanner} /></div>
+        <div><Image src={SampleBanner} /></div>
       </Slider>
     </BannerSliderWrapper>
   }
