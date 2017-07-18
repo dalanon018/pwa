@@ -42,9 +42,11 @@ const DefaultState = () => {
 const HandleBlock = ({loader}) => {
   let block
   const settings = {
+    autoplay: true,
+    autoplaySpeed: 3500,
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 1000,
     arrows: false,
     slidesToShow: 1,
     slidesToScroll: 1
