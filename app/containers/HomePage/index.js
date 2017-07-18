@@ -5,11 +5,13 @@
  */
 
 import React, { PropTypes } from 'react'
+
 import { connect } from 'react-redux'
-// import { FormattedMessage } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
+
 import Helmet from 'react-helmet'
-// import messages from './messages'
+import messages from './messages'
 
 import { Grid } from 'semantic-ui-react'
 
@@ -67,22 +69,19 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css' }
           ]}
         />
-        <H1>Lorem ipsum</H1>
         <NavCategories />
         <BannerSlider loader={loader} />
         <div className='padding__horizontal--10'>
           <Grid padded>
-            <Category loader={loader} />
-          </Grid>
-        </div>
-        <div className='padding__horizontal--10'>
-          <Grid padded>
+            <H1 center> <FormattedMessage {...messages.featureProduct} /> </H1>
             <ProductView loader={loader} />
             <Button
               onClick={() => {}}
               primary
               fluid
-              > ORDER NOW </Button>
+            > <FormattedMessage {...messages.productViewAll} /> </Button>
+            <H1 center> <FormattedMessage {...messages.browseCategory} /> </H1>
+            <Category loader={loader} />
           </Grid>
         </div>
       </div>
