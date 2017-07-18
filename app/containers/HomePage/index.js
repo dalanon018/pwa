@@ -21,6 +21,7 @@ import ProductView from 'components/ProductView'
 import Category from 'components/Category'
 import H1 from 'components/H1'
 import Button from 'components/Button'
+import Footer from 'components/Footer'
 
 import { getSampleApiAction } from './actions'
 import { makeSelectHomePage, selectSampleApi } from './selectors'
@@ -84,6 +85,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             <Category loader={loader} />
           </Grid>
         </div>
+        <Footer />
       </div>
     )
   }
