@@ -34,7 +34,7 @@ const CategoryBlock = styled.div`
 
 const CategoryLabel = styled.span`
   color: #5b5b5b;
-  font-size: .63em;
+  font-size: .6em;
   font-weight: bold;
   text-transform: uppercase;
 `

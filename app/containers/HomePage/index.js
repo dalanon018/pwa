@@ -17,6 +17,7 @@ import NavCategories from 'components/NavCategories'
 import BannerSlider from 'components/BannerSlider'
 import ProductView from 'components/ProductView'
 import Category from 'components/Category'
+import H1 from 'components/H1'
 
 import { getSampleApiAction } from './actions'
 import { makeSelectHomePage, selectSampleApi } from './selectors'
@@ -65,6 +66,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css' }
           ]}
         />
+        <H1>Lorem ipsum</H1>
         <NavCategories />
         <BannerSlider loader={loader} />
         <div className='padding__horizontal--10'>
