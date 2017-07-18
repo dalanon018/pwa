@@ -28,7 +28,7 @@ const ImageWrapper = styled.div`
 const ProductName = styled.p`
   color: #5b5b5b;
   font-family: 'helveticabold';
-  font-size: .58em;
+  font-size: 8px;
   margin-bottom: 3px;
   text-transform: uppercase;
 `
@@ -42,16 +42,15 @@ const ProductPriceWrapper = styled.div`
 const ProductPrice = styled.p`
   color: #F88728;
   font-family: 'helveticabold';
-  font-size: 2.3em;
   line-height: inherit;
   margin: 0;
   text-transform: uppercase;
 
   @media (min-width: 320px) {
-    font-size: 1.6em;
+    font-size: 23px;
   }
   @media (min-width: 375px) {
-    font-size: 1.75em;
+    font-size: 25px;
     line-height: initial;
   }
 `
@@ -59,13 +58,13 @@ const ProductPrice = styled.p`
 const ProductPriceStrike = styled.span`
   align-self: flex-end;
   color: #aeaeae;
-  font-size: .6em;
+  font-size: 9px;
   line-height: initial;
   text-decoration: line-through;
   text-transform: uppercase;
   
   @media (min-width: 375px) {
-    font-size: .7em;
+    font-size: 10px;
   }
 `
 
@@ -112,8 +111,8 @@ const RibbonWrapper = styled.div`
       color: #FFFFFF;
       display: inline-flex;
       font-family: 'helveticabold';
-      font-size: 1.4em;
-      line-height: 1em;
+      font-size: 20px;
+      line-height: 20px;
       margin-top: 10px;
       padding: 5px;
       text-align: center;

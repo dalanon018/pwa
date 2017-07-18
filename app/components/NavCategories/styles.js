@@ -3,8 +3,7 @@ import styled from 'styled-components'
 const NavCategoriesWrapper = styled.div`
   background-color: #9bcb49;
   color: #FFFFFF;
-  font-size: .5em;
-  text-align: center;
+  font-size: 7px;
   width: 100%;
 
   .column.row {
@@ -26,7 +25,20 @@ const CategoryIcon = styled.div`
   width: 30px;
 `
 
+const NavCategoriesContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  width: 100%;
+`
+
+const CategoryItem = styled.div`
+  text-align: center;
+`
+
 export {
   CategoryIcon,
-  NavCategoriesWrapper
+  NavCategoriesWrapper,
+  CategoryItem,
+  NavCategoriesContainer
 }
