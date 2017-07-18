@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import H5 from 'components/H5'
 import TestBackPack from 'images/test-images/BACKPACK-TICKET.png'
 import TestLogo from 'images/test-images/PENSHOPPE-TICKET.png'
 import CliqqLogo from 'images/icons/cliqq.png'
@@ -30,16 +31,13 @@ const ProductDescription = styled.div`
   flex-direction: column;
   flex: 1 0 auto;
   justify-content: center;
+  letter-spacing: 2px;
 `
 
 const CodeImage = styled.img`
   float: left;
   width: 19px;
   margin-right: 10px;
-`
-const ProductTitle = styled.h5`
-  color: #000;
-  margin: 5px 0;
 `
 
 const ProductLogoImage = styled.img`
@@ -61,9 +59,7 @@ const Barcode = () => (
       <ProductImage background={TestBackPack} />
       <ProductDescription>
         <span> <CodeImage src={CliqqLogo} /> 000D1</span>
-        <ProductTitle>
-            ALL DAY BACKPACK | WINE
-        </ProductTitle>
+        <H5> ALL DAY BACKPACK | WINE </H5>
         <ProductLogoImage src={TestLogo} />
       </ProductDescription>
     </ProductWrapper>
