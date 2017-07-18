@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const ProductWrapper = styled.div`
-  border-bottom: 3px solid #C5C5C5;
+  border-bottom: 2px solid #aeaeae;
   display: block;
   margin: 0 3px 20px;
   position: relative;
@@ -12,8 +12,9 @@ const ProductWrapper = styled.div`
 `
 
 const ImageWrapper = styled.div`
+  background-color: #f0f0f0;
   background: url(${props => props.background}) no-repeat center center / cover;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   width: 100%;
 
   .image {
@@ -25,8 +26,10 @@ const ImageWrapper = styled.div`
 `
 
 const ProductName = styled.p`
-  color: #555555;
-  font-size: .9em;
+  color: #5b5b5b;
+  font-family: 'helveticabold';
+  font-size: .58em;
+  margin-bottom: 3px;
   text-transform: uppercase;
 `
 
@@ -38,28 +41,31 @@ const ProductPriceWrapper = styled.div`
 
 const ProductPrice = styled.p`
   color: #F88728;
+  font-family: 'helveticabold';
   font-size: 2.3em;
-  line-height: 1em;
+  line-height: inherit;
   margin: 0;
   text-transform: uppercase;
 
   @media (min-width: 320px) {
-    font-size: 2.1em;
+    font-size: 1.6em;
   }
   @media (min-width: 375px) {
-    font-size: 2.3em;
+    font-size: 1.75em;
+    line-height: initial;
   }
 `
 
 const ProductPriceStrike = styled.span`
   align-self: flex-end;
-  color: #C5C5C5;
-  font-size: .8em;
+  color: #aeaeae;
+  font-size: .6em;
+  line-height: initial;
   text-decoration: line-through;
   text-transform: uppercase;
   
   @media (min-width: 375px) {
-    font-size: .9em;
+    font-size: .7em;
   }
 `
 
@@ -105,10 +111,11 @@ const RibbonWrapper = styled.div`
       align-items: center;
       color: #FFFFFF;
       display: inline-flex;
-      margin-top: 10px;
-      font-size: 1.5em;
-      padding: 5px;
+      font-family: 'helveticabold';
+      font-size: 1.4em;
       line-height: 1em;
+      margin-top: 10px;
+      padding: 5px;
       text-align: center;
     }
 `

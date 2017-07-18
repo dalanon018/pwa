@@ -2,6 +2,27 @@
         Global Overrides
 *******************************/
 
+@font-face {
+  font-family: 'helveticalight';
+  src: url('../src/themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Light.ttf')  format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'helveticamedium';
+  src: url('../src/themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Medium.ttf')  format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'helveticabold';
+  src: url('../src/themes/7-eleven/assets/fonts/helvetica/HelveticaNeu-Bold.ttf')  format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /*******************************
         Color Overrides
 *******************************/
@@ -20,6 +41,7 @@
 
 body {
   color: @grey;
+  font-family: 'helveticamedium';
   font-size: 12px;
 }
 

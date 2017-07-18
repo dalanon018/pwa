@@ -3,7 +3,8 @@ import styled from 'styled-components'
 const NavCategoriesWrapper = styled.div`
   background-color: #9bcb49;
   color: #FFFFFF;
-  font-size: .6em;
+  font-size: .5em;
+  text-align: center;
   width: 100%;
 
   .column.row {
