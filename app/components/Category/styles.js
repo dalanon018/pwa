@@ -16,7 +16,9 @@ const CategoryBlock = styled.div`
     background-color: rgba(255, 255, 255, 0.7);
     content: '';
     height: 100%;
+    left: 0;
     position: absolute;
+    top: 0;
     width: 100%;
     z-index: 1;
   }
