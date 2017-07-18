@@ -9,7 +9,11 @@ import React from 'react'
 
 // import { FormattedMessage } from 'react-intl'
 // import messages from './messages'
-import { NavCategoriesWrapper, CategoryIcon } from './styles'
+import {
+  NavCategoriesWrapper,
+  NavCategoriesContainer,
+  CategoryItem,
+  CategoryIcon } from './styles'
 import { Grid } from 'semantic-ui-react'
 
 import sampleCategoryIcon from 'images/test-images/category-test.svg'
@@ -19,26 +23,28 @@ function NavCategories () {
     <NavCategoriesWrapper>
       <Grid padded textAlign='center'>
         <Grid.Row columns={5}>
-          <Grid.Column>
-            <CategoryIcon background={sampleCategoryIcon} />
-            <p>APPAREL</p>
-          </Grid.Column>
-          <Grid.Column>
-            <CategoryIcon background={sampleCategoryIcon} />
-            <p>ACCESSORIES</p>
-          </Grid.Column>
-          <Grid.Column>
-            <CategoryIcon background={sampleCategoryIcon} />
-            <p>FRAGRANCES</p>
-          </Grid.Column>
-          <Grid.Column>
-            <CategoryIcon background={sampleCategoryIcon} />
-            <p>GADGETS</p>
-          </Grid.Column>
-          <Grid.Column>
-            <CategoryIcon background={sampleCategoryIcon} />
-            <p>MORE</p>
-          </Grid.Column>
+          <NavCategoriesContainer>
+            <CategoryItem>
+              <CategoryIcon background={sampleCategoryIcon} />
+              <p>APPAREL</p>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryIcon background={sampleCategoryIcon} />
+              <p>ACCESSORIES</p>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryIcon background={sampleCategoryIcon} />
+              <p>FRAGRANCES</p>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryIcon background={sampleCategoryIcon} />
+              <p>GADGETS</p>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryIcon background={sampleCategoryIcon} />
+              <p>MORE</p>
+            </CategoryItem>
+          </NavCategoriesContainer>
         </Grid.Row>
       </Grid>
     </NavCategoriesWrapper>

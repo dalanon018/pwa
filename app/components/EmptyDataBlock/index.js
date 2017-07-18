@@ -6,10 +6,11 @@
 
 import React from 'react'
 import styled from 'styled-components'
-import { Loader } from 'semantic-ui-react'
 
 // import { FormattedMessage } from 'react-intl'
 // import messages from './messages'
+
+import Loader from 'components/LoadingIndicator'
 
 const EmptyDataBlockWrapper = styled.div`
   position: relative;
@@ -22,7 +23,7 @@ const EmptyDataBlockWrapper = styled.div`
 function EmptyDataBlock ({children}) {
   return (
     <EmptyDataBlockWrapper>
-      <Loader active />
+      <Loader />
       {children}
     </EmptyDataBlockWrapper>
   )
