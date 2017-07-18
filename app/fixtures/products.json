@@ -1,34 +1,54 @@
 [
   {
+    "product_id": "0001",
     "image": null,
     "title": "All Day Backpack | (wine)",
     "price": "600",
-    "discount": "25",
+    "discount": {
+      "percent": "25",
+      "thru": "2015-04-06 12:00:00"
+    },
     "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla. Aenean congue libero sed nisl euismod tristique. Integer finibus est orci, nec hendrerit turpis mollis id. Phasellus rhoncus mollis mauris sit amet euismod.",
-    "shipping": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla."
+    "shipping": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla.",
+    "barcode": "718037806839"
   },
   {
+    "product_id": "0002",
     "image": null,
     "title": "All Day Backpack | (green)",
     "price": "300",
-    "discount": "10",
+    "discount": {
+      "percent": "10",
+      "thru": "2015-05-06 12:00:00"
+    },
     "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla. Aenean congue libero sed nisl euismod tristique. Integer finibus est orci, nec hendrerit turpis mollis id. Phasellus rhoncus mollis mauris sit amet euismod.",
-    "shipping": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla."
+    "shipping": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla.",
+    "barcode": "718037806839"
   },
   {
+    "product_id": "0003",
     "image": null,
     "title": "All Day Backpack | (blue)",
     "price": "800",
-    "discount": "15",
+    "discount": {
+      "percent": "5",
+      "thru": "2015-10-06 12:00:00"
+    },
     "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla. Aenean congue libero sed nisl euismod tristique. Integer finibus est orci, nec hendrerit turpis mollis id. Phasellus rhoncus mollis mauris sit amet euismod.",
-    "shipping": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla."
+    "shipping": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla.",
+    "barcode": "718037806839"
   },
   {
+    "product_id": "0004",
     "image": null,
     "title": "All Day Backpack | (white)",
     "price": "1000",
-    "discount": "20",
+    "discount": {
+      "percent": "20",
+      "thru": "2015-11-06 12:00:00"
+    },
     "details": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla. Aenean congue libero sed nisl euismod tristique. Integer finibus est orci, nec hendrerit turpis mollis id. Phasellus rhoncus mollis mauris sit amet euismod.",
-    "shipping": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla."
+    "shipping": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla.",
+    "barcode": "718037806839"
   }
 ]

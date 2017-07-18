@@ -2,12 +2,13 @@ import React, { PureComponent, PropTypes } from 'react'
 import styled from 'styled-components'
 
 import {
-  Icon,
   Image,
   Grid
 } from 'semantic-ui-react'
 
 import BarcodeImage from 'images/icons/barcode-header.svg'
+import SearchImage from 'images/icons/search-header.svg'
+import HamburgerImage from 'images/icons/hamburger-header.svg'
 import MainLogo from 'images/cliqq-logo.svg'
 
 const Wrapper = styled.div`
@@ -31,6 +32,10 @@ const CenterWrapper = styled.div`
   display: flex;
   justify-content: center;
 `
+const HamburgerWrapper = styled.img`
+  width: 24px;
+  height: 24px;
+`
 
 const ImageLogo = styled.img`
   width: 80px;
@@ -46,12 +51,13 @@ const SearchIcon = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-right: 10px;
+  margin-right: 20px;
 `
 
 export default class MainMenu extends PureComponent {
   static propTypes= {
-    toggleSidebarAction: PropTypes.func.isRequired
+    toggleSidebarAction: PropTypes.func.isRequired,
+    changeRoute: PropTypes.func.isRequired
   }
 
   state = {
@@ -60,11 +66,19 @@ export default class MainMenu extends PureComponent {
 
   constructor () {
     super()
-    this._handleItemClick = this._handleItemClick.bind(this)
+
+    this._handleBarcodeClick = this._handleBarcodeClick.bind(this)
+    this._handlerHomeClick = this._handlerHomeClick.bind(this)
   }
 
-  _handleItemClick (e, { name }) {
-    this.setState({ activeItem: name })
+  _handleBarcodeClick () {
+    const { changeRoute } = this.props
+    changeRoute('/barcodes')
+  }
+
+  _handlerHomeClick () {
+    const { changeRoute } = this.props
+    changeRoute('/')
   }
 
   render () {
@@ -76,23 +90,20 @@ export default class MainMenu extends PureComponent {
           <Grid.Row>
             <Grid.Column verticalAlign='middle'>
               <LeftWrapper onClick={toggleSidebarAction} >
-                <Icon
-                  size='large'
-                  name='sidebar'
-                />
+                <HamburgerWrapper src={HamburgerImage} />
               </LeftWrapper>
             </Grid.Column>
             <Grid.Column verticalAlign='middle'>
               <CenterWrapper>
-                <ImageLogo src={MainLogo} />
+                <ImageLogo src={MainLogo} onClick={this._handlerHomeClick} />
               </CenterWrapper>
             </Grid.Column>
             <Grid.Column verticalAlign='middle'>
               <RightWrapper>
                 <SearchIcon>
-                  <Icon size='large' name='search' />
+                  <Image src={SearchImage} size='mini' onClick={this._handleBarcodeClick} />
                 </SearchIcon>
-                <Image src={BarcodeImage} size='mini' />
+                <Image src={BarcodeImage} size='mini' onClick={this._handleBarcodeClick} />
               </RightWrapper>
             </Grid.Column>
           </Grid.Row>

@@ -18,6 +18,7 @@ import BannerSlider from 'components/BannerSlider'
 import ProductView from 'components/ProductView'
 import Category from 'components/Category'
 import H1 from 'components/H1'
+import Button from 'components/Button'
 
 import { getSampleApiAction } from './actions'
 import { makeSelectHomePage, selectSampleApi } from './selectors'
@@ -77,6 +78,11 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         <div className='padding__horizontal--10'>
           <Grid padded>
             <ProductView loader={loader} />
+            <Button
+              onClick={() => {}}
+              primary
+              fluid
+              > ORDER NOW </Button>
           </Grid>
         </div>
       </div>

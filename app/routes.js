@@ -60,6 +60,26 @@ export default function createRoutes (store) {
 
             importModules.catch(errorLoading)
           }
+        }, {
+          path: '/barcodes',
+          name: 'barcodeLists',
+          getComponent (nextState, cb) {
+            const importModules = Promise.all([
+              import('containers/BarcodeLists/reducer'),
+              import('containers/BarcodeLists/sagas'),
+              import('containers/BarcodeLists')
+            ])
+
+            const renderRoute = loadModule(cb)
+
+            importModules.then(([reducer, sagas, component]) => {
+              injectReducer('barcodeLists', reducer.default)
+              injectSagas(sagas.default)
+              renderRoute(component)
+            })
+
+            importModules.catch(errorLoading)
+          }
         }
       ]
     }, {

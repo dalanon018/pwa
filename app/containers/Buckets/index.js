@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 
+import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import {
@@ -16,7 +17,6 @@ import {
   getProductCategoriesAction
 } from './actions'
 
-import Button from 'components/Button'
 import HeaderMenu from './HeaderMenu'
 import SidebarMenu from './SidebarMenu'
 
@@ -29,17 +29,18 @@ const MainContent = styled.div`
   margin-top: 47px;
 `
 
-const SidebarCustom = styled(Sidebar.Pusher)`
-  padding: 0 !important;
-  &:not(body) {
-    transform: inherit;
-  }
-`
+// const SidebarCustom = styled(Sidebar.Pusher)`
+//   padding: 0 !important;
+//   &:not(body) {
+//     transform: inherit;
+//   }
+// `
 
 export class Buckets extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     children: PropTypes.object.isRequired,
     getCategories: PropTypes.func.isRequired,
+    changeRoute: PropTypes.func.isRequired,
     categories: PropTypes.bool.isRequired
   }
 
@@ -79,27 +80,25 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   render () {
-    const { children, productCategories } = this.props
+    const { children, productCategories, changeRoute } = this.props
     const { toggleSidebar } = this.state
 
     return (
       <Wrapper>
-        <SidebarCustom as={Segment}>
+        <Sidebar.Pushable as={Segment}>
           <Sidebar animation='overlay' width='thin' visible={toggleSidebar}>
             <SidebarMenu categories={productCategories} />
           </Sidebar>
           <Sidebar.Pusher dimmed={toggleSidebar} onClick={this._handleCloseSidebarClickPusher}>
-            <HeaderMenu toggleSidebarAction={this._handleToggleSideBar} />
+            <HeaderMenu
+              toggleSidebarAction={this._handleToggleSideBar}
+              changeRoute={changeRoute}
+            />
             <MainContent>
-              <Button
-                onClick={() => {}}
-                primary
-                fluid
-              > ORDER NOW </Button>
               { children }
             </MainContent>
           </Sidebar.Pusher>
-        </SidebarCustom>
+        </Sidebar.Pushable>
       </Wrapper>
     )
   }
@@ -116,6 +115,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps (dispatch) {
   return {
     getCategories: () => dispatch(getProductCategoriesAction()),
+    changeRoute: (url) => dispatch(push(url)),
     dispatch
   }
 }

@@ -24,10 +24,10 @@ export function App (props) {
   return (
     <AppWrapper>
       <Helmet
-        titleTemplate='%s - React.js Boilerplate'
-        defaultTitle='React.js Boilerplate'
+        titleTemplate='%s - 7-Eleven CliQQ'
+        defaultTitle='7-Eleven CliQQ'
         meta={[
-          { name: 'description', content: 'A React.js Boilerplate application' }
+          { name: 'description', content: 'A 7-Eleven CliQQ application' }
         ]}
       />
       {React.Children.toArray(props.children)}

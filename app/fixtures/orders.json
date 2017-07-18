@@ -1,0 +1,68 @@
+[
+  {
+    "totalPrice": "450.00",
+    "quantity": "1",
+    "expiryDate": "2015-02-04 20:17:14",
+    "deliveryDate": "2015-02-06 12:00:00",
+    "mobileNumber": "09052720567",
+    "quantity": "1",
+    "status": "CONFIRMED",
+    "paymentType": "CASH",
+    "products": {
+      "product_id": "0001",
+      "image": null,
+      "brandLogo": null,
+      "title": "All Day Backpack | (wine)",
+      "barcode": "718037806839",
+      "price": "600",
+      "discount": {
+        "percent": "25",
+        "thru": "2015-04-06 12:00:00"
+      }
+    }
+  },
+  {
+    "totalPrice": "270.00",
+    "quantity": "1",
+    "expiryDate": "2015-02-04 20:17:14",
+    "deliveryDate": "2015-02-06 12:00:00",
+    "mobileNumber": "09052720567",
+    "quantity": "1",
+    "status": "READYPICKUP",
+    "paymentType": "CASH",
+    "products": {
+      "product_id": "0002",
+      "image": null,
+      "brandLogo": null,
+      "title": "All Day Backpack | (green)",
+      "barcode": "718037806839",
+      "price": "300",
+      "discount": {
+        "percent": "10",
+        "thru": "2015-05-06 12:00:00"
+      }
+    }
+  },
+  {
+    "totalPrice": "760.00",
+    "quantity": "1",
+    "expiryDate": "2015-02-04 20:17:14",
+    "deliveryDate": "2015-02-06 12:00:00",
+    "mobileNumber": "09052720567",
+    "quantity": "1",
+    "status": "INTRANSIT",
+    "paymentType": "CASH",
+    "products": {
+      "product_id": "0003",
+      "image": null,
+      "brandLogo": null,
+      "title": "All Day Backpack | (blue)",
+      "barcode": "718037806839",
+      "price": "800",
+      "discount": {
+        "percent": "5",
+        "thru": "2015-10-06 12:00:00"
+      }
+    }
+  }
+]
