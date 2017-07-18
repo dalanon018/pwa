@@ -6,8 +6,8 @@
 
 import {
   DEFAULT_ACTION,
-  GET_SAMPLE_API,
-  SET_SAMPLE_API
+  GET_FEATURED_PRODUCTS,
+  SET_FEATURED_PRODUCTS
 } from './constants'
 
 export function defaultAction () {
@@ -16,16 +16,16 @@ export function defaultAction () {
   }
 }
 
-export function getSampleApiAction (payload) {
+export function getFeaturedProductsAction (payload) {
   return {
-    type: GET_SAMPLE_API,
+    type: GET_FEATURED_PRODUCTS,
     payload
   }
 }
 
-export function setSampleApiAction (payload) {
+export function setFeaturedProductsAction (payload) {
   return {
-    type: SET_SAMPLE_API,
+    type: SET_FEATURED_PRODUCTS,
     payload
   }
 }

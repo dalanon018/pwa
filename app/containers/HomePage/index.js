@@ -23,40 +23,17 @@ import H1 from 'components/H1'
 import Button from 'components/Button'
 import Footer from 'components/Footer'
 
-import { getSampleApiAction } from './actions'
-import { makeSelectHomePage, selectSampleApi } from './selectors'
+import { getFeaturedProductsAction } from './actions'
+import { selectLoading, selectFeaturedProducts } from './selectors'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
-  constructor () {
-    super()
-    this.state = {
-      loader: false
-    }
-    this.handleGetSampleApi = this.handleGetSampleApi.bind(this)
-  }
-
   componentDidMount () {
-    this.handleGetSampleApi('ferrari')
-  }
-
-  handleGetSampleApi (handle) {
-    new Promise((resolve, reject) => {
-      const payload = Object.assign({}, {
-        passData: handle,
-        resolve,
-        reject
-      })
-      this.props.getSampleApi(payload)
-    }).then(() => {
-      this.setState({loader: true})
-    }).catch((err) => {
-      this.setState({loader: false})
-      console.error(`Error:  ${err}`)
-    })
+    this.props.getProduct()
   }
 
   render () {
-    const { loader } = this.state
+    const { loader, featuredProducts } = this.props
+    console.log('featuredProducts', featuredProducts)
 
     return (
       <div>
@@ -75,7 +52,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         <div className='padding__horizontal--10'>
           <Grid padded>
             <H1 center> <FormattedMessage {...messages.featureProduct} /> </H1>
-            <ProductView loader={loader} />
+            <ProductView loader={loader} products={featuredProducts} />
             <Button
               onClick={() => {}}
               primary
@@ -96,13 +73,13 @@ HomePage.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-  HomePage: makeSelectHomePage(),
-  sampleApi: selectSampleApi()
+  loader: selectLoading(),
+  featuredProducts: selectFeaturedProducts()
 })
 
 function mapDispatchToProps (dispatch) {
   return {
-    getSampleApi: payload => dispatch(getSampleApiAction(payload)),
+    getProduct: payload => dispatch(getFeaturedProductsAction(payload)),
     dispatch
   }
 }

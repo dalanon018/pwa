@@ -24,10 +24,10 @@ import {
 
 function Category ({loader}) {
   return (
-    <Grid.Row columns={4}>
+    <Grid.Row>
       <Grid.Column className='padding__none' mobile={4} tablet={4} computer={3} widescreen={3}>
         {
-          !loader ? <DefaultState loader={loader} />
+          loader ? <DefaultState loader={loader} />
           : <CategoryBlock className='responsive-width' background={CategoryBgSample}>
             <CategoryItem>
               <Image src={sampleCategoryIcon} />
@@ -39,7 +39,7 @@ function Category ({loader}) {
 
       <Grid.Column className='padding__none' mobile={4} tablet={4} computer={3} widescreen={3}>
         {
-          !loader ? <DefaultState loader={loader} />
+          loader ? <DefaultState loader={loader} />
           : <CategoryBlock className='responsive-width' background={CategoryBgSample}>
             <CategoryItem>
               <Image src={sampleCategoryIcon} />
@@ -51,7 +51,7 @@ function Category ({loader}) {
 
       <Grid.Column className='padding__none' mobile={4} tablet={4} computer={3} widescreen={3}>
         {
-          !loader ? <DefaultState loader={loader} />
+          loader ? <DefaultState loader={loader} />
           : <CategoryBlock className='responsive-width' background={CategoryBgSample}>
             <CategoryItem>
               <Image src={sampleCategoryIcon} />
@@ -63,7 +63,7 @@ function Category ({loader}) {
 
       <Grid.Column className='padding__none' mobile={4} tablet={4} computer={3} widescreen={3}>
         {
-          !loader ? <DefaultState loader={loader} />
+          loader ? <DefaultState loader={loader} />
           : <CategoryBlock className='responsive-width' background={CategoryBgSample}>
             <CategoryItem>
               <Image src={sampleCategoryIcon} />

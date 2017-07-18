@@ -7,7 +7,8 @@ describe('homePageReducer', () => {
   let state
   beforeEach(() => {
     state = fromJS({
-      sampleApi: {}
+      product: {},
+      loading: false
     })
   })
 

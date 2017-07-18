@@ -51,7 +51,7 @@ const HandleBlock = ({loader}) => {
     slidesToShow: 1,
     slidesToScroll: 1
   }
-  if (!loader) {
+  if (loader) {
     block = <DefaultState loader={loader} />
   } else {
     block = <BannerSliderWrapper>
