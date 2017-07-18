@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
-const H2 = styled.h2`
-  font-size: 18px;
+const H5 = styled.h5`
+  font-family: 'helveticabold';
   color: ${({ color }) => color || '#5b5b5b'};
   text-align: ${({ center }) => center ? 'center' : 'left'}
-  font-weight: 400;
+  margin: 5px 0;
 `
 
-export default H2
+export default H5

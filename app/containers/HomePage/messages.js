@@ -15,5 +15,13 @@ export default defineMessages({
   featureProduct: {
     id: `${idSuffix}.featureProduct`,
     defaultMessage: 'FEATURED PRODUCTS'
+  },
+  browseCategory: {
+    id: `${idSuffix}.browseCategory`,
+    defaultMessage: 'BROWSE CATEGORY'
+  },
+  productViewAll: {
+    id: `${idSuffix}.productViewAll`,
+    defaultMessage: 'VIEW ALL'
   }
 })
