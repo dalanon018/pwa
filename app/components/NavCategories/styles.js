@@ -4,7 +4,7 @@ const NavCategoriesWrapper = styled.div`
   background-color: #9bcb49;
   color: #FFFFFF;
   font-size: .5em;
-  text-align: centerl
+  text-align: center;
   width: 100%;
 
   .column.row {
