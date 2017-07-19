@@ -15,6 +15,7 @@ import messages from './messages'
 import { Grid, Image } from 'semantic-ui-react'
 
 import {
+  CustomGridRow,
   ImageWrapper,
   ProductName,
   ProductPrice,
@@ -36,7 +37,7 @@ function ProductView ({
   changeRoute
 }) {
   return (
-    <Grid.Row stretched columns={2}>
+    <CustomGridRow stretched columns={2}>
       {
         loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
         : products.valueSeq().map((product) => {
@@ -83,7 +84,7 @@ function ProductView ({
           )
         })
       }
-    </Grid.Row>
+    </CustomGridRow>
   )
 }
 

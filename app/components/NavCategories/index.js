@@ -18,6 +18,7 @@ import {
 import { Grid } from 'semantic-ui-react'
 
 import sampleCategoryIcon from 'images/test-images/category-test.svg'
+import moreIcon from 'images/more-icon.svg'
 
 function NavCategories ({
   categories
@@ -39,7 +40,7 @@ function NavCategories ({
               }).splice(4)
             }
             <CategoryItem>
-              <CategoryIcon background={sampleCategoryIcon} />
+              <CategoryIcon background={moreIcon} />
               <p>More</p>
             </CategoryItem>
           </NavCategoriesContainer>
