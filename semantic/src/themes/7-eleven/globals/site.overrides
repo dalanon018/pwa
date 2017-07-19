@@ -92,4 +92,12 @@ p {
       }
     }
   }
+
+  .margin {
+    &__top {
+      &--none {
+        margin-top: 0;
+      }
+    }
+  }
 }

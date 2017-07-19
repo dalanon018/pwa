@@ -13,6 +13,7 @@ import { push } from 'react-router-redux'
 
 import Helmet from 'react-helmet'
 import messages from './messages'
+import moment from 'moment'
 
 import { Grid } from 'semantic-ui-react'
 
@@ -23,6 +24,7 @@ import Category from 'components/Category'
 import H1 from 'components/H1'
 import Button from 'components/Button'
 import Footer from 'components/Footer'
+import Promo from 'components/Promo'
 
 import { getFeaturedProductsAction } from './actions'
 import { selectLoading, selectFeaturedProducts } from './selectors'
@@ -36,6 +38,13 @@ import {
 } from 'containers/Buckets/selectors'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  constructor () {
+    super()
+    this.state = {
+      count: ''
+    }
+  }
+
   static propTypes = {
     changeRoute: PropTypes.func.isRequired,
     getProduct: PropTypes.func.isRequired,
@@ -51,9 +60,48 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     ]).isRequired
   }
 
+  countdownTimer = () => {
+    const date = new Date()
+    let eventTime = 1500474126
+    let currentTime = Math.floor(date.getTime() / 1000)
+    let diffTime = eventTime - currentTime
+    let duration = moment.duration(diffTime * 1000, 'milliseconds')
+    let interval = 1000
+
+    setInterval(() => {
+      duration = moment.duration(duration - interval, 'milliseconds')
+      const countHours = () => {
+        if (duration.hours().toString().length > 1) {
+          return duration.hours()
+        } else {
+          return '0' + duration.hours()
+        }
+      }
+      const countMinutes = () => {
+        if (duration.minutes().toString().length > 1) {
+          return duration.minutes()
+        } else {
+          return '0' + duration.minutes()
+        }
+      }
+      const countSeconds = () => {
+        if (duration.seconds().toString().length > 1) {
+          return duration.seconds()
+        } else {
+          return '0' + duration.seconds()
+        }
+      }
+
+      this.setState({
+        count: `${countHours()}:${countMinutes()}:${countSeconds()}`
+      })
+    }, 1000)
+  }
+
   componentDidMount () {
     this.props.getProduct()
     this.props.getProductCategories()
+    this.countdownTimer()
   }
 
   render () {
@@ -82,7 +130,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               primary
               fluid
             > <FormattedMessage {...messages.productViewAll} /> </Button>
-            <H1 center> <FormattedMessage {...messages.browseCategory} /> </H1>
+            <Promo loader={loader} countDown={this.state.count} />
+            <H1 className='margin__top--none' center> <FormattedMessage {...messages.browseCategory} /> </H1>
             <Category loader={loader} categories={productCategories} />
           </Grid>
         </div>

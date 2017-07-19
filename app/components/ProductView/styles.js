@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Grid } from 'semantic-ui-react'
 
 const ProductWrapper = styled.div`
   border-bottom: 2px solid #aeaeae;
@@ -120,7 +121,14 @@ const RibbonWrapper = styled.div`
     }
 `
 
+const CustomGridRow = styled(Grid.Row)`
+  @media (min-width: 320px) {
+    padding-bottom: 0 !important;
+  }
+`
+
 export {
+  CustomGridRow,
   ImageWrapper,
   ProductName,
   ProductPrice,

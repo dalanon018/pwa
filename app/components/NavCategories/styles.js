@@ -34,6 +34,10 @@ const NavCategoriesContainer = styled.div`
 
 const CategoryItem = styled.div`
   text-align: center;
+
+  p {
+    text-transform: uppercase;
+  }
 `
 
 export {
