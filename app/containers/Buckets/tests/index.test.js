@@ -16,7 +16,10 @@ describe('<Buckets />', () => {
     children: {},
     categories: fromJS({}),
     getCategories: () => {},
-    dispatch: () => {}
+    dispatch: () => {},
+    routes: [{
+      path: '/'
+    }]
   }
 
   it('render without exploding', () => {
