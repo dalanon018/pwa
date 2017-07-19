@@ -9,6 +9,7 @@ import React from 'react'
 
 // import { FormattedMessage } from 'react-intl'
 // import messages from './messages'
+
 import {
   NavCategoriesWrapper,
   NavCategoriesContainer,
@@ -18,31 +19,28 @@ import { Grid } from 'semantic-ui-react'
 
 import sampleCategoryIcon from 'images/test-images/category-test.svg'
 
-function NavCategories () {
+function NavCategories ({
+  categories
+}) {
   return (
     <NavCategoriesWrapper>
       <Grid padded textAlign='center'>
         <Grid.Row columns={5}>
           <NavCategoriesContainer>
+            {
+              categories &&
+              categories.valueSeq().map((category, index) => {
+                return (
+                  <CategoryItem key={index}>
+                    <CategoryIcon background={sampleCategoryIcon} />
+                    <p>{category.get('name')}</p>
+                  </CategoryItem>
+                )
+              }).splice(4)
+            }
             <CategoryItem>
               <CategoryIcon background={sampleCategoryIcon} />
-              <p>APPAREL</p>
-            </CategoryItem>
-            <CategoryItem>
-              <CategoryIcon background={sampleCategoryIcon} />
-              <p>ACCESSORIES</p>
-            </CategoryItem>
-            <CategoryItem>
-              <CategoryIcon background={sampleCategoryIcon} />
-              <p>FRAGRANCES</p>
-            </CategoryItem>
-            <CategoryItem>
-              <CategoryIcon background={sampleCategoryIcon} />
-              <p>GADGETS</p>
-            </CategoryItem>
-            <CategoryItem>
-              <CategoryIcon background={sampleCategoryIcon} />
-              <p>MORE</p>
+              <p>More</p>
             </CategoryItem>
           </NavCategoriesContainer>
         </Grid.Row>

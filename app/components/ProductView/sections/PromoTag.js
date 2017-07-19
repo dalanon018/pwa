@@ -14,7 +14,9 @@ function PromoTag ({ text }) {
   return (
     <RibbonWrapper>
       <div className='ribbon-tag'>
-        <p className='ribbon-text'>{text}</p>
+        <p className='ribbon-text'>
+          {text}% OFF
+        </p>
       </div>
     </RibbonWrapper>
   )

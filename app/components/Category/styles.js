@@ -38,11 +38,13 @@ const CategoryLabel = styled.span`
   color: #5b5b5b;
   font-family: helveticabold;
   font-size: 9px;
+  line-height: 0;
   text-transform: uppercase;
 `
 
 const CategoryItem = styled.div`
   align-self: center;
+  padding: 0 5px;
   position: relative;
   z-index: 2;
 `

@@ -26,14 +26,27 @@ import Footer from 'components/Footer'
 import { getFeaturedProductsAction } from './actions'
 import { selectLoading, selectFeaturedProducts } from './selectors'
 
+import {
+  getProductCategoriesAction
+} from 'containers/Buckets/actions'
+
+import {
+  selectProductCategories
+} from 'containers/Buckets/selectors'
+
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  static propTypes = {
+    getProduct: PropTypes.object.getProduct,
+    getProductCategories: PropTypes.object.getProductCategories
+  }
+
   componentDidMount () {
     this.props.getProduct()
+    this.props.getProductCategories()
   }
 
   render () {
-    const { loader, featuredProducts } = this.props
-    console.log('featuredProducts', featuredProducts)
+    const { loader, featuredProducts, productCategories } = this.props
 
     return (
       <div>
@@ -47,7 +60,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css' }
           ]}
         />
-        <NavCategories />
+        <NavCategories categories={productCategories} />
         <BannerSlider loader={loader} />
         <div className='padding__horizontal--10'>
           <Grid padded>
@@ -59,7 +72,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               fluid
             > <FormattedMessage {...messages.productViewAll} /> </Button>
             <H1 center> <FormattedMessage {...messages.browseCategory} /> </H1>
-            <Category loader={loader} />
+            <Category loader={loader} categories={productCategories} />
           </Grid>
         </div>
         <Footer />
@@ -74,12 +87,15 @@ HomePage.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   loader: selectLoading(),
-  featuredProducts: selectFeaturedProducts()
+  featuredProducts: selectFeaturedProducts(),
+  productCategories: selectProductCategories()
+
 })
 
 function mapDispatchToProps (dispatch) {
   return {
     getProduct: payload => dispatch(getFeaturedProductsAction(payload)),
+    getProductCategories: payload => dispatch(getProductCategoriesAction(payload)),
     dispatch
   }
 }

@@ -10,8 +10,8 @@ import {
 } from 'lodash'
 // import styled from 'styled-components';
 
-// import { FormattedMessage } from 'react-intl'
-// import messages from './messages'
+import { FormattedMessage } from 'react-intl'
+import messages from './messages'
 import { Grid, Image } from 'semantic-ui-react'
 
 import {
@@ -34,7 +34,6 @@ function ProductView ({
   loader,
   products
 }) {
-  console.log(range(4))
   return (
     <Grid.Row stretched columns={2}>
       {
@@ -43,14 +42,40 @@ function ProductView ({
           return (
             <Grid.Column key={product.get('product_id')} className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3}>
               <ProductWrapper>
-                <PromoTag text='sale!' />
+                {
+                  product.getIn(['discount']).size &&
+                  <PromoTag text={product.getIn(['discount', 'percent'])} />
+                }
                 <ImageWrapper>
                   <Image src={ProductImage} />
                 </ImageWrapper>
-                <ProductName>all day backpack all day backfdgffd  hdfghpack | (WINE)</ProductName>
+                <ProductName>{product.get('title')}</ProductName>
                 <ProductPriceWrapper>
-                  <ProductPrice>php 549</ProductPrice>
-                  <ProductPriceStrike>php 1000</ProductPriceStrike>
+                  <ProductPrice>
+                    <FormattedMessage {...messages.peso} />
+                    {
+                      product.getIn(['discount']).size
+                      ? Math.abs(
+                        parseFloat(
+                          product.get('price') *
+                          `.${
+                            product.getIn(['discount', 'percent']).length > 1
+                            ? product.getIn(['discount', 'percent'])
+                            : `0${product.getIn(['discount', 'percent'])}`
+                          }` -
+                          product.get('price').toLocaleString()
+                        )
+                      )
+                      : parseFloat(product.get('price')).toLocaleString()
+                    }
+                  </ProductPrice>
+                  <ProductPriceStrike>
+                    <FormattedMessage {...messages.peso} />
+                    {
+                      product.getIn(['discount']).size >= 1 &&
+                      parseFloat(product.get('price')).toLocaleString()
+                    }
+                  </ProductPriceStrike>
                 </ProductPriceWrapper>
               </ProductWrapper>
             </Grid.Column>
