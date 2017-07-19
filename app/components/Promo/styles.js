@@ -14,7 +14,7 @@ const PromoWrapper = styled.div`
   p {
     color: #FFFFFF;
     font-family: helveticabold;
-    font-size: 80px;
+    font-size: 65px;
   }
   
   img {
@@ -30,6 +30,12 @@ const PromoWrapper = styled.div`
 
     &:last-child {
       margin-bottom: 0;
+    }
+  }
+
+  @media (min-width: 375px) {
+    p {
+      font-size: 80px;
     }
   }
 `
