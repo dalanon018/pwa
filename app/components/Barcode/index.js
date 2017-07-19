@@ -33,6 +33,9 @@ const ProductDescription = styled.div`
   justify-content: center;
   letter-spacing: 2px;
 `
+const CodeWrapper = styled.span`
+  color: #AEAEAE;
+`
 
 const CodeImage = styled.img`
   float: left;
@@ -58,7 +61,7 @@ const Barcode = () => (
     <ProductWrapper >
       <ProductImage background={TestBackPack} />
       <ProductDescription>
-        <span> <CodeImage src={CliqqLogo} /> 000D1</span>
+        <CodeWrapper> <CodeImage src={CliqqLogo} /> 000D1</CodeWrapper>
         <H5> ALL DAY BACKPACK | WINE </H5>
         <ProductLogoImage src={TestLogo} />
       </ProductDescription>

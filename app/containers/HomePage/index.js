@@ -9,6 +9,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
+import { push } from 'react-router-redux'
 
 import Helmet from 'react-helmet'
 import messages from './messages'
@@ -82,6 +83,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 }
 
 HomePage.propTypes = {
+  changeRoute: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired
 }
 
