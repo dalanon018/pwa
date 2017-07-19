@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 
+import { browserHistory } from 'react-router'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -16,6 +17,10 @@ import {
 import {
   getProductCategoriesAction
 } from './actions'
+
+import {
+  HIDE_BACK_BUTTON
+} from './constants'
 
 import HeaderMenu from './HeaderMenu'
 import SidebarMenu from './SidebarMenu'
@@ -52,7 +57,9 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     super()
 
     this._handleToggleSideBar = this._handleToggleSideBar.bind(this)
+    this._handleLeftButtonAction = this._handleLeftButtonAction.bind(this)
     this._handleCloseSidebarClickPusher = this._handleCloseSidebarClickPusher.bind(this)
+    this._hideBackButton = this._hideBackButton.bind(this)
   }
 
   _handleToggleSideBar () {
@@ -60,6 +67,17 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     this.setState({
       toggleSidebar: !toggleSidebar
     })
+  }
+
+  /**
+   * this is a factory fn since we button is dynamic base on the url of the user.
+   */
+  _handleLeftButtonAction () {
+    if (this._hideBackButton()) {
+      this._handleToggleSideBar()
+    }
+
+    return browserHistory.goBack()
   }
 
   /**
@@ -75,6 +93,20 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     return false
   }
 
+  /**
+   * if route is not:[
+   *  '/',
+   *  'home',
+   *  'barcodes'
+   * ]
+   * then we will show the backbutton
+   */
+  _hideBackButton () {
+    const { routes } = this.props
+    const { path } = routes.slice().pop()
+    return HIDE_BACK_BUTTON.includes(path)
+  }
+
   componentDidMount () {
     this.props.getCategories()
   }
@@ -82,6 +114,11 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   render () {
     const { children, productCategories, changeRoute } = this.props
     const { toggleSidebar } = this.state
+
+    /**
+     * we have to identify if we should display backbutton
+     */
+    const hideBackButton = this._hideBackButton()
 
     return (
       <Wrapper>
@@ -91,8 +128,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
           </Sidebar>
           <Sidebar.Pusher dimmed={toggleSidebar} onClick={this._handleCloseSidebarClickPusher}>
             <HeaderMenu
-              toggleSidebarAction={this._handleToggleSideBar}
+              hideBackButton={hideBackButton}
+              leftButtonAction={this._handleLeftButtonAction}
               changeRoute={changeRoute}
+              show
             />
             <MainContent>
               { children }
