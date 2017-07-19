@@ -9,6 +9,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
+import { push } from 'react-router-redux'
 
 import Helmet from 'react-helmet'
 import messages from './messages'
@@ -36,8 +37,18 @@ import {
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
-    getProduct: PropTypes.object.getProduct,
-    getProductCategories: PropTypes.object.getProductCategories
+    changeRoute: PropTypes.func.isRequired,
+    getProduct: PropTypes.func.isRequired,
+    getProductCategories: PropTypes.func.isRequired,
+    loader: PropTypes.bool.isRequired,
+    featuredProducts: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.object
+    ]).isRequired,
+    productCategories: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.object
+    ]).isRequired
   }
 
   componentDidMount () {
@@ -46,7 +57,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render () {
-    const { loader, featuredProducts, productCategories } = this.props
+    const { loader, featuredProducts, productCategories, changeRoute } = this.props
 
     return (
       <div>
@@ -65,7 +76,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         <div className='padding__horizontal--10'>
           <Grid padded>
             <H1 center> <FormattedMessage {...messages.featureProduct} /> </H1>
-            <ProductView loader={loader} products={featuredProducts} />
+            <ProductView changeRoute={changeRoute} loader={loader} products={featuredProducts} />
             <Button
               onClick={() => {}}
               primary
@@ -81,10 +92,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 }
 
-HomePage.propTypes = {
-  dispatch: PropTypes.func.isRequired
-}
-
 const mapStateToProps = createStructuredSelector({
   loader: selectLoading(),
   featuredProducts: selectFeaturedProducts(),
@@ -96,6 +103,7 @@ function mapDispatchToProps (dispatch) {
   return {
     getProduct: payload => dispatch(getFeaturedProductsAction(payload)),
     getProductCategories: payload => dispatch(getProductCategoriesAction(payload)),
+    changeRoute: (url) => dispatch(push(url)),
     dispatch
   }
 }

@@ -4,7 +4,7 @@
 *
 */
 
-import React from 'react'
+import React, { Children } from 'react'
 import styled from 'styled-components'
 
 // import { FormattedMessage } from 'react-intl'
@@ -23,8 +23,8 @@ const EmptyDataBlockWrapper = styled.div`
 function EmptyDataBlock ({children}) {
   return (
     <EmptyDataBlockWrapper>
-      <Loader />
-      {children}
+      <Loader active />
+      { Children.toArray(children) }
     </EmptyDataBlockWrapper>
   )
 }

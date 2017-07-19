@@ -19,15 +19,16 @@ const Wrapper = styled.div`
   display: flex;
   flex: 1 0 auto;
   justify-content: center;
-  padding: 8px 0;
+  padding: 2px 0
 `
 const TextWrapper = styled.div`
-  font-size: 19px;
+  font-size: 16px;
   margin-right: 10px;
 `
 
 const ImageWrapper = styled.img`
-  width: 19px;
+  margin-top: 1px;
+  width: 15px;
 `
 
 function ElemButton ({ children, ...rest }) {
