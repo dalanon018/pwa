@@ -15,5 +15,9 @@ export default defineMessages({
   sale: {
     id: `${idSuffix}.sale`,
     defaultMessage: 'SALE!'
+  },
+  peso: {
+    id: `${idSuffix}.peso`,
+    defaultMessage: 'PHP '
   }
 })

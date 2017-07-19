@@ -31,14 +31,6 @@ function BannerSlider ({loader}) {
   return <HandleBlock loader={loader} />
 }
 
-const DefaultState = () => {
-  return (
-    <EmptyDataBlock>
-      <ImageWrapper />
-    </EmptyDataBlock>
-  )
-}
-
 const HandleBlock = ({loader}) => {
   let block
   const settings = {
@@ -51,7 +43,7 @@ const HandleBlock = ({loader}) => {
     slidesToShow: 1,
     slidesToScroll: 1
   }
-  if (!loader) {
+  if (loader) {
     block = <DefaultState loader={loader} />
   } else {
     block = <BannerSliderWrapper>
@@ -62,6 +54,16 @@ const HandleBlock = ({loader}) => {
     </BannerSliderWrapper>
   }
   return block
+}
+
+const DefaultState = () => {
+  return (
+    <BannerSliderWrapper>
+      <EmptyDataBlock>
+        <ImageWrapper />
+      </EmptyDataBlock>
+    </BannerSliderWrapper>
+  )
 }
 
 BannerSlider.propTypes = {

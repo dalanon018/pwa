@@ -6,20 +6,23 @@
 
 import { fromJS } from 'immutable'
 import {
-  DEFAULT_ACTION,
-  SET_SAMPLE_API
+  GET_FEATURED_PRODUCTS,
+  SET_FEATURED_PRODUCTS
 } from './constants'
 
 const initialState = fromJS({
-  sampleApi: {}
+  product: {},
+  loading: false
 })
 
 function homePageReducer (state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
+    case GET_FEATURED_PRODUCTS:
+      return state.set('loading', true)
+    case SET_FEATURED_PRODUCTS:
       return state
-    case SET_SAMPLE_API:
-      return state.set('sampleApi', fromJS(action.payload))
+        .set('product', fromJS(action.payload))
+        .set('loading', false)
     default:
       return state
   }

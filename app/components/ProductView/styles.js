@@ -116,6 +116,7 @@ const RibbonWrapper = styled.div`
       margin-top: 10px;
       padding: 5px;
       text-align: center;
+      text-transform: uppercase;
     }
 `
 

@@ -13,18 +13,23 @@ const selectHomePageDomain = () => (state) => state.get('home')
  * Default selector used by HomePage
  */
 
-const makeSelectHomePage = () => createSelector(
+// const makeSelectHomePage = () => createSelector(
+//   selectHomePageDomain(),
+//   (substate) => substate.toJS()
+// )
+
+const selectFeaturedProducts = () => createSelector(
   selectHomePageDomain(),
-  (substate) => substate.toJS()
+  subState => subState.get('product')
 )
 
-const selectSampleApi = () => createSelector(
+const selectLoading = () => createSelector(
   selectHomePageDomain(),
-  subState => subState.get('sampleApi')
+  subState => subState.get('loading')
 )
 
 export {
   selectHomePageDomain,
-  selectSampleApi,
-  makeSelectHomePage
+  selectFeaturedProducts,
+  selectLoading
 }

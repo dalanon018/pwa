@@ -18,69 +18,47 @@ import CategoryBgSample from 'images/test-images/accessories.jpg'
 import EmptyImage from 'images/broken-image.jpg'
 
 import {
+  range
+} from 'lodash'
+
+import {
   CategoryBlock,
   CategoryItem,
   CategoryLabel } from './styles'
 
-function Category ({loader}) {
+function Category ({
+  loader,
+  categories
+}) {
   return (
-    <Grid.Row columns={4}>
-      <Grid.Column className='padding__none' mobile={4} tablet={4} computer={3} widescreen={3}>
-        {
-          !loader ? <DefaultState loader={loader} />
-          : <CategoryBlock className='responsive-width' background={CategoryBgSample}>
-            <CategoryItem>
-              <Image src={sampleCategoryIcon} />
-              <CategoryLabel>CATEGORY</CategoryLabel>
-            </CategoryItem>
-          </CategoryBlock>
+    <Grid.Row>
+      {
+          loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
+          : categories &&
+          categories.valueSeq().map((category, index) => {
+            return (
+              <Grid.Column key={index} className='padding__none' mobile={4} tablet={4} computer={3} widescreen={3}>
+                <CategoryBlock className='responsive-width' background={CategoryBgSample}>
+                  <CategoryItem>
+                    <Image src={sampleCategoryIcon} />
+                    <CategoryLabel>{category.get('name')}</CategoryLabel>
+                  </CategoryItem>
+                </CategoryBlock>
+              </Grid.Column>
+            )
+          })
         }
-      </Grid.Column>
-
-      <Grid.Column className='padding__none' mobile={4} tablet={4} computer={3} widescreen={3}>
-        {
-          !loader ? <DefaultState loader={loader} />
-          : <CategoryBlock className='responsive-width' background={CategoryBgSample}>
-            <CategoryItem>
-              <Image src={sampleCategoryIcon} />
-              <CategoryLabel>CATEGORY</CategoryLabel>
-            </CategoryItem>
-          </CategoryBlock>
-        }
-      </Grid.Column>
-
-      <Grid.Column className='padding__none' mobile={4} tablet={4} computer={3} widescreen={3}>
-        {
-          !loader ? <DefaultState loader={loader} />
-          : <CategoryBlock className='responsive-width' background={CategoryBgSample}>
-            <CategoryItem>
-              <Image src={sampleCategoryIcon} />
-              <CategoryLabel>CATEGORY</CategoryLabel>
-            </CategoryItem>
-          </CategoryBlock>
-        }
-      </Grid.Column>
-
-      <Grid.Column className='padding__none' mobile={4} tablet={4} computer={3} widescreen={3}>
-        {
-          !loader ? <DefaultState loader={loader} />
-          : <CategoryBlock className='responsive-width' background={CategoryBgSample}>
-            <CategoryItem>
-              <Image src={sampleCategoryIcon} />
-              <CategoryLabel>CATEGORY</CategoryLabel>
-            </CategoryItem>
-          </CategoryBlock>
-        }
-      </Grid.Column>
     </Grid.Row>
   )
 }
 
 const DefaultState = () => {
   return (
-    <EmptyDataBlock>
-      <CategoryBlock className='responsive-width' background={EmptyImage} />
-    </EmptyDataBlock>
+    <Grid.Column className='padding__none' mobile={4} tablet={4} computer={3} widescreen={3}>
+      <EmptyDataBlock>
+        <CategoryBlock className='responsive-width' background={EmptyImage} />
+      </EmptyDataBlock>
+    </Grid.Column>
   )
 }
 

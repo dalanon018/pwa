@@ -5,10 +5,13 @@
 */
 
 import React from 'react'
+import {
+  range
+} from 'lodash'
 // import styled from 'styled-components';
 
-// import { FormattedMessage } from 'react-intl'
-// import messages from './messages'
+import { FormattedMessage } from 'react-intl'
+import messages from './messages'
 import { Grid, Image } from 'semantic-ui-react'
 
 import {
@@ -28,87 +31,71 @@ import EmptyImage from 'images/broken-image.jpg'
 import ParagraphImage from 'images/test-images/short-paragraph.png'
 
 function ProductView ({
-  loader
+  loader,
+  products
 }) {
   return (
     <Grid.Row stretched columns={2}>
-      <Grid.Column className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3}>
-        {
-          !loader ? <DefaultState loader={loader} />
-          : <ProductWrapper>
-            <ImageWrapper>
-              <Image src={ProductImage} />
-            </ImageWrapper>
-            <ProductName>all day backpack all day backfdgffd  hdfghpack | (WINE)</ProductName>
-            <ProductPriceWrapper>
-              <ProductPrice>php 549</ProductPrice>
-              <ProductPriceStrike>php 1000</ProductPriceStrike>
-            </ProductPriceWrapper>
-          </ProductWrapper>
-        }
-      </Grid.Column>
-
-      <Grid.Column className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3}>
-        {
-          !loader ? <DefaultState loader={loader} />
-          : <ProductWrapper>
-            { true && <PromoTag text='SALE!' /> }
-            <ImageWrapper>
-              <Image src={ProductImage} />
-            </ImageWrapper>
-            <ProductName>all day bachfghfg all day backpack | (WINE)</ProductName>
-            <ProductPriceWrapper>
-              <ProductPrice>php 549</ProductPrice>
-              <ProductPriceStrike>php 1000</ProductPriceStrike>
-            </ProductPriceWrapper>
-          </ProductWrapper>
-        }
-      </Grid.Column>
-
-      <Grid.Column className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3}>
-        {
-          !loader ? <DefaultState loader={loader} />
-          : <ProductWrapper>
-            { true && <PromoTag text='25% OFF' /> }
-            <ImageWrapper>
-              <Image src={ProductImage} />
-            </ImageWrapper>
-            <ProductName>all day backpack all day backpack | (WINE)</ProductName>
-            <ProductPriceWrapper>
-              <ProductPrice>php 549</ProductPrice>
-              <ProductPriceStrike>php 1000</ProductPriceStrike>
-            </ProductPriceWrapper>
-          </ProductWrapper>
-        }
-      </Grid.Column>
-
-      <Grid.Column className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3}>
-        {
-          !loader ? <DefaultState loader={loader} />
-          : <ProductWrapper>
-            <ImageWrapper>
-              <Image src={ProductImage} />
-            </ImageWrapper>
-            <ProductName>all day backpack all day backpack | (WINE)</ProductName>
-            <ProductPriceWrapper>
-              <ProductPrice>php 549</ProductPrice>
-              <ProductPriceStrike>php 1000</ProductPriceStrike>
-            </ProductPriceWrapper>
-          </ProductWrapper>
-        }
-      </Grid.Column>
+      {
+        loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
+        : products.valueSeq().map((product) => {
+          return (
+            <Grid.Column key={product.get('product_id')} className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3}>
+              <ProductWrapper>
+                {
+                  product.getIn(['discount']).size &&
+                  <PromoTag text={product.getIn(['discount', 'percent'])} />
+                }
+                <ImageWrapper>
+                  <Image src={ProductImage} />
+                </ImageWrapper>
+                <ProductName>{product.get('title')}</ProductName>
+                <ProductPriceWrapper>
+                  <ProductPrice>
+                    <FormattedMessage {...messages.peso} />
+                    {
+                      product.getIn(['discount']).size
+                      ? Math.abs(
+                        parseFloat(
+                          product.get('price') *
+                          `.${
+                            product.getIn(['discount', 'percent']).length > 1
+                            ? product.getIn(['discount', 'percent'])
+                            : `0${product.getIn(['discount', 'percent'])}`
+                          }` -
+                          product.get('price').toLocaleString()
+                        )
+                      )
+                      : parseFloat(product.get('price')).toLocaleString()
+                    }
+                  </ProductPrice>
+                  <ProductPriceStrike>
+                    <FormattedMessage {...messages.peso} />
+                    {
+                      product.getIn(['discount']).size >= 1 &&
+                      parseFloat(product.get('price')).toLocaleString()
+                    }
+                  </ProductPriceStrike>
+                </ProductPriceWrapper>
+              </ProductWrapper>
+            </Grid.Column>
+          )
+        })
+      }
     </Grid.Row>
   )
 }
 
 const DefaultState = () => {
   return (
-    <EmptyDataBlock>
-      <ProductWrapper>
-        <ImageWrapper background={EmptyImage} className='custom-height' />
-        <Image src={ParagraphImage} height={50} />
-      </ProductWrapper>
-    </EmptyDataBlock>
+    <Grid.Column className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3}>
+      <EmptyDataBlock>
+        <ProductWrapper>
+          <ImageWrapper background={EmptyImage} className='custom-height' />
+          <Image src={ParagraphImage} height={50} />
+        </ProductWrapper>
+      </EmptyDataBlock>
+    </Grid.Column>
   )
 }
 
