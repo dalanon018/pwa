@@ -46,7 +46,8 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     children: PropTypes.object.isRequired,
     getCategories: PropTypes.func.isRequired,
     changeRoute: PropTypes.func.isRequired,
-    categories: PropTypes.bool.isRequired
+    categories: PropTypes.bool.isRequired,
+    routes: PropTypes.array.isRequired
   }
 
   state = {
