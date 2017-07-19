@@ -38,6 +38,11 @@ import {
 } from 'containers/Buckets/selectors'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  /**
+   * holder for countdown interval
+   */
+  countdownInterval
+
   constructor () {
     super()
     this.state = {
@@ -68,7 +73,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     let duration = moment.duration(diffTime * 1000, 'milliseconds')
     let interval = 1000
 
-    setInterval(() => {
+    this.countdownInterval = setInterval(() => {
       duration = moment.duration(duration - interval, 'milliseconds')
       const countHours = () => {
         if (duration.hours().toString().length > 1) {
@@ -96,6 +101,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         count: `${countHours()}:${countMinutes()}:${countSeconds()}`
       })
     }, 1000)
+  }
+
+  componentWillUnmount () {
+    clearInterval(this.countdownInterval)
   }
 
   componentDidMount () {
