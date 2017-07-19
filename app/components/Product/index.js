@@ -13,6 +13,7 @@ import {
 
 import Test0001 from 'images/test-images/BACKPACK-TICKET.png'
 import CliqqLogo from 'images/icons/cliqq.png'
+import ShareIconImage from 'images/icons/share-icon.svg'
 
 import Button from 'components/Button'
 import H3 from 'components/H3'
@@ -34,6 +35,7 @@ import {
   ProductPrice,
   ProductPriceStrike,
   ShareItemWrapper,
+  ShareIcon,
   DetailsWrapper,
   ProductDetails,
   ShippingDetails,
@@ -72,7 +74,7 @@ const Product = ({ product, loading }) => {
         </LoadingStateInfo>
       </ProductMainContent>
       <ShareItemWrapper>
-        SHARE ITEM
+        <ShareIcon src={ShareIconImage} /> SHARE ITEM
       </ShareItemWrapper>
       <DetailsWrapper>
         <ProductDetails>

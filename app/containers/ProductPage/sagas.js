@@ -34,7 +34,7 @@ export function * getProduct (payload) {
 
   // We will emulate data
   const req = yield Promise.resolve(find(FakeProducts, { product_id: id }))
-  yield sleep(5000)
+  yield sleep(2000)
   if (!req.err) {
     yield put(setProductAction(req))
   }

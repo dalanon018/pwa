@@ -32,7 +32,8 @@ import ParagraphImage from 'images/test-images/short-paragraph.png'
 
 function ProductView ({
   loader,
-  products
+  products,
+  changeRoute
 }) {
   return (
     <Grid.Row stretched columns={2}>
@@ -40,7 +41,7 @@ function ProductView ({
         loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
         : products.valueSeq().map((product) => {
           return (
-            <Grid.Column key={product.get('product_id')} className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3}>
+            <Grid.Column key={product.get('product_id')} className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3} onClick={() => changeRoute(`/product/${product.get('product_id')}`)}>
               <ProductWrapper>
                 {
                   product.getIn(['discount']).size &&

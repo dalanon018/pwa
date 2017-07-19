@@ -1,27 +1,30 @@
 import styled from 'styled-components'
 
-export const ProductWrapper = styled.div`
+const AnimateDiv = styled.div`
+  animation:fadeIn ease-in 1;
+  animation-duration: .5s;
+`
+export const ProductWrapper = styled(AnimateDiv)`
   align-items: center;
   display: flex;
   flex-direction: column;
   flex: 1 0 auto;
   position: relative;
 
-  animation:fadeIn ease-in 1;
-  animation-duration: .5s;
+ ;
 `
-export const ImageBanner = styled.div`
+export const ImageBanner = styled(AnimateDiv)`
   align-self: stretch;
   background-color: #F0F0F0;
   display: flex;
   justify-content: center;
 `
 
-export const ProductMainContent = styled.div`
+export const ProductMainContent = styled(AnimateDiv)`
   margin: 20px 10px;
 `
 
-export const HeaderWrapper = styled.div`
+export const HeaderWrapper = styled(AnimateDiv)`
   align-items: center;
   color: #AEAEAE;
   display: flex;
@@ -35,7 +38,7 @@ export const CodeImage = styled.img`
   width: 32px;
   margin-right: 10px;
 `
-export const ProductPriceWrapper = styled.div`
+export const ProductPriceWrapper = styled(AnimateDiv)`
   align-self: stretch;
   display: flex;
   align-items: center;
@@ -66,7 +69,7 @@ export const ProductPriceStrike = styled.span`
     font-size: 16px;
   }
 `
-export const ShareItemWrapper = styled.div`
+export const ShareItemWrapper = styled(AnimateDiv)`
   align-items: center;
   align-self: stretch;
   border-bottom: 1px solid #F0F0F0;
@@ -79,10 +82,16 @@ export const ShareItemWrapper = styled.div`
   padding: 17px 0;
   text-transform: uppercase;
 `
-export const DetailsWrapper = styled.div`
+
+export const ShareIcon = styled.img`
+  width: 23px;
+  margin-right: 10px;
+`
+
+export const DetailsWrapper = styled(AnimateDiv)`
   align-self: stretch;
 `
-export const ProductDetailsContainer = styled.div`
+export const ProductDetailsContainer = styled(AnimateDiv)`
   padding: 25px 15px;
   color: #5B5B5B;
   font-weight: 100;
@@ -104,7 +113,7 @@ export const DetailsDescription = styled.p`
   letter-spacing: 1px;
   line-height: 1.5;
 `
-export const ButtonContainer = styled.div`
+export const ButtonContainer = styled(AnimateDiv)`
   // bottom: 0;
   // left: 0;
   // position: fixed;
