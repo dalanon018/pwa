@@ -100,7 +100,7 @@ export const ProductDetails = styled(ProductDetailsContainer)`
   border-bottom: 1px solid #F0F0F0;
 `
 export const ShippingDetails = styled(ProductDetailsContainer)`
-  // margin-bottom: 60px;
+  margin-bottom: 60px;
 `
 export const DetailsTitle = styled.p`
   text-transform: uppercase;
@@ -114,9 +114,9 @@ export const DetailsDescription = styled.p`
   line-height: 1.5;
 `
 export const ButtonContainer = styled(AnimateDiv)`
-  // bottom: 0;
-  // left: 0;
-  // position: fixed;
-  // width: 100%;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
   padding: 10px;
 `

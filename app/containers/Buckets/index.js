@@ -5,10 +5,6 @@ import { browserHistory } from 'react-router'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import {
-  Sidebar,
-  Segment
-} from 'semantic-ui-react'
 
 import {
   selectProductCategories
@@ -75,7 +71,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
    */
   _handleLeftButtonAction () {
     if (this._hideBackButton()) {
-      this._handleToggleSideBar()
+      return this._handleToggleSideBar()
     }
 
     return browserHistory.goBack()
@@ -88,7 +84,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     const { toggleSidebar } = this.state
 
     if (toggleSidebar) {
-      this._handleToggleSideBar()
+      return this._handleToggleSideBar()
     }
 
     return false
@@ -123,22 +119,20 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
     return (
       <Wrapper>
-        <Sidebar.Pushable as={Segment}>
-          <Sidebar animation='overlay' width='thin' visible={toggleSidebar}>
-            <SidebarMenu categories={productCategories} />
-          </Sidebar>
-          <Sidebar.Pusher dimmed={toggleSidebar} onClick={this._handleCloseSidebarClickPusher}>
-            <HeaderMenu
-              hideBackButton={hideBackButton}
-              leftButtonAction={this._handleLeftButtonAction}
-              changeRoute={changeRoute}
-              show
-            />
-            <MainContent>
-              { children }
-            </MainContent>
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
+        <HeaderMenu
+          hideBackButton={hideBackButton}
+          leftButtonAction={this._handleLeftButtonAction}
+          changeRoute={changeRoute}
+          show
+        />
+        <MainContent>
+          { children }
+        </MainContent>
+        <SidebarMenu
+          categories={productCategories}
+          toggleSidebar={toggleSidebar}
+          toggleAction={this._handleCloseSidebarClickPusher}
+        />
       </Wrapper>
     )
   }
