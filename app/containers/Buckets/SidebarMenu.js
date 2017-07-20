@@ -12,12 +12,33 @@ import HomeImage from 'images/icons/home-icon.svg'
 import BarcodeImage from 'images/icons/barcode-icon.svg'
 import CategoriesImage from 'images/icons/category-icon.svg'
 
+const SidebarContainer = styled.div`
+  background-color: rgba(0, 0, 0, 0.3);
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  transition: width 0.3s;
+  width: ${({toggle}) => toggle ? '100%' : '0'};
+  z-index: 99;
+
+
+`
+const SidebarWrapper = styled.div`
+  width: 260px;
+  height: 100%;
+`
+
+const MenuNavWrapper = styled(Menu)`
+  height: 100%;
+`
+
 const ItemWrapper = styled.div`
   display: flex;
 `
 
 const ItemImage = styled.span`
-
 `
 
 const ItemText = styled.span`
@@ -75,27 +96,31 @@ const SideBarChildrenContainer = ({ categories }) => (
   </UlWrapper>
 )
 
-const SidebarMenu = ({ categories }) => (
-  <Menu vertical borderless>
-    <Menu.Item as={Label} name='home' >
-      <SidebarItem image={HomeImage}>
-        <FormattedMessage {...messages.menuHome} />
-      </SidebarItem>
-    </Menu.Item>
-    <Menu.Item name='barcode'>
-      <SidebarItem image={BarcodeImage}>
-        <FormattedMessage {...messages.menuBarcode} />
-      </SidebarItem>
-    </Menu.Item>
-    <Menu.Item name='categories'>
-      <SidebarItem image={CategoriesImage}>
-        <FormattedMessage {...messages.menuCategories} />
-      </SidebarItem>
-      {
-        <SideBarChildrenContainer categories={categories} />
-      }
-    </Menu.Item>
-  </Menu>
+const SidebarMenu = ({ categories, toggleSidebar, toggleAction }) => (
+  <SidebarContainer toggle={toggleSidebar} onClick={toggleAction}>
+    <SidebarWrapper>
+      <MenuNavWrapper vertical borderless>
+        <Menu.Item as={Label} name='home' >
+          <SidebarItem image={HomeImage}>
+            <FormattedMessage {...messages.menuHome} />
+          </SidebarItem>
+        </Menu.Item>
+        <Menu.Item name='barcode'>
+          <SidebarItem image={BarcodeImage}>
+            <FormattedMessage {...messages.menuBarcode} />
+          </SidebarItem>
+        </Menu.Item>
+        <Menu.Item name='categories'>
+          <SidebarItem image={CategoriesImage}>
+            <FormattedMessage {...messages.menuCategories} />
+          </SidebarItem>
+          {
+            <SideBarChildrenContainer categories={categories} />
+          }
+        </Menu.Item>
+      </MenuNavWrapper>
+    </SidebarWrapper>
+  </SidebarContainer>
 )
 
 export default SidebarMenu
