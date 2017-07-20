@@ -4,7 +4,6 @@
 
 const path = require('path')
 const webpack = require('webpack')
-const HappyPack = require('happypack')
 
 module.exports = (options) => ({
   entry: options.entry,
@@ -15,9 +14,9 @@ module.exports = (options) => ({
   module: {
     loaders: [{
       test: /\.js$/, // Transform all .js files required somewhere with Babel
-      loaders: ['happypack/loader?id=jsx'],
       exclude: /node_modules/,
-      query: options.babelQuery
+      loaders: 'babel-loader',
+      options: options.babelQuery
     }, {
       // Do not transform vendor's CSS with CSS-modules
       // The point is that they remain in global scope.
@@ -38,10 +37,10 @@ module.exports = (options) => ({
       // Preprocess 3rd party .css files located in node_modules
       test: /\.css$/,
       include: [/node_modules/, /semantic/],
-      loaders: ['happypack/loader?id=styles']
+      loaders: ['style-loader', 'css-loader']
     }, {
       test: /\.(eot|svg|otf|ttf|woff|woff2)$/,
-      loaders: ['file-loader']
+      loaders: 'file-loader'
     }, {
       test: /\.(jpg|png|gif)$/,
       loaders: [
@@ -61,49 +60,19 @@ module.exports = (options) => ({
       ]
     }, {
       test: /\.html$/,
-      loaders: ['happypack/loader?id=html']
+      loaders: 'html-loader'
     }, {
       test: /\.json$/,
-      loaders: ['happypack/loader?id=json']
+      loaders: 'json-loader'
     }, {
       test: /\.(mp4|webm)$/,
-      loaders: 'happypack/loader?id=url',
+      loaders: 'url-loader',
       query: {
         limit: 10000
       }
     }]
   },
   plugins: options.plugins.concat([
-    // JSX
-    new HappyPack({
-      id: 'jsx',
-      threads: 4,
-      loaders: ['babel-loader']
-    }),
-    // STYLES
-    new HappyPack({
-      id: 'styles',
-      threads: 2,
-      loaders: ['style-loader', 'css-loader']
-    }),
-    // HTML-LOADER
-    new HappyPack({
-      id: 'html',
-      threads: 1,
-      loaders: ['html-loader']
-    }),
-    // JSON-LOADER
-    new HappyPack({
-      id: 'json',
-      threads: 1,
-      loaders: ['json-loader']
-    }),
-    // URL-LOADER
-    new HappyPack({
-      id: 'url',
-      threads: 1,
-      loaders: ['url-loader']
-    }),
 
     new webpack.ProvidePlugin({
       // make fetch available
