@@ -14,7 +14,6 @@ import CategoriesImage from 'images/icons/category-icon.svg'
 
 const SidebarContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.3);
-  height: 100%;
   left: 0;
   overflow: hidden;
   position: fixed;
@@ -22,12 +21,12 @@ const SidebarContainer = styled.div`
   transition: width 0.3s;
   width: ${({toggle}) => toggle ? '100%' : '0'};
   z-index: 99;
-
-
 `
 const SidebarWrapper = styled.div`
+  background-color: #FFFFFF;
+  height: 100vh;
+  overflow: auto;
   width: 260px;
-  height: 100%;
 `
 
 const MenuNavWrapper = styled(Menu)`
