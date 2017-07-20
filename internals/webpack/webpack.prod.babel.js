@@ -65,7 +65,8 @@ module.exports = require('./webpack.base.babel')({
       safeToUseOptionalCaches: true,
 
       AppCache: false
-    })
+    }),
+    new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/])
   ],
 
   performance: {
