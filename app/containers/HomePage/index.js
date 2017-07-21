@@ -24,6 +24,7 @@ import H1 from 'components/H1'
 import Button from 'components/Button'
 import Footer from 'components/Footer'
 import Promo from 'components/Promo'
+import PopupSlide from 'components/PopupSlide'
 
 import { getFeaturedProductsAction } from './actions'
 import { selectLoading, selectFeaturedProducts } from './selectors'
@@ -37,6 +38,12 @@ import {
 } from 'containers/Buckets/selectors'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  constructor () {
+    super()
+    this.state = {
+      toggle: false
+    }
+  }
   static propTypes = {
     changeRoute: PropTypes.func.isRequired,
     getProduct: PropTypes.func.isRequired,
@@ -55,6 +62,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   componentDidMount () {
     this.props.getProduct()
     this.props.getProductCategories()
+  }
+
+  handleToggle = () => {
+    this.setState({
+      toggle: true
+    })
   }
 
   render () {
@@ -89,6 +102,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           </Grid>
         </div>
         <Footer />
+        <Button onClick={this.handleToggle}>wew</Button>
+        <PopupSlide toggle={this.state.toggle} />
       </div>
     )
   }
