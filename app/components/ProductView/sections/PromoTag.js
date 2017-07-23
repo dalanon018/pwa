@@ -10,12 +10,16 @@ import {
   RibbonWrapper
 } from '../styles'
 
-function PromoTag ({ text }) {
+const isPercentOrValue = (type) => {
+  return type.toUpperCase() === 'PERCENTAGE' ? '%' : null
+}
+
+function PromoTag ({ discount }) {
   return (
     <RibbonWrapper>
       <div className='ribbon-tag'>
         <p className='ribbon-text'>
-          {text}% OFF
+          {`${discount.get('value')}${isPercentOrValue(discount.get('percentType'))} OFF`}
         </p>
       </div>
     </RibbonWrapper>
