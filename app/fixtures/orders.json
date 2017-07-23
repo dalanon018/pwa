@@ -8,16 +8,22 @@
     "quantity": "1",
     "status": "CONFIRMED",
     "paymentType": "CASH",
+    "location": {
+      "store_id": "0001",
+      "name": "IBM PLAZA-EASTWOOD"
+    },
     "products": {
-      "product_id": "0001",
+      "product_id": 1,
+      "cliqq_code": "0001",
       "image": null,
       "brandLogo": null,
       "title": "All Day Backpack | (wine)",
       "barcode": "718037806839",
       "price": "600",
       "discount": {
-        "percent": "25",
-        "thru": "2015-04-06 12:00:00"
+        "value": "25",
+        "percentType": "percentage",
+        "thru": "2015-05-06 12:00:00"
       }
     }
   },
@@ -30,6 +36,10 @@
     "quantity": "1",
     "status": "READYPICKUP",
     "paymentType": "CASH",
+    "location": {
+      "store_id": "0001",
+      "name": "IBM PLAZA-EASTWOOD"
+    },
     "products": {
       "product_id": "0002",
       "image": null,
@@ -38,7 +48,8 @@
       "barcode": "718037806839",
       "price": "300",
       "discount": {
-        "percent": "10",
+        "value": "10",
+        "percentType": "percentage",
         "thru": "2015-05-06 12:00:00"
       }
     }
@@ -52,6 +63,10 @@
     "quantity": "1",
     "status": "INTRANSIT",
     "paymentType": "CASH",
+    "location": {
+      "store_id": "0001",
+      "name": "IBM PLAZA-EASTWOOD"
+    },
     "products": {
       "product_id": "0003",
       "image": null,
@@ -60,8 +75,9 @@
       "barcode": "718037806839",
       "price": "800",
       "discount": {
-        "percent": "5",
-        "thru": "2015-10-06 12:00:00"
+        "value": "5",
+        "percentType": "percentage",
+        "thru": "2015-05-06 12:00:00"
       }
     }
   }
