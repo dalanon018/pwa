@@ -6,7 +6,8 @@
 
 import React from 'react'
 import {
-  range
+  range,
+  isEmpty
 } from 'lodash'
 // import styled from 'styled-components';
 
@@ -93,7 +94,7 @@ function ProductView ({
             <Grid.Column key={product.get('product_id')} className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3} onClick={() => changeRoute(`/product/${product.get('product_id')}`)}>
               <ProductWrapper>
                 {
-                  product.getIn(['discount']).size &&
+                  !isEmpty(product.get('discount')) &&
                   <PromoTag discount={product.get('discount')} />
                 }
                 <ImageWrapper>
@@ -108,7 +109,7 @@ function ProductView ({
                   <ProductPriceStrike>
                     <FormattedMessage {...messages.peso} />
                     {
-                      product.getIn(['discount']).size >= 1 &&
+                      !isEmpty(product.get('discount')) &&
                       parseFloat(product.get('price')).toLocaleString()
                     }
                   </ProductPriceStrike>
