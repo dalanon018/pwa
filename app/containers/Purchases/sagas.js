@@ -4,16 +4,16 @@ import { take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 // import request from 'utils/request'
 
-import FakeBarcodes from 'fixtures/orders.json'
+import FakeOrders from 'fixtures/orders.json'
 
 import {
-  GET_BARCODES
+  GET_PURCHASES
 } from './constants'
 import {
-  setBarcodesAction
+  setPurchasesAction
 } from './actions'
 
-export function * getBarcodes () {
+export function * getPurchases () {
   // const headers = new Headers()
   // const currentUser = yield select(selectCurrentUser())
   // headers.append('Content-Type', 'application/json')
@@ -27,20 +27,20 @@ export function * getBarcodes () {
   // })
 
   // We will emulate data
-  const req = yield Promise.resolve(FakeBarcodes)
+  const req = yield Promise.resolve(FakeOrders)
   if (!req.err) {
-    yield put(setBarcodesAction(req))
+    yield put(setPurchasesAction(req))
   }
 }
 
-export function * getBarcodesSaga () {
-  yield * takeLatest(GET_BARCODES, getBarcodes)
+export function * getPurchasesSaga () {
+  yield * takeLatest(GET_PURCHASES, getPurchases)
 }
 
 // All sagas to be loaded
-export function * barcodesSagas () {
+export function * purchasesSagas () {
   const watcher = yield [
-    fork(getBarcodesSaga)
+    fork(getPurchasesSaga)
   ]
 
   // Suspend execution until location changes
@@ -50,5 +50,5 @@ export function * barcodesSagas () {
 
 // All sagas to be loaded
 export default [
-  barcodesSagas
+  purchasesSagas
 ]

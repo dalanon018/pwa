@@ -1,22 +1,18 @@
 import React from 'react'
-
-import { fromJS } from 'immutable'
 import { shallow } from 'enzyme'
-import { BarcodeLists } from '../index'
+
+import Purchase from '../index'
 
 const children = (<h1>Test</h1>)
 const wrapper = (props = {}, enzyme = shallow) => enzyme(
-  <BarcodeLists {...props}>
+  <Purchase {...props}>
     {children}
-  </BarcodeLists>
+  </Purchase>
 )
 
-describe('<BarcodesList />', () => {
+describe('<Purchase />', () => {
   const minProps = {
-    loaders: false,
-    barcodes: fromJS({}),
-    getBarcodes: () => {},
-    dispatch: () => {}
+    onClick: () => {}
   }
 
   it('render without exploding', () => {

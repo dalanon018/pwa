@@ -3,7 +3,7 @@ import { createSelector } from 'reselect'
 /**
  * Direct selector to the barcodeLists state domain
  */
-const selectBarcodeListsDomain = () => (state) => state.get('barcodeLists')
+const selectBarcodeListsDomain = () => (state) => state.get('purchases')
 
 /**
  * Other specific selectors
@@ -18,12 +18,12 @@ const selectLoader = () => createSelector(
   (substate) => substate.get('loading')
 )
 
-const selectBarcodes = () => createSelector(
+const selectPurchases = () => createSelector(
   selectBarcodeListsDomain(),
-  (substate) => substate.get('barcodes')
+  (substate) => substate.get('purchases')
 )
 
 export {
-  selectBarcodes,
+  selectPurchases,
   selectLoader
 }

@@ -5,6 +5,7 @@ const H6 = styled.h6`
   text-align: ${({ center }) => center ? 'center' : 'left'}
   font-family: 'helveticabold';
   margin: 5px 0;
+  font-size: 10px;
 `
 
 export default H6

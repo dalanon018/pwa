@@ -1,31 +1,31 @@
 /*
  *
- * BarcodeLists reducer
+ * purchases reducer
  *
  */
 
 import { fromJS } from 'immutable'
 import {
-  GET_BARCODES,
-  SET_BARCODES
+  GET_PURCHASES,
+  SET_PURCHASES
 } from './constants'
 
 const initialState = fromJS({
-  barcodes: [],
+  purchases: [],
   loading: false
 })
 
-function barcodeListsReducer (state = initialState, action) {
+function purchasesReducer (state = initialState, action) {
   switch (action.type) {
-    case GET_BARCODES:
+    case GET_PURCHASES:
       return state.set('loading', true)
-    case SET_BARCODES:
+    case SET_PURCHASES:
       return state
-          .set('barcodes', fromJS(action.payload))
+          .set('purchases', fromJS(action.payload))
           .set('loading', false)
     default:
       return state
   }
 }
 
-export default barcodeListsReducer
+export default purchasesReducer
