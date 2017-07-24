@@ -127,6 +127,7 @@ export default class MainMenu extends PureComponent {
 
     this._handleBarcodeClick = this._handleBarcodeClick.bind(this)
     this._handlerHomeClick = this._handlerHomeClick.bind(this)
+    this._handlerSearchClick = this._handlerSearchClick.bind(this)
   }
 
   _handleBarcodeClick () {
@@ -139,9 +140,13 @@ export default class MainMenu extends PureComponent {
     changeRoute('/')
   }
 
+  _handlerSearchClick () {
+    const { changeRoute } = this.props
+    changeRoute('/search')
+  }
+
   render () {
     const { leftButtonAction, hideBackButton } = this.props
-
     return (
       <Wrapper>
         <Grid columns={3}>
@@ -161,7 +166,7 @@ export default class MainMenu extends PureComponent {
             <Grid.Column verticalAlign='middle'>
               <RightWrapper>
                 <SearchIcon>
-                  <Image src={SearchImage} size='mini' onClick={this._handleBarcodeClick} />
+                  <Image src={SearchImage} size='mini' onClick={this._handlerSearchClick} />
                 </SearchIcon>
                 <Image src={BarcodeImage} size='mini' onClick={this._handleBarcodeClick} />
               </RightWrapper>

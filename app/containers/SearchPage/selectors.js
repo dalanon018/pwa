@@ -13,12 +13,18 @@ const selectSearchPageDomain = () => (state) => state.get('searchPage')
  * Default selector used by SearchPage
  */
 
-const makeSelectSearchPage = () => createSelector(
+const selectSearchProductLoading = () => createSelector(
   selectSearchPageDomain(),
-  (substate) => substate.toJS()
+  (substate) => substate.get('loading')
 )
 
-export default makeSelectSearchPage
+const selectSearchProduct = () => createSelector(
+  selectSearchPageDomain(),
+  (substate) => substate.get('product')
+)
+
 export {
-  selectSearchPageDomain
+  selectSearchPageDomain,
+  selectSearchProductLoading,
+  selectSearchProduct
 }

@@ -18,7 +18,13 @@ import {
   HIDE_BACK_BUTTON
 } from './constants'
 
+import {
+  getSearchProductAction,
+  setSearchProductAction
+} from 'containers/SearchPage/actions'
+
 import HeaderMenu from './HeaderMenu'
+import SearchMenu from './SearchMenu'
 import SidebarMenu from './SidebarMenu'
 
 const Wrapper = styled.div`
@@ -42,6 +48,8 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     children: PropTypes.object.isRequired,
     getCategories: PropTypes.func.isRequired,
     changeRoute: PropTypes.func.isRequired,
+    searchProduct: PropTypes.func.isRequired,
+    setProductSearchList: PropTypes.func.isRequired,
     categories: PropTypes.bool.isRequired,
     routes: PropTypes.array.isRequired
   }
@@ -57,6 +65,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     this._handleLeftButtonAction = this._handleLeftButtonAction.bind(this)
     this._handleCloseSidebarClickPusher = this._handleCloseSidebarClickPusher.bind(this)
     this._hideBackButton = this._hideBackButton.bind(this)
+    this._displayHeader = this._displayHeader.bind(this)
   }
 
   _handleToggleSideBar () {
@@ -104,27 +113,48 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     return HIDE_BACK_BUTTON.includes(path)
   }
 
-  componentDidMount () {
-    this.props.getCategories()
-  }
-
-  render () {
-    const { children, productCategories, changeRoute } = this.props
-    const { toggleSidebar } = this.state
+  _displayHeader () {
+    const { changeRoute, routes, searchProduct, setProductSearchList } = this.props
+    const { path } = routes.slice().pop()
 
     /**
      * we have to identify if we should display backbutton
      */
     const hideBackButton = this._hideBackButton()
 
-    return (
-      <Wrapper>
-        <HeaderMenu
+    if (path === '/search') {
+      return (
+        <SearchMenu
+          clearSearch={setProductSearchList}
+          searchProduct={searchProduct}
           hideBackButton={hideBackButton}
           leftButtonAction={this._handleLeftButtonAction}
-          changeRoute={changeRoute}
           show
         />
+      )
+    }
+
+    return (
+      <HeaderMenu
+        hideBackButton={hideBackButton}
+        leftButtonAction={this._handleLeftButtonAction}
+        changeRoute={changeRoute}
+        show
+      />
+    )
+  }
+
+  componentDidMount () {
+    this.props.getCategories()
+  }
+
+  render () {
+    const { children, productCategories } = this.props
+    const { toggleSidebar } = this.state
+
+    return (
+      <Wrapper>
+        { this._displayHeader() }
         <MainContent>
           { children }
         </MainContent>
@@ -150,6 +180,8 @@ function mapDispatchToProps (dispatch) {
   return {
     getCategories: () => dispatch(getProductCategoriesAction()),
     changeRoute: (url) => dispatch(push(url)),
+    searchProduct: (payload) => dispatch(getSearchProductAction(payload)),
+    setProductSearchList: (payload) => dispatch(setSearchProductAction(payload)),
     dispatch
   }
 }

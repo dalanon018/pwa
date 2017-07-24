@@ -5,9 +5,11 @@ import { LOCATION_CHANGE } from 'react-router-redux'
 // import request from 'utils/request'
 
 import FakeCategories from 'fixtures/categories.json'
+
 import {
   GET_PRODUCT_CATEGORIES
 } from './constants'
+
 import {
   setProductCategoriesAction
 } from './actions'
