@@ -17,5 +17,9 @@ export default defineMessages({
   menuCategories: {
     id: 'app.containers.Bucket.menuCategories',
     defaultMessage: 'CATEGORIES'
+  },
+  searchPlaceHolder: {
+    id: 'app.containers.Bucket.searchPlaceHolder',
+    defaultMessage: 'SEARCH CLIQQ CODE'
   }
 })

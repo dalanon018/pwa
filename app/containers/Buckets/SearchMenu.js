@@ -1,14 +1,14 @@
 import React, { PureComponent, PropTypes } from 'react'
 import styled from 'styled-components'
 
+import { isEmpty } from 'lodash'
+import { injectIntl, intlShape } from 'react-intl'
 import {
-  Image,
+  Icon,
   Grid
 } from 'semantic-ui-react'
 
-import BarcodeImage from 'images/icons/barcode-header.svg'
-import SearchImage from 'images/icons/search-header.svg'
-import MainLogo from 'images/cliqq-logo.svg'
+import messages from './messages'
 
 const Wrapper = styled.div`
   background: #FFF;
@@ -28,28 +28,6 @@ const LeftWrapper = styled.div`
 
   animation:fadeIn ease-in 1;
   animation-duration: .5s;
-`
-
-const CenterWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`
-
-const ImageLogo = styled.img`
-  width: 80px;
-  height: 35px;
-`
-
-const RightWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`
-
-const SearchIcon = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-right: 20px;
 `
 
 const Hamburger = styled.div`
@@ -111,69 +89,117 @@ const HamburgerSpan = styled.span`
 
 `
 
-export default class MainMenu extends PureComponent {
+const SearchColumnWrapper = styled(Grid.Column)`
+  border: 1px solid  #F0F0F0;
+`
+
+const SearchContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 36px;
+  padding: 0 5px;
+`
+
+const SearchInput = styled.input`
+  color: #5B5B5B;
+  font-size: 18px;
+  letter-spacing: 1px;
+  margin-left: 5px;
+  width: 100%;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::placeholder {
+    letter-spacing: 1px;
+    font-weight: 100;
+  }
+`
+
+const CloseIcon = styled(Icon)`
+  align-self: center;
+`
+
+class SearchMenu extends PureComponent {
   static propTypes= {
     hideBackButton: PropTypes.bool.isRequired,
     leftButtonAction: PropTypes.func.isRequired,
-    changeRoute: PropTypes.func.isRequired
+    intl: intlShape.isRequired
   }
 
+  /**
+   * handler wether to show the close button or not.
+   */
   state = {
-    activeItem: null
+    dirty: false
   }
+
+  _searchInput
 
   constructor () {
     super()
 
-    this._handleBarcodeClick = this._handleBarcodeClick.bind(this)
-    this._handlerHomeClick = this._handlerHomeClick.bind(this)
-    this._handlerSearchClick = this._handlerSearchClick.bind(this)
+    this._inputReference = this._inputReference.bind(this)
+    this._handleKeyPress = this._handleKeyPress.bind(this)
+    this._clearInput = this._clearInput.bind(this)
   }
 
-  _handleBarcodeClick () {
-    const { changeRoute } = this.props
-    changeRoute('/barcodes')
+  _inputReference (inp) {
+    this._searchInput = inp
   }
 
-  _handlerHomeClick () {
-    const { changeRoute } = this.props
-    changeRoute('/')
+  _handleKeyPress (evt) {
+    this.setState({
+      dirty: !isEmpty(evt.target.value)
+    })
   }
 
-  _handlerSearchClick () {
-    const { changeRoute } = this.props
-    changeRoute('/search')
+  _clearInput () {
+    this._searchInput.value = ''
+    this.setState({
+      dirty: false
+    })
   }
 
   render () {
-    const { leftButtonAction, hideBackButton } = this.props
+    const { leftButtonAction, hideBackButton, intl } = this.props
+    const { dirty } = this.state
     return (
       <Wrapper>
-        <Grid columns={3}>
+        <Grid>
           <Grid.Row>
-            <Grid.Column verticalAlign='middle'>
+            <Grid.Column verticalAlign='middle' width={2}>
               <LeftWrapper onClick={leftButtonAction} >
                 <Hamburger>
                   <HamburgerSpan active={!hideBackButton}>toggle menu</HamburgerSpan>
                 </Hamburger>
               </LeftWrapper>
             </Grid.Column>
-            <Grid.Column verticalAlign='middle'>
-              <CenterWrapper>
-                <ImageLogo src={MainLogo} onClick={this._handlerHomeClick} />
-              </CenterWrapper>
-            </Grid.Column>
-            <Grid.Column verticalAlign='middle'>
-              <RightWrapper>
-                <SearchIcon>
-                  <Image src={SearchImage} size='mini' onClick={this._handlerSearchClick} />
-                </SearchIcon>
-                <Image src={BarcodeImage} size='mini' onClick={this._handleBarcodeClick} />
-              </RightWrapper>
-            </Grid.Column>
+            <SearchColumnWrapper className='padding__none' verticalAlign='middle' width={13}>
+              <SearchContainer>
+                <Icon name='search' color='black' size='large' />
+                <SearchInput
+                  innerRef={this._inputReference}
+                  placeholder={intl.formatMessage(messages.searchPlaceHolder)}
+                  onChange={this._handleKeyPress}
+                />
+                {
+                  dirty &&
+                  <CloseIcon
+                    onClick={this._clearInput}
+                    name='remove circle outline'
+                    color='orange'
+                    size='big' />
+                }
+              </SearchContainer>
+            </SearchColumnWrapper>
           </Grid.Row>
         </Grid>
       </Wrapper>
     )
   }
 }
+
+export default injectIntl(SearchMenu)
