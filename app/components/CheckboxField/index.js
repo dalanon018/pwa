@@ -10,6 +10,7 @@ import styled from 'styled-components'
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
 import { Checkbox } from 'semantic-ui-react'
+import A from 'components/A'
 
 const CheckboxWrapper = styled.div`
   display: flex;
@@ -34,7 +35,7 @@ function CheckboxField ({label}) {
   return (
     <CheckboxWrapper>
       <Checkbox id='checkbox' />
-      <label htmlFor='checkbox'>{label}<a>Terms and Conditions</a></label>
+      <label htmlFor='checkbox'>{label}<A href='https://google.com'>Terms and Conditions</A></label>
     </CheckboxWrapper>
   )
 }
