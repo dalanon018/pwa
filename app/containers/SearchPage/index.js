@@ -5,35 +5,59 @@
  */
 
 import React, { PropTypes } from 'react'
-import { connect } from 'react-redux'
 import Helmet from 'react-helmet'
-import { FormattedMessage } from 'react-intl'
+
+import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import makeSelectSearchPage from './selectors'
-import messages from './messages'
+
+import Product from 'components/Product'
+
+import {
+  selectSearchProductLoading,
+  selectSearchProduct
+} from './selectors'
 
 export class SearchPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  static propTypes = {
+    product: PropTypes.object.isRequired,
+    loading: PropTypes.bool.isRequired
+  }
+
+  constructor () {
+    super()
+
+    this._displayProduct = this._displayProduct.bind(this)
+  }
+  _displayProduct () {
+    const { loading, product } = this.props
+
+    if (product.size > 0) {
+      return (
+        <Product loading={loading} product={product} />
+      )
+    }
+
+    return null
+  }
+
   render () {
     return (
       <div>
         <Helmet
-          title='SearchPage'
+          title='Search'
           meta={[
             { name: 'description', content: 'Description of SearchPage' }
           ]}
         />
-        <FormattedMessage {...messages.header} />
+        { this._displayProduct() }
       </div>
     )
   }
 }
 
-SearchPage.propTypes = {
-  dispatch: PropTypes.func.isRequired
-}
-
 const mapStateToProps = createStructuredSelector({
-  SearchPage: makeSelectSearchPage()
+  product: selectSearchProduct(),
+  loading: selectSearchProductLoading()
 })
 
 function mapDispatchToProps (dispatch) {

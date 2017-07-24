@@ -18,6 +18,11 @@ import {
   HIDE_BACK_BUTTON
 } from './constants'
 
+import {
+  getSearchProductAction,
+  setSearchProductAction
+} from 'containers/SearchPage/actions'
+
 import HeaderMenu from './HeaderMenu'
 import SearchMenu from './SearchMenu'
 import SidebarMenu from './SidebarMenu'
@@ -43,6 +48,8 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     children: PropTypes.object.isRequired,
     getCategories: PropTypes.func.isRequired,
     changeRoute: PropTypes.func.isRequired,
+    searchProduct: PropTypes.func.isRequired,
+    setProductSearchList: PropTypes.func.isRequired,
     categories: PropTypes.bool.isRequired,
     routes: PropTypes.array.isRequired
   }
@@ -107,7 +114,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   _displayHeader () {
-    const { changeRoute, routes } = this.props
+    const { changeRoute, routes, searchProduct, setProductSearchList } = this.props
     const { path } = routes.slice().pop()
 
     /**
@@ -118,6 +125,8 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     if (path === '/search') {
       return (
         <SearchMenu
+          clearSearch={setProductSearchList}
+          searchProduct={searchProduct}
           hideBackButton={hideBackButton}
           leftButtonAction={this._handleLeftButtonAction}
           show
@@ -171,6 +180,8 @@ function mapDispatchToProps (dispatch) {
   return {
     getCategories: () => dispatch(getProductCategoriesAction()),
     changeRoute: (url) => dispatch(push(url)),
+    searchProduct: (payload) => dispatch(getSearchProductAction(payload)),
+    setProductSearchList: (payload) => dispatch(setSearchProductAction(payload)),
     dispatch
   }
 }

@@ -1,15 +1,19 @@
-/*
- *
- * SearchPage actions
- *
- */
 
 import {
-  DEFAULT_ACTION
+  GET_SEARCH_PRODUCT,
+  SET_SEARCH_PRODUCT
 } from './constants'
 
-export function defaultAction () {
+export function getSearchProductAction (payload) {
   return {
-    type: DEFAULT_ACTION
+    type: GET_SEARCH_PRODUCT,
+    payload
+  }
+}
+
+export function setSearchProductAction (payload) {
+  return {
+    type: SET_SEARCH_PRODUCT,
+    payload
   }
 }

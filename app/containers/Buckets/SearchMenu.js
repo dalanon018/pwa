@@ -126,6 +126,8 @@ class SearchMenu extends PureComponent {
   static propTypes= {
     hideBackButton: PropTypes.bool.isRequired,
     leftButtonAction: PropTypes.func.isRequired,
+    searchProduct: PropTypes.func.isRequired,
+    clearSearch: PropTypes.func.isRequired,
     intl: intlShape.isRequired
   }
 
@@ -143,6 +145,7 @@ class SearchMenu extends PureComponent {
 
     this._inputReference = this._inputReference.bind(this)
     this._handleKeyPress = this._handleKeyPress.bind(this)
+    this._handleOnchange = this._handleOnchange.bind(this)
     this._clearInput = this._clearInput.bind(this)
   }
 
@@ -150,17 +153,44 @@ class SearchMenu extends PureComponent {
     this._searchInput = inp
   }
 
-  _handleKeyPress (evt) {
+  _handleOnchange (evt) {
     this.setState({
       dirty: !isEmpty(evt.target.value)
     })
   }
 
+  _handleKeyPress (e) {
+    const { searchProduct } = this.props
+    const code = e.keyCode || e.which
+
+    if (code === 13 && e.target.value) {
+      // we will update our search key here.
+      searchProduct({ id: e.target.value })
+    }
+    return true
+  }
+
   _clearInput () {
+    const { clearSearch } = this.props
     this._searchInput.value = ''
     this.setState({
       dirty: false
     })
+    clearSearch({})
+  }
+
+  componentDidMount () {
+    // Evergreen event listener || IE8 event listener
+    const addEvent = this._searchInput.addEventListener || this._searchInput.attachEvent
+    addEvent('keypress', this._handleKeyPress, false)
+  }
+
+  componentWillUnmount () {
+    if (this._searchInput) {
+      // Reduce any memory leaks
+      const removeEvent = this._searchInput.removeEventListener || this._searchInput.detachEvent
+      removeEvent('keypress', this._handleKeyPress)
+    }
   }
 
   render () {
@@ -183,7 +213,7 @@ class SearchMenu extends PureComponent {
                 <SearchInput
                   innerRef={this._inputReference}
                   placeholder={intl.formatMessage(messages.searchPlaceHolder)}
-                  onChange={this._handleKeyPress}
+                  onChange={this._handleOnchange}
                 />
                 {
                   dirty &&
