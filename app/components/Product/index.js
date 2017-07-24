@@ -85,15 +85,21 @@ const calculateAmount = (product) =>
 const calculateProductPrice = (product) => {
   if (isEmpty(product.get('discount'))) {
     return (parseFloat(product.get('price')).toLocaleString())
+    const Product = ({ product, loading, popup }) => {
+      const getTotalPrice = (price = 0, discount = 0) => {
+        return price - (price * (discount / 100))
+      }
+
+      return identifyCalculation({
+        PERCENTAGE: calculatePercentage,
+        AMOUNT: calculateAmount
+      })(calculatePercentage)(product.getIn(['discount', 'percentType']))(product)
+    }
   }
-
-  return identifyCalculation({
-    PERCENTAGE: calculatePercentage,
-    AMOUNT: calculateAmount
-  })(calculatePercentage)(product.getIn(['discount', 'percentType']))(product)
 }
+  
 
-const Product = ({ product, loading }) => {
+const Product = ({ product, loading, popup }) => {
   return (
     <ProductWrapper>
       <ImageBanner>
@@ -141,7 +147,7 @@ const Product = ({ product, loading }) => {
         </ShippingDetails>
         <ButtonContainer>
           <Button
-            onClick={() => {}}
+            onClick={popup}
             primary
             fluid
             loading={loading}

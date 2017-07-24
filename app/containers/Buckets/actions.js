@@ -6,7 +6,8 @@
 
 import {
   GET_PRODUCT_CATEGORIES,
-  SET_PRODUCT_CATEGORIES
+  SET_PRODUCT_CATEGORIES,
+  SET_TOGGLE
 } from './constants'
 
 export function getProductCategoriesAction () {
@@ -18,6 +19,13 @@ export function getProductCategoriesAction () {
 export function setProductCategoriesAction (payload) {
   return {
     type: SET_PRODUCT_CATEGORIES,
+    payload
+  }
+}
+
+export function setToggleAction (payload) {
+  return {
+    type: SET_TOGGLE,
     payload
   }
 }

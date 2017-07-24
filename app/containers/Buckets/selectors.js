@@ -18,7 +18,13 @@ const selectProductCategories = () => createSelector(
   (substate) => substate.get('categories')
 )
 
+const selectToggle = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('toggle')
+)
+
 export {
   selectBucketDomain,
+  selectToggle,
   selectProductCategories
 }
