@@ -1,0 +1,17 @@
+{
+  "sevenConnectRefNum":"1503-5000-0074",
+  "transactionId":"42495701250238480",
+  "merchantRef": "121212151545",
+  "totalPrice":8476.85,
+  "product": {
+    "cliqqCode": "0001",
+    "productName":"Gionee Gpad G5 BLK",
+    "imageUrl": "",
+    "logoUrl": ""
+  },
+  "expiryDate":"2015-02-14 19:33:09",
+  "deliveryDate":"2015-02-06 12:00:00",
+  "dateCreated":"2015-02-05 11:50:40",
+  "paymentType": "COD",
+  "status": "reservation"
+}

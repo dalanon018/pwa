@@ -14,9 +14,9 @@ import {
   setProductAction
 } from './actions'
 
-function * sleep (ms) {
-  yield new Promise(resolve => setTimeout(resolve, ms))
-}
+// function * sleep (ms) {
+//   yield new Promise(resolve => setTimeout(resolve, ms))
+// }
 
 export function * getProduct (payload) {
   const { payload: { id } } = payload
@@ -34,7 +34,6 @@ export function * getProduct (payload) {
 
   // We will emulate data
   const req = yield Promise.resolve(find(FakeProducts, { product_id: id }))
-  yield sleep(2000)
   if (!req.err) {
     yield put(setProductAction(req))
   }
