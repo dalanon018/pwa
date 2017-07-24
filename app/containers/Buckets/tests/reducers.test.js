@@ -10,7 +10,8 @@ describe('Buckets Reducer', () => {
   let state
   beforeEach(() => {
     state = fromJS({
-      categories: []
+      categories: [],
+      toggle: false
     })
   })
 

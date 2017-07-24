@@ -12,6 +12,7 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
 import Product from 'components/Product'
+import PopupSlide from 'components/PopupSlide'
 
 import {
   selectLoader,
@@ -22,12 +23,21 @@ import {
   getProductAction
 } from './actions'
 
+import {
+  setToggleAction
+} from 'containers/Buckets/actions'
+
+import {
+  selectToggle
+} from 'containers/Buckets/selectors'
+
 export class ProductPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     getProduct: PropTypes.func.isRequired,
     changeRoute: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
-    loading: PropTypes.bool.isRequired
+    loading: PropTypes.bool.isRequired,
+    toggle: PropTypes.bool.isRequired
   }
 
   componentDidMount () {
@@ -35,8 +45,12 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.props.getProduct({ id })
   }
 
+  handleToggle = () => {
+    this.props.setToggle()
+  }
+
   render () {
-    const { loading, product } = this.props
+    const { loading, product, toggle } = this.props
 
     return (
       <div>
@@ -46,7 +60,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             { name: 'description', content: 'Description of ProductPage' }
           ]}
         />
-        <Product loading={loading} product={product} />
+        <Product loading={loading} product={product} popup={this.handleToggle} />
+        <PopupSlide toggle={toggle} onClose={this.handleToggle} />
       </div>
     )
   }
@@ -58,12 +73,14 @@ ProductPage.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   loading: selectLoader(),
-  product: selectProduct()
+  product: selectProduct(),
+  toggle: selectToggle()
 })
 
 function mapDispatchToProps (dispatch) {
   return {
     getProduct: (payload) => dispatch(getProductAction(payload)),
+    setToggle: payload => dispatch(setToggleAction(payload)),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
   }

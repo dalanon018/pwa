@@ -93,7 +93,7 @@ const calculateProductPrice = (product) => {
   })(calculatePercentage)(product.getIn(['discount', 'percentType']))(product)
 }
 
-const Product = ({ product, loading }) => {
+const Product = ({ product, loading, popup }) => {
   return (
     <ProductWrapper>
       <ImageBanner>
@@ -141,7 +141,7 @@ const Product = ({ product, loading }) => {
         </ShippingDetails>
         <ButtonContainer>
           <Button
-            onClick={() => {}}
+            onClick={popup}
             primary
             fluid
             loading={loading}

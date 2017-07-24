@@ -18,7 +18,7 @@ import {
 import { Grid } from 'semantic-ui-react'
 
 import sampleCategoryIcon from 'images/test-images/category-test.svg'
-import moreIcon from 'images/more-icon.svg'
+import moreIcon from 'images/icons/more-icon.svg'
 
 function NavCategories ({
   categories
