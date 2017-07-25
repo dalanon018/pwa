@@ -14,3 +14,16 @@ export const HIDE_BACK_BUTTON = [
   '/home',
   '/barcodes'
 ]
+
+export const PURCHASE_ORDER = [
+  'RESERVATION',
+  'PAID',
+  'INTRANSIT',
+  'PICKUP'
+]
+
+export const PURCHASE_USECASE = [
+  'REPURCHASED',
+  'CLAIMED',
+  'NOTCLAIMED'
+]

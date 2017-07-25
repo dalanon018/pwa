@@ -1,23 +1,23 @@
 [
   {
-    "totalPrice": "450.00",
+    "trackingNumber": "344760497230963792",
+    "claimExpiry": "2017-08-13 00:17:08",
+    "currency": "COD",
+    "dateCreated": "2017-07-20 16:17:34",
+    "amount": "450.00",
     "quantity": "1",
-    "expiryDate": "2015-02-04 20:17:14",
-    "deliveryDate": "2015-02-06 12:00:00",
     "mobileNumber": "09052720567",
     "quantity": "1",
-    "status": "CONFIRMED",
-    "paymentType": "CASH",
+    "status": "PAID",
     "location": {
       "store_id": "0001",
       "name": "IBM PLAZA-EASTWOOD"
     },
     "products": {
-      "product_id": 1,
-      "cliqq_code": "0001",
+      "product_id": "0001",
       "image": null,
       "brandLogo": null,
-      "title": "All Day Backpack | (wine)",
+      "name": "All Day Backpack | (wine)",
       "barcode": "718037806839",
       "price": "600",
       "discount": {
@@ -28,14 +28,14 @@
     }
   },
   {
-    "totalPrice": "270.00",
+    "trackingNumber": "344760497230963999",
+    "claimExpiry": "2017-08-13 00:17:08",
+    "currency": "COD",
+    "amount": "270.00",
     "quantity": "1",
-    "expiryDate": "2015-02-04 20:17:14",
-    "deliveryDate": "2015-02-06 12:00:00",
     "mobileNumber": "09052720567",
     "quantity": "1",
-    "status": "READYPICKUP",
-    "paymentType": "CASH",
+    "status": "PICKUP",
     "location": {
       "store_id": "0001",
       "name": "IBM PLAZA-EASTWOOD"
@@ -44,7 +44,7 @@
       "product_id": "0002",
       "image": null,
       "brandLogo": null,
-      "title": "All Day Backpack | (green)",
+      "name": "All Day Backpack | (green)",
       "barcode": "718037806839",
       "price": "300",
       "discount": {
@@ -55,14 +55,14 @@
     }
   },
   {
-    "totalPrice": "760.00",
+    "trackingNumber": "344760497230963888",
+    "claimExpiry": "2017-08-13 00:17:08",
+    "currency": "COD",
+    "amount": "760.00",
     "quantity": "1",
-    "expiryDate": "2015-02-04 20:17:14",
-    "deliveryDate": "2015-02-06 12:00:00",
     "mobileNumber": "09052720567",
     "quantity": "1",
     "status": "INTRANSIT",
-    "paymentType": "CASH",
     "location": {
       "store_id": "0001",
       "name": "IBM PLAZA-EASTWOOD"
@@ -71,7 +71,7 @@
       "product_id": "0003",
       "image": null,
       "brandLogo": null,
-      "title": "All Day Backpack | (blue)",
+      "name": "All Day Backpack | (blue)",
       "barcode": "718037806839",
       "price": "800",
       "discount": {

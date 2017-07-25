@@ -9,5 +9,9 @@ export default defineMessages({
   receiptsTitle: {
     id: 'app.containers.Purchases.receiptsTitle',
     defaultMessage: 'RECEIPTS'
+  },
+  emptyPurchases: {
+    id: 'app.containers.Purchases.emptyPurchases',
+    defaultMessage: 'YOU HAVE NOT MADE ANY PURCHASES YET'
   }
 })

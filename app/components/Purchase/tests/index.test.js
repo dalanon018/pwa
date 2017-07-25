@@ -1,4 +1,5 @@
 import React from 'react'
+import { fromJS } from 'immutable'
 import { shallow } from 'enzyme'
 
 import Purchase from '../index'
@@ -12,6 +13,7 @@ const wrapper = (props = {}, enzyme = shallow) => enzyme(
 
 describe('<Purchase />', () => {
   const minProps = {
+    order: fromJS({}),
     onClick: () => {}
   }
 

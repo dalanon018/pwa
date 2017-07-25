@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 
 import H6 from 'components/H6'
@@ -7,12 +7,12 @@ import TestLogo from 'images/test-images/PENSHOPPE-TICKET.png'
 import CliqqLogo from 'images/icons/cliqq.png'
 
 const PurchaseWrapper = styled.div`
-  margin: 20px 0;
+  margin: 5px 0;
 `
 
 const ProductWrapper = styled.div`
   background-color: #F0F0F0;
-  border: 2px solid blue;
+  border: 2px solid  ${({status}) => status};
   border-radius: 5px;
   display: flex;
   height: 140px;
@@ -47,27 +47,46 @@ const ProductLogoImage = styled.img`
   max-width: 100%;
 `
 
-const PurchaseDescription = styled.div`
-  background-color: #FFF;
-  height: 100px;
-`
+/**
+ * Currying for instead of using *ugly SWITCH statement
+ * @param {*} cases
+ */
+const identifyColor = cases => defaultColor => key =>
+ key in cases ? cases[key] : defaultColor
 
-const Purchase = () => (
+/**
+ * Main component for identifying color
+ * @param {*} param0
+ */
+const getColorStatus = (status) => {
+  return identifyColor({
+    RESERVATION: '#41BDF2',
+    PAID: '#F58322',
+    INTRANSIT: '#EFBA03',
+    PICKUP: '#8DC641',
+    REPURCHASED: '#2081EC',
+    CLAIMED: '#16A483',
+    NOTCLAIMED: '#F23640'
+  })('#41BDF2')(status)
+}
+
+const Purchase = ({ order }) => (
   <PurchaseWrapper>
-    <ProductWrapper >
+    <ProductWrapper status={getColorStatus(order.get('status'))}>
       <ProductImage background={TestBackPack} />
       <ProductDescription>
-        <CodeWrapper> <CodeImage src={CliqqLogo} /> 000D1</CodeWrapper>
-        <H6> ALL DAY BACKPACK | WINE </H6>
+        <CodeWrapper> <CodeImage src={CliqqLogo} />
+          { order.getIn(['products', 'product_id']) }
+        </CodeWrapper>
+        <H6 uppercase> { order.getIn(['products', 'name']) } </H6>
         <ProductLogoImage src={TestLogo} />
       </ProductDescription>
     </ProductWrapper>
-    <PurchaseDescription />
   </PurchaseWrapper>
 )
 
 Purchase.propTypes = {
-
+  order: PropTypes.object.isRequired
 }
 
 export default Purchase
