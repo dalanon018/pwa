@@ -101,6 +101,26 @@ export default function createRoutes (store) {
             importModules.catch(errorLoading)
           }
         }, {
+          path: '/review',
+          name: 'productReview',
+          getComponent (nextState, cb) {
+            const importModules = Promise.all([
+              import('containers/ProductReview/reducer'),
+              import('containers/ProductReview/sagas'),
+              import('containers/ProductReview')
+            ])
+
+            const renderRoute = loadModule(cb)
+
+            importModules.then(([reducer, sagas, component]) => {
+              injectReducer('productReview', reducer.default)
+              injectSagas(sagas.default)
+              renderRoute(component)
+            })
+
+            importModules.catch(errorLoading)
+          }
+        }, {
           path: '/search',
           name: 'searchPage',
           getComponent (nextState, cb) {

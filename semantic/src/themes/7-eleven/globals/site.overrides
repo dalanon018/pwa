@@ -98,6 +98,11 @@ p {
       &--none {
         margin-top: 0;
       }
+      &-positive {
+        &--20 {
+          margin-top: 20px;
+        }
+      }
     }
     &__bottom {
       &-positive {
