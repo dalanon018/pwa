@@ -207,7 +207,7 @@ class SearchMenu extends PureComponent {
                 </Hamburger>
               </LeftWrapper>
             </Grid.Column>
-            <SearchColumnWrapper className='padding__none' verticalAlign='middle' width={13}>
+            <SearchColumnWrapper className='padding__none--horizontal' verticalAlign='middle' width={13}>
               <SearchContainer>
                 <Icon name='search' color='black' size='large' />
                 <SearchInput

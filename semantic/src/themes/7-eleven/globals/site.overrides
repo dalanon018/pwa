@@ -106,8 +106,15 @@ input.input-field {
   /* Product Padding */
   .padding {
     &__none {
-      padding-left: 0 !important;
-      padding-right: 0 !important;
+      padding: 0 !important;
+      &--horizontal {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      &--vertical {
+        padding-bottom: 0 !important;
+        padding-top: 0 !important;
+      }
     }
     &__right {
       padding-right: 5px;

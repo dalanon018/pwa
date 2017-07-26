@@ -37,7 +37,7 @@ function Category ({
           : categories &&
           categories.valueSeq().map((category, index) => {
             return (
-              <Grid.Column key={index} className='padding__none' mobile={4} tablet={4} computer={3} widescreen={3}>
+              <Grid.Column key={index} className='padding__none--horizontal' mobile={4} tablet={4} computer={3} widescreen={3}>
                 <CategoryBlock className='responsive-width' background={CategoryBgSample}>
                   <CategoryItem>
                     <Image src={sampleCategoryIcon} />
@@ -54,7 +54,7 @@ function Category ({
 
 const DefaultState = () => {
   return (
-    <Grid.Column className='padding__none' mobile={4} tablet={4} computer={3} widescreen={3}>
+    <Grid.Column className='padding__none--horizontal' mobile={4} tablet={4} computer={3} widescreen={3}>
       <EmptyDataBlock>
         <CategoryBlock className='responsive-width' background={EmptyImage} />
       </EmptyDataBlock>

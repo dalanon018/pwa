@@ -82,7 +82,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     return (
       <Grid padded>
         <Grid.Row>
-          <Grid.Column className='padding__none'>
+          <Grid.Column className='padding__none--horizontal'>
 
             <ReviewContainer>
               <StepWrapper>

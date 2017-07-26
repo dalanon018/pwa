@@ -91,7 +91,7 @@ function ProductView ({
         loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
         : products.valueSeq().map((product) => {
           return (
-            <Grid.Column key={product.get('product_id')} className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3} onClick={() => changeRoute(`/product/${product.get('product_id')}`)}>
+            <Grid.Column key={product.get('product_id')} className='padding__none--horizontal' mobile={8} tablet={4} computer={3} widescreen={3} onClick={() => changeRoute(`/product/${product.get('product_id')}`)}>
               <ProductWrapper>
                 {
                   !isEmpty(product.get('discount')) &&
@@ -125,7 +125,7 @@ function ProductView ({
 
 const DefaultState = () => {
   return (
-    <Grid.Column className='padding__none' mobile={8} tablet={4} computer={3} widescreen={3}>
+    <Grid.Column className='padding__none--horizontal' mobile={8} tablet={4} computer={3} widescreen={3}>
       <EmptyDataBlock>
         <ProductWrapper>
           <ImageWrapper background={EmptyImage} className='custom-height' />
