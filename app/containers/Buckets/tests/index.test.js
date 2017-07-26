@@ -17,6 +17,7 @@ describe('<Buckets />', () => {
     categories: fromJS({}),
     getCategories: () => {},
     dispatch: () => {},
+    changeRoute: () => {},
     routes: [{
       path: '/'
     }]

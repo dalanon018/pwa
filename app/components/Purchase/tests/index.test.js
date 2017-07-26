@@ -5,7 +5,9 @@ import { shallow } from 'enzyme'
 import Purchase from '../index'
 
 import {
-  STATUSES
+  STATUSES,
+  PURCHASE_ORDER,
+  PURCHASE_USECASE
 } from '../../../containers/Buckets/constants'
 
 const children = (<h1>Test</h1>)
@@ -45,6 +47,8 @@ describe('<Purchase />', () => {
       }
     }),
     statuses: STATUSES,
+    purchaseUsecases: PURCHASE_USECASE,
+    purchaseOrders: PURCHASE_ORDER,
     changeRoute: () => {}
   }
 

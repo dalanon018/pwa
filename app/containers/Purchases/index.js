@@ -16,7 +16,9 @@ import { createStructuredSelector } from 'reselect'
 import H1 from 'components/H1'
 import Purchase from 'components/Purchase'
 import {
-  STATUSES
+  STATUSES,
+  PURCHASE_ORDER,
+  PURCHASE_USECASE
 } from 'containers/Buckets/constants'
 
 import EmptyPurchase from 'images/empty-purchases.svg'
@@ -137,6 +139,8 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
                 key={order.get('trackingNumber')}
                 order={order}
                 statuses={STATUSES}
+                purchaseUsecases={PURCHASE_USECASE}
+                purchaseOrders={PURCHASE_ORDER}
                 changeRoute={changeRoute}
               />
             )
