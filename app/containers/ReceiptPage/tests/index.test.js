@@ -16,7 +16,8 @@ describe('<ReceiptPage />', () => {
     loading: false,
     receipt: fromJS({}),
     getReceipt: () => {},
-    dispatch: () => {}
+    dispatch: () => {},
+    changeRoute: () => {}
   }
 
   it('render without exploding', () => {

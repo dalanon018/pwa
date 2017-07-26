@@ -42,7 +42,7 @@ const ComponentDetail = components => component => key =>
  key in components ? components[key] : component
 
 const DetailsContent = ({ title, children }) => (
-  <Grid.Row className='padding__none'>
+  <Grid.Row className='padding__none--vertical'>
     <Grid.Column width={8} verticalAlign='middle'>
       <DetailTitle> { title } </DetailTitle>
     </Grid.Column>
@@ -85,16 +85,15 @@ const DetailStatus = ({ status, receipt }) => {
 
 const WarningContent = ({ children }) => (
   <WrapperWarning padded>
-    <Grid.Row className='padding__none'>
+    <Grid.Row>
       <Grid.Column verticalAlign='middle' width={3}>
         <img src={WarningIcon} />
       </Grid.Column>
-      <Grid.Column textAlign='center' verticalAlign='middle' width={10}>
+      <Grid.Column textAlign='center' verticalAlign='middle' width={12}>
         <WarningDescription>
           { children }
         </WarningDescription>
       </Grid.Column>
-      <Grid.Column verticalAlign='middle' width={3} />
     </Grid.Row>
   </WrapperWarning>
 )
@@ -125,7 +124,8 @@ const WarningStatus = ({status}) => {
 class Receipt extends React.PureComponent {
   static propTypes = {
     receipt: PropTypes.object.isRequired,
-    statuses: PropTypes.object.isRequired
+    statuses: PropTypes.object.isRequired,
+    goHome: PropTypes.func.isRequired
   }
 
   constructor () {
@@ -162,7 +162,7 @@ class Receipt extends React.PureComponent {
   }
 
   render () {
-    const { receipt, statuses } = this.props
+    const { receipt, statuses, goHome } = this.props
 
     return (
       <ReceiptWrapper>
@@ -180,7 +180,7 @@ class Receipt extends React.PureComponent {
           { this._renderPurchaseBanner() }
           <PurchaseGeneralInfo>
             <Grid padded='vertically'>
-              <Grid.Row className='padding__none'>
+              <Grid.Row className='padding__none--vertical'>
                 <Grid.Column width={4} verticalAlign='middle'>
                   <DetailTitle>
                     <FormattedMessage {...messages.receiptPriceTitle} />
@@ -191,7 +191,7 @@ class Receipt extends React.PureComponent {
                 </Grid.Column>
               </Grid.Row>
               <DetailStatus {...{ status: statuses[receipt.get('status')], receipt }} />
-              <Grid.Row className='padding__none'>
+              <Grid.Row className='padding__none--vertical'>
                 <Grid.Column width={7} verticalAlign='middle'>
                   <DetailTitle>
                     <FormattedMessage {...messages.receiptStoreLocationTitle} />
@@ -208,7 +208,8 @@ class Receipt extends React.PureComponent {
             </WarningContent>
             <ButtonWrapper>
               <Button
-                onClick={() => {}}
+                onClick={goHome}
+                size={12}
                 primary
               > <FormattedMessage {...messages.returnToHome} /> </Button>
             </ButtonWrapper>

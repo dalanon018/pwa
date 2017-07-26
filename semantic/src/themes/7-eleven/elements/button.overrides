@@ -5,4 +5,5 @@
 .ui.button {
   border-radius: 0;
   font-weight: 300;
+  padding: 10px 45px;
 }

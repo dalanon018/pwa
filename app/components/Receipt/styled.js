@@ -62,7 +62,7 @@ export const PurchaseGeneralInfo = styled.div`
 `
 
 export const DetailTitle = styled.div`
-
+  margin: 5px 0;
 `
 
 export const ProductPrice = styled.p`

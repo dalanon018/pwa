@@ -8,6 +8,7 @@ import React, { PropTypes } from 'react'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
 
+import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
@@ -51,13 +52,15 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
     loading: PropTypes.bool.isRequired,
     receipt: PropTypes.object.isRequired,
     getReceipt: PropTypes.func.isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    changeRoute: PropTypes.func.isRequired
   }
 
   constructor () {
     super()
 
     this._identifyBackground = this._identifyBackground.bind(this)
+    this._goToHome = this._goToHome.bind(this)
   }
 
   _identifyBackground () {
@@ -71,6 +74,10 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
       CLAIMED,
       UNCLAIMED
     })('none')(STATUSES[receipt.get('status')])
+  }
+
+  _goToHome () {
+    this.props.changeRoute('/')
   }
 
   componentDidMount () {
@@ -94,6 +101,7 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
           purchaseUsecases={PURCHASE_USECASE}
           purchaseOrder={PURCHASE_ORDER}
           receipt={receipt}
+          goHome={this._goToHome}
         />
       </ReceiptWrapper>
     )
@@ -108,6 +116,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps (dispatch) {
   return {
     getReceipt: (payload) => dispatch(getReceiptAction(payload)),
+    changeRoute: (url) => dispatch(push(url)),
     dispatch
   }
 }
