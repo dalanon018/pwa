@@ -106,7 +106,12 @@ const Product = ({ product, loading, popup }) => {
           <HeaderWrapper>
             <CodeImage src={CliqqLogo} /> { product.get('product_id') }
           </HeaderWrapper>
-          <H3 weight='300' letterSpacing='4px' uppercase> { product.get('title') } </H3>
+          <H3
+            weight='300'
+            letterSpacing='4px'
+            uppercase
+            center
+          > { product.get('title') } </H3>
           <ProductPriceWrapper>
             <ProductPriceTitle> <FormattedMessage {...messages.productPriceTitle} /> </ProductPriceTitle>
             <ProductPrice>

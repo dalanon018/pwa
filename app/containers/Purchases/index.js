@@ -8,16 +8,17 @@ import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 import Helmet from 'react-helmet'
 
+import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 
 import H1 from 'components/H1'
 import Purchase from 'components/Purchase'
+import {
+  STATUSES
+} from 'containers/Buckets/constants'
 
-import ConfirmImage from 'images/CONFIRM-BG.png'
-import IntransitImage from 'images/IN-TRANSIT-BG.png'
-import PickupImage from 'images/PICK-UP-BG.png'
 import EmptyPurchase from 'images/empty-purchases.svg'
 
 import messages from './messages'
@@ -79,8 +80,12 @@ export const EmptyPurchases = () => (
 export class Purchases extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     loading: PropTypes.bool.isRequired,
-    purchases: PropTypes.object.isRequired,
+    purchases: PropTypes.oneOfType([
+      PropTypes.array.isRequired,
+      PropTypes.object.isRequired
+    ]),
     getPurchases: PropTypes.func.isRequired,
+    changeRoute: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired
   }
 
@@ -91,27 +96,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
   constructor () {
     super()
 
-    this._afterChange = this._afterChange.bind(this)
-    this._identifyBackground = this._identifyBackground.bind(this)
     this._displayEmpty = this._displayEmpty.bind(this)
-  }
-
-  _afterChange (index) {
-    console.log(index)
-  }
-
-  _identifyBackground () {
-    const { current } = this.state
-    // means its still loading
-    if (current === null) {
-      return PickupImage
-    }
-
-    switch (current.get('status')) {
-      case 'INTRANSIT': return IntransitImage
-      case 'CONFIRMED': return ConfirmImage
-      default: return PickupImage
-    }
   }
 
   _displayEmpty () {
@@ -131,12 +116,12 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
   }
 
   render () {
-    const { purchases } = this.props
+    const { purchases, changeRoute } = this.props
 
     return (
       <BarcodeListWrapper>
         <Helmet
-          title='Barcodes'
+          title='Receipts'
           meta={[
             { name: 'description', content: 'List of barcodes' }
           ]}
@@ -148,7 +133,12 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
           { this._displayEmpty() }
           {
             purchases.map((order) =>
-              <Purchase key={order.get('trackingNumber')} order={order} />
+              <Purchase
+                key={order.get('trackingNumber')}
+                order={order}
+                statuses={STATUSES}
+                changeRoute={changeRoute}
+              />
             )
           }
         </PurchasesList>
@@ -165,6 +155,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps (dispatch) {
   return {
     getPurchases: (payload) => dispatch(getPurchasesAction(payload)),
+    changeRoute: (url) => dispatch(push(url)),
     dispatch
   }
 }

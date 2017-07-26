@@ -81,6 +81,26 @@ export default function createRoutes (store) {
             importModules.catch(errorLoading)
           }
         }, {
+          path: '/purchases/:trackingNumber',
+          name: 'receiptPage',
+          getComponent (nextState, cb) {
+            const importModules = Promise.all([
+              import('containers/ReceiptPage/reducer'),
+              import('containers/ReceiptPage/sagas'),
+              import('containers/ReceiptPage')
+            ])
+
+            const renderRoute = loadModule(cb)
+
+            importModules.then(([reducer, sagas, component]) => {
+              injectReducer('receiptPage', reducer.default)
+              injectSagas(sagas.default)
+              renderRoute(component)
+            })
+
+            importModules.catch(errorLoading)
+          }
+        }, {
           path: '/product/:id',
           name: 'productPage',
           getComponent (nextState, cb) {

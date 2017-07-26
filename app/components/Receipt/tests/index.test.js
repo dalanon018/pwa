@@ -1,23 +1,26 @@
 import React from 'react'
-import { fromJS } from 'immutable'
 import { shallow } from 'enzyme'
+import { fromJS } from 'immutable'
 
-import Purchase from '../index'
+import Recipt from '../index'
 
 import {
-  STATUSES
+  STATUSES,
+  PURCHASE_ORDER,
+  PURCHASE_USECASE
 } from '../../../containers/Buckets/constants'
 
 const children = (<h1>Test</h1>)
 const wrapper = (props = {}, enzyme = shallow) => enzyme(
-  <Purchase {...props}>
+  <Recipt {...props}>
     {children}
-  </Purchase>
+  </Recipt>
 )
 
-describe('<Purchase />', () => {
+describe('<Receipt />', () => {
   const minProps = {
-    order: fromJS({
+    onClick: () => {},
+    receipt: fromJS({
       'trackingNumber': '344760497230963792',
       'claimExpiry': '2017-08-13 00:17:08',
       'currency': 'CASH',
@@ -45,7 +48,8 @@ describe('<Purchase />', () => {
       }
     }),
     statuses: STATUSES,
-    changeRoute: () => {}
+    purchaseUsecases: PURCHASE_USECASE,
+    purchaseOrder: PURCHASE_ORDER
   }
 
   it('render without exploding', () => {

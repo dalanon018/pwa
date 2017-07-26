@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 
 import H6 from 'components/H6'
+import PackageStatus from 'components/PackageStatus'
+
 import TestBackPack from 'images/test-images/BACKPACK-TICKET.png'
 import TestLogo from 'images/test-images/PENSHOPPE-TICKET.png'
 import CliqqLogo from 'images/icons/cliqq.png'
@@ -15,7 +17,7 @@ const ProductWrapper = styled.div`
   border: 2px solid  ${({status}) => status};
   border-radius: 5px;
   display: flex;
-  height: 140px;
+  height: 160px;
   margin: 0 auto;
 `
 const ProductImage = styled.div`
@@ -32,6 +34,11 @@ const ProductDescription = styled.div`
   justify-content: center;
   letter-spacing: 2px;
 `
+
+const ProductStatusWrapper = styled.div`
+  width: 100%;
+`
+
 const CodeWrapper = styled.span`
   color: #AEAEAE;
 `
@@ -60,33 +67,45 @@ const identifyColor = cases => defaultColor => key =>
  */
 const getColorStatus = (status) => {
   return identifyColor({
-    RESERVATION: '#41BDF2',
-    PAID: '#F58322',
+    RESERVED: '#41BDF2',
+    CONFIRMED: '#F58322',
     INTRANSIT: '#EFBA03',
-    PICKUP: '#8DC641',
-    REPURCHASED: '#2081EC',
+    DELIVERED: '#8DC641',
     CLAIMED: '#16A483',
-    NOTCLAIMED: '#F23640'
+    UNCLAIMED: '#F23640'
   })('#41BDF2')(status)
 }
 
-const Purchase = ({ order }) => (
-  <PurchaseWrapper>
-    <ProductWrapper status={getColorStatus(order.get('status'))}>
-      <ProductImage background={TestBackPack} />
-      <ProductDescription>
-        <CodeWrapper> <CodeImage src={CliqqLogo} />
-          { order.getIn(['products', 'product_id']) }
-        </CodeWrapper>
-        <H6 uppercase> { order.getIn(['products', 'name']) } </H6>
-        <ProductLogoImage src={TestLogo} />
-      </ProductDescription>
-    </ProductWrapper>
-  </PurchaseWrapper>
-)
+const Purchase = ({ order, statuses, changeRoute }) => {
+  const currentStatus = statuses[order.get('status')] || ''
+
+  const goToReceipt = () => {
+    changeRoute(`/purchases/${order.get('trackingNumber')}`)
+  }
+
+  return (
+    <PurchaseWrapper>
+      <ProductWrapper status={getColorStatus(currentStatus)} onClick={goToReceipt}>
+        <ProductImage background={TestBackPack} />
+        <ProductDescription>
+          <CodeWrapper> <CodeImage src={CliqqLogo} />
+            { order.getIn(['products', 'product_id']) }
+          </CodeWrapper>
+          <H6 uppercase> { order.getIn(['products', 'name']) } </H6>
+          <ProductLogoImage src={TestLogo} />
+          <ProductStatusWrapper>
+            <PackageStatus {...{ status: currentStatus }} />
+          </ProductStatusWrapper>
+        </ProductDescription>
+      </ProductWrapper>
+    </PurchaseWrapper>
+  )
+}
 
 Purchase.propTypes = {
-  order: PropTypes.object.isRequired
+  order: PropTypes.object.isRequired,
+  statuses: PropTypes.object.isRequired,
+  changeRoute: PropTypes.func.isRequired
 }
 
 export default Purchase

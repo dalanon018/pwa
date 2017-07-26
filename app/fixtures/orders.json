@@ -2,13 +2,12 @@
   {
     "trackingNumber": "344760497230963792",
     "claimExpiry": "2017-08-13 00:17:08",
-    "currency": "COD",
+    "currency": "CASH",
     "dateCreated": "2017-07-20 16:17:34",
     "amount": "450.00",
     "quantity": "1",
     "mobileNumber": "09052720567",
-    "quantity": "1",
-    "status": "PAID",
+    "status": "CONFIRMED",
     "location": {
       "store_id": "0001",
       "name": "IBM PLAZA-EASTWOOD"
@@ -30,12 +29,39 @@
   {
     "trackingNumber": "344760497230963999",
     "claimExpiry": "2017-08-13 00:17:08",
-    "currency": "COD",
+    "currency": "CASH",
+    "dateCreated": "2017-07-20 16:17:34",
     "amount": "270.00",
     "quantity": "1",
     "mobileNumber": "09052720567",
+    "status": "DELIVERED TO STORE",
+    "location": {
+      "store_id": "0001",
+      "name": "IBM PLAZA-EASTWOOD"
+    },
+    "products": {
+      "product_id": "0002",
+      "image": null,
+      "brandLogo": null,
+      "name": "All Day Backpack | (green)",
+      "barcode": "718037806839",
+      "price": "300",
+      "discount": {
+        "value": "10",
+        "percentType": "percentage",
+        "thru": "2015-05-06 12:00:00"
+      }
+    }
+  },
+  {
+    "trackingNumber": "344760497230963111",
+    "claimExpiry": "2017-08-13 00:17:08",
+    "currency": "CASH",
+    "dateCreated": "2017-07-20 16:17:34",
+    "amount": "270.00",
     "quantity": "1",
-    "status": "PICKUP",
+    "mobileNumber": "09052720567",
+    "status": "DELIVERED TO STORE",
     "location": {
       "store_id": "0001",
       "name": "IBM PLAZA-EASTWOOD"
@@ -61,8 +87,112 @@
     "amount": "760.00",
     "quantity": "1",
     "mobileNumber": "09052720567",
+    "status": "IN-TRANSIT",
+    "location": {
+      "store_id": "0001",
+      "name": "IBM PLAZA-EASTWOOD"
+    },
+    "products": {
+      "product_id": "0003",
+      "image": null,
+      "brandLogo": null,
+      "name": "All Day Backpack | (blue)",
+      "barcode": "718037806839",
+      "price": "800",
+      "discount": {
+        "value": "5",
+        "percentType": "percentage",
+        "thru": "2015-05-06 12:00:00"
+      }
+    }
+  },
+  {
+    "trackingNumber": "344760497230963777",
+    "claimExpiry": "2017-08-13 00:17:08",
+    "currency": "CASH",
+    "dateCreated": "2017-07-20 16:17:34",
+    "amount": "760.00",
     "quantity": "1",
-    "status": "INTRANSIT",
+    "mobileNumber": "09052720567",
+    "status": "DELIVERED TO WAREHOUSE",
+    "location": {
+      "store_id": "0001",
+      "name": "IBM PLAZA-EASTWOOD"
+    },
+    "products": {
+      "product_id": "0003",
+      "image": null,
+      "brandLogo": null,
+      "name": "All Day Backpack | (blue)",
+      "barcode": "718037806839",
+      "price": "800",
+      "discount": {
+        "value": "5",
+        "percentType": "percentage",
+        "thru": "2015-05-06 12:00:00"
+      }
+    }
+  },
+  {
+    "trackingNumber": "344760497230963555",
+    "claimExpiry": "2017-07-13 00:17:08",
+    "currency": "COD",
+    "amount": "760.00",
+    "quantity": "1",
+    "mobileNumber": "09052720567",
+    "status": "DELIVERED TO WAREHOUSE",
+    "location": {
+      "store_id": "0001",
+      "name": "IBM PLAZA-EASTWOOD"
+    },
+    "products": {
+      "product_id": "0003",
+      "image": null,
+      "brandLogo": null,
+      "name": "All Day Backpack | (blue)",
+      "barcode": "718037806839",
+      "price": "800",
+      "discount": {
+        "value": "5",
+        "percentType": "percentage",
+        "thru": "2015-05-06 12:00:00"
+      }
+    }
+  },
+  {
+    "trackingNumber": "344760497230963444",
+    "claimExpiry": "2017-07-13 00:17:08",
+    "currency": "COD",
+    "amount": "760.00",
+    "quantity": "1",
+    "mobileNumber": "09052720567",
+    "status": "FOR PULL OUT",
+    "location": {
+      "store_id": "0001",
+      "name": "IBM PLAZA-EASTWOOD"
+    },
+    "products": {
+      "product_id": "0003",
+      "image": null,
+      "brandLogo": null,
+      "name": "All Day Backpack | (blue)",
+      "barcode": "718037806839",
+      "price": "800",
+      "discount": {
+        "value": "5",
+        "percentType": "percentage",
+        "thru": "2015-05-06 12:00:00"
+      }
+    }
+  },
+  {
+    "trackingNumber": "344760497230962333",
+    "claimExpiry": "2017-07-22 00:17:08",
+    "currency": "COD",
+    "amount": "760.00",
+    "quantity": "1",
+    "mobileNumber": "09052720567",
+    "status": "CLAIMED",
     "location": {
       "store_id": "0001",
       "name": "IBM PLAZA-EASTWOOD"
