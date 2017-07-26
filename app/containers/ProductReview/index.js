@@ -23,7 +23,7 @@ import Button from 'components/Button'
 import SampleProduct from 'images/test-images/samplebag.png'
 import SampleBrand from 'images/test-images/PENSHOPPE-TICKET.png'
 import CliqqLogo from 'images/icons/cliqq.png'
-import NextIcon from 'images/icons/button-next.svg'
+import NextIcon from 'images/icons/greater-than-icon.svg'
 
 import {
   StepHead,
@@ -54,8 +54,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   render () {
-    const { toggle } = this.props
-    console.log('toggle', toggle)
+    console.log(this.props.params)
 
     const labelOne = <label className='label-custom'>
       <LabelTitle>
@@ -124,9 +123,6 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                   <SelectMethodWrapper>
                     <Form>
                       <Form.Field>
-                          Selected value: <b>{this.state.value}</b>
-                      </Form.Field>
-                      <Form.Field>
                         <Checkbox
                           radio
                           name='checkboxRadioGroup'
@@ -157,6 +153,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                 <StepContent>
                   <StepHead step='3' className='margin__top-positive--20'>
                     <FormattedMessage {...messages.stepThree} />
+                    <p>Your default store will be the last store you visited</p>
                   </StepHead>
                   <LocationButton fluid icon={NextIcon}>
                     <span>FIND STORE NEARBY</span>

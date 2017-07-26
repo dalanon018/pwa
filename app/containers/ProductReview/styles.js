@@ -5,11 +5,24 @@ const StepHead = styled.div`
   align-items: center;
   color: #5B5B5B;
   display: flex;
+  flex-wrap: wrap;
   font-family: 'helveticabold';
   font-size: 13px;
   letter-spacing: 3px;
   margin-bottom: 15px;
   text-transform: uppercase;
+
+  p {
+    align-self: flex-start;
+    color: #AEAEAE;
+    flex: none;
+    font-family: 'helveticamedium';
+    font-size: 10px;
+    letter-spacing: initial;
+    margin-left: 40px;
+    margin-top: -10px;
+    text-transform: none;
+  }
 
   span {
     margin-left: 10px;
@@ -22,10 +35,11 @@ const StepHead = styled.div`
     color: #9BCB49;
     content: '${props => props.step}'
     display: flex;
+    flex: none;
     font-size: 14px;
     height: 30px;
     justify-content: center;
-    padding: 0 0 1px 3px;
+    padding: 1px 0 1px 3px;
     text-align: center;
     width: 30px;
   }
@@ -92,6 +106,11 @@ const StepWrapper = styled.div`
 
   &.visibility {
     display: ${props => props.visibility ? 'block' : 'none'};
+
+    span {
+      align-self: flex-start;
+      flex: none;
+    }
   }
 
   &:first-child {
@@ -102,13 +121,13 @@ const StepWrapper = styled.div`
 
 const ViewDetails = styled.div`
   .title {
+    border-bottom: 1px solid #F0F0F0;
+    border-top: 1px solid #F0F0F0;
     color: #5B5B5B !important;
     font-family: 'helveticamedium' !important;
     letter-spacing: 2px;
     padding: 15px 0 !important;
     text-align: center;
-    border-top: 1px solid #F0F0F0;
-    border-bottom: 1px solid #F0F0F0;
   }
 `
 
@@ -137,26 +156,24 @@ const SelectMethodWrapper = styled.div`
     height: 100%;
     padding: 20px 10px;
     position: relative;
+    width: 100%;
 
     &.checked {
       border: 2px solid #9BCB49;
     }
     
     input:checked~label:after {
+      // Don't sort this block
       content: '';
       background-color: #9BCB49 !important;
       color: #FFFFFF !important;
       left: 6px;
       top: 4px;
-      
       display: block;
- 
       width: 5px;
       height: 9px;
- 
       border: solid #FFFFFF;
       border-width: 0 2px 2px 0;
- 
       transform: rotate(45deg) !important;
     }
 
@@ -168,9 +185,9 @@ const SelectMethodWrapper = styled.div`
     }
 
     .label-custom {
-      position: relative;
       display: flex;
       flex-wrap: wrap;
+      position: relative;
     }
   }
 
@@ -189,8 +206,8 @@ const LabelTitle = styled.p`
   color: #333333 !important;
   font-family: 'helveticabold';
   font-size: 14px;
-  margin: 0;
   letter-spacing: 2px;
+  margin: 0;
 `
 
 const LabelSubTitle = styled.span`
@@ -206,9 +223,9 @@ const LabelPrice = styled.div`
     font-family: 'helveticabold';
     font-size: 25px;
     line-height: inherit;
+    margin-right: 10px;
     margin: 0;
     text-transform: uppercase;
-    margin-right: 10px;
   }
   .strike {
     align-self: flex-end;
@@ -237,12 +254,12 @@ const LocationButton = styled(Button)`
   &:after {
     background: url(${props => props.icon}) no-repeat center center / contain;
     content: '';
-    height: 20px;
+    height: 15px;
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    width: 20px;
+    width: 15px;
   }
 `
 

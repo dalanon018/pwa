@@ -31,10 +31,10 @@ const CheckboxWrapper = styled.div`
   }
 `
 
-function CheckboxField ({label}) {
+function CheckboxField ({label, ...props}) {
   return (
     <CheckboxWrapper>
-      <Checkbox id='checkbox' />
+      <Checkbox id='checkbox' {...props} />
       <label htmlFor='checkbox'>{label}<A href='https://google.com'>Terms and Conditions</A></label>
     </CheckboxWrapper>
   )
