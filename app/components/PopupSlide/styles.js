@@ -31,6 +31,13 @@ const InputWrapper = styled.div`
   font-size: 30px;
   justify-content: center;
   margin-bottom: 20px;
+
+  input {
+    font-size: 30px;
+    margin-left: 10px;
+    padding: 4px 6px 0 6px;
+    width: 73%;
+  }
   
   span {
     color: #AEAEAE;

@@ -50,7 +50,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   render () {
-    const { loading, product, toggle } = this.props
+    const { loading, product, toggle, changeRoute } = this.props
 
     return (
       <div>
@@ -61,7 +61,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
           ]}
         />
         <Product loading={loading} product={product} popup={this.handleToggle} />
-        <PopupSlide toggle={toggle} onClose={this.handleToggle} />
+        <PopupSlide changeRoute={changeRoute} toggle={toggle} onClose={this.handleToggle} />
       </div>
     )
   }
