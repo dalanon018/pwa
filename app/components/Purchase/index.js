@@ -13,6 +13,7 @@ import TestLogo from 'images/test-images/PENSHOPPE-TICKET.png'
 import CliqqLogo from 'images/icons/cliqq.png'
 import CLAIMED from 'images/status/claimed.svg'
 import UNCLAIMED from 'images/status/unclaimed.svg'
+import UNPAID from 'images/status/unpaid.svg'
 
 const PurchaseWrapper = styled.div`
   margin: 5px 0;
@@ -94,6 +95,7 @@ class Purchase extends React.PureComponent {
     const currentStatus = statuses[order.get('status')] || ''
 
     return switchFn({
+      UNPAID,
       CLAIMED,
       UNCLAIMED
     })('#41BDF2')(currentStatus)
@@ -132,6 +134,7 @@ class Purchase extends React.PureComponent {
   _getColorStatus (status) {
     return switchFn({
       RESERVED: '#41BDF2',
+      UNPAID: '#2081EC',
       CONFIRMED: '#F58322',
       INTRANSIT: '#EFBA03',
       DELIVERED: '#8DC641',

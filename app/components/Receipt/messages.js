@@ -10,6 +10,10 @@ export default defineMessages({
     id: 'app.components.Receipt.RESERVED',
     defaultMessage: 'YOU HAVE THIS TIME TO SHOW THIS RECEIPT TO THE STORE'
   },
+  UNPAID: {
+    id: 'app.components.Receipt.UNPAID',
+    defaultMessage: 'ITEM EXPIRED PLEASE REORDER IT.'
+  },
   CONFIRMED: {
     id: 'app.components.Receipt.CONFIRMED',
     defaultMessage: 'WE\'VE RECEIVED YOUR PAYMENT FOR THIS ITEM'
@@ -57,6 +61,10 @@ export default defineMessages({
   receiptInfoMessageReserve: {
     id: 'app.components.Receipt.receiptInfoMessageReserve',
     defaultMessage: 'PAY ITEM BEFORE TIME EXPIRES'
+  },
+  receiptInfoMessageUnpaid: {
+    id: 'app.components.Receipt.receiptInfoMessageUnpaid',
+    defaultMessage: 'ITEM IS ALREADY EXPIRED'
   },
   receiptInfoMessageClaimEarly: {
     id: 'app.components.Receipt.receiptInfoMessageClaimEarly',

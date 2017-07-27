@@ -11,7 +11,10 @@ describe('Receipt Reducer', () => {
   beforeEach(() => {
     state = fromJS({
       receipt: {},
-      loading: false
+      loading: false,
+      repurchase: {},
+      repurchaseSuccess: false,
+      repurchaseError: null
     })
   })
 
