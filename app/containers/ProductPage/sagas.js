@@ -1,17 +1,22 @@
 
 import { takeLatest } from 'redux-saga'
 import { find } from 'lodash'
-import { take, put, fork, cancel } from 'redux-saga/effects'
+import { take, put, fork, cancel, call } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
+import { setItem } from 'utils/localStorage'
 // import request from 'utils/request'
 
 import FakeProducts from 'fixtures/products.json'
 
 import {
-  GET_PRODUCT
+  GET_PRODUCT,
+  SET_CURRENT_PRODUCT
 } from './constants'
 import {
-  setProductAction
+  setProductAction,
+
+  setProductSuccessAction
+  // setProductErrorAction
 } from './actions'
 
 // function * sleep (ms) {
@@ -39,14 +44,29 @@ export function * getProduct (payload) {
   }
 }
 
+export function * setCurrentProduct (payload) {
+  const req = yield call(setItem, 'currentProduct', payload.payload.toJS())
+  if (!req.err) {
+    yield put(setProductSuccessAction(req))
+    return req
+  } else {
+    console.info(req.err)
+  }
+}
+
 export function * getProductSaga () {
   yield * takeLatest(GET_PRODUCT, getProduct)
+}
+
+export function * setCurrentProductSaga () {
+  yield * takeLatest(SET_CURRENT_PRODUCT, setCurrentProduct)
 }
 
 // All sagas to be loaded
 export function * productSagas () {
   const watcher = yield [
-    fork(getProductSaga)
+    fork(getProductSaga),
+    fork(setCurrentProductSaga)
   ]
 
   // Suspend execution until location changes

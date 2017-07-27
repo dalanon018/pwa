@@ -3,7 +3,16 @@ import { fromJS } from 'immutable'
 import productReviewReducer from '../reducer'
 
 describe('productReviewReducer', () => {
+  let state
+  beforeEach(() => {
+    state = fromJS({
+      orderProduct: {},
+      loading: false
+    })
+  })
+
   it('returns the initial state', () => {
-    expect(productReviewReducer(undefined, {})).toEqual(fromJS({}))
+    const expectedResult = state
+    expect(productReviewReducer(undefined, {})).toEqual(expectedResult)
   })
 })

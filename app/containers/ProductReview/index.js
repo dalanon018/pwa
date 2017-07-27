@@ -8,8 +8,17 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
-import makeSelectProductReview from './selectors'
 import messages from './messages'
+
+import {
+  getOrderProductAction
+} from './actions'
+
+import {
+  selectOrderProduct,
+  makeSelectProductReview,
+  selectLoader
+} from './selectors'
 
 import {
   Grid,
@@ -19,6 +28,8 @@ import {
   Accordion } from 'semantic-ui-react'
 
 import Button from 'components/Button'
+
+import { calculateProductPrice } from 'utils/promo'
 
 import SampleProduct from 'images/test-images/samplebag.png'
 import SampleBrand from 'images/test-images/PENSHOPPE-TICKET.png'
@@ -44,8 +55,25 @@ import {
 } from './styles'
 
 export class ProductReview extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  constructor () {
+    super()
+    this.handleChange = this.handleChange.bind(this)
+    this.handleToBottom = this.handleToBottom.bind(this)
+  }
+
+  static propTypes = {
+    getOrderProduct: PropTypes.func.isRequired,
+    loader: PropTypes.bool.isRequired,
+    orderedProduct: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.object
+    ]).isRequired
+  }
+
   state = {}
-  handleChange = (e, { value }) => this.setState({ value })
+  handleChange = (e, { value }) => {
+    this.setState({ value })
+  }
 
   handleToBottom = () => {
     setTimeout(() => {
@@ -53,9 +81,13 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     }, 50)
   }
 
-  render () {
-    console.log(this.props.params)
+  componentDidMount () {
+    this.props.getOrderProduct()
+  }
 
+  render () {
+    const { orderedProduct, loader } = this.props
+    console.log(orderedProduct.get('product_id'), loader)
     const labelOne = <label className='label-custom'>
       <LabelTitle>
         <FormattedMessage {...messages.cashPrepaid} />
@@ -64,8 +96,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         Get free 10points by paying through prepaid!
       </LabelSubTitle>
       <LabelPrice>
-        <span className='total'>PHP 760</span>
-        <span className='strike'>PHP 800</span>
+        <span className='total'>PHP {calculateProductPrice(orderedProduct)}</span>
+        <span className='strike'>PHP {orderedProduct.get('price')}</span>
       </LabelPrice>
     </label>
 
@@ -74,8 +106,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         <FormattedMessage {...messages.cashDelivery} />
       </LabelTitle>
       <LabelPrice>
-        <span className='total'>PHP 760</span>
-        <span className='strike'>PHP 800</span>
+        <span className='total'>PHP {calculateProductPrice(orderedProduct)}</span>
+        <span className='strike'>PHP {orderedProduct.get('price')}</span>
       </LabelPrice>
     </label>
 
@@ -94,9 +126,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                     <Image src={SampleProduct} />
                   </ProductItem>
                   <CliqqCodeWrapper>
-                    <Image src={CliqqLogo} /> 00001
-                    </CliqqCodeWrapper>
-                  <ProductName className='text-center'>ALL DAY BACKPACK | (WINE)</ProductName>
+                    <Image src={CliqqLogo} /> {orderedProduct.get('product_id')}
+                  </CliqqCodeWrapper>
+                  <ProductName className='text-center'>{orderedProduct.get('title')}</ProductName>
                 </StepContent>
                 <ViewDetails>
                   <Accordion fluid>
@@ -106,9 +138,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                     <Accordion.Content>
                       <DetailsWrapper>
                         <FormattedMessage {...messages.productDetailsTitle} />
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum earum consequuntur dolorem ullam, unde, incidunt debitis quam eos dolores ipsam nihil! Culpa aliquam quis temporibus asperiores esse magnam neque eaque.</p>
+                        <p>{orderedProduct.get('details')}</p>
                         <FormattedMessage {...messages.productDeliveryTitle} />
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum earum consequuntur dolorem ullam, unde, incidunt debitis quam eos dolores ipsam nihil! Culpa aliquam quis temporibus asperiores esse magnam neque eaque.</p>
+                        <p>{orderedProduct.get('shipping')}</p>
                       </DetailsWrapper>
                     </Accordion.Content>
                   </Accordion>
@@ -125,7 +157,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                       <Form.Field>
                         <Checkbox
                           radio
-                          name='checkboxRadioGroup'
+                          name='cash-prepaid'
                           value={false}
                           label={labelOne}
                           checked={this.state.value === false}
@@ -136,7 +168,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                       <Form.Field>
                         <Checkbox
                           radio
-                          name='checkboxRadioGroup'
+                          name='cod'
                           value
                           label={labelTwo}
                           checked={this.state.value === true}
@@ -155,14 +187,14 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                     <FormattedMessage {...messages.stepThree} />
                     <p>Your default store will be the last store you visited</p>
                   </StepHead>
-                  <LocationButton fluid icon={NextIcon}>
+                  <LocationButton onClick={() => {}} fluid icon={NextIcon}>
                     <span>FIND STORE NEARBY</span>
                   </LocationButton>
                 </StepContent>
               </StepWrapper>
 
               <ButtonContainer>
-                <Button primary fluid><FormattedMessage {...messages.proceedNext} /></Button>
+                <Button onClick={() => {}} primary fluid><FormattedMessage {...messages.proceedNext} /></Button>
               </ButtonContainer>
             </ReviewContainer>
 
@@ -178,11 +210,14 @@ ProductReview.propTypes = {
 }
 
 const mapStateToProps = createStructuredSelector({
-  ProductReview: makeSelectProductReview()
+  ProductReview: makeSelectProductReview(),
+  orderedProduct: selectOrderProduct(),
+  loader: selectLoader()
 })
 
 function mapDispatchToProps (dispatch) {
   return {
+    getOrderProduct: (payload) => dispatch(getOrderProductAction(payload)),
     dispatch
   }
 }

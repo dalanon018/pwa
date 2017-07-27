@@ -1,24 +1,22 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { fromJS } from 'immutable'
 
 import { ProductReview } from '../index'
 
-const children = (<h1>Test</h1>)
-const wrapper = (props = {}, enzyme = shallow) => enzyme(
-  <ProductReview {...props}>
-    {children}
-  </ProductReview>
-)
-
 describe('<ProductReview />', () => {
-  it('Expect to have unit tests specified', () => {
-    expect(true).toEqual(true)
-  })
+  const minProps = {
+    getOrderProduct: () => {},
+    getProductCategories: () => {},
+    loader: false,
+    featuredProducts: fromJS([]),
+    orderedProduct: fromJS({})
+  }
 
-  it('render without exploding', () => {
-    const renderComponent = wrapper()
-    expect(
-      renderComponent.length
-    ).toEqual(1)
+  it('should render a div', () => {
+    const renderedComponent = shallow(
+      <ProductReview {...minProps} />
+    )
+    expect(renderedComponent.find('div').length).toEqual(0)
   })
 })

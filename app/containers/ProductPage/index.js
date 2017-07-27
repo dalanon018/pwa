@@ -16,11 +16,14 @@ import PopupSlide from 'components/PopupSlide'
 
 import {
   selectLoader,
-  selectProduct
+  selectProduct,
+  selectProductSuccess,
+  selectProductError
 } from './selectors'
 
 import {
-  getProductAction
+  getProductAction,
+  setCurrentProductAction
 } from './actions'
 
 import {
@@ -32,8 +35,13 @@ import {
 } from 'containers/Buckets/selectors'
 
 export class ProductPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  constructor () {
+    super()
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
   static propTypes = {
     getProduct: PropTypes.func.isRequired,
+    setCurrentProduct: PropTypes.func.isRequired,
     changeRoute: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
@@ -43,14 +51,32 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   componentDidMount () {
     const { params: { id } } = this.props
     this.props.getProduct({ id })
+    // this.handleSubmit()
   }
 
   handleToggle = () => {
     this.props.setToggle()
   }
 
+  componentWillReceiveProps (nextProps) {
+    const { productSuccess } = nextProps
+    if (productSuccess) {
+      this.props.changeRoute('/review')
+    }
+  }
+
+  handleSubmit () {
+    this.props.setCurrentProduct(this.props.product)
+    // this.props.changeRoute('/review')
+  }
+
   render () {
     const { loading, product, toggle, changeRoute } = this.props
+
+    // console.log('succerr', {
+    //   success: this.props.productSuccess,
+    //   error: this.props.productError
+    // })
 
     return (
       <div>
@@ -61,7 +87,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
           ]}
         />
         <Product loading={loading} product={product} popup={this.handleToggle} />
-        <PopupSlide changeRoute={changeRoute} toggle={toggle} onClose={this.handleToggle} />
+        <PopupSlide submit={this.handleSubmit} product={product} changeRoute={changeRoute} toggle={toggle} onClose={this.handleToggle} />
       </div>
     )
   }
@@ -74,12 +100,15 @@ ProductPage.propTypes = {
 const mapStateToProps = createStructuredSelector({
   loading: selectLoader(),
   product: selectProduct(),
-  toggle: selectToggle()
+  toggle: selectToggle(),
+  productSuccess: selectProductSuccess(),
+  productError: selectProductError()
 })
 
 function mapDispatchToProps (dispatch) {
   return {
     getProduct: (payload) => dispatch(getProductAction(payload)),
+    setCurrentProduct: (payload) => dispatch(setCurrentProductAction(payload)),
     setToggle: payload => dispatch(setToggleAction(payload)),
     changeRoute: (url) => dispatch(push(url)),
     dispatch

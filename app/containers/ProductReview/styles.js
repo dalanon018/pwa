@@ -94,6 +94,7 @@ const ProductName = styled.div`
   letter-spacing: 2px;
   margin: 20px 0;
   text-align: center;
+  text-transform: uppercase;
 `
 
 const StepContent = styled.div`

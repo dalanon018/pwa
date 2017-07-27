@@ -18,7 +18,19 @@ const makeSelectProductReview = () => createSelector(
   (substate) => substate.toJS()
 )
 
+const selectOrderProduct = () => createSelector(
+  selectProductReviewDomain(),
+  (substate) => substate.get('orderProduct')
+)
+
+const selectLoader = () => createSelector(
+  selectProductReviewDomain(),
+  (substate) => substate.get('loading')
+)
+
 export default makeSelectProductReview
 export {
-  selectProductReviewDomain
+  makeSelectProductReview,
+  selectOrderProduct,
+  selectLoader
 }
