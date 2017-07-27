@@ -1,26 +1,18 @@
 import React from 'react'
-
-import { fromJS } from 'immutable'
 import { shallow } from 'enzyme'
-import { Buckets } from '../index'
+
+import PackageStatus from '../index'
 
 const children = (<h1>Test</h1>)
 const wrapper = (props = {}, enzyme = shallow) => enzyme(
-  <Buckets {...props}>
+  <PackageStatus {...props}>
     {children}
-  </Buckets>
+  </PackageStatus>
 )
 
-describe('<Buckets />', () => {
+describe('<PackageStatus />', () => {
   const minProps = {
-    children: {},
-    categories: fromJS({}),
-    getCategories: () => {},
-    dispatch: () => {},
-    changeRoute: () => {},
-    routes: [{
-      path: '/'
-    }]
+    status: 'RESERVED'
   }
 
   it('render without exploding', () => {

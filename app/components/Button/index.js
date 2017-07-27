@@ -22,25 +22,26 @@ const Wrapper = styled.div`
   padding: 2px 0
 `
 const TextWrapper = styled.div`
-  font-size: 16px;
+  font-size: ${({ fontSize }) => fontSize}px;
   margin-right: 10px;
 `
 
 const ImageWrapper = styled.img`
   margin-top: 1px;
-  width: 15px;
+  width: ${({ fontSize }) => (fontSize - 1)}px;
 `
 
-function ElemButton ({ children, ...rest }) {
+function ElemButton ({ children, size, ...rest }) {
+  let fontSize = size || 16
   // Render an anchor tag
   // If the Button has a handleRoute prop, we want to render a button
   return (
     <Button {...rest} >
       <Wrapper>
-        <TextWrapper>
+        <TextWrapper fontSize={fontSize}>
           { Children.toArray(children) }
         </TextWrapper>
-        <ImageWrapper src={ButtonNext} />
+        <ImageWrapper src={ButtonNext} fontSize={fontSize} />
       </Wrapper>
     </Button>
   )

@@ -2,25 +2,22 @@ import React from 'react'
 
 import { fromJS } from 'immutable'
 import { shallow } from 'enzyme'
-import { Buckets } from '../index'
+import { ReceiptPage } from '../index'
 
 const children = (<h1>Test</h1>)
 const wrapper = (props = {}, enzyme = shallow) => enzyme(
-  <Buckets {...props}>
+  <ReceiptPage {...props}>
     {children}
-  </Buckets>
+  </ReceiptPage>
 )
 
-describe('<Buckets />', () => {
+describe('<ReceiptPage />', () => {
   const minProps = {
-    children: {},
-    categories: fromJS({}),
-    getCategories: () => {},
+    loading: false,
+    receipt: fromJS({}),
+    getReceipt: () => {},
     dispatch: () => {},
-    changeRoute: () => {},
-    routes: [{
-      path: '/'
-    }]
+    changeRoute: () => {}
   }
 
   it('render without exploding', () => {

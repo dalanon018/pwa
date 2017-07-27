@@ -1,26 +1,18 @@
 import React from 'react'
-
-import { fromJS } from 'immutable'
 import { shallow } from 'enzyme'
-import { Buckets } from '../index'
+
+import PurchaseUsecase from '../PurchaseUsecase'
 
 const children = (<h1>Test</h1>)
 const wrapper = (props = {}, enzyme = shallow) => enzyme(
-  <Buckets {...props}>
+  <PurchaseUsecase {...props}>
     {children}
-  </Buckets>
+  </PurchaseUsecase>
 )
 
-describe('<Buckets />', () => {
+describe('<Receipt PurchaseUsecase/>', () => {
   const minProps = {
-    children: {},
-    categories: fromJS({}),
-    getCategories: () => {},
-    dispatch: () => {},
-    changeRoute: () => {},
-    routes: [{
-      path: '/'
-    }]
+    status: 'CLAIMED'
   }
 
   it('render without exploding', () => {

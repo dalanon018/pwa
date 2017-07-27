@@ -132,7 +132,7 @@ export default class MainMenu extends PureComponent {
 
   _handleBarcodeClick () {
     const { changeRoute } = this.props
-    changeRoute('/barcodes')
+    changeRoute('/purchases')
   }
 
   _handlerHomeClick () {

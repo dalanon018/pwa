@@ -61,19 +61,39 @@ export default function createRoutes (store) {
             importModules.catch(errorLoading)
           }
         }, {
-          path: '/barcodes',
-          name: 'barcodeLists',
+          path: '/purchases',
+          name: 'purchases',
           getComponent (nextState, cb) {
             const importModules = Promise.all([
-              import('containers/BarcodeLists/reducer'),
-              import('containers/BarcodeLists/sagas'),
-              import('containers/BarcodeLists')
+              import('containers/Purchases/reducer'),
+              import('containers/Purchases/sagas'),
+              import('containers/Purchases')
             ])
 
             const renderRoute = loadModule(cb)
 
             importModules.then(([reducer, sagas, component]) => {
-              injectReducer('barcodeLists', reducer.default)
+              injectReducer('purchases', reducer.default)
+              injectSagas(sagas.default)
+              renderRoute(component)
+            })
+
+            importModules.catch(errorLoading)
+          }
+        }, {
+          path: '/purchases/:trackingNumber',
+          name: 'receiptPage',
+          getComponent (nextState, cb) {
+            const importModules = Promise.all([
+              import('containers/ReceiptPage/reducer'),
+              import('containers/ReceiptPage/sagas'),
+              import('containers/ReceiptPage')
+            ])
+
+            const renderRoute = loadModule(cb)
+
+            importModules.then(([reducer, sagas, component]) => {
+              injectReducer('receiptPage', reducer.default)
               injectSagas(sagas.default)
               renderRoute(component)
             })
