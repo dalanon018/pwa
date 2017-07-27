@@ -13,7 +13,10 @@ import {
   SET_CURRENT_PRODUCT
 } from './constants'
 import {
-  setProductAction
+  setProductAction,
+
+  setProductSuccessAction
+  // setProductErrorAction
 } from './actions'
 
 // function * sleep (ms) {
@@ -42,22 +45,9 @@ export function * getProduct (payload) {
 }
 
 export function * setCurrentProduct (payload) {
-  // const headers = new Headers()
-  // const currentUser = yield select(selectCurrentUser())
-  // headers.append('Content-Type', 'application/json')
-  // headers.append('Accept', 'application/json')
-  // headers.append('Authorization', `JWT ${currentUser.token}`)
-
-  // const requestURL = `${API_BASE_URL}/data/sectors`
-  // const req = yield call(request, requestURL, {
-  //   method: 'GET',
-  //   headers
-  // })
-
-  // We will emulate data
-  const req = yield call(setItem, 'currentProduct', payload.payload)
+  const req = yield call(setItem, 'currentProduct', payload.payload.toJS())
   if (!req.err) {
-    // alert('true')
+    yield put(setProductSuccessAction(req))
     return req
   } else {
     console.info(req.err)

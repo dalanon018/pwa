@@ -16,7 +16,9 @@ import PopupSlide from 'components/PopupSlide'
 
 import {
   selectLoader,
-  selectProduct
+  selectProduct,
+  selectProductSuccess,
+  selectProductError
 } from './selectors'
 
 import {
@@ -56,13 +58,12 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.props.setToggle()
   }
 
-  // async componentWillReceiveProps(nextProps) {
-  //   const { product } = nextProps
-  //   console.log(product)
-  //   if ( product.size > 0 ) {
-  //      await this.handleSubmit(nextProps)
-  //   }
-  // }
+  componentWillReceiveProps (nextProps) {
+    const { productSuccess } = nextProps
+    if (productSuccess) {
+      this.props.changeRoute('/review')
+    }
+  }
 
   handleSubmit () {
     this.props.setCurrentProduct(this.props.product)
@@ -71,6 +72,11 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   render () {
     const { loading, product, toggle, changeRoute } = this.props
+
+    // console.log('succerr', {
+    //   success: this.props.productSuccess,
+    //   error: this.props.productError
+    // })
 
     return (
       <div>
@@ -94,7 +100,9 @@ ProductPage.propTypes = {
 const mapStateToProps = createStructuredSelector({
   loading: selectLoader(),
   product: selectProduct(),
-  toggle: selectToggle()
+  toggle: selectToggle(),
+  productSuccess: selectProductSuccess(),
+  productError: selectProductError()
 })
 
 function mapDispatchToProps (dispatch) {

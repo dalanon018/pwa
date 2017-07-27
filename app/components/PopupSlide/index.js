@@ -124,7 +124,7 @@ class PopupSlide extends React.Component {
               primary
               fluid
               onClick={this.handleSubmit}>
-                SUBMIT
+                  SUBMIT
               </Button>
 
             <CloseButton close={onClose} />

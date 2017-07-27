@@ -11,7 +11,10 @@ describe('Products Reducer', () => {
   beforeEach(() => {
     state = fromJS({
       product: {},
-      loading: false
+      loading: false,
+      requestProductSuccess: false,
+      requestProductError: false,
+      currentProduct: {}
     })
   })
 
