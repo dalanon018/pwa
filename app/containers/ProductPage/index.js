@@ -66,7 +66,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   handleSubmit () {
     this.props.setCurrentProduct(this.props.product)
-    //this.props.changeRoute('/review')
+    // this.props.changeRoute('/review')
   }
 
   render () {

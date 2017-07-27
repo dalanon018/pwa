@@ -57,8 +57,8 @@ export function * setCurrentProduct (payload) {
   // We will emulate data
   const req = yield call(setItem, 'currentProduct', payload.payload)
   if (!req.err) {
-    alert('true')
-    return req 
+    // alert('true')
+    return req
   } else {
     console.info(req.err)
   }

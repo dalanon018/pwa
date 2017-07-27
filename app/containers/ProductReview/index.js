@@ -25,7 +25,7 @@ import SampleBrand from 'images/test-images/PENSHOPPE-TICKET.png'
 import CliqqLogo from 'images/icons/cliqq.png'
 import NextIcon from 'images/icons/greater-than-icon.svg'
 
-import { getItem } from 'utils/localStorage'
+// import { getItem } from 'utils/localStorage'
 
 import {
   StepHead,
