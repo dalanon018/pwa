@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl'
 
 import CLAIMED from 'images/status/claimed.svg'
 import UNCLAIMED from 'images/status/unclaimed.svg'
+import UNPAID from 'images/status/unpaid.svg'
 
 import messages from './messages'
 
@@ -43,6 +44,7 @@ const identifyBannerImage = images => image => key =>
 
 const ImageBanner = (status) => {
   return identifyBannerImage({
+    UNPAID,
     CLAIMED,
     UNCLAIMED
   })(null)(status)

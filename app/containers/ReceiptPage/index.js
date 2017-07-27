@@ -20,6 +20,7 @@ import {
 } from 'containers/Buckets/constants'
 
 import RESERVED from 'images/ticket-backgrounds/reserve.png'
+import UNPAID from 'images/ticket-backgrounds/unpaid.png'
 import CONFIRMED from 'images/ticket-backgrounds/paid.png'
 import INTRANSIT from 'images/ticket-backgrounds/intransit.png'
 import DELIVERED from 'images/ticket-backgrounds/pickup.png'
@@ -68,6 +69,7 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
 
     return identifyBackground({
       RESERVED,
+      UNPAID,
       CONFIRMED,
       INTRANSIT,
       DELIVERED,

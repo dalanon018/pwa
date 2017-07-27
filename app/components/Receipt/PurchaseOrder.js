@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import styled from 'styled-components'
-import moment from 'moment'
+import { CountdownParser } from 'utils/date'
 
 import { FormattedMessage } from 'react-intl'
 
@@ -29,9 +29,8 @@ const HeaderOrder = styled(HeaderBase)`
   font-size: ${({ status }) => (status === 'RESERVED') ? '14px' : '18px'};
 `
 
-const PurchaseOrder = ({ status }) => {
+const PurchaseOrder = ({ status, receipt }) => {
   const currentStatus = status || 'unknownStatus'
-
   return (
     <PurchaseWrapper>
       <HeaderOrder {...{ status }} >
@@ -39,7 +38,7 @@ const PurchaseOrder = ({ status }) => {
         {
           (status === 'RESERVED') &&
           <Timer>
-            <Countdown endDate={(moment().add(1, 'hours').valueOf() / 1000)} />
+            <Countdown endDate={CountdownParser(receipt.get('claimExpiry'))} />
           </Timer>
         }
       </HeaderOrder>
@@ -49,7 +48,8 @@ const PurchaseOrder = ({ status }) => {
 }
 
 PurchaseOrder.propTypes = {
-  status: PropTypes.string.isRequired
+  status: PropTypes.string.isRequired,
+  receipt: PropTypes.object.isRequired
 }
 
 export default PurchaseOrder

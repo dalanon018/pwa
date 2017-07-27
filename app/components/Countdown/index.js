@@ -25,6 +25,7 @@ class Countdown extends React.PureComponent { // eslint-disable-line react/prefe
     super()
 
     this._countdownTimer = this._countdownTimer.bind(this)
+    this._disableTimer = this._disableTimer.bind(this)
   }
 
   _countdownTimer () {
@@ -66,12 +67,34 @@ class Countdown extends React.PureComponent { // eslint-disable-line react/prefe
     }, 1000)
   }
 
+  /**
+   * we need to make sure that once the timer goes to negative then
+   * we need to clear our interval means its done
+   */
+  _disableTimer () {
+    const { timer } = this.state
+    const pT = parseInt
+
+    const [ hh, mm, ss ] = timer.split(':')
+
+    if ((pT(hh) < 0) && (pT(mm) < 0) && (pT(ss) < 0)) {
+      clearInterval(this.countdownInterval)
+      this.setState({
+        timer: '00:00:00'
+      })
+    }
+  }
+
   componentWillUnmount () {
     clearInterval(this.countdownInterval)
   }
 
   componentDidMount () {
     this._countdownTimer()
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    this._disableTimer()
   }
 
   render () {

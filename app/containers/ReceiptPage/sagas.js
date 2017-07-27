@@ -8,15 +8,40 @@ import { LOCATION_CHANGE } from 'react-router-redux'
 import FakeOrders from 'fixtures/orders.json'
 
 import {
-  GET_RECEIPT
+  GET_RECEIPT,
+  REPURCHASE_ITEM_REQUEST
 } from './constants'
+
 import {
   setReceiptAction
+  // successReceiptAction,
+  // errorReceiptAction
 } from './actions'
 
 // function * sleep (ms) {
 //   yield new Promise(resolve => setTimeout(resolve, ms))
 // }
+
+export function * requestRepurchaseItem (payload) {
+  // const { payload: { receipt } } = payload
+  // const headers = new Headers()
+  // const currentUser = yield select(selectCurrentUser())
+  // headers.append('Content-Type', 'application/json')
+  // headers.append('Accept', 'application/json')
+  // headers.append('Authorization', `JWT ${currentUser.token}`)
+
+  // const requestURL = `${API_BASE_URL}/data/sectors`
+  // const req = yield call(request, requestURL, {
+  //   method: 'GET',
+  //   headers
+  // })
+
+  // We will emulate data
+  // const req = yield Promise.resolve(find(FakeOrders, { trackingNumber }))
+  // if (!req.err) {
+  //   yield put(setReceiptAction(req))
+  // }
+}
 
 export function * getReceipt (payload) {
   const { payload: { trackingNumber } } = payload
@@ -43,10 +68,15 @@ export function * getReceiptSaga () {
   yield * takeLatest(GET_RECEIPT, getReceipt)
 }
 
+export function * requestRepurchaseItemSaga () {
+  yield * takeLatest(REPURCHASE_ITEM_REQUEST, requestRepurchaseItem)
+}
+
 // All sagas to be loaded
 export function * receiptSagas () {
   const watcher = yield [
-    fork(getReceiptSaga)
+    fork(getReceiptSaga),
+    fork(requestRepurchaseItemSaga)
   ]
 
   // Suspend execution until location changes

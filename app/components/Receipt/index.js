@@ -55,6 +55,7 @@ const DetailsContent = ({ title, children }) => (
 const DetailStatus = ({ status, receipt }) => {
   return ComponentDetail({
     RESERVED: null,
+    UNPAID: null,
     CONFIRMED: (
       <DetailsContent title={<FormattedMessage {...messages.receiptDatePurchasedTitle} />}>
         { DateFormater(receipt.get('dateCreated')) }
@@ -102,6 +103,9 @@ const WarningStatus = ({status}) => {
   return ComponentDetail({
     RESERVED: (
       <FormattedMessage {...messages.receiptInfoMessageReserve} />
+    ),
+    UNPAID: (
+      <FormattedMessage {...messages.receiptInfoMessageUnpaid} />
     ),
     CONFIRMED: (
       <FormattedMessage {...messages.receiptInfoMessageClaimEarly} />
@@ -154,7 +158,7 @@ class Receipt extends React.PureComponent {
 
     if (purchaseOrder.includes(currentStatus)) {
       return (
-        <PurchaseOrder status={currentStatus} />
+        <PurchaseOrder status={currentStatus} receipt={receipt} />
       )
     }
 
@@ -187,7 +191,7 @@ class Receipt extends React.PureComponent {
                   </DetailTitle>
                 </Grid.Column>
                 <Grid.Column width={12} textAlign='right' verticalAlign='middle'>
-                  <ProductPrice> PHP 549 </ProductPrice>
+                  <ProductPrice> PHP { receipt.get('amount') } </ProductPrice>
                 </Grid.Column>
               </Grid.Row>
               <DetailStatus {...{ status: statuses[receipt.get('status')], receipt }} />

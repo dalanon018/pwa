@@ -23,8 +23,26 @@ const selectReceipt = () => createSelector(
   (substate) => substate.get('receipt')
 )
 
+const selectRepurchase = () => createSelector(
+  selectPurchaseEntityDomain(),
+  (substate) => substate.get('repurchase')
+)
+
+const selectRepurchaseSuccess = () => createSelector(
+  selectPurchaseEntityDomain(),
+  (substate) => substate.get('repurchaseSuccess')
+)
+
+const selectRepurchaseError = () => createSelector(
+  selectPurchaseEntityDomain(),
+  (substate) => substate.get('repurchaseError')
+)
+
 export {
   selectPurchaseEntityDomain,
   selectReceipt,
-  selectLoading
+  selectLoading,
+  selectRepurchase,
+  selectRepurchaseSuccess,
+  selectRepurchaseError
 }
