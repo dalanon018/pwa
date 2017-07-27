@@ -12,7 +12,9 @@ import {
 
 const initialState = fromJS({
   product: {},
-  loading: false
+  loading: false,
+  success: false,
+  error: false
 })
 
 function productPageReducer (state = initialState, action) {

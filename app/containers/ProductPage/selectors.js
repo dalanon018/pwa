@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect'
+import { fromJS } from 'immutable'
 
 /**
  * Direct selector to the productPage state domain
@@ -20,7 +21,7 @@ const selectLoader = () => createSelector(
 
 const selectProduct = () => createSelector(
   selectProductPageDomain(),
-  (substate) => substate.get('product')
+  (substate) => substate ? substate.get('product') : fromJS({})
 )
 
 export {

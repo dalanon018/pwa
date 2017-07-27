@@ -20,6 +20,8 @@ import MobileIcon from 'images/icons/mobile-icon.svg'
 
 import { Image } from 'semantic-ui-react'
 
+// import { setItem } from 'utils/localStorage'
+
 import {
   PopupWrapper,
   PopupContainer,
@@ -40,10 +42,11 @@ class PopupSlide extends React.Component {
     this.handleInput = this.handleInput.bind(this)
     this.handleCheck = this.handleCheck.bind(this)
     this.handleDisable = this.handleDisable.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    // this.setLocalStorage = this.setLocalStorage.bind(this)
   }
 
   handleCheck (e, data) {
-    console.log(e, data)
     this.setState({
       check: data.checked
     }, () => this.handleDisable())
@@ -71,8 +74,20 @@ class PopupSlide extends React.Component {
     }
   }
 
+  // setLocalStorage () {
+  //   console.log('asd', this.props.product)
+  //   try {
+  //     setItem('currentProduct', this.props.product)
+  //   }
+  //   catch {}
+  // }
+
+  handleSubmit () {
+    this.props.submit()
+  }
+
   render () {
-    const { toggle, onClose, changeRoute } = this.props
+    const { toggle, onClose } = this.props
     const label = `I have read and accepted the `
 
     return (
@@ -90,28 +105,28 @@ class PopupSlide extends React.Component {
               </TitleHead>
               <p><FormattedMessage {...messages.label} /></p>
             </TextWrapper>
-            <form action=''>
-              <InputWrapper>
-                <FormattedMessage {...messages.phonePrefix} />
-                <Input
-                  type='number'
-                  value={this.state.value}
-                  onChange={this.handleInput}
-                  placeholder='9XXXXXXXXX' />
-              </InputWrapper>
-              <Checkbox
-                className='margin__bottom-positive--20'
-                onChange={this.handleCheck}
-                label={label} />
-              <Button
-                type='submit'
-                disabled={this.state.toggle}
-                primary
-                fluid
-                onClick={() => changeRoute('/review')}>
+
+            <InputWrapper>
+              <FormattedMessage {...messages.phonePrefix} />
+              <Input
+                type='number'
+                value={this.state.value}
+                onChange={this.handleInput}
+                placeholder='9XXXXXXXXX' />
+            </InputWrapper>
+            <Checkbox
+              className='margin__bottom-positive--20'
+              onChange={this.handleCheck}
+              label={label} />
+            <Button
+              type='submit'
+              disabled={this.state.toggle}
+              primary
+              fluid
+              onClick={this.handleSubmit}>
                 SUBMIT
               </Button>
-            </form>
+
             <CloseButton close={onClose} />
           </PopupContent>
         </PopupContainer>

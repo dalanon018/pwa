@@ -25,6 +25,8 @@ import SampleBrand from 'images/test-images/PENSHOPPE-TICKET.png'
 import CliqqLogo from 'images/icons/cliqq.png'
 import NextIcon from 'images/icons/greater-than-icon.svg'
 
+import { getItem } from 'utils/localStorage'
+
 import {
   StepHead,
   ProductItem,
@@ -53,9 +55,21 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     }, 50)
   }
 
-  render () {
-    console.log(this.props.params)
+  // async componentDidMount () {
+  //   const wew = await getItem('currentProduct')
+  //   console.log(wew)
+  // }
 
+  // async componentWillReceiveProps(nextProps) {
+  //   const { product } = nextProps
+  //   console.log(product)
+  //   if ( product.size > 0 ) {
+  //     const aw = await getItem('currentProduct')
+  //      console.log(aw)
+  //   }
+  // }
+
+  render () {
     const labelOne = <label className='label-custom'>
       <LabelTitle>
         <FormattedMessage {...messages.cashPrepaid} />
