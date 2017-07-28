@@ -1,13 +1,13 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import PopupSlide from '../index'
+import PromptModal from '../index'
 
 const wrapper = (props = {}, enzyme = shallow) => shallow(
-  <PopupSlide {...props} />
+  <PromptModal {...props} />
 )
 
-describe('<PopupSlide />', () => {
+describe('<PromptModal />', () => {
   it('render without exploding', () => {
     const renderComponent = wrapper()
     expect(
@@ -16,7 +16,7 @@ describe('<PopupSlide />', () => {
   })
 
   it('renders without exploding', () => {
-    expect(shallow(<PopupSlide />).length).toEqual(1)
+    expect(shallow(<PromptModal />).length).toEqual(1)
   })
 
   it('Expect to have unit tests specified', () => {
