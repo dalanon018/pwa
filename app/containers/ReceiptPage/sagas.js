@@ -1,9 +1,10 @@
 
 import { takeLatest } from 'redux-saga'
 import { find } from 'lodash'
-import { take, put, fork, cancel } from 'redux-saga/effects'
+import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 // import request from 'utils/request'
+import { transformOrder } from 'utils/transforms'
 
 import FakeOrders from 'fixtures/orders.json'
 
@@ -60,7 +61,8 @@ export function * getReceipt (payload) {
   // We will emulate data
   const req = yield Promise.resolve(find(FakeOrders, { trackingNumber }))
   if (!req.err) {
-    yield put(setReceiptAction(req))
+    const response = yield call(transformOrder, req)
+    yield put(setReceiptAction(response))
   }
 }
 

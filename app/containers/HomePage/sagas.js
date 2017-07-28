@@ -1,5 +1,5 @@
 import {
-  // call,
+  call,
   cancel,
   fork,
   put,
@@ -15,10 +15,17 @@ import {
 import {
   setFeaturedProductsAction
 } from './actions'
-import FakeCategories from 'fixtures/products.json'
+
+import { transformProduct } from 'utils/transforms'
+import FakeProducts from 'fixtures/products.json'
 
 function * sleep (ms) {
   yield new Promise(resolve => setTimeout(resolve, ms))
+}
+
+function * transformEachEntity (entity) {
+  const response = yield call(transformProduct, entity)
+  return response
 }
 
 export function * initializeAppGlobals () {
@@ -49,10 +56,12 @@ export function * getProduct (data) {
   //   reject(status)
   // }
 
-  const req = yield Promise.resolve(FakeCategories)
+  const req = yield Promise.resolve(FakeProducts)
   yield sleep(1500)
   if (!req.err) {
-    yield put(setFeaturedProductsAction(req))
+    const transform = yield req.map(transformEachEntity)
+
+    yield put(setFeaturedProductsAction(transform))
   }
 }
 

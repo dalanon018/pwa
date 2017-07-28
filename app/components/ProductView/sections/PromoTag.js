@@ -19,7 +19,7 @@ function PromoTag ({ discount }) {
     <RibbonWrapper>
       <div className='ribbon-tag'>
         <p className='ribbon-text'>
-          {`${discount.get('value')}${isPercentOrValue(discount.get('percentType'))} OFF`}
+          {`${discount.get('value')}${isPercentOrValue(discount.get('discountType'))} OFF`}
         </p>
       </div>
     </RibbonWrapper>

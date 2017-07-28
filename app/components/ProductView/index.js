@@ -77,7 +77,7 @@ const calculateProductPrice = (product) => {
   return identifyCalculation({
     PERCENTAGE: calculatePercentage,
     AMOUNT: calculateAmount
-  })(calculatePercentage)(product.getIn(['discount', 'percentType']))(product)
+  })(calculatePercentage)(product.getIn(['discount', 'discountType']))(product)
 }
 
 function ProductView ({
@@ -91,7 +91,7 @@ function ProductView ({
         loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
         : products.valueSeq().map((product) => {
           return (
-            <Grid.Column key={product.get('product_id')} className='padding__none--horizontal' mobile={8} tablet={4} computer={3} widescreen={3} onClick={() => changeRoute(`/product/${product.get('product_id')}`)}>
+            <Grid.Column key={product.get('cliqqCode')} className='padding__none--horizontal' mobile={8} tablet={4} computer={3} widescreen={3} onClick={() => changeRoute(`/product/${product.get('cliqqCode').first()}`)}>
               <ProductWrapper>
                 {
                   !isEmpty(product.get('discount')) &&

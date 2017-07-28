@@ -48,6 +48,8 @@ import {
 } from './styled'
 
 const Product = ({ product, loading, popup }) => {
+  const cliqqCode = product.get('cliqqCode') && product.get('cliqqCode').join(', ')
+
   return (
     <ProductWrapper>
       <ImageBanner>
@@ -58,7 +60,7 @@ const Product = ({ product, loading, popup }) => {
       <ProductMainContent>
         <LoadingStateInfo loading={loading} center>
           <HeaderWrapper>
-            <CodeImage src={CliqqLogo} /> { product.get('product_id') }
+            <CodeImage src={CliqqLogo} /> { cliqqCode }
           </HeaderWrapper>
           <H3
             weight='300'

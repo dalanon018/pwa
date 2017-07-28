@@ -174,7 +174,7 @@ class Receipt extends React.PureComponent {
           <ProductImage background={TestBackPack} />
           <ProductDescription>
             <CodeWrapper> <CodeImage src={CliqqLogo} />
-              { receipt.getIn(['products', 'product_id']) }
+              { receipt.getIn(['products', 'cliqqCode']) }
             </CodeWrapper>
             <H6 uppercase> { receipt.getIn(['products', 'name']) } </H6>
             <ProductLogoImage src={TestLogo} />
