@@ -86,8 +86,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   render () {
-    const { orderedProduct, loader } = this.props
-    console.log(orderedProduct.get('product_id'), loader)
+    const { orderedProduct } = this.props
     const labelOne = <label className='label-custom'>
       <LabelTitle>
         <FormattedMessage {...messages.cashPrepaid} />

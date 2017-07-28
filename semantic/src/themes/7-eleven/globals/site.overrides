@@ -89,6 +89,10 @@ input.input-field {
   }
 }
 
+.ui.modal {
+  height: initial;
+}
+
 /*******************************
         Responsive Overrides
 *******************************/

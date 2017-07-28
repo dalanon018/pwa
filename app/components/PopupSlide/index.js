@@ -14,6 +14,7 @@ import Button from 'components/Button'
 import CloseButton from 'components/CloseButton'
 import Input from 'components/InputField'
 import Checkbox from 'components/CheckboxField'
+import Modal from 'components/PromptModal'
 
 import BannerBg from 'images/modal-bg-orange.png'
 import MobileIcon from 'images/icons/mobile-icon.svg'
@@ -45,6 +46,8 @@ class PopupSlide extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     // this.setLocalStorage = this.setLocalStorage.bind(this)
   }
+
+  state={}
 
   handleCheck (e, data) {
     this.setState({
@@ -87,8 +90,10 @@ class PopupSlide extends React.Component {
   }
 
   render () {
-    const { toggle, onClose } = this.props
+    const { toggle, onClose, modalToggle, modalClose } = this.props
     const label = `I have read and accepted the `
+
+    console.log('modalToggle pop', modalToggle)
 
     return (
       <PopupWrapper toggle={toggle}>
@@ -130,6 +135,12 @@ class PopupSlide extends React.Component {
             <CloseButton close={onClose} />
           </PopupContent>
         </PopupContainer>
+        <Modal
+          open={modalToggle}
+          name='remove'
+          close={modalClose}
+          title='Server Error'
+          content='System is under maintenance' />
       </PopupWrapper>
     )
   }

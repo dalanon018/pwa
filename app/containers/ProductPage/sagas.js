@@ -15,8 +15,8 @@ import {
 import {
   setProductAction,
 
-  setProductSuccessAction
-  // setProductErrorAction
+  setProductSuccessAction,
+  setProductErrorAction
 } from './actions'
 
 // function * sleep (ms) {
@@ -50,7 +50,7 @@ export function * setCurrentProduct (payload) {
     yield put(setProductSuccessAction(req))
     return req
   } else {
-    console.info(req.err)
+    yield put(setProductErrorAction(true))
   }
 }
 

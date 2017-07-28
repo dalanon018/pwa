@@ -11,7 +11,7 @@ const PopupWrapper = styled.div`
   position: fixed;
   transition: all .3s ease;
   width: 100%;
-  z-index: 999999;
+  z-index: 999;
 `
 
 const PopupContainer = styled.div`
