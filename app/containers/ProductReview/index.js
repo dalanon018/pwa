@@ -87,6 +87,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
   render () {
     const { orderedProduct } = this.props
+    const cliqqCode = orderedProduct.get('cliqqCode') && orderedProduct.get('cliqqCode').join(', ')
+
     const labelOne = <label className='label-custom'>
       <LabelTitle>
         <FormattedMessage {...messages.cashPrepaid} />
@@ -125,7 +127,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                     <Image src={SampleProduct} />
                   </ProductItem>
                   <CliqqCodeWrapper>
-                    <Image src={CliqqLogo} /> {orderedProduct.get('product_id')}
+                    <Image src={CliqqLogo} /> { cliqqCode }
                   </CliqqCodeWrapper>
                   <ProductName className='text-center'>{orderedProduct.get('title')}</ProductName>
                 </StepContent>
