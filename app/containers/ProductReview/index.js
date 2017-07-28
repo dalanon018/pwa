@@ -106,13 +106,17 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
   componentWillReceiveProps (nextProps) {
     const { mobileNumber } = nextProps
-    console.log('mobileNumber', mobileNumber)
     if (mobileNumber.size > 1) {
       this.setState({
-        registeredMobileNumber: mobileNumber.toJS().pop()
-        // modalToggle: false
+        registeredMobileNumber: mobileNumber.last(),
+        modalToggle: false
       })
     } else {
+      /**
+       * @chino please make sure that this will not trigger immediately
+       * there should be an identifier that it is done requesting the mobile number
+       * TODO:
+       */
       // this.setState({
       //   modalToggle: true
       // })
@@ -147,15 +151,15 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       </LabelPrice>
     </label>
 
-    const labelTwo = <label className='label-custom'>
-      <LabelTitle>
-        <FormattedMessage {...messages.cashDelivery} />
-      </LabelTitle>
-      <LabelPrice>
-        <span className='total'>PHP {calculateProductPrice(orderedProduct)}</span>
-        <span className='strike'>PHP {orderedProduct.get('price')}</span>
-      </LabelPrice>
-    </label>
+    // const labelTwo = <label className='label-custom'>
+    //   <LabelTitle>
+    //     <FormattedMessage {...messages.cashDelivery} />
+    //   </LabelTitle>
+    //   <LabelPrice>
+    //     <span className='total'>PHP {calculateProductPrice(orderedProduct)}</span>
+    //     <span className='strike'>PHP {orderedProduct.get('price')}</span>
+    //   </LabelPrice>
+    // </label>
 
     return (
       <Grid padded>
@@ -211,17 +215,19 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                           onChange={this.handleChange}
                           />
                       </Form.Field>
-                      <Form.Field className='display__none'> {/* Cash on Deliver option */}
-                        <Checkbox
-                          radio
-                          name='cod'
-                          value='COD'
-                          label={labelTwo}
-                          checked={this.state.value === 'COD'}
-                          onChange={this.handleChange}
-                          onClick={this.handleToBottom}
-                          />
-                      </Form.Field>
+                      {
+                      //   <Form.Field className='display__none'> {/* Cash on Deliver option */}
+                      //   <Checkbox
+                      //     radio
+                      //     name='cod'
+                      //     value='COD'
+                      //     label={labelTwo}
+                      //     checked={this.state.value === 'COD'}
+                      //     onChange={this.handleChange}
+                      //     onClick={this.handleToBottom}
+                      //     />
+                      // </Form.Field>
+                      }
                     </Form>
                   </SelectMethodWrapper>
                 </StepContent>
