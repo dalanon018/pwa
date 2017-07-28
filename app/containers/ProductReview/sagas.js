@@ -11,10 +11,12 @@ import { takeLatest } from 'redux-saga'
 import { getItem } from 'utils/localStorage'
 
 import {
-  GET_ORDER_PRODUCT
+  GET_ORDER_PRODUCT,
+  GET_MOBILE_NUMBER
 } from './constants'
 import {
-  setOrderProductAction
+  setOrderProductAction,
+  setMobileNumberAction
 } from './actions'
 // import FakeCategories from 'fixtures/products.json'
 
@@ -30,13 +32,25 @@ export function * getOrderProduct () {
   }
 }
 
+export function * getMobileNumber () {
+  const req = yield call(getItem, 'mobileNumbers')
+  if (!req.err) {
+    yield put(setMobileNumberAction(req))
+  }
+}
+
 export function * getOrderProductSaga () {
   yield * takeLatest(GET_ORDER_PRODUCT, getOrderProduct)
 }
 
+export function * getMobileNumberSaga () {
+  yield * takeLatest(GET_MOBILE_NUMBER, getMobileNumber)
+}
+
 export function * productReviewSagas () {
   const watcher = yield [
-    fork(getOrderProductSaga)
+    fork(getOrderProductSaga),
+    fork(getMobileNumberSaga)
   ]
   yield take(LOCATION_CHANGE)
   yield watcher.map(task => cancel(task))

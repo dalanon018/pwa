@@ -23,7 +23,8 @@ import {
 
 import {
   getProductAction,
-  setCurrentProductAction
+  setCurrentProductAction,
+  setMobileNumbersAction
 } from './actions'
 
 import {
@@ -35,6 +36,11 @@ import {
 } from 'containers/Buckets/selectors'
 
 export class ProductPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  /**
+   * this will handle if success is valid after submission
+   */
+  successSubmission = false
+
   constructor () {
     super()
     this.state = {
@@ -64,19 +70,22 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   componentWillReceiveProps (nextProps) {
     const { productSuccess, productError } = nextProps
-    if (productSuccess) {
+    if (productSuccess && this.successSubmission) {
       this.props.changeRoute('/review')
+      this.successSubmission = false
     }
 
-    if (productError) {
+    if (productError && this.successSubmission) {
       this.setState({
         modalToggle: productError
       })
+      this.successSubmission = false
     }
   }
 
   handleSubmit () {
     this.props.setCurrentProduct(this.props.product)
+    this.successSubmission = true
   }
 
   handleClose () {
@@ -100,6 +109,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
         <PopupSlide
           submit={this.handleSubmit}
           product={product}
+          setMobileNumbers={this.props.setMobileNumbers}
           modalClose={this.handleClose}
           changeRoute={changeRoute}
           modalToggle={this.state.modalToggle}
@@ -126,6 +136,7 @@ function mapDispatchToProps (dispatch) {
   return {
     getProduct: (payload) => dispatch(getProductAction(payload)),
     setCurrentProduct: (payload) => dispatch(setCurrentProductAction(payload)),
+    setMobileNumbers: (payload) => dispatch(setMobileNumbersAction(payload)),
     setToggle: payload => dispatch(setToggleAction(payload)),
     changeRoute: (url) => dispatch(push(url)),
     dispatch

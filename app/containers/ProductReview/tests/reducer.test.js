@@ -7,7 +7,8 @@ describe('productReviewReducer', () => {
   beforeEach(() => {
     state = fromJS({
       orderProduct: {},
-      loading: false
+      loading: false,
+      mobileNumber: []
     })
   })
 

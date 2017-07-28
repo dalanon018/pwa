@@ -107,6 +107,12 @@ input.input-field {
     margin-bottom: 7px;
   }
 
+  .display {
+    &__none {
+      display: none;
+    }
+  }
+
   /* Product Padding */
   .padding {
     &__none {

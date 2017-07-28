@@ -6,18 +6,21 @@
 
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import messages from './messages'
 
 import {
-  getOrderProductAction
+  getOrderProductAction,
+  getMobileNumberAction
 } from './actions'
 
 import {
   selectOrderProduct,
   makeSelectProductReview,
-  selectLoader
+  selectLoader,
+  selectMobileNumber
 } from './selectors'
 
 import {
@@ -28,6 +31,7 @@ import {
   Accordion } from 'semantic-ui-react'
 
 import Button from 'components/Button'
+import Modal from 'components/PromptModal'
 
 import { calculateProductPrice } from 'utils/promo'
 
@@ -57,8 +61,16 @@ import {
 export class ProductReview extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   constructor () {
     super()
+    this.state = {
+      value: '',
+      visibility: false,
+      registeredMobileNumber: '',
+      modalToggle: false
+    }
     this.handleChange = this.handleChange.bind(this)
     this.handleToBottom = this.handleToBottom.bind(this)
+    this.handleProceed = this.handleProceed.bind(this)
+    this.handleStoreLocator = this.handleStoreLocator.bind(this)
   }
 
   static propTypes = {
@@ -67,12 +79,18 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     orderedProduct: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.object
+    ]).isRequired,
+    mobileNumber: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.object
     ]).isRequired
   }
 
-  state = {}
   handleChange = (e, { value }) => {
-    this.setState({ value })
+    this.setState({
+      value: value,
+      visibility: value === 'COD'
+    })
   }
 
   handleToBottom = () => {
@@ -83,6 +101,33 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
   componentDidMount () {
     this.props.getOrderProduct()
+    this.props.getMobileNumber()
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const { mobileNumber } = nextProps
+    console.log('mobileNumber', mobileNumber)
+    if (mobileNumber.size > 1) {
+      this.setState({
+        registeredMobileNumber: mobileNumber.toJS().pop()
+        // modalToggle: false
+      })
+    } else {
+      // this.setState({
+      //   modalToggle: true
+      // })
+      // setTimeout(() => {
+      //   this.props.changeRoute('/')
+      // }, 5000)
+    }
+  }
+
+  handleProceed () {
+    this.props.changeRoute('purchases/344760497230963777') // Temporary route
+  }
+
+  handleStoreLocator () {
+    window.location.replace('https://store-locator-7-eleven.appspot.com')
   }
 
   render () {
@@ -159,20 +204,20 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                         <Checkbox
                           radio
                           name='cash-prepaid'
-                          value={false}
+                          value='CASH'
                           label={labelOne}
-                          checked={this.state.value === false}
+                          // checked={this.state.value === 'CASH'}
+                          defaultChecked
                           onChange={this.handleChange}
                           />
-
                       </Form.Field>
-                      <Form.Field>
+                      <Form.Field className='display__none'> {/* Cash on Deliver option */}
                         <Checkbox
                           radio
                           name='cod'
-                          value
+                          value='COD'
                           label={labelTwo}
-                          checked={this.state.value === true}
+                          checked={this.state.value === 'COD'}
                           onChange={this.handleChange}
                           onClick={this.handleToBottom}
                           />
@@ -182,23 +227,29 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                 </StepContent>
               </StepWrapper>
 
-              <StepWrapper className='visibility' visibility={this.state.value}>
+              {/* <StepWrapper className='visibility' visibility={this.state.visibility}> */}
+              <StepWrapper>
                 <StepContent>
                   <StepHead step='3' className='margin__top-positive--20'>
                     <FormattedMessage {...messages.stepThree} />
                     <p>Your default store will be the last store you visited</p>
                   </StepHead>
-                  <LocationButton onClick={() => {}} fluid icon={NextIcon}>
+                  <LocationButton onClick={this.handleStoreLocator} fluid icon={NextIcon}>
                     <span>FIND STORE NEARBY</span>
                   </LocationButton>
                 </StepContent>
               </StepWrapper>
 
               <ButtonContainer>
-                <Button onClick={() => {}} primary fluid><FormattedMessage {...messages.proceedNext} /></Button>
+                <Button onClick={this.handleProceed} primary fluid><FormattedMessage {...messages.proceedNext} /></Button>
               </ButtonContainer>
             </ReviewContainer>
 
+            <Modal
+              open={this.state.modalToggle}
+              name='warning'
+              title='Something Wrong'
+              content='No registered mobile number.' />
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -213,12 +264,15 @@ ProductReview.propTypes = {
 const mapStateToProps = createStructuredSelector({
   ProductReview: makeSelectProductReview(),
   orderedProduct: selectOrderProduct(),
+  mobileNumber: selectMobileNumber(),
   loader: selectLoader()
 })
 
 function mapDispatchToProps (dispatch) {
   return {
     getOrderProduct: (payload) => dispatch(getOrderProductAction(payload)),
+    getMobileNumber: (payload) => dispatch(getMobileNumberAction(payload)),
+    changeRoute: (url) => dispatch(push(url)),
     dispatch
   }
 }
