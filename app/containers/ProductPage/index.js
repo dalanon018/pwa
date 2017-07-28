@@ -41,6 +41,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       modalToggle: false
     }
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleClose = this.handleClose.bind(this)
   }
   static propTypes = {
     getProduct: PropTypes.func.isRequired,
@@ -78,6 +79,12 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.props.setCurrentProduct(this.props.product)
   }
 
+  handleClose () {
+    this.setState({
+      modalToggle: false
+    })
+  }
+
   render () {
     const { loading, product, toggle, changeRoute } = this.props
 
@@ -93,7 +100,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
         <PopupSlide
           submit={this.handleSubmit}
           product={product}
-          modalClose={() => { this.setState({modalToggle: false}) }}
+          modalClose={this.handleClose}
           changeRoute={changeRoute}
           modalToggle={this.state.modalToggle}
           toggle={toggle}
