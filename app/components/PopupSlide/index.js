@@ -44,7 +44,6 @@ class PopupSlide extends React.Component {
     this.handleCheck = this.handleCheck.bind(this)
     this.handleDisable = this.handleDisable.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    // this.setLocalStorage = this.setLocalStorage.bind(this)
   }
 
   state={}
@@ -77,23 +76,14 @@ class PopupSlide extends React.Component {
     }
   }
 
-  // setLocalStorage () {
-  //   console.log('asd', this.props.product)
-  //   try {
-  //     setItem('currentProduct', this.props.product)
-  //   }
-  //   catch {}
-  // }
-
   handleSubmit () {
     this.props.submit()
+    this.props.setMobileNumbers(this.state.value)
   }
 
   render () {
     const { toggle, onClose, modalToggle, modalClose } = this.props
     const label = `I have read and accepted the `
-
-    console.log('modalToggle pop', modalToggle)
 
     return (
       <PopupWrapper toggle={toggle}>
@@ -124,7 +114,6 @@ class PopupSlide extends React.Component {
               onChange={this.handleCheck}
               label={label} />
             <Button
-              type='submit'
               disabled={this.state.toggle}
               primary
               fluid

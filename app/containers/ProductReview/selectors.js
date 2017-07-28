@@ -28,9 +28,15 @@ const selectLoader = () => createSelector(
   (substate) => substate.get('loading')
 )
 
+const selectMobileNumber = () => createSelector(
+  selectProductReviewDomain(),
+  (substate) => substate.get('mobileNumber')
+)
+
 export default makeSelectProductReview
 export {
   makeSelectProductReview,
   selectOrderProduct,
+  selectMobileNumber,
   selectLoader
 }

@@ -11,7 +11,9 @@ import {
   SET_CURRENT_PRODUCT,
 
   SET_PRODUCT_SUCCESS,
-  SET_PRODUCT_ERROR
+  SET_PRODUCT_ERROR,
+
+  SET_MOBILE_NUMBERS
 } from './constants'
 
 export function getProductAction (payload) {
@@ -52,6 +54,13 @@ export function setProductSuccessAction (payload) {
 export function setProductErrorAction (payload) {
   return {
     type: SET_PRODUCT_ERROR,
+    payload
+  }
+}
+
+export function setMobileNumbersAction (payload) {
+  return {
+    type: SET_MOBILE_NUMBERS,
     payload
   }
 }

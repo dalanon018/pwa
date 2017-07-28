@@ -8,12 +8,15 @@ import { fromJS } from 'immutable'
 import {
   DEFAULT_ACTION,
   GET_ORDER_PRODUCT,
-  SET_ORDER_PRODUCT
+  SET_ORDER_PRODUCT,
+
+  SET_MOBILE_NUMBER
 } from './constants'
 
 const initialState = fromJS({
   orderProduct: {},
-  loading: false
+  loading: false,
+  mobileNumber: []
 })
 
 function productReviewReducer (state = initialState, action) {
@@ -26,6 +29,8 @@ function productReviewReducer (state = initialState, action) {
       return state
         .set('orderProduct', fromJS(action.payload))
         .set('loading', false)
+    case SET_MOBILE_NUMBER:
+      return state.set('mobileNumber', fromJS(action.payload))
     default:
       return state
   }

@@ -16,7 +16,7 @@ const IconWrapper = styled.div`
 
   .custom-icon {
     align-items: center;
-    background-color: red;
+    background-color: ${props => props.background};
     border-radius: 50px;
     display: flex;
     height: 25px;
@@ -24,7 +24,7 @@ const IconWrapper = styled.div`
     margin: 0 auto;
     width: 25px;
 
-    &.remove:before {
+    &.icon:before {
       color: #FFFFFF;
     }
   }
@@ -49,18 +49,31 @@ function PromptModal ({
   open,
   close
 }) {
+  let color = ''
+  const handleColor = () => {
+    switch (name) {
+      case 'checkmark':
+        color = '#9BCB49'
+        break
+      case 'remove':
+        color = '#EB1C24'
+        break
+      case 'warning':
+        color = '#F58322'
+        break
+    }
+  }
+  handleColor()
   return (
-    <div>
-      <Modal size='small' open={open} onClose={close} >
-        <Modal.Content>
-          <IconWrapper>
-            <Icon name='remove' className='custom-icon' />
-          </IconWrapper>
-          <TitleHead>{title}</TitleHead>
-          <Content>{content}</Content>
-        </Modal.Content>
-      </Modal>
-    </div>
+    <Modal size='small' open={open} onClose={close}>
+      <Modal.Content>
+        <IconWrapper background={color}>
+          <Icon name={name} className='custom-icon' />
+        </IconWrapper>
+        <TitleHead>{title}</TitleHead>
+        <Content>{content}</Content>
+      </Modal.Content>
+    </Modal>
   )
 }
 
