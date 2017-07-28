@@ -45,5 +45,5 @@ export const calculateProductPrice = (product) => {
   return identifyCalculation({
     PERCENTAGE: calculatePercentage,
     AMOUNT: calculateAmount
-  })(calculatePercentage)(product.getIn(['discount', 'percentType']))(product)
+  })(calculatePercentage)(product.getIn(['discount', 'discountType']))(product)
 }

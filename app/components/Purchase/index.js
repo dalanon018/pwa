@@ -153,7 +153,7 @@ class Purchase extends React.PureComponent {
           <ProductImage background={TestBackPack} />
           <ProductDescription>
             <CodeWrapper> <CodeImage src={CliqqLogo} />
-              { order.getIn(['products', 'product_id']) }
+              { order.getIn(['products', 'cliqqCode']) }
             </CodeWrapper>
             <H6 uppercase> { order.getIn(['products', 'name']) } </H6>
             <ProductLogoImage src={TestLogo} />

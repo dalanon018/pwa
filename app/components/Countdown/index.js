@@ -77,7 +77,7 @@ class Countdown extends React.PureComponent { // eslint-disable-line react/prefe
 
     const [ hh, mm, ss ] = timer.split(':')
 
-    if ((pT(hh) < 0) && (pT(mm) < 0) && (pT(ss) < 0)) {
+    if ((pT(hh) + pT(mm) + pT(ss)) < 0) {
       clearInterval(this.countdownInterval)
       this.setState({
         timer: '00:00:00'

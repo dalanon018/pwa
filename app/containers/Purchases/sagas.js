@@ -1,8 +1,9 @@
 
 import { takeLatest } from 'redux-saga'
-import { take, put, fork, cancel } from 'redux-saga/effects'
+import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 // import request from 'utils/request'
+import { transformOrder } from 'utils/transforms'
 
 import FakeOrders from 'fixtures/orders.json'
 
@@ -12,6 +13,11 @@ import {
 import {
   setPurchasesAction
 } from './actions'
+
+function * transformEachEntity (entity) {
+  const response = yield call(transformOrder, entity)
+  return response
+}
 
 export function * getPurchases () {
   // const headers = new Headers()
@@ -29,7 +35,8 @@ export function * getPurchases () {
   // We will emulate data
   const req = yield Promise.resolve(FakeOrders)
   if (!req.err) {
-    yield put(setPurchasesAction(req))
+    const transform = yield req.map(transformEachEntity)
+    yield put(setPurchasesAction(transform))
   }
 }
 

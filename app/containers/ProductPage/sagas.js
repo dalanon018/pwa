@@ -1,10 +1,10 @@
 
 import { takeLatest } from 'redux-saga'
 import { find } from 'lodash'
-import { take, put, fork, cancel, call } from 'redux-saga/effects'
+import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { setItem } from 'utils/localStorage'
-// import request from 'utils/request'
+import { transformProduct } from 'utils/transforms'
 
 import FakeProducts from 'fixtures/products.json'
 
@@ -23,6 +23,11 @@ import {
 //   yield new Promise(resolve => setTimeout(resolve, ms))
 // }
 
+function * transformEachEntity (entity) {
+  const response = yield call(transformProduct, entity)
+  return response
+}
+
 export function * getProduct (payload) {
   const { payload: { id } } = payload
   // const headers = new Headers()
@@ -38,9 +43,13 @@ export function * getProduct (payload) {
   // })
 
   // We will emulate data
-  const req = yield Promise.resolve(find(FakeProducts, { product_id: id }))
+  const req = yield Promise.resolve(FakeProducts)
+
   if (!req.err) {
-    yield put(setProductAction(req))
+    const transform = yield req.map(transformEachEntity)
+    const findData = find(transform, (prod) => prod.cliqqCode.includes(id))
+
+    yield put(setProductAction(findData))
   }
 }
 
