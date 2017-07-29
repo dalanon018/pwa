@@ -10,7 +10,9 @@ import {
   SET_PRODUCT,
 
   SET_PRODUCT_SUCCESS,
-  SET_PRODUCT_ERROR
+  SET_PRODUCT_ERROR,
+
+  SET_PRODUCT_HANDLER_DEFAULT
 } from './constants'
 
 const initialState = fromJS({
@@ -40,6 +42,11 @@ function productPageReducer (state = initialState, action) {
       return state
           .set('product', fromJS(action.payload))
           .set('loading', false)
+
+    case SET_PRODUCT_HANDLER_DEFAULT:
+      return state
+        .set('requestProductSuccess', false)
+        .set('requestProductError', false)
     default:
       return state
   }

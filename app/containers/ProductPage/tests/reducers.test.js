@@ -3,7 +3,8 @@ import productsReducer from '../reducer'
 import { fromJS } from 'immutable'
 
 import {
-  setProductAction
+  setProductAction,
+  setProductHandlersDefaultAction
 } from '../actions'
 
 describe('Products Reducer', () => {
@@ -32,5 +33,13 @@ describe('Products Reducer', () => {
     const expectedResult = state.set('product', payload)
 
     expect(productsReducer(state, setProductAction(payload))).toEqual(expectedResult)
+  })
+
+  it('should reset the handlers to default success = false, error = false', () => {
+    const expectedResult = state
+                            .set('requestProductSuccess', false)
+                            .set('requestProductError', false)
+
+    expect(productsReducer(state, setProductHandlersDefaultAction())).toEqual(expectedResult)
   })
 })

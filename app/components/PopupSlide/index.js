@@ -77,8 +77,10 @@ class PopupSlide extends React.Component {
   }
 
   handleSubmit () {
-    this.props.submit()
-    this.props.setMobileNumbers(this.state.value)
+    const { value } = this.state
+    this.props.submit({
+      value
+    })
   }
 
   render () {
