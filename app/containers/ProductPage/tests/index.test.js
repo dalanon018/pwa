@@ -16,6 +16,8 @@ describe('<Products />', () => {
     dispatch: () => {},
     getProduct: () => {},
     changeRoute: () => {},
+    setCurrentProduct: () => {},
+    setHandlersDefault: () => {},
     product: fromJS({
       'product_id': '0001',
       'image': null,
@@ -29,7 +31,10 @@ describe('<Products />', () => {
       'shipping': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla.',
       'barcode': '718037806839'
     }),
-    loading: false
+    loading: false,
+    toggle: false,
+    productSuccess: false,
+    productError: false
   }
 
   it('render without exploding', () => {

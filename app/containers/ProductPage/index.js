@@ -37,6 +37,18 @@ import {
 } from 'containers/Buckets/selectors'
 
 export class ProductPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  static propTypes = {
+    getProduct: PropTypes.func.isRequired,
+    setCurrentProduct: PropTypes.func.isRequired,
+    changeRoute: PropTypes.func.isRequired,
+    setHandlersDefault: PropTypes.func.isRequired,
+    product: PropTypes.object.isRequired,
+    loading: PropTypes.bool.isRequired,
+    toggle: PropTypes.bool.isRequired,
+    productSuccess: PropTypes.bool.isRequired,
+    productError: PropTypes.bool.isRequired
+  }
+
   /**
    * this will handle if success is valid after submission
    */
@@ -47,19 +59,12 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.state = {
       modalToggle: false
     }
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleClose = this.handleClose.bind(this)
-  }
-  static propTypes = {
-    getProduct: PropTypes.func.isRequired,
-    setCurrentProduct: PropTypes.func.isRequired,
-    changeRoute: PropTypes.func.isRequired,
-    product: PropTypes.object.isRequired,
-    loading: PropTypes.bool.isRequired,
-    toggle: PropTypes.bool.isRequired
+    this._handleSubmit = this._handleSubmit.bind(this)
+    this._handleClose = this._handleClose.bind(this)
+    this._handleToggle = this._handleToggle.bind(this)
   }
 
-  handleSubmit ({ value }) {
+  _handleSubmit ({ value }) {
     const { product, setCurrentProduct, setMobileNumbers } = this.props
 
     this.successSubmission = true
@@ -68,13 +73,13 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     setMobileNumbers(value)
   }
 
-  handleClose () {
+  _handleClose () {
     this.setState({
       modalToggle: false
     })
   }
 
-  handleToggle = () => {
+  _handleToggle = () => {
     this.props.setToggle()
   }
 
@@ -83,17 +88,18 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   componentDidMount () {
-    const { params: { id } } = this.props
-    this.props.getProduct({ id })
+    const { params: { id }, getProduct } = this.props
+    getProduct({ id })
   }
 
   componentWillReceiveProps (nextProps) {
-    const { productSuccess, productError } = nextProps
+    const { productSuccess, productError, changeRoute } = nextProps
 
     if (productSuccess && this.successSubmission) {
-      this.props.changeRoute('/review')
-      this.handleClose()
+      this._handleClose()
       this.successSubmission = false
+
+      changeRoute('/review')
     }
 
     if (productError && this.successSubmission) {
@@ -106,6 +112,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   render () {
     const { loading, product, toggle } = this.props
+    const { modalToggle } = this.state
 
     return (
       <div>
@@ -115,21 +122,17 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             { name: 'description', content: 'Description of ProductPage' }
           ]}
         />
-        <Product loading={loading} product={product} popup={this.handleToggle} />
+        <Product loading={loading} product={product} popup={this._handleToggle} />
         <PopupSlide
-          submit={this.handleSubmit}
+          submit={this._handleSubmit}
           product={product}
-          modalClose={this.handleClose}
-          modalToggle={this.state.modalToggle}
+          modalClose={this._handleClose}
+          modalToggle={modalToggle}
           toggle={toggle}
-          onClose={this.handleToggle} />
+          onClose={this._handleToggle} />
       </div>
     )
   }
-}
-
-ProductPage.propTypes = {
-  dispatch: PropTypes.func.isRequired
 }
 
 const mapStateToProps = createStructuredSelector({

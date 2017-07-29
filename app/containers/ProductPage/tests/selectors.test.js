@@ -41,7 +41,7 @@ describe('Product Selectors', () => {
   describe('selectProductError', () => {
     const selectProductErrorSelectors = selectProductError()
 
-    it('should get product', () => {
+    it('should get error submission', () => {
       const requestProductError = false
       const mockedState = fromJS({
         productPage: {
