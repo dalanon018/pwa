@@ -14,7 +14,14 @@ const wrapper = (props = {}, enzyme = shallow) => enzyme(
 describe('<SearchPage />', () => {
   const minProps = {
     product: fromJS({}),
-    loading: false
+    loading: false,
+    getProduct: () => {},
+    setCurrentProduct: () => {},
+    changeRoute: () => {},
+    setHandlersDefault: () => {},
+    toggle: false,
+    productSuccess: false,
+    productError: false
   }
 
   it('render without exploding', () => {

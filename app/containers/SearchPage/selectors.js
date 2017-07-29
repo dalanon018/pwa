@@ -23,8 +23,19 @@ const selectSearchProduct = () => createSelector(
   (substate) => substate.get('product')
 )
 
+const selectProductSuccess = () => createSelector(
+  selectSearchPageDomain(),
+  (substate) => substate.get('requestProductSuccess')
+)
+
+const selectProductError = () => createSelector(
+  selectSearchPageDomain(),
+  (substate) => substate.get('requestProductError')
+)
+
 export {
-  selectSearchPageDomain,
   selectSearchProductLoading,
-  selectSearchProduct
+  selectSearchProduct,
+  selectProductSuccess,
+  selectProductError
 }

@@ -2,7 +2,9 @@ import { fromJS } from 'immutable'
 
 import {
   selectSearchProductLoading,
-  selectSearchProduct
+  selectSearchProduct,
+  selectProductSuccess,
+  selectProductError
 } from '../selectors'
 
 describe('Buckets Selectors', () => {
@@ -35,6 +37,34 @@ describe('Buckets Selectors', () => {
         }
       })
       expect(selectSearchProductSelectors(mockedState)).toEqual(product)
+    })
+  })
+
+  describe('selectProductSuccess', () => {
+    const selectProductSuccessSelectors = selectProductSuccess()
+
+    it('should get success submission', () => {
+      const requestProductSuccess = true
+      const mockedState = fromJS({
+        searchPage: {
+          requestProductSuccess
+        }
+      })
+      expect(selectProductSuccessSelectors(mockedState)).toEqual(requestProductSuccess)
+    })
+  })
+
+  describe('selectProductError', () => {
+    const selectProductErrorSelectors = selectProductError()
+
+    it('should get error submission', () => {
+      const requestProductError = false
+      const mockedState = fromJS({
+        searchPage: {
+          requestProductError
+        }
+      })
+      expect(selectProductErrorSelectors(mockedState)).toEqual(requestProductError)
     })
   })
 })

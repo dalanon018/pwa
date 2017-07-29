@@ -1,11 +1,13 @@
 
 import {
   getSearchProductAction,
-  setSearchProductAction
+  setSearchProductAction,
+  setProductHandlersDefaultAction
 } from '../actions'
 import {
   GET_SEARCH_PRODUCT,
-  SET_SEARCH_PRODUCT
+  SET_SEARCH_PRODUCT,
+  SET_PRODUCT_HANDLER_DEFAULT
 } from '../constants'
 
 describe('SearchPage actions', () => {
@@ -33,6 +35,16 @@ describe('SearchPage actions', () => {
       }
 
       expect(setSearchProductAction(payload)).toEqual(expectedResult)
+    })
+  })
+
+  describe('setProductHandlersDefaultAction', () => {
+    it('should have handler default payload', () => {
+      const expectedResult = {
+        type: SET_PRODUCT_HANDLER_DEFAULT
+      }
+
+      expect(setProductHandlersDefaultAction()).toEqual(expectedResult)
     })
   })
 })

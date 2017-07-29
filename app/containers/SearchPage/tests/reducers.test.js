@@ -3,7 +3,8 @@ import productSearchReducer from '../reducer'
 import { fromJS } from 'immutable'
 
 import {
-  setSearchProductAction
+  setSearchProductAction,
+  setProductHandlersDefaultAction
 } from '../actions'
 
 describe('Buckets Reducer', () => {
@@ -11,7 +12,10 @@ describe('Buckets Reducer', () => {
   beforeEach(() => {
     state = fromJS({
       loading: false,
-      product: {}
+      product: {},
+      requestProductSuccess: false,
+      requestProductError: false,
+      currentProduct: {}
     })
   })
 
@@ -20,7 +24,7 @@ describe('Buckets Reducer', () => {
     expect(productSearchReducer(undefined, {})).toEqual(expectedResult)
   })
 
-  it('should update categories', () => {
+  it('should update Product info', () => {
     const payload = fromJS({
       name: 'Testproduct',
       product_id: '0001'
@@ -29,5 +33,13 @@ describe('Buckets Reducer', () => {
     const expectedResult = state.set('product', payload)
 
     expect(productSearchReducer(state, setSearchProductAction(payload))).toEqual(expectedResult)
+  })
+
+  it('should reset the handlers to default success = false, error = false', () => {
+    const expectedResult = state
+                            .set('requestProductSuccess', false)
+                            .set('requestProductError', false)
+
+    expect(productSearchReducer(state, setProductHandlersDefaultAction())).toEqual(expectedResult)
   })
 })
