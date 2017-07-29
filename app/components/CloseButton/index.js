@@ -20,6 +20,7 @@ const ButtonWrapper = styled.div`
     background: transparent;
     font-family: 'helveticamedium';
     letter-spacing: 2px;
+    text-transform: uppercase;
 
     &:hover, &:focus {
       background: transparent;
@@ -28,10 +29,10 @@ const ButtonWrapper = styled.div`
   }
 `
 
-function CloseButton ({close}) {
+function CloseButton ({close, text}) {
   return (
     <ButtonWrapper>
-      <Button onClick={close}>CLOSE</Button>
+      <Button onClick={close}>{text}</Button>
     </ButtonWrapper>
   )
 }

@@ -19,7 +19,8 @@ const Wrapper = styled.div`
   display: flex;
   flex: 1 0 auto;
   justify-content: center;
-  padding: 2px 0
+  padding: 2px 0;
+  text-transform: uppercase;
 `
 const TextWrapper = styled.div`
   font-size: ${({ fontSize }) => fontSize}px;
