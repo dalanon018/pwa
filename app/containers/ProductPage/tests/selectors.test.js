@@ -1,7 +1,9 @@
 import { fromJS } from 'immutable'
 
 import {
-  selectProduct
+  selectProduct,
+  selectProductSuccess,
+  selectProductError
 } from '../selectors'
 
 describe('Product Selectors', () => {
@@ -19,6 +21,34 @@ describe('Product Selectors', () => {
         }
       })
       expect(selectProductSelectors(mockedState)).toEqual(product)
+    })
+  })
+
+  describe('selectProductSuccess', () => {
+    const selectProductSuccessSelectors = selectProductSuccess()
+
+    it('should get success submission', () => {
+      const requestProductSuccess = true
+      const mockedState = fromJS({
+        productPage: {
+          requestProductSuccess
+        }
+      })
+      expect(selectProductSuccessSelectors(mockedState)).toEqual(requestProductSuccess)
+    })
+  })
+
+  describe('selectProductError', () => {
+    const selectProductErrorSelectors = selectProductError()
+
+    it('should get product', () => {
+      const requestProductError = false
+      const mockedState = fromJS({
+        productPage: {
+          requestProductError
+        }
+      })
+      expect(selectProductErrorSelectors(mockedState)).toEqual(requestProductError)
     })
   })
 })

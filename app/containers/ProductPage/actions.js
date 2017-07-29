@@ -13,7 +13,9 @@ import {
   SET_PRODUCT_SUCCESS,
   SET_PRODUCT_ERROR,
 
-  SET_MOBILE_NUMBERS
+  SET_MOBILE_NUMBERS,
+
+  SET_PRODUCT_HANDLER_DEFAULT
 } from './constants'
 
 export function getProductAction (payload) {
@@ -62,5 +64,11 @@ export function setMobileNumbersAction (payload) {
   return {
     type: SET_MOBILE_NUMBERS,
     payload
+  }
+}
+
+export function setProductHandlersDefaultAction () {
+  return {
+    type: SET_PRODUCT_HANDLER_DEFAULT
   }
 }

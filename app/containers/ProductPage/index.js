@@ -24,7 +24,8 @@ import {
 import {
   getProductAction,
   setCurrentProductAction,
-  setMobileNumbersAction
+  setMobileNumbersAction,
+  setProductHandlersDefaultAction
 } from './actions'
 
 import {
@@ -58,20 +59,40 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     toggle: PropTypes.bool.isRequired
   }
 
-  componentDidMount () {
-    const { params: { id } } = this.props
-    this.props.getProduct({ id })
-    // this.handleSubmit()
+  handleSubmit ({ value }) {
+    const { product, setCurrentProduct, setMobileNumbers } = this.props
+
+    this.successSubmission = true
+
+    setCurrentProduct(product)
+    setMobileNumbers(value)
+  }
+
+  handleClose () {
+    this.setState({
+      modalToggle: false
+    })
   }
 
   handleToggle = () => {
     this.props.setToggle()
   }
 
+  componentWillUnmount () {
+    this.props.setHandlersDefault()
+  }
+
+  componentDidMount () {
+    const { params: { id } } = this.props
+    this.props.getProduct({ id })
+  }
+
   componentWillReceiveProps (nextProps) {
     const { productSuccess, productError } = nextProps
+
     if (productSuccess && this.successSubmission) {
       this.props.changeRoute('/review')
+      this.handleClose()
       this.successSubmission = false
     }
 
@@ -83,19 +104,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     }
   }
 
-  handleSubmit () {
-    this.props.setCurrentProduct(this.props.product)
-    this.successSubmission = true
-  }
-
-  handleClose () {
-    this.setState({
-      modalToggle: false
-    })
-  }
-
   render () {
-    const { loading, product, toggle, changeRoute } = this.props
+    const { loading, product, toggle } = this.props
 
     return (
       <div>
@@ -109,9 +119,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
         <PopupSlide
           submit={this.handleSubmit}
           product={product}
-          setMobileNumbers={this.props.setMobileNumbers}
           modalClose={this.handleClose}
-          changeRoute={changeRoute}
           modalToggle={this.state.modalToggle}
           toggle={toggle}
           onClose={this.handleToggle} />
@@ -137,7 +145,8 @@ function mapDispatchToProps (dispatch) {
     getProduct: (payload) => dispatch(getProductAction(payload)),
     setCurrentProduct: (payload) => dispatch(setCurrentProductAction(payload)),
     setMobileNumbers: (payload) => dispatch(setMobileNumbersAction(payload)),
-    setToggle: payload => dispatch(setToggleAction(payload)),
+    setToggle: (payload) => dispatch(setToggleAction(payload)),
+    setHandlersDefault: () => dispatch(setProductHandlersDefaultAction()),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
   }

@@ -1,11 +1,13 @@
 
 import {
   getProductAction,
-  setProductAction
+  setProductAction,
+  setProductHandlersDefaultAction
 } from '../actions'
 import {
   GET_PRODUCT,
-  SET_PRODUCT
+  SET_PRODUCT,
+  SET_PRODUCT_HANDLER_DEFAULT
 } from '../constants'
 
 describe('Products actions', () => {
@@ -33,6 +35,16 @@ describe('Products actions', () => {
       }
 
       expect(setProductAction(payload)).toEqual(expectedResult)
+    })
+  })
+
+  describe('setProductHandlersDefaultAction', () => {
+    it('should have handler default payload', () => {
+      const expectedResult = {
+        type: SET_PRODUCT_HANDLER_DEFAULT
+      }
+
+      expect(setProductHandlersDefaultAction()).toEqual(expectedResult)
     })
   })
 })
