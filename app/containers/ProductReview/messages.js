@@ -47,5 +47,17 @@ export default defineMessages({
   proceedNext: {
     id: `${idSuffix}.proceedNext`,
     defaultMessage: 'PROCEED TO NEXT STEP'
+  },
+  errorHeader: {
+    id: `${idSuffix}.errorHeader`,
+    defaultMessage: 'Something went Wrong'
+  },
+  errorNoMobileProduct: {
+    id: `${idSuffix}.errorNoMobileProduct`,
+    defaultMessage: 'No registered mobile / No product selected'
+  },
+  errorSubmission: {
+    id: `${idSuffix}.errorNoMobileProduct`,
+    defaultMessage: 'There\'s problem with submission please try again.'
   }
 })

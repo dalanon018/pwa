@@ -6,31 +6,56 @@
 
 import { fromJS } from 'immutable'
 import {
-  DEFAULT_ACTION,
   GET_ORDER_PRODUCT,
   SET_ORDER_PRODUCT,
 
-  SET_MOBILE_NUMBER
+  GET_MOBILE_NUMBER,
+  SET_MOBILE_NUMBER,
+
+  ORDER_SUBMIT,
+  ORDER_SUCCESS,
+  ORDER_ERROR
 } from './constants'
 
 const initialState = fromJS({
   orderProduct: {},
-  loading: false,
-  mobileNumber: []
+  submitting: false,
+  submissionSuccess: {},
+  submissionError: {},
+  productLoading: false,
+  mobileNumber: null,
+  mobileLoading: false
 })
 
 function productReviewReducer (state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state
     case GET_ORDER_PRODUCT:
-      return state.set('loading', true)
+      return state.set('productLoading', true)
     case SET_ORDER_PRODUCT:
       return state
         .set('orderProduct', fromJS(action.payload))
-        .set('loading', false)
+        .set('productLoading', false)
+
+    case GET_MOBILE_NUMBER:
+      return state.set('mobileLoading', true)
     case SET_MOBILE_NUMBER:
-      return state.set('mobileNumber', fromJS(action.payload))
+      return state
+        .set('mobileNumber', fromJS(action.payload))
+        .set('mobileLoading', false)
+
+    case ORDER_SUBMIT:
+      return state.set('submitting', true)
+    case ORDER_SUCCESS:
+      return state
+        .set('submissionSuccess', fromJS(action.payload))
+        .set('submissionError', fromJS({}))
+        .set('submitting', false)
+    case ORDER_ERROR:
+      return state
+        .set('submissionError', fromJS(action.payload))
+        .set('submissionSuccess', fromJS({}))
+        .set('submitting', false)
+
     default:
       return state
   }
