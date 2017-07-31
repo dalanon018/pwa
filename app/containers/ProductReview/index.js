@@ -101,7 +101,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
   componentDidMount () {
     this.props.getOrderProduct()
-    this.props.getMobileNumber()
+    // this.props.getMobileNumber()
   }
 
   componentWillReceiveProps (nextProps) {

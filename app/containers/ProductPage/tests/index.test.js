@@ -34,7 +34,8 @@ describe('<Products />', () => {
     loading: false,
     toggle: false,
     productSuccess: false,
-    productError: false
+    productError: false,
+    mobileNumbers: fromJS([1, 2, 3])
   }
 
   it('render without exploding', () => {

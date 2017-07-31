@@ -1,6 +1,6 @@
 
 import { takeLatest } from 'redux-saga'
-import { find } from 'lodash'
+import { find, compact } from 'lodash'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { transformProduct } from 'utils/transforms'
@@ -11,11 +11,13 @@ import FakeProducts from 'fixtures/products.json'
 import {
   GET_PRODUCT,
   SET_CURRENT_PRODUCT,
-  SET_MOBILE_NUMBERS
+
+  GET_MOBILE_NUMBERS,
+  UPDATE_MOBILE_NUMBERS
 } from './constants'
 import {
   setProductAction,
-
+  setMobileNumbersAction,
   setProductSuccessAction,
   setProductErrorAction
 } from './actions'
@@ -64,15 +66,22 @@ export function * setCurrentProduct (payload) {
   }
 }
 
-export function * setMobileNumbers (args) {
+export function * getMobileNumbers () {
+  const mobiles = yield call(getItem, 'mobileNumbers')
+
+  yield put(setMobileNumbersAction(mobiles || []))
+}
+
+export function * updateMobileNumbers (args) {
   const { payload } = args
   const mobiles = yield call(getItem, 'mobileNumbers')
-  const mobileRegistrations = mobiles || []
-  mobileRegistrations.push(payload)
-  const req = yield call(setItem, 'mobileNumbers', mobileRegistrations)
-  if (!req.err) {
-    return req
-  }
+  let mobileRegistrations = compact(mobiles) || []
+
+  mobileRegistrations = mobileRegistrations.concat(payload)
+
+  yield call(setItem, 'mobileNumbers', mobileRegistrations)
+
+  yield put(setMobileNumbersAction(mobileRegistrations))
 }
 
 export function * getProductSaga () {
@@ -83,16 +92,24 @@ export function * setCurrentProductSaga () {
   yield * takeLatest(SET_CURRENT_PRODUCT, setCurrentProduct)
 }
 
-export function * setMobileNumbersSaga () {
-  yield * takeLatest(SET_MOBILE_NUMBERS, setMobileNumbers)
+export function * getMobileNumbersSaga () {
+  yield * takeLatest(GET_MOBILE_NUMBERS, getMobileNumbers)
+}
+
+export function * updateMobileNumbersSaga () {
+  yield * takeLatest(UPDATE_MOBILE_NUMBERS, updateMobileNumbers)
 }
 
 // All sagas to be loaded
 export function * productSagas () {
   const watcher = yield [
     fork(getProductSaga),
+
     fork(setCurrentProductSaga),
-    fork(setMobileNumbersSaga)
+
+    // Getter and Setter for mobile numbers
+    fork(getMobileNumbersSaga),
+    fork(updateMobileNumbersSaga)
   ]
 
   // Suspend execution until location changes

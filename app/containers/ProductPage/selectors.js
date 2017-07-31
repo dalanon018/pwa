@@ -34,9 +34,15 @@ const selectProductError = () => createSelector(
   (substate) => substate.get('requestProductError')
 )
 
+const selectMobileNumbers = () => createSelector(
+  selectProductPageDomain(),
+  (substate) => substate.get('mobileNumbers')
+)
+
 export {
   selectLoader,
   selectProduct,
+  selectMobileNumbers,
   selectProductSuccess,
   selectProductError
 }
