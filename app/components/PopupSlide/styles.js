@@ -79,11 +79,11 @@ const BannerHeader = styled.div`
 `
 
 const TitleHead = styled.div`
+  font-family: 'helveticabold';
   font-size:  14px;
+  letter-spacing: 2px;
   margin-bottom: 15px;
   text-transform: uppercase;
-  font-family: 'helveticabold';
-  letter-spacing: 2px;
 `
 
 export {

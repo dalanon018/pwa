@@ -123,7 +123,7 @@ class PopupSlide extends React.Component {
                   SUBMIT
               </Button>
 
-            <CloseButton close={onClose} />
+            <CloseButton close={onClose} text='Close' />
           </PopupContent>
         </PopupContainer>
         <Modal
