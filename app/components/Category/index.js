@@ -33,9 +33,14 @@ function Category ({
   height,
   margin,
   iconWidth,
+  changeRoute,
+  route,
   fontSize
 }) {
   const { mobile, tablet, computer, widescreen } = grids
+  const handleRedirect = () => {
+    changeRoute(route)
+  }
   return (
     <Grid.Row>
       {
@@ -44,7 +49,7 @@ function Category ({
         categories.valueSeq().map((category, index) => {
           return (
             <Grid.Column key={index} className='padding__none--horizontal' mobile={mobile} tablet={tablet} computer={computer} widescreen={widescreen}>
-              <CategoryBlock className='responsive-width' height={height} background={CategoryBgSample} margin={margin} width={iconWidth}>
+              <CategoryBlock className='responsive-width' height={height} background={CategoryBgSample} margin={margin} width={iconWidth} onClick={handleRedirect}>
                 <CategoryItem>
                   <Image src={sampleCategoryIcon} />
                   <CategoryLabel fontSize={fontSize}>{category.get('name')}</CategoryLabel>

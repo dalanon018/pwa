@@ -95,6 +95,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               loader={loader}
               grids={grids}
               margin='2'
+              changeRoute={changeRoute}
+              route='/products-category'
               iconWidth='25'
               fontSize='9'
               height='80'

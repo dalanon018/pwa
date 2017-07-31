@@ -93,6 +93,14 @@ input.input-field {
   height: initial;
 }
 
+text {
+  &__align {
+    &--center {
+      text-align: center;
+    }
+  }
+}
+
 /*******************************
         Responsive Overrides
 *******************************/

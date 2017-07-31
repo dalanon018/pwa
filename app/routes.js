@@ -161,6 +161,26 @@ export default function createRoutes (store) {
             importModules.catch(errorLoading)
           }
         }, {
+          path: '/products-category',
+          name: 'productsByCategory',
+          getComponent (nextState, cb) {
+            const importModules = Promise.all([
+              import('containers/ProductsByCategory/reducer'),
+              import('containers/ProductsByCategory/sagas'),
+              import('containers/ProductsByCategory')
+            ])
+
+            const renderRoute = loadModule(cb)
+
+            importModules.then(([reducer, sagas, component]) => {
+              injectReducer('productsByCategory', reducer.default)
+              injectSagas(sagas.default)
+              renderRoute(component)
+            })
+
+            importModules.catch(errorLoading)
+          }
+        }, {
           path: '/search',
           name: 'searchPage',
           getComponent (nextState, cb) {

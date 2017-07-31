@@ -1,0 +1,158 @@
+[
+  {
+    "cliqqCodes": [
+      {
+        "cliqqCode": "00001",
+        "agentCode": "ASMG73DW"
+      },
+      {
+        "cliqqCode": "11111",
+        "agentCode": "ASMG73DW"
+      },
+      {
+        "cliqqCode": "06525",
+        "agentCode": "ASMG73DW"
+      }
+    ],
+    "imageUrl": "http://ic1.maxabout.us/mobiles//G/2014/8/gionee-ctrl-v4s-front-rear-view.jpg",
+    "name": "All Day Backpack | (wine)",
+    "priceList": [
+      {
+        "amount": 400,
+        "currency": "PHP"
+      },
+      {
+        "amount": 150,
+        "currency": "LPTS"
+      }
+    ],
+    "discountList": [
+      {
+        "value": "25",
+        "discountType": "percentage",
+        "fromDate": "2017-01-01",
+        "cronSchedule": "0 0 * ? * *"
+      }
+    ],
+    "longDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla. Aenean congue libero sed nisl euismod tristique. Integer finibus est orci, nec hendrerit turpis mollis id. Phasellus rhoncus mollis mauris sit amet euismod.",
+    "deliveryPromiseMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla.",
+    "gtin": "718037806839"
+  },
+  {
+    "cliqqCodes": [
+      {
+        "cliqqCode": "00002",
+        "agentCode": "ASMG73DW"
+      },
+      {
+        "cliqqCode": "22222",
+        "agentCode": "ASMG73DW"
+      },
+      {
+        "cliqqCode": "06526",
+        "agentCode": "ASMG73DW"
+      }
+    ],
+    "imageUrl": "http://ic1.maxabout.us/mobiles//G/2014/8/gionee-ctrl-v4s-front-rear-view.jpg",
+    "name": "All Day Backpack | (green)",
+    "priceList": [
+      {
+        "amount": 300,
+        "currency": "PHP"
+      },
+      {
+        "amount": 150,
+        "currency": "LPTS"
+      }
+    ],
+    "discountList": [
+      {
+        "value": "10",
+        "discountType": "percentage",
+        "fromDate": "2017-01-01",
+        "cronSchedule": "0 0 * ? * *"
+      }
+    ],
+    "longDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla. Aenean congue libero sed nisl euismod tristique. Integer finibus est orci, nec hendrerit turpis mollis id. Phasellus rhoncus mollis mauris sit amet euismod.",
+    "deliveryPromiseMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla.",
+    "gtin": "718037806839"
+  },
+  {
+    "cliqqCodes": [
+      {
+        "cliqqCode": "00003",
+        "agentCode": "ASMG73DW"
+      },
+      {
+        "cliqqCode": "33333",
+        "agentCode": "ASMG73DW"
+      },
+      {
+        "cliqqCode": "06527",
+        "agentCode": "ASMG73DW"
+      }
+    ],
+    "imageUrl": "http://ic1.maxabout.us/mobiles//G/2014/8/gionee-ctrl-v4s-front-rear-view.jpg",
+    "name": "All Day Backpack | (blue)",
+    "priceList": [
+      {
+        "amount": 800,
+        "currency": "PHP"
+      },
+      {
+        "amount": 150,
+        "currency": "LPTS"
+      }
+    ],
+    "discountList": [
+      {
+        "value": "5",
+        "discountType": "percentage",
+        "fromDate": "2017-01-01",
+        "cronSchedule": "0 0 * ? * *"
+      }
+    ],
+    "longDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla. Aenean congue libero sed nisl euismod tristique. Integer finibus est orci, nec hendrerit turpis mollis id. Phasellus rhoncus mollis mauris sit amet euismod.",
+    "deliveryPromiseMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla.",
+    "gtin": "718037806839"
+  },
+  {
+    "cliqqCodes": [
+      {
+        "cliqqCode": "00004",
+        "agentCode": "ASMG73DW"
+      },
+      {
+        "cliqqCode": "44444",
+        "agentCode": "ASMG73DW"
+      },
+      {
+        "cliqqCode": "06528",
+        "agentCode": "ASMG73DW"
+      }
+    ],
+    "imageUrl": "http://ic1.maxabout.us/mobiles//G/2014/8/gionee-ctrl-v4s-front-rear-view.jpg",
+    "name": "All Day Backpack | (white)",
+    "priceList": [
+      {
+        "amount": 1000,
+        "currency": "PHP"
+      },
+      {
+        "amount": 150,
+        "currency": "LPTS"
+      }
+    ],
+    "discountList": [
+      {
+        "value": "20",
+        "discountType": "percentage",
+        "fromDate": "2017-01-01",
+        "cronSchedule": "0 0 * ? * *"
+      }
+    ],
+    "longDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla. Aenean congue libero sed nisl euismod tristique. Integer finibus est orci, nec hendrerit turpis mollis id. Phasellus rhoncus mollis mauris sit amet euismod.",
+    "deliveryPromiseMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla.",
+    "gtin": "718037806839"
+  }
+]
