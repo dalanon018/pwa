@@ -44,9 +44,9 @@ function Category ({
         categories.valueSeq().map((category, index) => {
           return (
             <Grid.Column key={index} className='padding__none--horizontal' mobile={mobile} tablet={tablet} computer={computer} widescreen={widescreen}>
-              <CategoryBlock className='responsive-width' height={height} background={CategoryBgSample} margin={margin}>
+              <CategoryBlock className='responsive-width' height={height} background={CategoryBgSample} margin={margin} width={iconWidth}>
                 <CategoryItem>
-                  <Image width={iconWidth} src={sampleCategoryIcon} />
+                  <Image src={sampleCategoryIcon} />
                   <CategoryLabel fontSize={fontSize}>{category.get('name')}</CategoryLabel>
                 </CategoryItem>
               </CategoryBlock>
