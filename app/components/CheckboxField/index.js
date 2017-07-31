@@ -17,7 +17,7 @@ const CheckboxWrapper = styled.div`
   margin-bottom: 20px;
 
   input:checked~label:after {
-    color: #9BCB49 !important;
+    color: #8DC640 !important;
   }
   label {
     color: #5B5B5B !important;
