@@ -53,7 +53,7 @@ function PromptModal ({
   const handleColor = () => {
     switch (name) {
       case 'checkmark':
-        color = '#9BCB49'
+        color = '#8DC640'
         break
       case 'remove':
         color = '#EB1C24'

@@ -50,7 +50,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     changeRoute: PropTypes.func.isRequired,
     searchProduct: PropTypes.func.isRequired,
     setProductSearchList: PropTypes.func.isRequired,
-    categories: PropTypes.bool.isRequired,
+    categories: PropTypes.array.isRequired,
     routes: PropTypes.array.isRequired
   }
 

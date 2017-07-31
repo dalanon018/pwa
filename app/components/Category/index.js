@@ -28,35 +28,46 @@ import {
 
 function Category ({
   loader,
-  categories
+  categories,
+  grids,
+  height,
+  margin,
+  iconWidth,
+  fontSize
 }) {
+  const { mobile, tablet, computer, widescreen } = grids
   return (
     <Grid.Row>
       {
-          loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
-          : categories &&
-          categories.valueSeq().map((category, index) => {
-            return (
-              <Grid.Column key={index} className='padding__none--horizontal' mobile={4} tablet={4} computer={3} widescreen={3}>
-                <CategoryBlock className='responsive-width' background={CategoryBgSample}>
-                  <CategoryItem>
-                    <Image src={sampleCategoryIcon} />
-                    <CategoryLabel>{category.get('name')}</CategoryLabel>
-                  </CategoryItem>
-                </CategoryBlock>
-              </Grid.Column>
-            )
-          })
-        }
+        loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} height={height} margin={margin} grids={grids} />)
+        : categories &&
+        categories.valueSeq().map((category, index) => {
+          return (
+            <Grid.Column key={index} className='padding__none--horizontal' mobile={mobile} tablet={tablet} computer={computer} widescreen={widescreen}>
+              <CategoryBlock className='responsive-width' height={height} background={CategoryBgSample} margin={margin} width={iconWidth}>
+                <CategoryItem>
+                  <Image src={sampleCategoryIcon} />
+                  <CategoryLabel fontSize={fontSize}>{category.get('name')}</CategoryLabel>
+                </CategoryItem>
+              </CategoryBlock>
+            </Grid.Column>
+          )
+        })
+      }
     </Grid.Row>
   )
 }
 
-const DefaultState = () => {
+const DefaultState = ({
+  height,
+  margin,
+  grids
+}) => {
+  const { mobile, tablet, computer, widescreen } = grids
   return (
-    <Grid.Column className='padding__none--horizontal' mobile={4} tablet={4} computer={3} widescreen={3}>
+    <Grid.Column className='padding__none--horizontal' mobile={mobile} tablet={tablet} computer={computer} widescreen={widescreen}>
       <EmptyDataBlock>
-        <CategoryBlock className='responsive-width' background={EmptyImage} />
+        <CategoryBlock className='responsive-width' height={height} margin={margin} background={EmptyImage} />
       </EmptyDataBlock>
     </Grid.Column>
   )

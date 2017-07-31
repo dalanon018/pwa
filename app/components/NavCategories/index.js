@@ -21,8 +21,12 @@ import sampleCategoryIcon from 'images/test-images/category-test.svg'
 import moreIcon from 'images/icons/more-icon.svg'
 
 function NavCategories ({
-  categories
+  categories,
+  changeRoute
 }) {
+  const handleRoute = () => {
+    changeRoute('/categories')
+  }
   return (
     <NavCategoriesWrapper>
       <Grid padded textAlign='center'>
@@ -39,7 +43,7 @@ function NavCategories ({
                 )
               }).splice(4)
             }
-            <CategoryItem>
+            <CategoryItem onClick={handleRoute}>
               <CategoryIcon background={moreIcon} />
               <p>More</p>
             </CategoryItem>

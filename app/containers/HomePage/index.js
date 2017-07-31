@@ -59,6 +59,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
   render () {
     const { loader, featuredProducts, productCategories, changeRoute } = this.props
+    const grids = {
+      mobile: 4,
+      tablet: 4,
+      computer: 3,
+      widescreen: 3
+    }
 
     return (
       <div>
@@ -72,7 +78,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css' }
           ]}
         />
-        <NavCategories categories={productCategories} />
+        <NavCategories changeRoute={changeRoute} categories={productCategories} />
         <BannerSlider loader={loader} />
         <div className='padding__horizontal--10'>
           <Grid padded>
@@ -85,7 +91,14 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             > <FormattedMessage {...messages.productViewAll} /> </Button>
             <Promo loader={loader} />
             <H1 className='margin__top--none' center> <FormattedMessage {...messages.browseCategory} /> </H1>
-            <Category loader={loader} categories={productCategories} />
+            <Category
+              loader={loader}
+              grids={grids}
+              margin='2'
+              iconWidth='25'
+              fontSize='9'
+              height='80'
+              categories={productCategories} />
           </Grid>
         </div>
         <Footer />

@@ -77,8 +77,8 @@ const RibbonWrapper = styled.div`
 
   // sorting styles is sensitive on ribbon-tag class
   .ribbon-tag {
-    background: #9bcb49;
-    border-bottom: 2px solid #9bcb49;
+    background: #8DC640;
+    border-bottom: 2px solid #8DC640;
     display: flex;
     height: 60px;
     justify-content: center;
@@ -91,7 +91,7 @@ const RibbonWrapper = styled.div`
     &:after, &:before {
       content: '';
       position: absolute;
-      border-top: 25px solid #9bcb49;
+      border-top: 25px solid #8DC640;
       height: 0;
       width: 0;
       top: 100%;

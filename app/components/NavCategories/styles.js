@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const NavCategoriesWrapper = styled.div`
-  background-color: #9bcb49;
+  background-color: #8DC640;
   color: #FFFFFF;
   font-size: 7px;
   width: 100%;

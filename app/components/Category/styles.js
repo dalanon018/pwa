@@ -4,7 +4,7 @@ const CategoryBlock = styled.div`
   background: url(${props => props.background}) no-repeat center center / cover;
   display: flex;
   justify-content: center;
-  margin: 2px;
+  margin: ${props => props.margin}px;
   position: relative;
   text-align: center;
 
@@ -25,11 +25,11 @@ const CategoryBlock = styled.div`
 
   @media (min-width: 320px) {
     &.responsive-width {
-      height: 22vw;
+      height: ${props => props.height}px;
     }
     img {
       margin: 0 auto;
-      width: 6vw;
+      width: ${props => props.width}px;
     }
   }
 `
@@ -37,7 +37,7 @@ const CategoryBlock = styled.div`
 const CategoryLabel = styled.span`
   color: #5b5b5b;
   font-family: helveticabold;
-  font-size: 9px;
+  font-size: ${props => props.fontSize}px;
   line-height: 0;
   text-transform: uppercase;
 `

@@ -31,8 +31,8 @@ const StepHead = styled.div`
   &:before {
     align-items: center;
     border-radius: 50px;
-    border: 2px solid #9BCB49;
-    color: #9BCB49;
+    border: 2px solid #8DC640;
+    color: #8DC640;
     content: '${props => props.step}'
     display: flex;
     flex: none;
@@ -160,13 +160,13 @@ const SelectMethodWrapper = styled.div`
     width: 100%;
 
     &.checked {
-      border: 2px solid #9BCB49;
+      border: 2px solid #8DC640;
     }
     
     input:checked~label:after {
       // Don't sort this block
       content: '';
-      background-color: #9BCB49 !important;
+      background-color: #8DC640 !important;
       color: #FFFFFF !important;
       left: 6px;
       top: 4px;
@@ -179,8 +179,8 @@ const SelectMethodWrapper = styled.div`
     }
 
     input:checked~label:before {
-      background-color: #9BCB49 !important;
-      border-color: #9BCB49 !important;
+      background-color: #8DC640 !important;
+      border-color: #8DC640 !important;
       height: 18px;
       width: 18px;
     }
