@@ -67,6 +67,10 @@ import {
   LabelPrice
 } from './styles'
 
+// Helper
+const isDoneRequesting = (loader) => () => (loader === false)
+const isEntityEmpty = compose(equals(0), prop('size'))
+
 export class ProductReview extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     getOrderProduct: PropTypes.func.isRequired,
@@ -179,9 +183,6 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   componentWillReceiveProps (nextProps) {
     const { orderedProduct, productLoader, mobileNumber, mobileLoader, orderSuccess, orderFail } = nextProps
 
-    const isDoneRequesting = (loader) => () => (loader === false)
-    const isEntityEmpty = compose(equals(0), prop('size'))
-
     // handle once done fetching our ordered product
     ifElse(
       both(isEntityEmpty, isDoneRequesting(productLoader)), this._handleDoneFetchOrderNoProductNorMobile, noop
@@ -204,7 +205,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   render () {
-    const { orderedProduct, orderRequesting } = this.props
+    const { orderedProduct, orderRequesting, mobileNumber } = this.props
     const { errorMessage, modePayment, modalToggle } = this.state
     const cliqqCode = orderedProduct.get('cliqqCode') && orderedProduct.get('cliqqCode').join(', ')
 
@@ -321,10 +322,15 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
             <Modal
               open={modalToggle}
-              close={this._handleModalClose}
               name='warning'
               title={<FormattedMessage {...messages.errorHeader} />}
-              content={errorMessage} />
+              content={errorMessage}
+              {
+                ...Object.assign({}, (!isEntityEmpty(orderedProduct) && mobileNumber) ? {
+                  close: this._handleModalClose
+                } : {})
+              }
+            />
           </Grid.Column>
         </Grid.Row>
       </Grid>
