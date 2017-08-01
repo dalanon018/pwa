@@ -9,6 +9,7 @@ import React from 'react'
 
 import { FormattedMessage } from 'react-intl'
 import messages from './messages'
+import { fromJS } from 'immutable' // temporary
 
 import { Modal, Image } from 'semantic-ui-react'
 
@@ -36,7 +37,7 @@ import {
   ButtonWrapper
 } from './styles'
 
-const receipt = {
+const receipt = fromJS({
   'trackingNumber': '344760497230963792',
   'claimExpiry': '2017-08-13 00:17:08',
   'currency': 'CASH',
@@ -44,12 +45,12 @@ const receipt = {
   'amount': '450.00',
   'quantity': '1',
   'mobileNumber': '09052720567',
-  'status': 'CLAIMED',
+  'status': 'RETURNED',
   'cliqqCode': '0001',
   'imageUrl': 'http://ic1.maxabout.us/mobiles//G/2014/8/gionee-ctrl-v4s-front-rear-view.jpg',
   'brandLogo': 'http://ic1.maxabout.us/mobiles//G/2014/8/gionee-ctrl-v4s-front-rear-view.jpg',
   'name': 'All Day Backpack | (wine)'
-}
+})
 
 const ComponentDetail = components => component => key =>
  key in components ? components[key] : component
@@ -119,37 +120,37 @@ const ModalDescription = ({ status, receipt }) => {
       <FormattedMessage
         id='confirmedDescription'
         defaultMessage={`Are you happy with these options? You will not be able to edit once you proceed. For Cash on Delivery, please pay upon delivery of item within 24 hours.`}
-        values={{name: receipt.status}} />
+        values={{name: receipt.get('status')}} />
     ),
     UNPAID: (
       <FormattedMessage
         id='unclaimedDescription'
         defaultMessage={`Oh no! You were not able to pay within the hour. Would you like to reorder {name}? You will have another hour to pay for you item.`}
-        values={{name: <b>{receipt.name}</b>}} />
+        values={{name: <b>{receipt.get('name')}</b>}} />
     ),
     CONFIRMED: (
       <FormattedMessage
         id='confirmedDescription'
         defaultMessage={`Are you happy with these options? You will not be able to edit once you proceed. For Cash on Delivery, please pay upon delivery of item within 24 hours.`}
-        values={{name: receipt.status}} />
+        values={{name: receipt.get('status')}} />
     ),
     DELIVERED: (
       <FormattedMessage
         id='deliveredDescription'
         defaultMessage={`Claim your {name} within 24 hours and earn 50 Cliqq points! Use points to redeem items instead of cash. `}
-        values={{name: <b>{receipt.name}</b>}} />
+        values={{name: <b>{receipt.get('name')}</b>}} />
     ),
     CLAIMED: (
       <FormattedMessage
         id='claimedDescription'
         defaultMessage={`Thank you for shopping with us! Here's 50 points for claiming your item early. You can use points to redeem items instead of cash.`}
-        values={{name: receipt.status}} />
+        values={{name: receipt.get('status')}} />
     ),
     UNCLAIMED: (
       <FormattedMessage
         id='unclaimedDescription'
         defaultMessage={`Oh no! You were not able to pay within the hour. Would you like to reorder {name}? You will have another hour to pay for you item.`}
-        values={{name: <b>{receipt.name}</b>}} />
+        values={{name: <b>{receipt.get('name')}</b>}} />
     )
   })(null)(status)
 }
@@ -194,24 +195,24 @@ function ModalWithHeader () {
       size='small'
     >
       <BannerHeader
-        background={ModalImages({ status: STATUSES[receipt.status] }).banner}
-        iconBg={ModalImages({ status: STATUSES[receipt.status] }).iconBg} >
+        background={ModalImages({ status: STATUSES[receipt.get('status')] }).banner}
+        iconBg={ModalImages({ status: STATUSES[receipt.get('status')] }).iconBg} >
         <span>
-          <Image src={ModalImages({ status: STATUSES[receipt.status] }).icon} />
+          <Image src={ModalImages({ status: STATUSES[receipt.get('status')] }).icon} />
         </span>
       </BannerHeader>
       <Modal.Content>
         <TextWrapper>
           <TitleHead>
-            <ModalTitle {...{ status: STATUSES[receipt.status], receipt }} />
+            <ModalTitle {...{ status: STATUSES[receipt.get('status')], receipt }} />
           </TitleHead>
-          <p><ModalDescription {...{ status: STATUSES[receipt.status], receipt }} /></p>
+          <p><ModalDescription {...{ status: STATUSES[receipt.get('status')], receipt }} /></p>
         </TextWrapper>
         <ButtonWrapper>
           <Button primary fluid onClick={() => {}}>
-            { ModalButtons({ status: STATUSES[receipt.status] }).primary }
+            { ModalButtons({ status: STATUSES[receipt.get('status')] }).primary }
           </Button>
-          <TextButton text={ModalButtons({ status: STATUSES[receipt.status] }).secondary} close={() => {}} />
+          <TextButton text={ModalButtons({ status: STATUSES[receipt.get('status')] }).secondary} close={() => {}} />
         </ButtonWrapper>
       </Modal.Content>
     </Modal>
