@@ -159,11 +159,11 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     getCategories()
   }
 
-  // @TODO: mobile numbers not updated after using different number
   componentWillReceiveProps (nextProps) {
     const { mobileNumbers } = nextProps
-
-    console.log('MOBILENUMBERS', mobileNumbers.toJS())
+    /**
+     * whenever theres new mobile number we have to listen for all the order
+     */
     Firebase.listen(mobileNumbers, this._firebaseListener)
   }
 

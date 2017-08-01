@@ -1,6 +1,7 @@
 import moment from 'moment'
 import Firebase from 'utils/firebase-realtime'
 
+import { compose, is, ifElse, identity, uniq } from 'ramda'
 import { call, cancel, fork, put, take } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 // import request from 'utils/request'
@@ -27,6 +28,9 @@ import {
   ORDERED_LIST_KEY
 } from 'containers/App/constants'
 
+import {
+  setMobileNumbersAction
+} from 'containers/Buckets/actions'
 /**
  * we will create the fake response here.
  * @param {*} body
@@ -82,9 +86,14 @@ export function * getOrderProduct () {
 }
 
 export function * getMobileNumber () {
-  const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
-  const mobile = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
+  const convertToArray = ifElse(is(Object), identity, (entity) => [entity])
+  const updateBucket = compose(uniq, convertToArray)
 
+  // first we have to update our bucket list of what number we already have
+  const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
+  yield put(setMobileNumbersAction(updateBucket(mobileNumbers)))
+
+  const mobile = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
   yield put(setMobileNumberAction(mobile))
 }
 
