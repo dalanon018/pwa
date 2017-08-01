@@ -33,7 +33,7 @@ function * fakeResponse ({ mobileNumber, orderedProduct, modePayment }) {
   return {
     trackingNumber: String(Math.random() * 1000000000000000000, 19),
     claimExpiry: moment().add(1, 'hour').format('YYYY-MM-DD HH:mm:ss'),
-    dateCreated: moment().format('YYYY-MM-DD hh:mm:ss'),
+    dateCreated: moment().format('YYYY-MM-DD HH:mm:ss'),
     cliqqCode: orderedProduct.get('cliqqCode').first(),
     currency: modePayment,
     amount: String(calculateProductPrice(orderedProduct)),
