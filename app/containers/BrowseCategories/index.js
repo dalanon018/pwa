@@ -7,6 +7,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
+import { push } from 'react-router-redux'
 import { createStructuredSelector } from 'reselect'
 import messages from './messages'
 
@@ -37,7 +38,7 @@ export class BrowseCategories extends React.PureComponent { // eslint-disable-li
   }
 
   render () {
-    const { categories, loader } = this.props
+    const { categories, loader, changeRoute } = this.props
     const grids = {
       mobile: 8,
       tablet: 8,
@@ -55,6 +56,8 @@ export class BrowseCategories extends React.PureComponent { // eslint-disable-li
               categories={categories}
               height='160'
               iconWidth='45'
+              changeRoute={changeRoute}
+              route='/products-category'
               fontSize='14'
               grids={grids} />
           </Grid>
@@ -73,6 +76,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps (dispatch) {
   return {
     getCategories: (payload) => dispatch(getCategoriesAction(payload)),
+    changeRoute: (url) => dispatch(push(url)),
     dispatch
   }
 }

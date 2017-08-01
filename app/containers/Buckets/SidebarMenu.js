@@ -78,19 +78,15 @@ const SidebarItem = ({ children, image }) => {
   )
 }
 
-const SideBarChildrenItem = ({ category }) => (
-  <Li>
-    { category.get('name').toUpperCase() }
-  </Li>
-)
-
 const SideBarChildrenContainer = ({ categories }) => (
   <UlWrapper>
+    <Li>
+      <FormattedMessage {...messages.sale} />
+    </Li>
     {categories.map((category) => (
-      <SideBarChildrenItem
-        key={category.get('name')}
-        category={category}
-      />
+      <Li key={category.get('name')}>
+        { category.get('name').toUpperCase() }
+      </Li>
     ))}
   </UlWrapper>
 )

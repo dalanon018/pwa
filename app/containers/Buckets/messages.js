@@ -21,5 +21,9 @@ export default defineMessages({
   searchPlaceHolder: {
     id: 'app.containers.Bucket.searchPlaceHolder',
     defaultMessage: 'SEARCH CLIQQ CODE'
+  },
+  sale: {
+    id: 'app.containers.Bucket.sale',
+    defaultMessage: 'SALE'
   }
 })
