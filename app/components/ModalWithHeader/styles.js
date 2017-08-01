@@ -5,7 +5,15 @@ const TextWrapper = styled.div`
   text-align: center;
 
   p {
+    font-size: 12px !important;
     letter-spacing: 2px;
+    line-height: 14px;
+
+    span {
+      b {
+        color: #5B5B5B;
+      }
+    }
   }
 `
 
@@ -26,11 +34,13 @@ const BannerHeader = styled.div`
   width: 100%;
 
   .image {
-    width: 20px;
+    height: 35px;
+    width: 30px;
   }
 
   span {
-    background-color: #F6A22D;
+    align-items: center;
+    background-color: ${props => props.iconBg ? props.iconBg : '#F6A22D'};
     border-radius: 50px;
     border: 3px solid #FFFFFF;
     bottom: -35px;
@@ -38,10 +48,10 @@ const BannerHeader = styled.div`
     height: 75px;
     justify-content: center;
     left: 50%;
-    transform: translate(-50%);
     margin-right: -50%;
     margin: 0 auto;
     position: absolute;
+    transform: translate(-50%);
     width: 75px;
     z-index: 1;
   }
@@ -49,6 +59,15 @@ const BannerHeader = styled.div`
 
 const ButtonWrapper = styled.div`
   padding: 0 20px;
+  text-align: center;
+  button {
+    &:last-child {
+      font-size: 12px;
+      margin-right: 0;
+      margin-top: 15px;
+      padding: 0;
+    }
+  }
 `
 
 export {

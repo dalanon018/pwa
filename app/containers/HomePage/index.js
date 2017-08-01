@@ -24,6 +24,7 @@ import H1 from 'components/H1'
 import Button from 'components/Button'
 import Footer from 'components/Footer'
 import Promo from 'components/Promo'
+import ModalWithHeader from 'components/ModalWithHeader'
 
 import { getFeaturedProductsAction } from './actions'
 import { selectLoading, selectFeaturedProducts } from './selectors'
@@ -104,6 +105,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           </Grid>
         </div>
         <Footer />
+        <ModalWithHeader />
       </div>
     )
   }
