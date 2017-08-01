@@ -32,11 +32,11 @@ import {
 function * fakeResponse ({ mobileNumber, orderedProduct, modePayment }) {
   return {
     trackingNumber: String(Math.random() * 1000000000000000000, 19),
-    claimExpiry: moment().add(1, 'hour').format('YYYY-MM-DD hh:mm:ss'),
+    claimExpiry: moment().add(1, 'hour').format('YYYY-MM-DD HH:mm:ss'),
     dateCreated: moment().format('YYYY-MM-DD hh:mm:ss'),
     cliqqCode: orderedProduct.get('cliqqCode').first(),
     currency: modePayment,
-    amount: calculateProductPrice(orderedProduct),
+    amount: String(calculateProductPrice(orderedProduct)),
     quantity: 1,
     status: 'DELIVERED TO WAREHOUSE',
     imageUrl: orderedProduct.get('image'),

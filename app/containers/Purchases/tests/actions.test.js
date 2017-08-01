@@ -1,20 +1,35 @@
 
 import {
-  getPurchasesAction,
-  setPurchasesAction
+  getApiPurchasesAction,
+  setPurchasesAction,
+  getStoragePurchasesAction
 } from '../actions'
 import {
-  GET_PURCHASES,
+  GET_API_PURCHASES,
+  GET_LOCAL_PURCHASES,
   SET_PURCHASES
 } from '../constants'
 
 describe('Purchases actions', () => {
-  describe('getPurchases', () => {
-    it('it should get purchase', () => {
-      const expectedResult = {
-        type: GET_PURCHASES
+  describe('getApiPurchasesAction', () => {
+    it('it should get API purchase', () => {
+      const payload = {
+        mobile: '99'
       }
-      expect(getPurchasesAction()).toEqual(expectedResult)
+      const expectedResult = {
+        type: GET_API_PURCHASES,
+        payload
+      }
+      expect(getApiPurchasesAction(payload)).toEqual(expectedResult)
+    })
+  })
+
+  describe('getStoragePurchasesAction', () => {
+    it('it should get local purchase', () => {
+      const expectedResult = {
+        type: GET_LOCAL_PURCHASES
+      }
+      expect(getStoragePurchasesAction()).toEqual(expectedResult)
     })
   })
 

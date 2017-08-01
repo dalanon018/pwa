@@ -5,14 +5,21 @@
  */
 
 import {
-  GET_PURCHASES,
+  GET_API_PURCHASES,
+  GET_LOCAL_PURCHASES,
   SET_PURCHASES
 } from './constants'
 
-export function getPurchasesAction (payload) {
+export function getApiPurchasesAction (payload) {
   return {
-    type: GET_PURCHASES,
+    type: GET_API_PURCHASES,
     payload
+  }
+}
+
+export function getStoragePurchasesAction () {
+  return {
+    type: GET_LOCAL_PURCHASES
   }
 }
 

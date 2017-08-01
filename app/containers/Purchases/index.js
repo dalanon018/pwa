@@ -31,7 +31,8 @@ import {
 } from './selectors'
 
 import {
-  getPurchasesAction
+  getApiPurchasesAction,
+  getStoragePurchasesAction
 } from './actions'
 
 const BarcodeListWrapper = styled.div`
@@ -86,7 +87,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
       PropTypes.array.isRequired,
       PropTypes.object.isRequired
     ]),
-    getPurchases: PropTypes.func.isRequired,
+    getApiPurchases: PropTypes.func.isRequired,
     changeRoute: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired
   }
@@ -114,7 +115,11 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
   }
 
   componentDidMount () {
-    this.props.getPurchases()
+    const { getApiPurchases, getLocalPurchases } = this.props
+    // first we have to fetch what we already have on our local storage
+    getLocalPurchases()
+    // then we will call from our API
+    getApiPurchases()
   }
 
   render () {
@@ -158,7 +163,8 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
-    getPurchases: (payload) => dispatch(getPurchasesAction(payload)),
+    getApiPurchases: (payload) => dispatch(getApiPurchasesAction(payload)),
+    getLocalPurchases: () => dispatch(getStoragePurchasesAction()),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
   }
