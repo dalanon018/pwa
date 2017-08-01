@@ -13,6 +13,8 @@ import {
   SET_PRODUCT_SUCCESS,
   SET_PRODUCT_ERROR,
 
+  GET_MOBILE_NUMBERS,
+  UPDATE_MOBILE_NUMBERS,
   SET_MOBILE_NUMBERS,
 
   SET_PRODUCT_HANDLER_DEFAULT
@@ -56,6 +58,19 @@ export function setProductSuccessAction (payload) {
 export function setProductErrorAction (payload) {
   return {
     type: SET_PRODUCT_ERROR,
+    payload
+  }
+}
+
+export function getMobileNumbersAction () {
+  return {
+    type: GET_MOBILE_NUMBERS
+  }
+}
+
+export function updateMobileNumbersAction (payload) {
+  return {
+    type: UPDATE_MOBILE_NUMBERS,
     payload
   }
 }

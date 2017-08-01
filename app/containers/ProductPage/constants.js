@@ -8,6 +8,8 @@ export const GET_PRODUCT = 'app/ProductPage/GET_PRODUCT'
 export const SET_PRODUCT = 'app/ProductPage/SET_PRODUCT'
 
 export const SET_CURRENT_PRODUCT = 'app/ProductPage/SET_CURRENT_PRODUCT'
+export const GET_MOBILE_NUMBERS = 'app/ProductPage/GET_MOBILE_NUMBERS'
+export const UPDATE_MOBILE_NUMBERS = 'app/ProductPage/UPDATE_MOBILE_NUMBERS'
 export const SET_MOBILE_NUMBERS = 'app/ProductPage/SET_MOBILE_NUMBERS'
 
 export const SET_PRODUCT_SUCCESS = 'app/ProductPage/SET_SUCCESS'

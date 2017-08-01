@@ -12,12 +12,16 @@ import {
   SET_PRODUCT_SUCCESS,
   SET_PRODUCT_ERROR,
 
+  GET_MOBILE_NUMBERS,
+  SET_MOBILE_NUMBERS,
+
   SET_PRODUCT_HANDLER_DEFAULT
 } from './constants'
 
 const initialState = fromJS({
   product: {},
   loading: false,
+  mobileNumbers: [],
   requestProductSuccess: false,
   requestProductError: false,
   currentProduct: {}
@@ -31,7 +35,7 @@ function productPageReducer (state = initialState, action) {
     case SET_PRODUCT_SUCCESS:
       return state
         .set('requestProductSuccess', true)
-        .set('requestProductError', null)
+        .set('requestProductError', false)
 
     case SET_PRODUCT_ERROR:
       return state
@@ -41,6 +45,14 @@ function productPageReducer (state = initialState, action) {
     case SET_PRODUCT:
       return state
           .set('product', fromJS(action.payload))
+          .set('loading', false)
+
+    case GET_MOBILE_NUMBERS:
+      return state.set('loading', true)
+
+    case SET_MOBILE_NUMBERS:
+      return state
+          .set('mobileNumbers', fromJS(action.payload))
           .set('loading', false)
 
     case SET_PRODUCT_HANDLER_DEFAULT:

@@ -4,7 +4,7 @@
 *
 */
 
-import React from 'react'
+import React, { PropTypes } from 'react'
 // import styled from 'styled-components';
 
 import { FormattedMessage } from 'react-intl'
@@ -32,21 +32,31 @@ import {
   TextWrapper,
   PopupContent } from './styles'
 
-class PopupSlide extends React.Component {
+class PopupSlide extends React.PureComponent {
+  static propTypes = {
+    submit: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
+    modalClose: PropTypes.func.isRequired,
+    product: PropTypes.object.isRequired,
+    modalToggle: PropTypes.bool.isRequired,
+    toggle: PropTypes.bool.isRequired,
+    mobileNumber: PropTypes.string
+  }
+
+  state = {
+    value: '',
+    toggle: true,
+    check: false
+  }
+
   constructor (props) {
     super(props)
-    this.state = {
-      value: '',
-      toggle: true,
-      check: false
-    }
+
     this.handleInput = this.handleInput.bind(this)
     this.handleCheck = this.handleCheck.bind(this)
     this.handleDisable = this.handleDisable.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-
-  state={}
 
   handleCheck (e, data) {
     this.setState({
@@ -83,10 +93,19 @@ class PopupSlide extends React.Component {
     })
   }
 
+  componentWillReceiveProps (nextProps) {
+    const { mobileNumber } = nextProps
+    if (mobileNumber) {
+      this.setState({
+        value: mobileNumber
+      })
+    }
+  }
+
   render () {
     const { toggle, onClose, modalToggle, modalClose } = this.props
+    const { value } = this.state
     const label = `I have read and accepted the `
-
     return (
       <PopupWrapper toggle={toggle}>
         <BannerHeader background={BannerBg}>
@@ -107,7 +126,7 @@ class PopupSlide extends React.Component {
               <FormattedMessage {...messages.phonePrefix} />
               <Input
                 type='number'
-                value={this.state.value}
+                value={value}
                 onChange={this.handleInput}
                 placeholder='9XXXXXXXXX' />
             </InputWrapper>
@@ -135,10 +154,6 @@ class PopupSlide extends React.Component {
       </PopupWrapper>
     )
   }
-}
-
-PopupSlide.propTypes = {
-
 }
 
 export default PopupSlide

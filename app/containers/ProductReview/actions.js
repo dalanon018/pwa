@@ -5,25 +5,20 @@
  */
 
 import {
-  DEFAULT_ACTION,
-
   GET_ORDER_PRODUCT,
   SET_ORDER_PRODUCT,
 
   GET_MOBILE_NUMBER,
-  SET_MOBILE_NUMBER
+  SET_MOBILE_NUMBER,
+
+  ORDER_SUBMIT,
+  ORDER_SUCCESS,
+  ORDER_ERROR
 } from './constants'
 
-export function defaultAction () {
+export function getOrderProductAction () {
   return {
-    type: DEFAULT_ACTION
-  }
-}
-
-export function getOrderProductAction (payload) {
-  return {
-    type: GET_ORDER_PRODUCT,
-    payload
+    type: GET_ORDER_PRODUCT
   }
 }
 
@@ -34,16 +29,36 @@ export function setOrderProductAction (payload) {
   }
 }
 
-export function getMobileNumberAction (payload) {
+export function getMobileNumberAction () {
   return {
-    type: GET_MOBILE_NUMBER,
-    payload
+    type: GET_MOBILE_NUMBER
   }
 }
 
 export function setMobileNumberAction (payload) {
   return {
     type: SET_MOBILE_NUMBER,
+    payload
+  }
+}
+
+export function submitOrderAction (payload) {
+  return {
+    type: ORDER_SUBMIT,
+    payload
+  }
+}
+
+export function successOrderAction (payload) {
+  return {
+    type: ORDER_SUCCESS,
+    payload
+  }
+}
+
+export function errorOrderAction (payload) {
+  return {
+    type: ORDER_ERROR,
     payload
   }
 }

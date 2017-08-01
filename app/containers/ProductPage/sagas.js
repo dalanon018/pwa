@@ -1,6 +1,7 @@
 
 import { takeLatest } from 'redux-saga'
-import { find } from 'lodash'
+import { find, compact } from 'lodash'
+import { compose, uniqBy, prop } from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { transformProduct } from 'utils/transforms'
@@ -11,14 +12,22 @@ import FakeProducts from 'fixtures/products.json'
 import {
   GET_PRODUCT,
   SET_CURRENT_PRODUCT,
-  SET_MOBILE_NUMBERS
+
+  GET_MOBILE_NUMBERS,
+  UPDATE_MOBILE_NUMBERS
 } from './constants'
 import {
   setProductAction,
-
+  setMobileNumbersAction,
   setProductSuccessAction,
   setProductErrorAction
 } from './actions'
+
+import {
+  LAST_VIEWS_KEY,
+  CURRENT_PRODUCT_KEY,
+  MOBILE_NUMBERS_KEY
+} from 'containers/App/constants'
 
 // function * sleep (ms) {
 //   yield new Promise(resolve => setTimeout(resolve, ms))
@@ -27,6 +36,22 @@ import {
 function * transformEachEntity (entity) {
   const response = yield call(transformProduct, entity)
   return response
+}
+
+/**
+ * function that will simply update the last viewed items
+ * we call this automatically after getting the product page.
+ * @param {*} args
+ */
+export function * updateLastViewedItems (args) {
+  const { payload } = args
+  const products = yield call(getItem, LAST_VIEWS_KEY)
+  const cleanProducts = compose(uniqBy(prop('barcode')), compact)
+  let productsViewed = Array.isArray(products) ? products : []
+
+  productsViewed = productsViewed.concat(payload)
+
+  yield call(setItem, LAST_VIEWS_KEY, cleanProducts(productsViewed))
 }
 
 export function * getProduct (payload) {
@@ -50,12 +75,17 @@ export function * getProduct (payload) {
     const transform = yield req.map(transformEachEntity)
     const findData = find(transform, (prod) => prod.cliqqCode.includes(id))
 
+    // since we have the cliqqcode of the item we can save this last viewed items.
+    yield * updateLastViewedItems({
+      payload: findData
+    })
+
     yield put(setProductAction(findData))
   }
 }
 
 export function * setCurrentProduct (payload) {
-  const req = yield call(setItem, 'currentProduct', payload.payload.toJS())
+  const req = yield call(setItem, CURRENT_PRODUCT_KEY, payload.payload.toJS())
   if (!req.err) {
     yield put(setProductSuccessAction(req))
     return req
@@ -64,15 +94,22 @@ export function * setCurrentProduct (payload) {
   }
 }
 
-export function * setMobileNumbers (args) {
+export function * getMobileNumbers () {
+  const mobiles = yield call(getItem, MOBILE_NUMBERS_KEY)
+
+  yield put(setMobileNumbersAction(mobiles || []))
+}
+
+export function * updateMobileNumbers (args) {
   const { payload } = args
-  const mobiles = yield call(getItem, 'mobileNumbers')
-  const mobileRegistrations = mobiles || []
-  mobileRegistrations.push(payload)
-  const req = yield call(setItem, 'mobileNumbers', mobileRegistrations)
-  if (!req.err) {
-    return req
-  }
+  const mobiles = yield call(getItem, MOBILE_NUMBERS_KEY)
+  let mobileRegistrations = compact(mobiles) || []
+
+  mobileRegistrations = mobileRegistrations.concat(payload)
+
+  yield call(setItem, MOBILE_NUMBERS_KEY, mobileRegistrations)
+
+  yield put(setMobileNumbersAction(mobileRegistrations))
 }
 
 export function * getProductSaga () {
@@ -83,16 +120,24 @@ export function * setCurrentProductSaga () {
   yield * takeLatest(SET_CURRENT_PRODUCT, setCurrentProduct)
 }
 
-export function * setMobileNumbersSaga () {
-  yield * takeLatest(SET_MOBILE_NUMBERS, setMobileNumbers)
+export function * getMobileNumbersSaga () {
+  yield * takeLatest(GET_MOBILE_NUMBERS, getMobileNumbers)
+}
+
+export function * updateMobileNumbersSaga () {
+  yield * takeLatest(UPDATE_MOBILE_NUMBERS, updateMobileNumbers)
 }
 
 // All sagas to be loaded
 export function * productSagas () {
   const watcher = yield [
     fork(getProductSaga),
+
     fork(setCurrentProductSaga),
-    fork(setMobileNumbersSaga)
+
+    // Getter and Setter for mobile numbers
+    fork(getMobileNumbersSaga),
+    fork(updateMobileNumbersSaga)
   ]
 
   // Suspend execution until location changes

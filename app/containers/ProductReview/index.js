@@ -5,22 +5,30 @@
  */
 
 import React, { PropTypes } from 'react'
+
+import { noop } from 'lodash'
+import { ifElse, equals, both, compose, prop } from 'ramda'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
+
 import messages from './messages'
 
 import {
   getOrderProductAction,
-  getMobileNumberAction
+  getMobileNumberAction,
+  submitOrderAction
 } from './actions'
 
 import {
   selectOrderProduct,
-  makeSelectProductReview,
-  selectLoader,
-  selectMobileNumber
+  selectProductLoader,
+  selectMobileNumber,
+  selectMobileLoader,
+  selectSubmitting,
+  selectSubmissionSuccess,
+  selectSubmissionError
 } from './selectors'
 
 import {
@@ -28,7 +36,8 @@ import {
   Image,
   Form,
   Checkbox,
-  Accordion } from 'semantic-ui-react'
+  Accordion
+} from 'semantic-ui-react'
 
 import Button from 'components/Button'
 import Modal from 'components/PromptModal'
@@ -58,45 +67,112 @@ import {
   LabelPrice
 } from './styles'
 
-export class ProductReview extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
-  constructor () {
-    super()
-    this.state = {
-      value: '',
-      visibility: false,
-      registeredMobileNumber: '',
-      modalToggle: false
-    }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleToBottom = this.handleToBottom.bind(this)
-    this.handleProceed = this.handleProceed.bind(this)
-    this.handleStoreLocator = this.handleStoreLocator.bind(this)
-  }
+// Helper
+const isDoneRequesting = (loader) => () => (loader === false)
+const isEntityEmpty = compose(equals(0), prop('size'))
 
+export class ProductReview extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     getOrderProduct: PropTypes.func.isRequired,
-    loader: PropTypes.bool.isRequired,
+    productLoader: PropTypes.bool.isRequired,
+    mobileLoader: PropTypes.bool.isRequired,
     orderedProduct: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.object
     ]).isRequired,
-    mobileNumber: PropTypes.oneOfType([
-      PropTypes.array,
-      PropTypes.object
-    ]).isRequired
+    mobileNumber: PropTypes.string,
+    orderRequesting: PropTypes.bool.isRequired,
+    orderSuccess: PropTypes.object.isRequired,
+    orderFail: PropTypes.object.isRequired
   }
 
-  handleChange = (e, { value }) => {
+  state = {
+    modePayment: 'COD',
+    visibility: false,
+    modalToggle: false,
+    errorMessage: ''
+  }
+
+  /**
+   * Native handler so we know our form is submitting
+   */
+  submitting = false
+
+  constructor () {
+    super()
+
+    this._handleChange = this._handleChange.bind(this)
+    this._handleModalClose = this._handleModalClose.bind(this)
+    this._handleToBottom = this._handleToBottom.bind(this)
+    this._handleProceed = this._handleProceed.bind(this)
+    this._handleStoreLocator = this._handleStoreLocator.bind(this)
+    this._handleDoneFetchOrderNoProductNorMobile = this._handleDoneFetchOrderNoProductNorMobile.bind(this)
+    this._handleSubmissionSuccess = this._handleSubmissionSuccess.bind(this)
+    this._handleSubmissionError = this._handleSubmissionError.bind(this)
+  }
+
+  _handleModalClose () {
     this.setState({
-      value: value,
+      modalToggle: false
+    })
+  }
+
+  _handleChange = (e, { value }) => {
+    this.setState({
+      modePayment: value,
       visibility: value === 'COD'
     })
   }
 
-  handleToBottom = () => {
+  _handleToBottom = () => {
     setTimeout(() => {
       window.scrollTo(0, document.body.scrollHeight)
     }, 50)
+  }
+
+  _handleProceed () {
+    const { mobileNumber, orderedProduct, submitOrder } = this.props
+    const { modePayment } = this.state
+
+    submitOrder({
+      modePayment,
+      orderedProduct,
+      mobileNumber
+    })
+
+    this.submitting = true
+  }
+
+  _handleStoreLocator () {
+    window.location.replace('https://store-locator-7-eleven.appspot.com')
+  }
+
+  _handleDoneFetchOrderNoProductNorMobile () {
+    this.setState({
+      modalToggle: true,
+      errorMessage: <FormattedMessage {...messages.errorNoMobileProduct} />
+    })
+    setTimeout(() => {
+      this.props.changeRoute('/')
+    }, 5000)
+  }
+
+  _handleSubmissionSuccess (success) {
+    const { changeRoute } = this.props
+    if (this.submitting) {
+      changeRoute(`/purchases/${success.get('trackingNumber')}`)
+      this.submitting = false
+    }
+  }
+
+  _handleSubmissionError () {
+    if (this.submitting) {
+      this.setState({
+        modalToggle: true,
+        errorMessage: <FormattedMessage {...messages.errorSubmission} />
+      })
+      this.submitting = false
+    }
   }
 
   componentDidMount () {
@@ -105,37 +181,32 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   componentWillReceiveProps (nextProps) {
-    const { mobileNumber } = nextProps
-    if (mobileNumber.size > 1) {
-      this.setState({
-        registeredMobileNumber: mobileNumber.last(),
-        modalToggle: false
-      })
-    } else {
-      /**
-       * @chino please make sure that this will not trigger immediately
-       * there should be an identifier that it is done requesting the mobile number
-       * TODO:
-       */
-      // this.setState({
-      //   modalToggle: true
-      // })
-      // setTimeout(() => {
-      //   this.props.changeRoute('/')
-      // }, 5000)
-    }
-  }
+    const { orderedProduct, productLoader, mobileNumber, mobileLoader, orderSuccess, orderFail } = nextProps
 
-  handleProceed () {
-    this.props.changeRoute('purchases/344760497230963777') // Temporary route
-  }
+    // handle once done fetching our ordered product
+    ifElse(
+      both(isEntityEmpty, isDoneRequesting(productLoader)), this._handleDoneFetchOrderNoProductNorMobile, noop
+    )(orderedProduct)
 
-  handleStoreLocator () {
-    window.location.replace('https://store-locator-7-eleven.appspot.com')
+    // handle once done fetching our use mobile number
+    ifElse(
+      both(equals('null'), isDoneRequesting(mobileLoader)), this._handleDoneFetchOrderNoProductNorMobile, noop
+    )(mobileNumber)
+
+    // handle once done submitting and success
+    ifElse(
+      isEntityEmpty, noop, this._handleSubmissionSuccess
+    )(orderSuccess)
+
+    // handle once done submitting and theres error
+    ifElse(
+      isEntityEmpty, noop, this._handleSubmissionError
+    )(orderFail)
   }
 
   render () {
-    const { orderedProduct } = this.props
+    const { orderedProduct, orderRequesting, mobileNumber } = this.props
+    const { errorMessage, modePayment, modalToggle } = this.state
     const cliqqCode = orderedProduct.get('cliqqCode') && orderedProduct.get('cliqqCode').join(', ')
 
     const labelOne = <label className='label-custom'>
@@ -210,9 +281,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                           name='cash-prepaid'
                           value='CASH'
                           label={labelOne}
-                          // checked={this.state.value === 'CASH'}
+                          // checked={modePayment === 'CASH'}
                           defaultChecked
-                          onChange={this.handleChange}
+                          onChange={this._handleChange}
                           />
                       </Form.Field>
                       <Form.Field className='display__none'> {/* Cash on Deliver option */}
@@ -221,9 +292,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                           name='cod'
                           value='COD'
                           label={labelTwo}
-                          checked={this.state.value === 'COD'}
-                          onChange={this.handleChange}
-                          onClick={this.handleToBottom}
+                          checked={modePayment === 'COD'}
+                          onChange={this._handleChange}
+                          onClick={this._handleToBottom}
                           />
                       </Form.Field>
                     </Form>
@@ -231,29 +302,35 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                 </StepContent>
               </StepWrapper>
 
-              {/* <StepWrapper className='visibility' visibility={this.state.visibility}> */}
+              {/* <StepWrapper className='visibility' visibility={visibility}> */}
               <StepWrapper>
                 <StepContent>
                   <StepHead step='3' className='margin__top-positive--20'>
                     <FormattedMessage {...messages.stepThree} />
                     <p>Your default store will be the last store you visited</p>
                   </StepHead>
-                  <LocationButton onClick={this.handleStoreLocator} fluid icon={NextIcon}>
+                  <LocationButton onClick={this._handleStoreLocator} fluid icon={NextIcon}>
                     <span>FIND STORE NEARBY</span>
                   </LocationButton>
                 </StepContent>
               </StepWrapper>
 
               <ButtonContainer>
-                <Button onClick={this.handleProceed} primary fluid><FormattedMessage {...messages.proceedNext} /></Button>
+                <Button onClick={this._handleProceed} primary fluid loading={orderRequesting}><FormattedMessage {...messages.proceedNext} /></Button>
               </ButtonContainer>
             </ReviewContainer>
 
             <Modal
-              open={this.state.modalToggle}
+              open={modalToggle}
               name='warning'
-              title='Something Wrong'
-              content='No registered mobile number.' />
+              title={<FormattedMessage {...messages.errorHeader} />}
+              content={errorMessage}
+              {
+                ...Object.assign({}, (!isEntityEmpty(orderedProduct) && mobileNumber) ? {
+                  close: this._handleModalClose
+                } : {})
+              }
+            />
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -261,21 +338,21 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 }
 
-ProductReview.propTypes = {
-  dispatch: PropTypes.func.isRequired
-}
-
 const mapStateToProps = createStructuredSelector({
-  ProductReview: makeSelectProductReview(),
   orderedProduct: selectOrderProduct(),
   mobileNumber: selectMobileNumber(),
-  loader: selectLoader()
+  productLoader: selectProductLoader(),
+  mobileLoader: selectMobileLoader(),
+  orderRequesting: selectSubmitting(),
+  orderSuccess: selectSubmissionSuccess(),
+  orderFail: selectSubmissionError()
 })
 
 function mapDispatchToProps (dispatch) {
   return {
-    getOrderProduct: (payload) => dispatch(getOrderProductAction(payload)),
-    getMobileNumber: (payload) => dispatch(getMobileNumberAction(payload)),
+    getOrderProduct: () => dispatch(getOrderProductAction()),
+    getMobileNumber: () => dispatch(getMobileNumberAction()),
+    submitOrder: (payload) => dispatch(submitOrderAction(payload)),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
   }

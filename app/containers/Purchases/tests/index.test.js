@@ -15,7 +15,7 @@ describe('<Purchases />', () => {
   const minProps = {
     loading: false,
     purchases: fromJS([]),
-    getPurchases: () => {},
+    getApiPurchases: () => {},
     dispatch: () => {},
     changeRoute: () => {}
   }

@@ -31,8 +31,7 @@ class Countdown extends React.PureComponent { // eslint-disable-line react/prefe
   _countdownTimer () {
     const { endDate } = this.props
 
-    const date = new Date()
-    let currentTime = Math.floor(date.getTime() / 1000)
+    let currentTime = moment().unix()
     let diffTime = endDate - currentTime
     let duration = moment.duration(diffTime * 1000, 'milliseconds')
     let interval = 1000

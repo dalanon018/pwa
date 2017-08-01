@@ -13,19 +13,14 @@ const selectProductReviewDomain = () => (state) => state.get('productReview')
  * Default selector used by ProductReview
  */
 
-const makeSelectProductReview = () => createSelector(
-  selectProductReviewDomain(),
-  (substate) => substate.toJS()
-)
-
 const selectOrderProduct = () => createSelector(
   selectProductReviewDomain(),
   (substate) => substate.get('orderProduct')
 )
 
-const selectLoader = () => createSelector(
+const selectProductLoader = () => createSelector(
   selectProductReviewDomain(),
-  (substate) => substate.get('loading')
+  (substate) => substate.get('productLoading')
 )
 
 const selectMobileNumber = () => createSelector(
@@ -33,10 +28,32 @@ const selectMobileNumber = () => createSelector(
   (substate) => substate.get('mobileNumber')
 )
 
-export default makeSelectProductReview
+const selectMobileLoader = () => createSelector(
+  selectProductReviewDomain(),
+  (substate) => substate.get('mobileLoading')
+)
+
+const selectSubmitting = () => createSelector(
+  selectProductReviewDomain(),
+  (substate) => substate.get('submitting')
+)
+
+const selectSubmissionSuccess = () => createSelector(
+  selectProductReviewDomain(),
+  (substate) => substate.get('submissionSuccess')
+)
+
+const selectSubmissionError = () => createSelector(
+  selectProductReviewDomain(),
+  (substate) => substate.get('submissionError')
+)
+
 export {
-  makeSelectProductReview,
   selectOrderProduct,
   selectMobileNumber,
-  selectLoader
+  selectProductLoader,
+  selectMobileLoader,
+  selectSubmitting,
+  selectSubmissionSuccess,
+  selectSubmissionError
 }

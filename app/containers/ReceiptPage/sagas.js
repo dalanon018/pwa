@@ -5,8 +5,7 @@ import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 // import request from 'utils/request'
 import { transformOrder } from 'utils/transforms'
-
-import FakeOrders from 'fixtures/orders.json'
+import { getItem } from 'utils/localStorage'
 
 import {
   GET_RECEIPT,
@@ -19,9 +18,14 @@ import {
   // errorReceiptAction
 } from './actions'
 
-// function * sleep (ms) {
-//   yield new Promise(resolve => setTimeout(resolve, ms))
-// }
+import {
+  ORDERED_LIST_KEY
+} from 'containers/App/constants'
+
+function * getOrderList () {
+  const orders = yield call(getItem, ORDERED_LIST_KEY)
+  return orders || []
+}
 
 export function * requestRepurchaseItem (payload) {
   // const { payload: { receipt } } = payload
@@ -46,24 +50,16 @@ export function * requestRepurchaseItem (payload) {
 
 export function * getReceipt (payload) {
   const { payload: { trackingNumber } } = payload
-  // const headers = new Headers()
-  // const currentUser = yield select(selectCurrentUser())
-  // headers.append('Content-Type', 'application/json')
-  // headers.append('Accept', 'application/json')
-  // headers.append('Authorization', `JWT ${currentUser.token}`)
-
-  // const requestURL = `${API_BASE_URL}/data/sectors`
-  // const req = yield call(request, requestURL, {
-  //   method: 'GET',
-  //   headers
-  // })
-
+  const orders = yield getOrderList()
   // We will emulate data
-  const req = yield Promise.resolve(find(FakeOrders, { trackingNumber }))
-  if (!req.err) {
-    const response = yield call(transformOrder, req)
-    yield put(setReceiptAction(response))
+  const req = yield find(orders, { trackingNumber })
+  let response = {}
+
+  if (req) {
+    response = yield call(transformOrder, req)
   }
+
+  yield put(setReceiptAction(response))
 }
 
 export function * getReceiptSaga () {
