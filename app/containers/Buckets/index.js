@@ -5,13 +5,16 @@ import { browserHistory } from 'react-router'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
+import Firebase from 'utils/firebase-realtime'
 
 import {
-  selectProductCategories
+  selectProductCategories,
+  selectMobileNumbers
 } from './selectors'
 
 import {
-  getProductCategoriesAction
+  getProductCategoriesAction,
+  getMobileNumbersAction
 } from './actions'
 
 import {
@@ -50,7 +53,8 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     changeRoute: PropTypes.func.isRequired,
     searchProduct: PropTypes.func.isRequired,
     setProductSearchList: PropTypes.func.isRequired,
-    categories: PropTypes.array.isRequired,
+    productCategories: PropTypes.object.isRequired,
+    mobileNumbers: PropTypes.object,
     routes: PropTypes.array.isRequired
   }
 
@@ -66,6 +70,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     this._handleCloseSidebarClickPusher = this._handleCloseSidebarClickPusher.bind(this)
     this._hideBackButton = this._hideBackButton.bind(this)
     this._displayHeader = this._displayHeader.bind(this)
+    this._firebaseListener = this._firebaseListener.bind(this)
   }
 
   _handleToggleSideBar () {
@@ -144,8 +149,22 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     )
   }
 
+  _firebaseListener (snapshot) {
+    console.log(snapshot.val())
+  }
+
   componentDidMount () {
-    this.props.getCategories()
+    const { getMobileNumbers, getCategories } = this.props
+    getMobileNumbers()
+    getCategories()
+  }
+
+  // @TODO: mobile numbers not updated after using different number
+  componentWillReceiveProps (nextProps) {
+    const { mobileNumbers } = nextProps
+
+    console.log('MOBILENUMBERS', mobileNumbers.toJS())
+    Firebase.listen(mobileNumbers, this._firebaseListener)
   }
 
   render () {
@@ -168,17 +187,15 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 }
 
-Buckets.propTypes = {
-  dispatch: PropTypes.func.isRequired
-}
-
 const mapStateToProps = createStructuredSelector({
-  productCategories: selectProductCategories()
+  productCategories: selectProductCategories(),
+  mobileNumbers: selectMobileNumbers()
 })
 
 function mapDispatchToProps (dispatch) {
   return {
     getCategories: () => dispatch(getProductCategoriesAction()),
+    getMobileNumbers: () => dispatch(getMobileNumbersAction()),
     changeRoute: (url) => dispatch(push(url)),
     searchProduct: (payload) => dispatch(getSearchProductAction(payload)),
     setProductSearchList: (payload) => dispatch(setSearchProductAction(payload)),

@@ -13,7 +13,9 @@ import {
 
   ORDER_SUBMIT,
   ORDER_SUCCESS,
-  ORDER_ERROR
+  ORDER_ERROR,
+
+  SET_ORDER_HANDLER_DEFAULT
 } from './constants'
 
 export function getOrderProductAction () {
@@ -60,5 +62,11 @@ export function errorOrderAction (payload) {
   return {
     type: ORDER_ERROR,
     payload
+  }
+}
+
+export function setOrderHandlersDefaultAction () {
+  return {
+    type: SET_ORDER_HANDLER_DEFAULT
   }
 }
