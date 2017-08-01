@@ -125,11 +125,51 @@ const WarningStatus = ({status}) => {
   })(null)(status)
 }
 
+const ButtonTrigger = ({ onClick, children }) => (
+  <Button onClick={onClick} size={12} primary>
+    { children }
+  </Button>
+)
+
+const ButtonRepurchaseHome = ({ status, goHomeFn }) =>
+  ComponentDetail({
+    RESERVED: (
+      <ButtonTrigger onClick={goHomeFn} >
+        <FormattedMessage {...messages.returnToHome} />
+      </ButtonTrigger>
+    ),
+    UNPAID: (
+      <ButtonTrigger onClick={goHomeFn} >
+        <FormattedMessage {...messages.returnToHome} />
+      </ButtonTrigger>),
+    CONFIRMED: (
+      <ButtonTrigger onClick={goHomeFn} >
+        <FormattedMessage {...messages.returnToHome} />
+      </ButtonTrigger>),
+    INTRANSIT: (
+      <ButtonTrigger onClick={goHomeFn} >
+        <FormattedMessage {...messages.returnToHome} />
+      </ButtonTrigger>),
+    DELIVERED: (
+      <ButtonTrigger onClick={goHomeFn} >
+        <FormattedMessage {...messages.returnToHome} />
+      </ButtonTrigger>),
+    CLAIMED: (
+      <ButtonTrigger onClick={goHomeFn} >
+        <FormattedMessage {...messages.returnToHome} />
+      </ButtonTrigger>),
+    UNCLAIMED: (
+      <ButtonTrigger onClick={goHomeFn} >
+        <FormattedMessage {...messages.returnToHome} />
+      </ButtonTrigger>)
+  })(null)(status)
+
 class Receipt extends React.PureComponent {
   static propTypes = {
     receipt: PropTypes.object.isRequired,
     statuses: PropTypes.object.isRequired,
-    goHome: PropTypes.func.isRequired
+    goHomeFn: PropTypes.func.isRequired,
+    repurchaseFn: PropTypes.func.isRequired
   }
 
   constructor () {
@@ -166,8 +206,7 @@ class Receipt extends React.PureComponent {
   }
 
   render () {
-    const { receipt, statuses, goHome } = this.props
-
+    const { receipt, statuses, goHomeFn, repurchaseFn } = this.props
     return (
       <ReceiptWrapper>
         <ProductWrapper >
@@ -211,11 +250,7 @@ class Receipt extends React.PureComponent {
               <WarningStatus {...{ status: statuses[receipt.get('status')] }} />
             </WarningContent>
             <ButtonWrapper>
-              <Button
-                onClick={goHome}
-                size={12}
-                primary
-              > <FormattedMessage {...messages.returnToHome} /> </Button>
+              <ButtonRepurchaseHome {...{ status: statuses[receipt.get('status')], goHomeFn, repurchaseFn }} />
             </ButtonWrapper>
           </PurchaseGeneralInfo>
         </ReceiptDescription>

@@ -77,5 +77,9 @@ export default defineMessages({
   returnToHome: {
     id: 'app.components.Receipt.returnToHome',
     defaultMessage: 'RETURN TO HOME'
+  },
+  rePurchase: {
+    id: 'app.components.Receipt.rePurchase',
+    defaultMessage: 'REPURCHASE'
   }
 })

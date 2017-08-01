@@ -40,7 +40,8 @@ import {
 } from './selectors'
 
 import {
-  getReceiptAction
+  getReceiptAction,
+  requestReceiptAction
 } from './actions'
 
 const ReceiptWrapper = styled.div`
@@ -76,7 +77,8 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
     super()
 
     this._identifyBackground = this._identifyBackground.bind(this)
-    this._goToHome = this._goToHome.bind(this)
+    this._goToHomeFn = this._goToHomeFn.bind(this)
+    this._repurchaseFn = this._repurchaseFn.bind(this)
     this._handleDoneInvalidReceipt = this._handleDoneInvalidReceipt.bind(this)
   }
 
@@ -94,7 +96,11 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
     })('none')(STATUSES[receipt.get('status')])
   }
 
-  _goToHome () {
+  _goToHomeFn () {
+    this.props.changeRoute('/')
+  }
+
+  _repurchaseFn () {
     this.props.changeRoute('/')
   }
 
@@ -114,7 +120,6 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
 
   componentWillReceiveProps (nextProps) {
     const { receipt, loading } = nextProps
-    console.log(receipt, loading)
 
     ifElse(
       both(isEntityEmpty, isDoneRequesting(loading)),
@@ -139,7 +144,8 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
           purchaseUsecases={PURCHASE_USECASE}
           purchaseOrder={PURCHASE_ORDER}
           receipt={receipt}
-          goHome={this._goToHome}
+          goHomeFn={this._goToHomeFn}
+          repurchaseFn={this._repurchaseFn}
         />
 
         <Modal
@@ -161,6 +167,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps (dispatch) {
   return {
     getReceipt: (payload) => dispatch(getReceiptAction(payload)),
+    repurchase: (payload) => dispatch(requestReceiptAction(payload)),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
   }
