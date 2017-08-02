@@ -44,7 +44,7 @@ function * fakeResponse ({ mobileNumber, orderedProduct, modePayment }) {
     currency: modePayment,
     amount: String(calculateProductPrice(orderedProduct)),
     quantity: 1,
-    status: 'DELIVERED TO WAREHOUSE',
+    status: 'CREATED',
     imageUrl: orderedProduct.get('image'),
     brandLogo: orderedProduct.get('image'),
     name: orderedProduct.get('title'),

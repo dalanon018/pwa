@@ -16,10 +16,13 @@ describe('<Buckets />', () => {
     children: {},
     productCategories: fromJS({}),
     mobileNumbers: fromJS([]),
+    receiptsUpdated: fromJS([]),
     routes: [{
       path: '/'
     }],
     getCategories: () => {},
+    getUpdatedReceipts: () => {},
+    setUpdatedReceipts: () => {},
     searchProduct: () => {},
     setProductSearchList: () => {},
     dispatch: () => {},

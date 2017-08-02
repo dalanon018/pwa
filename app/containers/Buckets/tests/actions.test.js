@@ -4,7 +4,10 @@ import {
   setProductCategoriesAction,
 
   getMobileNumbersAction,
-  setMobileNumbersAction
+  setMobileNumbersAction,
+
+  getUpdatedReceiptsAction,
+  setUpdatedReceiptsAction
 } from '../actions'
 
 import {
@@ -12,7 +15,10 @@ import {
   SET_PRODUCT_CATEGORIES,
 
   GET_MOBILE_NUMBERS,
-  SET_MOBILE_NUMBERS
+  SET_MOBILE_NUMBERS,
+
+  GET_RECEIPT_UPDATED,
+  SET_RECEIPT_UPDATED
 } from '../constants'
 
 describe('Buckets actions', () => {
@@ -58,6 +64,31 @@ describe('Buckets actions', () => {
       }
 
       expect(setMobileNumbersAction(payload)).toEqual(expectedResult)
+    })
+  })
+
+  describe('getUpdatedReceiptsAction', () => {
+    it('should request updated reciepts', () => {
+      const expectedResult = {
+        type: GET_RECEIPT_UPDATED
+      }
+
+      expect(getUpdatedReceiptsAction()).toEqual(expectedResult)
+    })
+  })
+
+  describe('setUpdatedReceiptsAction', () => {
+    it('should request updated reciepts', () => {
+      const payload = [
+        { trackingNumber: '12345678', status: 'CONFIRMED' },
+        { trackingNumber: '87654321', status: 'IN-TRANSIT' }
+      ]
+      const expectedResult = {
+        type: SET_RECEIPT_UPDATED,
+        payload
+      }
+
+      expect(setUpdatedReceiptsAction(payload)).toEqual(expectedResult)
     })
   })
 })

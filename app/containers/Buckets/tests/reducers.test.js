@@ -13,6 +13,7 @@ describe('Buckets Reducer', () => {
     state = fromJS({
       categories: [],
       mobileNumbers: [],
+      receiptsUpdated: [],
       toggle: false
     })
   })

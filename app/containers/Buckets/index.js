@@ -9,12 +9,15 @@ import Firebase from 'utils/firebase-realtime'
 
 import {
   selectProductCategories,
-  selectMobileNumbers
+  selectMobileNumbers,
+  selectReceiptsUpdated
 } from './selectors'
 
 import {
   getProductCategoriesAction,
-  getMobileNumbersAction
+  getMobileNumbersAction,
+  getUpdatedReceiptsAction,
+  setUpdatedReceiptsAction
 } from './actions'
 
 import {
@@ -25,6 +28,8 @@ import {
   getSearchProductAction,
   setSearchProductAction
 } from 'containers/SearchPage/actions'
+
+import ModalWithHeader from 'components/ModalWithHeader'
 
 import HeaderMenu from './HeaderMenu'
 import SearchMenu from './SearchMenu'
@@ -50,6 +55,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   static propTypes = {
     children: PropTypes.object.isRequired,
     getCategories: PropTypes.func.isRequired,
+    getUpdatedReceipts: PropTypes.func.isRequired,
     changeRoute: PropTypes.func.isRequired,
     searchProduct: PropTypes.func.isRequired,
     setProductSearchList: PropTypes.func.isRequired,
@@ -71,6 +77,20 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     this._hideBackButton = this._hideBackButton.bind(this)
     this._displayHeader = this._displayHeader.bind(this)
     this._firebaseListener = this._firebaseListener.bind(this)
+    this._handleShownModal = this._handleShownModal.bind(this)
+
+    this._goToHome = this._goToHome.bind(this)
+    this._goToReceipts = this._goToReceipts.bind(this)
+  }
+
+  _goToHome () {
+    const { changeRoute } = this.props
+    changeRoute('/')
+  }
+
+  _goToReceipts () {
+    const { changeRoute } = this.props
+    changeRoute('/purchases')
   }
 
   _handleToggleSideBar () {
@@ -149,8 +169,27 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     )
   }
 
+  _handleShownModal () {
+    const { receiptsUpdated, setUpdatedReceipts } = this.props
+
+    return receiptsUpdated.map((receipt, index) =>
+      <ModalWithHeader
+        receipt={receipt}
+        receipts={receiptsUpdated}
+        key={index}
+        setUpdatedReceipts={setUpdatedReceipts}
+        goToHome={this._goToHome}
+        goToReceipts={this._goToReceipts}
+      />
+    )
+  }
+
   _firebaseListener (snapshot) {
-    console.log(snapshot.val())
+    const { getUpdatedReceipts } = this.props
+
+    getUpdatedReceipts({
+      snapshot: snapshot.val()
+    })
   }
 
   componentDidMount () {
@@ -170,7 +209,6 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   render () {
     const { children, productCategories } = this.props
     const { toggleSidebar } = this.state
-
     return (
       <Wrapper>
         { this._displayHeader() }
@@ -182,6 +220,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
           toggleSidebar={toggleSidebar}
           toggleAction={this._handleCloseSidebarClickPusher}
         />
+        { this._handleShownModal() }
       </Wrapper>
     )
   }
@@ -189,13 +228,16 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
 const mapStateToProps = createStructuredSelector({
   productCategories: selectProductCategories(),
-  mobileNumbers: selectMobileNumbers()
+  mobileNumbers: selectMobileNumbers(),
+  receiptsUpdated: selectReceiptsUpdated()
 })
 
 function mapDispatchToProps (dispatch) {
   return {
     getCategories: () => dispatch(getProductCategoriesAction()),
     getMobileNumbers: () => dispatch(getMobileNumbersAction()),
+    getUpdatedReceipts: (payload) => dispatch(getUpdatedReceiptsAction(payload)),
+    setUpdatedReceipts: (payload) => dispatch(setUpdatedReceiptsAction(payload)),
     changeRoute: (url) => dispatch(push(url)),
     searchProduct: (payload) => dispatch(getSearchProductAction(payload)),
     setProductSearchList: (payload) => dispatch(setSearchProductAction(payload)),

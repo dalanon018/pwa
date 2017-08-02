@@ -28,9 +28,15 @@ const selectMobileNumbers = () => createSelector(
   (substate) => substate.get('mobileNumbers')
 )
 
+const selectReceiptsUpdated = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('receiptsUpdated')
+)
+
 export {
   selectBucketDomain,
   selectToggle,
   selectProductCategories,
-  selectMobileNumbers
+  selectMobileNumbers,
+  selectReceiptsUpdated
 }
