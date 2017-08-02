@@ -3,7 +3,8 @@ import bucketsReducer from '../reducer'
 import { fromJS } from 'immutable'
 
 import {
-  setProductCategoriesAction
+  setProductCategoriesAction,
+  setMobileNumbersAction
 } from '../actions'
 
 describe('Buckets Reducer', () => {
@@ -11,6 +12,8 @@ describe('Buckets Reducer', () => {
   beforeEach(() => {
     state = fromJS({
       categories: [],
+      mobileNumbers: [],
+      receiptsUpdated: [],
       toggle: false
     })
   })
@@ -26,5 +29,13 @@ describe('Buckets Reducer', () => {
     const expectedResult = state.set('categories', payload)
 
     expect(bucketsReducer(state, setProductCategoriesAction(payload))).toEqual(expectedResult)
+  })
+
+  it('should update mobile numbers', () => {
+    const payload = fromJS(['999999999', '88888888', '77777777'])
+
+    const expectedResult = state.set('mobileNumbers', payload)
+
+    expect(bucketsReducer(state, setMobileNumbersAction(payload))).toEqual(expectedResult)
   })
 })

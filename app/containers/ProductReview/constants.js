@@ -12,3 +12,6 @@ export const SET_MOBILE_NUMBER = 'app/ProductReview/SET_MOBILE_NUMBER'
 export const ORDER_SUBMIT = 'app/ProductReview/ORDER_SUBMIT'
 export const ORDER_SUCCESS = 'app/ProductReview/ORDER_SUCCESS'
 export const ORDER_ERROR = 'app/ProductReview/ORDER_ERROR'
+
+// This will set our /success and error handler to default
+export const SET_ORDER_HANDLER_DEFAULT = 'app/ProductReview/SET_ORDER_HANDLER_DEFAULT'

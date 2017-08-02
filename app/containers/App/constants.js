@@ -18,5 +18,6 @@ export const LAST_VIEWS_KEY = 'boilerplate/App/LAST_VIEWS'
 export const CURRENT_PRODUCT_KEY = 'boilerplate/App/CURRENT_PRODUCT'
 export const MOBILE_NUMBERS_KEY = 'boilerplate/App/MOBILE_NUMBERS'
 export const ORDERED_LIST_KEY = 'boilerplate/App/ORDERED_LIST'
+export const PURCHASED_PRODUCTS_KEY = 'boilerplate/App/PURCHASED_PRODUCTS'
 
 console.log(process.env.APP_BASE_URL)

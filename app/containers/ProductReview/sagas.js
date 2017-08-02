@@ -1,4 +1,7 @@
 import moment from 'moment'
+import Firebase from 'utils/firebase-realtime'
+
+import { compose, is, ifElse, identity, uniq } from 'ramda'
 import { call, cancel, fork, put, take } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 // import request from 'utils/request'
@@ -25,6 +28,9 @@ import {
   ORDERED_LIST_KEY
 } from 'containers/App/constants'
 
+import {
+  setMobileNumbersAction
+} from 'containers/Buckets/actions'
 /**
  * we will create the fake response here.
  * @param {*} body
@@ -38,7 +44,7 @@ function * fakeResponse ({ mobileNumber, orderedProduct, modePayment }) {
     currency: modePayment,
     amount: String(calculateProductPrice(orderedProduct)),
     quantity: 1,
-    status: 'DELIVERED TO WAREHOUSE',
+    status: 'CREATED',
     imageUrl: orderedProduct.get('image'),
     brandLogo: orderedProduct.get('image'),
     name: orderedProduct.get('title'),
@@ -59,15 +65,35 @@ function * setOrderList (order) {
   return yield call(setItem, ORDERED_LIST_KEY, setOrders)
 }
 
+/**
+ * Here we will save the transactions to firebase with the main key of mobile numbers
+ * <mobile>: {transactionID: "status"}
+ */
+function * updateFirebase ({ order: { trackingNumber }, mobileNumber }) {
+  try {
+    yield Firebase.login()
+    yield Firebase.update(mobileNumber, {
+      [trackingNumber]: 'CREATED'
+    })
+  } catch (e) {
+    console.log('error on firebase', e)
+  }
+}
+
 export function * getOrderProduct () {
   const orderProduct = yield call(getItem, CURRENT_PRODUCT_KEY)
   yield put(setOrderProductAction(orderProduct || {}))
 }
 
 export function * getMobileNumber () {
-  const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
-  const mobile = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
+  const convertToArray = ifElse(is(Object), identity, (entity) => [entity])
+  const updateBucket = compose(uniq, convertToArray)
 
+  // first we have to update our bucket list of what number we already have
+  const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
+  yield put(setMobileNumbersAction(updateBucket(mobileNumbers)))
+
+  const mobile = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
   yield put(setMobileNumberAction(mobile))
 }
 
@@ -102,6 +128,9 @@ export function * submitOrder (payload) {
     yield setOrderList(order)
     // we have to remove the current product since we already done with it.
     yield call(removeItem, CURRENT_PRODUCT_KEY)
+    // we have to update the firebase
+    yield updateFirebase({ order, mobileNumber })
+
     yield put(successOrderAction(order))
   } else {
     yield put(errorOrderAction(order))

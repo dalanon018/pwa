@@ -92,7 +92,10 @@ module.exports = (options) => ({
         FIREBASE_DATABASE_URL: JSON.stringify(process.env.FIREBASE_DATABASE_URL),
         FIREBASE_PROJECT_ID: JSON.stringify(process.env.FIREBASE_PROJECT_ID),
         FIREBASE_STORAGE_BUCKET: JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET),
-        FIREBASE_MESSAGING_SENDER_ID: JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID)
+        FIREBASE_MESSAGING_SENDER_ID: JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID),
+        FIREBASE_MAIN_OBJECT: JSON.stringify(process.env.FIREBASE_MAIN_OBJECT),
+        FIREBASE_USERNAME: JSON.stringify(process.env.FIREBASE_USERNAME),
+        FIREBASE_PASSWORD: JSON.stringify(process.env.FIREBASE_PASSWORD)
       }
     }),
     new webpack.NamedModulesPlugin()

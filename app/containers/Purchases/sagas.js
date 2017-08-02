@@ -48,7 +48,7 @@ function * setOrderList (apiOrders) {
   const cleanOrders = compose(uniqBy(prop('trackingNumber')), compact)
   let currentOrders = Array.isArray(orders) ? orders : []
 
-  let setOrders = orders.concat(currentOrders)
+  let setOrders = currentOrders.concat(apiOrders)
 
   yield call(setItem, ORDERED_LIST_KEY, cleanOrders(setOrders))
 }
@@ -68,7 +68,8 @@ export function * getApiPurchases () {
 
   // We will emulate data
   const req = yield Promise.resolve(FakeOrders)
-  if (!req.err) {
+
+  if (req) {
     yield * setOrderList(req)
     const allOrders = yield * getOrderList()
 

@@ -7,6 +7,12 @@
 export const GET_PRODUCT_CATEGORIES = 'app/Buckets/GET_PRODUCT_CATEGORIES'
 export const SET_PRODUCT_CATEGORIES = 'app/Buckets/SET_PRODUCT_CATEGORIES'
 
+export const GET_MOBILE_NUMBERS = 'app/Buckets/GET_MOBILE_NUMBERS'
+export const SET_MOBILE_NUMBERS = 'app/Buckets/SET_MOBILE_NUMBERS'
+
+export const GET_RECEIPT_UPDATED = 'app/Buckets/GET_RECEIPT_UPDATED'
+export const SET_RECEIPT_UPDATED = 'app/Buckets/SET_RECEIPT_UPDATED'
+
 export const SET_TOGGLE = 'app/Buckets/SET_TOGGLE'
 
 export const HIDE_BACK_BUTTON = [

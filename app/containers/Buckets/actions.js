@@ -7,6 +7,13 @@
 import {
   GET_PRODUCT_CATEGORIES,
   SET_PRODUCT_CATEGORIES,
+
+  GET_MOBILE_NUMBERS,
+  SET_MOBILE_NUMBERS,
+
+  GET_RECEIPT_UPDATED,
+  SET_RECEIPT_UPDATED,
+
   SET_TOGGLE
 } from './constants'
 
@@ -19,6 +26,33 @@ export function getProductCategoriesAction () {
 export function setProductCategoriesAction (payload) {
   return {
     type: SET_PRODUCT_CATEGORIES,
+    payload
+  }
+}
+
+export function getMobileNumbersAction () {
+  return {
+    type: GET_MOBILE_NUMBERS
+  }
+}
+
+export function setMobileNumbersAction (payload) {
+  return {
+    type: SET_MOBILE_NUMBERS,
+    payload
+  }
+}
+
+export function getUpdatedReceiptsAction (payload) {
+  return {
+    type: GET_RECEIPT_UPDATED,
+    payload
+  }
+}
+
+export function setUpdatedReceiptsAction (payload) {
+  return {
+    type: SET_RECEIPT_UPDATED,
     payload
   }
 }

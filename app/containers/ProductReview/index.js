@@ -18,7 +18,8 @@ import messages from './messages'
 import {
   getOrderProductAction,
   getMobileNumberAction,
-  submitOrderAction
+  submitOrderAction,
+  setOrderHandlersDefaultAction
 } from './actions'
 
 import {
@@ -173,6 +174,10 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       })
       this.submitting = false
     }
+  }
+
+  componentWillUnmount () {
+    this.props.setHandlersDefault()
   }
 
   componentDidMount () {
@@ -353,6 +358,7 @@ function mapDispatchToProps (dispatch) {
     getOrderProduct: () => dispatch(getOrderProductAction()),
     getMobileNumber: () => dispatch(getMobileNumberAction()),
     submitOrder: (payload) => dispatch(submitOrderAction(payload)),
+    setHandlersDefault: () => dispatch(setOrderHandlersDefaultAction()),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
   }

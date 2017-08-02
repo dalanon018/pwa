@@ -25,7 +25,7 @@ export default defineMessages({
   },
   intransitTitle: {
     id: 'app.components.ModalWithHeader.intransitTitle',
-    defaultMessage: 'intransitTitle TEXT'
+    defaultMessage: 'ITEM IS ON ITS WAY TO STORE'
   },
   deliveredTitle: {
     id: 'app.components.ModalWithHeader.deliveredTitle',
@@ -50,7 +50,7 @@ export default defineMessages({
   },
   confirmedDescription: {
     id: 'app.components.ModalWithHeader.confirmedDescription',
-    defaultMessage: 'CONFIRM OPTION'
+    defaultMessage: 'ITEM HAS BEEN PAID'
   },
   intransitDescription: {
     id: 'app.components.ModalWithHeader.intransitDescription',

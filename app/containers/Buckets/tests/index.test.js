@@ -14,13 +14,20 @@ const wrapper = (props = {}, enzyme = shallow) => enzyme(
 describe('<Buckets />', () => {
   const minProps = {
     children: {},
-    categories: fromJS({}),
-    getCategories: () => {},
-    dispatch: () => {},
-    changeRoute: () => {},
+    productCategories: fromJS({}),
+    mobileNumbers: fromJS([]),
+    receiptsUpdated: fromJS([]),
     routes: [{
       path: '/'
-    }]
+    }],
+    getCategories: () => {},
+    getUpdatedReceipts: () => {},
+    setUpdatedReceipts: () => {},
+    searchProduct: () => {},
+    setProductSearchList: () => {},
+    dispatch: () => {},
+    changeRoute: () => {}
+
   }
 
   it('render without exploding', () => {

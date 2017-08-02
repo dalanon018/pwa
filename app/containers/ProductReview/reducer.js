@@ -14,7 +14,9 @@ import {
 
   ORDER_SUBMIT,
   ORDER_SUCCESS,
-  ORDER_ERROR
+  ORDER_ERROR,
+
+  SET_ORDER_HANDLER_DEFAULT
 } from './constants'
 
 const initialState = fromJS({
@@ -55,6 +57,11 @@ function productReviewReducer (state = initialState, action) {
         .set('submissionError', fromJS(action.payload))
         .set('submissionSuccess', fromJS({}))
         .set('submitting', false)
+
+    case SET_ORDER_HANDLER_DEFAULT:
+      return state
+        .set('submissionSuccess', fromJS({}))
+        .set('submissionError', fromJS({}))
 
     default:
       return state

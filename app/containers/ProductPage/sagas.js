@@ -108,7 +108,6 @@ export function * updateMobileNumbers (args) {
   mobileRegistrations = mobileRegistrations.concat(payload)
 
   yield call(setItem, MOBILE_NUMBERS_KEY, mobileRegistrations)
-
   yield put(setMobileNumbersAction(mobileRegistrations))
 }
 

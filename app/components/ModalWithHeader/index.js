@@ -4,12 +4,12 @@
 *
 */
 
-import React from 'react'
+import React, { PropTypes } from 'react'
 // import styled from 'styled-components';
 
+import { toUpper } from 'ramda'
 import { FormattedMessage } from 'react-intl'
 import messages from './messages'
-import { fromJS } from 'immutable' // temporary
 
 import { Modal, Image } from 'semantic-ui-react'
 
@@ -21,10 +21,10 @@ import RedBackground from 'images/modal-bg-red.png'
 
 import StoreIcon from 'images/icons/ready-icon.svg'
 import PaperBagIcon from 'images/icons/claimed-icon.svg'
-// import CashierIcon from 'images/icons/paid-icon.svg'
+import CashierIcon from 'images/icons/paid-icon.svg'
 import WarningIcon from 'images/icons/warning-icon.svg'
-import NoteIcon from 'images/icons/confirmation-icon.svg'
-// import StarIcon from 'images/icons/star-icon.svg'
+// import NoteIcon from 'images/icons/confirmation-icon.svg'
+import StarIcon from 'images/icons/star-icon.svg'
 
 import {
   STATUSES
@@ -37,30 +37,12 @@ import {
   ButtonWrapper
 } from './styles'
 
-const receipt = fromJS({
-  'trackingNumber': '344760497230963792',
-  'claimExpiry': '2017-08-13 00:17:08',
-  'currency': 'CASH',
-  'dateCreated': '2017-07-20 16:17:34',
-  'amount': '450.00',
-  'quantity': '1',
-  'mobileNumber': '09052720567',
-  'status': 'RETURNED',
-  'cliqqCode': '0001',
-  'imageUrl': 'http://ic1.maxabout.us/mobiles//G/2014/8/gionee-ctrl-v4s-front-rear-view.jpg',
-  'brandLogo': 'http://ic1.maxabout.us/mobiles//G/2014/8/gionee-ctrl-v4s-front-rear-view.jpg',
-  'name': 'All Day Backpack | (wine)'
-})
-
 const ComponentDetail = components => component => key =>
  key in components ? components[key] : component
 
 const ModalImages = ({ status }) => {
   return ComponentDetail({
-    RESERVED: {
-      banner: OrangeBackground,
-      icon: NoteIcon
-    },
+    RESERVED: null,
     UNPAID: {
       banner: RedBackground,
       icon: WarningIcon,
@@ -68,7 +50,11 @@ const ModalImages = ({ status }) => {
     },
     CONFIRMED: {
       banner: OrangeBackground,
-      icon: StoreIcon
+      icon: CashierIcon
+    },
+    INTRANSIT: {
+      banner: OrangeBackground,
+      icon: StarIcon
     },
     DELIVERED: {
       banner: OrangeBackground,
@@ -82,25 +68,21 @@ const ModalImages = ({ status }) => {
       banner: RedBackground,
       icon: WarningIcon,
       iconBg: '#EB1E25'
-    },
-    INTRANSIT: {
-      banner: RedBackground,
-      icon: WarningIcon,
-      iconBg: '#EB1E25'
     }
   })(null)(status)
 }
 
 const ModalTitle = ({ status, receipt }) => {
   return ComponentDetail({
-    RESERVED: (
-      <FormattedMessage {...messages.reservedTitle} />
-    ),
+    RESERVED: null,
     UNPAID: (
       <FormattedMessage {...messages.unpaidTitle} />
     ),
     CONFIRMED: (
       <FormattedMessage {...messages.confirmedTitle} />
+    ),
+    INTRANSIT: (
+      <FormattedMessage {...messages.intransitTitle} />
     ),
     DELIVERED: (
       <FormattedMessage {...messages.deliveredTitle} />
@@ -116,12 +98,7 @@ const ModalTitle = ({ status, receipt }) => {
 
 const ModalDescription = ({ status, receipt }) => {
   return ComponentDetail({
-    RESERVED: (
-      <FormattedMessage
-        id='confirmedDescription'
-        defaultMessage={`Are you happy with these options? You will not be able to edit once you proceed. For Cash on Delivery, please pay upon delivery of item within 24 hours.`}
-        values={{name: receipt.get('status')}} />
-    ),
+    RESERVED: null,
     UNPAID: (
       <FormattedMessage
         id='unclaimedDescription'
@@ -131,8 +108,14 @@ const ModalDescription = ({ status, receipt }) => {
     CONFIRMED: (
       <FormattedMessage
         id='confirmedDescription'
-        defaultMessage={`Are you happy with these options? You will not be able to edit once you proceed. For Cash on Delivery, please pay upon delivery of item within 24 hours.`}
-        values={{name: receipt.get('status')}} />
+        defaultMessage={`Your payment for {name}, is already processed!`}
+        values={{name: <b>{receipt.get('name')}</b>}} />
+    ),
+    INTRANSIT: (
+      <FormattedMessage
+        id='intransitDescription'
+        defaultMessage={`Your item {name}, is on it's way to Store!`}
+        values={{name: <b>{receipt.get('name')}</b>}} />
     ),
     DELIVERED: (
       <FormattedMessage
@@ -155,72 +138,110 @@ const ModalDescription = ({ status, receipt }) => {
   })(null)(status)
 }
 
-const ModalButtons = ({ status }) => {
+const ModalButtons = ({ status, goToHome, goToReceipts }) => {
   return ComponentDetail({
     RESERVED: {
       primary: 'THANKS! I\'M ON MY WAY!',
-      secondary: 'HOW MUCH POINTS CAN I EARN?'
+      secondary: 'HOW MUCH POINTS CAN I EARN?',
+      onClick: goToHome
     },
     UNPAID: {
-      primary: 'ORDER AGAIN',
-      secondary: 'NO THANKS, CONTINUE SHOPPING'
+      primary: 'GOT IT!',
+      secondary: 'BACK TO HOME',
+      onClick: goToHome
     },
     CONFIRMED: {
-      primary: 'I\'M HAPPY, LET\'S PROCEED!',
-      secondary: 'BACK TO CHECKOUT PAGE'
-    },
-    DELIVERED: {
       primary: 'AWESOME! THANKS',
-      secondary: 'TELL ME MORE ABOUT CLIQQ POINTS'
-    },
-    CLAIMED: {
-      primary: 'AWESOME! THANKS',
-      secondary: 'TELL ME MORE ABOUT CLIQQ POINTS'
-    },
-    UNCLAIMED: {
-      primary: 'ORDER AGAIN',
-      secondary: 'NO THANKS, CONTINUE SHOPPING'
+      secondary: 'TRACK YOUR ORDER',
+      onClick: goToReceipts
     },
     INTRANSIT: {
       primary: 'COOL! I\'M EXCITED!',
-      secondary: 'TELL ME MORE ABOUT CLIQQ POINTS'
+      secondary: 'TRACK YOUR ORDER',
+      onClick: goToReceipts
+    },
+    DELIVERED: {
+      primary: 'AWESOME! THANKS',
+      secondary: 'TELL ME MORE ABOUT CLIQQ POINTS',
+      onClick: goToHome
+    },
+    CLAIMED: {
+      primary: 'AWESOME! THANKS',
+      secondary: 'TELL ME MORE ABOUT CLIQQ POINTS',
+      onClick: goToHome
+    },
+    UNCLAIMED: {
+      primary: 'GOT IT!',
+      secondary: 'BACK TO HOME',
+      onClick: goToHome
     }
   })(null)(status)
 }
 
-function ModalWithHeader () {
-  return (
-    <Modal
-      open
-      size='small'
-    >
-      <BannerHeader
-        background={ModalImages({ status: STATUSES[receipt.get('status')] }).banner}
-        iconBg={ModalImages({ status: STATUSES[receipt.get('status')] }).iconBg} >
-        <span>
-          <Image src={ModalImages({ status: STATUSES[receipt.get('status')] }).icon} />
-        </span>
-      </BannerHeader>
-      <Modal.Content>
-        <TextWrapper>
-          <TitleHead>
-            <ModalTitle {...{ status: STATUSES[receipt.get('status')], receipt }} />
-          </TitleHead>
-          <p><ModalDescription {...{ status: STATUSES[receipt.get('status')], receipt }} /></p>
-        </TextWrapper>
-        <ButtonWrapper>
-          <Button primary fluid onClick={() => {}}>
-            { ModalButtons({ status: STATUSES[receipt.get('status')] }).primary }
-          </Button>
-          <TextButton text={ModalButtons({ status: STATUSES[receipt.get('status')] }).secondary} close={() => {}} />
-        </ButtonWrapper>
-      </Modal.Content>
-    </Modal>
-  )
-}
+class ModalWithHeader extends React.PureComponent {
+  static propTypes = {
+    receipt: PropTypes.object.isRequired,
+    receipts: PropTypes.object.isRequired,
+    setUpdatedReceipts: PropTypes.func.isRequired,
+    goToHome: PropTypes.func.isRequired,
+    goToReceipts: PropTypes.func.isRequired
+  }
 
-ModalWithHeader.propTypes = {
+  constructor () {
+    super()
 
+    this._closeModal = this._closeModal.bind(this)
+    this._fnFactory = this._fnFactory.bind(this)
+  }
+
+  _closeModal () {
+    const { receipt, receipts, setUpdatedReceipts } = this.props
+    // we have to update our recieptUpdated state to remove what we already showed.
+    const receiptsUpdated = receipts.filter((rec) => rec !== receipt)
+
+    setUpdatedReceipts(receiptsUpdated)
+  }
+
+  _fnFactory (cbFn) {
+    this._closeModal()
+    cbFn()
+  }
+
+  render () {
+    const { receipt, goToHome, goToReceipts } = this.props
+    const currentStatus = STATUSES[toUpper(receipt.get('status'))] || ''
+    const { primary, secondary, onClick } = ModalButtons({ status: currentStatus, goToHome, goToReceipts }) || {}
+
+    return (
+      <Modal
+        defaultOpen
+        size='small'
+        closeOnDimmerClick={false}
+      >
+        <BannerHeader
+          background={ModalImages({ status: currentStatus }).banner}
+          iconBg={ModalImages({ status: currentStatus }).iconBg} >
+          <span>
+            <Image src={ModalImages({ status: currentStatus }).icon} />
+          </span>
+        </BannerHeader>
+        <Modal.Content>
+          <TextWrapper>
+            <TitleHead>
+              <ModalTitle {...{ status: currentStatus, receipt }} />
+            </TitleHead>
+            <p><ModalDescription {...{ status: currentStatus, receipt }} /></p>
+          </TextWrapper>
+          <ButtonWrapper>
+            <Button primary fluid onClick={this._closeModal}>
+              { primary }
+            </Button>
+            <TextButton text={secondary} close={() => this._fnFactory(onClick)} />
+          </ButtonWrapper>
+        </Modal.Content>
+      </Modal>
+    )
+  }
 }
 
 export default ModalWithHeader
