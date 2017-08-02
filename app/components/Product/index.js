@@ -8,9 +8,13 @@ import React, { PropTypes } from 'react'
 
 import { isEmpty } from 'lodash'
 import { FormattedMessage } from 'react-intl'
+import CopyToClipboard from 'react-copy-to-clipboard'
+import { Image, Icon, Popup } from 'semantic-ui-react'
+
 import {
-  Image
-} from 'semantic-ui-react'
+  ShareButtons,
+  generateShareIcon
+} from 'react-share'
 
 import Test0001 from 'images/test-images/BACKPACK-TICKET.png'
 import CliqqLogo from 'images/icons/cliqq.png'
@@ -36,6 +40,7 @@ import {
   ProductPriceWrapper,
   ProductPriceTitle,
   ProductPrice,
+  SocialContainer,
   ProductPriceStrike,
   ShareItemWrapper,
   ShareIcon,
@@ -43,13 +48,25 @@ import {
   ProductDetails,
   ShippingDetails,
   DetailsTitle,
+  SocialButtonWrapper,
   DetailsDescription,
   ButtonContainer
 } from './styled'
 
-const Product = ({ product, loading, popup }) => {
+const Product = ({
+  product,
+  loading,
+  popup,
+  toggle,
+  toggleClick,
+  copied }) => {
   const cliqqCode = product.get('cliqqCode') && product.get('cliqqCode').join(', ')
-
+  const FacebookIcon = generateShareIcon('facebook')
+  const TwitterIcon = generateShareIcon('twitter')
+  const {
+    FacebookShareButton,
+    TwitterShareButton
+  } = ShareButtons
   return (
     <ProductWrapper>
       <ImageBanner>
@@ -80,9 +97,43 @@ const Product = ({ product, loading, popup }) => {
           </ProductPriceWrapper>
         </LoadingStateInfo>
       </ProductMainContent>
-      <ShareItemWrapper>
-        <ShareIcon src={ShareIconImage} /> SHARE ITEM
-      </ShareItemWrapper>
+
+      <SocialContainer>
+        <ShareItemWrapper onClick={toggleClick}>
+          <ShareIcon src={ShareIconImage} /> SHARE ITEM
+        </ShareItemWrapper>
+
+        <SocialButtonWrapper visibility={toggle}>
+
+          <FacebookShareButton
+            title={product.get('title')}
+            description={product.get('details')}
+            url={window.location.href}
+            picture={product.get('image')} >
+            <FacebookIcon size={40} round />
+          </FacebookShareButton>
+
+          <TwitterShareButton
+            title={product.get('title')}
+            // hashtags={['asd', 'qwe']}
+            via='711philippines'
+            url={window.location.href} >
+            <TwitterIcon size={40} round />
+          </TwitterShareButton>
+
+          <CopyToClipboard text={window.location.href}>
+            <span onCopy={copied}>
+              <Popup
+                trigger={<Icon name='linkify' className='copy-to-clipboard' />}
+                on='click'
+                hideOnScroll
+                content='Product URL copied' />
+            </span>
+          </CopyToClipboard>
+
+        </SocialButtonWrapper>
+      </SocialContainer>
+
       <DetailsWrapper>
         <ProductDetails>
           <DetailsTitle> <FormattedMessage {...messages.productDetailsTitle} /> </DetailsTitle>

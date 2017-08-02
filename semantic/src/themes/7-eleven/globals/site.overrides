@@ -56,6 +56,10 @@ body {
   :-moz-placeholder { /* Firefox 18- */
     color: @lightGrey;
   }
+
+  :focus, :hover, :active {
+    outline: none !important;
+  }
 }
 
 #app,
@@ -93,12 +97,17 @@ input.input-field {
   height: initial;
 }
 
-text {
+.text {
   &__align {
     &--center {
       text-align: center;
     }
   }
+}
+
+.popup {
+  height: inherit !important;
+  color: #AEAEAE !important;
 }
 
 /*******************************

@@ -56,7 +56,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   state = {
     modalToggle: false,
-    prevMobileNumber: null
+    prevMobileNumber: null,
+    socialToggle: false,
+    copied: false
   }
 
   /**
@@ -73,6 +75,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this._handleSuccess = this._handleSuccess.bind(this)
     this._handleError = this._handleError.bind(this)
     this._handleMobileRegistered = this._handleMobileRegistered.bind(this)
+    this._handleSocialToggle = this._handleSocialToggle.bind(this)
+    this._handleCopy = this._handleCopy.bind(this)
   }
 
   _handleSubmit ({ value }) {
@@ -120,6 +124,18 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     })
   }
 
+  _handleSocialToggle () {
+    this.setState({
+      socialToggle: !this.state.socialToggle
+    })
+  }
+
+  _handleCopy () {
+    this.setState({
+      copied: true
+    })
+  }
+
   componentWillUnmount () {
     this.props.setHandlersDefault()
   }
@@ -155,7 +171,13 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             { name: 'description', content: 'Description of ProductPage' }
           ]}
         />
-        <Product loading={loading} product={product} popup={this._handleToggle} />
+        <Product
+          loading={loading}
+          product={product}
+          popup={this._handleToggle}
+          copied={this._handleCopy}
+          toggle={this.state.socialToggle}
+          toggleClick={this._handleSocialToggle} />
         <PopupSlide
           submit={this._handleSubmit}
           product={product}

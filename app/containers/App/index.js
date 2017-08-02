@@ -27,7 +27,10 @@ export function App (props) {
         titleTemplate='%s - 7-Eleven CliQQ'
         defaultTitle='7-Eleven CliQQ'
         meta={[
-          { name: 'description', content: 'A 7-Eleven CliQQ application' }
+          { name: 'description', content: 'A 7-Eleven CliQQ application' },
+          { property: 'og:title', content: 'title' },
+          { property: 'og:description', content: 'description' },
+          { property: 'og:image', content: 'image' }
         ]}
       />
       {React.Children.toArray(props.children)}
