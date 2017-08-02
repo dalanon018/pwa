@@ -81,6 +81,7 @@ export const ShareItemWrapper = styled(AnimateDiv)`
   letter-spacing: 1px;
   padding: 17px 0;
   text-transform: uppercase;
+  width: 100%;
 `
 
 export const ShareIcon = styled.img`
@@ -119,4 +120,39 @@ export const ButtonContainer = styled(AnimateDiv)`
   position: fixed;
   width: 100%;
   padding: 10px;
+`
+
+export const SocialButtonWrapper = styled.div`
+  align-items: center;
+  border-bottom: 1px solid #F0F0F0;
+  display: flex;
+  height: ${props => props.visibility ? '60px' : '0'};
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  .SocialMediaShareButton {
+    margin: 0 10px;
+  }
+
+  .copy-to-clipboard {
+    align-items: center;
+    background-color: #F6A22D;
+    border-radius: 50px;
+    color: #FFFFFF;
+    display: flex;
+    font-size: 18px;
+    height: 40px;
+    justify-content: center;
+    margin: 0 10px;
+    width: 40px;
+
+    &:before {
+      margin-top: 3px;
+    }
+  }
+`
+
+export const SocialContainer = styled.div`
+  width: 100%;
 `
