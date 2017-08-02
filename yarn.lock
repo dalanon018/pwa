@@ -1115,16 +1115,9 @@ babel-register@^6.22.0, babel-register@^6.24.1:
     mkdirp "^0.5.1"
     source-map-support "^0.4.2"
 
-babel-runtime@^6.18.0, babel-runtime@^6.2.0, babel-runtime@^6.22.0:
+babel-runtime@^6.18.0, babel-runtime@^6.2.0, babel-runtime@^6.22.0, babel-runtime@^6.6.1:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.23.0.tgz#0a9489f144de70efb3ce4300accdb329e2fc543b"
-  dependencies:
-    core-js "^2.4.0"
-    regenerator-runtime "^0.10.0"
-
-babel-runtime@^6.6.1:
-  version "6.25.0"
-  resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.25.0.tgz#33b98eaa5d482bb01a8d1aa6b437ad2b01aec41c"
   dependencies:
     core-js "^2.4.0"
     regenerator-runtime "^0.10.0"
@@ -5246,7 +5239,7 @@ js-yaml@^3.4.3, js-yaml@^3.7.0:
     argparse "^1.0.7"
     esprima "^3.1.1"
 
-jsbarcode@^3.8.0:
+jsbarcode@3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/jsbarcode/-/jsbarcode-3.8.0.tgz#a290379a7449fb927f26d26b319c24bf2debc8fc"
 
@@ -7312,7 +7305,7 @@ railroad-diagrams@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/railroad-diagrams/-/railroad-diagrams-1.0.0.tgz#eb7e6267548ddedfb899c1b90e57374559cddb7e"
 
-ramda@^0.24.1:
+ramda@0.24.1:
   version "0.24.1"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.24.1.tgz#c3b7755197f35b8dc3502228262c4c91ddb6b857"
 
@@ -7354,7 +7347,7 @@ react-addons-test-utils@15.4.2:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
-react-copy-to-clipboard@^5.0.0:
+react-copy-to-clipboard@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-copy-to-clipboard/-/react-copy-to-clipboard-5.0.0.tgz#23ccdd7c4d9ec2cc763839e2a55b1220aeb4f33d"
   dependencies:
@@ -7430,7 +7423,7 @@ react-router@3.0.0:
     loose-envify "^1.2.0"
     warning "^3.0.0"
 
-react-share@^1.15.0:
+react-share@1.15.0:
   version "1.15.0"
   resolved "https://registry.yarnpkg.com/react-share/-/react-share-1.15.0.tgz#2b2c576dc90a3ede49ec0adedc311a19df4acaba"
   dependencies:
@@ -8057,7 +8050,6 @@ semantic-ui@2.2.10:
     gulp-watch "^4.3.11"
     jquery "^3.1.1"
     map-stream "^0.1.0"
-    merge-stream "^1.0.0"
     mkdirp "^0.5.1"
     require-dot-file "^0.4.0"
     run-sequence "^1.2.2"
