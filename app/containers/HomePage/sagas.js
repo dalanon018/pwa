@@ -40,22 +40,6 @@ export function * getProduct (data) {
   // headers.append('Content-Type', 'application/json')
   // headers.append('Accept', 'application/json')
 
-  // // const url = `https://www.reddit.com/search.json?q=${data.payload.passData}&sort=new`
-  // const url = `https://jsonplaceholder.typicode.com/posts`
-  // const req = yield call(request, url, {
-  //   method: 'GET',
-  //   headers
-  // })
-
-  // if (!req.err) {
-  //   yield put(setFeaturedProductsAction(req))
-  //   resolve()
-  // } else {
-  //   const err = yield req.err.body
-  //   const { status } = err
-  //   reject(status)
-  // }
-
   const req = yield Promise.resolve(FakeProducts)
   yield sleep(1500)
   if (!req.err) {

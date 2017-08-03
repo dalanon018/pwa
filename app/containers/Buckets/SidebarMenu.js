@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 import {
@@ -91,31 +91,59 @@ const SideBarChildrenContainer = ({ categories }) => (
   </UlWrapper>
 )
 
-const SidebarMenu = ({ categories, toggleSidebar, toggleAction }) => (
-  <SidebarContainer toggle={toggleSidebar} onClick={toggleAction}>
-    <SidebarWrapper>
-      <MenuNavWrapper vertical borderless>
-        <Menu.Item as={Label} name='home' >
-          <SidebarItem image={HomeImage}>
-            <FormattedMessage {...messages.menuHome} />
-          </SidebarItem>
-        </Menu.Item>
-        <Menu.Item name='barcode'>
-          <SidebarItem image={BarcodeImage}>
-            <FormattedMessage {...messages.menuBarcode} />
-          </SidebarItem>
-        </Menu.Item>
-        <Menu.Item name='categories'>
-          <SidebarItem image={CategoriesImage}>
-            <FormattedMessage {...messages.menuCategories} />
-          </SidebarItem>
-          {
-            <SideBarChildrenContainer categories={categories} />
-          }
-        </Menu.Item>
-      </MenuNavWrapper>
-    </SidebarWrapper>
-  </SidebarContainer>
-)
+class SidebarMenu extends React.PureComponent {
+  static propTypes = {
+    categories: PropTypes.object.isRequired,
+    toggleSidebar: PropTypes.bool.isRequired,
+    changeRoute: PropTypes.func.isRequired,
+    toggleAction: PropTypes.func.isRequired
+  }
+
+  constructor () {
+    super()
+
+    this._goHome = this._goHome.bind(this)
+    this._goReceipts = this._goReceipts.bind(this)
+  }
+
+  _goHome () {
+    this.props.changeRoute('/')
+  }
+
+  _goReceipts () {
+    this.props.changeRoute('purchases')
+  }
+
+  render () {
+    const { categories, toggleSidebar, toggleAction } = this.props
+
+    return (
+      <SidebarContainer toggle={toggleSidebar} onClick={toggleAction}>
+        <SidebarWrapper>
+          <MenuNavWrapper vertical borderless>
+            <Menu.Item as={Label} name='home' onClick={this._goHome}>
+              <SidebarItem image={HomeImage}>
+                <FormattedMessage {...messages.menuHome} />
+              </SidebarItem>
+            </Menu.Item>
+            <Menu.Item name='barcode' onClick={this._goReceipts}>
+              <SidebarItem image={BarcodeImage}>
+                <FormattedMessage {...messages.menuBarcode} />
+              </SidebarItem>
+            </Menu.Item>
+            <Menu.Item name='categories'>
+              <SidebarItem image={CategoriesImage}>
+                <FormattedMessage {...messages.menuCategories} />
+              </SidebarItem>
+              {
+                <SideBarChildrenContainer categories={categories} />
+              }
+            </Menu.Item>
+          </MenuNavWrapper>
+        </SidebarWrapper>
+      </SidebarContainer>
+    )
+  }
+}
 
 export default SidebarMenu

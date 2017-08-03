@@ -14,10 +14,13 @@ export const LOAD_REPOS_SUCCESS = 'boilerplate/App/LOAD_REPOS_SUCCESS'
 export const LOAD_REPOS_ERROR = 'boilerplate/App/LOAD_REPOS_ERROR'
 export const DEFAULT_LOCALE = 'en'
 
+export const API_BASE_URL = process.env.API_BASE_URL
+
 export const LAST_VIEWS_KEY = 'boilerplate/App/LAST_VIEWS'
 export const CURRENT_PRODUCT_KEY = 'boilerplate/App/CURRENT_PRODUCT'
 export const MOBILE_NUMBERS_KEY = 'boilerplate/App/MOBILE_NUMBERS'
 export const ORDERED_LIST_KEY = 'boilerplate/App/ORDERED_LIST'
 export const PURCHASED_PRODUCTS_KEY = 'boilerplate/App/PURCHASED_PRODUCTS'
+export const ACCESS_TOKEN_KEY = 'boilerplate/App/ACCESS_TOKEN'
 
 console.log(process.env.APP_BASE_URL)

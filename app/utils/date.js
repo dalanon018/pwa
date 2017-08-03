@@ -8,6 +8,8 @@ import moment from 'moment'
 export const DateFormater = (date = String, format = 'MMM DD, YYYY') =>
   moment(date, moment.ISO_8601).format(format)
 
-export const CountdownParser = (date) => {
-  return moment(date, moment.ISO_8601).unix()
-}
+export const CountdownParser = (date) =>
+  moment(date, moment.ISO_8601).unix()
+
+export const DateDifferece = (now = String, then = String) =>
+   moment(then, 'YYYY-MM-DD HH:mm:ss').diff(moment(now, 'YYYY-MM-DD HH:mm:ss'))

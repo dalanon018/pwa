@@ -12,7 +12,7 @@ export default defineMessages({
   },
   menuBarcode: {
     id: 'app.containers.Bucket.menuBarcode',
-    defaultMessage: 'BARCODE HISTORY'
+    defaultMessage: 'RECEIPTS'
   },
   menuCategories: {
     id: 'app.containers.Bucket.menuCategories',
