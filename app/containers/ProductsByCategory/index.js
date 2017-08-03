@@ -20,10 +20,24 @@ import ProductView from 'components/ProductView'
 import Footer from 'components/Footer'
 import Promo from 'components/Promo'
 
-import { getProductCategoriesAction } from 'containers/Buckets/actions'
-import { selectProductCategories } from 'containers/Buckets/selectors'
-import { getProductsByCategoryAction } from './actions'
-import { selectProductsByCategory, selectLoading } from './selectors'
+import {
+  getProductCategoriesAction
+} from 'containers/Buckets/actions'
+
+import {
+  selectProductCategories
+} from 'containers/Buckets/selectors'
+
+import {
+  getProductsByCategoryAction,
+  getProductsViewedAction
+} from './actions'
+
+import {
+  selectProductsByCategory,
+  selectLoading,
+  selectProductsViewed
+} from './selectors'
 
 const ItemCount = styled.p`
   font-family: 'helveticalight';
@@ -37,25 +51,22 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     changeRoute: PropTypes.func.isRequired,
     getProductsByCategory: PropTypes.func.isRequired,
     getProductCategories: PropTypes.func.isRequired,
+    getProductsViewed: PropTypes.func.isRequired,
     loader: PropTypes.bool.isRequired,
-    productsByCategory: PropTypes.oneOfType([
-      PropTypes.array,
-      PropTypes.object
-    ]).isRequired,
-    categories: PropTypes.oneOfType([
-      PropTypes.array,
-      PropTypes.object
-    ]).isRequired
+    productsByCategory: PropTypes.object.isRequired,
+    productsViewed: PropTypes.object.isRequired,
+    categories: PropTypes.object.isRequired
   }
 
   componentDidMount () {
-    this.props.getProductCategories()
-    this.props.getProductsByCategory()
+    const { getProductsViewed, getProductCategories, getProductsByCategory } = this.props
+    getProductCategories()
+    getProductsByCategory()
+    getProductsViewed()
   }
 
   render () {
-    const { productsByCategory, categories, loader, changeRoute } = this.props
-    console.log('productsByCategory', productsByCategory)
+    const { productsByCategory, categories, productsViewed, loader, changeRoute } = this.props
     return (
       <div>
         <NavCategories changeRoute={changeRoute} categories={categories} />
@@ -68,7 +79,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
             <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} />
             <Promo loader={loader} />
             <H1 center className='margin__top--none'><FormattedMessage {...messages.viewed} /></H1>
-            <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} />
+            <ProductView changeRoute={changeRoute} loader={loader} products={productsViewed} />
           </Grid>
         </div>
         <Footer />
@@ -77,12 +88,9 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 }
 
-ProductsByCategory.propTypes = {
-  dispatch: PropTypes.func.isRequired
-}
-
 const mapStateToProps = createStructuredSelector({
   productsByCategory: selectProductsByCategory(),
+  productsViewed: selectProductsViewed(),
   categories: selectProductCategories(),
   loader: selectLoading()
 })
@@ -91,6 +99,7 @@ function mapDispatchToProps (dispatch) {
   return {
     getProductCategories: payload => dispatch(getProductCategoriesAction(payload)),
     getProductsByCategory: payload => dispatch(getProductsByCategoryAction(payload)),
+    getProductsViewed: () => dispatch(getProductsViewedAction()),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
   }

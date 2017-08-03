@@ -9,8 +9,10 @@ describe('<ProductsByCategory />', () => {
     changeRoute: () => {},
     getProductsByCategory: () => {},
     getProductCategories: () => {},
+    getProductsViewed: () => {},
     loader: false,
     productsByCategory: fromJS([]),
+    productsViewed: fromJS([]),
     categories: fromJS([])
   }
 
