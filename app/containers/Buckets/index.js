@@ -207,7 +207,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   render () {
-    const { children, productCategories } = this.props
+    const { children, productCategories, changeRoute } = this.props
     const { toggleSidebar } = this.state
     return (
       <Wrapper>
@@ -216,6 +216,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
           { children }
         </MainContent>
         <SidebarMenu
+          changeRoute={changeRoute}
           categories={productCategories}
           toggleSidebar={toggleSidebar}
           toggleAction={this._handleCloseSidebarClickPusher}
