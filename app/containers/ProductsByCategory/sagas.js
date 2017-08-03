@@ -43,7 +43,6 @@ function * getLastViewedItems () {
 
 export function * getProduct () {
   const req = yield Promise.resolve(FakeProducts)
-  console.log(req)
   yield sleep(1500)
   if (!req.err) {
     const transform = yield req.map(transformEachEntity)

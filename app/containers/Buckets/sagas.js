@@ -1,11 +1,12 @@
-
+import moment from 'moment'
 import { takeLatest } from 'redux-saga'
 import { find, uniq, isEmpty } from 'lodash'
 import { compose, filter, contains, toPairs, map, head } from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { getItem, setItem } from 'utils/localStorage'
-// import request from 'utils/request'
+import { DateDifferece } from 'utils/date'
+import request from 'utils/request'
 
 import FakeCategories from 'fixtures/categories.json'
 
@@ -23,27 +24,62 @@ import {
 } from './actions'
 
 import {
+  API_BASE_URL,
+  ACCESS_TOKEN_KEY,
   MOBILE_NUMBERS_KEY,
   ORDERED_LIST_KEY
 } from 'containers/App/constants'
 
-export function * getCategories () {
-  // const headers = new Headers()
-  // const currentUser = yield select(selectCurrentUser())
-  // headers.append('Content-Type', 'application/json')
-  // headers.append('Accept', 'application/json')
-  // headers.append('Authorization', `JWT ${currentUser.token}`)
+export function * requestAccessToken () {
+  const requestURL = `${API_BASE_URL}/authorize`
+  const req = yield call(request, requestURL, {
+    method: 'POST'
+  })
 
-  // const requestURL = `${API_BASE_URL}/data/sectors`
-  // const req = yield call(request, requestURL, {
-  //   method: 'GET',
-  //   headers
-  // })
-
-  // We will emulate data
-  const req = yield Promise.resolve(FakeCategories)
   if (!req.err) {
+    // the normal expiration is 1 hour but we will only set it to 30 mins so we can be sure that we will not encounter token expiry
+    const expiry = moment().add(30, 'minutes').format('YYYY-MM-DD HH:mm:ss')
+    const token = Object.assign({}, req, { expiry })
+
+    yield call(setItem, ACCESS_TOKEN_KEY, token)
+
+    return token
+  } else {
+    throw new Error(req.err)
+  }
+}
+
+/**
+ * main function for getting us the valid token
+ */
+export function * getAccessToken () {
+  // first we will check if we have token set up
+  const token = yield call(getItem, ACCESS_TOKEN_KEY)
+  // if we have token then we simply need to check if token is still valid
+  if (!isEmpty(token) && token) {
+    const { expiry } = token
+    if (DateDifferece(moment(), expiry) <= 0) {
+      return yield requestAccessToken()
+    }
+
+    return token
+  }
+
+  return yield requestAccessToken()
+}
+
+export function * getCategories () {
+  try {
+    // const token = yield getAccessToken()
+    const req = yield Promise.resolve(FakeCategories)
+
+    if (req.err) {
+      throw new Error(req.err)
+    }
+
     yield put(setProductCategoriesAction(req))
+  } catch (e) {
+    console.log(e)
   }
 }
 
