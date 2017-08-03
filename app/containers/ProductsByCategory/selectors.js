@@ -23,6 +23,11 @@ const selectProductsByCategory = () => createSelector(
   (substate) => substate.get('productsByCategory')
 )
 
+const selectProductsViewed = () => createSelector(
+  selectProductsByCategoryDomain(),
+  (substate) => substate.get('productsViewed')
+)
+
 const selectLoading = () => createSelector(
   selectProductsByCategoryDomain(),
   subState => subState.get('loading')
@@ -32,5 +37,6 @@ export default makeSelectProductsByCategory
 export {
   selectProductsByCategoryDomain,
   selectProductsByCategory,
+  selectProductsViewed,
   selectLoading
 }

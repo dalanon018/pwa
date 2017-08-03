@@ -7,6 +7,7 @@ describe('productsByCategoryReducer', () => {
   beforeEach(() => {
     state = fromJS({
       productsByCategory: [],
+      productsViewed: [],
       loading: false
     })
   })

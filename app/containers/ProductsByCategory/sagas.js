@@ -9,15 +9,23 @@ import { LOCATION_CHANGE } from 'react-router-redux'
 // import request from 'utils/request'
 import { takeLatest } from 'redux-saga'
 
-import {
-  GET_PRODUCTS_CATEGORY
-} from './constants'
-import {
-  setProductsByCategoryAction
-} from './actions'
+import FakeProducts from 'fixtures/accessories.json'
 
 import { transformProduct } from 'utils/transforms'
-import FakeProducts from 'fixtures/accessories.json'
+import { getItem } from 'utils/localStorage'
+
+import {
+  GET_PRODUCTS_CATEGORY,
+  GET_PRODUCTS_VIEWED
+} from './constants'
+import {
+  setProductsByCategoryAction,
+  setProductsViewedAction
+} from './actions'
+
+import {
+  LAST_VIEWS_KEY
+} from 'containers/App/constants'
 
 function * sleep (ms) {
   yield new Promise(resolve => setTimeout(resolve, ms))
@@ -28,8 +36,9 @@ function * transformEachEntity (entity) {
   return response
 }
 
-export function * initializeAppGlobals () {
-  // code block
+function * getLastViewedItems () {
+  const products = yield call(getItem, LAST_VIEWS_KEY)
+  return products || []
 }
 
 export function * getProduct () {
@@ -43,22 +52,26 @@ export function * getProduct () {
   }
 }
 
-/**
- * Watches for Every change of locations from router
- * once this triggers we need to check all the items under `initializeAppGlobals`
- */
-export function * getLocationChangeWatcher () {
-  yield takeLatest(LOCATION_CHANGE, initializeAppGlobals)
+export function * getProductsViewed () {
+  const response = yield * getLastViewedItems()
+
+  yield put(setProductsViewedAction(response))
 }
 
 export function * getProductSaga () {
   yield * takeLatest(GET_PRODUCTS_CATEGORY, getProduct)
 }
 
+export function * getProductsViewedSaga () {
+  yield * takeLatest(GET_PRODUCTS_VIEWED, getProductsViewed)
+}
+
 // Individual exports for testing
 export function * productsCategorySagas () {
   const watcher = yield [
-    fork(getProductSaga)
+    fork(getProductSaga),
+
+    fork(getProductsViewedSaga)
   ]
   yield take(LOCATION_CHANGE)
   yield watcher.map(task => cancel(task))
