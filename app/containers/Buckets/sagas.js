@@ -1,6 +1,7 @@
 
 import { takeLatest } from 'redux-saga'
 import { find, uniq, isEmpty } from 'lodash'
+import { compose, filter, contains, toPairs, map, head } from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { getItem, setItem } from 'utils/localStorage'
@@ -11,7 +12,8 @@ import FakeCategories from 'fixtures/categories.json'
 import {
   GET_PRODUCT_CATEGORIES,
   GET_MOBILE_NUMBERS,
-  GET_RECEIPT_UPDATED
+  GET_RECEIPT_UPDATED,
+  STATUSES
 } from './constants'
 
 import {
@@ -61,9 +63,18 @@ export function * getUpdatedReceipts (payload) {
   if (snapshot) {
     // first we have to make our snapshot to keys and find the order by the key
     Object.keys(snapshot).map((trackingNumber) => {
-      const order = find(orders, { trackingNumber })
-      if (order.status !== snapshot[trackingNumber]) {
-        order.status = snapshot[trackingNumber]
+      const snapStatus = snapshot[trackingNumber]
+      const order = find(orders, { trackingNumber }) || {}
+      // we need to make sure that we will not include 'RESERVED'
+      const isReservedStatus = (status) => compose(
+        contains(status),
+        map(head),
+        filter(contains('RESERVED')),
+        toPairs
+      )(STATUSES)
+
+      if ((!isEmpty(order) && order.status !== snapStatus) && !isReservedStatus(snapStatus)) {
+        order.status = snapStatus
         updatedReceipts = updatedReceipts.concat(order)
 
         setItem(ORDERED_LIST_KEY, orders)
