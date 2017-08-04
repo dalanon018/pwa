@@ -15,7 +15,6 @@ const ListCollapseWrapper = styled.div`
 
     p {
       font-family: 'helveticalight';
-      
     }
     
     .collapse-content {
@@ -27,6 +26,7 @@ const ListCollapseWrapper = styled.div`
     color: #5B5B5B !important;
     font-family: 'helveticamedium' !important;
     font-size: 11px !important;
+    letter-spacing: 1px;
     text-transform: uppercase;
 
     .icon {
