@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
 import { FormattedMessage } from 'react-intl'
 import { push } from 'react-router-redux'
 
@@ -88,6 +89,10 @@ export class Footer extends React.PureComponent {
   }
 }
 
+const mapStateToProps = createStructuredSelector({
+
+})
+
 function mapDispatchToProps (dispatch) {
   return {
     changeRoute: (url) => dispatch(push(url)),
@@ -95,4 +100,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapDispatchToProps, mapDispatchToProps)(Footer)
+export default connect(mapStateToProps, mapDispatchToProps)(Footer)

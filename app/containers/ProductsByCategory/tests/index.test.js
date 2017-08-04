@@ -36,11 +36,4 @@ describe('<ProductsByCategory />', () => {
     )
     expect(renderedComponent.find('ProductView').length).toEqual(2)
   })
-
-  it('should render a Footer', () => {
-    const renderedComponent = shallow(
-      <ProductsByCategory {...minProps} />
-    )
-    expect(renderedComponent.find('Footer').length).toEqual(1)
-  })
 })
