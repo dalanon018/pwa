@@ -12,7 +12,7 @@ const Wrapper = styled.footer`
 
 const HelperLinks = styled.div`
   margin-bottom: 10px;
-  a {
+  span {
     color: #aeaeae;
     font-size: 11px;
   }

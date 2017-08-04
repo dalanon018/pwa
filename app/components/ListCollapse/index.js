@@ -5,11 +5,6 @@
 */
 
 import React from 'react'
-// import styled from 'styled-components';
-
-import { FormattedMessage } from 'react-intl'
-import messages from './messages'
-
 import { Grid, Accordion } from 'semantic-ui-react'
 
 import {
@@ -36,49 +31,34 @@ class ListCollapse extends React.PureComponent {
   render () {
     return (
       <Grid.Row>
-        <FormattedMessage {...messages.header} />
         <ListCollapseWrapper height={this.state.height} open={this.state.open}>
           <Accordion>
             <Accordion.Title onClick={this._handleClick}>
               <i className='icon' />
-              What is a dog?
+              Lorem ipsum dolor sit amet?
             </Accordion.Title>
             <Accordion.Content>
               <div className='collapse-content'>
-                <p>
-                  A dog is a type of domesticated animal. Known for its loyalty and faithfulness,
-                  {' '}it can be found as a welcome guest in many households across the world.
-                </p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam eos repudiandae inventore debitis iusto ea esse eligendi voluptatum distinctio assumenda quam aliquid, unde ullam odit tenetur cum, explicabo quisquam a!</p>
               </div>
             </Accordion.Content>
             <Accordion.Title onClick={this._handleClick}>
               <i className='icon' />
-              What kinds of dogs are there?
+              Lorem ipsum dolor sit amet?
             </Accordion.Title>
             <Accordion.Content>
               <div className='collapse-content'>
-                <p>
-                  There are many breeds of dogs. Each breed varies in size and temperament.
-                  {' '}Owners often select a breed of dog that they find to be compatible
-                  with their own lifestyle and desires from a companion.
-                </p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam eos repudiandae inventore debitis iusto ea esse eligendi voluptatum distinctio assumenda quam aliquid, unde ullam odit tenetur cum, explicabo quisquam a!</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, est. Veniam velit repellat, natus repellendus impedit rerum quas distinctio id voluptatem commodi. Ea, modi! Voluptas id enim, sint amet aperiam! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla necessitatibus a repudiandae ipsa pariatur, veritatis mollitia. Hic accusantium, nobis ab. Hic sunt ipsa odio aut consequatur praesentium, architecto nesciunt sit.</p>
               </div>
             </Accordion.Content>
             <Accordion.Title onClick={this._handleClick}>
               <i className='icon' />
-              How do you acquire a dog?
+              Lorem ipsum dolor sit amet?
             </Accordion.Title>
             <Accordion.Content>
               <div className='collapse-content'>
-                <p>
-                  Three common ways for a prospective owner to acquire a dog is from pet shops,
-                  {' '}private owners, or shelters.
-                </p>
-                <p> A pet shop may be the most convenient way to buy a dog.
-                  {' '}Buying a dog from a private owner allows you to assess the pedigree and
-                  {' '}upbringing of your dog before choosing to take it home. Lastly, finding your dog
-                  {' '}from a shelter, helps give a good home to a dog who may not find one so readily.
-                </p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime eum voluptate, rerum iste. Sapiente reprehenderit, odit ratione explicabo molestiae harum fugit reiciendis iste iusto, enim sequi temporibus delectus. Est, iste. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate ex error alias tenetur saepe, architecto, obcaecati modi similique corrupti dolorem accusantium maiores consequatur necessitatibus aliquid numquam iusto eveniet placeat ullam.</p>
               </div>
             </Accordion.Content>
           </Accordion>
@@ -86,7 +66,7 @@ class ListCollapse extends React.PureComponent {
       </Grid.Row>
     )
   }
-  }
+}
 
 ListCollapse.propTypes = {
 
