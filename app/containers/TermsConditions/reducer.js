@@ -6,15 +6,17 @@
 
 import { fromJS } from 'immutable'
 import {
-  DEFAULT_ACTION
+  SET_MARKDOWN
 } from './constants'
 
-const initialState = fromJS({})
+const initialState = fromJS({
+  markdown: ''
+})
 
 function termsConditionsReducer (state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state
+    case SET_MARKDOWN:
+      return state.set('markdown', action.payload)
     default:
       return state
   }

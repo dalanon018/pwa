@@ -250,6 +250,7 @@
     "reselect": "2.5.4",
     "sanitize.css": "4.1.0",
     "semantic-ui-react": "0.67.0",
+    "showdown": "^1.7.2",
     "styled-components": "1.4.3",
     "warning": "3.0.0",
     "whatwg-fetch": "2.0.2"

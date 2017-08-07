@@ -1,9 +1,23 @@
 
 import { fromJS } from 'immutable'
 import termsConditionsReducer from '../reducer'
+import { GET_MARKDOWN } from './../constants'
 
 describe('termsConditionsReducer', () => {
+  let state
+  beforeEach(() => {
+    state = fromJS({
+      markdown: ''
+    })
+  })
+
   it('returns the initial state', () => {
-    expect(termsConditionsReducer(undefined, {})).toEqual(fromJS({}))
+    const expectedResult = state
+    expect(termsConditionsReducer(undefined, {
+      type: GET_MARKDOWN,
+      payload: fromJS([
+        {test: 'passed'}
+      ])
+    })).toEqual(expectedResult)
   })
 })

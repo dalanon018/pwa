@@ -18,7 +18,13 @@ const makeSelectTermsConditions = () => createSelector(
   (substate) => substate.toJS()
 )
 
+const selectMarkdown = () => createSelector(
+  selectTermsConditionsDomain(),
+  (substate) => substate.get('markdown')
+)
+
 export default makeSelectTermsConditions
 export {
-  selectTermsConditionsDomain
+  selectTermsConditionsDomain,
+  selectMarkdown
 }
