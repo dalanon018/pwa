@@ -1,21 +1,17 @@
-/**
- * Testing our Product View component
- */
-
 import React from 'react'
-import { shallow } from 'enzyme'
 import { fromJS } from 'immutable'
+import { shallow } from 'enzyme'
 
-import Product from '../index'
+import ProductResults from '../index'
 
-const children = 'Test'
+const children = (<h1>Test</h1>)
 const wrapper = (props = {}, enzyme = shallow) => enzyme(
-  <Product {...props}>
+  <ProductResults {...props}>
     {children}
-  </Product>
+  </ProductResults>
 )
 
-describe('<Product />', () => {
+describe('<ProductResults />', () => {
   const minProps = {
     product: fromJS({
       'cliqqCode': ['00001', '11111', '06525'],
@@ -30,7 +26,7 @@ describe('<Product />', () => {
       'shipping': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla.',
       'barcode': '718037806839'
     }),
-    loading: false
+    changeRoute: () => {}
   }
 
   it('render without exploding', () => {

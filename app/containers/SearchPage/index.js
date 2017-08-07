@@ -5,14 +5,14 @@
  */
 
 import React, { PropTypes } from 'react'
+import styled from 'styled-components'
 import Helmet from 'react-helmet'
 
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
-import Product from 'components/Product'
-import PopupSlide from 'components/PopupSlide'
+import ProductResults from 'components/ProductResults'
 
 import {
   selectSearchProductLoading,
@@ -35,9 +35,13 @@ import {
   selectToggle
 } from 'containers/Buckets/selectors'
 
-/**
- * most of the function are copied from prodct page for now! since we will have to change this due to fuzzy search and stuff.
- */
+const SearchListWrapper = styled.div`
+  display: flex;
+  height: 94vh;
+  flex-direction: column;
+  padding: 20px 10px;
+`
+
 export class SearchPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     product: PropTypes.object.isRequired,
@@ -83,11 +87,15 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
   }
 
   _displayProduct () {
-    const { loading, product } = this.props
+    const { product, changeRoute } = this.props
 
     if (product.size > 0) {
-      return (
-        <Product loading={loading} product={product} popup={this._handleToggle} />
+      return product.map((result) =>
+        <ProductResults
+          key={result.get('cliqqCode').first()}
+          product={result}
+          changeRoute={changeRoute}
+        />
       )
     }
 
@@ -117,26 +125,17 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
   }
 
   render () {
-    const { product, toggle } = this.props
-    const { modalToggle } = this.state
     return (
-      <div>
+      <SearchListWrapper>
         <Helmet
           title='Search'
           meta={[
             { name: 'description', content: 'Description of SearchPage' }
           ]}
         />
+
         { this._displayProduct() }
-        <PopupSlide
-          submit={this._handleSubmit}
-          product={product}
-          modalClose={this._handleClose}
-          modalToggle={modalToggle}
-          toggle={toggle}
-          onClose={this._handleToggle}
-        />
-      </div>
+      </SearchListWrapper>
     )
   }
 }
