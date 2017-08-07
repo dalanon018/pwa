@@ -22,5 +22,6 @@ export const MOBILE_NUMBERS_KEY = 'boilerplate/App/MOBILE_NUMBERS'
 export const ORDERED_LIST_KEY = 'boilerplate/App/ORDERED_LIST'
 export const PURCHASED_PRODUCTS_KEY = 'boilerplate/App/PURCHASED_PRODUCTS'
 export const ACCESS_TOKEN_KEY = 'boilerplate/App/ACCESS_TOKEN'
+export const CATEGORIES_KEY = 'boilerplate/App/CATEGORIES_KEY'
 
 console.log(process.env.APP_BASE_URL)

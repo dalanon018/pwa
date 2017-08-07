@@ -1,38 +1,47 @@
 [
   {
+    "categoryCode": "1",
     "name": "Accessories",
-    "image": null
+    "image": "https://www.colourbox.com/preview/3925424-accessories-icon.jpg"
   },
   {
+    "categoryCode": "2",
     "name": "Deodorant",
-    "image": null
+    "image": "https://www.colourbox.com/preview/3925424-accessories-icon.jpg"
   },
   {
+    "categoryCode": "3",
     "name": "Electronics",
-    "image": null
+    "image": "https://www.colourbox.com/preview/3925424-accessories-icon.jpg"
   },
   {
+    "categoryCode": "4",
     "name": "Fragrances",
-    "image": null
+    "image": "https://www.colourbox.com/preview/3925424-accessories-icon.jpg"
   },
   {
+    "categoryCode": "5",
     "name": "Gadgets",
-    "image": null
+    "image": "https://www.colourbox.com/preview/3925424-accessories-icon.jpg"
   },
   {
+    "categoryCode": "6",
     "name": "Hair Care",
-    "image": null
+    "image": "https://www.colourbox.com/preview/3925424-accessories-icon.jpg"
   },
   {
+    "categoryCode": "7",
     "name": "Health & Beauty",
-    "image": null
+    "image": "https://www.colourbox.com/preview/3925424-accessories-icon.jpg"
   },
   {
+    "categoryCode": "8",
     "name": "Home & Living",
-    "image": null
+    "image": "https://www.colourbox.com/preview/3925424-accessories-icon.jpg"
   },
   {
+    "categoryCode": "9",
     "name": "Laundry & Home care",
-    "image": null
+    "image": "https://www.colourbox.com/preview/3925424-accessories-icon.jpg"
   }
 ]

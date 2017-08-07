@@ -1,12 +1,15 @@
 import moment from 'moment'
 import { takeLatest } from 'redux-saga'
 import { find, uniq, isEmpty } from 'lodash'
-import { compose, filter, contains, toPairs, map, head } from 'ramda'
+import { compose, filter, contains, toPairs, map, head, identity, ifElse } from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
+
+import request from 'utils/request'
+
+import { transformCategory } from 'utils/transforms'
 import { getItem, setItem } from 'utils/localStorage'
 import { DateDifferece } from 'utils/date'
-import request from 'utils/request'
 
 import FakeCategories from 'fixtures/categories.json'
 
@@ -27,8 +30,32 @@ import {
   API_BASE_URL,
   ACCESS_TOKEN_KEY,
   MOBILE_NUMBERS_KEY,
-  ORDERED_LIST_KEY
+  ORDERED_LIST_KEY,
+  CATEGORIES_KEY
 } from 'containers/App/constants'
+
+function * transformEachEntity (transform, entity) {
+  const response = yield call(transform, entity)
+  return response
+}
+
+function * requestCategories () {
+  // const token = yield getAccessToken()
+  const req = yield Promise.resolve(FakeCategories)
+
+  if (!req.err) {
+    yield call(setItem, CATEGORIES_KEY, req)
+    return req
+  } else {
+    throw new Error(req.err)
+  }
+}
+
+function * getCategoriesResource () {
+  const categories = yield call(getItem, CATEGORIES_KEY)
+  const response = ifElse(isEmpty, requestCategories, identity)(categories)
+  return response
+}
 
 export function * requestAccessToken () {
   const requestURL = `${API_BASE_URL}/authorize`
@@ -70,14 +97,12 @@ export function * getAccessToken () {
 
 export function * getCategories () {
   try {
-    // const token = yield getAccessToken()
-    const req = yield Promise.resolve(FakeCategories)
+    // we need to see if we need to request this since we save this anyway to the browser
+    const req = yield getCategoriesResource()
 
-    if (req.err) {
-      throw new Error(req.err)
-    }
+    const transform = yield req.map((data) => transformEachEntity(transformCategory, data))
 
-    yield put(setProductCategoriesAction(req))
+    yield put(setProductCategoriesAction(transform))
   } catch (e) {
     console.log(e)
   }

@@ -28,7 +28,7 @@ import {
 export class BrowseCategories extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     loader: PropTypes.bool.isRequired,
-    categories: PropTypes.array.isRequired,
+    categories: PropTypes.object.isRequired,
     getCategories: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired
   }
