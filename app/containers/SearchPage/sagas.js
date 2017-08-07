@@ -1,6 +1,6 @@
 
 import { takeLatest } from 'redux-saga'
-import { find } from 'lodash'
+import { filter } from 'lodash'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 // import request from 'utils/request'
@@ -45,7 +45,7 @@ export function * getProductSearch (payload) {
   const req = yield Promise.resolve(FakeProducts)
   if (!req.err) {
     const transform = yield req.map(transformEachEntity)
-    const findData = find(transform, (prod) => prod.cliqqCode.includes(id))
+    const findData = filter(transform, (prod) => prod.cliqqCode.includes(id))
     yield put(setSearchProductAction(findData))
   }
 }
