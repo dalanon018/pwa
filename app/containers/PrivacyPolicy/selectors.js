@@ -18,7 +18,19 @@ const makeSelectPrivacyPolicy = () => createSelector(
   (substate) => substate.toJS()
 )
 
+const selectMarkdown = () => createSelector(
+  selectPrivacyPolicyDomain(),
+  (substate) => substate.get('markdown')
+)
+
+const selectLoading = () => createSelector(
+  selectPrivacyPolicyDomain(),
+  (substate) => substate.get('loading')
+)
+
 export default makeSelectPrivacyPolicy
 export {
-  selectPrivacyPolicyDomain
+  selectPrivacyPolicyDomain,
+  selectMarkdown,
+  selectLoading
 }

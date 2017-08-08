@@ -7,7 +7,8 @@ describe('termsConditionsReducer', () => {
   let state
   beforeEach(() => {
     state = fromJS({
-      markdown: ''
+      markdown: '',
+      loading: true
     })
   })
 

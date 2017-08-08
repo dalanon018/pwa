@@ -14,7 +14,8 @@ describe('<TermsConditions />', () => {
   const minProps = {
     markdown: '# Lorem ipsum ## dolor sit amet, consectetur adipisicing elit. Vel architecto at necessitatibus voluptas harum explicabo vitae repudiandae facere, soluta assumenda sint sapiente atque ut magni aperiam earum tenetur ullam velit.',
     getMarkDown: () => {},
-    dispatch: () => {}
+    dispatch: () => {},
+    loader: false
   }
   it('render without exploding', () => {
     const renderComponent = wrapper(minProps)

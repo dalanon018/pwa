@@ -14,6 +14,7 @@ import EmptyDataBlock from 'components/EmptyDataBlock'
 import EmptyImage from 'images/broken-image.jpg'
 import ParagraphCenter from 'images/empty-center-text.png'
 import ParagraphLeft from 'images/empty-left-text.png'
+import { range } from 'lodash'
 
 const LoadingParagraph = styled.div`
   display: flex;
@@ -33,17 +34,23 @@ export const LoadingStateImage = ({ children, loading }) => {
   return children
 }
 
-export const LoadingStateInfo = ({ children, loading, center }) => {
+export const LoadingStateInfo = ({ children, loading, center, count }) => {
   const image = center ? ParagraphCenter : ParagraphLeft
   const width = center ? '90%' : '100%'
 
   if (loading) {
     return (
-      <EmptyDataBlock>
-        <LoadingParagraph>
-          <Image src={image} width={width} />
-        </LoadingParagraph>
-      </EmptyDataBlock>
+      <div>
+        {
+          range(count ? 4 : 1).map((_, index) => (
+            <EmptyDataBlock key={index}>
+              <LoadingParagraph>
+                <Image src={image} width={width} />
+              </LoadingParagraph>
+            </EmptyDataBlock>
+          ))
+        }
+      </div>
     )
   }
 
