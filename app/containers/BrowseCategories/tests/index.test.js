@@ -1,12 +1,13 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { fromJS } from 'immutable'
 
 import { BrowseCategories } from '../index'
 
 describe('<BrowseCategories />', () => {
   const minProps = {
     loader: false,
-    categories: [],
+    categories: fromJS([]),
     getCategories: () => {},
     dispatch: () => {}
   }

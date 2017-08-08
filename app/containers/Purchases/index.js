@@ -91,12 +91,16 @@ export const EmptyPurchases = () => (
 export class Purchases extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     loading: PropTypes.bool.isRequired,
+    modalToggle: PropTypes.bool.isRequired,
     purchases: PropTypes.oneOfType([
       PropTypes.array.isRequired,
       PropTypes.object.isRequired
     ]),
     getApiPurchases: PropTypes.func.isRequired,
     changeRoute: PropTypes.func.isRequired,
+    getModalToggle: PropTypes.func.isRequired,
+    setModalToggle: PropTypes.func.isRequired,
+    setMobileNumber: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired
   }
 
