@@ -181,6 +181,66 @@ export default function createRoutes (store) {
             importModules.catch(errorLoading)
           }
         }, {
+          path: '/faq',
+          name: 'faqPage',
+          getComponent (nextState, cb) {
+            const importModules = Promise.all([
+              import('containers/FaqPage/reducer'),
+              import('containers/FaqPage/sagas'),
+              import('containers/FaqPage')
+            ])
+
+            const renderRoute = loadModule(cb)
+
+            importModules.then(([reducer, sagas, component]) => {
+              injectReducer('faqPage', reducer.default)
+              injectSagas(sagas.default)
+              renderRoute(component)
+            })
+
+            importModules.catch(errorLoading)
+          }
+        }, {
+          path: '/privacy-policy',
+          name: 'privacyPolicy',
+          getComponent (nextState, cb) {
+            const importModules = Promise.all([
+              import('containers/PrivacyPolicy/reducer'),
+              import('containers/PrivacyPolicy/sagas'),
+              import('containers/PrivacyPolicy')
+            ])
+
+            const renderRoute = loadModule(cb)
+
+            importModules.then(([reducer, sagas, component]) => {
+              injectReducer('privacyPolicy', reducer.default)
+              injectSagas(sagas.default)
+              renderRoute(component)
+            })
+
+            importModules.catch(errorLoading)
+          }
+        }, {
+          path: '/terms-conditions',
+          name: 'termsConditions',
+          getComponent (nextState, cb) {
+            const importModules = Promise.all([
+              import('containers/TermsConditions/reducer'),
+              import('containers/TermsConditions/sagas'),
+              import('containers/TermsConditions')
+            ])
+
+            const renderRoute = loadModule(cb)
+
+            importModules.then(([reducer, sagas, component]) => {
+              injectReducer('termsConditions', reducer.default)
+              injectSagas(sagas.default)
+              renderRoute(component)
+            })
+
+            importModules.catch(errorLoading)
+          }
+        }, {
           path: '/search',
           name: 'searchPage',
           getComponent (nextState, cb) {
