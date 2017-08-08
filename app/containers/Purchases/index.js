@@ -108,6 +108,11 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
     super()
 
     this._displayEmpty = this._displayEmpty.bind(this)
+    this._goToHome = this._goToHome.bind(this)
+  }
+
+  _goToHome () {
+    this.props.changeRoute('/')
   }
 
   _displayEmpty () {
@@ -133,7 +138,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
   }
 
   render () {
-    const { purchases, changeRoute, modalToggle, setMobileNumber, getModalToggle } = this.props
+    const { purchases, changeRoute, modalToggle, setMobileNumber } = this.props
 
     return (
       <BarcodeListWrapper>
@@ -165,7 +170,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
         <PopupSlide
           submit={setMobileNumber}
           toggle={modalToggle}
-          onClose={getModalToggle}
+          onClose={this._goToHome}
         />
       </BarcodeListWrapper>
     )
