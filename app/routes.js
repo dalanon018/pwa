@@ -18,7 +18,6 @@ export default function createRoutes (store) {
 
   return [
     {
-      path: '/',
       name: 'bucket',
       getComponent (nextState, cb) {
         const importModules = Promise.all([
@@ -37,10 +36,10 @@ export default function createRoutes (store) {
 
         importModules.catch(errorLoading)
       },
-      indexRoute: { onEnter: (nextState, replace) => replace('/home') },
+      indexRoute: { onEnter: (nextState, replace) => replace('/') },
       childRoutes: [
         {
-          path: '/home',
+          path: '/',
           name: 'home',
           getComponent (nextState, cb) {
             const importModules = Promise.all([
