@@ -1,7 +1,7 @@
 import moment from 'moment'
 import { takeLatest } from 'redux-saga'
 import { find, uniq, isEmpty } from 'lodash'
-import { compose, filter, contains, toPairs, map, head, identity, ifElse } from 'ramda'
+import { compose, filter, contains, toPairs, map, head, identity, ifElse, isNil } from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 
@@ -53,7 +53,7 @@ function * requestCategories () {
 
 function * getCategoriesResource () {
   const categories = yield call(getItem, CATEGORIES_KEY)
-  const response = ifElse(isEmpty, requestCategories, identity)(categories)
+  const response = yield ifElse(isNil, requestCategories, identity)(categories)
   return response
 }
 
