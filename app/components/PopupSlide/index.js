@@ -36,10 +36,9 @@ class PopupSlide extends React.PureComponent {
   static propTypes = {
     submit: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
-    modalClose: PropTypes.func.isRequired,
-    product: PropTypes.object.isRequired,
-    modalToggle: PropTypes.bool.isRequired,
     toggle: PropTypes.bool.isRequired,
+    modalClose: PropTypes.func,
+    modalToggle: PropTypes.bool,
     mobileNumber: PropTypes.string
   }
 

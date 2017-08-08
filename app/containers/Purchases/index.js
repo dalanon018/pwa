@@ -15,6 +15,8 @@ import { createStructuredSelector } from 'reselect'
 
 import H1 from 'components/H1'
 import Purchase from 'components/Purchase'
+import PopupSlide from 'components/PopupSlide'
+
 import {
   STATUSES,
   PURCHASE_ORDER,
@@ -27,12 +29,18 @@ import messages from './messages'
 
 import {
   selectLoader,
-  selectPurchases
+  selectPurchases,
+  selectModalToggle
 } from './selectors'
 
 import {
   getApiPurchasesAction,
-  getStoragePurchasesAction
+  getStoragePurchasesAction,
+
+  getModalToggleAction,
+  setModalToggleAction,
+
+  setMobileNumberAction
 } from './actions'
 
 const BarcodeListWrapper = styled.div`
@@ -115,7 +123,9 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
   }
 
   componentDidMount () {
-    const { getApiPurchases, getLocalPurchases } = this.props
+    const { getApiPurchases, getLocalPurchases, getModalToggle } = this.props
+    // fetch
+    getModalToggle()
     // first we have to fetch what we already have on our local storage
     getLocalPurchases()
     // then we will call from our API
@@ -123,7 +133,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
   }
 
   render () {
-    const { purchases, changeRoute } = this.props
+    const { purchases, changeRoute, modalToggle, setMobileNumber, getModalToggle } = this.props
 
     return (
       <BarcodeListWrapper>
@@ -151,6 +161,12 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
             )
           }
         </PurchasesList>
+
+        <PopupSlide
+          submit={setMobileNumber}
+          toggle={modalToggle}
+          onClose={getModalToggle}
+        />
       </BarcodeListWrapper>
     )
   }
@@ -158,13 +174,17 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
 
 const mapStateToProps = createStructuredSelector({
   purchases: selectPurchases(),
-  loading: selectLoader()
+  loading: selectLoader(),
+  modalToggle: selectModalToggle()
 })
 
 function mapDispatchToProps (dispatch) {
   return {
     getApiPurchases: (payload) => dispatch(getApiPurchasesAction(payload)),
     getLocalPurchases: () => dispatch(getStoragePurchasesAction()),
+    getModalToggle: () => dispatch(getModalToggleAction()),
+    setModalToggle: (payload) => dispatch(setModalToggleAction(payload)),
+    setMobileNumber: (payload) => dispatch(setMobileNumberAction(payload)),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
   }

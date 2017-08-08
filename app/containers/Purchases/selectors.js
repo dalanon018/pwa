@@ -23,7 +23,13 @@ const selectPurchases = () => createSelector(
   (substate) => substate.get('purchases')
 )
 
+const selectModalToggle = () => createSelector(
+  selectBarcodeListsDomain(),
+  (substate) => substate.get('modalToggle')
+)
+
 export {
   selectPurchases,
-  selectLoader
+  selectLoader,
+  selectModalToggle
 }
