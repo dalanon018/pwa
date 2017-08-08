@@ -5,11 +5,19 @@
  */
 
 import {
-  DEFAULT_ACTION
+  GET_MARKDOWN,
+  SET_MARKDOWN
 } from './constants'
 
-export function defaultAction () {
+export function getMarkDownAction () {
   return {
-    type: DEFAULT_ACTION
+    type: GET_MARKDOWN
+  }
+}
+
+export function setMarkDownAction (payload) {
+  return {
+    type: SET_MARKDOWN,
+    payload
   }
 }

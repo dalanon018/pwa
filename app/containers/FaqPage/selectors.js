@@ -18,7 +18,19 @@ const makeSelectFaqPage = () => createSelector(
   (substate) => substate.toJS()
 )
 
+const selectMarkdown = () => createSelector(
+  selectFaqPageDomain(),
+  (substate) => substate.get('markdown')
+)
+
+const selectLoading = () => createSelector(
+  selectFaqPageDomain(),
+  (substate) => substate.get('loading')
+)
+
 export default makeSelectFaqPage
 export {
-  selectFaqPageDomain
+  selectFaqPageDomain,
+  selectMarkdown,
+  selectLoading
 }

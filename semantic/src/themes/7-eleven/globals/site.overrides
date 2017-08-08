@@ -110,6 +110,72 @@ input.input-field {
   color: #AEAEAE !important;
 }
 
+.document-helper {
+  margin: 20px 0;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  h2,
+
+  #privacypolicy,
+
+  #termsandconditions,
+  #termsandconditions-1 {
+    color: #5B5B5B;
+    font-family: 'helveticamedium';
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding-left: 13px;
+    position: relative;
+    text-transform: uppercase;
+
+    &:before {
+      color: #F6A22D;
+      content: '⚫';
+      font-size: 10px;
+      left: 0;
+      line-height: 9px;
+      position: absolute;
+      top: 2px;
+    }
+  }
+
+  h3 {
+    color: #5B5B5B;
+    font-family: 'helveticamedium';
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding-left: 13px;
+    position: relative;
+    text-transform: uppercase;
+
+    &:before {
+      color: #F6A22D;
+      content: '-';
+      font-size: 10px;
+      left: 0;
+      line-height: 9px;
+      position: absolute;
+      top: 1px;
+    }
+  }
+
+  p {
+    font-family: 'helveticamedium';
+  }
+
+  hr {
+    display: none;
+  }
+}
+
+.animation-fade {
+  animation:fadeIn ease-in 1;
+  animation-duration: .5s;
+}
+
 /*******************************
         Responsive Overrides
 *******************************/

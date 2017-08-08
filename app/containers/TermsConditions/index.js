@@ -15,37 +15,38 @@ import { Grid } from 'semantic-ui-react'
 
 import H1 from 'components/H1'
 import Footer from 'components/Footer'
+import { LoadingStateInfo } from 'components/LoadingBlock'
 
 import { getMarkDownAction } from './actions'
-import { selectMarkdown } from './selectors'
-
-import { ContainerWrapper } from './styles'
+import { selectMarkdown, selectLoading } from './selectors'
 
 export class TermsConditions extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     markdown: PropTypes.string,
     getMarkDown: PropTypes.func.isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    loader: PropTypes.bool
   }
   componentDidMount () {
     this.props.getMarkDown()
   }
 
   render () {
-    const { markdown } = this.props
+    const { markdown, loader } = this.props
     const converter = new showdown.Converter()
     const html = converter.makeHtml(markdown)
-    console.log(html)
     return (
       <div>
-        <ContainerWrapper>
+        <div className='document-helper'>
           <Grid padded>
             <H1 center className='padding__top--25 padding__none--horizontal'>
               <FormattedMessage {...messages.header} />
             </H1>
-            <div dangerouslySetInnerHTML={{__html: html}} />
+            <LoadingStateInfo loading={loader} count='4'>
+              <div className='animation-fade' dangerouslySetInnerHTML={{__html: html}} />
+            </LoadingStateInfo>
           </Grid>
-        </ContainerWrapper>
+        </div>
         <Footer />
       </div>
     )
@@ -53,7 +54,8 @@ export class TermsConditions extends React.PureComponent { // eslint-disable-lin
 }
 
 const mapStateToProps = createStructuredSelector({
-  markdown: selectMarkdown()
+  markdown: selectMarkdown(),
+  loader: selectLoading()
 })
 
 function mapDispatchToProps (dispatch) {

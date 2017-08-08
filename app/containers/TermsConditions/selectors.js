@@ -23,8 +23,14 @@ const selectMarkdown = () => createSelector(
   (substate) => substate.get('markdown')
 )
 
+const selectLoading = () => createSelector(
+  selectTermsConditionsDomain(),
+  (substate) => substate.get('loading')
+)
+
 export default makeSelectTermsConditions
 export {
   selectTermsConditionsDomain,
-  selectMarkdown
+  selectMarkdown,
+  selectLoading
 }

@@ -8,25 +8,44 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
-import makeSelectPrivacyPolicy from './selectors'
 import messages from './messages'
+import showdown from 'showdown'
 
 import { Grid } from 'semantic-ui-react'
 
 import H1 from 'components/H1'
-import ListBlock from 'components/ListBlock'
 import Footer from 'components/Footer'
+import { LoadingStateInfo } from 'components/LoadingBlock'
+
+import { getMarkDownAction } from './actions'
+import { selectMarkdown, selectLoading } from './selectors'
 
 export class PrivacyPolicy extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  static propTypes = {
+    markdown: PropTypes.string,
+    getMarkDown: PropTypes.func.isRequired,
+    dispatch: PropTypes.func.isRequired,
+    loader: PropTypes.bool
+  }
+
+  componentDidMount () {
+    this.props.getMarkDown()
+  }
+
   render () {
+    const { markdown, loader } = this.props
+    const converter = new showdown.Converter()
+    const html = converter.makeHtml(markdown)
     return (
       <div>
-        <div className='padding__horizontal--10'>
+        <div className='document-helper'>
           <Grid padded>
             <H1 center className='padding__top--25 padding__none--horizontal'>
               <FormattedMessage {...messages.header} />
             </H1>
-            <ListBlock />
+            <LoadingStateInfo loading={loader} count='4'>
+              <div className='animation-fade' dangerouslySetInnerHTML={{__html: html}} />
+            </LoadingStateInfo>
           </Grid>
         </div>
         <Footer />
@@ -35,16 +54,14 @@ export class PrivacyPolicy extends React.PureComponent { // eslint-disable-line 
   }
 }
 
-PrivacyPolicy.propTypes = {
-  dispatch: PropTypes.func.isRequired
-}
-
 const mapStateToProps = createStructuredSelector({
-  PrivacyPolicy: makeSelectPrivacyPolicy()
+  markdown: selectMarkdown(),
+  loader: selectLoading()
 })
 
 function mapDispatchToProps (dispatch) {
   return {
+    getMarkDown: payload => dispatch(getMarkDownAction()),
     dispatch
   }
 }
