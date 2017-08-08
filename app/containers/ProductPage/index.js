@@ -180,7 +180,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
           toggleClick={this._handleSocialToggle} />
         <PopupSlide
           submit={this._handleSubmit}
-          product={product}
           modalClose={this._handleClose}
           modalToggle={modalToggle}
           toggle={toggle}

@@ -11,6 +11,7 @@ describe('Purchases Reducer', () => {
   beforeEach(() => {
     state = fromJS({
       purchases: [],
+      modalToggle: false,
       loading: false
     })
   })
