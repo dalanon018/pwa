@@ -7,14 +7,18 @@
 import React, { PropTypes } from 'react'
 // import styled from 'styled-components';
 
+import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
+import { createStructuredSelector } from 'reselect'
 import messages from './messages'
+import { push } from 'react-router-redux'
 
 import Button from 'components/Button'
 import CloseButton from 'components/CloseButton'
 import Input from 'components/InputField'
 import Checkbox from 'components/CheckboxField'
 import Modal from 'components/PromptModal'
+import A from 'components/A'
 
 import BannerBg from 'images/modal-bg-orange.png'
 import MobileIcon from 'images/icons/mobile-icon.svg'
@@ -32,14 +36,15 @@ import {
   TextWrapper,
   PopupContent } from './styles'
 
-class PopupSlide extends React.PureComponent {
+export class PopupSlide extends React.PureComponent {
   static propTypes = {
     submit: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     toggle: PropTypes.bool.isRequired,
     modalClose: PropTypes.func,
     modalToggle: PropTypes.bool,
-    mobileNumber: PropTypes.string
+    mobileNumber: PropTypes.string,
+    changeRoute: PropTypes.func
   }
 
   state = {
@@ -51,29 +56,34 @@ class PopupSlide extends React.PureComponent {
   constructor (props) {
     super(props)
 
-    this.handleInput = this.handleInput.bind(this)
-    this.handleCheck = this.handleCheck.bind(this)
-    this.handleDisable = this.handleDisable.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this._handleInput = this._handleInput.bind(this)
+    this._handleCheck = this._handleCheck.bind(this)
+    this._handleDisable = this._handleDisable.bind(this)
+    this._handleSubmit = this._handleSubmit.bind(this)
+    this._goToTermsConditions = this._goToTermsConditions.bind(this)
   }
 
-  handleCheck (e, data) {
+  _goToTermsConditions () {
+    this.props.changeRoute('/terms-conditions')
+  }
+
+  _handleCheck (e, data) {
     this.setState({
       check: data.checked
-    }, () => this.handleDisable())
+    }, () => this._handleDisable())
   }
 
-  handleInput (e) {
+  _handleInput (e) {
     if (e.target.value.length <= 10) {
       e.preventDefault()
       this.setState({
         value: e.target.value,
         inputed: this.state.value
-      }, () => this.handleDisable())
+      }, () => this._handleDisable())
     }
   }
 
-  handleDisable () {
+  _handleDisable () {
     if ((this.state.value.length === 10 && this.state.value.charAt(0) === '9') && this.state.check === true) {
       this.setState({
         toggle: false
@@ -85,7 +95,7 @@ class PopupSlide extends React.PureComponent {
     }
   }
 
-  handleSubmit () {
+  _handleSubmit () {
     const { value } = this.state
     this.props.submit({
       value
@@ -104,7 +114,19 @@ class PopupSlide extends React.PureComponent {
   render () {
     const { toggle, onClose, modalToggle, modalClose } = this.props
     const { value } = this.state
-    const label = `I have read and accepted the `
+    const checkboxList =
+      [
+        {
+          name: 'checkbox',
+          label: (
+            <span>
+              I have read and accepted the
+              <A key={0} onClick={this._goToTermsConditions}> Terms and Conditions</A>
+            </span>
+          )
+        }
+      ]
+
     return (
       <PopupWrapper toggle={toggle}>
         <BannerHeader background={BannerBg}>
@@ -126,18 +148,24 @@ class PopupSlide extends React.PureComponent {
               <Input
                 type='number'
                 value={value}
-                onChange={this.handleInput}
+                onChange={this._handleInput}
                 placeholder='9XXXXXXXXX' />
             </InputWrapper>
-            <Checkbox
-              className='margin__bottom-positive--20'
-              onChange={this.handleCheck}
-              label={label} />
+            {
+              checkboxList.map((item, index) =>
+                <Checkbox
+                  key={index}
+                  className='margin__bottom-positive--20'
+                  onChange={this._handleCheck}
+                  name={item.name}
+                  label={item.label} />
+              )
+            }
             <Button
               disabled={this.state.toggle}
               primary
               fluid
-              onClick={this.handleSubmit}>
+              onClick={this._handleSubmit}>
                   SUBMIT
               </Button>
 
@@ -155,4 +183,15 @@ class PopupSlide extends React.PureComponent {
   }
 }
 
-export default PopupSlide
+const mapStateToProps = createStructuredSelector({
+
+})
+
+function mapDispatchToProps (dispatch) {
+  return {
+    changeRoute: (url) => dispatch(push(url)),
+    dispatch
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PopupSlide)

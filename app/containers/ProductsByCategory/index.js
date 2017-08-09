@@ -18,7 +18,7 @@ import H1 from 'components/H1'
 import NavCategories from 'components/NavCategories'
 import ProductView from 'components/ProductView'
 import Footer from 'components/Footer'
-import Promo from 'components/Promo'
+// import Promo from 'components/Promo'
 
 import {
   getProductCategoriesAction
@@ -77,8 +77,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
               6 <FormattedMessage {...messages.items} />
             </ItemCount>
             <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} />
-            <Promo loader={loader} />
-            <H1 center className='margin__top--none'><FormattedMessage {...messages.viewed} /></H1>
+            {/* <Promo loader={loader} /> */}
+            <H1 center><FormattedMessage {...messages.viewed} /></H1>
             <ProductView changeRoute={changeRoute} loader={loader} products={productsViewed} />
           </Grid>
         </div>
