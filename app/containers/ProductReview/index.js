@@ -48,7 +48,7 @@ import { calculateProductPrice } from 'utils/promo'
 import SampleProduct from 'images/test-images/samplebag.png'
 import SampleBrand from 'images/test-images/PENSHOPPE-TICKET.png'
 import CliqqLogo from 'images/icons/cliqq.png'
-import NextIcon from 'images/icons/greater-than-icon.svg'
+// import NextIcon from 'images/icons/greater-than-icon.svg'
 
 import {
   StepHead,
@@ -63,7 +63,7 @@ import {
   StepWrapper,
   LabelTitle,
   ReviewContainer,
-  LocationButton,
+  // LocationButton,
   LabelSubTitle,
   LabelPrice
 } from './styles'
@@ -308,18 +308,19 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
               </StepWrapper>
 
               {/* <StepWrapper className='visibility' visibility={visibility}> */}
-              <StepWrapper>
-                <StepContent>
-                  <StepHead step='3' className='margin__top-positive--20'>
-                    <FormattedMessage {...messages.stepThree} />
-                    <p>Your default store will be the last store you visited</p>
-                  </StepHead>
-                  <LocationButton onClick={this._handleStoreLocator} fluid icon={NextIcon}>
-                    <span>FIND STORE NEARBY</span>
-                  </LocationButton>
-                </StepContent>
-              </StepWrapper>
-
+              {/*
+                <StepWrapper>
+                  <StepContent>
+                    <StepHead step='3' className='margin__top-positive--20'>
+                      <FormattedMessage {...messages.stepThree} />
+                      <p>Your default store will be the last store you visited</p>
+                    </StepHead>
+                    <LocationButton onClick={this._handleStoreLocator} fluid icon={NextIcon}>
+                      <span>FIND STORE NEARBY</span>
+                    </LocationButton>
+                  </StepContent>
+                </StepWrapper>
+              */}
               <ButtonContainer>
                 <Button onClick={this._handleProceed} primary fluid loading={orderRequesting}><FormattedMessage {...messages.proceedNext} /></Button>
               </ButtonContainer>
