@@ -34,6 +34,13 @@ import LanguageProvider from 'containers/LanguageProvider'
 import '!file-loader?name=[name].[ext]!./favicon.ico'
 import '!file-loader?name=[name].[ext]!./manifest.json'
 import 'file-loader?name=[name].[ext]!./.htaccess' // eslint-disable-line import/extensions
+
+// we need to add also the icon for our manifest
+import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-48.png'
+import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-96.png'
+import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-144.png'
+import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-192.png'
+
 /* eslint-enable import/no-webpack-loader-syntax */
 
 import configureStore from './store'
