@@ -23,7 +23,7 @@ import Category from 'components/Category'
 import H1 from 'components/H1'
 import Button from 'components/Button'
 import Footer from 'components/Footer'
-import Promo from 'components/Promo'
+// import Promo from 'components/Promo'
 
 import { getFeaturedProductsAction } from './actions'
 import { selectLoading, selectFeaturedProducts } from './selectors'
@@ -89,8 +89,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               primary
               fluid
             > <FormattedMessage {...messages.productViewAll} /> </Button>
-            <Promo loader={loader} />
-            <H1 className='margin__top--none' center> <FormattedMessage {...messages.browseCategory} /> </H1>
+            {/* <Promo loader={loader} /> */}
+            <H1 center> <FormattedMessage {...messages.browseCategory} /> </H1>
             <Category
               loader={loader}
               grids={grids}

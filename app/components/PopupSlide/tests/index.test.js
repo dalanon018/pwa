@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import PopupSlide from '../index'
+import { PopupSlide } from '../index'
 
 const wrapper = (props = {}, enzyme = shallow) => shallow(
   <PopupSlide {...props} />
@@ -12,9 +12,10 @@ describe('<PopupSlide />', () => {
     submit: () => {},
     onClose: () => {},
     modalClose: () => {},
+    changeRoute: () => {},
     modalToggle: false,
     toggle: false,
-    mobileNumber: null
+    mobileNumber: 9123456780
   }
 
   it('render without exploding', () => {
