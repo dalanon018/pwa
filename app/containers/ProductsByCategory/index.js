@@ -78,7 +78,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
             </ItemCount>
             <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} />
             {/* <Promo loader={loader} /> */}
-            <H1 center className='margin__top--none'><FormattedMessage {...messages.viewed} /></H1>
+            <H1 center><FormattedMessage {...messages.viewed} /></H1>
             <ProductView changeRoute={changeRoute} loader={loader} products={productsViewed} />
           </Grid>
         </div>
