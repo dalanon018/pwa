@@ -106,7 +106,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     this._handleModalClose = this._handleModalClose.bind(this)
     this._handleToBottom = this._handleToBottom.bind(this)
     this._handleProceed = this._handleProceed.bind(this)
-    this._handleStoreLocator = this._handleStoreLocator.bind(this)
+    // this._handleStoreLocator = this._handleStoreLocator.bind(this)
     this._handleDoneFetchOrderNoProductNorMobile = this._handleDoneFetchOrderNoProductNorMobile.bind(this)
     this._handleSubmissionSuccess = this._handleSubmissionSuccess.bind(this)
     this._handleSubmissionError = this._handleSubmissionError.bind(this)
@@ -144,9 +144,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     this.submitting = true
   }
 
-  _handleStoreLocator () {
-    window.location.replace('https://store-locator-7-eleven.appspot.com')
-  }
+  // _handleStoreLocator () {
+  //   window.location.replace('https://store-locator-7-eleven.appspot.com')
+  // }
 
   _handleDoneFetchOrderNoProductNorMobile () {
     this.setState({
