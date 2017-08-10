@@ -1,0 +1,7 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "integrationFolder": "app/integration",
+  "fixturesFolder":"app/fixtures",
+  "viewportWidth": 375,
+  "viewportHeight": 667
+}

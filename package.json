@@ -319,7 +319,8 @@
       "/internals/scripts",
       "/internals/templates",
       "/semantic/",
-      "/app/utils/firebase-messaging-sw.js"
+      "/app/utils/firebase-messaging-sw.js",
+      "/cypress"
     ],
     "globals": [
       "Blob",
@@ -335,7 +336,8 @@
       "fetch",
       "it",
       "jest",
-      "XMLHttpRequest"
+      "XMLHttpRequest",
+      "cy"
     ]
   }
 }

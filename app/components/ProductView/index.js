@@ -44,8 +44,10 @@ function ProductView ({
       {
         loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
         : products.valueSeq().map((product) => {
+          const goToProduct = () => changeRoute(`/product/${product.get('cliqqCode').first()}`)
+
           return (
-            <Grid.Column key={product.get('cliqqCode')} className='padding__none--horizontal' mobile={8} tablet={4} computer={3} widescreen={3} onClick={() => changeRoute(`/product/${product.get('cliqqCode').first()}`)}>
+            <Grid.Column key={product.get('cliqqCode')} className='padding__none--horizontal' mobile={8} tablet={4} computer={3} widescreen={3} onClick={goToProduct}>
               <ProductWrapper>
                 {
                   !isEmpty(product.get('discount')) &&

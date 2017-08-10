@@ -20,3 +20,4 @@ yarn-error.log
 semantic/dist
 
 app/containers/*/tests/__snapshots__
+cypress
