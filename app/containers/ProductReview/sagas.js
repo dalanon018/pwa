@@ -33,6 +33,7 @@ import {
 } from 'containers/Buckets/actions'
 /**
  * we will create the fake response here.
+ * // eventually we will use this to transform the data from response of the order.
  * @param {*} body
  */
 function * fakeResponse ({ mobileNumber, orderedProduct, modePayment }) {

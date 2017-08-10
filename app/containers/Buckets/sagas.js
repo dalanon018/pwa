@@ -1,7 +1,7 @@
 import moment from 'moment'
 import { takeLatest } from 'redux-saga'
-import { find, uniq, isEmpty } from 'lodash'
-import { compose, filter, contains, toPairs, map, head, identity, ifElse, isNil } from 'ramda'
+import { find, uniq, isEmpty, isEqual, noop } from 'lodash'
+import { compose, filter, contains, toPairs, map, head, ifElse } from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 
@@ -41,11 +41,20 @@ function * transformEachEntity (transform, entity) {
 
 function * requestCategories () {
   // const token = yield getAccessToken()
+  const dbResource = yield call(getItem, CATEGORIES_KEY)
   const req = yield Promise.resolve(FakeCategories)
 
   if (!req.err) {
     yield call(setItem, CATEGORIES_KEY, req)
-    return req
+    const isObjectNotEqual = (data) => !isEqual(dbResource, data)
+
+    const shouldUpdate = ifElse(
+      isObjectNotEqual,
+      updateUICategories,
+      noop
+    )
+
+    yield shouldUpdate(req)
   } else {
     throw new Error(req.err)
   }
@@ -53,8 +62,10 @@ function * requestCategories () {
 
 function * getCategoriesResource () {
   const categories = yield call(getItem, CATEGORIES_KEY)
-  const response = yield ifElse(isNil, requestCategories, identity)(categories)
-  return response
+
+  yield call(requestCategories)
+
+  return categories
 }
 
 export function * requestAccessToken () {
@@ -95,14 +106,17 @@ export function * getAccessToken () {
   return yield requestAccessToken()
 }
 
+export function * updateUICategories (req) {
+  const transform = yield req.map((data) => transformEachEntity(transformCategory, data))
+
+  yield put(setProductCategoriesAction(transform))
+}
+
 export function * getCategories () {
   try {
     // we need to see if we need to request this since we save this anyway to the browser
     const req = yield getCategoriesResource()
-
-    const transform = yield req.map((data) => transformEachEntity(transformCategory, data))
-
-    yield put(setProductCategoriesAction(transform))
+    yield updateUICategories(req)
   } catch (e) {
     console.log(e)
   }

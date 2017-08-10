@@ -16,6 +16,16 @@
     ],
     "imageUrl": "http://ic1.maxabout.us/mobiles//G/2014/8/gionee-ctrl-v4s-front-rear-view.jpg",
     "name": "All Day Backpack | (wine)",
+    "images": [
+      {
+        "imageUrl": "http://www.samsung.com/global/microsite/galaxynote4/images/design/detail/white_5.png",
+        "imageType": "Primary"
+      },
+      {
+        "imageUrl": "http://www.samsung.com/global/microsite/galaxynote4/images/design/detail/white_5.png",
+        "imageType": "BrandLogo"
+      }
+    ],
     "priceList": [
       {
         "amount": 400,
@@ -55,6 +65,16 @@
     ],
     "imageUrl": "http://ic1.maxabout.us/mobiles//G/2014/8/gionee-ctrl-v4s-front-rear-view.jpg",
     "name": "All Day Backpack | (green)",
+    "images": [
+      {
+        "imageUrl": "http://www.samsung.com/global/microsite/galaxynote4/images/design/detail/white_5.png",
+        "imageType": "Primary"
+      },
+      {
+        "imageUrl": "http://www.samsung.com/global/microsite/galaxynote4/images/design/detail/white_5.png",
+        "imageType": "BrandLogo"
+      }
+    ],
     "priceList": [
       {
         "amount": 300,
@@ -94,6 +114,16 @@
     ],
     "imageUrl": "http://ic1.maxabout.us/mobiles//G/2014/8/gionee-ctrl-v4s-front-rear-view.jpg",
     "name": "All Day Backpack | (blue)",
+    "images": [
+      {
+        "imageUrl": "http://www.samsung.com/global/microsite/galaxynote4/images/design/detail/white_5.png",
+        "imageType": "Primary"
+      },
+      {
+        "imageUrl": "http://www.samsung.com/global/microsite/galaxynote4/images/design/detail/white_5.png",
+        "imageType": "BrandLogo"
+      }
+    ],
     "priceList": [
       {
         "amount": 800,
@@ -133,6 +163,16 @@
     ],
     "imageUrl": "http://ic1.maxabout.us/mobiles//G/2014/8/gionee-ctrl-v4s-front-rear-view.jpg",
     "name": "All Day Backpack | (white)",
+    "images": [
+      {
+        "imageUrl": "http://www.samsung.com/global/microsite/galaxynote4/images/design/detail/white_5.png",
+        "imageType": "Primary"
+      },
+      {
+        "imageUrl": "http://www.samsung.com/global/microsite/galaxynote4/images/design/detail/white_5.png",
+        "imageType": "BrandLogo"
+      }
+    ],
     "priceList": [
       {
         "amount": 1000,

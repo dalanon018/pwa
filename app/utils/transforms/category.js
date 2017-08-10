@@ -1,12 +1,18 @@
 import {
   adjust,
+  compose,
   curry,
+  find,
   fromPairs,
   map,
-  toPairs
+  omit,
+  toPairs,
+  prop,
+  propEq
 } from 'ramda'
 
 import {
+  ARRAY,
   STRING,
   ValidateSchema
 } from './helper'
@@ -16,9 +22,9 @@ const Schema = {
     name: 'id',
     type: STRING
   },
-  image: {
-    name: 'image',
-    type: STRING
+  images: {
+    name: 'images',
+    type: ARRAY
   },
   name: {
     name: 'name',
@@ -33,7 +39,28 @@ const mapKeys = curry((fn, obj) =>
 const transformCategory = (data) => {
   const changeKey = (key) => Schema[key].name
   const applySchemaName = mapKeys(changeKey, data)
-  return applySchemaName
+
+  const applyImage = (data) => {
+    const applyImageUrl = (key) => compose(
+      prop('imageUrl'),
+      find(propEq('imageType', key)),
+      prop('images')
+    )
+
+    return Object.assign({}, data, {
+      icon: applyImageUrl('Navigation')(data),
+      background: applyImageUrl('Background Image')(data),
+      main: applyImageUrl('Primary')(data)
+    })
+  }
+
+  const removeKeys = ['images']
+  const adjustmentObject = compose(
+    omit(removeKeys),
+    applyImage
+  )
+
+  return adjustmentObject(applySchemaName)
 }
 
 const Category = async (response) => {
