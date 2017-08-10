@@ -1,12 +1,15 @@
-import { find } from 'lodash'
+
 import {
+  find,
   adjust,
   curry,
   compose,
   fromPairs,
   map,
+  omit,
   toPairs,
-  prop
+  prop,
+  propEq
 } from 'ramda'
 
 import {
@@ -25,6 +28,10 @@ const Schema = {
   imageUrl: {
     name: 'image',
     type: STRING
+  },
+  images: {
+    name: 'images',
+    type: ARRAY
   },
   brandLogo: {
     name: 'brandLogo',
@@ -64,6 +71,19 @@ const transformProduct = (data) => {
   const changeKey = (key) => Schema[key].name
   const applySchemaName = mapKeys(changeKey, data)
 
+  const applyImage = (data) => {
+    const applyImageUrl = (key) => compose(
+      prop('imageUrl'),
+      find(propEq('imageType', key)),
+      prop('images')
+    )
+
+    return Object.assign({}, data, {
+      image: applyImageUrl('Primary')(data),
+      brandLogo: applyImageUrl('BrandLogo')(data)
+    })
+  }
+
   // for now we will only return the first element of the id
   const applyChangeProductId = (data) => {
     const getCliqqCode = compose(
@@ -93,14 +113,21 @@ const transformProduct = (data) => {
     })
   }
   const applyChangePrice = (data) => {
-    const { amount } = find(data.price, { currency: 'PHP' }) || {}
+    const amount = compose(
+      prop('amount'),
+      find(propEq('currency', 'PHP')),
+      prop('price')
+    )
 
     return Object.assign({}, data, {
-      price: amount || 0
+      price: amount(data) || 0
     })
   }
 
+  const removeKeys = ['images']
   const adjustmentObject = compose(
+    omit(removeKeys),
+    applyImage,
     applyChangeProductId,
     applyChangeDiscount,
     applyChangePrice
