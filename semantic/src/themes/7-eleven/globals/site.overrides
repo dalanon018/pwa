@@ -257,4 +257,17 @@ input.input-field {
       }
     }
   }
+
+  /* Elements Responsive */
+  .banner-padding  {
+    padding: 0;
+  }
+}
+
+@media (min-width: 768px) {
+
+  /* Element Responsive */
+  .banner-padding {
+    padding: 14px;
+  }
 }

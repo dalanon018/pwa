@@ -23,6 +23,8 @@ import Category from 'components/Category'
 import H1 from 'components/H1'
 import Button from 'components/Button'
 import Footer from 'components/Footer'
+import StaticPromos from 'components/BannerStaticPromos'
+import WindowWidth from 'components/WindowWidth'
 // import Promo from 'components/Promo'
 
 import { getFeaturedProductsAction } from './actions'
@@ -35,6 +37,10 @@ import {
 import {
   selectProductCategories
 } from 'containers/Buckets/selectors'
+
+import {
+  BannerWrapper
+} from './styles'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
@@ -65,7 +71,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       computer: 3,
       widescreen: 3
     }
-
     return (
       <div>
         <Helmet
@@ -79,7 +84,32 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           ]}
         />
         <NavCategories changeRoute={changeRoute} categories={productCategories} />
-        <BannerSlider loader={loader} />
+
+        <BannerWrapper>
+          <Grid>
+            <Grid.Row stretched className='banner-padding'>
+              <Grid.Column
+                className='banner-padding'
+                mobile={16}
+                tablet={8}
+                computer={8}
+                largeScreen={8}
+                widescreen={8}>
+                <BannerSlider loader={loader} />
+              </Grid.Column>
+              <Grid.Column
+                className='banner-padding'
+                only='tablet'
+                tablet={8}
+                computer={8}
+                largeScreen={8}
+                widescreen={8}>
+                <StaticPromos loader={loader} />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </BannerWrapper>
+
         <div className='padding__horizontal--10'>
           <Grid padded>
             <H1 center> <FormattedMessage {...messages.featureProduct} /> </H1>
@@ -125,4 +155,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage)
+export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(HomePage))

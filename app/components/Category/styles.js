@@ -1,12 +1,12 @@
 import styled from 'styled-components'
 
 const CategoryBlock = styled.div`
-  background: url(${props => props.background}) no-repeat center center / cover;
-  display: flex;
-  justify-content: center;
-  margin: ${props => props.margin}px;
-  position: relative;
-  text-align: center;
+  // background: url(${props => props.background}) no-repeat center center / cover;
+  // display: flex;
+  // justify-content: center;
+  // margin: ${props => props.margin}px;
+  // position: relative;
+  // text-align: center;
 
   // not included on sorting
   animation:fadeIn ease-in 1;
@@ -23,15 +23,15 @@ const CategoryBlock = styled.div`
     z-index: 1;
   }
 
-  @media (min-width: 320px) {
-    &.responsive-width {
-      height: ${props => props.height}px;
-    }
-    img {
-      margin: 0 auto;
-      width: ${props => props.width}px;
-    }
+  .category-image {
+    position: relative;
   }
+
+  // @media (min-width: 320px) {
+  //   &.responsive-width {
+  //     height: ${props => props.height}px;
+  //   }
+  // }
 `
 
 const CategoryLabel = styled.span`
@@ -45,12 +45,31 @@ const CategoryLabel = styled.span`
 const CategoryItem = styled.div`
   align-self: center;
   padding: 0 5px;
-  position: relative;
   z-index: 2;
+
+  @media (min-width: 320px) {
+    img {
+      margin: 0 auto;
+      width: ${props => props.width}px;
+    }
+  }
+`
+
+const CategoryContent = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 `
 
 export {
   CategoryLabel,
   CategoryBlock,
+  CategoryContent,
   CategoryItem
 }
