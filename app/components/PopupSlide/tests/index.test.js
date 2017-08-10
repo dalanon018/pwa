@@ -15,7 +15,7 @@ describe('<PopupSlide />', () => {
     changeRoute: () => {},
     modalToggle: false,
     toggle: false,
-    mobileNumber: 9123456780
+    mobileNumber: '9123456780'
   }
 
   it('render without exploding', () => {
