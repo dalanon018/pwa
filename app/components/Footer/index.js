@@ -41,7 +41,7 @@ export class Footer extends React.PureComponent {
 
   render () {
     return (
-      <Wrapper>
+      <Wrapper className='mobile-visibility'>
         <Grid>
           <Grid.Row>
             <Grid.Column>

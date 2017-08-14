@@ -1,12 +1,6 @@
 import styled from 'styled-components'
 
 const CategoryBlock = styled.div`
-  // background: url(${props => props.background}) no-repeat center center / cover;
-  // display: flex;
-  // justify-content: center;
-  // margin: ${props => props.margin}px;
-  // position: relative;
-  // text-align: center;
   margin: ${props => props.margin ? props.margin : '2'}px;
 
   // not included on sorting
@@ -28,11 +22,10 @@ const CategoryBlock = styled.div`
     position: relative;
   }
 
-  // @media (min-width: 320px) {
-  //   &.responsive-width {
-  //     height: ${props => props.height}px;
-  //   }
-  // }
+  @media (min-width: 768px) {
+    margin: 7px;
+  }
+
 `
 
 const CategoryLabel = styled.span`

@@ -28,7 +28,7 @@ function NavCategories ({
     changeRoute('/categories')
   }
   return (
-    <NavCategoriesWrapper>
+    <NavCategoriesWrapper className='mobile-visibility'>
       <Grid padded textAlign='center'>
         <Grid.Row columns={5}>
           <NavCategoriesContainer>
