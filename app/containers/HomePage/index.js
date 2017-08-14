@@ -117,7 +117,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             <Button
               onClick={() => {}}
               primary
-              fluid
             > <FormattedMessage {...messages.productViewAll} /> </Button>
             {/* <Promo loader={loader} /> */}
             <H1 center> <FormattedMessage {...messages.browseCategory} /> </H1>

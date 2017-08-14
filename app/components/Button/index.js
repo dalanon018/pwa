@@ -37,7 +37,7 @@ function ElemButton ({ children, size, ...rest }) {
   // Render an anchor tag
   // If the Button has a handleRoute prop, we want to render a button
   return (
-    <Button {...rest} >
+    <Button className='custom-button' {...rest} >
       <Wrapper>
         <TextWrapper fontSize={fontSize}>
           { Children.toArray(children) }

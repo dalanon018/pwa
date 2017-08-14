@@ -7,6 +7,7 @@ const CategoryBlock = styled.div`
   // margin: ${props => props.margin}px;
   // position: relative;
   // text-align: center;
+  margin: ${props => props.margin ? props.margin : '2'}px;
 
   // not included on sorting
   animation:fadeIn ease-in 1;
@@ -40,17 +41,29 @@ const CategoryLabel = styled.span`
   font-size: ${props => props.fontSize}px;
   line-height: 0;
   text-transform: uppercase;
+
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
 `
 
 const CategoryItem = styled.div`
   align-self: center;
   padding: 0 5px;
+  text-align: center;
   z-index: 2;
 
   @media (min-width: 320px) {
     img {
       margin: 0 auto;
-      width: ${props => props.width}px;
+      width: ${props => props.width ? props.width : '30'}px;
+    }
+  }
+
+  // This is for Home page only
+  @media (min-width: 768px) {
+    img {
+      width: 60px;
     }
   }
 `

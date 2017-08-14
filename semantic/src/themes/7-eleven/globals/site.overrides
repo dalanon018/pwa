@@ -184,6 +184,10 @@ input.input-field {
   }
 }
 
+.custom-button {
+  margin: 0 auto;
+  width: 100%;
+}
 /*******************************
         Responsive Overrides
 *******************************/
@@ -269,5 +273,12 @@ input.input-field {
   /* Element Responsive */
   .banner-padding {
     padding: 14px;
+  }
+  .custom-button {
+    margin: 0 auto !important;
+    padding: 12px 60px !important;
+    width: inherit;
+    font-family: 'helveticabold' !important;
+    letter-spacing: 2px;
   }
 }

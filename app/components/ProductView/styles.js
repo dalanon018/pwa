@@ -32,6 +32,10 @@ const ProductName = styled.p`
   font-size: 8px;
   margin-bottom: 3px;
   text-transform: uppercase;
+
+  @media (min-width: 768px) {
+    font-size: 14px;
+  }
 `
 
 const ProductPriceWrapper = styled.div`
@@ -66,6 +70,9 @@ const ProductPriceStrike = styled.span`
   
   @media (min-width: 375px) {
     font-size: 10px;
+  }
+  @media (min-width: 768px) {
+    font-size: 12px;
   }
 `
 
