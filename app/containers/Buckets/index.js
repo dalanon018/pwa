@@ -42,6 +42,7 @@ const Wrapper = styled.div`
 
 const MainContent = styled.div`
   margin-top: 47px;
+  overflow: hidden;
 `
 
 // const SidebarCustom = styled(Sidebar.Pusher)`

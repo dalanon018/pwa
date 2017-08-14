@@ -47,7 +47,15 @@ function ProductView ({
           const goToProduct = () => changeRoute(`/product/${product.get('cliqqCode').first()}`)
 
           return (
-            <Grid.Column key={product.get('cliqqCode')} className='padding__none--horizontal' mobile={8} tablet={4} computer={3} widescreen={3} onClick={goToProduct}>
+            <Grid.Column
+              key={product.get('cliqqCode')}
+              className='padding__none--horizontal'
+              mobile={8}
+              tablet={4}
+              computer={2}
+              largeScreen={2}
+              widescreen={2}
+              onClick={goToProduct}>
               <ProductWrapper>
                 {
                   !isEmpty(product.get('discount')) &&

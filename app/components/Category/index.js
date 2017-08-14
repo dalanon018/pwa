@@ -23,6 +23,7 @@ import {
 
 import {
   CategoryBlock,
+  CategoryContent,
   CategoryItem,
   CategoryLabel } from './styles'
 
@@ -30,7 +31,6 @@ function Category ({
   loader,
   categories,
   grids,
-  height,
   margin,
   iconWidth,
   changeRoute,
@@ -44,16 +44,19 @@ function Category ({
   return (
     <Grid.Row>
       {
-        loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} height={height} margin={margin} grids={grids} />)
+        loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} margin={margin} grids={grids} />)
         : categories &&
         categories.valueSeq().map((category, index) => {
           return (
-            <Grid.Column key={index} className='padding__none--horizontal' mobile={mobile} tablet={tablet} computer={computer} widescreen={widescreen}>
-              <CategoryBlock className='responsive-width' height={height} background={CategoryBgSample} margin={margin} width={iconWidth} onClick={handleRedirect}>
-                <CategoryItem>
-                  <Image src={sampleCategoryIcon} />
-                  <CategoryLabel fontSize={fontSize}>{category.get('name')}</CategoryLabel>
-                </CategoryItem>
+            <Grid.Column key={index} className='padding__none--horizontal category-divider' mobile={mobile} tablet={tablet} computer={computer} widescreen={widescreen}>
+              <CategoryBlock margin={margin} width={iconWidth} onClick={handleRedirect}>
+                <Image className='category-image' src={CategoryBgSample} />
+                <CategoryContent>
+                  <CategoryItem width={iconWidth}>
+                    <Image src={sampleCategoryIcon} />
+                    <CategoryLabel fontSize={fontSize}>{category.get('name')}</CategoryLabel>
+                  </CategoryItem>
+                </CategoryContent>
               </CategoryBlock>
             </Grid.Column>
           )
@@ -64,7 +67,6 @@ function Category ({
 }
 
 const DefaultState = ({
-  height,
   margin,
   grids
 }) => {
@@ -72,7 +74,9 @@ const DefaultState = ({
   return (
     <Grid.Column className='padding__none--horizontal' mobile={mobile} tablet={tablet} computer={computer} widescreen={widescreen}>
       <EmptyDataBlock>
-        <CategoryBlock className='responsive-width' height={height} margin={margin} background={EmptyImage} />
+        <CategoryBlock margin={margin} className='responsive-width'>
+          <Image className='category-image' src={EmptyImage} />
+        </CategoryBlock>
       </EmptyDataBlock>
     </Grid.Column>
   )
