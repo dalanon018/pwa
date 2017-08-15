@@ -4,7 +4,7 @@
 *
 */
 
-import React from 'react'
+import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -28,6 +28,7 @@ const DesktopWrapper = styled.div`
 
 const Wrapper = styled.footer`
   border-top: 8px solid #aeaeae;
+  margin-top: 30px;
   padding: 25px 15px 15px;
 
   .custom-header {
@@ -87,6 +88,10 @@ const SocialIcons = styled.div`
 `
 
 export class DesktopFooter extends React.PureComponent {
+  static propTypes = {
+    changeRoute: PropTypes.func.isRequired
+  }
+
   constructor () {
     super()
     this._handleFaqRoute = this._handleFaqRoute.bind(this)
