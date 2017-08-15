@@ -13,6 +13,10 @@ const H1 = styled.h1`
     font-size: 16px;
     letter-spacing: 4px;
   }
+
+  @media (min-width: 768px) {
+    margin: 20px 0 !important;
+  }
 `
 
 export default H1

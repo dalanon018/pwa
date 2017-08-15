@@ -3,6 +3,9 @@ import styled from 'styled-components'
 
 import {
   Image,
+  Button,
+  Icon,
+  Input,
   Grid
 } from 'semantic-ui-react'
 
@@ -10,16 +13,11 @@ import BarcodeImage from 'images/icons/barcode-header.svg'
 import SearchImage from 'images/icons/search-header.svg'
 import MainLogo from 'images/cliqq-logo.svg'
 
+import A from 'components/A'
+
 const Wrapper = styled.div`
-  background: #FFF;
-  border-bottom: 3px solid #8DC640;
-  height: 49px;
-  left: 0;
-  padding: 7px 10px;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 99;
+  display: block;
+  position: relative;
 `
 
 const LeftWrapper = styled.div`
@@ -108,7 +106,66 @@ const HamburgerSpan = styled.span`
     bottom: ${({active}) => active ? '0' : '-8px'};;
     transform: ${({active}) => active ? 'translateX(0) translateY(0) rotate(-45deg)' : 'none'};
   }
+`
 
+const MobileMenu = styled.div`
+  background: #FFF;
+  border-bottom: 3px solid #8DC640;
+  height: 49px;
+  left: 0;
+  padding: 7px 10px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+`
+
+const DesktopMenu = styled.div`
+  .brand {
+    display: inline-block !important;
+    width: 160px;
+  }
+`
+
+const InputWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  input {
+    border-radius: 0 !important;
+    font-family: 'helveticalight' !important;
+    font-size: 18px;
+    height: 50px;
+    width: 490px;
+  }
+
+  button {
+    background-color: #F58322 !important;
+    border-radius: 0 !important;
+    padding: 10px 25px !important;
+    i {
+      color: #FFFFFF;
+      font-size: 30px;
+      margin: 0 !important;
+      padding-top: 5px;
+    }
+  }
+`
+
+const NavMenu = styled.div`
+  button {
+    background-color: #F0F0F0 !important;
+    color: #5B5B5B;
+    font-family: 'helveticabold' !important;
+    font-size: 18px !important;
+    letter-spacing: 4px;
+    padding: 20px 50px !important;
+    width: 100%;
+
+    &:hover {
+      background: transparent !important;
+      color: #5B5B5B !important;
+    }
+  }
 `
 
 export default class MainMenu extends PureComponent {
@@ -149,30 +206,66 @@ export default class MainMenu extends PureComponent {
     const { leftButtonAction, hideBackButton } = this.props
     return (
       <Wrapper>
-        <Grid columns={3}>
-          <Grid.Row>
-            <Grid.Column verticalAlign='middle'>
-              <LeftWrapper onClick={leftButtonAction} >
-                <Hamburger>
-                  <HamburgerSpan active={!hideBackButton}>toggle menu</HamburgerSpan>
-                </Hamburger>
-              </LeftWrapper>
-            </Grid.Column>
-            <Grid.Column verticalAlign='middle'>
-              <CenterWrapper>
-                <ImageLogo src={MainLogo} onClick={this._handlerHomeClick} />
-              </CenterWrapper>
-            </Grid.Column>
-            <Grid.Column verticalAlign='middle'>
-              <RightWrapper>
-                <SearchIcon>
-                  <Image src={SearchImage} size='mini' onClick={this._handlerSearchClick} />
-                </SearchIcon>
-                <Image src={BarcodeImage} size='mini' onClick={this._handleBarcodeClick} />
-              </RightWrapper>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+        <MobileMenu className='mobile-visibility'>
+          <Grid columns={3}>
+            <Grid.Row>
+              <Grid.Column verticalAlign='middle'>
+                <LeftWrapper onClick={leftButtonAction} >
+                  <Hamburger>
+                    <HamburgerSpan active={!hideBackButton}>toggle menu</HamburgerSpan>
+                  </Hamburger>
+                </LeftWrapper>
+              </Grid.Column>
+              <Grid.Column verticalAlign='middle'>
+                <CenterWrapper>
+                  <ImageLogo src={MainLogo} onClick={this._handlerHomeClick} />
+                </CenterWrapper>
+              </Grid.Column>
+              <Grid.Column verticalAlign='middle'>
+                <RightWrapper>
+                  <SearchIcon>
+                    <Image src={SearchImage} size='mini' onClick={this._handlerSearchClick} />
+                  </SearchIcon>
+                  <Image src={BarcodeImage} size='mini' onClick={this._handleBarcodeClick} />
+                </RightWrapper>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </MobileMenu>
+        <DesktopMenu className='desktop-visibility'>
+          <Grid padded>
+            <Grid.Row columns='equal' verticalAlign='middle'>
+              <Grid.Column>
+                <A href='/'>
+                  <Image className='brand' src={MainLogo} />
+                </A>
+              </Grid.Column>
+              <Grid.Column>
+                <InputWrapper>
+                  <Input type='text' placeholder='00001' />
+                  <Button onClick={() => {}} >
+                    <Icon name='search' />
+                  </Button>
+                </InputWrapper>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+          <NavMenu>
+            <Grid padded>
+              <Grid.Row columns='equal'>
+                <Grid.Column>
+                  <Button onClick={() => {}}>HOME</Button>
+                </Grid.Column>
+                <Grid.Column>
+                  <Button onClick={() => {}}>CATEGORIES</Button>
+                </Grid.Column>
+                <Grid.Column>
+                  <Button onClick={() => {}}>RECEIPTS</Button>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </NavMenu>
+        </DesktopMenu>
       </Wrapper>
     )
   }

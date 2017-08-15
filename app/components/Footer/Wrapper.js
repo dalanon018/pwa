@@ -14,6 +14,7 @@ const HelperLinks = styled.div`
   margin-bottom: 10px;
   span {
     color: #aeaeae;
+    cursor: pointer;
     font-size: 11px;
   }
 

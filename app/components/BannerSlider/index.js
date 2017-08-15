@@ -25,6 +25,10 @@ const ImageWrapper = styled.div`
   background: url(${props => EmptyImage}) no-repeat center center / cover;
   height: 200px;
   width: 100%;
+
+  @media (min-width: 768px) {
+    height: 350px;
+  }
 `
 
 function BannerSlider ({loader}) {
