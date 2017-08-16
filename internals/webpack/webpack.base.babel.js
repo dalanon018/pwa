@@ -85,6 +85,7 @@ module.exports = (options) => ({
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        TOKEN_URL: JSON.stringify(process.env.TOKEN_URL),
         API_BASE_URL: JSON.stringify(process.env.API_BASE_URL),
         APP_BASE_URL: JSON.stringify(process.env.APP_BASE_URL),
         FIREBASE_API_KEY: JSON.stringify(process.env.FIREBASE_API_KEY),
@@ -95,7 +96,11 @@ module.exports = (options) => ({
         FIREBASE_MESSAGING_SENDER_ID: JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID),
         FIREBASE_MAIN_OBJECT: JSON.stringify(process.env.FIREBASE_MAIN_OBJECT),
         FIREBASE_USERNAME: JSON.stringify(process.env.FIREBASE_USERNAME),
-        FIREBASE_PASSWORD: JSON.stringify(process.env.FIREBASE_PASSWORD)
+        FIREBASE_PASSWORD: JSON.stringify(process.env.FIREBASE_PASSWORD),
+        OATH_CLIENT_ID: JSON.stringify(process.env.OATH_CLIENT_ID),
+        OATH_CLIENT_SECRET: JSON.stringify(process.env.OATH_CLIENT_SECRET),
+        OATH_RESPONSE_TYPE: JSON.stringify(process.env.OATH_RESPONSE_TYPE),
+        OATH_GRANT_TYPE: JSON.stringify(process.env.OATH_GRANT_TYPE)
       }
     }),
     new webpack.NamedModulesPlugin()

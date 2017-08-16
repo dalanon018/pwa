@@ -11,6 +11,7 @@ import {
 } from 'ramda'
 
 import {
+  NUMBER,
   STRING,
   ValidateSchema
 } from './helper'
@@ -30,7 +31,7 @@ const Schema = {
   },
   amount: {
     name: 'amount',
-    type: STRING
+    type: NUMBER
   },
   name: {
     name: 'name',

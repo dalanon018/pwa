@@ -35,8 +35,9 @@ function NavCategories ({
             {
               categories &&
               categories.valueSeq().map((category, index) => {
+                const handleRedirect = () => changeRoute(`/products-category/${category.get('id')}`)
                 return (
-                  <CategoryItem key={index}>
+                  <CategoryItem key={index} onClick={handleRedirect}>
                     <CategoryIcon background={sampleCategoryIcon} />
                     <p>{category.get('name')}</p>
                   </CategoryItem>

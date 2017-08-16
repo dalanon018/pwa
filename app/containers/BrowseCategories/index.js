@@ -57,7 +57,6 @@ export class BrowseCategories extends React.PureComponent { // eslint-disable-li
               height='160'
               iconWidth='45'
               changeRoute={changeRoute}
-              route='/products-category'
               fontSize='14'
               grids={grids} />
           </Grid>

@@ -3,6 +3,8 @@ import {
   getProductsByCategoryAction,
   setProductsByCategoryAction,
 
+  getProductsByTagsAction,
+
   getProductsViewedAction,
   setProductsViewedAction
 } from '../actions'
@@ -10,6 +12,8 @@ import {
 import {
   GET_PRODUCTS_CATEGORY,
   SET_PRODUCTS_CATEGORY,
+
+  GET_TAGS_PRODUCTS,
 
   GET_PRODUCTS_VIEWED,
   SET_PRODUCTS_VIEWED
@@ -33,6 +37,17 @@ describe('ProductsByCategory actions', () => {
         payload
       }
       expect(setProductsByCategoryAction(payload)).toEqual(expected)
+    })
+  })
+
+  describe('Products by Tags', () => {
+    it('has a type of GET_TAGS_PRODUCTS', () => {
+      const payload = 'featured'
+      const expected = {
+        type: GET_TAGS_PRODUCTS,
+        payload
+      }
+      expect(getProductsByTagsAction(payload)).toEqual(expected)
     })
   })
 

@@ -11,6 +11,9 @@ describe('<ProductsByCategory />', () => {
     getProductCategories: () => {},
     getProductsViewed: () => {},
     loader: false,
+    params: {
+      id: 'CAT1'
+    },
     productsByCategory: fromJS([]),
     productsViewed: fromJS([]),
     categories: fromJS([])

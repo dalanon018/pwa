@@ -1,7 +1,7 @@
 import moment from 'moment'
 import { takeLatest } from 'redux-saga'
 import { find, uniq, isEmpty, isEqual, noop } from 'lodash'
-import { compose, filter, contains, toPairs, map, head, ifElse } from 'ramda'
+import { compose, filter, contains, join, toPairs, map, propOr, head, ifElse, is } from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 
@@ -10,8 +10,6 @@ import request from 'utils/request'
 import { transformCategory } from 'utils/transforms'
 import { getItem, setItem } from 'utils/localStorage'
 import { DateDifferece } from 'utils/date'
-
-import FakeCategories from 'fixtures/categories.json'
 
 import {
   GET_PRODUCT_CATEGORIES,
@@ -28,6 +26,13 @@ import {
 
 import {
   API_BASE_URL,
+
+  TOKEN_URL,
+  OATH_CLIENT_ID,
+  OATH_CLIENT_SECRET,
+  OATH_RESPONSE_TYPE,
+  OATH_GRANT_TYPE,
+
   ACCESS_TOKEN_KEY,
   MOBILE_NUMBERS_KEY,
   ORDERED_LIST_KEY,
@@ -40,12 +45,14 @@ function * transformEachEntity (transform, entity) {
 }
 
 function * requestCategories () {
-  // const token = yield getAccessToken()
+  const token = yield getAccessToken()
   const dbResource = yield call(getItem, CATEGORIES_KEY)
-  const req = yield Promise.resolve(FakeCategories)
-
+  const req = yield call(request, `${API_BASE_URL}/categories`, {
+    method: 'GET',
+    token: token.access_token
+  })
   if (!req.err) {
-    yield call(setItem, CATEGORIES_KEY, req)
+    const getResults = propOr([], 'categoryList')
     const isObjectNotEqual = (data) => !isEqual(dbResource, data)
 
     const shouldUpdate = ifElse(
@@ -54,7 +61,11 @@ function * requestCategories () {
       noop
     )
 
-    yield shouldUpdate(req)
+    yield call(setItem, CATEGORIES_KEY, getResults(req))
+    yield * compose(
+      shouldUpdate,
+      getResults
+    )(req)
   } else {
     throw new Error(req.err)
   }
@@ -69,9 +80,23 @@ function * getCategoriesResource () {
 }
 
 export function * requestAccessToken () {
-  const requestURL = `${API_BASE_URL}/authorize`
-  const req = yield call(request, requestURL, {
-    method: 'POST'
+  const params = {
+    client_id: OATH_CLIENT_ID,
+    client_secret: OATH_CLIENT_SECRET,
+    response_type: OATH_RESPONSE_TYPE,
+    grant_type: OATH_GRANT_TYPE
+  }
+
+  const fnSearchParams = compose(
+    join('&'),
+    map(join('=')),
+    toPairs
+  )
+
+  const req = yield call(request, TOKEN_URL, {
+    method: 'POST',
+    contentType: 'application/x-www-form-urlencoded;charset=UTF-8',
+    body: fnSearchParams(params)
   })
 
   if (!req.err) {
@@ -106,7 +131,7 @@ export function * getAccessToken () {
   return yield requestAccessToken()
 }
 
-export function * updateUICategories (req) {
+export function * updateUICategories (req = Array) {
   const transform = yield req.map((data) => transformEachEntity(transformCategory, data))
 
   yield put(setProductCategoriesAction(transform))
@@ -116,7 +141,12 @@ export function * getCategories () {
   try {
     // we need to see if we need to request this since we save this anyway to the browser
     const req = yield getCategoriesResource()
-    yield updateUICategories(req || [])
+    const getResults = ifElse(
+      is(Array),
+      updateUICategories,
+      noop
+    )
+    yield getResults(req)
   } catch (e) {
     console.log(e)
   }

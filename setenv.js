@@ -1,6 +1,7 @@
 /*eslint-disable*/
 const env = process.env.NODE_ENV
 if (env === 'production') {
+  console.log(`TOKEN_URL=${process.env.TOKEN_URL}`)
   console.log(`API_BASE_URL=${process.env.API_BASE_URL}`)
   console.log(`APP_BASE_URL=${process.env.APP_BASE_URL}`)
 
@@ -15,8 +16,14 @@ if (env === 'production') {
   console.log(`FIREBASE_USERNAME=${process.env.FIREBASE_USERNAME}`)
   console.log(`FIREBASE_PASSWORD=${process.env.FIREBASE_PASSWORD}`)
 
+  console.log(`OATH_CLIENT_ID=${process.env.OATH_CLIENT_ID}`)
+  console.log(`OATH_CLIENT_SECRET=${process.env.OATH_CLIENT_SECRET}`)
+  console.log(`OATH_RESPONSE_TYPE=${process.env.OATH_RESPONSE_TYPE}`)
+  console.log(`OATH_GRANT_TYPE=${process.env.OATH_GRANT_TYPE}`)
+
 } else {
-  console.log(`API_BASE_URL=http://localhost:4000`)
+  console.log(`TOKEN_URL=https://202.60.9.110:8443/accounts/oauth2/token`)
+  console.log(`API_BASE_URL=http://202.60.9.110:8000/ecms/api/v1`)
   console.log(`APP_BASE_URL=http://localhost:3000`)
 
   console.log(`FIREBASE_API_KEY=AIzaSyBaKhRjF4feFUsPyezk8Hmu0u_PCbNb2oI`)
@@ -29,4 +36,9 @@ if (env === 'production') {
 
   console.log(`FIREBASE_USERNAME=joshuacalpuerto@gmail.com`)
   console.log(`FIREBASE_PASSWORD=password`)
+
+  console.log(`OATH_CLIENT_ID=ecms-pwa`)
+  console.log(`OATH_CLIENT_SECRET=ecms-pwa-secret`)
+  console.log(`OATH_RESPONSE_TYPE=token`)
+  console.log(`OATH_GRANT_TYPE=client_credentials`)
 }

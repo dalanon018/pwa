@@ -160,7 +160,7 @@ export default function createRoutes (store) {
             importModules.catch(errorLoading)
           }
         }, {
-          path: '/products-category',
+          path: '/products-category/:id',
           name: 'productsByCategory',
           getComponent (nextState, cb) {
             const importModules = Promise.all([

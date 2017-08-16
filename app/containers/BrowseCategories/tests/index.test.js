@@ -9,6 +9,7 @@ describe('<BrowseCategories />', () => {
     loader: false,
     categories: fromJS([]),
     getCategories: () => {},
+    changeRoute: () => {},
     dispatch: () => {}
   }
 

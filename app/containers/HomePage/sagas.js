@@ -5,23 +5,33 @@ import {
   put,
   take
 } from 'redux-saga/effects'
+import { compose, map, filter, prop, propOr } from 'ramda'
 import { LOCATION_CHANGE } from 'react-router-redux'
-// import request from 'utils/request'
 import { takeLatest } from 'redux-saga'
+
+import request from 'utils/request'
+
+import { transformProduct } from 'utils/transforms'
 
 import {
   GET_FEATURED_PRODUCTS
 } from './constants'
+
 import {
   setFeaturedProductsAction
 } from './actions'
 
-import { transformProduct } from 'utils/transforms'
-import FakeProducts from 'fixtures/products.json'
+import {
+  API_BASE_URL
+} from 'containers/App/constants'
 
-function * sleep (ms) {
-  yield new Promise(resolve => setTimeout(resolve, ms))
-}
+import {
+  getAccessToken
+} from 'containers/Buckets/sagas'
+
+// function * sleep (ms) {
+//   yield new Promise(resolve => setTimeout(resolve, ms))
+// }
 
 function * transformEachEntity (entity) {
   const response = yield call(transformProduct, entity)
@@ -33,19 +43,21 @@ export function * initializeAppGlobals () {
 }
 
 export function * getProduct (data) {
-  // const headers = new Headers()
-  // const { payload: { resolve, reject } } = data
-  // console.log(data)
+  const token = yield getAccessToken()
 
-  // headers.append('Content-Type', 'application/json')
-  // headers.append('Accept', 'application/json')
+  const req = yield call(request, `${API_BASE_URL}/tags/FEATURED?deviceOrigin=PWA`, {
+    method: 'GET',
+    token: token.access_token
+  })
 
-  const req = yield Promise.resolve(FakeProducts)
-  yield sleep(1500)
   if (!req.err) {
-    const transform = yield req.map(transformEachEntity)
-
-    yield put(setFeaturedProductsAction(transform))
+    const transform = compose(
+      map(transformEachEntity),
+      filter(prop('cliqqCodes')),
+      propOr([], 'productList')
+    )
+    const products = yield transform(req)
+    yield put(setFeaturedProductsAction(products))
   }
 }
 

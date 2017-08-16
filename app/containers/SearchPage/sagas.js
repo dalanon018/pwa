@@ -1,13 +1,12 @@
 
 import { takeLatest } from 'redux-saga'
-import { filter } from 'lodash'
+import { compose, map, propOr } from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
-// import request from 'utils/request'
+
+import request from 'utils/request'
 import { setItem, getItem } from 'utils/localStorage'
 import { transformProduct } from 'utils/transforms'
-
-import FakeProducts from 'fixtures/products.json'
 
 import {
   GET_SEARCH_PRODUCT,
@@ -22,6 +21,14 @@ import {
   setProductErrorAction
 } from './actions'
 
+import {
+  API_BASE_URL
+} from 'containers/App/constants'
+
+import {
+  getAccessToken
+} from 'containers/Buckets/sagas'
+
 function * transformEachEntity (entity) {
   const response = yield call(transformProduct, entity)
   return response
@@ -29,24 +36,20 @@ function * transformEachEntity (entity) {
 
 export function * getProductSearch (payload) {
   const { payload: { id } } = payload
-  // const headers = new Headers()
-  // const currentUser = yield select(selectCurrentUser())
-  // headers.append('Content-Type', 'application/json')
-  // headers.append('Accept', 'application/json')
-  // headers.append('Authorization', `JWT ${currentUser.token}`)
+  const token = yield getAccessToken()
+  const req = yield call(request, `${API_BASE_URL}/search/${id}?deviceOrigin=PWA`, {
+    method: 'GET',
+    token: token.access_token
+  })
 
-  // const requestURL = `${API_BASE_URL}/data/sectors`
-  // const req = yield call(request, requestURL, {
-  //   method: 'GET',
-  //   headers
-  // })
-
-  // We will emulate data
-  const req = yield Promise.resolve(FakeProducts)
   if (!req.err) {
-    const transform = yield req.map(transformEachEntity)
-    const findData = filter(transform, (prod) => prod.cliqqCode.includes(id))
-    yield put(setSearchProductAction(findData))
+    const transform = compose(
+      map(transformEachEntity),
+      propOr([], 'productList')
+    )
+    const products = yield transform(req)
+
+    yield put(setSearchProductAction(products))
   }
 }
 

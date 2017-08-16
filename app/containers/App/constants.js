@@ -14,7 +14,12 @@ export const LOAD_REPOS_SUCCESS = 'boilerplate/App/LOAD_REPOS_SUCCESS'
 export const LOAD_REPOS_ERROR = 'boilerplate/App/LOAD_REPOS_ERROR'
 export const DEFAULT_LOCALE = 'en'
 
+export const TOKEN_URL = process.env.TOKEN_URL
 export const API_BASE_URL = process.env.API_BASE_URL
+export const OATH_CLIENT_ID = process.env.OATH_CLIENT_ID
+export const OATH_CLIENT_SECRET = process.env.OATH_CLIENT_SECRET
+export const OATH_RESPONSE_TYPE = process.env.OATH_RESPONSE_TYPE
+export const OATH_GRANT_TYPE = process.env.OATH_GRANT_TYPE
 
 export const LAST_VIEWS_KEY = 'boilerplate/App/LAST_VIEWS'
 export const CURRENT_PRODUCT_KEY = 'boilerplate/App/CURRENT_PRODUCT'

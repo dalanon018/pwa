@@ -6,7 +6,9 @@ import {
   Label,
   Menu
 } from 'semantic-ui-react'
-
+import {
+  partial
+} from 'ramda'
 import messages from './messages'
 import HomeImage from 'images/icons/home-icon.svg'
 import BarcodeImage from 'images/icons/barcode-icon.svg'
@@ -78,18 +80,22 @@ const SidebarItem = ({ children, image }) => {
   )
 }
 
-const SideBarChildrenContainer = ({ categories }) => (
-  <UlWrapper>
-    <Li>
-      <FormattedMessage {...messages.sale} />
-    </Li>
-    {categories.map((category) => (
-      <Li key={category.get('name')}>
-        { category.get('name').toUpperCase() }
+const SideBarChildrenContainer = ({ changeRoute, categories }) => {
+  const handleRedirect = (id) => changeRoute(`/products-category/${id}`)
+
+  return (
+    <UlWrapper>
+      <Li onClick={partial(handleRedirect, ['sale'])}>
+        <FormattedMessage {...messages.sale} />
       </Li>
-    ))}
-  </UlWrapper>
-)
+      {categories.map((category) => (
+        <Li key={category.get('name')} onClick={partial(handleRedirect, [category.get('id')])}>
+          { category.get('name').toUpperCase() }
+        </Li>
+      ))}
+    </UlWrapper>
+  )
+}
 
 class SidebarMenu extends React.PureComponent {
   static propTypes = {
@@ -115,7 +121,7 @@ class SidebarMenu extends React.PureComponent {
   }
 
   render () {
-    const { categories, toggleSidebar, toggleAction } = this.props
+    const { categories, changeRoute, toggleSidebar, toggleAction } = this.props
 
     return (
       <SidebarContainer toggle={toggleSidebar} onClick={toggleAction}>
@@ -136,7 +142,7 @@ class SidebarMenu extends React.PureComponent {
                 <FormattedMessage {...messages.menuCategories} />
               </SidebarItem>
               {
-                <SideBarChildrenContainer categories={categories} />
+                <SideBarChildrenContainer categories={categories} changeRoute={changeRoute} />
               }
             </Menu.Item>
           </MenuNavWrapper>

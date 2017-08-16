@@ -1,15 +1,14 @@
 import moment from 'moment'
 import { takeLatest } from 'redux-saga'
 import { compact } from 'lodash'
-import { compose, identity, ifElse, is, prop, sort, uniq, uniqBy } from 'ramda'
+import { compose, identity, ifElse, is, prop, propOr, sort, uniq, uniqBy } from 'ramda'
 
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
-// import request from 'utils/request'
+
+import request from 'utils/request'
 import { getItem, setItem } from 'utils/localStorage'
 import { transformOrder } from 'utils/transforms'
-
-import FakeOrders from 'fixtures/orders.json'
 
 import {
   GET_API_PURCHASES,
@@ -27,6 +26,8 @@ import {
 } from './actions'
 
 import {
+  API_BASE_URL,
+
   ORDERED_LIST_KEY,
   MOBILE_NUMBERS_KEY
 } from 'containers/App/constants'
@@ -34,6 +35,10 @@ import {
 import {
   setMobileNumbersAction
 } from 'containers/Buckets/actions'
+
+import {
+  getAccessToken
+} from 'containers/Buckets/sagas'
 
 function * transformEachEntity (entity) {
   const response = yield call(transformOrder, entity)
@@ -65,24 +70,21 @@ function * setOrderList (apiOrders) {
 }
 
 export function * getApiPurchases () {
-  // remember we have to get the last mobile numbers used here.
-  // const headers = new Headers()
-  // const currentUser = yield select(selectCurrentUser())
-  // headers.append('Content-Type', 'application/json')
-  // headers.append('Accept', 'application/json')
-  // headers.append('Authorization', `JWT ${currentUser.token}`)
+  const token = yield getAccessToken()
+  const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
 
-  // const requestURL = `${API_BASE_URL}/data/sectors`
-  // const req = yield call(request, requestURL, {
-  //   method: 'GET',
-  //   headers
-  // })
-
-  // We will emulate data
-  const req = yield Promise.resolve(FakeOrders)
+  // we will only get the last mobileNumber used
+  const mobile = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
+  const req = yield call(request, `${API_BASE_URL}/purchases/${mobile}?deviceOrigin=PWA`, {
+    method: 'GET',
+    token: token.access_token
+  })
 
   if (req) {
-    yield * setOrderList(req)
+    const getOrderListProp = propOr([], 'salesOrderList')
+    const orderLists = getOrderListProp(req)
+
+    yield * setOrderList(orderLists)
     const allOrders = yield * getOrderList()
 
     const transform = yield allOrders.map(transformEachEntity)
