@@ -10,8 +10,6 @@ import { takeLatest } from 'redux-saga'
 import {
   compose,
   map,
-  filter,
-  prop,
   propOr,
   toUpper
 } from 'ramda'
@@ -58,7 +56,7 @@ function * getLastViewedItems () {
 export function * getProductByCategory (args) {
   const { payload } = args
   const token = yield getAccessToken()
-  const req = yield call(request, `${API_BASE_URL}/categories/${payload}`, {
+  const req = yield call(request, `${API_BASE_URL}/categories/${payload}/enabled`, {
     method: 'GET',
     token: token.access_token
   })
@@ -66,9 +64,6 @@ export function * getProductByCategory (args) {
   if (!req.err) {
     const transform = compose(
       map(transformEachEntity),
-      // we have to filter since  some items dont have cliqq codes
-      // once they are not active.
-      filter(prop('cliqqCodes')),
       propOr([], 'productList')
     )
     const products = yield transform(req)
@@ -87,9 +82,6 @@ export function * getProductByTags (args) {
   if (!req.err) {
     const transform = compose(
       map(transformEachEntity),
-      // we have to filter since  some items dont have cliqq codes
-      // once they are not active.
-      filter(prop('cliqqCodes')),
       propOr([], 'productList')
     )
     const products = yield transform(req)
