@@ -5,7 +5,7 @@ import {
   put,
   take
 } from 'redux-saga/effects'
-import { compose, map, prop, filter, propOr } from 'ramda'
+import { compose, map, propOr } from 'ramda'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { takeLatest } from 'redux-saga'
 
@@ -53,9 +53,6 @@ export function * getProduct (data) {
   if (!req.err) {
     const transform = compose(
       map(transformEachEntity),
-      // we have to filter since  some items dont have cliqq codes
-      // once they are not active.
-      filter(prop('cliqqCodes')),
       propOr([], 'productList')
     )
     const products = yield transform(req)
