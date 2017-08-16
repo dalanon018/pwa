@@ -9,13 +9,17 @@ import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
+import { noop } from 'lodash'
 import {
   ifElse,
   contains,
   curry,
   compose,
+  equals,
   toUpper,
-  identity
+  identity,
+  path,
+  partial
 } from 'ramda'
 import messages from './messages'
 import styled from 'styled-components'
@@ -76,6 +80,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
     this._handlePageTitle = this._handlePageTitle.bind(this)
     this._isCategoryExist = this._isCategoryExist.bind(this)
+    this._fetchProductByTagCategory = this._fetchProductByTagCategory.bind(this)
   }
 
   _isCategoryExist () {
@@ -98,14 +103,40 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     return titleComposition(id)
   }
 
-  componentDidMount () {
-    const { getProductsViewed, getProductCategories, getProductsByTags, getProductsByCategory, params: { id } } = this.props
-
+  /**
+   * Here we will request for our data base on change of route.
+   * @param {*w} props
+   */
+  _fetchProductByTagCategory (props) {
+    const { getProductsByTags, getProductsByCategory, params: { id } } = props
     const executeFetchData = ifElse(isTag(this._tags), getProductsByTags, getProductsByCategory)
+    executeFetchData(id)
+  }
+
+  componentDidMount () {
+    const { getProductsViewed, getProductCategories } = this.props
 
     getProductCategories()
     getProductsViewed()
-    executeFetchData(id)
+
+    this._fetchProductByTagCategory(this.props)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const { params } = this.props
+
+    const isParamsEqual = (id, props) => compose(
+      equals(id),
+      path(['params', 'id'])
+    )(props)
+
+    const updateFetchProduct = ifElse(
+      partial(isParamsEqual, [params.id]),
+      noop,
+      this._fetchProductByTagCategory
+    )
+
+    updateFetchProduct(nextProps)
   }
 
   render () {
