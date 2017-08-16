@@ -5,7 +5,7 @@ import {
   put,
   take
 } from 'redux-saga/effects'
-import { compose, map, propOr } from 'ramda'
+import { compose, map, filter, prop, propOr } from 'ramda'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { takeLatest } from 'redux-saga'
 
@@ -53,6 +53,7 @@ export function * getProduct (data) {
   if (!req.err) {
     const transform = compose(
       map(transformEachEntity),
+      filter(prop('cliqqCodes')),
       propOr([], 'productList')
     )
     const products = yield transform(req)

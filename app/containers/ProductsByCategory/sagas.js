@@ -10,6 +10,8 @@ import { takeLatest } from 'redux-saga'
 import {
   compose,
   map,
+  filter,
+  prop,
   propOr,
   toUpper
 } from 'ramda'
@@ -82,6 +84,7 @@ export function * getProductByTags (args) {
   if (!req.err) {
     const transform = compose(
       map(transformEachEntity),
+      filter(prop('cliqqCodes')),
       propOr([], 'productList')
     )
     const products = yield transform(req)
