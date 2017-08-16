@@ -83,7 +83,7 @@ const transformProduct = (data) => {
 
     return Object.assign({}, data, {
       image: applyImageUrl('Primary')(data),
-      brandLogo: applyImageUrl('BrandLogo')(data)
+      brandLogo: applyImageUrl('Brand Logo')(data)
     })
   }
 

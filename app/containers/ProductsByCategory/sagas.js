@@ -6,16 +6,24 @@ import {
   take
 } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
-// import request from 'utils/request'
 import { takeLatest } from 'redux-saga'
+import {
+  compose,
+  map,
+  filter,
+  prop,
+  propOr,
+  toUpper
+} from 'ramda'
 
-import FakeProducts from 'fixtures/accessories.json'
+import request from 'utils/request'
 
 import { transformProduct } from 'utils/transforms'
 import { getItem } from 'utils/localStorage'
 
 import {
   GET_PRODUCTS_CATEGORY,
+  GET_TAGS_PRODUCTS,
   GET_PRODUCTS_VIEWED
 } from './constants'
 import {
@@ -24,12 +32,18 @@ import {
 } from './actions'
 
 import {
+  API_BASE_URL,
+
   LAST_VIEWS_KEY
 } from 'containers/App/constants'
 
-function * sleep (ms) {
-  yield new Promise(resolve => setTimeout(resolve, ms))
-}
+import {
+  getAccessToken
+} from 'containers/Buckets/sagas'
+
+// function * sleep (ms) {
+//   yield new Promise(resolve => setTimeout(resolve, ms))
+// }
 
 function * transformEachEntity (entity) {
   const response = yield call(transformProduct, entity)
@@ -41,13 +55,45 @@ function * getLastViewedItems () {
   return products || []
 }
 
-export function * getProduct () {
-  const req = yield Promise.resolve(FakeProducts)
-  yield sleep(1500)
-  if (!req.err) {
-    const transform = yield req.map(transformEachEntity)
+export function * getProductByCategory (args) {
+  const { payload } = args
+  const token = yield getAccessToken()
+  const req = yield call(request, `${API_BASE_URL}/categories/${payload}`, {
+    method: 'GET',
+    token: token.access_token
+  })
 
-    yield put(setProductsByCategoryAction(transform))
+  if (!req.err) {
+    const transform = compose(
+      map(transformEachEntity),
+      // we have to filter since  some items dont have cliqq codes
+      // once they are not active.
+      filter(prop('cliqqCodes')),
+      propOr([], 'productList')
+    )
+    const products = yield transform(req)
+    yield put(setProductsByCategoryAction(products))
+  }
+}
+
+export function * getProductByTags (args) {
+  const { payload } = args
+  const token = yield getAccessToken()
+  const req = yield call(request, `${API_BASE_URL}/tags/${toUpper(payload)}?deviceOrigin=PWA`, {
+    method: 'GET',
+    token: token.access_token
+  })
+
+  if (!req.err) {
+    const transform = compose(
+      map(transformEachEntity),
+      // we have to filter since  some items dont have cliqq codes
+      // once they are not active.
+      filter(prop('cliqqCodes')),
+      propOr([], 'productList')
+    )
+    const products = yield transform(req)
+    yield put(setProductsByCategoryAction(products))
   }
 }
 
@@ -57,8 +103,12 @@ export function * getProductsViewed () {
   yield put(setProductsViewedAction(response))
 }
 
-export function * getProductSaga () {
-  yield * takeLatest(GET_PRODUCTS_CATEGORY, getProduct)
+export function * getProductByCategorySaga () {
+  yield * takeLatest(GET_PRODUCTS_CATEGORY, getProductByCategory)
+}
+
+export function * getProductByTagsSaga () {
+  yield * takeLatest(GET_TAGS_PRODUCTS, getProductByTags)
 }
 
 export function * getProductsViewedSaga () {
@@ -68,7 +118,9 @@ export function * getProductsViewedSaga () {
 // Individual exports for testing
 export function * productsCategorySagas () {
   const watcher = yield [
-    fork(getProductSaga),
+    fork(getProductByCategorySaga),
+
+    fork(getProductByTagsSaga),
 
     fork(getProductsViewedSaga)
   ]

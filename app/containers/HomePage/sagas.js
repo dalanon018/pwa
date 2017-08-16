@@ -59,7 +59,6 @@ export function * getProduct (data) {
       propOr([], 'productList')
     )
     const products = yield transform(req)
-    console.log(products)
     yield put(setFeaturedProductsAction(products))
   }
 }
