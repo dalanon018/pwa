@@ -4,7 +4,6 @@ const PopupWrapper = styled.div`
   background-color: #FFFFFF;;
   bottom: 0;
   height: ${props => props.toggle ? '100vh' : '0'};
-  // height: 100vh;
   color: #5B5B5B;
   left: 0;
   overflow: auto;
@@ -12,6 +11,13 @@ const PopupWrapper = styled.div`
   transition: all .3s ease;
   width: 100%;
   z-index: 999;
+
+  @media (min-width: 768px) {
+    border-radius: 30px;
+    height: auto;
+    position: relative;
+    z-index: inherit;
+  }
 `
 
 const PopupContainer = styled.div`

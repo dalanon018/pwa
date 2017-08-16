@@ -226,6 +226,8 @@ export default class MainMenu extends PureComponent {
     this._handlerSearchClick = this._handlerSearchClick.bind(this)
     this._handleShowCategories = this._handleShowCategories.bind(this)
     this._handleHideCategories = this._handleHideCategories.bind(this)
+    this._handleCategoryRoute = this._handleCategoryRoute.bind(this)
+    this._handlerPreventDefault = this._handlerPreventDefault.bind(this)
   }
 
   _handleBarcodeClick () {
@@ -243,6 +245,11 @@ export default class MainMenu extends PureComponent {
     changeRoute('/search')
   }
 
+  _handleCategoryRoute () {
+    const { changeRoute } = this.props
+    changeRoute('/products-category')
+  }
+
   _handleShowCategories () {
     this.setState({
       show: true
@@ -255,9 +262,12 @@ export default class MainMenu extends PureComponent {
     })
   }
 
+  _handlerPreventDefault (e) {
+    e.preventDefault()
+  }
+
   render () {
     const { leftButtonAction, hideBackButton, categories } = this.props
-    console.log('categories', categories.toJS())
     return (
       <Wrapper>
         <MobileMenu className='mobile-visibility'>
@@ -310,13 +320,13 @@ export default class MainMenu extends PureComponent {
             <Grid padded>
               <Grid.Row columns='equal'>
                 <Grid.Column>
-                  <Button onClick={() => {}}>HOME</Button>
+                  <Button onClick={this._handlerHomeClick}>HOME</Button>
                 </Grid.Column>
                 <Grid.Column>
-                  <Button onMouseOver={this._handleShowCategories}>CATEGORIES</Button>
+                  <Button onClick={(e) => this._handlerPreventDefault(e)} onMouseOver={this._handleShowCategories}>CATEGORIES</Button>
                 </Grid.Column>
                 <Grid.Column>
-                  <Button onClick={() => {}}>RECEIPTS</Button>
+                  <Button onClick={this._handleBarcodeClick}>RECEIPTS</Button>
                 </Grid.Column>
               </Grid.Row>
             </Grid>
@@ -331,7 +341,7 @@ export default class MainMenu extends PureComponent {
                       return (
                         <Grid.Column key={index}>
                           <CategoryItem>
-                            <A href>{item.get('name')}</A>
+                            <A onClick={this._handleCategoryRoute}>{item.get('name')}</A>
                           </CategoryItem>
                         </Grid.Column>
                       )

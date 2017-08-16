@@ -28,11 +28,17 @@ const CheckboxWrapper = styled.div`
   a {
     color: #F58322;
   }
+
+  @media (min-width: 768px) {
+    &.prompt-number {
+      justify-content: center;
+    }
+  }
 `
 
 function CheckboxField ({label, name, ...props}) {
   return (
-    <CheckboxWrapper>
+    <CheckboxWrapper className='prompt-number'>
       <Checkbox id={name} {...props} />
       <label htmlFor={name}>{label}</label>
     </CheckboxWrapper>

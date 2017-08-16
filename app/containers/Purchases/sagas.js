@@ -100,6 +100,7 @@ export function * getLocalPurchases () {
 export function * getModalToggle () {
   const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
   const modalToggle = !mobileNumbers
+  console.log('modalToggle', modalToggle)
   // if we have mobile numbers then we dont have to show our modal else we have to show it.
   yield put(setModalToggleAction(modalToggle))
 }

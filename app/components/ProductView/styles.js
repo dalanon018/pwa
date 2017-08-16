@@ -10,6 +10,10 @@ const ProductWrapper = styled.div`
   // not included on sorting
   animation:fadeIn ease-in 1;
   animation-duration: .5s;
+
+  @media (min-width: 768px) {
+    margin: 0 0 20px 0;
+  }
 `
 
 const ImageWrapper = styled.div`
@@ -131,6 +135,12 @@ const RibbonWrapper = styled.div`
 const CustomGridRow = styled(Grid.Row)`
   @media (min-width: 320px) {
     padding-bottom: 0 !important;
+  }
+  @media (min-width: 768px) {
+    .padding__none--horizontal {
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+    }
   }
 `
 

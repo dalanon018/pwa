@@ -188,6 +188,10 @@ input.input-field {
   margin: 0 auto;
   width: 100%;
 }
+
+.modal-popup-slide {
+  padding: 0;
+}
 /*******************************
         Responsive Overrides
 *******************************/
@@ -267,7 +271,7 @@ input.input-field {
     padding: 0;
   }
   .desktop-visibility {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -289,5 +293,13 @@ input.input-field {
   }
   .desktop-visibility {
     display: block !important;
+  }
+  .ui.modal {
+    border-radius: 50px !important;
+  }
+  .modal-popup-slide {
+    input.input-field {
+      width: 200px !important;
+    }
   }
 }

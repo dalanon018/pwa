@@ -54,13 +54,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     mobileNumbers: PropTypes.object.isRequired
   }
 
-  state = {
-    modalToggle: false,
-    prevMobileNumber: null,
-    socialToggle: false,
-    copied: false
-  }
-
   /**
    * this will handle if success is valid after submission
    */
@@ -68,6 +61,13 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   constructor () {
     super()
+    this.state = {
+      modalToggle: false,
+      prevMobileNumber: null,
+      socialToggle: false,
+      copied: false,
+      openModalPhoneDesktop: false
+    }
 
     this._handleSubmit = this._handleSubmit.bind(this)
     this._handleClose = this._handleClose.bind(this)
@@ -77,6 +77,20 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this._handleMobileRegistered = this._handleMobileRegistered.bind(this)
     this._handleSocialToggle = this._handleSocialToggle.bind(this)
     this._handleCopy = this._handleCopy.bind(this)
+    this._handleModalOpen = this._handleModalOpen.bind(this)
+    this._handleModalClose = this._handleModalClose.bind(this)
+  }
+
+  _handleModalOpen () {
+    this.setState({
+      openModalPhoneDesktop: true
+    })
+  }
+
+  _handleModalClose () {
+    this.setState({
+      openModalPhoneDesktop: false
+    })
   }
 
   _handleSubmit ({ value }) {
@@ -161,7 +175,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   render () {
     const { loading, product, toggle } = this.props
-    const { modalToggle, prevMobileNumber } = this.state
+    const { modalToggle, prevMobileNumber, openModalPhoneDesktop } = this.state
 
     return (
       <div>
@@ -177,14 +191,26 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
           popup={this._handleToggle}
           copied={this._handleCopy}
           toggle={this.state.socialToggle}
-          toggleClick={this._handleSocialToggle} />
-        <PopupSlide
+          toggleClick={this._handleSocialToggle}
+
+          // For Phone Prompt Desktop Modal
           submit={this._handleSubmit}
-          modalClose={this._handleClose}
+          closeModal={this._handleModalClose}
           modalToggle={modalToggle}
-          toggle={toggle}
+          openModal={this._handleModalOpen}
+          toggleModal={toggle}
+          modalStatus={openModalPhoneDesktop}
           mobileNumber={prevMobileNumber}
           onClose={this._handleToggle} />
+        <div className='mobile-visibility'>
+          <PopupSlide
+            submit={this._handleSubmit}
+            modalClose={this._handleClose}
+            modalToggle={modalToggle}
+            toggle={toggle}
+            mobileNumber={prevMobileNumber}
+            onClose={this._handleToggle} />
+        </div>
       </div>
     )
   }
