@@ -166,6 +166,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
     return (
       <HeaderMenu
+        categories={this.props.productCategories}
         hideBackButton={hideBackButton}
         leftButtonAction={this._handleLeftButtonAction}
         changeRoute={changeRoute}

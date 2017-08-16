@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import {
   Image,
   Button,
-  Icon,
-  Input,
+  // Icon,
+  // Input,
   Grid
 } from 'semantic-ui-react'
 
@@ -121,35 +121,37 @@ const MobileMenu = styled.div`
 `
 
 const DesktopMenu = styled.div`
+  position: relative;
+
   .brand {
     display: inline-block !important;
     width: 160px;
   }
 `
 
-const InputWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  input {
-    border-radius: 0 !important;
-    font-family: 'helveticalight' !important;
-    font-size: 18px;
-    height: 50px;
-    width: 490px;
-  }
+// const InputWrapper = styled.div`
+//   display: flex;
+//   justify-content: flex-end;
+//   input {
+//     border-radius: 0 !important;
+//     font-family: 'helveticalight' !important;
+//     font-size: 18px;
+//     height: 50px;
+//     width: 490px;
+//   }
 
-  button {
-    background-color: #F58322 !important;
-    border-radius: 0 !important;
-    padding: 10px 25px !important;
-    i {
-      color: #FFFFFF;
-      font-size: 30px;
-      margin: 0 !important;
-      padding-top: 5px;
-    }
-  }
-`
+//   button {
+//     background-color: #F58322 !important;
+//     border-radius: 0 !important;
+//     padding: 10px 25px !important;
+//     i {
+//       color: #FFFFFF;
+//       font-size: 30px;
+//       margin: 0 !important;
+//       padding-top: 5px;
+//     }
+//   }
+// `
 
 const NavMenu = styled.div`
   button {
@@ -168,6 +170,39 @@ const NavMenu = styled.div`
   }
 `
 
+const CategoriesContainer = styled.div`
+  background-color: #FFFFFF;
+  display: ${props => props.display ? 'block' : 'none'};
+  min-height:378px;
+  position: absolute;
+  top: 170px;
+  padding: 10px 0;
+  z-index: 999999;
+
+  .wrapper {
+    padding: 0 40px;
+  }
+`
+
+const CategoryItem = styled.p`
+  border-bottom: 1px solid #5B5B5B;
+  padding: 20px 0;
+  width: 100%;
+
+  a {
+    color: #5B5B5B;
+    font-family: 'helveticalight';
+    font-size: 18px;
+    letter-spacing: 4px;
+    line-height: 20px;
+    text-transform: uppercase;
+
+    &:hover {
+      color: #F58322;
+    }
+  }
+`
+
 export default class MainMenu extends PureComponent {
   static propTypes= {
     hideBackButton: PropTypes.bool.isRequired,
@@ -182,9 +217,15 @@ export default class MainMenu extends PureComponent {
   constructor () {
     super()
 
+    this.state = {
+      show: false
+    }
+
     this._handleBarcodeClick = this._handleBarcodeClick.bind(this)
     this._handlerHomeClick = this._handlerHomeClick.bind(this)
     this._handlerSearchClick = this._handlerSearchClick.bind(this)
+    this._handleShowCategories = this._handleShowCategories.bind(this)
+    this._handleHideCategories = this._handleHideCategories.bind(this)
   }
 
   _handleBarcodeClick () {
@@ -202,8 +243,21 @@ export default class MainMenu extends PureComponent {
     changeRoute('/search')
   }
 
+  _handleShowCategories () {
+    this.setState({
+      show: true
+    })
+  }
+
+  _handleHideCategories () {
+    this.setState({
+      show: false
+    })
+  }
+
   render () {
-    const { leftButtonAction, hideBackButton } = this.props
+    const { leftButtonAction, hideBackButton, categories } = this.props
+    console.log('categories', categories.toJS())
     return (
       <Wrapper>
         <MobileMenu className='mobile-visibility'>
@@ -240,14 +294,16 @@ export default class MainMenu extends PureComponent {
                   <Image className='brand' src={MainLogo} />
                 </A>
               </Grid.Column>
-              <Grid.Column>
-                <InputWrapper>
-                  <Input type='text' placeholder='00001' />
-                  <Button onClick={() => {}} >
-                    <Icon name='search' />
-                  </Button>
-                </InputWrapper>
-              </Grid.Column>
+              {/*
+                <Grid.Column>
+                  <InputWrapper>
+                    <Input type='text' placeholder='00001' />
+                    <Button onClick={() => {}} >
+                      <Icon name='search' />
+                    </Button>
+                  </InputWrapper>
+                </Grid.Column>
+              */}
             </Grid.Row>
           </Grid>
           <NavMenu>
@@ -257,7 +313,7 @@ export default class MainMenu extends PureComponent {
                   <Button onClick={() => {}}>HOME</Button>
                 </Grid.Column>
                 <Grid.Column>
-                  <Button onClick={() => {}}>CATEGORIES</Button>
+                  <Button onMouseOver={this._handleShowCategories}>CATEGORIES</Button>
                 </Grid.Column>
                 <Grid.Column>
                   <Button onClick={() => {}}>RECEIPTS</Button>
@@ -265,6 +321,26 @@ export default class MainMenu extends PureComponent {
               </Grid.Row>
             </Grid>
           </NavMenu>
+          <CategoriesContainer display={this.state.show} onMouseLeave={this._handleHideCategories}>
+            <div className='wrapper'>
+              <Grid padded>
+                <Grid.Row columns={3}>
+                  {
+                    categories &&
+                    categories.map((item, index) => {
+                      return (
+                        <Grid.Column key={index}>
+                          <CategoryItem>
+                            <A href>{item.get('name')}</A>
+                          </CategoryItem>
+                        </Grid.Column>
+                      )
+                    })
+                  }
+                </Grid.Row>
+              </Grid>
+            </div>
+          </CategoriesContainer>
         </DesktopMenu>
       </Wrapper>
     )

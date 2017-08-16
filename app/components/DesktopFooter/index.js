@@ -33,6 +33,7 @@ const Wrapper = styled.footer`
 
   .custom-header {
     font-size: 18px;
+    margin: 0 0 10px 0 !important;
     text-align: left;
   }
 `
