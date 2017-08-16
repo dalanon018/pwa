@@ -1,13 +1,14 @@
 
 import { takeLatest } from 'redux-saga'
-import { find, compact } from 'lodash'
+import { compact } from 'lodash'
 import { compose, uniqBy, prop } from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
+
+import request from 'utils/request'
+
 import { transformProduct } from 'utils/transforms'
 import { setItem, getItem } from 'utils/localStorage'
-
-import FakeProducts from 'fixtures/products.json'
 
 import {
   GET_PRODUCT,
@@ -24,10 +25,15 @@ import {
 } from './actions'
 
 import {
+  API_BASE_URL,
   LAST_VIEWS_KEY,
   CURRENT_PRODUCT_KEY,
   MOBILE_NUMBERS_KEY
 } from 'containers/App/constants'
+
+import {
+  getAccessToken
+} from 'containers/Buckets/sagas'
 
 // function * sleep (ms) {
 //   yield new Promise(resolve => setTimeout(resolve, ms))
@@ -56,31 +62,21 @@ export function * updateLastViewedItems (args) {
 
 export function * getProduct (payload) {
   const { payload: { id } } = payload
-  // const headers = new Headers()
-  // const currentUser = yield select(selectCurrentUser())
-  // headers.append('Content-Type', 'application/json')
-  // headers.append('Accept', 'application/json')
-  // headers.append('Authorization', `JWT ${currentUser.token}`)
-
-  // const requestURL = `${API_BASE_URL}/data/sectors`
-  // const req = yield call(request, requestURL, {
-  //   method: 'GET',
-  //   headers
-  // })
-
-  // We will emulate data
-  const req = yield Promise.resolve(FakeProducts)
+  const token = yield getAccessToken()
+  const req = yield call(request, `${API_BASE_URL}/products/${id}?deviceOrigin=PWA`, {
+    method: 'GET',
+    token: token.access_token
+  })
 
   if (!req.err) {
-    const transform = yield req.map(transformEachEntity)
-    const findData = find(transform, (prod) => prod.cliqqCode.includes(id))
+    const transform = yield transformEachEntity(req)
 
     // since we have the cliqqcode of the item we can save this last viewed items.
     yield * updateLastViewedItems({
-      payload: findData
+      payload: transform
     })
 
-    yield put(setProductAction(findData))
+    yield put(setProductAction(transform))
   }
 }
 
