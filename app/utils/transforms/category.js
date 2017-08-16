@@ -8,6 +8,7 @@ import {
   omit,
   toPairs,
   prop,
+  propOr,
   propEq
 } from 'ramda'
 
@@ -42,15 +43,14 @@ const transformCategory = (data) => {
 
   const applyImage = (data) => {
     const applyImageUrl = (key) => compose(
-      prop('imageUrl'),
+      propOr('', 'imageUrl'),
       find(propEq('imageType', key)),
       prop('images')
     )
-
     return Object.assign({}, data, {
-      icon: applyImageUrl('Navigation')(data),
+      icon: applyImageUrl('Nav Icon')(data),
       background: applyImageUrl('Background Image')(data),
-      main: applyImageUrl('Primary')(data)
+      main: applyImageUrl('Main Image')(data)
     })
   }
 

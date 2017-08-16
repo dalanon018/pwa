@@ -1,5 +1,7 @@
 
 import {
+  __,
+  assoc,
   find,
   adjust,
   curry,
@@ -9,6 +11,7 @@ import {
   omit,
   toPairs,
   prop,
+  propOr,
   propEq
 } from 'ramda'
 
@@ -16,8 +19,8 @@ import {
   ARRAY,
   OBJECT,
   STRING,
-  ValidateSchema,
-  SwitchFn
+  ValidateSchema
+  // SwitchFn
 } from './helper'
 
 const Schema = {
@@ -73,9 +76,9 @@ const transformProduct = (data) => {
 
   const applyImage = (data) => {
     const applyImageUrl = (key) => compose(
-      prop('imageUrl'),
+      propOr('', 'imageUrl'),
       find(propEq('imageType', key)),
-      prop('images')
+      propOr({}, 'images')
     )
 
     return Object.assign({}, data, {
@@ -85,51 +88,46 @@ const transformProduct = (data) => {
   }
 
   // for now we will only return the first element of the id
-  const applyChangeProductId = (data) => {
-    const getCliqqCode = compose(
-      map(prop('cliqqCode'))
-    )(data.cliqqCode)
+  const applyChangeProductId = (data) => compose(
+      assoc('cliqqCode', __, data),
+      map(prop('cliqqCode')),
+      prop('cliqqCode')
+  )(data)
 
-    return Object.assign({}, data, {
-      cliqqCode: getCliqqCode
-    })
-  }
+  /**
+   * We will not implement this yet
+   * @param {*} data
+   */
+  // const applyChangeDiscount = (data) => {
+  //   const { discount } = data
 
-  const applyChangeDiscount = (data) => {
-    const { discount } = data
+  //   const identifyDiscount = () => {
+  //     const object = OBJECT(discount)
+  //     const array = ARRAY(discount)
 
-    const identifyDiscount = () => {
-      const object = OBJECT(discount)
-      const array = ARRAY(discount)
+  //     return array ? 'array' : (object ? 'object' : null)
+  //   }
 
-      return array ? 'array' : (object ? 'object' : null)
-    }
+  //   return Object.assign({}, data, {
+  //     discount: SwitchFn({
+  //       object: discount,
+  //       array: discount[0] // we will get for now the first index
+  //     })(null)(identifyDiscount())
+  //   })
+  // }
 
-    return Object.assign({}, data, {
-      discount: SwitchFn({
-        object: discount,
-        array: discount[0] // we will get for now the first index
-      })(null)(identifyDiscount())
-    })
-  }
-  const applyChangePrice = (data) => {
-    const amount = compose(
-      prop('amount'),
-      find(propEq('currency', 'PHP')),
-      prop('price')
-    )
+  const applyChangePrice = (data) => compose(
+    assoc('price', __, data),
+    propOr(0, 'amount'),
+    find(propEq('currency', 'PHP')),
+    prop('price')
+  )(data)
 
-    return Object.assign({}, data, {
-      price: amount(data) || 0
-    })
-  }
-
-  const removeKeys = ['images']
+  const removeKeys = ['images', 'discount']
   const adjustmentObject = compose(
     omit(removeKeys),
     applyImage,
     applyChangeProductId,
-    applyChangeDiscount,
     applyChangePrice
   )
 

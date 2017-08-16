@@ -1,15 +1,13 @@
 // import { take, call, put, select } from 'redux-saga/effects';
 import { takeLatest } from 'redux-saga'
-import { isEmpty } from 'lodash'
-import { identity, ifElse } from 'ramda'
+import { isEqual, noop } from 'lodash'
+import { compose, propOr, ifElse, is } from 'ramda'
 import { take, put, fork, cancel, call } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
-// import request from 'utils/request'
+import request from 'utils/request'
 
 import { transformCategory } from 'utils/transforms'
 import { getItem, setItem } from 'utils/localStorage'
-
-import FakeCategories from 'fixtures/categories.json'
 
 import {
   GET_CATEGORIES
@@ -20,8 +18,14 @@ import {
 } from './actions'
 
 import {
+  API_BASE_URL,
+
   CATEGORIES_KEY
 } from 'containers/App/constants'
+
+import {
+  getAccessToken
+} from 'containers/Buckets/sagas'
 
 function * transformEachEntity (transform, entity) {
   const response = yield call(transform, entity)
@@ -29,12 +33,28 @@ function * transformEachEntity (transform, entity) {
 }
 
 function * requestCategories () {
-  // const token = yield getAccessToken()
-  const req = yield Promise.resolve(FakeCategories)
+  const token = yield getAccessToken()
+  const dbResource = yield call(getItem, CATEGORIES_KEY)
+  const req = yield call(request, `${API_BASE_URL}/categories`, {
+    method: 'GET',
+    token: token.access_token
+  })
 
   if (!req.err) {
-    yield call(setItem, CATEGORIES_KEY, req)
-    return req
+    const getResults = propOr([], 'categoryList')
+    const isObjectNotEqual = (data) => !isEqual(dbResource, data)
+
+    const shouldUpdate = ifElse(
+      isObjectNotEqual,
+      updateUICategories,
+      noop
+    )
+
+    yield call(setItem, CATEGORIES_KEY, getResults(req))
+    yield * compose(
+      shouldUpdate,
+      getResults
+    )(req)
   } else {
     throw new Error(req.err)
   }
@@ -42,21 +62,32 @@ function * requestCategories () {
 
 function * getCategoriesResource () {
   const categories = yield call(getItem, CATEGORIES_KEY)
-  const response = ifElse(isEmpty, requestCategories, identity)(categories)
-  return response
+
+  yield call(requestCategories)
+
+  return categories
 }
 
 export function * getCategories () {
   try {
     // we need to see if we need to request this since we save this anyway to the browser
     const req = yield getCategoriesResource()
+    const getResults = ifElse(
+      is(Array),
+      updateUICategories,
+      noop
+    )
 
-    const transform = yield req.map((data) => transformEachEntity(transformCategory, data))
-
-    yield put(setCategoriesAction(transform))
+    yield getResults(req)
   } catch (e) {
     console.log(e)
   }
+}
+
+export function * updateUICategories (req = Array) {
+  const transform = yield req.map((data) => transformEachEntity(transformCategory, data))
+
+  yield put(setCategoriesAction(transform))
 }
 
 export function * getCategoriesSaga () {
