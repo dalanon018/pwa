@@ -164,7 +164,6 @@ export class PopupSlide extends React.PureComponent {
             <Button
               disabled={this.state.toggle}
               primary
-              fluid
               onClick={this._handleSubmit}>
                   SUBMIT
               </Button>

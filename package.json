@@ -46,7 +46,7 @@
     "test": "cross-env NODE_ENV=test jest",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "fresh-install": "rm -rf node_modules && npm cache clean && yarn && yarn build"
+    "fresh-install": "rm -rf node_modules && npm cache clean --force && yarn && yarn build"
   },
   "lint-staged": {
     "*.js": "lint:eslint"
@@ -237,6 +237,7 @@
     "react-dom": "15.4.2",
     "react-helmet": "3.2.2",
     "react-intl": "2.2.3",
+    "react-paginate": "^4.4.3",
     "react-redux": "5.0.2",
     "react-router": "3.0.0",
     "react-router-redux": "4.0.6",

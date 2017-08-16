@@ -14,6 +14,7 @@ import {
 import { FormattedMessage } from 'react-intl'
 import messages from './messages'
 import { Grid, Image } from 'semantic-ui-react'
+// import ReactPaginate from 'react-paginate'
 
 import {
   CustomGridRow,
@@ -52,9 +53,9 @@ function ProductView ({
               className='padding__none--horizontal'
               mobile={8}
               tablet={4}
-              computer={2}
-              largeScreen={2}
-              widescreen={2}
+              computer={3}
+              largeScreen={3}
+              widescreen={3}
               onClick={goToProduct}>
               <ProductWrapper>
                 {
@@ -71,7 +72,11 @@ function ProductView ({
                     { calculateProductPrice(product) }
                   </ProductPrice>
                   <ProductPriceStrike>
-                    <FormattedMessage {...messages.peso} />
+                    {
+                      !isEmpty(product.get('discount'))
+                      ? <FormattedMessage {...messages.peso} />
+                      : ''
+                    }
                     {
                       !isEmpty(product.get('discount')) &&
                       parseFloat(product.get('price')).toLocaleString()
@@ -79,6 +84,20 @@ function ProductView ({
                   </ProductPriceStrike>
                 </ProductPriceWrapper>
               </ProductWrapper>
+              {/*
+                <ReactPaginate
+                  previousLabel={"previous"}
+                  nextLabel={"next"}
+                  breakLabel={<a href="">...</a>}
+                  breakClassName={"break-me"}
+                  pageCount={this.state.pageCount}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={this.handlePageClick}
+                  containerClassName={"pagination"}
+                  subContainerClassName={"pages pagination"}
+                  activeClassName={"active"} />
+              */}
             </Grid.Column>
           )
         })

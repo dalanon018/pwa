@@ -14,6 +14,11 @@ import {
 
 import ButtonNext from 'images/icons/button-next.svg'
 
+const ButtonWrapper = styled.div`
+  text-align: center;
+  width: 100%;
+`
+
 const Wrapper = styled.div`
   align-items: center;
   display: flex;
@@ -37,14 +42,16 @@ function ElemButton ({ children, size, ...rest }) {
   // Render an anchor tag
   // If the Button has a handleRoute prop, we want to render a button
   return (
-    <Button className='custom-button' {...rest} >
-      <Wrapper>
-        <TextWrapper fontSize={fontSize}>
-          { Children.toArray(children) }
-        </TextWrapper>
-        <ImageWrapper src={ButtonNext} fontSize={fontSize} />
-      </Wrapper>
-    </Button>
+    <ButtonWrapper>
+      <Button className='custom-button' {...rest} >
+        <Wrapper>
+          <TextWrapper fontSize={fontSize}>
+            { Children.toArray(children) }
+          </TextWrapper>
+          <ImageWrapper src={ButtonNext} fontSize={fontSize} />
+        </Wrapper>
+      </Button>
+    </ButtonWrapper>
   )
 }
 

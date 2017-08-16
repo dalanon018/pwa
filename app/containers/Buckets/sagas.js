@@ -116,7 +116,7 @@ export function * getCategories () {
   try {
     // we need to see if we need to request this since we save this anyway to the browser
     const req = yield getCategoriesResource()
-    yield updateUICategories(req)
+    yield updateUICategories(req || [])
   } catch (e) {
     console.log(e)
   }

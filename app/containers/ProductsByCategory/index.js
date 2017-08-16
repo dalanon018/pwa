@@ -76,6 +76,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
             <ItemCount>
               6 <FormattedMessage {...messages.items} />
             </ItemCount>
+            <H1 center className='padding__top--25'>PRODUCTS</H1>
+            <H1 center>SHOWING 1-15 OF 72 ITEMS FOR ACCESSORIES</H1>
             <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} />
             {/* <Promo loader={loader} /> */}
             <H1 center><FormattedMessage {...messages.viewed} /></H1>

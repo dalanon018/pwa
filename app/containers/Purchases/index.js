@@ -171,11 +171,13 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
           }
         </PurchasesList>
 
-        <PopupSlide
-          submit={setMobileNumber}
-          toggle={modalToggle}
-          onClose={this._goToHome}
-        />
+        <div className='mobile-visibility'>
+          <PopupSlide
+            submit={setMobileNumber}
+            toggle={modalToggle}
+            onClose={this._goToHome}
+          />
+        </div>
       </BarcodeListWrapper>
     )
   }
