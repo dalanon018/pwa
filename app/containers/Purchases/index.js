@@ -47,7 +47,6 @@ import {
 
 const BarcodeListWrapper = styled.div`
   display: flex;
-  height: 94vh;
   flex-direction: column;
   padding: 20px 10px;
 
@@ -62,14 +61,12 @@ const PurchasesList = styled.div`
   justify-content: ${({purchases}) => purchases ? 'flex-start' : 'center'};
   align-items: center;
   height: 100%;
-  overflow: auto;
 
   @media (min-width: 768px) {
     display: block;
     flex-direction: inherit;
     justify-content: flex-start;
     margin-top: 30px;
-    overflow: inherit;
   }
 `
 

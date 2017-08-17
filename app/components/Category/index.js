@@ -13,8 +13,6 @@ import React, { PropTypes } from 'react'
 import EmptyDataBlock from 'components/EmptyDataBlock'
 
 import { Grid, Image } from 'semantic-ui-react'
-import sampleCategoryIcon from 'images/test-images/accessories-icon.svg'
-import CategoryBgSample from 'images/test-images/accessories.jpg'
 import EmptyImage from 'images/broken-image.jpg'
 
 import {
@@ -38,6 +36,7 @@ function Category ({
   fontSize
 }) {
   const { mobile, tablet, computer, widescreen } = grids
+  console.log('categories', categories.toJS())
 
   return (
     <Grid.Row>
@@ -50,10 +49,10 @@ function Category ({
           return (
             <Grid.Column key={index} className='padding__none--horizontal category-divider' mobile={mobile} tablet={tablet} computer={computer} widescreen={widescreen}>
               <CategoryBlock margin={margin} width={iconWidth} onClick={handleRedirect}>
-                <Image className='category-image' src={CategoryBgSample} />
+                <Image className='category-image' src={category.get('background')} />
                 <CategoryContent>
                   <CategoryItem width={iconWidth}>
-                    <Image src={sampleCategoryIcon} />
+                    <Image src={category.get('main')} />
                     <CategoryLabel fontSize={fontSize}>{category.get('name')}</CategoryLabel>
                   </CategoryItem>
                 </CategoryContent>

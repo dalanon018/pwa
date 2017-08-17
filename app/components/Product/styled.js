@@ -211,8 +211,9 @@ export const CodeWrapper = styled(AnimateDiv)`
 `
 
 export const DesktopProductDetails = styled(AnimateDiv)`
-  display: block;
-  width: 100%;
+  &.desktop-visibility {
+    width: 100%;
+  }
 `
 
 export const ShareIcons = styled(AnimateDiv)`
