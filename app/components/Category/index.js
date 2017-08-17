@@ -36,7 +36,6 @@ function Category ({
   fontSize
 }) {
   const { mobile, tablet, computer, widescreen } = grids
-  console.log('categories', categories.toJS())
 
   return (
     <Grid.Row>
@@ -47,7 +46,7 @@ function Category ({
           const handleRedirect = () => changeRoute(`/products-category/${category.get('id')}`)
 
           return (
-            <Grid.Column key={index} className='padding__none--horizontal category-divider' mobile={mobile} tablet={tablet} computer={computer} widescreen={widescreen}>
+            <Grid.Column key={index} className='padding__none--horizontal category-item' mobile={mobile} tablet={tablet} computer={computer} widescreen={widescreen}>
               <CategoryBlock margin={margin} width={iconWidth} onClick={handleRedirect}>
                 <Image className='category-image' src={category.get('background')} />
                 <CategoryContent>
@@ -71,7 +70,7 @@ const DefaultState = ({
 }) => {
   const { mobile, tablet, computer, widescreen } = grids
   return (
-    <Grid.Column className='padding__none--horizontal' mobile={mobile} tablet={tablet} computer={computer} widescreen={widescreen}>
+    <Grid.Column className='padding__none--horizontal category-item' mobile={mobile} tablet={tablet} computer={computer} widescreen={widescreen}>
       <EmptyDataBlock>
         <CategoryBlock margin={margin} className='responsive-width'>
           <Image className='category-image' src={EmptyImage} />

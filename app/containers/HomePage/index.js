@@ -105,7 +105,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render () {
-    const { loader, productCategories, changeRoute } = this.props
+    const { loader, productCategories, changeRoute, windowWidth } = this.props
     const { products } = this.state
     const grids = {
       mobile: 4,
@@ -156,7 +156,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         <div className='padding__horizontal--10'>
           <Grid padded>
             <H1 center> <FormattedMessage {...messages.featureProduct} /> </H1>
-            <ProductView changeRoute={changeRoute} loader={loader} products={products} />
+            <ProductView changeRoute={changeRoute} loader={loader} products={products} windowWidth={windowWidth} />
             { this._displayViewAll() }
             {/* <Promo loader={loader} /> */}
             <H1 center> <FormattedMessage {...messages.browseCategory} /> </H1>

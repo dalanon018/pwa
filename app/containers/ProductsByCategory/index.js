@@ -30,6 +30,7 @@ import H1 from 'components/H1'
 import NavCategories from 'components/NavCategories'
 import ProductView from 'components/ProductView'
 import Footer from 'components/Footer'
+import WindowWidth from 'components/WindowWidth'
 // import Promo from 'components/Promo'
 
 import {
@@ -140,7 +141,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   render () {
-    const { productsByCategory, categories, productsViewed, loader, changeRoute } = this.props
+    const { productsByCategory, categories, productsViewed, loader, changeRoute, windowWidth } = this.props
 
     return (
       <div>
@@ -151,16 +152,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
             <ItemCount>
               { productsByCategory.size } <FormattedMessage {...messages.items} />
             </ItemCount>
-            {
-              productsByCategory.size >= 1
-              ? <H1 center className='padding__top--25'>PRODUCTS</H1>
-              : ''
-            }
-            <H1 center className='desktop-visibility'>SHOWING 1-15 OF {productsByCategory.size} ITEMS FOR {this._handlePageTitle()}</H1>
-            <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} />
+            <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} windowWidth={windowWidth} />
             {/* <Promo loader={loader} /> */}
             <H1 center><FormattedMessage {...messages.viewed} /></H1>
-            <ProductView changeRoute={changeRoute} loader={loader} products={productsViewed} />
+            <ProductView changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
           </Grid>
         </div>
         <Footer />
@@ -187,4 +182,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductsByCategory)
+export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(ProductsByCategory))

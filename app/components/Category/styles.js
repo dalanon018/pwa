@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 const CategoryBlock = styled.div`
+  cursor: pointer;
   margin: ${props => props.margin ? props.margin : '2'}px;
 
   // not included on sorting
@@ -23,7 +24,7 @@ const CategoryBlock = styled.div`
   }
 
   @media (min-width: 768px) {
-    margin: 7px;
+    margin: 0;
   }
 
 `
