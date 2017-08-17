@@ -23,7 +23,7 @@ if (env === 'production') {
 
 } else {
   console.log(`TOKEN_URL=https://202.60.9.110:8443/accounts/oauth2/token`)
-  console.log(`API_BASE_URL=http://202.60.9.110:8000/ecms/api/v1`)
+  console.log(`API_BASE_URL=https://apidemo.cliqq.net:8443/ecms/api/v1`)
   console.log(`APP_BASE_URL=http://localhost:3000`)
 
   console.log(`FIREBASE_API_KEY=AIzaSyBaKhRjF4feFUsPyezk8Hmu0u_PCbNb2oI`)
