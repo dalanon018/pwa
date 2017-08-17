@@ -42,6 +42,8 @@ import {
 
 import Button from 'components/Button'
 import Modal from 'components/PromptModal'
+import WindowWidth from 'components/WindowWidth'
+import DesktopBlock from './DesktopBlock'
 
 import { calculateProductPrice } from 'utils/promo'
 
@@ -238,93 +240,97 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     </label>
 
     return (
-      <Grid padded>
-        <Grid.Row>
-          <Grid.Column className='padding__none--horizontal'>
+      <div>
+        <div className='mobile-visibility'>
+          <Grid padded>
+            <Grid.Row className='mobile-visibility'>
+              <Grid.Column className='padding__none--horizontal'>
 
-            <ReviewContainer>
-              <StepWrapper>
-                <StepContent>
-                  <StepHead step='1'>
-                    <FormattedMessage {...messages.stepOne} />
-                  </StepHead>
-                  <ProductItem brand={SampleBrand}>
-                    <Image src={SampleProduct} />
-                  </ProductItem>
-                  <CliqqCodeWrapper>
-                    <Image src={CliqqLogo} /> { cliqqCode }
-                  </CliqqCodeWrapper>
-                  <ProductName className='text-center'>{orderedProduct.get('title')}</ProductName>
-                </StepContent>
-                <ViewDetails>
-                  <Accordion fluid>
-                    <Accordion.Title>
-                      <FormattedMessage {...messages.viewDetails} />
-                    </Accordion.Title>
-                    <Accordion.Content>
-                      <DetailsWrapper>
-                        <FormattedMessage {...messages.productDetailsTitle} />
-                        <p>{orderedProduct.get('details')}</p>
-                        <FormattedMessage {...messages.productDeliveryTitle} />
-                        <p>{orderedProduct.get('shipping')}</p>
-                      </DetailsWrapper>
-                    </Accordion.Content>
-                  </Accordion>
-                </ViewDetails>
-              </StepWrapper>
+                <ReviewContainer>
+                  <StepWrapper>
+                    <StepContent>
+                      <StepHead step='1'>
+                        <FormattedMessage {...messages.stepOne} />
+                      </StepHead>
+                      <ProductItem brand={SampleBrand}>
+                        <Image src={SampleProduct} />
+                      </ProductItem>
+                      <CliqqCodeWrapper>
+                        <Image src={CliqqLogo} /> { cliqqCode }
+                      </CliqqCodeWrapper>
+                      <ProductName className='text-center'>{orderedProduct.get('title')}</ProductName>
+                    </StepContent>
+                    <ViewDetails>
+                      <Accordion fluid>
+                        <Accordion.Title>
+                          <FormattedMessage {...messages.viewDetails} />
+                        </Accordion.Title>
+                        <Accordion.Content>
+                          <DetailsWrapper>
+                            <FormattedMessage {...messages.productDetailsTitle} />
+                            <p>{orderedProduct.get('details')}</p>
+                            <FormattedMessage {...messages.productDeliveryTitle} />
+                            <p>{orderedProduct.get('shipping')}</p>
+                          </DetailsWrapper>
+                        </Accordion.Content>
+                      </Accordion>
+                    </ViewDetails>
+                  </StepWrapper>
 
-              <StepWrapper>
-                <StepContent>
-                  <StepHead step='2' className='margin__top-positive--20'>
-                    <FormattedMessage {...messages.stepTwo} />
-                  </StepHead>
-                  <SelectMethodWrapper>
-                    <Form>
-                      <Form.Field>
-                        <Checkbox
-                          radio
-                          name='cash-prepaid'
-                          value='CASH'
-                          label={labelOne}
-                          // checked={modePayment === 'CASH'}
-                          defaultChecked
-                          onChange={this._handleChange}
-                          />
-                      </Form.Field>
-                      <Form.Field className='display__none'> {/* Cash on Deliver option */}
-                        <Checkbox
-                          radio
-                          name='cod'
-                          value='COD'
-                          label={labelTwo}
-                          checked={modePayment === 'COD'}
-                          onChange={this._handleChange}
-                          onClick={this._handleToBottom}
-                          />
-                      </Form.Field>
-                    </Form>
-                  </SelectMethodWrapper>
-                </StepContent>
-              </StepWrapper>
+                  <StepWrapper>
+                    <StepContent>
+                      <StepHead step='2' className='margin__top-positive--20'>
+                        <FormattedMessage {...messages.stepTwo} />
+                      </StepHead>
+                      <SelectMethodWrapper>
+                        <Form>
+                          <Form.Field>
+                            <Checkbox
+                              radio
+                              name='cash-prepaid'
+                              value='CASH'
+                              label={labelOne}
+                              // checked={modePayment === 'CASH'}
+                              defaultChecked
+                              onChange={this._handleChange}
+                              />
+                          </Form.Field>
+                          <Form.Field className='display__none'> {/* Cash on Deliver option */}
+                            <Checkbox
+                              radio
+                              name='cod'
+                              value='COD'
+                              label={labelTwo}
+                              checked={modePayment === 'COD'}
+                              onChange={this._handleChange}
+                              onClick={this._handleToBottom}
+                              />
+                          </Form.Field>
+                        </Form>
+                      </SelectMethodWrapper>
+                    </StepContent>
+                  </StepWrapper>
 
-              {/* <StepWrapper className='visibility' visibility={visibility}> */}
-              {/*
-                <StepWrapper>
-                  <StepContent>
-                    <StepHead step='3' className='margin__top-positive--20'>
-                      <FormattedMessage {...messages.stepThree} />
-                      <p>Your default store will be the last store you visited</p>
-                    </StepHead>
-                    <LocationButton onClick={this._handleStoreLocator} fluid icon={NextIcon}>
-                      <span>FIND STORE NEARBY</span>
-                    </LocationButton>
-                  </StepContent>
-                </StepWrapper>
-              */}
-              <ButtonContainer>
-                <Button onClick={this._handleProceed} primary fluid loading={orderRequesting}><FormattedMessage {...messages.proceedNext} /></Button>
-              </ButtonContainer>
-            </ReviewContainer>
+                  {/* <StepWrapper className='visibility' visibility={visibility}> */}
+                  {/*
+                    <StepWrapper>
+                      <StepContent>
+                        <StepHead step='3' className='margin__top-positive--20'>
+                          <FormattedMessage {...messages.stepThree} />
+                          <p>Your default store will be the last store you visited</p>
+                        </StepHead>
+                        <LocationButton onClick={this._handleStoreLocator} fluid icon={NextIcon}>
+                          <span>FIND STORE NEARBY</span>
+                        </LocationButton>
+                      </StepContent>
+                    </StepWrapper>
+                  */}
+                  <ButtonContainer>
+                    <Button onClick={this._handleProceed} primary fluid loading={orderRequesting}><FormattedMessage {...messages.proceedNext} /></Button>
+                  </ButtonContainer>
+                </ReviewContainer>
+              </Grid.Column>
+            </Grid.Row>
 
             <Modal
               open={modalToggle}
@@ -337,9 +343,13 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                 } : {})
               }
             />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+          </Grid>
+        </div>
+
+        <div className='desktop-visibility'>
+          <DesktopBlock />
+        </div>
+      </div>
     )
   }
 }
@@ -365,4 +375,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductReview)
+export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(ProductReview))
