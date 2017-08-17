@@ -9,6 +9,8 @@ import {
   Grid
 } from 'semantic-ui-react'
 
+import { partial } from 'ramda'
+
 import BarcodeImage from 'images/icons/barcode-header.svg'
 import SearchImage from 'images/icons/search-header.svg'
 import MainLogo from 'images/cliqq-logo.svg'
@@ -174,9 +176,10 @@ const CategoriesContainer = styled.div`
   background-color: #FFFFFF;
   display: ${props => props.display ? 'block' : 'none'};
   min-height:378px;
+  padding: 10px 0;
   position: absolute;
   top: 170px;
-  padding: 10px 0;
+  width: 100%;
   z-index: 999999;
 
   .wrapper {
@@ -245,9 +248,9 @@ export default class MainMenu extends PureComponent {
     changeRoute('/search')
   }
 
-  _handleCategoryRoute () {
+  _handleCategoryRoute (id) {
     const { changeRoute } = this.props
-    changeRoute('/products-category')
+    changeRoute(`/products-category/${id}`)
   }
 
   _handleShowCategories () {
@@ -323,7 +326,7 @@ export default class MainMenu extends PureComponent {
                   <Button onClick={this._handlerHomeClick}>HOME</Button>
                 </Grid.Column>
                 <Grid.Column>
-                  <Button onClick={(e) => this._handlerPreventDefault(e)} onMouseOver={this._handleShowCategories}>CATEGORIES</Button>
+                  <Button onClick={(e) => this._handlerPreventDefault(e)} onMouseOver={this._handleShowCategories} onMouseLeave={this._handleHideCategories}>CATEGORIES</Button>
                 </Grid.Column>
                 <Grid.Column>
                   <Button onClick={this._handleBarcodeClick}>RECEIPTS</Button>
@@ -331,7 +334,7 @@ export default class MainMenu extends PureComponent {
               </Grid.Row>
             </Grid>
           </NavMenu>
-          <CategoriesContainer display={this.state.show} onMouseLeave={this._handleHideCategories}>
+          <CategoriesContainer display={this.state.show} onMouseOver={this._handleShowCategories} onMouseLeave={this._handleHideCategories}>
             <div className='wrapper'>
               <Grid padded>
                 <Grid.Row columns={3}>
@@ -341,7 +344,7 @@ export default class MainMenu extends PureComponent {
                       return (
                         <Grid.Column key={index}>
                           <CategoryItem>
-                            <A onClick={this._handleCategoryRoute}>{item.get('name')}</A>
+                            <A onClick={partial(this._handleCategoryRoute, [item.get('id')])}>{item.get('name')}</A>
                           </CategoryItem>
                         </Grid.Column>
                       )
