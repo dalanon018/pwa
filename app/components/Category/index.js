@@ -13,8 +13,6 @@ import React, { PropTypes } from 'react'
 import EmptyDataBlock from 'components/EmptyDataBlock'
 
 import { Grid, Image } from 'semantic-ui-react'
-import sampleCategoryIcon from 'images/test-images/accessories-icon.svg'
-import CategoryBgSample from 'images/test-images/accessories.jpg'
 import EmptyImage from 'images/broken-image.jpg'
 
 import {
@@ -48,12 +46,12 @@ function Category ({
           const handleRedirect = () => changeRoute(`/products-category/${category.get('id')}`)
 
           return (
-            <Grid.Column key={index} className='padding__none--horizontal category-divider' mobile={mobile} tablet={tablet} computer={computer} widescreen={widescreen}>
+            <Grid.Column key={index} className='padding__none--horizontal category-item' mobile={mobile} tablet={tablet} computer={computer} widescreen={widescreen}>
               <CategoryBlock margin={margin} width={iconWidth} onClick={handleRedirect}>
-                <Image className='category-image' src={CategoryBgSample} />
+                <Image className='category-image' src={category.get('background')} />
                 <CategoryContent>
                   <CategoryItem width={iconWidth}>
-                    <Image src={sampleCategoryIcon} />
+                    <Image src={category.get('main')} />
                     <CategoryLabel fontSize={fontSize}>{category.get('name')}</CategoryLabel>
                   </CategoryItem>
                 </CategoryContent>
@@ -72,7 +70,7 @@ const DefaultState = ({
 }) => {
   const { mobile, tablet, computer, widescreen } = grids
   return (
-    <Grid.Column className='padding__none--horizontal' mobile={mobile} tablet={tablet} computer={computer} widescreen={widescreen}>
+    <Grid.Column className='padding__none--horizontal category-item' mobile={mobile} tablet={tablet} computer={computer} widescreen={widescreen}>
       <EmptyDataBlock>
         <CategoryBlock margin={margin} className='responsive-width'>
           <Image className='category-image' src={EmptyImage} />

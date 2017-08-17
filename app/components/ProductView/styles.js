@@ -3,6 +3,7 @@ import { Grid } from 'semantic-ui-react'
 
 const ProductWrapper = styled.div`
   border-bottom: 2px solid #aeaeae;
+  cursor: pointer;
   display: block;
   margin: 0 3px 20px;
   position: relative;
@@ -138,8 +139,8 @@ const CustomGridRow = styled(Grid.Row)`
   }
   @media (min-width: 768px) {
     .padding__none--horizontal {
-      padding-left: 10px !important;
-      padding-right: 10px !important;
+      padding-left: 8px !important;
+      padding-right: 8px !important;
     }
   }
 `

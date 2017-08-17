@@ -38,10 +38,18 @@ import { calculateProductPrice } from 'utils/promo'
 function ProductView ({
   loader,
   products,
-  changeRoute
+  changeRoute,
+  windowWidth
 }) {
+  const resposiveColumns = () => {
+    if (windowWidth >= 768) {
+      return 5
+    } else {
+      return 2
+    }
+  }
   return (
-    <CustomGridRow stretched columns={2}>
+    <CustomGridRow stretched columns={resposiveColumns()}>
       {
         loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
         : products.valueSeq().map((product) => {
@@ -51,11 +59,6 @@ function ProductView ({
             <Grid.Column
               key={product.get('cliqqCode')}
               className='padding__none--horizontal'
-              mobile={8}
-              tablet={4}
-              computer={3}
-              largeScreen={3}
-              widescreen={3}
               onClick={goToProduct}>
               <ProductWrapper>
                 {
