@@ -1,7 +1,15 @@
 {
   "baseUrl": "http://localhost:3000",
   "integrationFolder": "app/integration",
-  "fixturesFolder":"app/fixtures",
+  "fixturesFolder": "app/fixtures",
   "viewportWidth": 375,
-  "viewportHeight": 667
+  "viewportHeight": 667,
+  "env": {
+    "TOKEN_URL": "https://202.60.9.110:8443/accounts/oauth2/token",
+    "API_BASE_URL": "https://apidemo.cliqq.net:8443/ecms/api/v1",
+    "OATH_CLIENT_ID": "ecms-pwa",
+    "OATH_CLIENT_SECRET": "ecms-pwa-secret",
+    "OATH_RESPONSE_TYPE": "token",
+    "OATH_GRANT_TYPE": "client_credentials"
+  }
 }

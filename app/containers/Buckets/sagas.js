@@ -1,7 +1,7 @@
 import moment from 'moment'
 import { takeLatest } from 'redux-saga'
-import { find, uniq, isEmpty, isEqual, noop } from 'lodash'
-import { compose, filter, contains, join, toPairs, map, propOr, head, ifElse, is } from 'ramda'
+import { find, isEmpty, isEqual, noop } from 'lodash'
+import { compose, filter, contains, join, toPairs, map, propOr, head, ifElse, is, isNil, uniq } from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 
@@ -154,8 +154,19 @@ export function * getCategories () {
 
 export function * getMobileNumbers () {
   const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
-  const mobiles = uniq(mobileNumbers) || []
+  const emptyArray = () => []
+  const transform = (num) => `0${num}`
+  const transformMobile = compose(
+    map(transform),
+    uniq
+  )
 
+  const cleanMobiles = ifElse(
+    isNil,
+    emptyArray,
+    transformMobile
+  )
+  const mobiles = cleanMobiles(mobileNumbers)
   yield put(setMobileNumbersAction(mobiles))
 }
 

@@ -1,7 +1,7 @@
 import moment from 'moment'
 import Firebase from 'utils/firebase-realtime'
 
-import { compose, is, ifElse, identity, uniq } from 'ramda'
+import { compose, is, ifElse, identity, map, uniq } from 'ramda'
 import { call, cancel, fork, put, take } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { takeLatest } from 'redux-saga'
@@ -41,7 +41,7 @@ import {
  * // eventually we will use this to transform the data from response of the order.
  * @param {*} body
  */
-function * transformResponse ({ order: { transactionId, expiryDate, totalPrice, status }, mobileNumber, orderedProduct, modePayment }) {
+function * transformResponse ({ order: { transactionId, expiryDate, totalPrice, status }, completeMobile, orderedProduct, modePayment }) {
   return {
     trackingNumber: transactionId,
     claimExpiry: expiryDate,
@@ -53,7 +53,7 @@ function * transformResponse ({ order: { transactionId, expiryDate, totalPrice, 
     imageUrl: orderedProduct.get('image'),
     brandLogo: orderedProduct.get('brandLogo'),
     name: orderedProduct.get('title'),
-    mobileNumber,
+    mobileNumber: completeMobile,
     status
   }
 }
@@ -75,10 +75,10 @@ function * setOrderList (order) {
  * Here we will save the transactions to firebase with the main key of mobile numbers
  * <mobile>: {transactionID: "status"}
  */
-function * updateFirebase ({ orderResponse: { trackingNumber, status }, mobileNumber }) {
+function * updateFirebase ({ orderResponse: { trackingNumber, status }, completeMobile }) {
   try {
     yield Firebase.login()
-    yield Firebase.update(mobileNumber, {
+    yield Firebase.update(completeMobile, {
       [trackingNumber]: status
     })
   } catch (e) {
@@ -93,11 +93,17 @@ export function * getOrderProduct () {
 
 export function * getMobileNumber () {
   const convertToArray = ifElse(is(Object), identity, (entity) => [entity])
-  const updateBucket = compose(uniq, convertToArray)
+  const transformMobile = (num) => `0${num}`
+  const updateBucket = compose(
+    setMobileNumbersAction,
+    map(transformMobile),
+    uniq,
+    convertToArray
+  )
 
   // first we have to update our bucket list of what number we already have
   const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
-  yield put(setMobileNumbersAction(updateBucket(mobileNumbers)))
+  yield put(updateBucket(mobileNumbers))
 
   const mobile = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
   yield put(setMobileNumberAction(mobile))
@@ -105,6 +111,7 @@ export function * getMobileNumber () {
 
 export function * submitOrder (args) {
   const { payload: { orderedProduct, mobileNumber, modePayment } } = args
+  const completeMobile = `0${mobileNumber}`
   const token = yield getAccessToken()
   const order = yield call(request, `${API_BASE_URL}/orders`, {
     method: 'POST',
@@ -113,7 +120,7 @@ export function * submitOrder (args) {
       cliqqCode: orderedProduct.get('cliqqCode').first(),
       quantity: 1,
       deviceOrigin: 'PWA',
-      mobileNumber
+      mobileNumber: completeMobile
     })
   })
 
@@ -121,13 +128,13 @@ export function * submitOrder (args) {
   // once response is success we have to pass it back so we can eventually redirect the user to the barcode page.
   if (order) {
     // make our transformer here that should be the same as getting purchase list.
-    const orderResponse = yield transformResponse({ order, orderedProduct, mobileNumber, modePayment })
+    const orderResponse = yield transformResponse({ order, orderedProduct, completeMobile, modePayment })
     // here we have to save it first to our storage.
     yield setOrderList(orderResponse)
     // we have to remove the current product since we already done with it.
     yield call(removeItem, CURRENT_PRODUCT_KEY)
     // we have to update the firebase
-    yield updateFirebase({ orderResponse, mobileNumber })
+    yield updateFirebase({ orderResponse, completeMobile })
 
     yield put(successOrderAction(orderResponse))
   } else {

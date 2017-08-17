@@ -5,12 +5,12 @@ describe('Product Page', () => {
 
   it('It should select first product', () => {
     cy.wait(3000)
-    cy.get('.kIvCPF div.column:first-child').click()
+    cy.get('.dFAASG:first').click()
     cy.url().should('contain', 'product')
   })
 
   it('We should able to proceed to product review', () => {
-    cy.get('.gNIVmr .primary.button').as('orderNow')
+    cy.get('.cTcXIH .primary.button').as('orderNow')
     cy.get('.hhpmBF .primary.button').as('submit')
 
     cy.get('@orderNow').should('contain', 'ORDER NOW!')
@@ -30,9 +30,7 @@ describe('Product Page', () => {
     cy.get('@proceed').should('contain', 'PROCEED TO NEXT STEP')
     cy.get('@proceed').click()
 
-    cy.server({force404: true})
-    cy.route('POST', /getAccountInfo/g).as('accountInfo')
-    cy.wait('@accountInfo')
+    cy.wait(5000)
 
     cy.url().should('contain', 'purchases')
   })
