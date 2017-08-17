@@ -75,7 +75,7 @@ export function * getApiPurchases () {
 
   // we will only get the last mobileNumber used
   const mobile = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
-  const req = yield call(request, `${API_BASE_URL}/purchases/${mobile}?deviceOrigin=PWA`, {
+  const req = yield call(request, `${API_BASE_URL}/purchases/0${mobile}?deviceOrigin=PWA`, {
     method: 'GET',
     token: token.access_token
   })
@@ -102,7 +102,6 @@ export function * getLocalPurchases () {
 export function * getModalToggle () {
   const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
   const modalToggle = !mobileNumbers
-  console.log('modalToggle', modalToggle)
   // if we have mobile numbers then we dont have to show our modal else we have to show it.
   yield put(setModalToggleAction(modalToggle))
 }

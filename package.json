@@ -338,7 +338,8 @@
       "it",
       "jest",
       "XMLHttpRequest",
-      "cy"
+      "cy",
+      "Cypress"
     ]
   }
 }

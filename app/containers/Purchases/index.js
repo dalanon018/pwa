@@ -205,7 +205,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
             onClose={this._goToHome}
           />
         </div>
-        <Modal open={modalToggle}>
+        <Modal open={windowWidth >= 768 && modalToggle}>
           <div className='modal-popup-slide'>
             <PopupSlide
               submit={setMobileNumber}
