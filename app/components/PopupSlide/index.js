@@ -12,6 +12,13 @@ import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import messages from './messages'
 import { push } from 'react-router-redux'
+import { noop } from 'lodash'
+import {
+  compose,
+  isNil,
+  prop,
+  ifElse
+} from 'ramda'
 
 import Button from 'components/Button'
 import CloseButton from 'components/CloseButton'
@@ -61,6 +68,7 @@ export class PopupSlide extends React.PureComponent {
     this._handleDisable = this._handleDisable.bind(this)
     this._handleSubmit = this._handleSubmit.bind(this)
     this._goToTermsConditions = this._goToTermsConditions.bind(this)
+    this._setDefaultMobileNumber = this._setDefaultMobileNumber.bind(this)
   }
 
   _goToTermsConditions () {
@@ -102,18 +110,34 @@ export class PopupSlide extends React.PureComponent {
     })
   }
 
+  _setDefaultMobileNumber ({ mobileNumber }) {
+    this.setState({
+      value: mobileNumber
+    })
+  }
+
+  componentDidMount () {
+    const setDefaultMobile = ifElse(
+      compose(isNil, prop('mobileNumber')),
+      noop,
+      this._setDefaultMobileNumber
+    )
+
+    setDefaultMobile(this.props)
+  }
+
   componentWillReceiveProps (nextProps) {
     const { mobileNumber } = nextProps
+
     if (mobileNumber) {
-      this.setState({
-        value: mobileNumber
-      })
+      this._setDefaultMobileNumber(nextProps)
     }
   }
 
   render () {
     const { toggle, onClose, modalToggle, modalClose } = this.props
     const { value } = this.state
+
     const checkboxList =
       [
         {
