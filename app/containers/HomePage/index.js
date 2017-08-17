@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
+import { fromJS } from 'immutable'
 
 import Helmet from 'react-helmet'
 import messages from './messages'
@@ -58,19 +59,61 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     ]).isRequired
   }
 
+  state = {
+    products: fromJS([])
+  }
+
+  constructor () {
+    super()
+
+    this._displayViewAll = this._displayViewAll.bind(this)
+    this._displayFeatured = this._displayFeatured.bind(this)
+  }
+
+  _displayFeatured () {
+    this.props.changeRoute(`/products-category/featured`)
+  }
+
+  _displayViewAll () {
+    const { featuredProducts } = this.props
+
+    if (featuredProducts.size > 4) {
+      return (
+        <Button
+          onClick={this._displayFeatured}
+          primary
+        > <FormattedMessage {...messages.productViewAll} /> </Button>
+      )
+    }
+
+    return null
+  }
+
   componentDidMount () {
     this.props.getProduct()
     this.props.getProductCategories()
   }
 
+  componentWillReceiveProps (nextProps) {
+    const { featuredProducts } = nextProps
+
+    if (featuredProducts.size) {
+      this.setState({
+        products: featuredProducts.slice(0, 4)
+      })
+    }
+  }
+
   render () {
-    const { loader, featuredProducts, productCategories, changeRoute } = this.props
+    const { loader, productCategories, changeRoute } = this.props
+    const { products } = this.state
     const grids = {
       mobile: 4,
       tablet: 4,
       computer: 3,
       widescreen: 3
     }
+
     return (
       <div>
         <Helmet
@@ -113,11 +156,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         <div className='padding__horizontal--10'>
           <Grid padded>
             <H1 center> <FormattedMessage {...messages.featureProduct} /> </H1>
-            <ProductView changeRoute={changeRoute} loader={loader} products={featuredProducts} />
-            <Button
-              onClick={() => {}}
-              primary
-            > <FormattedMessage {...messages.productViewAll} /> </Button>
+            <ProductView changeRoute={changeRoute} loader={loader} products={products} />
+            { this._displayViewAll() }
             {/* <Promo loader={loader} /> */}
             <H1 center> <FormattedMessage {...messages.browseCategory} /> </H1>
             <Category
