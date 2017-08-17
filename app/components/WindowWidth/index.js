@@ -33,7 +33,7 @@ export default function WindowWidth (WrapperComponent) {
     render () {
       const { width } = this.state
       return (
-        <WrapperComponent width={width} />
+        <WrapperComponent windowWidth={width} />
       )
     }
   }

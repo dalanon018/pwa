@@ -12,10 +12,12 @@ import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
+import { Grid, Modal } from 'semantic-ui-react'
 
 import H1 from 'components/H1'
 import Purchase from 'components/Purchase'
 import PopupSlide from 'components/PopupSlide'
+import WindowWidth from 'components/WindowWidth'
 
 import {
   STATUSES,
@@ -48,6 +50,10 @@ const BarcodeListWrapper = styled.div`
   height: 94vh;
   flex-direction: column;
   padding: 20px 10px;
+
+  @media (min-width: 768px) {
+    height: auto;
+  }
 `
 
 const PurchasesList = styled.div`
@@ -57,6 +63,14 @@ const PurchasesList = styled.div`
   align-items: center;
   height: 100%;
   overflow: auto;
+
+  @media (min-width: 768px) {
+    display: block;
+    flex-direction: inherit;
+    justify-content: flex-start;
+    margin-top: 30px;
+    overflow: inherit;
+  }
 `
 
 const EmptyWrapper = styled.div`
@@ -142,7 +156,17 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
   }
 
   render () {
-    const { purchases, changeRoute, modalToggle, setMobileNumber } = this.props
+    const { purchases, changeRoute, modalToggle, setMobileNumber, windowWidth } = this.props
+
+    const resposiveColumns = () => {
+      if (windowWidth >= 768 && windowWidth <= 1200) {
+        return 2
+      } else if (windowWidth >= 1200) {
+        return 3
+      } else {
+        return 1
+      }
+    }
 
     return (
       <BarcodeListWrapper>
@@ -156,19 +180,25 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
           <FormattedMessage {...messages.receiptsTitle} />
         </H1>
         <PurchasesList purchases={(purchases.size > 0)}>
-          { this._displayEmpty() }
-          {
-            purchases.map((order) =>
-              <Purchase
-                key={order.get('trackingNumber')}
-                order={order}
-                statuses={STATUSES}
-                purchaseUsecases={PURCHASE_USECASE}
-                purchaseOrders={PURCHASE_ORDER}
-                changeRoute={changeRoute}
-              />
-            )
-          }
+          <Grid>
+            <Grid.Row columns={resposiveColumns()}>
+              { this._displayEmpty() }
+              {
+                  purchases.map((order, index) =>
+                    <Grid.Column key={index}>
+                      <Purchase
+                        key={order.get('trackingNumber')}
+                        order={order}
+                        statuses={STATUSES}
+                        purchaseUsecases={PURCHASE_USECASE}
+                        purchaseOrders={PURCHASE_ORDER}
+                        changeRoute={changeRoute}
+                        />
+                    </Grid.Column>
+                  )
+                }
+            </Grid.Row>
+          </Grid>
         </PurchasesList>
 
         <div className='mobile-visibility'>
@@ -178,6 +208,14 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
             onClose={this._goToHome}
           />
         </div>
+        <Modal open={modalToggle}>
+          <div className='modal-popup-slide'>
+            <PopupSlide
+              submit={setMobileNumber}
+              toggle={modalToggle}
+              onClose={this._goToHome} />
+          </div>
+        </Modal>
       </BarcodeListWrapper>
     )
   }
@@ -201,4 +239,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Purchases)
+export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(Purchases))
