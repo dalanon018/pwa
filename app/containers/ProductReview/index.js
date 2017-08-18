@@ -12,7 +12,6 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
-
 import messages from './messages'
 
 import {
@@ -32,40 +31,15 @@ import {
   selectSubmissionError
 } from './selectors'
 
-import {
-  Grid,
-  Image,
-  Form,
-  Checkbox,
-  Accordion
-} from 'semantic-ui-react'
-
-import Button from 'components/Button'
 import Modal from 'components/PromptModal'
 import WindowWidth from 'components/WindowWidth'
 import DesktopBlock from './DesktopBlock'
+import MobileBlock from './MobileBlock'
 
 import { calculateProductPrice } from 'utils/promo'
 
-import SampleProduct from 'images/test-images/samplebag.png'
-import SampleBrand from 'images/test-images/PENSHOPPE-TICKET.png'
-import CliqqLogo from 'images/icons/cliqq.png'
-// import NextIcon from 'images/icons/greater-than-icon.svg'
-
 import {
-  StepHead,
-  ProductItem,
-  StepContent,
-  CliqqCodeWrapper,
-  ProductName,
-  SelectMethodWrapper,
-  DetailsWrapper,
-  ViewDetails,
-  ButtonContainer,
-  StepWrapper,
   LabelTitle,
-  ReviewContainer,
-  // LocationButton,
   LabelSubTitle,
   LabelPrice
 } from './styles'
@@ -217,13 +191,13 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     const cliqqCode = orderedProduct.get('cliqqCode') && orderedProduct.get('cliqqCode').join(', ')
 
     const labelOne = <label className='label-custom'>
-      <LabelTitle>
+      <LabelTitle className='desktop__width--full'>
         <FormattedMessage {...messages.cashPrepaid} />
       </LabelTitle>
-      <LabelSubTitle>
+      <LabelSubTitle className='desktop__width--full'>
         Get free 10points by paying through prepaid!
       </LabelSubTitle>
-      <LabelPrice>
+      <LabelPrice className='desktop__width--full'>
         <span className='total'>PHP {calculateProductPrice(orderedProduct)}</span>
         <span className='strike'>PHP {orderedProduct.get('price')}</span>
       </LabelPrice>
@@ -242,113 +216,52 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     return (
       <div>
         <div className='mobile-visibility'>
-          <Grid padded>
-            <Grid.Row className='mobile-visibility'>
-              <Grid.Column className='padding__none--horizontal'>
+          <MobileBlock
+            orderedProduct={orderedProduct}
+            orderRequesting={orderRequesting}
+            mobileNumber={mobileNumber}
+            errorMessage={errorMessage}
+            modePayment={modePayment}
+            modalToggle={modalToggle}
+            cliqqCode={cliqqCode}
+            labelOne={labelOne}
+            labelTwo={labelTwo}
 
-                <ReviewContainer>
-                  <StepWrapper>
-                    <StepContent>
-                      <StepHead step='1'>
-                        <FormattedMessage {...messages.stepOne} />
-                      </StepHead>
-                      <ProductItem brand={SampleBrand}>
-                        <Image src={SampleProduct} />
-                      </ProductItem>
-                      <CliqqCodeWrapper>
-                        <Image src={CliqqLogo} /> { cliqqCode }
-                      </CliqqCodeWrapper>
-                      <ProductName className='text-center'>{orderedProduct.get('title')}</ProductName>
-                    </StepContent>
-                    <ViewDetails>
-                      <Accordion fluid>
-                        <Accordion.Title>
-                          <FormattedMessage {...messages.viewDetails} />
-                        </Accordion.Title>
-                        <Accordion.Content>
-                          <DetailsWrapper>
-                            <FormattedMessage {...messages.productDetailsTitle} />
-                            <p>{orderedProduct.get('details')}</p>
-                            <FormattedMessage {...messages.productDeliveryTitle} />
-                            <p>{orderedProduct.get('shipping')}</p>
-                          </DetailsWrapper>
-                        </Accordion.Content>
-                      </Accordion>
-                    </ViewDetails>
-                  </StepWrapper>
-
-                  <StepWrapper>
-                    <StepContent>
-                      <StepHead step='2' className='margin__top-positive--20'>
-                        <FormattedMessage {...messages.stepTwo} />
-                      </StepHead>
-                      <SelectMethodWrapper>
-                        <Form>
-                          <Form.Field>
-                            <Checkbox
-                              radio
-                              name='cash-prepaid'
-                              value='CASH'
-                              label={labelOne}
-                              // checked={modePayment === 'CASH'}
-                              defaultChecked
-                              onChange={this._handleChange}
-                              />
-                          </Form.Field>
-                          <Form.Field className='display__none'> {/* Cash on Deliver option */}
-                            <Checkbox
-                              radio
-                              name='cod'
-                              value='COD'
-                              label={labelTwo}
-                              checked={modePayment === 'COD'}
-                              onChange={this._handleChange}
-                              onClick={this._handleToBottom}
-                              />
-                          </Form.Field>
-                        </Form>
-                      </SelectMethodWrapper>
-                    </StepContent>
-                  </StepWrapper>
-
-                  {/* <StepWrapper className='visibility' visibility={visibility}> */}
-                  {/*
-                    <StepWrapper>
-                      <StepContent>
-                        <StepHead step='3' className='margin__top-positive--20'>
-                          <FormattedMessage {...messages.stepThree} />
-                          <p>Your default store will be the last store you visited</p>
-                        </StepHead>
-                        <LocationButton onClick={this._handleStoreLocator} fluid icon={NextIcon}>
-                          <span>FIND STORE NEARBY</span>
-                        </LocationButton>
-                      </StepContent>
-                    </StepWrapper>
-                  */}
-                  <ButtonContainer>
-                    <Button onClick={this._handleProceed} primary fluid loading={orderRequesting}><FormattedMessage {...messages.proceedNext} /></Button>
-                  </ButtonContainer>
-                </ReviewContainer>
-              </Grid.Column>
-            </Grid.Row>
-
-            <Modal
-              open={modalToggle}
-              name='warning'
-              title={<FormattedMessage {...messages.errorHeader} />}
-              content={errorMessage}
-              {
-                ...Object.assign({}, (!isEntityEmpty(orderedProduct) && mobileNumber) ? {
-                  close: this._handleModalClose
-                } : {})
-              }
-            />
-          </Grid>
+            // function props
+            handleChange={this._handleChange}
+            handleStoreLocator={this._handleStoreLocator}
+            handleToBottom={this._handleToBottom}
+            handleProceed={this._handleProceed} />
         </div>
-
         <div className='desktop-visibility'>
-          <DesktopBlock />
+          <DesktopBlock
+            orderedProduct={orderedProduct}
+            orderRequesting={orderRequesting}
+            mobileNumber={mobileNumber}
+            errorMessage={errorMessage}
+            modePayment={modePayment}
+            modalToggle={modalToggle}
+            cliqqCode={cliqqCode}
+            labelOne={labelOne}
+            labelTwo={labelTwo}
+
+            // function props
+            handleChange={this._handleChange}
+            handleStoreLocator={this._handleStoreLocator}
+            handleToBottom={this._handleToBottom}
+            handleProceed={this._handleProceed} />
         </div>
+        <Modal
+          open={modalToggle}
+          name='warning'
+          title={<FormattedMessage {...messages.errorHeader} />}
+          content={errorMessage}
+          {
+            ...Object.assign({}, (!isEntityEmpty(orderedProduct) && mobileNumber) ? {
+              close: this._handleModalClose
+            } : {})
+          }
+        />
       </div>
     )
   }
