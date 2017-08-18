@@ -316,4 +316,47 @@ input.input-field {
       }
     }
   }
+
+  .document-helper {
+    h1 {
+      font-size: 35px;
+      letter-spacing: 10px;
+    }
+    h2,
+
+    #privacypolicy,
+
+    #termsandconditions,
+    #termsandconditions-1 {
+      font-size: 22px;
+      letter-spacing: 5px;
+      padding-left: 27px;
+
+      &:before {
+        font-size: 20px;
+        top: 7px;
+      }
+    }
+
+    p, li {
+      font-family: 'helveticalight';
+      font-size: 18px;
+      line-height: 20px;
+    }
+
+    h3 {
+      font-size: 18px;
+      letter-spacing: 5px;
+      padding-left: 25px;
+      font-family: 'helveticalight';
+
+      &:before {
+        content: '-';
+        font-size: 30px;
+        left: 0;
+        line-height: 9px;
+        top: 3px;
+      }
+    }
+  }
 }

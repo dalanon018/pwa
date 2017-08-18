@@ -32,8 +32,21 @@ const IconWrapper = styled.div`
   img {
     padding: 10px 23px;
   }
-  span {
+  p {
     color: #5B5B5B;
+  }
+
+  @media (min-width: 768px) {
+    img {
+      width: 200px;
+      margin: 0 auto;
+    }
+    p {
+      font-family: 'helveticabold';
+      font-size: 28px;
+      letter-spacing: 3px;
+      margin-top: 20px;
+    }
   }
 `
 
@@ -67,37 +80,37 @@ export class FaqPage extends React.PureComponent { // eslint-disable-line react/
               <Grid.Column>
                 <IconWrapper>
                   <Image src={pointsIcon} />
-                  <span>CLIQQ POINTS</span>
+                  <p>CLIQQ POINTS</p>
                 </IconWrapper>
               </Grid.Column>
               <Grid.Column>
                 <IconWrapper>
                   <Image src={orderingIcon} />
-                  <span>ORDERING</span>
+                  <p>ORDERING</p>
                 </IconWrapper>
               </Grid.Column>
               <Grid.Column>
                 <IconWrapper>
                   <Image src={claimIcon} />
-                  <span>CLAIMING</span>
+                  <p>CLAIMING</p>
                 </IconWrapper>
               </Grid.Column>
               <Grid.Column>
                 <IconWrapper>
                   <Image src={deliveryIcon} />
-                  <span>DELIVERY</span>
+                  <p>DELIVERY</p>
                 </IconWrapper>
               </Grid.Column>
               <Grid.Column>
                 <IconWrapper>
                   <Image src={paymentIcon} />
-                  <span>PAYMENT</span>
+                  <p>PAYMENT</p>
                 </IconWrapper>
               </Grid.Column>
               <Grid.Column>
                 <IconWrapper>
                   <Image src={returnIcon} />
-                  <span>RETURNS</span>
+                  <p>RETURNS</p>
                 </IconWrapper>
               </Grid.Column>
             </Grid.Row>
