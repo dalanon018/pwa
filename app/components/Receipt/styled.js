@@ -15,6 +15,10 @@ export const ProductWrapper = styled.div`
   display: flex;
   height: 140px;
   margin: 0 auto;
+
+  @media (min-width: 768px) {
+    height: 220px;
+  }
 `
 export const ProductImage = styled.div`
   background: url(${({background}) => background}) no-repeat top right / cover;
@@ -30,9 +34,24 @@ export const ProductDescription = styled.div`
   flex: 1 0 auto;
   justify-content: center;
   letter-spacing: 2px;
+
+  @media (min-width: 768px) {
+    h6 {
+      font-family: 'helveticabold';
+      font-size: 18px;
+      letter-spacing: 5px;
+      margin: 10px 0 20px 0;
+    }
+  }
 `
 export const CodeWrapper = styled.span`
   color: #AEAEAE;
+
+  @media (min-width: 768px) {
+    font-family: 'helveticabold';
+    font-size: 16px;
+    letter-spacing: 3px;
+  }
 `
 
 export const CodeImage = styled.img`
@@ -44,6 +63,10 @@ export const CodeImage = styled.img`
 export const ProductLogoImage = styled.img`
   width: 180px;
   max-width: 100%;
+
+  @media (min-width: 768px) {
+    width: 270px;
+  }
 `
 
 export const ReceiptDescription = styled.div`
@@ -53,12 +76,26 @@ export const ReceiptDescription = styled.div`
   background-color: #FFF;
   padding: 30px 20px;
   color: #5B5B5B;
+
+  @media (min-width: 768px) {
+    padding: 50px;
+  }
 `
 
 export const PurchaseGeneralInfo = styled.div`
-  font-family: 'helveticalight'
-  margin-top: 20px
+  font-family: 'helveticalight';
+  margin-top: 20px;
   font-size: 12px;
+
+  .item {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media (min-width: 768px) {
+    margin-top: 0;
+  }
 `
 
 export const DetailTitle = styled.div`
@@ -76,10 +113,24 @@ export const ProductPrice = styled.p`
 
 export const BarcodeSVG = styled.svg`
   width: 100%;
+
+  @media (min-width: 768px) {
+    margin: 20px 0;
+  }
 `
 
 export const WrapperWarning = styled(Grid)`
   background-color: #8DC641;
+
+  @media (min-width: 768px) {
+    img {
+      width: 50px;
+    }
+    p {
+      font-size: 16px;
+      font-family: 'helveticabold';
+    }
+  }
 `
 
 export const WarningDescription = styled.p`
