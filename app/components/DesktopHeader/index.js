@@ -86,7 +86,7 @@ function DesktopHeader () {
                 <div className='info-item'>
                   <A href='mailto:customercare@7-elevem.com.ph'>
                     <Image src={EnvelopeIcon} />
-                    <span>customercare@7-elevem.com.ph</span>
+                    <span>customercare@7-eleven.com.ph</span>
                   </A>
                 </div>
               </InfoWrapper>
