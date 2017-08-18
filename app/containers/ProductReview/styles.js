@@ -43,6 +43,23 @@ const StepHead = styled.div`
     text-align: center;
     width: 30px;
   }
+
+  @media (min-width: 768px) {
+    span {
+      font-family: 'helveticabold';
+      font-size: 16px;
+      letter-spacing: 3px;
+    }
+
+    &:before {
+      font-family: 'helveticabold';
+      font-size: 16px;
+      height: 33px;
+      justify-content: center;
+      padding-top: 0'
+      width: 33px;
+    }
+  }
 `
 
 const ProductItem = styled.div`
@@ -68,7 +85,20 @@ const ProductItem = styled.div`
 
   .image {
     margin: 0 auto;
+    position: relative;
     width: 80px;
+    z-index: 2;
+  }
+
+  @media (min-width: 768px) {
+    padding-top: 50px;
+    .image {
+      width: 160px;
+    }
+    &:before {
+      height: 55px;
+      width: 350px;
+    }
   }
 `
 
@@ -85,6 +115,10 @@ const CliqqCodeWrapper = styled.div`
     width: 25px;
     margin-right: 10px;
   }
+
+  @media (min-width: 768px) {
+    justify-content: flex-start;
+  }
 `
 
 const ProductName = styled.div`
@@ -95,6 +129,13 @@ const ProductName = styled.div`
   margin: 20px 0;
   text-align: center;
   text-transform: uppercase;
+
+  @media (min-width: 768px) {
+    font-weight: bolder;
+    font-size: 19px;
+    text-align: left;
+    letter-spacing: 3px;
+  }
 `
 
 const StepContent = styled.div`
@@ -146,6 +187,27 @@ const DetailsWrapper = styled.div`
 
     &:last-child {
       margin-bottom: 0;
+    }
+  }
+
+  @media (min-width: 768px) {
+    padding: 0;
+    margin: 30px 0;
+
+    span {
+      font-family: 'helveticabold';
+      font-size: 16px;
+      letter-spacing: 3px;
+    }
+
+    p {
+      font-family: 'helveticalight';
+      font-size: 14px;
+      margin-bottom: 35px;
+
+      &.step-three {
+        margin-bottom: 10px;
+      }
     }
   }
 `
@@ -201,6 +263,32 @@ const SelectMethodWrapper = styled.div`
     top: 41%;
     transform: translateY(-50%);
   }
+
+  @media (min-width: 768px) {
+    .checkbox {
+      .label-custom {
+        flex-wrap: wrap;
+        padding-left: 50px !important;
+      }
+      input:before {
+        border: 3px solid #F0F0F0 !important;
+      }
+      input:checked~label:before {
+        border: 3px solid #8DC640 !important;
+        height: 22px;
+        width: 22px;
+      }
+      input:checked~label:after {
+        width: 5px;
+        height: 11px;
+        left: 9px;
+        top: 42% !important;
+      }
+    }
+    .checkbox {
+      padding: 40px 30px;
+    }
+  }
 `
 
 const LabelTitle = styled.p`
@@ -209,11 +297,22 @@ const LabelTitle = styled.p`
   font-size: 14px;
   letter-spacing: 2px;
   margin: 0;
+
+  @media (min-width: 768px) {
+    color: #5B5B5B !important;
+    font-size: 16px;
+    letter-spacing: 3px;
+  }
 `
 
 const LabelSubTitle = styled.span`
   font-size: 10px;
   color: #AEAEAE;
+
+  @media (min-width: 768px) {
+    font-size: 14px;
+    margin: 10px 0;
+  }
 `
 
 const LabelPrice = styled.div`
@@ -235,6 +334,29 @@ const LabelPrice = styled.div`
     line-height: initial;
     text-decoration: line-through;
     text-transform: uppercase;
+  }
+
+  @media (min-width: 768px) {
+    .total {
+      font-size: 40px;
+      font-weight: bolder;
+    }
+    .strike {
+      margin-left: 10px;
+      font-family: 'helveticalight';
+      font-size: 14px;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .total {
+      font-size: 50px;
+      letter-spacing: 3px;
+    }
+    .strike {
+      margin-left: 20px;
+      font-size: 16px;
+    }
   }
 `
 
@@ -271,6 +393,14 @@ const ButtonContainer = styled.div`
   padding: 0 10px 10px;
   position: fixed;
   width: 100%;
+
+  @media (min-width: 768px) {
+    position: static;
+
+    button {
+      padding: 20px 70px!important
+    }
+  }
 `
 
 const ReviewContainer = styled.div`

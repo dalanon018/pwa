@@ -259,6 +259,9 @@ input.input-field {
     }
     &__bottom {
       &-positive {
+        &--10 {
+          margin-bottom: 10px;
+        }
         &--20 {
           margin-bottom: 20px;
         }
@@ -304,5 +307,13 @@ input.input-field {
   }
   .category-item {
     padding: 8px !important;
+  }
+
+  .desktop {
+    &__width {
+      &--full {
+        width: 100%;
+      }
+    }
   }
 }
