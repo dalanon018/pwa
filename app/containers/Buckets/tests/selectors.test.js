@@ -4,7 +4,9 @@ import {
   selectProductCategories,
   selectToggle,
   selectMobileNumbers,
-  selectReceiptsUpdated
+  selectReceiptsUpdated,
+  selectToggleError,
+  selectToggleMessage
 } from '../selectors'
 
 describe('Buckets Selectors', () => {
@@ -64,6 +66,34 @@ describe('Buckets Selectors', () => {
         }
       })
       expect(selectReceiptsUpdatedSelectors(mockedState)).toEqual(receiptsUpdated)
+    })
+  })
+
+  describe('selectToggleError', () => {
+    const selectToggleErrorSelectors = selectToggleError()
+
+    it('should get updated toggleError', () => {
+      const toggleError = true
+      const mockedState = fromJS({
+        buckets: {
+          toggleError
+        }
+      })
+      expect(selectToggleErrorSelectors(mockedState)).toEqual(toggleError)
+    })
+  })
+
+  describe('selectToggleMessage', () => {
+    const selectToggleMessageSelectors = selectToggleMessage()
+
+    it('should get updated toggleMessage', () => {
+      const toggleMessage = 'Error message'
+      const mockedState = fromJS({
+        buckets: {
+          toggleMessage
+        }
+      })
+      expect(selectToggleMessageSelectors(mockedState)).toEqual(toggleMessage)
     })
   })
 })

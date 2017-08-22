@@ -7,7 +7,9 @@ import {
   setMobileNumbersAction,
 
   getUpdatedReceiptsAction,
-  setUpdatedReceiptsAction
+  setUpdatedReceiptsAction,
+
+  setNetworkErrorAction
 } from '../actions'
 
 import {
@@ -18,7 +20,9 @@ import {
   SET_MOBILE_NUMBERS,
 
   GET_RECEIPT_UPDATED,
-  SET_RECEIPT_UPDATED
+  SET_RECEIPT_UPDATED,
+
+  SET_NETWORK_ERROR
 } from '../constants'
 
 describe('Buckets actions', () => {
@@ -89,6 +93,19 @@ describe('Buckets actions', () => {
       }
 
       expect(setUpdatedReceiptsAction(payload)).toEqual(expectedResult)
+    })
+  })
+
+  describe('setNetworkErrorAction', () => {
+    it('should set Error Message', () => {
+      const payload = 'Error'
+
+      const expectedResult = {
+        type: SET_NETWORK_ERROR,
+        payload
+      }
+
+      expect(setNetworkErrorAction(payload)).toEqual(expectedResult)
     })
   })
 })

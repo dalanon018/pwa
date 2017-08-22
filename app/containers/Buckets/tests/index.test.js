@@ -17,6 +17,8 @@ describe('<Buckets />', () => {
     productCategories: fromJS({}),
     mobileNumbers: fromJS([]),
     receiptsUpdated: fromJS([]),
+    toggleError: false,
+    toggleMessage: null,
     routes: [{
       path: '/'
     }],
@@ -25,6 +27,7 @@ describe('<Buckets />', () => {
     setUpdatedReceipts: () => {},
     searchProduct: () => {},
     setProductSearchList: () => {},
+    setNetworkError: () => {},
     dispatch: () => {},
     changeRoute: () => {}
 

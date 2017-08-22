@@ -71,9 +71,12 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     changeRoute: PropTypes.func.isRequired,
     searchProduct: PropTypes.func.isRequired,
     setProductSearchList: PropTypes.func.isRequired,
+    setNetworkError: PropTypes.func.isRequired,
     productCategories: PropTypes.object.isRequired,
     mobileNumbers: PropTypes.object,
-    routes: PropTypes.array.isRequired
+    routes: PropTypes.array.isRequired,
+    toggleError: PropTypes.bool.isRequired,
+    toggleMessage: PropTypes.string
   }
 
   state = {
