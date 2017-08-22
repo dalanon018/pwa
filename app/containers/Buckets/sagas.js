@@ -6,6 +6,7 @@ import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 
 import request from 'utils/request'
+import { getRequestData } from 'utils/offline-request'
 
 import { transformCategory } from 'utils/transforms'
 import { getItem, setItem } from 'utils/localStorage'
@@ -47,10 +48,11 @@ function * transformEachEntity (transform, entity) {
 function * requestCategories () {
   const token = yield getAccessToken()
   const dbResource = yield call(getItem, CATEGORIES_KEY)
-  const req = yield call(request, `${API_BASE_URL}/categories`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/categories`, {
     method: 'GET',
     token: token.access_token
   })
+
   if (!req.err) {
     const getResults = propOr([], 'categoryList')
     const isObjectNotEqual = (data) => !isEqual(dbResource, data)

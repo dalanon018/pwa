@@ -12,6 +12,8 @@ const cheerio = require('cheerio')
 const pkg = require(path.resolve(process.cwd(), 'package.json'))
 const dllPlugin = pkg.dllPlugin
 
+const OfflinePlugin = require('offline-plugin')
+
 const plugins = [
   new webpack.HotModuleReplacementPlugin(), // Tell webpack we want hot reloading
   new webpack.NoEmitOnErrorsPlugin(),
@@ -22,6 +24,34 @@ const plugins = [
   new CircularDependencyPlugin({
     exclude: /a\.js|node_modules/, // exclude node_modules
     failOnError: false // show a warning when there is a circular dependency
+  }),
+  new OfflinePlugin({
+    relativePaths: false,
+    publicPath: '/',
+
+    // No need to cache .htaccess. See http://mxs.is/googmp,
+    // this is applied before any match in `caches` section
+    excludes: ['.htaccess'],
+
+    // Externals we have to find a way to match this using RegEx
+       // Will hande external API CALLS
+    ServiceWorker: {
+      entry: path.join(process.cwd(), 'app/sw-handler.js')
+    },
+
+    caches: {
+      main: [':rest:'],
+
+      // All chunks marked as `additional`, loaded after main section
+      // and do not prevent SW to install. Change to `optional` if
+      // do not want them to be preloaded at all (cached only when first loaded)
+      additional: ['*.chunk.js']
+    },
+
+    // Removes warning for about `additional` section usage
+    safeToUseOptionalCaches: true,
+
+    AppCache: false
   })
 ]
 

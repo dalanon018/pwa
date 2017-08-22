@@ -50,6 +50,7 @@ describe('request', () => {
     it('should catch errors', (done) => {
       request('/thisdoesntexist')
         .catch((err) => {
+          console.log(err)
           expect(err.response.status).toBe(404)
           expect(err.response.statusText).toBe('Not Found')
           done()

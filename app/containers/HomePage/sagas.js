@@ -9,8 +9,9 @@ import { compose, map, filter, prop, propOr } from 'ramda'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { takeLatest } from 'redux-saga'
 
-import request from 'utils/request'
+// import request from 'utils/request'
 
+import { getRequestData } from 'utils/offline-request'
 import { transformProduct } from 'utils/transforms'
 
 import {
@@ -44,8 +45,7 @@ export function * initializeAppGlobals () {
 
 export function * getProduct (data) {
   const token = yield getAccessToken()
-
-  const req = yield call(request, `${API_BASE_URL}/tags/FEATURED?deviceOrigin=PWA`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/tags/FEATURED?deviceOrigin=PWA`, {
     method: 'GET',
     token: token.access_token
   })
