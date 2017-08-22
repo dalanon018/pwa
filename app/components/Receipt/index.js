@@ -29,6 +29,7 @@ import {
   ReceiptDescription,
   PurchaseGeneralInfo,
   DetailTitle,
+  ContainerGrid,
   ProductPrice,
   BarcodeSVG,
   WrapperWarning,
@@ -83,18 +84,20 @@ const DetailStatus = ({ status, receipt }) => {
 }
 
 const WarningContent = ({ children }) => (
-  <WrapperWarning padded>
-    <Grid.Row>
-      <Grid.Column verticalAlign='middle' width={3}>
-        <img src={WarningIcon} />
-      </Grid.Column>
-      <Grid.Column textAlign='center' verticalAlign='middle' width={12}>
-        <WarningDescription>
-          { children }
-        </WarningDescription>
-      </Grid.Column>
-    </Grid.Row>
-  </WrapperWarning>
+  <ContainerGrid>
+    <WrapperWarning padded>
+      <Grid.Row>
+        <Grid.Column verticalAlign='middle' width={3}>
+          <img src={WarningIcon} />
+        </Grid.Column>
+        <Grid.Column textAlign='center' verticalAlign='middle' width={12}>
+          <WarningDescription>
+            { children }
+          </WarningDescription>
+        </Grid.Column>
+      </Grid.Row>
+    </WrapperWarning>
+  </ContainerGrid>
 )
 
 const WarningStatus = ({status}) => {
@@ -240,12 +243,14 @@ class Receipt extends React.PureComponent {
                     </DetailTitle>
                     <ProductPrice> PHP { receipt.get('amount') } </ProductPrice>
                   </div>
-                  <div className='item'>
-                    <DetailTitle>
-                      <FormattedMessage {...messages.receiptStoreLocationTitle} />
-                    </DetailTitle>
-                    IBM - EASTWOOD
-                  </div>
+                  {/*
+                    <div className='item'>
+                      <DetailTitle>
+                        <FormattedMessage {...messages.receiptStoreLocationTitle} />
+                      </DetailTitle>
+                      IBM - EASTWOOD
+                    </div>
+                  */}
                 </PurchaseGeneralInfo>
                 <DetailStatus {...{ status: statuses[receipt.get('status')], receipt }} />
                 <BarcodeSVG id='barcode' />

@@ -6,7 +6,7 @@
 
 import React, { PropTypes } from 'react'
 
-import { noop } from 'lodash'
+import { noop, isEmpty } from 'lodash'
 import { ifElse, equals, both, compose, prop } from 'ramda'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
@@ -199,7 +199,10 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       </LabelSubTitle>
       <LabelPrice className='desktop__width--full'>
         <span className='total'>PHP {calculateProductPrice(orderedProduct)}</span>
-        <span className='strike'>PHP {orderedProduct.get('price')}</span>
+        {
+          !isEmpty(orderedProduct.get('discount')) &&
+          <span className='strike'>PHP {orderedProduct.get('price')}</span>
+        }
       </LabelPrice>
     </label>
 

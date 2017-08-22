@@ -192,6 +192,11 @@ input.input-field {
 .modal-popup-slide {
   padding: 0;
 }
+
+svg#barcode {
+  height: auto !important;
+}
+
 /*******************************
         Responsive Overrides
 *******************************/
