@@ -133,7 +133,7 @@ input.input-field {
 
     &:before {
       color: #F6A22D;
-      content: '⚫';
+      content: '\2022';
       font-size: 10px;
       left: 0;
       line-height: 9px;
@@ -197,6 +197,12 @@ input.input-field {
 *******************************/
 
 /* Media 320 */
+@media (min-width: 0px) {
+  .desktop-visibility {
+    display: none !important;
+  }
+}
+
 @media (min-width: 320px) {
   /* Global */
   body {
@@ -273,9 +279,6 @@ input.input-field {
   .banner-padding  {
     padding: 0;
   }
-  .desktop-visibility {
-    display: none !important;
-  }
 }
 
 @media (min-width: 768px) {
@@ -333,8 +336,8 @@ input.input-field {
       padding-left: 27px;
 
       &:before {
-        font-size: 20px;
-        top: 7px;
+        font-size: 30px;
+        top: 10px;
       }
     }
 

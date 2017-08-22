@@ -13,6 +13,7 @@ const ProductWrapper = styled.div`
   animation-duration: .5s;
 
   @media (min-width: 768px) {
+    border-bottom: 4px solid #aeaeae;
     margin: 0 0 20px 0;
   }
 `
@@ -47,6 +48,10 @@ const ProductPriceWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+
+  @media (min-width: 768px) {
+    margin-bottom: 30px;
+  }
 `
 
 const ProductPrice = styled.p`

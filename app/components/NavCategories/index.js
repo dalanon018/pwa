@@ -17,7 +17,6 @@ import {
   CategoryIcon } from './styles'
 import { Grid } from 'semantic-ui-react'
 
-import sampleCategoryIcon from 'images/test-images/category-test.svg'
 import moreIcon from 'images/icons/more-icon.svg'
 
 function NavCategories ({
@@ -38,7 +37,7 @@ function NavCategories ({
                 const handleRedirect = () => changeRoute(`/products-category/${category.get('id')}`)
                 return (
                   <CategoryItem key={index} onClick={handleRedirect}>
-                    <CategoryIcon background={sampleCategoryIcon} />
+                    <CategoryIcon background={category.get('icon')} />
                     <p>{category.get('name')}</p>
                   </CategoryItem>
                 )

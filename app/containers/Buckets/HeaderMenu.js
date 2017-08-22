@@ -163,11 +163,12 @@ const NavMenu = styled.div`
     font-size: 18px !important;
     letter-spacing: 4px;
     padding: 20px 50px !important;
+    transition: all 0.3s ease !important;
     width: 100%;
 
-    &:hover {
-      background: transparent !important;
-      color: #5B5B5B !important;
+    &:hover, &.active {
+      background-color: #F58322 !important;
+      color: #FFFFFF !important;
     }
   }
 `
@@ -221,7 +222,8 @@ export default class MainMenu extends PureComponent {
     super()
 
     this.state = {
-      show: false
+      show: false,
+      activeMenu: 'home'
     }
 
     this._handleBarcodeClick = this._handleBarcodeClick.bind(this)
@@ -231,6 +233,7 @@ export default class MainMenu extends PureComponent {
     this._handleHideCategories = this._handleHideCategories.bind(this)
     this._handleCategoryRoute = this._handleCategoryRoute.bind(this)
     this._handlerPreventDefault = this._handlerPreventDefault.bind(this)
+    this._handleActiveMenu = this._handleActiveMenu.bind(this)
   }
 
   _handleBarcodeClick () {
@@ -269,8 +272,39 @@ export default class MainMenu extends PureComponent {
     e.preventDefault()
   }
 
+  _handleActiveMenu () {
+    const { currentRoute } = this.props
+
+    switch (currentRoute) {
+      case 'home':
+        this.setState({
+          activeMenu: 'home'
+        })
+        break
+      case 'purchases':
+        this.setState({
+          activeMenu: 'purchases'
+        })
+        break
+      case 'productsByCategory':
+        this.setState({
+          activeMenu: 'productsByCategory'
+        })
+        break
+
+      // default:
+      //   break;
+    }
+  }
+
+  componentDidUpdate () {
+    this._handleActiveMenu()
+  }
+
   render () {
     const { leftButtonAction, hideBackButton, categories } = this.props
+    const { activeMenu } = this.state
+
     return (
       <Wrapper>
         <MobileMenu className='mobile-visibility'>
@@ -323,13 +357,21 @@ export default class MainMenu extends PureComponent {
             <Grid padded>
               <Grid.Row columns='equal'>
                 <Grid.Column>
-                  <Button onClick={this._handlerHomeClick}>HOME</Button>
+                  <Button
+                    active={activeMenu === 'home'}
+                    onClick={this._handlerHomeClick}>HOME</Button>
                 </Grid.Column>
                 <Grid.Column>
-                  <Button onClick={(e) => this._handlerPreventDefault(e)} onMouseOver={this._handleShowCategories} onMouseLeave={this._handleHideCategories}>CATEGORIES</Button>
+                  <Button
+                    active={activeMenu === 'productsByCategory'}
+                    onClick={(e) => this._handlerPreventDefault(e)}
+                    onMouseOver={this._handleShowCategories}
+                    onMouseLeave={this._handleHideCategories}>CATEGORIES</Button>
                 </Grid.Column>
                 <Grid.Column>
-                  <Button onClick={this._handleBarcodeClick}>RECEIPTS</Button>
+                  <Button
+                    active={activeMenu === 'purchases'}
+                    onClick={this._handleBarcodeClick}>RECEIPTS</Button>
                 </Grid.Column>
               </Grid.Row>
             </Grid>
