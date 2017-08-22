@@ -112,11 +112,18 @@ export const ProductPrice = styled.p`
 `
 
 export const BarcodeSVG = styled.svg`
+  margin: 5px 0;
   width: 100%;
 
   @media (min-width: 768px) {
     margin: 20px 0;
   }
+`
+
+export const ContainerGrid = styled.div`
+  margin: 0 auto;
+  max-width: 492px;
+  width: 100%;
 `
 
 export const WrapperWarning = styled(Grid)`
