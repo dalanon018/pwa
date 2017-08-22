@@ -14,7 +14,9 @@ describe('Buckets Reducer', () => {
       categories: [],
       mobileNumbers: [],
       receiptsUpdated: [],
-      toggle: false
+      toggle: false,
+      toggleError: false,
+      toggleMessage: null
     })
   })
 

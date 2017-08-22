@@ -40,6 +40,10 @@ import {
   CATEGORIES_KEY
 } from 'containers/App/constants'
 
+import {
+  setNetworkErrorAction
+} from 'containers/Buckets/actions'
+
 function * transformEachEntity (transform, entity) {
   const response = yield call(transform, entity)
   return response
@@ -53,7 +57,7 @@ function * requestCategories () {
     token: token.access_token
   })
 
-  if (!req.err) {
+  if (!isEmpty(req)) {
     const getResults = propOr([], 'categoryList')
     const isObjectNotEqual = (data) => !isEqual(dbResource, data)
 
@@ -69,7 +73,7 @@ function * requestCategories () {
       getResults
     )(req)
   } else {
-    throw new Error(req.err)
+    yield put(setNetworkErrorAction('No cache data'))
   }
 }
 

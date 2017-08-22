@@ -33,10 +33,22 @@ const selectReceiptsUpdated = () => createSelector(
   (substate) => substate.get('receiptsUpdated')
 )
 
+const selectToggleError = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('toggleError')
+)
+
+const selectToggleMessage = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('toggleMessage')
+)
+
 export {
   selectBucketDomain,
   selectToggle,
   selectProductCategories,
   selectMobileNumbers,
-  selectReceiptsUpdated
+  selectReceiptsUpdated,
+  selectToggleError,
+  selectToggleMessage
 }

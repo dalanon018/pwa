@@ -35,13 +35,9 @@ const getRequestData = async (url, options) => {
   let response
   try {
     response = await request(url, options)
-    console.log('online')
   } catch (e) {
-    console.log('offline')
-    response = getFromCache(url)
+    response = await getFromCache(url)
   }
-
-  console.log(response)
 
   return response
 }

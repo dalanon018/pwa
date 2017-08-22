@@ -1,10 +1,11 @@
 // import { take, call, put, select } from 'redux-saga/effects';
 import { takeLatest } from 'redux-saga'
-import { isEqual, noop } from 'lodash'
+import { isEqual, isEmpty, noop } from 'lodash'
 import { compose, propOr, ifElse, is } from 'ramda'
 import { take, put, fork, cancel, call } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
-import request from 'utils/request'
+// import request from 'utils/request'
+import { getRequestData } from 'utils/offline-request'
 
 import { transformCategory } from 'utils/transforms'
 import { getItem, setItem } from 'utils/localStorage'
@@ -24,6 +25,10 @@ import {
 } from 'containers/App/constants'
 
 import {
+  setNetworkErrorAction
+} from 'containers/Buckets/actions'
+
+import {
   getAccessToken
 } from 'containers/Buckets/sagas'
 
@@ -35,12 +40,12 @@ function * transformEachEntity (transform, entity) {
 function * requestCategories () {
   const token = yield getAccessToken()
   const dbResource = yield call(getItem, CATEGORIES_KEY)
-  const req = yield call(request, `${API_BASE_URL}/categories`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/categories`, {
     method: 'GET',
     token: token.access_token
   })
 
-  if (!req.err) {
+  if (!isEmpty(req)) {
     const getResults = propOr([], 'categoryList')
     const isObjectNotEqual = (data) => !isEqual(dbResource, data)
 
@@ -56,7 +61,7 @@ function * requestCategories () {
       getResults
     )(req)
   } else {
-    throw new Error(req.err)
+    yield put(setNetworkErrorAction('No cache data'))
   }
 }
 

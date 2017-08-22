@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash'
 import {
   call,
   cancel,
@@ -27,6 +28,10 @@ import {
 } from 'containers/App/constants'
 
 import {
+  setNetworkErrorAction
+} from 'containers/Buckets/actions'
+
+import {
   getAccessToken
 } from 'containers/Buckets/sagas'
 
@@ -50,7 +55,7 @@ export function * getProduct (data) {
     token: token.access_token
   })
 
-  if (!req.err) {
+  if (!isEmpty(req)) {
     const transform = compose(
       map(transformEachEntity),
       filter(prop('cliqqCodes')),
@@ -58,6 +63,8 @@ export function * getProduct (data) {
     )
     const products = yield transform(req)
     yield put(setFeaturedProductsAction(products))
+  } else {
+    yield put(setNetworkErrorAction('No cache data'))
   }
 }
 

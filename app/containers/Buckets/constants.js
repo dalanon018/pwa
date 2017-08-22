@@ -13,6 +13,8 @@ export const SET_MOBILE_NUMBERS = 'app/Buckets/SET_MOBILE_NUMBERS'
 export const GET_RECEIPT_UPDATED = 'app/Buckets/GET_RECEIPT_UPDATED'
 export const SET_RECEIPT_UPDATED = 'app/Buckets/SET_RECEIPT_UPDATED'
 
+export const SET_NETWORK_ERROR = 'app/Buckets/SET_NETWORK_ERROR'
+
 export const SET_TOGGLE = 'app/Buckets/SET_TOGGLE'
 
 export const HIDE_BACK_BUTTON = [

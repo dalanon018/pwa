@@ -1,12 +1,14 @@
 import moment from 'moment'
 import { takeLatest } from 'redux-saga'
-import { compact } from 'lodash'
+import { isEmpty, compact } from 'lodash'
 import { compose, identity, ifElse, is, prop, propOr, sort, uniq, uniqBy } from 'ramda'
 
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 
-import request from 'utils/request'
+// import request from 'utils/request'
+import { getRequestData } from 'utils/offline-request'
+
 import { getItem, setItem } from 'utils/localStorage'
 import { transformOrder } from 'utils/transforms'
 
@@ -33,7 +35,8 @@ import {
 } from 'containers/App/constants'
 
 import {
-  setMobileNumbersAction
+  setMobileNumbersAction,
+  setNetworkErrorAction
 } from 'containers/Buckets/actions'
 
 import {
@@ -75,12 +78,12 @@ export function * getApiPurchases () {
 
   // we will only get the last mobileNumber used
   const mobile = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
-  const req = yield call(request, `${API_BASE_URL}/purchases/0${mobile}?deviceOrigin=PWA`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/purchases/0${mobile}?deviceOrigin=PWA`, {
     method: 'GET',
     token: token.access_token
   })
 
-  if (req) {
+  if (!isEmpty(req)) {
     const getOrderListProp = propOr([], 'salesOrderList')
     const orderLists = getOrderListProp(req)
 
@@ -90,6 +93,8 @@ export function * getApiPurchases () {
     const transform = yield allOrders.map(transformEachEntity)
 
     yield put(setPurchasesAction(transform))
+  } else {
+    yield put(setNetworkErrorAction('No cache data'))
   }
 }
 

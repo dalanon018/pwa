@@ -7,6 +7,7 @@ import {
 } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { takeLatest } from 'redux-saga'
+import { isEmpty } from 'lodash'
 import {
   compose,
   map,
@@ -16,7 +17,8 @@ import {
   toUpper
 } from 'ramda'
 
-import request from 'utils/request'
+// import request from 'utils/request'
+import { getRequestData } from 'utils/offline-request'
 
 import { transformProduct } from 'utils/transforms'
 import { getItem } from 'utils/localStorage'
@@ -36,6 +38,10 @@ import {
 
   LAST_VIEWS_KEY
 } from 'containers/App/constants'
+
+import {
+  setNetworkErrorAction
+} from 'containers/Buckets/actions'
 
 import {
   getAccessToken
@@ -58,25 +64,27 @@ function * getLastViewedItems () {
 export function * getProductByCategory (args) {
   const { payload } = args
   const token = yield getAccessToken()
-  const req = yield call(request, `${API_BASE_URL}/categories/${payload}/enabled`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/categories/${payload}/enabled`, {
     method: 'GET',
     token: token.access_token
   })
 
-  if (!req.err) {
+  if (!isEmpty(req)) {
     const transform = compose(
       map(transformEachEntity),
       propOr([], 'productList')
     )
     const products = yield transform(req)
     yield put(setProductsByCategoryAction(products))
+  } else {
+    yield put(setNetworkErrorAction('No cache data'))
   }
 }
 
 export function * getProductByTags (args) {
   const { payload } = args
   const token = yield getAccessToken()
-  const req = yield call(request, `${API_BASE_URL}/tags/${toUpper(payload)}?deviceOrigin=PWA`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/tags/${toUpper(payload)}?deviceOrigin=PWA`, {
     method: 'GET',
     token: token.access_token
   })
