@@ -20,6 +20,7 @@ const ButtonWrapper = styled.div`
     background: transparent;
     font-family: 'helveticamedium';
     letter-spacing: 2px;
+    padding: 0;
     text-transform: uppercase;
 
     &:hover, &:focus {

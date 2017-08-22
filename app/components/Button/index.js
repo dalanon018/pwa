@@ -29,6 +29,7 @@ const Wrapper = styled.div`
 `
 const TextWrapper = styled.div`
   font-size: ${({ fontSize }) => fontSize}px;
+  line-height: 15px;
   margin-right: 10px;
 `
 

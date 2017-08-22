@@ -16,6 +16,7 @@ import UNCLAIMED from 'images/status/unclaimed.svg'
 import UNPAID from 'images/status/unpaid.svg'
 
 const PurchaseWrapper = styled.div`
+  cursor: pointer;
   margin: 5px 0;
 `
 
@@ -57,8 +58,9 @@ const CodeImage = styled.img`
 `
 
 const ProductLogoImage = styled.img`
-  width: 180px;
+  margin-bottom: 5px;
   max-width: 100%;
+  width: 180px;
 `
 
 const StatusUseCaseImg = styled.img`

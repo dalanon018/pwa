@@ -71,10 +71,11 @@ const PurchasesList = styled.div`
 `
 
 const EmptyWrapper = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  width: 100%;
 `
 const EmptyWrapperImg = styled.img`
   margin-bottom: 20px;

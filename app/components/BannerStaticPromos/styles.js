@@ -19,6 +19,8 @@ export const BannerWrapper = styled.div`
   }
 
   .item {
+    cursor: pointer;
+    
     &:last-child {
       align-self: flex-end;
     }

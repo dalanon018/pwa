@@ -65,8 +65,11 @@ const ButtonWrapper = styled.div`
       font-size: 12px;
       margin-right: 0;
       margin-top: 15px;
-      padding: 0;
     }
+  }
+
+  @media (min-width: 768px) {
+    padding: 0 80px;
   }
 `
 

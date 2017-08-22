@@ -146,6 +146,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   _displayHeader () {
     const { changeRoute, routes, searchProduct, setProductSearchList } = this.props
     const { path } = routes.slice().pop()
+    const currentRoute = routes.slice().pop().name
 
     /**
      * we have to identify if we should display backbutton
@@ -170,6 +171,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
         hideBackButton={hideBackButton}
         leftButtonAction={this._handleLeftButtonAction}
         changeRoute={changeRoute}
+        currentRoute={currentRoute}
         show
       />
     )
