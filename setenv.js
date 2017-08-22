@@ -22,7 +22,7 @@ if (env === 'production') {
   console.log(`OATH_GRANT_TYPE=${process.env.OATH_GRANT_TYPE}`)
 
 } else {
-  console.log(`TOKEN_URL=https://202.60.9.110:8443/accounts/oauth2/token`)
+  console.log(`TOKEN_URL=https://apidemo.cliqq.net:8443/accounts/oauth2/token`)
   console.log(`API_BASE_URL=https://apidemo.cliqq.net:8443/ecms/api/v1`)
   console.log(`APP_BASE_URL=http://localhost:3000`)
 
