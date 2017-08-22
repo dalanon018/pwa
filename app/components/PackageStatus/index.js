@@ -7,10 +7,6 @@
 import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 
-import {
-  Grid
-} from 'semantic-ui-react'
-
 import RESERVED from 'images/status/reserved.svg'
 import CONFIRMED from 'images/status/paid.svg'
 import INTRANSIT from 'images/status/intransit.svg'
@@ -21,24 +17,45 @@ import CONFIRMEDDONE from 'images/status/paid-done.svg'
 import INTRANSITDONE from 'images/status/intransit-done.svg'
 import DELIVEREDDONE from 'images/status/delivered-done.svg'
 
-const StatusWrapper = styled(Grid)`
-  width: 100%
-`
 const StatusImg = styled.img`
   max-width: 50px;
+
+  @media (min-width: 768px) {
+    max-width: 70px
+  }
 `
 const StatusColumnWrapper = styled.div`
+  flex-grow: 3;
   opacity: ${({ isDone, current }) => (isDone || current) ? '1' : '0.3'};
 `
 
 const StatusColumnConnectorWrapper = styled.div`
+  flex-grow: 2;
   opacity: ${({ isDone }) => (isDone) ? '1' : '0.3'};
+
+  @media (min-width: 400px) {
+    flex-grow: 4;
+  }
+
+  @media (min-width: 490px) {
+    flex-grow: 8;
+  }
+
+  @media (min-width: 768px) {
+    flex-grow: 4;
+  }
 `
 
 const StatusConnecter = styled.div`
+  border-top: 2px dotted ${({ isDone }) => isDone ? '#8DC641' : '#5B5B5B'};
   height: 1px;
   width: 100%;
-  border-top: 2px dotted ${({ isDone }) => isDone ? '#8DC641' : '#5B5B5B'};
+`
+
+const Wrapper = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
 `
 
 const IS_RESERVED_DONE = ['CONFIRMED', 'INTRANSIT', 'DELIVERED']
@@ -55,11 +72,9 @@ const identifyActiveImage = images => image => key =>
 
 const Connector = ({ current, isDone }) => {
   return (
-    <Grid.Column className='padding__none' verticalAlign='middle'>
-      <StatusColumnConnectorWrapper isDone={isDone} >
-        <StatusConnecter isDone={isDone} />
-      </StatusColumnConnectorWrapper>
-    </Grid.Column>
+    <StatusColumnConnectorWrapper isDone={isDone} >
+      <StatusConnecter isDone={isDone} />
+    </StatusColumnConnectorWrapper>
   )
 }
 
@@ -71,11 +86,9 @@ const ReservationStatus = ({ status, current }) => {
   })(true)(isDone)
 
   return (
-    <Grid.Column className='padding__none'>
-      <StatusColumnWrapper isDone={isDone} current={current} >
-        <StatusImg src={BANNER} />
-      </StatusColumnWrapper>
-    </Grid.Column>
+    <StatusColumnWrapper isDone={isDone} current={current} >
+      <StatusImg src={BANNER} />
+    </StatusColumnWrapper>
   )
 }
 
@@ -87,11 +100,9 @@ const PaidStatus = ({ status, current }) => {
   })(true)(isDone)
 
   return (
-    <Grid.Column className='padding__none'>
-      <StatusColumnWrapper isDone={isDone} current={current} >
-        <StatusImg src={BANNER} />
-      </StatusColumnWrapper>
-    </Grid.Column>
+    <StatusColumnWrapper isDone={isDone} current={current} >
+      <StatusImg src={BANNER} />
+    </StatusColumnWrapper>
   )
 }
 
@@ -103,11 +114,9 @@ const InTransitStatus = ({ status, current }) => {
   })(true)(isDone)
 
   return (
-    <Grid.Column className='padding__none'>
-      <StatusColumnWrapper isDone={isDone} current={current} >
-        <StatusImg src={BANNER} />
-      </StatusColumnWrapper>
-    </Grid.Column>
+    <StatusColumnWrapper isDone={isDone} current={current} >
+      <StatusImg src={BANNER} />
+    </StatusColumnWrapper>
   )
 }
 
@@ -119,39 +128,36 @@ const DeliveredStatus = ({ status, current }) => {
   })(true)(isDone)
 
   return (
-    <Grid.Column className='padding__none'>
-      <StatusColumnWrapper isDone={isDone} current={current} >
-        <StatusImg src={BANNER} />
-      </StatusColumnWrapper>
-    </Grid.Column>
+    <StatusColumnWrapper isDone={isDone} current={current} >
+      <StatusImg src={BANNER} />
+    </StatusColumnWrapper>
   )
 }
 
 function PackageStatus ({ status }) {
   return (
-    <StatusWrapper padded columns={7}>
-      <Grid.Row>
-        <ReservationStatus {...{ status, current: (status === 'RESERVED') }} />
-        <Connector {...{
-          current: (status === 'RESERVED'),
-          isDone: (IS_RESERVED_DONE.includes(status))
-        }}
-        />
-        <PaidStatus {...{ status, current: (status === 'CONFIRMED') }} />
-        <Connector {...{
-          current: (status === 'CONFIRMED'),
-          isDone: (IS_CONFIRMED_DONE.includes(status))
-        }}
-        />
-        <InTransitStatus {...{ status, current: (status === 'INTRANSIT') }} />
-        <Connector {...{
-          current: (status === 'DELIVERED'),
-          isDone: (IS_INTRANSIT_DONE.includes(status))
-        }}
-        />
-        <DeliveredStatus {...{ status, current: (status === 'DELIVERED') }} />
-      </Grid.Row>
-    </StatusWrapper>
+
+    <Wrapper>
+      <ReservationStatus {...{ status, current: (status === 'RESERVED') }} />
+      <Connector {...{
+        current: (status === 'RESERVED'),
+        isDone: (IS_RESERVED_DONE.includes(status))
+      }}
+      />
+      <PaidStatus {...{ status, current: (status === 'CONFIRMED') }} />
+      <Connector {...{
+        current: (status === 'CONFIRMED'),
+        isDone: (IS_CONFIRMED_DONE.includes(status))
+      }}
+      />
+      <InTransitStatus {...{ status, current: (status === 'INTRANSIT') }} />
+      <Connector {...{
+        current: (status === 'DELIVERED'),
+        isDone: (IS_INTRANSIT_DONE.includes(status))
+      }}
+      />
+      <DeliveredStatus {...{ status, current: (status === 'DELIVERED') }} />
+    </Wrapper>
   )
 }
 

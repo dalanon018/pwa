@@ -15,8 +15,11 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { FormattedMessage } from 'react-intl'
 
+import { Grid } from 'semantic-ui-react'
+
 import Receipt from 'components/Receipt'
 import Modal from 'components/PromptModal'
+import WindowWidth from 'components/WindowWidth'
 
 import {
   STATUSES,
@@ -46,7 +49,7 @@ import {
 
 const ReceiptWrapper = styled.div`
   background: url(${({background}) => background}) no-repeat top right / cover;
-  min-height: 100vh;
+  // min-height: 100vh;
   padding: 25px;
 `
 /**
@@ -128,33 +131,42 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
   }
 
   render () {
-    const { receipt } = this.props
+    const { receipt, windowWidth } = this.props
     const { modalToggle } = this.state
 
-    return (
-      <ReceiptWrapper background={this._identifyBackground}>
-        <Helmet
-          title='ReceiptPage'
-          meta={[
-            { name: 'description', content: 'Description of ReceiptPage' }
-          ]}
-        />
-        <Receipt
-          statuses={STATUSES}
-          purchaseUsecases={PURCHASE_USECASE}
-          purchaseOrder={PURCHASE_ORDER}
-          receipt={receipt}
-          goHomeFn={this._goToHomeFn}
-          repurchaseFn={this._repurchaseFn}
-        />
+    const widthResponsive = windowWidth >= 768
 
-        <Modal
-          open={modalToggle}
-          name='warning'
-          title={<FormattedMessage {...messages.errorMessageTitle} />}
-          content={<FormattedMessage {...messages.invalidTrackingNumber} />}
-        />
-      </ReceiptWrapper>
+    return (
+      <Grid padded={widthResponsive}>
+        <Grid.Row>
+          <Grid.Column>
+            <ReceiptWrapper background={this._identifyBackground}>
+              <Helmet
+                title='ReceiptPage'
+                meta={[
+                  { name: 'description', content: 'Description of ReceiptPage' }
+                ]}
+              />
+              <Receipt
+                statuses={STATUSES}
+                purchaseUsecases={PURCHASE_USECASE}
+                purchaseOrder={PURCHASE_ORDER}
+                receipt={receipt}
+                goHomeFn={this._goToHomeFn}
+                windowWidth={windowWidth}
+                repurchaseFn={this._repurchaseFn}
+              />
+
+              <Modal
+                open={modalToggle}
+                name='warning'
+                title={<FormattedMessage {...messages.errorMessageTitle} />}
+                content={<FormattedMessage {...messages.invalidTrackingNumber} />}
+              />
+            </ReceiptWrapper>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     )
   }
 }
@@ -173,4 +185,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReceiptPage)
+export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(ReceiptPage))

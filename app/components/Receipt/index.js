@@ -2,9 +2,7 @@ import React, { PropTypes } from 'react'
 import JsBarcode from 'jsbarcode'
 
 import { FormattedMessage } from 'react-intl'
-import {
-  Grid
-} from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 
 import Button from 'components/Button'
 import H6 from 'components/H6'
@@ -206,7 +204,16 @@ class Receipt extends React.PureComponent {
   }
 
   render () {
-    const { receipt, statuses, goHomeFn, repurchaseFn } = this.props
+    const { receipt, statuses, goHomeFn, repurchaseFn, windowWidth } = this.props
+
+    const resposiveColumns = () => {
+      if (windowWidth >= 768) {
+        return 2
+      } else {
+        return 1
+      }
+    }
+
     return (
       <ReceiptWrapper>
         <ProductWrapper >
@@ -219,42 +226,43 @@ class Receipt extends React.PureComponent {
             <ProductLogoImage src={TestLogo} />
           </ProductDescription>
         </ProductWrapper>
-        <ReceiptDescription >
-          { this._renderPurchaseBanner() }
-          <PurchaseGeneralInfo>
-            <Grid padded='vertically'>
-              <Grid.Row className='padding__none--vertical'>
-                <Grid.Column width={4} verticalAlign='middle'>
-                  <DetailTitle>
-                    <FormattedMessage {...messages.receiptPriceTitle} />
-                  </DetailTitle>
-                </Grid.Column>
-                <Grid.Column width={12} textAlign='right' verticalAlign='middle'>
-                  <ProductPrice> PHP { receipt.get('amount') } </ProductPrice>
-                </Grid.Column>
-              </Grid.Row>
-              <DetailStatus {...{ status: statuses[receipt.get('status')], receipt }} />
-              <Grid.Row className='padding__none--vertical'>
-                <Grid.Column width={7} verticalAlign='middle'>
-                  <DetailTitle>
-                    <FormattedMessage {...messages.receiptStoreLocationTitle} />
-                  </DetailTitle>
-                </Grid.Column>
-                <Grid.Column width={9} textAlign='right' verticalAlign='middle'>
-                  IBM - EASTWOOD
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-            <BarcodeSVG id='barcode' />
-            <WarningContent>
-              <WarningStatus {...{ status: statuses[receipt.get('status')] }} />
-            </WarningContent>
-            <ButtonWrapper>
-              <ButtonRepurchaseHome {...{ status: statuses[receipt.get('status')], goHomeFn, repurchaseFn }} />
-            </ButtonWrapper>
-          </PurchaseGeneralInfo>
+
+        <ReceiptDescription>
+          <Grid>
+            <Grid.Row columns={resposiveColumns()} stretched>
+              { this._renderPurchaseBanner() }
+
+              <Grid.Column>
+                <PurchaseGeneralInfo>
+                  <div className='item'>
+                    <DetailTitle>
+                      <FormattedMessage {...messages.receiptPriceTitle} />
+                    </DetailTitle>
+                    <ProductPrice> PHP { receipt.get('amount') } </ProductPrice>
+                  </div>
+                  <div className='item'>
+                    <DetailTitle>
+                      <FormattedMessage {...messages.receiptStoreLocationTitle} />
+                    </DetailTitle>
+                    IBM - EASTWOOD
+                  </div>
+                </PurchaseGeneralInfo>
+                <DetailStatus {...{ status: statuses[receipt.get('status')], receipt }} />
+                <BarcodeSVG id='barcode' />
+                <WarningContent>
+                  <WarningStatus {...{ status: statuses[receipt.get('status')] }} />
+                </WarningContent>
+                <ButtonWrapper>
+                  <ButtonRepurchaseHome {...{ status: statuses[receipt.get('status')], goHomeFn, repurchaseFn }} />
+                </ButtonWrapper>
+              </Grid.Column>
+
+            </Grid.Row>
+          </Grid>
         </ReceiptDescription>
+
       </ReceiptWrapper>
+
     )
   }
 }

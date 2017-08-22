@@ -4,17 +4,12 @@ import { CountdownParser } from 'utils/date'
 
 import { FormattedMessage } from 'react-intl'
 
+import { Grid } from 'semantic-ui-react'
+
 import Countdown from 'components/Countdown'
 import PackageStatus from 'components/PackageStatus'
 
 import messages from './messages'
-
-const PurchaseWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`
 
 const HeaderBase = styled.div`
   font-family: 'helveticabold';
@@ -23,6 +18,11 @@ const HeaderBase = styled.div`
 
 const Timer = styled.div`
   font-size: 60px;
+  margin: 20px 0;
+
+  @media (min-width: 992px) {
+    font-size: 100px;
+  }
 `
 
 const HeaderOrder = styled(HeaderBase)`
@@ -32,9 +32,11 @@ const HeaderOrder = styled(HeaderBase)`
 const PurchaseOrder = ({ status, receipt }) => {
   const currentStatus = status || 'unknownStatus'
   return (
-    <PurchaseWrapper>
-      <HeaderOrder {...{ status }} >
+    <Grid.Column>
+      <HeaderOrder>
         <FormattedMessage {...messages[currentStatus]} />
+      </HeaderOrder>
+      <HeaderOrder {...{ status }} >
         {
           (status === 'RESERVED') &&
           <Timer>
@@ -43,7 +45,7 @@ const PurchaseOrder = ({ status, receipt }) => {
         }
       </HeaderOrder>
       <PackageStatus {...{ status }} />
-    </PurchaseWrapper>
+    </Grid.Column>
   )
 }
 
