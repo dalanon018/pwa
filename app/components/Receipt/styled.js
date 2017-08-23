@@ -1,9 +1,5 @@
 import styled from 'styled-components'
 
-import {
-  Grid
-} from 'semantic-ui-react'
-
 export const ReceiptWrapper = styled.div`
 `
 
@@ -107,7 +103,6 @@ export const ProductPrice = styled.p`
   font-family: 'helveticabold';
   font-size: 29px;
   line-height: inherit;
-  margin: 10px 0;
   text-transform: uppercase;
 `
 
@@ -120,14 +115,11 @@ export const BarcodeSVG = styled.svg`
   }
 `
 
-export const ContainerGrid = styled.div`
+export const WrapperWarning = styled.div`
+  background-color: #8DC641;
   margin: 0 auto;
   max-width: 492px;
   width: 100%;
-`
-
-export const WrapperWarning = styled(Grid)`
-  background-color: #8DC641;
 
   @media (min-width: 768px) {
     img {

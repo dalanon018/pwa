@@ -27,6 +27,7 @@ const Timer = styled.div`
 
 const HeaderOrder = styled(HeaderBase)`
   font-size: ${({ status }) => (status === 'RESERVED') ? '14px' : '18px'};
+  margin-bottom: 15px;
 `
 
 const PurchaseOrder = ({ status, receipt }) => {
