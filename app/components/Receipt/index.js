@@ -29,7 +29,6 @@ import {
   ReceiptDescription,
   PurchaseGeneralInfo,
   DetailTitle,
-  ContainerGrid,
   ProductPrice,
   BarcodeSVG,
   WrapperWarning,
@@ -41,14 +40,16 @@ const ComponentDetail = components => component => key =>
  key in components ? components[key] : component
 
 const DetailsContent = ({ title, children }) => (
-  <Grid.Row className='padding__none--vertical'>
-    <Grid.Column width={8} verticalAlign='middle'>
-      <DetailTitle> { title } </DetailTitle>
-    </Grid.Column>
-    <Grid.Column width={8} textAlign='right' verticalAlign='middle'>
-      { children }
-    </Grid.Column>
-  </Grid.Row>
+  <Grid>
+    <Grid.Row columns={2}>
+      <Grid.Column verticalAlign='middle'>
+        <DetailTitle> { title } </DetailTitle>
+      </Grid.Column>
+      <Grid.Column textAlign='right' verticalAlign='middle'>
+        { children }
+      </Grid.Column>
+    </Grid.Row>
+  </Grid>
 )
 
 const DetailStatus = ({ status, receipt }) => {
@@ -84,8 +85,8 @@ const DetailStatus = ({ status, receipt }) => {
 }
 
 const WarningContent = ({ children }) => (
-  <ContainerGrid>
-    <WrapperWarning padded>
+  <WrapperWarning>
+    <Grid padded>
       <Grid.Row>
         <Grid.Column verticalAlign='middle' width={3}>
           <img src={WarningIcon} />
@@ -96,8 +97,8 @@ const WarningContent = ({ children }) => (
           </WarningDescription>
         </Grid.Column>
       </Grid.Row>
-    </WrapperWarning>
-  </ContainerGrid>
+    </Grid>
+  </WrapperWarning>
 )
 
 const WarningStatus = ({status}) => {
