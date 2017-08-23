@@ -1,7 +1,7 @@
 
 import { takeLatest } from 'redux-saga'
 import { isEmpty } from 'lodash'
-import { compose, map, propOr } from 'ramda'
+import { compose, map, filter, prop, propOr } from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 
@@ -52,6 +52,7 @@ export function * getProductSearch (payload) {
   if (!isEmpty(req)) {
     const transform = compose(
       map(transformEachEntity),
+      filter(prop('cliqqCodes')),
       propOr([], 'productList')
     )
     const products = yield transform(req)

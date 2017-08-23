@@ -22,7 +22,8 @@ import {
 import {
   setProductCategoriesAction,
   setMobileNumbersAction,
-  setUpdatedReceiptsAction
+  setUpdatedReceiptsAction,
+  setNetworkErrorAction
 } from './actions'
 
 import {
@@ -39,10 +40,6 @@ import {
   ORDERED_LIST_KEY,
   CATEGORIES_KEY
 } from 'containers/App/constants'
-
-import {
-  setNetworkErrorAction
-} from 'containers/Buckets/actions'
 
 function * transformEachEntity (transform, entity) {
   const response = yield call(transform, entity)
@@ -99,13 +96,13 @@ export function * requestAccessToken () {
     toPairs
   )
 
-  const req = yield call(request, TOKEN_URL, {
-    method: 'POST',
-    contentType: 'application/x-www-form-urlencoded;charset=UTF-8',
-    body: fnSearchParams(params)
-  })
+  try {
+    const req = yield call(request, TOKEN_URL, {
+      method: 'POST',
+      contentType: 'application/x-www-form-urlencoded;charset=UTF-8',
+      body: fnSearchParams(params)
+    })
 
-  if (!req.err) {
     // the normal expiration is 1 hour but we will only set it to 30 mins so we can be sure that we will not encounter token expiry
     const expiry = moment().add(30, 'minutes').format('YYYY-MM-DD HH:mm:ss')
     const token = Object.assign({}, req, { expiry })
@@ -113,9 +110,11 @@ export function * requestAccessToken () {
     yield call(setItem, ACCESS_TOKEN_KEY, token)
 
     return token
-  } else {
-    throw new Error(req.err)
+  } catch (e) {
+    yield put(setNetworkErrorAction('Please make sure you have internet connection to automatically refresh your token.'))
   }
+
+  return {}
 }
 
 /**
@@ -144,18 +143,14 @@ export function * updateUICategories (req = Array) {
 }
 
 export function * getCategories () {
-  try {
-    // we need to see if we need to request this since we save this anyway to the browser
-    const req = yield getCategoriesResource()
-    const getResults = ifElse(
-      is(Array),
-      updateUICategories,
-      noop
-    )
-    yield getResults(req)
-  } catch (e) {
-    console.log(e)
-  }
+  // we need to see if we need to request this since we save this anyway to the browser
+  const req = yield getCategoriesResource()
+  const getResults = ifElse(
+    is(Array),
+    updateUICategories,
+    noop
+  )
+  yield getResults(req)
 }
 
 export function * getMobileNumbers () {

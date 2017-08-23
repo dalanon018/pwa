@@ -30,7 +30,8 @@ import {
 } from 'containers/App/constants'
 
 import {
-  setMobileNumbersAction
+  setMobileNumbersAction,
+  setNetworkErrorAction
 } from 'containers/Buckets/actions'
 
 import {
@@ -113,32 +114,38 @@ export function * submitOrder (args) {
   const { payload: { orderedProduct, mobileNumber, modePayment } } = args
   const completeMobile = `0${mobileNumber}`
   const token = yield getAccessToken()
-  const order = yield call(request, `${API_BASE_URL}/orders`, {
-    method: 'POST',
-    token: token.access_token,
-    body: JSON.stringify({
-      cliqqCode: orderedProduct.get('cliqqCode').first(),
-      quantity: 1,
-      deviceOrigin: 'PWA',
-      mobileNumber: completeMobile
+
+  try {
+    const order = yield call(request, `${API_BASE_URL}/orders`, {
+      method: 'POST',
+      token: token.access_token,
+      body: JSON.stringify({
+        cliqqCode: orderedProduct.get('cliqqCode').first(),
+        quantity: 1,
+        deviceOrigin: 'PWA',
+        mobileNumber: completeMobile
+      })
     })
-  })
 
-  // right now e have to emulate the response data
-  // once response is success we have to pass it back so we can eventually redirect the user to the barcode page.
-  if (order) {
-    // make our transformer here that should be the same as getting purchase list.
-    const orderResponse = yield transformResponse({ order, orderedProduct, completeMobile, modePayment })
-    // here we have to save it first to our storage.
-    yield setOrderList(orderResponse)
-    // we have to remove the current product since we already done with it.
-    yield call(removeItem, CURRENT_PRODUCT_KEY)
-    // we have to update the firebase
-    yield updateFirebase({ orderResponse, completeMobile })
+    // right now e have to emulate the response data
+    // once response is success we have to pass it back so we can eventually redirect the user to the barcode page.
+    if (order) {
+      // make our transformer here that should be the same as getting purchase list.
+      const orderResponse = yield transformResponse({ order, orderedProduct, completeMobile, modePayment })
+      // here we have to save it first to our storage.
+      yield setOrderList(orderResponse)
+      // we have to remove the current product since we already done with it.
+      yield call(removeItem, CURRENT_PRODUCT_KEY)
+      // we have to update the firebase
+      yield updateFirebase({ orderResponse, completeMobile })
 
-    yield put(successOrderAction(orderResponse))
-  } else {
-    yield put(errorOrderAction(order))
+      yield put(successOrderAction(orderResponse))
+    } else {
+      yield put(errorOrderAction(order))
+    }
+  } catch (e) {
+    yield put(setNetworkErrorAction('Please make sure you have internet connection to order a product.'))
+    yield put(errorOrderAction({}))
   }
 }
 

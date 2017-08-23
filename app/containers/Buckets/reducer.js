@@ -42,11 +42,12 @@ function bucketsReducer (state = initialState, action) {
     case SET_RECEIPT_UPDATED:
       return state.set('receiptsUpdated', fromJS(action.payload))
 
-    case SET_NETWORK_ERROR:
+    case SET_NETWORK_ERROR: {
+      const toggle = action.payload || false
       return state
         .set('toggleMessage', action.payload)
-        .set('toggleError', !state.get('toggleError'))
-
+        .set('toggleError', Boolean(toggle))
+    }
     default:
       return state
   }
