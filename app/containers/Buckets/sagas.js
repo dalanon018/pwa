@@ -1,7 +1,7 @@
 import moment from 'moment'
 import { takeLatest } from 'redux-saga'
 import { find, isEmpty, isEqual, noop } from 'lodash'
-import { compose, filter, contains, join, toPairs, map, propOr, head, ifElse, is, isNil, uniq } from 'ramda'
+import { compose, flatten, filter, fromPairs, contains, join, toPairs, lensProp, map, partial, propOr, head, ifElse, is, isNil, uniq, view } from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 
@@ -40,6 +40,14 @@ import {
   ORDERED_LIST_KEY,
   CATEGORIES_KEY
 } from 'containers/App/constants'
+
+import {
+  setPurchasesAction
+} from 'containers/Purchases/actions'
+
+import {
+  setReceiptAction
+} from 'containers/ReceiptPage/actions'
 
 function * transformEachEntity (transform, entity) {
   const response = yield call(transform, entity)
@@ -171,37 +179,55 @@ export function * getMobileNumbers () {
   yield put(setMobileNumbersAction(mobiles))
 }
 
+function * updateReceiptSnapShot (orders, receiptId) {
+  const trackingNumber = head(receiptId)
+  const receiptKey = lensProp(trackingNumber)
+  const receipt = fromPairs([receiptId])
+  const snapStatus = view(receiptKey, receipt)
+  const order = find(orders, { trackingNumber }) || {}
+  let updatedReceipts = []
+
+  // we need to make sure that we will not include 'RESERVED'
+  const isReservedStatus = (status) => compose(
+    contains(status),
+    map(head),
+    filter(contains('RESERVED')),
+    toPairs
+  )(STATUSES)
+
+  if ((!isEmpty(order) && order.status !== snapStatus) && !isReservedStatus(snapStatus)) {
+    order.status = snapStatus
+    updatedReceipts = updatedReceipts.concat(order)
+    setItem(ORDERED_LIST_KEY, orders)
+    // yield put(setUpdatedReceiptsAction(updatedReceipts))
+
+    // we have to update the receipt page
+    yield put(setReceiptAction(order))
+
+    // we have to update the purchase list
+    yield put(setPurchasesAction(orders))
+  }
+
+  return updatedReceipts
+}
+
 export function * getUpdatedReceipts (payload) {
   const orders = yield call(getItem, ORDERED_LIST_KEY)
   const { payload: { snapshot } } = payload
-  let updatedReceipts = []
-
+  const emptyReceipts = (data) => isEmpty(data)
   // make sure that it is not null
   if (snapshot) {
     // first we have to make our snapshot to keys and find the order by the key
-    Object.keys(snapshot).map((trackingNumber) => {
-      const snapStatus = snapshot[trackingNumber]
-      const order = find(orders, { trackingNumber }) || {}
-      // we need to make sure that we will not include 'RESERVED'
-      const isReservedStatus = (status) => compose(
-        contains(status),
-        map(head),
-        filter(contains('RESERVED')),
-        toPairs
-      )(STATUSES)
+    const updateSnapshot = compose(
+      map(partial(updateReceiptSnapShot, [orders])),
+      toPairs
+    )
+    const updatedReceipts = yield updateSnapshot(snapshot)
+    const updateReceiptRedux = compose(put, setUpdatedReceiptsAction)
+    const shouldUpdateReceiptsRedux = ifElse(emptyReceipts, noop, updateReceiptRedux)
+    const handleUpdateReceipt = compose(shouldUpdateReceiptsRedux, flatten)
 
-      if ((!isEmpty(order) && order.status !== snapStatus) && !isReservedStatus(snapStatus)) {
-        order.status = snapStatus
-        updatedReceipts = updatedReceipts.concat(order)
-
-        setItem(ORDERED_LIST_KEY, orders)
-        put(setUpdatedReceiptsAction(updatedReceipts))
-      }
-    })
-  }
-
-  if (!isEmpty(updatedReceipts)) {
-    yield put(setUpdatedReceiptsAction(updatedReceipts))
+    yield handleUpdateReceipt(updatedReceipts)
   }
 }
 
