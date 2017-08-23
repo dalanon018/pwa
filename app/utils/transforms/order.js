@@ -52,6 +52,10 @@ const Schema = {
   claimExpiry: {
     name: 'claimExpiry',
     type: STRING
+  },
+  facilityName: {
+    name: 'storeName',
+    type: STRING
   }
 }
 
