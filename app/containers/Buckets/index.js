@@ -5,19 +5,24 @@ import { browserHistory } from 'react-router'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
+import { FormattedMessage } from 'react-intl'
+
 import Firebase from 'utils/firebase-realtime'
 
 import {
   selectProductCategories,
   selectMobileNumbers,
-  selectReceiptsUpdated
+  selectReceiptsUpdated,
+  selectToggleError,
+  selectToggleMessage
 } from './selectors'
 
 import {
   getProductCategoriesAction,
   getMobileNumbersAction,
   getUpdatedReceiptsAction,
-  setUpdatedReceiptsAction
+  setUpdatedReceiptsAction,
+  setNetworkErrorAction
 } from './actions'
 
 import {
@@ -30,7 +35,9 @@ import {
 } from 'containers/SearchPage/actions'
 
 import ModalWithHeader from 'components/ModalWithHeader'
+import Modal from 'components/PromptModal'
 
+import messages from './messages'
 import HeaderMenu from './HeaderMenu'
 import SearchMenu from './SearchMenu'
 import SidebarMenu from './SidebarMenu'
@@ -64,9 +71,12 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     changeRoute: PropTypes.func.isRequired,
     searchProduct: PropTypes.func.isRequired,
     setProductSearchList: PropTypes.func.isRequired,
+    setNetworkError: PropTypes.func.isRequired,
     productCategories: PropTypes.object.isRequired,
     mobileNumbers: PropTypes.object,
-    routes: PropTypes.array.isRequired
+    routes: PropTypes.array.isRequired,
+    toggleError: PropTypes.bool.isRequired,
+    toggleMessage: PropTypes.string
   }
 
   state = {
@@ -83,6 +93,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     this._displayHeader = this._displayHeader.bind(this)
     this._firebaseListener = this._firebaseListener.bind(this)
     this._handleShownModal = this._handleShownModal.bind(this)
+    this._handleNetworkErrorMessage = this._handleNetworkErrorMessage.bind(this)
 
     this._goToHome = this._goToHome.bind(this)
     this._goToReceipts = this._goToReceipts.bind(this)
@@ -96,6 +107,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   _goToReceipts () {
     const { changeRoute } = this.props
     changeRoute('/purchases')
+  }
+
+  _handleNetworkErrorMessage () {
+    this.props.setNetworkError(null)
   }
 
   _handleToggleSideBar () {
@@ -215,7 +230,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   render () {
-    const { children, productCategories, changeRoute } = this.props
+    const { children, productCategories, changeRoute, toggleError, toggleMessage } = this.props
     const { toggleSidebar } = this.state
     return (
       <Wrapper>
@@ -230,6 +245,13 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
           toggleAction={this._handleCloseSidebarClickPusher}
         />
         { this._handleShownModal() }
+        <Modal
+          open={toggleError}
+          name='warning'
+          title={<FormattedMessage {...messages.errorHeader} />}
+          content={toggleMessage}
+          close={this._handleNetworkErrorMessage}
+        />
       </Wrapper>
     )
   }
@@ -238,7 +260,9 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 const mapStateToProps = createStructuredSelector({
   productCategories: selectProductCategories(),
   mobileNumbers: selectMobileNumbers(),
-  receiptsUpdated: selectReceiptsUpdated()
+  receiptsUpdated: selectReceiptsUpdated(),
+  toggleError: selectToggleError(),
+  toggleMessage: selectToggleMessage()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -250,6 +274,7 @@ function mapDispatchToProps (dispatch) {
     changeRoute: (url) => dispatch(push(url)),
     searchProduct: (payload) => dispatch(getSearchProductAction(payload)),
     setProductSearchList: (payload) => dispatch(setSearchProductAction(payload)),
+    setNetworkError: (payload) => dispatch(setNetworkErrorAction(payload)),
     dispatch
   }
 }

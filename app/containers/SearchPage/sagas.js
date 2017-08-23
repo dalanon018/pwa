@@ -1,10 +1,13 @@
 
 import { takeLatest } from 'redux-saga'
-import { compose, map, propOr } from 'ramda'
+import { isEmpty } from 'lodash'
+import { compose, map, filter, prop, propOr } from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 
-import request from 'utils/request'
+// import request from 'utils/request'
+import { getRequestData } from 'utils/offline-request'
+
 import { setItem, getItem } from 'utils/localStorage'
 import { transformProduct } from 'utils/transforms'
 
@@ -26,6 +29,10 @@ import {
 } from 'containers/App/constants'
 
 import {
+  setNetworkErrorAction
+} from 'containers/Buckets/actions'
+
+import {
   getAccessToken
 } from 'containers/Buckets/sagas'
 
@@ -37,19 +44,22 @@ function * transformEachEntity (entity) {
 export function * getProductSearch (payload) {
   const { payload: { id } } = payload
   const token = yield getAccessToken()
-  const req = yield call(request, `${API_BASE_URL}/search/${id}?deviceOrigin=PWA`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/search/${id}?deviceOrigin=PWA`, {
     method: 'GET',
     token: token.access_token
   })
 
-  if (!req.err) {
+  if (!isEmpty(req)) {
     const transform = compose(
       map(transformEachEntity),
+      filter(prop('cliqqCodes')),
       propOr([], 'productList')
     )
     const products = yield transform(req)
 
     yield put(setSearchProductAction(products))
+  } else {
+    yield put(setNetworkErrorAction('No cache data'))
   }
 }
 

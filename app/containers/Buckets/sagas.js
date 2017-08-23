@@ -6,6 +6,7 @@ import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 
 import request from 'utils/request'
+import { getRequestData } from 'utils/offline-request'
 
 import { transformCategory } from 'utils/transforms'
 import { getItem, setItem } from 'utils/localStorage'
@@ -21,7 +22,8 @@ import {
 import {
   setProductCategoriesAction,
   setMobileNumbersAction,
-  setUpdatedReceiptsAction
+  setUpdatedReceiptsAction,
+  setNetworkErrorAction
 } from './actions'
 
 import {
@@ -47,11 +49,12 @@ function * transformEachEntity (transform, entity) {
 function * requestCategories () {
   const token = yield getAccessToken()
   const dbResource = yield call(getItem, CATEGORIES_KEY)
-  const req = yield call(request, `${API_BASE_URL}/categories`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/categories`, {
     method: 'GET',
     token: token.access_token
   })
-  if (!req.err) {
+
+  if (!isEmpty(req)) {
     const getResults = propOr([], 'categoryList')
     const isObjectNotEqual = (data) => !isEqual(dbResource, data)
 
@@ -67,7 +70,7 @@ function * requestCategories () {
       getResults
     )(req)
   } else {
-    throw new Error(req.err)
+    yield put(setNetworkErrorAction('No cache data'))
   }
 }
 
@@ -93,13 +96,13 @@ export function * requestAccessToken () {
     toPairs
   )
 
-  const req = yield call(request, TOKEN_URL, {
-    method: 'POST',
-    contentType: 'application/x-www-form-urlencoded;charset=UTF-8',
-    body: fnSearchParams(params)
-  })
+  try {
+    const req = yield call(request, TOKEN_URL, {
+      method: 'POST',
+      contentType: 'application/x-www-form-urlencoded;charset=UTF-8',
+      body: fnSearchParams(params)
+    })
 
-  if (!req.err) {
     // the normal expiration is 1 hour but we will only set it to 30 mins so we can be sure that we will not encounter token expiry
     const expiry = moment().add(30, 'minutes').format('YYYY-MM-DD HH:mm:ss')
     const token = Object.assign({}, req, { expiry })
@@ -107,9 +110,11 @@ export function * requestAccessToken () {
     yield call(setItem, ACCESS_TOKEN_KEY, token)
 
     return token
-  } else {
-    throw new Error(req.err)
+  } catch (e) {
+    yield put(setNetworkErrorAction('Please make sure you have internet connection to automatically refresh your token.'))
   }
+
+  return {}
 }
 
 /**
@@ -138,18 +143,14 @@ export function * updateUICategories (req = Array) {
 }
 
 export function * getCategories () {
-  try {
-    // we need to see if we need to request this since we save this anyway to the browser
-    const req = yield getCategoriesResource()
-    const getResults = ifElse(
-      is(Array),
-      updateUICategories,
-      noop
-    )
-    yield getResults(req)
-  } catch (e) {
-    console.log(e)
-  }
+  // we need to see if we need to request this since we save this anyway to the browser
+  const req = yield getCategoriesResource()
+  const getResults = ifElse(
+    is(Array),
+    updateUICategories,
+    noop
+  )
+  yield getResults(req)
 }
 
 export function * getMobileNumbers () {

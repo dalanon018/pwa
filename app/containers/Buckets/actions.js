@@ -14,6 +14,8 @@ import {
   GET_RECEIPT_UPDATED,
   SET_RECEIPT_UPDATED,
 
+  SET_NETWORK_ERROR,
+
   SET_TOGGLE
 } from './constants'
 
@@ -60,6 +62,13 @@ export function setUpdatedReceiptsAction (payload) {
 export function setToggleAction (payload) {
   return {
     type: SET_TOGGLE,
+    payload
+  }
+}
+
+export function setNetworkErrorAction (payload) {
+  return {
+    type: SET_NETWORK_ERROR,
     payload
   }
 }

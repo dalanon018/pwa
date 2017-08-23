@@ -4,6 +4,7 @@ import { find } from 'lodash'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 // import request from 'utils/request'
+// import { getRequestData } from 'utils/offline-request'
 import { transformOrder } from 'utils/transforms'
 import { getItem } from 'utils/localStorage'
 

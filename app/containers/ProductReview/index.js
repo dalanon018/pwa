@@ -188,7 +188,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   render () {
     const { orderedProduct, orderRequesting, mobileNumber } = this.props
     const { errorMessage, modePayment, modalToggle } = this.state
-    const cliqqCode = orderedProduct.get('cliqqCode') && orderedProduct.get('cliqqCode').join(', ')
+    const cliqqCode = orderedProduct.get('cliqqCode') && orderedProduct.get('cliqqCode').first()
 
     const labelOne = <label className='label-custom'>
       <LabelTitle className='desktop__width--full'>

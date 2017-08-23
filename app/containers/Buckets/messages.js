@@ -25,5 +25,9 @@ export default defineMessages({
   sale: {
     id: 'app.containers.Bucket.sale',
     defaultMessage: 'SALE'
+  },
+  errorHeader: {
+    id: 'app.containers.Bucket.errorHeader',
+    defaultMessage: 'PAGE OFFLINE'
   }
 })

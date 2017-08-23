@@ -4,7 +4,8 @@ import { fromJS } from 'immutable'
 
 import {
   setProductCategoriesAction,
-  setMobileNumbersAction
+  setMobileNumbersAction,
+  setNetworkErrorAction
 } from '../actions'
 
 describe('Buckets Reducer', () => {
@@ -14,7 +15,9 @@ describe('Buckets Reducer', () => {
       categories: [],
       mobileNumbers: [],
       receiptsUpdated: [],
-      toggle: false
+      toggle: false,
+      toggleError: false,
+      toggleMessage: null
     })
   })
 
@@ -37,5 +40,13 @@ describe('Buckets Reducer', () => {
     const expectedResult = state.set('mobileNumbers', payload)
 
     expect(bucketsReducer(state, setMobileNumbersAction(payload))).toEqual(expectedResult)
+  })
+
+  it('should toggleError true', () => {
+    const payload = 'Error'
+
+    const expectedResult = state.set('toggleMessage', payload).set('toggleError', true)
+
+    expect(bucketsReducer(state, setNetworkErrorAction(payload))).toEqual(expectedResult)
   })
 })

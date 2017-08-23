@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash'
 import {
   call,
   cancel,
@@ -9,8 +10,9 @@ import { compose, map, filter, prop, propOr } from 'ramda'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { takeLatest } from 'redux-saga'
 
-import request from 'utils/request'
+// import request from 'utils/request'
 
+import { getRequestData } from 'utils/offline-request'
 import { transformProduct } from 'utils/transforms'
 
 import {
@@ -24,6 +26,10 @@ import {
 import {
   API_BASE_URL
 } from 'containers/App/constants'
+
+import {
+  setNetworkErrorAction
+} from 'containers/Buckets/actions'
 
 import {
   getAccessToken
@@ -44,13 +50,12 @@ export function * initializeAppGlobals () {
 
 export function * getProduct (data) {
   const token = yield getAccessToken()
-
-  const req = yield call(request, `${API_BASE_URL}/tags/FEATURED?deviceOrigin=PWA`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/tags/FEATURED?deviceOrigin=PWA`, {
     method: 'GET',
     token: token.access_token
   })
 
-  if (!req.err) {
+  if (!isEmpty(req)) {
     const transform = compose(
       map(transformEachEntity),
       filter(prop('cliqqCodes')),
@@ -58,6 +63,8 @@ export function * getProduct (data) {
     )
     const products = yield transform(req)
     yield put(setFeaturedProductsAction(products))
+  } else {
+    yield put(setNetworkErrorAction('No cache data'))
   }
 }
 

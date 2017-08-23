@@ -80,7 +80,7 @@ const Product = ({
   closeModal,
   mobileNumber,
   onClose }) => {
-  const cliqqCode = product.get('cliqqCode') && product.get('cliqqCode').join(', ')
+  const cliqqCode = product.get('cliqqCode') && product.get('cliqqCode').first()
   const FacebookIcon = generateShareIcon('facebook')
   const TwitterIcon = generateShareIcon('twitter')
   const {

@@ -52,6 +52,12 @@ module.exports = require('./webpack.base.babel')({
       // this is applied before any match in `caches` section
       excludes: ['.htaccess'],
 
+      // Externals we have to find a way to match this using RegEx
+         // Will hande external API CALLS
+      ServiceWorker: {
+        entry: path.join(process.cwd(), 'app/sw-handler.js')
+      },
+
       caches: {
         main: [':rest:'],
 

@@ -12,6 +12,8 @@ import {
 
   SET_RECEIPT_UPDATED,
 
+  SET_NETWORK_ERROR,
+
   SET_TOGGLE
 } from './constants'
 
@@ -19,7 +21,9 @@ const initialState = fromJS({
   categories: [],
   mobileNumbers: [],
   receiptsUpdated: [],
-  toggle: false
+  toggle: false,
+  toggleError: false,
+  toggleMessage: null
 })
 
 function bucketsReducer (state = initialState, action) {
@@ -38,6 +42,12 @@ function bucketsReducer (state = initialState, action) {
     case SET_RECEIPT_UPDATED:
       return state.set('receiptsUpdated', fromJS(action.payload))
 
+    case SET_NETWORK_ERROR: {
+      const toggle = action.payload || false
+      return state
+        .set('toggleMessage', action.payload)
+        .set('toggleError', Boolean(toggle))
+    }
     default:
       return state
   }
