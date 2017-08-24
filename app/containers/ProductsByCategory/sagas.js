@@ -6,7 +6,7 @@ import {
   take
 } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
-import { takeLatest } from 'redux-saga'
+import { takeLatest, takeEvery } from 'redux-saga'
 import { isEmpty } from 'lodash'
 import {
   compose,
@@ -62,9 +62,9 @@ function * getLastViewedItems () {
 }
 
 export function * getProductByCategory (args) {
-  const { payload } = args
+  const { payload: { offset, limit, id } } = args
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/categories/${payload}/enabled`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/categories/${id}/enabled?offset=${offset}&limit=${limit}`, {
     method: 'GET',
     token: token.access_token
   })
@@ -82,9 +82,10 @@ export function * getProductByCategory (args) {
 }
 
 export function * getProductByTags (args) {
-  const { payload } = args
+  const { payload: { offset, limit, id } } = args
+
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/tags/${toUpper(payload)}?deviceOrigin=PWA`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/tags/${toUpper(id)}?deviceOrigin=PWA&offset=${offset}&limit=${limit}`, {
     method: 'GET',
     token: token.access_token
   })
@@ -107,11 +108,11 @@ export function * getProductsViewed () {
 }
 
 export function * getProductByCategorySaga () {
-  yield * takeLatest(GET_PRODUCTS_CATEGORY, getProductByCategory)
+  yield * takeEvery(GET_PRODUCTS_CATEGORY, getProductByCategory)
 }
 
 export function * getProductByTagsSaga () {
-  yield * takeLatest(GET_TAGS_PRODUCTS, getProductByTags)
+  yield * takeEvery(GET_TAGS_PRODUCTS, getProductByTags)
 }
 
 export function * getProductsViewedSaga () {

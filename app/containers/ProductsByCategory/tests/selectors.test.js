@@ -1,7 +1,8 @@
 import { fromJS } from 'immutable'
 import {
   selectProductsByCategory,
-  selectProductsViewed
+  selectProductsViewed,
+  selectLazyload
 } from '../selectors'
 
 describe('makeSelectProductsByCategoryDomain', () => {
@@ -30,6 +31,20 @@ describe('makeSelectProductsByCategoryDomain', () => {
         }
       })
       expect(selector(mockedState)).toEqual(productsViewed)
+    })
+  })
+
+  describe('selectLazyload', () => {
+    const selector = selectLazyload()
+
+    it('should get lazyload', () => {
+      const lazyload = false
+      const mockedState = fromJS({
+        productsByCategory: {
+          lazyload
+        }
+      })
+      expect(selector(mockedState)).toEqual(lazyload)
     })
   })
 })

@@ -50,7 +50,7 @@ export function * initializeAppGlobals () {
 
 export function * getProduct (data) {
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/tags/FEATURED?deviceOrigin=PWA`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/tags/FEATURED?deviceOrigin=PWA&offset=0&limit=5`, {
     method: 'GET',
     token: token.access_token
   })

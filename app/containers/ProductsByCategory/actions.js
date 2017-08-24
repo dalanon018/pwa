@@ -7,6 +7,7 @@
 import {
   GET_PRODUCTS_CATEGORY,
   SET_PRODUCTS_CATEGORY,
+  RESET_PRODUCTS_CATEGORY,
 
   GET_TAGS_PRODUCTS,
 
@@ -24,6 +25,13 @@ export function getProductsByCategoryAction (payload) {
 export function setProductsByCategoryAction (payload) {
   return {
     type: SET_PRODUCTS_CATEGORY,
+    payload
+  }
+}
+
+export function resetProductsByCategoryAction (payload) {
+  return {
+    type: RESET_PRODUCTS_CATEGORY,
     payload
   }
 }

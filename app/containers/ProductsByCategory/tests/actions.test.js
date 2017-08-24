@@ -2,6 +2,7 @@
 import {
   getProductsByCategoryAction,
   setProductsByCategoryAction,
+  resetProductsByCategoryAction,
 
   getProductsByTagsAction,
 
@@ -12,6 +13,7 @@ import {
 import {
   GET_PRODUCTS_CATEGORY,
   SET_PRODUCTS_CATEGORY,
+  RESET_PRODUCTS_CATEGORY,
 
   GET_TAGS_PRODUCTS,
 
@@ -37,6 +39,15 @@ describe('ProductsByCategory actions', () => {
         payload
       }
       expect(setProductsByCategoryAction(payload)).toEqual(expected)
+    })
+
+    it('has a type of RESET_PRODUCTS_CATEGORY', () => {
+      const payload = []
+      const expected = {
+        type: RESET_PRODUCTS_CATEGORY,
+        payload
+      }
+      expect(resetProductsByCategoryAction(payload)).toEqual(expected)
     })
   })
 

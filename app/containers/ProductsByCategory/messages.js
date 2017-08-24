@@ -13,5 +13,9 @@ export default defineMessages({
   items: {
     id: 'app.containers.ProductsByCategory.items',
     defaultMessage: 'ITEMS'
+  },
+  loadMore: {
+    id: 'app.containers.ProductsByCategory.loadMore',
+    defaultMessage: 'LOAD MORE'
   }
 })
