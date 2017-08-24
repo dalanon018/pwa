@@ -10,6 +10,7 @@ import Slider from 'react-slick'
 import { Image } from 'semantic-ui-react'
 
 import EmptyDataBlock from 'components/EmptyDataBlock'
+import defaultImage from 'images/default-slider.jpg'
 
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
@@ -52,8 +53,8 @@ const HandleBlock = ({loader}) => {
   } else {
     block = <BannerSliderWrapper>
       <Slider {...settings}>
-        <div><Image src={SampleBanner} /></div>
-        <div><Image src={SampleBanner} /></div>
+        <div><Image src={SampleBanner || defaultImage} /></div>
+        <div><Image src={SampleBanner || defaultImage} /></div>
       </Slider>
     </BannerSliderWrapper>
   }

@@ -14,6 +14,7 @@ import sampleBanner from 'images/test-images/sample-banner-promo.png'
 import EmptyImage from 'images/broken-image.jpg'
 
 import EmptyDataBlock from 'components/EmptyDataBlock'
+import defaultImage from 'images/default-banner-promo.png'
 
 import { Image } from 'semantic-ui-react'
 import { BannerWrapper } from './styles'
@@ -25,10 +26,10 @@ function BannerStaticPromos ({
     return (
       <BannerWrapper>
         <div className='item'>
-          <Image src={sampleBanner} />
+          <Image src={sampleBanner || defaultImage} />
         </div>
         <div className='item'>
-          <Image src={sampleBanner} />
+          <Image src={sampleBanner || defaultImage} />
         </div>
       </BannerWrapper>
     )
