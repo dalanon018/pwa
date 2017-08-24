@@ -150,5 +150,5 @@ export const WarningDescription = styled.p`
 export const ButtonWrapper = styled.div`
   display:flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 10px;
 `

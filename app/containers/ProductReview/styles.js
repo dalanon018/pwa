@@ -184,10 +184,6 @@ const DetailsWrapper = styled.div`
 
   p {
     margin: 10px 0 20px 0;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
   }
 
   @media (min-width: 768px) {

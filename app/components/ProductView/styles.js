@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Grid } from 'semantic-ui-react'
 
 const ProductWrapper = styled.div`
-  border-bottom: 2px solid #aeaeae;
+  border-bottom: 3px solid #aeaeae;
   cursor: pointer;
   display: block;
   margin: 0 3px 20px;
