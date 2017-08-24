@@ -142,7 +142,7 @@ const ModalButtons = ({ status, goToHome, goToReceipts }) => {
   return ComponentDetail({
     RESERVED: {
       primary: 'THANKS! I\'M ON MY WAY!',
-      secondary: 'HOW MUCH POINTS CAN I EARN?',
+      secondary: '',
       onClick: goToHome
     },
     UNPAID: {
@@ -162,12 +162,12 @@ const ModalButtons = ({ status, goToHome, goToReceipts }) => {
     },
     DELIVERED: {
       primary: 'AWESOME! THANKS',
-      secondary: 'TELL ME MORE ABOUT CLIQQ POINTS',
+      secondary: 'KEEP SHOPPING',
       onClick: goToHome
     },
     CLAIMED: {
       primary: 'AWESOME! THANKS',
-      secondary: 'TELL ME MORE ABOUT CLIQQ POINTS',
+      secondary: 'KEEP SHOPPING',
       onClick: goToHome
     },
     UNCLAIMED: {

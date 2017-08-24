@@ -1,7 +1,23 @@
 import moment from 'moment'
 import { takeLatest } from 'redux-saga'
 import { isEmpty, compact } from 'lodash'
-import { compose, identity, ifElse, is, prop, propOr, sort, uniq, uniqBy } from 'ramda'
+import {
+  compose,
+  either,
+  identity,
+  ifElse,
+  is,
+  // find,
+  isNil,
+  // map,
+  // partial,
+  prop,
+  propOr,
+  // propEq,
+  sort,
+  uniq,
+  uniqBy
+} from 'ramda'
 
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
@@ -61,9 +77,38 @@ function * getOrderList () {
   return sorted || []
 }
 
-function * setOrderList (apiOrders) {
-  const orders = yield getOrderList()
+/**
+ * TODO:
+ * REMEMBER WE HAVE TO UPDATE THE API PURCHASES TO OUR INDEX DB
+ * @param {*} apiOrders
+ */
 
+// function * findAndUpdateReceiptDetails(apiOrders) {
+//   const orders = yield getOrderList()
+//   // create new object
+//   const updatedOrders = apiOrders.slice()
+//   const updateLocalReceiptsDetails = (oldReceipts, newReceipt) => {
+
+//     const findReceipt = find(propEq('trackingNumber', prop('trackingNumber', newReceipt)))
+
+//     const found = compose(
+//       findReceipt
+//     )
+
+//     console.log('Receipts', found(oldReceipts))
+//   }
+
+//   const updateReceiptList = compose(
+//     map(partial(updateLocalReceiptsDetails, [orders]))
+//   )
+//   console.log(updatedOrders, orders)
+//   updateReceiptList(updatedOrders)
+// }
+
+function * setOrderList (apiOrders) {
+  // yield findAndUpdateReceiptDetails(apiOrders)
+
+  const orders = yield getOrderList()
   const cleanOrders = compose(uniqBy(prop('trackingNumber')), compact)
   let currentOrders = Array.isArray(orders) ? orders : []
 
@@ -75,15 +120,15 @@ function * setOrderList (apiOrders) {
 export function * getApiPurchases () {
   const token = yield getAccessToken()
   const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
-
   // we will only get the last mobileNumber used
   const mobile = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
   const req = yield call(getRequestData, `${API_BASE_URL}/purchases/0${mobile}?deviceOrigin=PWA`, {
     method: 'GET',
     token: token.access_token
   })
+  const shouldUpdateApi = either(!isEmpty(req), isNil(mobile))
 
-  if (!isEmpty(req)) {
+  if (shouldUpdateApi) {
     const getOrderListProp = propOr([], 'salesOrderList')
     const orderLists = getOrderListProp(req)
 

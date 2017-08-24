@@ -72,7 +72,7 @@ const DetailStatus = ({ status, receipt }) => {
       </DetailsContent>
     ),
     CLAIMED: (
-      <DetailsContent title={<FormattedMessage {...messages.receiptDateClaimedTitle} />}>
+      <DetailsContent title={<FormattedMessage {...messages.receiptTrackingTitle} />}>
         { receipt.get('trackingNumber') }
       </DetailsContent>
     ),
@@ -133,7 +133,7 @@ const ButtonTrigger = ({ onClick, children }) => (
   </Button>
 )
 
-const ButtonRepurchaseHome = ({ status, goHomeFn }) =>
+const ButtonRepurchaseHome = ({ status, goHomeFn, repurchaseFn }) =>
   ComponentDetail({
     RESERVED: (
       <ButtonTrigger onClick={goHomeFn} >
@@ -141,8 +141,8 @@ const ButtonRepurchaseHome = ({ status, goHomeFn }) =>
       </ButtonTrigger>
     ),
     UNPAID: (
-      <ButtonTrigger onClick={goHomeFn} >
-        <FormattedMessage {...messages.returnToHome} />
+      <ButtonTrigger onClick={repurchaseFn} >
+        <FormattedMessage {...messages.rePurchase} />
       </ButtonTrigger>),
     CONFIRMED: (
       <ButtonTrigger onClick={goHomeFn} >
@@ -166,6 +166,26 @@ const ButtonRepurchaseHome = ({ status, goHomeFn }) =>
       </ButtonTrigger>)
   })(null)(status)
 
+const BarcodeDisplay = ({ status }) =>
+  ComponentDetail({
+    UNPAID: null
+  })(
+    <BarcodeSVG id='barcode' />
+  )(status)
+
+const HideStoreLocations = ({ status, store }) =>
+  ComponentDetail({
+    RESERVED: null,
+    UNPAID: null
+  })(
+    <div className='item'>
+      <DetailTitle>
+        <FormattedMessage {...messages.receiptStoreLocationTitle} />
+      </DetailTitle>
+      { store }
+    </div>
+  )(status)
+
 class Receipt extends React.PureComponent {
   static propTypes = {
     receipt: PropTypes.object.isRequired,
@@ -181,9 +201,13 @@ class Receipt extends React.PureComponent {
   }
 
   componentWillReceiveProps (nextProps) {
-    const { receipt } = nextProps
+    const { receipt, statuses } = nextProps
+    const HIDE_BARCODE = ['UNPAID']
 
-    if (receipt.get('trackingNumber')) {
+    /**
+     * we have to make sure that we will initialize JsBarcode only if it is on the dom
+     */
+    if (receipt.get('trackingNumber') && !HIDE_BARCODE.includes(statuses[receipt.get('status')])) {
       JsBarcode('#barcode', receipt.get('trackingNumber'), {
         format: 'CODE128',
         lineColor: '#5B5B5B',
@@ -209,7 +233,6 @@ class Receipt extends React.PureComponent {
 
   render () {
     const { receipt, statuses, goHomeFn, repurchaseFn, windowWidth } = this.props
-
     const resposiveColumns = () => {
       if (windowWidth >= 768) {
         return 2
@@ -244,17 +267,13 @@ class Receipt extends React.PureComponent {
                     </DetailTitle>
                     <ProductPrice> PHP { receipt.get('amount') } </ProductPrice>
                   </div>
-                  {/*
-                    <div className='item'>
-                      <DetailTitle>
-                        <FormattedMessage {...messages.receiptStoreLocationTitle} />
-                      </DetailTitle>
-                      IBM - EASTWOOD
-                    </div>
-                  */}
+                  <HideStoreLocations {...{
+                    status: statuses[receipt.get('status')],
+                    store: receipt.getIn(['storeName'])
+                  }} />
                 </PurchaseGeneralInfo>
                 <DetailStatus {...{ status: statuses[receipt.get('status')], receipt }} />
-                <BarcodeSVG id='barcode' />
+                <BarcodeDisplay {...{ status: statuses[receipt.get('status')] }} />
                 <WarningContent>
                   <WarningStatus {...{ status: statuses[receipt.get('status')] }} />
                 </WarningContent>
