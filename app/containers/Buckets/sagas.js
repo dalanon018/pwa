@@ -8,7 +8,7 @@ import { LOCATION_CHANGE } from 'react-router-redux'
 import request from 'utils/request'
 import { getRequestData } from 'utils/offline-request'
 
-import { transformCategory } from 'utils/transforms'
+import { transformCategory, transformOrder } from 'utils/transforms'
 import { getItem, setItem } from 'utils/localStorage'
 import { DateDifferece } from 'utils/date'
 
@@ -202,7 +202,8 @@ function * updateReceiptSnapShot (orders, receiptId) {
     // yield put(setUpdatedReceiptsAction(updatedReceipts))
 
     // we have to update the receipt page
-    yield put(setReceiptAction(order))
+    const receiptTransform = yield call(transformOrder, order)
+    yield put(setReceiptAction(receiptTransform))
 
     // we have to update the purchase list
     yield put(setPurchasesAction(orders))
