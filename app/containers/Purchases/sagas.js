@@ -2,18 +2,19 @@ import moment from 'moment'
 import { takeLatest } from 'redux-saga'
 import { isEmpty, compact } from 'lodash'
 import {
+  assoc,
   compose,
   either,
   identity,
   ifElse,
   is,
-  // find,
+  find,
   isNil,
-  // map,
-  // partial,
+  map,
+  partial,
   prop,
   propOr,
-  // propEq,
+  propEq,
   sort,
   uniq,
   uniqBy
@@ -79,36 +80,36 @@ function * getOrderList () {
 
 /**
  * TODO:
- * REMEMBER WE HAVE TO UPDATE THE API PURCHASES TO OUR INDEX DB
+ * REFACTOR OUT PLEASE MAKE USE RAMDA BETTER
  * @param {*} apiOrders
  */
+function * findAndUpdateReceiptDetails (apiOrders) {
+  const orders = yield getOrderList()
+  // create new object
+  const updatedOrders = apiOrders.slice()
+  const updateLocalReceiptsDetails = (newReceipts, oldReceipt) => {
+    const trackingNumber = prop('trackingNumber', oldReceipt)
+    const findReceipt = find(propEq('trackingNumber', trackingNumber))
+    const updateOldReceipt = (data) =>
+      assoc('facilityName', prop('facilityName', data), oldReceipt)
 
-// function * findAndUpdateReceiptDetails(apiOrders) {
-//   const orders = yield getOrderList()
-//   // create new object
-//   const updatedOrders = apiOrders.slice()
-//   const updateLocalReceiptsDetails = (oldReceipts, newReceipt) => {
+    const found = compose(
+      updateOldReceipt,
+      findReceipt
+    )
 
-//     const findReceipt = find(propEq('trackingNumber', prop('trackingNumber', newReceipt)))
+    return found(newReceipts)
+  }
 
-//     const found = compose(
-//       findReceipt
-//     )
+  const updateReceiptList = compose(
+    map(partial(updateLocalReceiptsDetails, [updatedOrders]))
+  )
 
-//     console.log('Receipts', found(oldReceipts))
-//   }
-
-//   const updateReceiptList = compose(
-//     map(partial(updateLocalReceiptsDetails, [orders]))
-//   )
-//   console.log(updatedOrders, orders)
-//   updateReceiptList(updatedOrders)
-// }
+  return updateReceiptList(orders)
+}
 
 function * setOrderList (apiOrders) {
-  // yield findAndUpdateReceiptDetails(apiOrders)
-
-  const orders = yield getOrderList()
+  const orders = yield findAndUpdateReceiptDetails(apiOrders)
   const cleanOrders = compose(uniqBy(prop('trackingNumber')), compact)
   let currentOrders = Array.isArray(orders) ? orders : []
 
