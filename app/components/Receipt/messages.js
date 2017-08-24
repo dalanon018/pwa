@@ -12,7 +12,7 @@ export default defineMessages({
   },
   UNPAID: {
     id: 'app.components.Receipt.UNPAID',
-    defaultMessage: 'ITEM EXPIRED PLEASE REORDER IT.'
+    defaultMessage: 'ITEM HAS EXPIRED. WOULD YOU LIKE TO REPURCHASE IT?'
   },
   CONFIRMED: {
     id: 'app.components.Receipt.CONFIRMED',
@@ -32,7 +32,7 @@ export default defineMessages({
   },
   UNCLAIMED: {
     id: 'app.components.Receipt.UNCLAIMED',
-    defaultMessage: 'ITEM HASN\'T BEEN CLAIMED'
+    defaultMessage: 'THIS ITEM HASN\'T BEEN CLAIMED'
   },
   unknownStatus: {
     id: 'app.components.Receipt.unknownStatus',
