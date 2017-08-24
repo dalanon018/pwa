@@ -11,12 +11,15 @@ import {
   SET_PRODUCTS_CATEGORY,
   RESET_PRODUCTS_CATEGORY,
 
+  SET_FEATURED_PRODUCTS,
+
   GET_PRODUCTS_VIEWED,
   SET_PRODUCTS_VIEWED
 } from './constants'
 
 const initialState = fromJS({
   productsByCategory: [],
+  productsFeatured: [],
   productsViewed: [],
   loading: false,
   lazyload: false
@@ -40,6 +43,10 @@ function productsByCategoryReducer (state = initialState, action) {
     }
     case RESET_PRODUCTS_CATEGORY:
       return state.set('productsByCategory', fromJS([]))
+
+    case SET_FEATURED_PRODUCTS:
+      return state
+        .set('productsFeatured', fromJS(action.payload))
 
     case GET_PRODUCTS_VIEWED:
       return state.set('loading', true)

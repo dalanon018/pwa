@@ -33,10 +33,16 @@ const selectLazyload = () => createSelector(
   subState => subState.get('lazyload')
 )
 
+const selectFeaturedProducts = () => createSelector(
+  selectProductsByCategoryDomain(),
+  subState => subState.get('productsFeatured')
+)
+
 export {
   selectProductsByCategoryDomain,
   selectProductsByCategory,
   selectProductsViewed,
   selectLoading,
-  selectLazyload
+  selectLazyload,
+  selectFeaturedProducts
 }
