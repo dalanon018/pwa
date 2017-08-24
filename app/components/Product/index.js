@@ -181,7 +181,7 @@ const Product = ({
           <DetailsTitle> <FormattedMessage {...messages.productDetailsTitle} /> </DetailsTitle>
           <LoadingStateInfo loading={loading}>
             <DetailsDescription>
-              { product.get('details') }
+              <div dangerouslySetInnerHTML={{__html: product.get('details')}} />
             </DetailsDescription>
           </LoadingStateInfo>
         </ProductDetails>
@@ -189,7 +189,7 @@ const Product = ({
           <DetailsTitle> <FormattedMessage {...messages.productDeliveryTitle} /> </DetailsTitle>
           <LoadingStateInfo loading={loading}>
             <DetailsDescription>
-              { product.get('shipping') }
+              <div dangerouslySetInnerHTML={{__html: product.get('shipping')}} />
             </DetailsDescription>
           </LoadingStateInfo>
         </ShippingDetails>
@@ -211,7 +211,7 @@ const Product = ({
                 <DetailsTitle> <FormattedMessage {...messages.productDetailsTitle} /> </DetailsTitle>
                 <LoadingStateInfo loading={loading}>
                   <DetailsDescription>
-                    { product.get('details') }
+                    <div dangerouslySetInnerHTML={{__html: product.get('details')}} />
                   </DetailsDescription>
                 </LoadingStateInfo>
               </ProductDetails>
@@ -241,7 +241,7 @@ const Product = ({
                 <DetailsTitle> <FormattedMessage {...messages.productDeliveryTitle} /> </DetailsTitle>
                 <LoadingStateInfo loading={loading}>
                   <DetailsDescription>
-                    { product.get('shipping') }
+                    <div dangerouslySetInnerHTML={{__html: product.get('shipping')}} />
                   </DetailsDescription>
                 </LoadingStateInfo>
               </ShippingDetails>

@@ -36,7 +36,8 @@ import {
 } from 'containers/Buckets/actions'
 
 import {
-  selectProductCategories
+  selectProductCategories,
+  selectLoader
 } from 'containers/Buckets/selectors'
 
 import {
@@ -105,7 +106,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render () {
-    const { loader, productCategories, changeRoute, windowWidth } = this.props
+    const { loader, productCategories, changeRoute, windowWidth, categoryLoader } = this.props
     const { products } = this.state
     const grids = {
       mobile: 4,
@@ -126,7 +127,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css' }
           ]}
         />
-        <NavCategories changeRoute={changeRoute} categories={productCategories} />
+
+        <NavCategories
+          changeRoute={changeRoute}
+          categoryLoader={categoryLoader}
+          loader={loader}
+          categories={productCategories} />
 
         <BannerWrapper>
           <Grid>
@@ -181,8 +187,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 const mapStateToProps = createStructuredSelector({
   loader: selectLoading(),
   featuredProducts: selectFeaturedProducts(),
-  productCategories: selectProductCategories()
-
+  productCategories: selectProductCategories(),
+  categoryLoader: selectLoader()
 })
 
 function mapDispatchToProps (dispatch) {

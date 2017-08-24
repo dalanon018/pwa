@@ -9,7 +9,8 @@ export const ProductWrapper = styled.div`
   border-bottom-right-radius: 10px;
   border-bottom: 2px dashed #AEAEAE;
   display: flex;
-  height: 140px;
+  min-height: 140px;
+  justify-content: space-between;
   margin: 0 auto;
 
   @media (min-width: 768px) {
@@ -19,19 +20,26 @@ export const ProductWrapper = styled.div`
 export const ProductImage = styled.div`
   background: url(${({background}) => background}) no-repeat top right / cover;
   border-bottom-left-radius: 10px;
-  width: 160px;
+  width: 100%;
 `
 
 export const ProductDescription = styled.div`
-  padding: 20px
   align-items: flex-end;
   display: flex;
   flex-direction: column;
   flex: 1 0 auto;
   justify-content: center;
   letter-spacing: 2px;
+  padding: 20px
+  width: 70%;
+
+  h6 {
+    line-height: 10px;
+    text-align: right;
+  }
 
   @media (min-width: 768px) {
+    width: 80%;
     h6 {
       font-family: 'helveticabold';
       font-size: 18px;
@@ -142,5 +150,5 @@ export const WarningDescription = styled.p`
 export const ButtonWrapper = styled.div`
   display:flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 10px;
 `

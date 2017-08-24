@@ -51,9 +51,9 @@ function DesktopBlock ({
           </ProductItem>
           <DetailsWrapper>
             <FormattedMessage {...messages.productDetailsTitle} />
-            <p>{orderedProduct.get('details')}</p>
+            <div dangerouslySetInnerHTML={{__html: orderedProduct.get('details')}} />
             <FormattedMessage {...messages.productDeliveryTitle} />
-            <p>{orderedProduct.get('shipping')}</p>
+            <div dangerouslySetInnerHTML={{__html: orderedProduct.get('shipping')}} />
             {/*
                 <FormattedMessage {...messages.stepThree} />
                 <p className='step-three'>Your default store will be the last store you visited</p>

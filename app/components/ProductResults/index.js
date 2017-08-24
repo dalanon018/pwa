@@ -21,7 +21,7 @@ const ProductWrapper = styled.div`
 `
 const ProductImage = styled.div`
   background: url(${({background}) => background}) no-repeat top right / cover;
-  width: 160px;
+  width: 100%;
 `
 
 const ProductDescription = styled.div`
@@ -32,6 +32,12 @@ const ProductDescription = styled.div`
   flex: 1 0 auto;
   justify-content: center;
   letter-spacing: 2px;
+  width: 70%;
+  
+  h6 {
+    line-height: 10px;
+    text-align: right;
+  }
 `
 
 const CodeWrapper = styled.span`

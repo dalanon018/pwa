@@ -122,10 +122,12 @@ export const DetailsTitle = styled.p`
     font-size: 18px;
   }
 `
-export const DetailsDescription = styled.p`
-  font-size: 12px
-  letter-spacing: 1px;
-  line-height: 1.5;
+export const DetailsDescription = styled.div`
+  p {
+    font-size: 12px
+    letter-spacing: 1px;
+    line-height: 1.5;
+  }
 
   @media (min-width: 768px) {
     font-family: 'helveticalight';

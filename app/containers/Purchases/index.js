@@ -56,11 +56,10 @@ const BarcodeListWrapper = styled.div`
 `
 
 const PurchasesList = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: ${({purchases}) => purchases ? 'flex-start' : 'center'};
-  align-items: center;
-  height: 100%;
 
   @media (min-width: 768px) {
     display: block;
@@ -75,6 +74,7 @@ const EmptyWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-top: 20px;
   width: 100%;
 `
 const EmptyWrapperImg = styled.img`
