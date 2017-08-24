@@ -43,6 +43,11 @@ const selectToggleMessage = () => createSelector(
   (substate) => substate.get('toggleMessage')
 )
 
+const selectLoader = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('loader')
+)
+
 export {
   selectBucketDomain,
   selectToggle,
@@ -50,5 +55,6 @@ export {
   selectMobileNumbers,
   selectReceiptsUpdated,
   selectToggleError,
-  selectToggleMessage
+  selectToggleMessage,
+  selectLoader
 }

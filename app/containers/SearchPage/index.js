@@ -37,7 +37,6 @@ import {
 
 const SearchListWrapper = styled.div`
   display: flex;
-  height: 94vh;
   flex-direction: column;
   padding: 20px 10px;
 `

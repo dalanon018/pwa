@@ -248,11 +248,21 @@ svg#barcode {
       }
     }
     &__horizontal {
+      &--none {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
       &--10 {
         padding: 0 10px;
       }
       &--20 {
         padding: 0 20px;
+      }
+    }
+    &__vertical {
+      &--none {
+        padding-bottom: 0 !important;
+        padding-top: 0 !important;
       }
     }
   }

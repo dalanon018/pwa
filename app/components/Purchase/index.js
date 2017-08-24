@@ -25,12 +25,12 @@ const ProductWrapper = styled.div`
   border: 2px solid  ${({status}) => status};
   border-radius: 5px;
   display: flex;
-  height: 160px;
+  min-height: 160px;
   margin: 0 auto;
 `
 const ProductImage = styled.div`
   background: url(${({background}) => background}) no-repeat top right / cover;
-  width: 160px;
+  width: 100%;
 `
 
 const ProductDescription = styled.div`
@@ -41,6 +41,12 @@ const ProductDescription = styled.div`
   flex: 1 0 auto;
   justify-content: center;
   letter-spacing: 2px;
+  width: 70%;
+
+  h6 {
+    line-height: 10px;
+    text-align: right;
+  }
 `
 
 const ProductStatusWrapper = styled.div`

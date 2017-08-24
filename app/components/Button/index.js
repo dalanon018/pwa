@@ -15,6 +15,7 @@ import {
 import ButtonNext from 'images/icons/button-next.svg'
 
 const ButtonWrapper = styled.div`
+  padding: 0 !important;
   text-align: center;
   width: 100%;
 `

@@ -17,7 +17,8 @@ describe('Buckets Reducer', () => {
       receiptsUpdated: [],
       toggle: false,
       toggleError: false,
-      toggleMessage: null
+      toggleMessage: null,
+      loader: false
     })
   })
 
