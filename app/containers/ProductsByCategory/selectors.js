@@ -13,11 +13,6 @@ const selectProductsByCategoryDomain = () => (state) => state.get('productsByCat
  * Default selector used by ProductsByCategory
  */
 
-const makeSelectProductsByCategory = () => createSelector(
-  selectProductsByCategoryDomain(),
-  (substate) => substate.toJS()
-)
-
 const selectProductsByCategory = () => createSelector(
   selectProductsByCategoryDomain(),
   (substate) => substate.get('productsByCategory')
@@ -33,10 +28,21 @@ const selectLoading = () => createSelector(
   subState => subState.get('loading')
 )
 
-export default makeSelectProductsByCategory
+const selectLazyload = () => createSelector(
+  selectProductsByCategoryDomain(),
+  subState => subState.get('lazyload')
+)
+
+const selectFeaturedProducts = () => createSelector(
+  selectProductsByCategoryDomain(),
+  subState => subState.get('productsFeatured')
+)
+
 export {
   selectProductsByCategoryDomain,
   selectProductsByCategory,
   selectProductsViewed,
-  selectLoading
+  selectLoading,
+  selectLazyload,
+  selectFeaturedProducts
 }

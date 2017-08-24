@@ -10,11 +10,15 @@ describe('<ProductsByCategory />', () => {
     getProductsByCategory: () => {},
     getProductCategories: () => {},
     getProductsViewed: () => {},
+    resetProductsByCategory: () => {},
+    getProductFeatured: () => {},
     loader: false,
+    lazyload: false,
     params: {
       id: 'CAT1'
     },
     productsByCategory: fromJS([]),
+    productsFeatured: fromJS([]),
     productsViewed: fromJS([]),
     categories: fromJS([])
   }

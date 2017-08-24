@@ -11,15 +11,17 @@ import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
 import { noop } from 'lodash'
 import {
-  ifElse,
+  F,
+  T,
+  compose,
   contains,
   curry,
-  compose,
   equals,
-  toUpper,
   identity,
+  ifElse,
+  partial,
   path,
-  partial
+  toUpper
 } from 'ramda'
 import messages from './messages'
 import styled from 'styled-components'
@@ -44,13 +46,17 @@ import {
 import {
   getProductsByCategoryAction,
   getProductsByTagsAction,
-  getProductsViewedAction
+  getProductsViewedAction,
+  resetProductsByCategoryAction,
+  getFeaturedProductsAction
 } from './actions'
 
 import {
   selectProductsByCategory,
   selectLoading,
-  selectProductsViewed
+  selectProductsViewed,
+  selectLazyload,
+  selectFeaturedProducts
 } from './selectors'
 
 const ItemCount = styled.p`
@@ -67,11 +73,20 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     getProductsByCategory: PropTypes.func.isRequired,
     getProductCategories: PropTypes.func.isRequired,
     getProductsViewed: PropTypes.func.isRequired,
+    resetProductsByCategory: PropTypes.func.isRequired,
+    getProductFeatured: PropTypes.func.isRequired,
     loader: PropTypes.bool.isRequired,
+    lazyload: PropTypes.bool.isRequired,
     productsByCategory: PropTypes.object.isRequired,
     productsViewed: PropTypes.object.isRequired,
+    productsFeatured: PropTypes.object.isRequired,
     categories: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired
+  }
+
+  state = {
+    offset: 0,
+    limit: 12
   }
 
   _tags = ['featured', 'sale']
@@ -82,6 +97,23 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this._handlePageTitle = this._handlePageTitle.bind(this)
     this._isCategoryExist = this._isCategoryExist.bind(this)
     this._fetchProductByTagCategory = this._fetchProductByTagCategory.bind(this)
+    this._fetchProductFeatured = this._fetchProductFeatured.bind(this)
+    this._displayMoreProducts = this._displayMoreProducts.bind(this)
+    this._onScrollElement = this._onScrollElement.bind(this)
+    this._resetValuesAndFetch = this._resetValuesAndFetch.bind(this)
+    this._handleFeaturedProductsPerCategory = this._handleFeaturedProductsPerCategory.bind(this)
+    this._displayFeaturesProduct = this._displayFeaturesProduct.bind(this)
+    this._displayHeaderFeaturesProduct = this._displayHeaderFeaturesProduct.bind(this)
+  }
+
+  _onScrollElement (evt) {
+    const { lazyload } = this.props
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop
+    const offset = 200
+
+    if (window.innerHeight < (scrollY + offset) && lazyload) {
+      this._displayMoreProducts()
+    }
   }
 
   _isCategoryExist () {
@@ -104,14 +136,85 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     return titleComposition(id)
   }
 
+  _displayMoreProducts () {
+    const { offset } = this.state
+    const updatedOffset = offset + 1
+    this.setState({
+      offset: updatedOffset
+    }, () => this._fetchProductByTagCategory(this.props))
+  }
+
+  _displayHeaderFeaturesProduct () {
+    const { productsFeatured } = this.props
+    if (this._handleFeaturedProductsPerCategory() && productsFeatured.size) {
+      return (
+        <H1 center className='padding__top--25'>
+          <FormattedMessage {...messages.feature} />
+        </H1>
+      )
+    }
+
+    return null
+  }
+
+  _displayFeaturesProduct () {
+    const { productsFeatured, changeRoute, loader, windowWidth } = this.props
+    if (this._handleFeaturedProductsPerCategory() && productsFeatured.size) {
+      return (
+        <ProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} />
+      )
+    }
+
+    return null
+  }
+
+  _handleFeaturedProductsPerCategory () {
+    const { params: { id } } = this.props
+    const shouldNotDisplay = (id) => (isTag(this._tags)(id))
+
+    const showFeaturedItem = ifElse(shouldNotDisplay, F, T)
+
+    return showFeaturedItem(id)
+  }
+
   /**
    * Here we will request for our data base on change of route.
    * @param {*w} props
    */
   _fetchProductByTagCategory (props) {
     const { getProductsByTags, getProductsByCategory, params: { id } } = props
-    const executeFetchData = ifElse(isTag(this._tags), getProductsByTags, getProductsByCategory)
+    const { offset, limit } = this.state
+    const requestData = curry((fn, id) => fn({ offset, limit, id }))
+
+    const executeFetchData = ifElse(
+      isTag(this._tags),
+      requestData(getProductsByTags),
+      requestData(getProductsByCategory)
+    )
+
+    // since this data is change and we know exactly
     executeFetchData(id)
+  }
+
+  /**
+   * Here we will request for our data base on change of route. FEATURED
+   * @param {*w} props
+   */
+  _fetchProductFeatured (props) {
+    const { getProductFeatured, params: { id } } = props
+
+    // since this data is change and we know exactly
+    getProductFeatured(id)
+  }
+
+  _resetValuesAndFetch (props) {
+    const { resetProductsByCategory } = props
+
+    resetProductsByCategory()
+
+    this.setState({
+      offset: 0
+    }, () => this._fetchProductByTagCategory(props))
   }
 
   componentDidMount () {
@@ -121,6 +224,13 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     getProductsViewed()
 
     this._fetchProductByTagCategory(this.props)
+    this._fetchProductFeatured(this.props)
+
+    window.addEventListener('scroll', this._onScrollElement)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('scroll', this._onScrollElement)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -134,10 +244,17 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     const updateFetchProduct = ifElse(
       partial(isParamsEqual, [params.id]),
       noop,
-      this._fetchProductByTagCategory
+      this._resetValuesAndFetch
+    )
+
+    const updateFeaturedProducts = ifElse(
+      partial(isParamsEqual, [params.id]),
+      noop,
+      this._fetchProductFeatured
     )
 
     updateFetchProduct(nextProps)
+    updateFeaturedProducts(nextProps)
   }
 
   render () {
@@ -148,6 +265,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
         <NavCategories changeRoute={changeRoute} categories={categories} />
         <div className='padding__horizontal--10'>
           <Grid padded>
+            { this._displayHeaderFeaturesProduct() }
+            { this._displayFeaturesProduct() }
             <H1 center className='padding__top--25'>{ this._handlePageTitle() }</H1>
             <ItemCount>
               { productsByCategory.size } <FormattedMessage {...messages.items} />
@@ -167,8 +286,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 const mapStateToProps = createStructuredSelector({
   productsByCategory: selectProductsByCategory(),
   productsViewed: selectProductsViewed(),
+  productsFeatured: selectFeaturedProducts(),
   categories: selectProductCategories(),
-  loader: selectLoading()
+  loader: selectLoading(),
+  lazyload: selectLazyload()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -177,6 +298,8 @@ function mapDispatchToProps (dispatch) {
     getProductsByCategory: payload => dispatch(getProductsByCategoryAction(payload)),
     getProductsByTags: payload => dispatch(getProductsByTagsAction(payload)),
     getProductsViewed: () => dispatch(getProductsViewedAction()),
+    getProductFeatured: payload => dispatch(getFeaturedProductsAction(payload)),
+    resetProductsByCategory: () => dispatch(resetProductsByCategoryAction()),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
   }

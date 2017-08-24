@@ -6,7 +6,7 @@ import {
   take
 } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
-import { takeLatest } from 'redux-saga'
+import { takeLatest, takeEvery } from 'redux-saga'
 import { isEmpty } from 'lodash'
 import {
   compose,
@@ -26,11 +26,13 @@ import { getItem } from 'utils/localStorage'
 import {
   GET_PRODUCTS_CATEGORY,
   GET_TAGS_PRODUCTS,
-  GET_PRODUCTS_VIEWED
+  GET_PRODUCTS_VIEWED,
+  GET_FEATURED_PRODUCTS
 } from './constants'
 import {
   setProductsByCategoryAction,
-  setProductsViewedAction
+  setProductsViewedAction,
+  setFeaturedProductsAction
 } from './actions'
 
 import {
@@ -62,9 +64,9 @@ function * getLastViewedItems () {
 }
 
 export function * getProductByCategory (args) {
-  const { payload } = args
+  const { payload: { offset, limit, id } } = args
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/categories/${payload}/enabled`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/categories/${id}/enabled?offset=${offset}&limit=${limit}`, {
     method: 'GET',
     token: token.access_token
   })
@@ -82,9 +84,10 @@ export function * getProductByCategory (args) {
 }
 
 export function * getProductByTags (args) {
-  const { payload } = args
+  const { payload: { offset, limit, id } } = args
+
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/tags/${toUpper(payload)}?deviceOrigin=PWA`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/tags/${toUpper(id)}?deviceOrigin=PWA&offset=${offset}&limit=${limit}`, {
     method: 'GET',
     token: token.access_token
   })
@@ -100,6 +103,27 @@ export function * getProductByTags (args) {
   }
 }
 
+export function * getProductByFeaturedCategory (args) {
+  const { payload } = args
+  const token = yield getAccessToken()
+  const req = yield call(getRequestData, `${API_BASE_URL}/categories/${payload}/enabled/FEATURED?offset=0&limit=4`, {
+    method: 'GET',
+    token: token.access_token
+  })
+
+  if (!isEmpty(req)) {
+    const transform = compose(
+      map(transformEachEntity),
+      filter(prop('cliqqCodes')),
+      propOr([], 'productList')
+    )
+    const products = yield transform(req)
+    yield put(setFeaturedProductsAction(products))
+  } else {
+    yield put(setNetworkErrorAction('No cache data'))
+  }
+}
+
 export function * getProductsViewed () {
   const response = yield * getLastViewedItems()
 
@@ -107,11 +131,15 @@ export function * getProductsViewed () {
 }
 
 export function * getProductByCategorySaga () {
-  yield * takeLatest(GET_PRODUCTS_CATEGORY, getProductByCategory)
+  yield * takeEvery(GET_PRODUCTS_CATEGORY, getProductByCategory)
 }
 
 export function * getProductByTagsSaga () {
-  yield * takeLatest(GET_TAGS_PRODUCTS, getProductByTags)
+  yield * takeEvery(GET_TAGS_PRODUCTS, getProductByTags)
+}
+
+export function * getProductByFeaturedCategorySaga () {
+  yield * takeEvery(GET_FEATURED_PRODUCTS, getProductByFeaturedCategory)
 }
 
 export function * getProductsViewedSaga () {
@@ -124,6 +152,8 @@ export function * productsCategorySagas () {
     fork(getProductByCategorySaga),
 
     fork(getProductByTagsSaga),
+
+    fork(getProductByFeaturedCategorySaga),
 
     fork(getProductsViewedSaga)
   ]

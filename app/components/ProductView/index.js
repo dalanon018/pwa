@@ -53,12 +53,12 @@ function ProductView ({
     <CustomGridRow stretched columns={resposiveColumns()}>
       {
         loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
-        : products.valueSeq().map((product) => {
+        : products.valueSeq().map((product, index) => {
           const goToProduct = () => changeRoute(`/product/${product.get('cliqqCode').first()}`)
 
           return (
             <Grid.Column
-              key={product.get('cliqqCode')}
+              key={`${product.get('cliqqCode')}-${index}`}
               className='padding__none--horizontal'
               onClick={goToProduct}>
               <ProductWrapper>

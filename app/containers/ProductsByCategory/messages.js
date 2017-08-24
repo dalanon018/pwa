@@ -13,5 +13,13 @@ export default defineMessages({
   items: {
     id: 'app.containers.ProductsByCategory.items',
     defaultMessage: 'ITEMS'
+  },
+  feature: {
+    id: 'app.containers.ProductsByCategory.feature',
+    defaultMessage: 'FEATURES'
+  },
+  loadMore: {
+    id: 'app.containers.ProductsByCategory.loadMore',
+    defaultMessage: 'LOAD MORE'
   }
 })

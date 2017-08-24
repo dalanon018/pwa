@@ -5,9 +5,13 @@
  */
 
 import { fromJS } from 'immutable'
+import { compact, isEmpty } from 'lodash'
 import {
   GET_PRODUCTS_CATEGORY,
   SET_PRODUCTS_CATEGORY,
+  RESET_PRODUCTS_CATEGORY,
+
+  SET_FEATURED_PRODUCTS,
 
   GET_PRODUCTS_VIEWED,
   SET_PRODUCTS_VIEWED
@@ -15,18 +19,34 @@ import {
 
 const initialState = fromJS({
   productsByCategory: [],
+  productsFeatured: [],
   productsViewed: [],
-  loading: false
+  loading: false,
+  lazyload: false
 })
 
 function productsByCategoryReducer (state = initialState, action) {
   switch (action.type) {
-    case GET_PRODUCTS_CATEGORY:
-      return state.set('loading', true)
-    case SET_PRODUCTS_CATEGORY:
+    case GET_PRODUCTS_CATEGORY: {
+      const productsByCategory = state.get('productsByCategory')
+      return productsByCategory.size === 0 ? state.set('loading', true) : state
+    }
+    case SET_PRODUCTS_CATEGORY: {
+      // TODO:
+      // we have find a way to concat 2 immutable object since converting is expensive
+      const currentState = state.get('productsByCategory').toJS()
+      const mergeState = currentState.concat(action.payload)
       return state
-        .set('productsByCategory', fromJS(action.payload))
+        .set('productsByCategory', fromJS(compact(mergeState)))
         .set('loading', false)
+        .set('lazyload', !isEmpty(action.payload))
+    }
+    case RESET_PRODUCTS_CATEGORY:
+      return state.set('productsByCategory', fromJS([]))
+
+    case SET_FEATURED_PRODUCTS:
+      return state
+        .set('productsFeatured', fromJS(action.payload))
 
     case GET_PRODUCTS_VIEWED:
       return state.set('loading', true)
