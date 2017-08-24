@@ -18,7 +18,7 @@ export default defineMessages({
   },
   browseCategory: {
     id: `${idSuffix}.browseCategory`,
-    defaultMessage: 'BROWSE CATEGORY'
+    defaultMessage: 'BROWSE CATEGORIES'
   },
   productViewAll: {
     id: `${idSuffix}.productViewAll`,

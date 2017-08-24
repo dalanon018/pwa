@@ -27,6 +27,7 @@ import {
 } from './styles'
 
 import EmptyDataBlock from 'components/EmptyDataBlock'
+import defaultImage from 'images/default-product.jpg'
 
 import PromoTag from './sections/PromoTag'
 import ProductImage from 'images/test-images/samplebag.png'
@@ -66,7 +67,7 @@ function ProductView ({
                   <PromoTag discount={product.get('discount')} />
                 }
                 <ImageWrapper>
-                  <Image src={ProductImage} />
+                  <Image src={ProductImage || defaultImage} />
                 </ImageWrapper>
                 <ProductName>{product.get('title')}</ProductName>
                 <ProductPriceWrapper>

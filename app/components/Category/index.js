@@ -14,6 +14,8 @@ import EmptyDataBlock from 'components/EmptyDataBlock'
 
 import { Grid, Image } from 'semantic-ui-react'
 import EmptyImage from 'images/broken-image.jpg'
+import defaultImage from 'images/default-image.png'
+import defaultCategoryBackground from 'images/default-categories.jpg'
 
 import {
   range
@@ -48,10 +50,10 @@ function Category ({
           return (
             <Grid.Column key={index} className='padding__none--horizontal category-item' mobile={mobile} tablet={tablet} computer={computer} widescreen={widescreen}>
               <CategoryBlock margin={margin} width={iconWidth} onClick={handleRedirect}>
-                <Image className='category-image' src={category.get('background')} />
+                <Image className='category-image' src={category.get('background') ? category.get('background') : defaultCategoryBackground} />
                 <CategoryContent>
                   <CategoryItem width={iconWidth}>
-                    <Image src={category.get('main')} />
+                    <Image src={category.get('main') ? category.get('main') : defaultImage} />
                     <CategoryLabel fontSize={fontSize}>{category.get('name')}</CategoryLabel>
                   </CategoryItem>
                 </CategoryContent>

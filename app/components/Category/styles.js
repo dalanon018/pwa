@@ -21,6 +21,7 @@ const CategoryBlock = styled.div`
 
   .category-image {
     position: relative;
+    width: 100%;
   }
 
   @media (min-width: 768px) {
@@ -57,6 +58,7 @@ const CategoryItem = styled.div`
   // This is for Home page only
   @media (min-width: 768px) {
     img {
+      margin-bottom: 10px;
       width: 60px;
     }
   }
