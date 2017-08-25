@@ -56,7 +56,8 @@ import {
   selectLoading,
   selectProductsViewed,
   selectLazyload,
-  selectFeaturedProducts
+  selectFeaturedProducts,
+  selectTotalCount
 } from './selectors'
 
 const ItemCount = styled.p`
@@ -85,6 +86,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   state = {
+    pageOffset: 0,
     offset: 0,
     limit: 12
   }
@@ -137,10 +139,12 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _displayMoreProducts () {
-    const { offset } = this.state
-    const updatedOffset = offset + 1
+    const { pageOffset, limit } = this.state
+    const incrementOffset = pageOffset + 1
+
     this.setState({
-      offset: updatedOffset
+      pageOffset: incrementOffset,
+      offset: (incrementOffset * limit)
     }, () => this._fetchProductByTagCategory(this.props))
   }
 
@@ -262,7 +266,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   render () {
-    const { productsByCategory, categories, productsViewed, loader, changeRoute, windowWidth } = this.props
+    const { productsByCategory, categories, productsViewed, loader, changeRoute, windowWidth, totalCount } = this.props
 
     return (
       <div>
@@ -273,7 +277,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
             { this._displayFeaturesProduct() }
             <H1 center className='padding__top--25'>{ this._handlePageTitle() }</H1>
             <ItemCount>
-              { productsByCategory.size } <FormattedMessage {...messages.items} />
+              { productsByCategory.size }
+              <FormattedMessage {...messages.noSeparator} />
+              { totalCount }
+              <FormattedMessage {...messages.items} />
             </ItemCount>
             <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} windowWidth={windowWidth} />
             {/* <Promo loader={loader} /> */}
@@ -293,7 +300,8 @@ const mapStateToProps = createStructuredSelector({
   productsFeatured: selectFeaturedProducts(),
   categories: selectProductCategories(),
   loader: selectLoading(),
-  lazyload: selectLazyload()
+  lazyload: selectLazyload(),
+  totalCount: selectTotalCount()
 })
 
 function mapDispatchToProps (dispatch) {

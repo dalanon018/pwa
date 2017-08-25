@@ -15,7 +15,9 @@ import {
   GET_TAGS_PRODUCTS,
 
   GET_PRODUCTS_VIEWED,
-  SET_PRODUCTS_VIEWED
+  SET_PRODUCTS_VIEWED,
+
+  SET_PRODUCTS_COUNT
 } from './constants'
 
 export function getProductsByCategoryAction (payload) {
@@ -69,6 +71,13 @@ export function getProductsViewedAction () {
 export function setProductsViewedAction (payload) {
   return {
     type: SET_PRODUCTS_VIEWED,
+    payload
+  }
+}
+
+export function setProductsCountsAction (payload) {
+  return {
+    type: SET_PRODUCTS_COUNT,
     payload
   }
 }

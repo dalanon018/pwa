@@ -38,11 +38,17 @@ const selectFeaturedProducts = () => createSelector(
   subState => subState.get('productsFeatured')
 )
 
+const selectTotalCount = () => createSelector(
+  selectProductsByCategoryDomain(),
+  subState => subState.get('totalCount')
+)
+
 export {
   selectProductsByCategoryDomain,
   selectProductsByCategory,
   selectProductsViewed,
   selectLoading,
   selectLazyload,
-  selectFeaturedProducts
+  selectFeaturedProducts,
+  selectTotalCount
 }

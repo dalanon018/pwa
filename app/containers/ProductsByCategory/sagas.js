@@ -32,7 +32,8 @@ import {
 import {
   setProductsByCategoryAction,
   setProductsViewedAction,
-  setFeaturedProductsAction
+  setFeaturedProductsAction,
+  setProductsCountsAction
 } from './actions'
 
 import {
@@ -63,6 +64,11 @@ function * getLastViewedItems () {
   return products || []
 }
 
+function getProductsCategory (response) {
+  const count = propOr(0, 'totalCount')
+  return count(response)
+}
+
 export function * getProductByCategory (args) {
   const { payload: { offset, limit, id } } = args
   const token = yield getAccessToken()
@@ -77,7 +83,10 @@ export function * getProductByCategory (args) {
       propOr([], 'productList')
     )
     const products = yield transform(req)
+    const count = yield getProductsCategory(req)
+
     yield put(setProductsByCategoryAction(products))
+    yield put(setProductsCountsAction(count))
   } else {
     yield put(setNetworkErrorAction('No cache data'))
   }
@@ -99,7 +108,10 @@ export function * getProductByTags (args) {
       propOr([], 'productList')
     )
     const products = yield transform(req)
+    const count = yield getProductsCategory(req)
+
     yield put(setProductsByCategoryAction(products))
+    yield put(setProductsCountsAction(count))
   }
 }
 

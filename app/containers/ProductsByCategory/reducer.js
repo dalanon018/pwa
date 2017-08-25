@@ -13,6 +13,8 @@ import {
 
   SET_FEATURED_PRODUCTS,
 
+  SET_PRODUCTS_COUNT,
+
   GET_PRODUCTS_VIEWED,
   SET_PRODUCTS_VIEWED
 } from './constants'
@@ -21,6 +23,7 @@ const initialState = fromJS({
   productsByCategory: [],
   productsFeatured: [],
   productsViewed: [],
+  totalCount: 0,
   loading: false,
   lazyload: false
 })
@@ -42,11 +45,14 @@ function productsByCategoryReducer (state = initialState, action) {
         .set('lazyload', !isEmpty(action.payload))
     }
     case RESET_PRODUCTS_CATEGORY:
-      return state.set('productsByCategory', fromJS([]))
+      return state.set('productsByCategory', fromJS([])).set('totalCount', 0)
 
     case SET_FEATURED_PRODUCTS:
       return state
         .set('productsFeatured', fromJS(action.payload))
+
+    case SET_PRODUCTS_COUNT:
+      return state.set('totalCount', fromJS(action.payload))
 
     case GET_PRODUCTS_VIEWED:
       return state.set('loading', true)
