@@ -56,6 +56,10 @@ const Schema = {
   facilityName: {
     name: 'storeName',
     type: STRING
+  },
+  sevenConnectRefNum: {
+    name: 'payCode',
+    type: STRING
   }
 }
 

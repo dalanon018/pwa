@@ -207,8 +207,9 @@ class Receipt extends React.PureComponent {
     /**
      * we have to make sure that we will initialize JsBarcode only if it is on the dom
      */
-    if (receipt.get('trackingNumber') && !HIDE_BARCODE.includes(statuses[receipt.get('status')])) {
-      JsBarcode('#barcode', receipt.get('trackingNumber'), {
+    if (receipt.get('payCode') && !HIDE_BARCODE.includes(statuses[receipt.get('status')])) {
+      const payCode = receipt.get('payCode').split('-').join('')
+      JsBarcode('#barcode', payCode, {
         format: 'CODE128',
         lineColor: '#5B5B5B',
         width: 3,

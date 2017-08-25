@@ -42,7 +42,7 @@ import {
  * // eventually we will use this to transform the data from response of the order.
  * @param {*} body
  */
-function * transformResponse ({ order: { transactionId, expiryDate, totalPrice, status }, completeMobile, orderedProduct, modePayment }) {
+function * transformResponse ({ order: { sevenConnectRefNum, transactionId, expiryDate, totalPrice, status }, completeMobile, orderedProduct, modePayment }) {
   return {
     trackingNumber: transactionId,
     claimExpiry: expiryDate,
@@ -55,6 +55,7 @@ function * transformResponse ({ order: { transactionId, expiryDate, totalPrice, 
     brandLogo: orderedProduct.get('brandLogo'),
     name: orderedProduct.get('title'),
     mobileNumber: completeMobile,
+    sevenConnectRefNum,
     status
   }
 }
