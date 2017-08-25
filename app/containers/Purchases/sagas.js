@@ -98,8 +98,14 @@ function * findAndUpdateReceiptDetails (apiOrders) {
       assoc('facilityName', prop('facilityName', data))
     )(oldReceipt)
 
+    const shouldUpdateOldReceipt = ifElse(
+      isNil,
+      () => {},
+      updateOldReceipt
+    )
+
     const found = compose(
-      updateOldReceipt,
+      shouldUpdateOldReceipt,
       findReceipt
     )
 
