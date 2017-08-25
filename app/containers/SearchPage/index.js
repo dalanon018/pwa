@@ -87,6 +87,7 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
 
   _displayProduct () {
     const { product, changeRoute } = this.props
+    console.log('product', product)
 
     if (product.size > 0) {
       return product.map((result) =>

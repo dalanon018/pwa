@@ -15,6 +15,9 @@ import { ifElse, equals } from 'ramda'
 
 import Product from 'components/Product'
 import PopupSlide from 'components/PopupSlide'
+import WindowWidth from 'components/WindowWidth'
+
+import defaultImage from 'images/default-slider.jpg'
 
 import {
   selectLoader,
@@ -174,7 +177,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   render () {
-    const { loading, product, toggle, route } = this.props
+    const { loading, product, toggle, route, windowWidth } = this.props
     const { modalToggle, prevMobileNumber, openModalPhoneDesktop } = this.state
     const productPageTrigger = route
 
@@ -189,8 +192,10 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
         <Product
           loading={loading}
           product={product}
+          windowWidth={windowWidth}
           popup={this._handleToggle}
           copied={this._handleCopy}
+          defaultImage={defaultImage}
           toggle={this.state.socialToggle}
           toggleClick={this._handleSocialToggle}
           productPageTrigger={productPageTrigger}
@@ -240,4 +245,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductPage)
+export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(ProductPage))

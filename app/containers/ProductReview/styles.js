@@ -72,32 +72,33 @@ const ProductItem = styled.div`
   &:before {
     background: url(${props => props.brand})no-repeat center center / contain;
     content: '';
-    height: 17px;
+    height: 20px;
     left: 50%;
     margin-right: -50%;
     position: absolute;
     text-align: center;
-    top: 10px;
+    top: 20px;
     transform: translate(-50%);
-    width: 180px;
+    min-width: 180px;
     z-index: 2;
   }
 
   .image {
     margin: 0 auto;
     position: relative;
-    width: 80px;
+    width: 150px;
     z-index: 2;
   }
 
   @media (min-width: 768px) {
     padding-top: 50px;
     .image {
-      width: 160px;
+      width: 300px;
     }
     &:before {
       height: 55px;
-      width: 350px;
+      min-width: 300px;
+      top: 40px;
     }
   }
 `
@@ -302,8 +303,9 @@ const LabelTitle = styled.p`
 `
 
 const LabelSubTitle = styled.span`
-  font-size: 10px;
   color: #AEAEAE;
+  font-size: 10px;
+  width: 100%;
 
   @media (min-width: 768px) {
     font-size: 14px;

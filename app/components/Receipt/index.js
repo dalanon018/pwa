@@ -7,10 +7,9 @@ import { Grid } from 'semantic-ui-react'
 import Button from 'components/Button'
 import H6 from 'components/H6'
 
-import TestBackPack from 'images/test-images/BACKPACK-TICKET.png'
-import TestLogo from 'images/test-images/PENSHOPPE-TICKET.png'
 import CliqqLogo from 'images/icons/cliqq.png'
 import WarningIcon from 'images/icons/notice.png'
+import defaultImage from 'images/default-slider.jpg'
 
 import { DateFormater } from 'utils/date'
 
@@ -245,13 +244,16 @@ class Receipt extends React.PureComponent {
     return (
       <ReceiptWrapper>
         <ProductWrapper >
-          <ProductImage background={TestBackPack} />
+          <ProductImage background={receipt.getIn(['products', 'image']) ? receipt.getIn(['products', 'image']) : defaultImage} />
           <ProductDescription>
             <CodeWrapper> <CodeImage src={CliqqLogo} />
               { receipt.getIn(['products', 'cliqqCode']) }
             </CodeWrapper>
             <H6 uppercase> { receipt.getIn(['products', 'name']) } </H6>
-            <ProductLogoImage src={TestLogo} />
+            {
+              receipt.getIn(['products', 'brandLogo']) &&
+              <ProductLogoImage src={receipt.getIn(['products', 'brandLogo'])} />
+            }
           </ProductDescription>
         </ProductWrapper>
 

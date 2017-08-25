@@ -18,7 +18,7 @@ export const ProductWrapper = styled.div`
   }
 `
 export const ProductImage = styled.div`
-  background: url(${({background}) => background}) no-repeat top right / cover;
+  background: url(${({background}) => background}) no-repeat center / cover;
   border-bottom-left-radius: 10px;
   width: 100%;
 `

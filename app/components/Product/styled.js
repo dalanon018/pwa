@@ -199,6 +199,7 @@ export const BrandInfo = styled(AnimateDiv)`
     overflow: hidden;
     img {
       float: right;
+      width: 300px;
     }
   }
 `

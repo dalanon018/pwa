@@ -8,8 +8,6 @@ import {
 import H6 from 'components/H6'
 import PackageStatus from 'components/PackageStatus'
 
-import TestBackPack from 'images/test-images/BACKPACK-TICKET.png'
-import TestLogo from 'images/test-images/PENSHOPPE-TICKET.png'
 import CliqqLogo from 'images/icons/cliqq.png'
 import CLAIMED from 'images/status/claimed.svg'
 import UNCLAIMED from 'images/status/unclaimed.svg'
@@ -29,7 +27,7 @@ const ProductWrapper = styled.div`
   margin: 0 auto;
 `
 const ProductImage = styled.div`
-  background: url(${({background}) => background}) no-repeat top right / cover;
+  background: url(${({background}) => background}) no-repeat center / cover;
   width: 100%;
 `
 
@@ -152,19 +150,22 @@ class Purchase extends React.PureComponent {
   }
 
   render () {
-    const { order, statuses } = this.props
+    const { order, statuses, defaultImage } = this.props
     const currentStatus = statuses[order.get('status')] || ''
 
     return (
       <PurchaseWrapper>
         <ProductWrapper status={this._getColorStatus(currentStatus)} onClick={this._goToReceipt}>
-          <ProductImage background={TestBackPack} />
+          <ProductImage background={order.getIn(['products', 'image']) ? order.getIn(['products', 'image']) : defaultImage} />
           <ProductDescription>
             <CodeWrapper> <CodeImage src={CliqqLogo} />
               { order.getIn(['products', 'cliqqCode']) }
             </CodeWrapper>
             <H6 uppercase> { order.getIn(['products', 'name']) } </H6>
-            <ProductLogoImage src={TestLogo} />
+            {
+              order.getIn(['products', 'brandLogo']) &&
+              <ProductLogoImage src={order.getIn(['products', 'brandLogo'])} />
+            }
             <ProductStatusWrapper>
               { this._displayPackageStatus() }
             </ProductStatusWrapper>

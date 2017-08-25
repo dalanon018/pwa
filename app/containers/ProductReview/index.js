@@ -31,6 +31,8 @@ import {
   selectSubmissionError
 } from './selectors'
 
+import defaultImage from 'images/default-slider.jpg'
+
 import Modal from 'components/PromptModal'
 import WindowWidth from 'components/WindowWidth'
 import DesktopBlock from './DesktopBlock'
@@ -228,6 +230,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             modalToggle={modalToggle}
             cliqqCode={cliqqCode}
             labelOne={labelOne}
+            defaultImage={defaultImage}
             labelTwo={labelTwo}
 
             // function props
@@ -244,6 +247,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             errorMessage={errorMessage}
             modePayment={modePayment}
             modalToggle={modalToggle}
+            defaultImage={defaultImage}
             cliqqCode={cliqqCode}
             labelOne={labelOne}
             labelTwo={labelTwo}

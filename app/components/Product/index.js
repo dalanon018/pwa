@@ -16,10 +16,8 @@ import {
   generateShareIcon
 } from 'react-share'
 
-import Test0001 from 'images/test-images/BACKPACK-TICKET.png'
 import CliqqLogo from 'images/icons/cliqq.png'
 import ShareIconImage from 'images/icons/share-icon.svg'
-import Brand from 'images/test-images/PENSHOPPE-TICKET.png'
 
 import Button from 'components/Button'
 import H3 from 'components/H3'
@@ -70,9 +68,11 @@ const Product = ({
   popup,
   toggle,
   toggleClick,
+  defaultImage,
   copied,
   productSlider,
   productPageTrigger,
+  windowWidth,
 
   // For Phone Prompt Desktop Modal
   submit,
@@ -92,7 +92,6 @@ const Product = ({
   } = ShareButtons
 
   const productImages = [product]
-  console.log('productImages', product.toJS())
 
   return (
     <ProductWrapper>
@@ -105,7 +104,9 @@ const Product = ({
       */}
 
       <ProductSlider
+        className='mobile-visibility'
         images={productImages}
+        windowWidth={windowWidth}
         productPageTrigger={productPageTrigger}
         loader={loading} />
 
@@ -114,13 +115,16 @@ const Product = ({
           <Grid padded>
             <Grid.Row columns='equal' verticalAlign='middle'>
               <Grid.Column>
-                <Image className='product-image' src={Test0001} />
+                <Image className='product-image' src={product.get('image') ? product.get('image') : defaultImage} />
               </Grid.Column>
               <Grid.Column textAlign='right'>
                 <BrandInfo>
-                  <div className='brand-wrapper'>
-                    <Image src={Brand} />
-                  </div>
+                  {
+                    product.get('brandLogo') &&
+                    <div className='brand-wrapper'>
+                      <Image src={product.get('brandLogo')} />
+                    </div>
+                  }
                   <CodeWrapper>
                     <CodeImage src={CliqqLogo} /> { cliqqCode }
                   </CodeWrapper>

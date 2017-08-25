@@ -268,6 +268,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
   render () {
     const { productsByCategory, categories, productsViewed, loader, changeRoute, windowWidth, totalCount } = this.props
+    console.log('productsViewed', productsViewed)
 
     return (
       <div>

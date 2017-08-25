@@ -14,8 +14,6 @@ import {
 
 import Button from 'components/Button'
 
-import SampleProduct from 'images/test-images/samplebag.png'
-import SampleBrand from 'images/test-images/PENSHOPPE-TICKET.png'
 import CliqqLogo from 'images/icons/cliqq.png'
 // import NextIcon from 'images/icons/greater-than-icon.svg'
 
@@ -41,6 +39,7 @@ function MobileBlock ({
   labelTwo,
   orderRequesting,
   modePayment,
+  defaultImage,
 
   // function props
   // handleStoreLocator,
@@ -59,8 +58,8 @@ function MobileBlock ({
                 <StepHead step='1'>
                   <FormattedMessage {...messages.stepOne} />
                 </StepHead>
-                <ProductItem brand={SampleBrand}>
-                  <Image src={SampleProduct} />
+                <ProductItem brand={orderedProduct.get('brandLogo')}>
+                  <Image src={orderedProduct.get('image') ? orderedProduct.get('image') : defaultImage} />
                 </ProductItem>
                 <CliqqCodeWrapper>
                   <Image src={CliqqLogo} /> { cliqqCode }
