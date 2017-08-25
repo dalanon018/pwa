@@ -43,7 +43,7 @@ function ProductView ({
 }) {
   const resposiveColumns = () => {
     if (windowWidth >= 768) {
-      return 5
+      return 4
     } else {
       return 2
     }
@@ -54,7 +54,6 @@ function ProductView ({
         loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
         : products.valueSeq().map((product, index) => {
           const goToProduct = () => changeRoute(`/product/${product.get('cliqqCode').first()}`)
-
           return (
             <Grid.Column
               key={`${product.get('cliqqCode')}-${index}`}
@@ -66,7 +65,7 @@ function ProductView ({
                   <PromoTag discount={product.get('discount')} />
                 }
                 <ImageWrapper>
-                  <Image src={product.get('image') || defaultImage} />
+                  <Image src={(product.get('image') && `${product.get('image')}?w=175&h=175&fit=clamp`) || defaultImage} />
                 </ImageWrapper>
                 <ProductName>{product.get('title')}</ProductName>
                 <ProductPriceWrapper>

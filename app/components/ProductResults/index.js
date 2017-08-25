@@ -3,9 +3,8 @@ import styled from 'styled-components'
 
 import H6 from 'components/H6'
 
-import TestBackPack from 'images/test-images/BACKPACK-TICKET.png'
-import TestLogo from 'images/test-images/PENSHOPPE-TICKET.png'
 import CliqqLogo from 'images/icons/cliqq.png'
+import defaultImage from 'images/default-slider.jpg'
 
 const PurchaseWrapper = styled.div`
   margin: 5px 0;
@@ -20,7 +19,7 @@ const ProductWrapper = styled.div`
   margin: 0 auto;
 `
 const ProductImage = styled.div`
-  background: url(${({background}) => background}) no-repeat top right / cover;
+  background: url(${({background}) => background}) no-repeat center / cover;
   width: 100%;
 `
 
@@ -74,16 +73,20 @@ class ProductResult extends React.PureComponent {
 
   render () {
     const { product } = this.props
+
     return (
       <PurchaseWrapper>
         <ProductWrapper onClick={this._goToProduct}>
-          <ProductImage background={TestBackPack} />
+          <ProductImage background={product.get('image') ? product.get('image') : defaultImage} />
           <ProductDescription>
             <CodeWrapper> <CodeImage src={CliqqLogo} />
               { product.get('cliqqCode').join(', ') }
             </CodeWrapper>
             <H6 uppercase> { product.get('title') } </H6>
-            <ProductLogoImage src={TestLogo} />
+            {
+              product.get('brandLogo') &&
+              <ProductLogoImage src={product.get('brandLogo')} />
+            }
           </ProductDescription>
         </ProductWrapper>
       </PurchaseWrapper>

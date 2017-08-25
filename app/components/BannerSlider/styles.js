@@ -3,7 +3,8 @@ import styled from 'styled-components'
 const BannerSliderWrapper = styled.div`
   background: #F0F0F0;
   color: #333;
-  margin: auto auto 20px;
+  display: ${props => props.productPageSlider ? 'none' : 'block'};
+  margin: ${props => props.productPageTrigger ? '' : 'auto auto 20px'};
   width: 100%;
 
   img {

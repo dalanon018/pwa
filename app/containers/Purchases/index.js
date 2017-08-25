@@ -26,6 +26,7 @@ import {
 } from 'containers/Buckets/constants'
 
 import EmptyPurchase from 'images/empty-purchases.svg'
+import defaultImage from 'images/default-slider.jpg'
 
 import messages from './messages'
 
@@ -185,6 +186,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
                   purchases.map((order, index) =>
                     <Grid.Column key={index}>
                       <Purchase
+                        defaultImage={defaultImage}
                         key={order.get('trackingNumber')}
                         order={order}
                         statuses={STATUSES}
