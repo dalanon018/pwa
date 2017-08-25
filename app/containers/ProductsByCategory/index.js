@@ -230,7 +230,11 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   componentWillUnmount () {
+    const { resetProductsByCategory } = this.props
+
     window.removeEventListener('scroll', this._onScrollElement)
+
+    resetProductsByCategory()
   }
 
   componentWillReceiveProps (nextProps) {
