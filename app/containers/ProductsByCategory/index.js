@@ -107,6 +107,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this._handleFeaturedProductsPerCategory = this._handleFeaturedProductsPerCategory.bind(this)
     this._displayFeaturesProduct = this._displayFeaturesProduct.bind(this)
     this._displayHeaderFeaturesProduct = this._displayHeaderFeaturesProduct.bind(this)
+    this._displayNumberProducts = this._displayNumberProducts.bind(this)
   }
 
   _onScrollElement (evt) {
@@ -167,6 +168,21 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     if (this._handleFeaturedProductsPerCategory() && productsFeatured.size) {
       return (
         <ProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} />
+      )
+    }
+
+    return null
+  }
+
+  _displayNumberProducts () {
+    const { productsByCategory, totalCount } = this.props
+
+    if (productsByCategory.size) {
+      return (
+        <ItemCount>
+          { totalCount }
+          <FormattedMessage {...messages.items} />
+        </ItemCount>
       )
     }
 
@@ -267,8 +283,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   render () {
-    const { productsByCategory, categories, productsViewed, loader, changeRoute, windowWidth, totalCount } = this.props
-
+    const { productsByCategory, categories, productsViewed, loader, changeRoute, windowWidth } = this.props
     return (
       <div>
         <NavCategories changeRoute={changeRoute} categories={categories} />
@@ -277,12 +292,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
             { this._displayHeaderFeaturesProduct() }
             { this._displayFeaturesProduct() }
             <H1 center className='padding__top--25'>{ this._handlePageTitle() }</H1>
-            <ItemCount>
-              { productsByCategory.size }
-              <FormattedMessage {...messages.noSeparator} />
-              { totalCount }
-              <FormattedMessage {...messages.items} />
-            </ItemCount>
+            { this._displayNumberProducts() }
             <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} windowWidth={windowWidth} />
             {/* <Promo loader={loader} /> */}
             <H1 center><FormattedMessage {...messages.viewed} /></H1>
