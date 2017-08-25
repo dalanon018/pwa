@@ -270,10 +270,18 @@ export default function createRoutes (store) {
           .catch(errorLoading)
       }
     }, {
-      path: '*',
-      name: 'notfound',
+      path: '/offline',
+      name: 'pageoffline',
       getComponent (nextState, cb) {
-        import('containers/NotFoundPage')
+        import('containers/PageOffline')
+          .then(loadModule(cb))
+          .catch(errorLoading)
+      }
+    }, {
+      path: '*',
+      name: 'pagenotfound',
+      getComponent (nextState, cb) {
+        import('containers/PageNotFound')
           .then(loadModule(cb))
           .catch(errorLoading)
       }
