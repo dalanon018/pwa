@@ -73,7 +73,7 @@ class ProductResult extends React.PureComponent {
 
   render () {
     const { product } = this.props
-    console.log('product', product.toJS())
+
     return (
       <PurchaseWrapper>
         <ProductWrapper onClick={this._goToProduct}>
