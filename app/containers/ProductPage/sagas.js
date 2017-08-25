@@ -1,7 +1,7 @@
 
 import { takeLatest } from 'redux-saga'
 import { isEmpty, compact } from 'lodash'
-import { compose, uniqBy, prop } from 'ramda'
+import { compose, uniqBy, prop, slice } from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 
@@ -56,8 +56,16 @@ function * transformEachEntity (entity) {
  */
 export function * updateLastViewedItems (args) {
   const { payload } = args
+  const NUMBER_VIEW_ITEMS = 4
   const products = yield call(getItem, LAST_VIEWS_KEY)
-  const cleanProducts = compose(uniqBy(prop('barcode')), compact)
+  const sliceRecentViewItems = (data) =>
+    slice(data.length - NUMBER_VIEW_ITEMS, Infinity)(data)
+  const cleanProducts = compose(
+    sliceRecentViewItems,
+    uniqBy(prop('barcode')),
+    compact
+  )
+
   let productsViewed = Array.isArray(products) ? products : []
 
   productsViewed = productsViewed.concat(payload)
