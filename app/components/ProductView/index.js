@@ -43,7 +43,7 @@ function ProductView ({
 }) {
   const resposiveColumns = () => {
     if (windowWidth >= 768) {
-      return 5
+      return 4
     } else {
       return 2
     }
