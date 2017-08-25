@@ -3,7 +3,8 @@ import {
   selectProductsByCategory,
   selectProductsViewed,
   selectLazyload,
-  selectFeaturedProducts
+  selectFeaturedProducts,
+  selectTotalCount
 } from '../selectors'
 
 describe('makeSelectProductsByCategoryDomain', () => {
@@ -60,6 +61,20 @@ describe('makeSelectProductsByCategoryDomain', () => {
         }
       })
       expect(selector(mockedState)).toEqual(productsFeatured)
+    })
+  })
+
+  describe('selectTotalCount', () => {
+    const selector = selectTotalCount()
+
+    it('should get totalCount of Products', () => {
+      const totalCount = 10
+      const mockedState = fromJS({
+        productsByCategory: {
+          totalCount
+        }
+      })
+      expect(selector(mockedState)).toEqual(totalCount)
     })
   })
 })

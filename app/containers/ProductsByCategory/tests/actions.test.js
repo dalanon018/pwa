@@ -10,7 +10,9 @@ import {
   getProductsByTagsAction,
 
   getProductsViewedAction,
-  setProductsViewedAction
+  setProductsViewedAction,
+
+  setProductsCountsAction
 } from '../actions'
 
 import {
@@ -24,7 +26,9 @@ import {
   GET_TAGS_PRODUCTS,
 
   GET_PRODUCTS_VIEWED,
-  SET_PRODUCTS_VIEWED
+  SET_PRODUCTS_VIEWED,
+
+  SET_PRODUCTS_COUNT
 } from '../constants'
 
 describe('ProductsByCategory actions', () => {
@@ -101,6 +105,17 @@ describe('ProductsByCategory actions', () => {
         payload
       }
       expect(setFeaturedProductsAction(payload)).toEqual(expected)
+    })
+  })
+
+  describe('Product counts', () => {
+    it('has a type of SET_PRODUCTS_COUNT', () => {
+      const payload = 10
+      const expected = {
+        type: SET_PRODUCTS_COUNT,
+        payload
+      }
+      expect(setProductsCountsAction(payload)).toEqual(expected)
     })
   })
 })

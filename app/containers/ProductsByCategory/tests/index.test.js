@@ -12,6 +12,7 @@ describe('<ProductsByCategory />', () => {
     getProductsViewed: () => {},
     resetProductsByCategory: () => {},
     getProductFeatured: () => {},
+    totalCount: 0,
     loader: false,
     lazyload: false,
     params: {

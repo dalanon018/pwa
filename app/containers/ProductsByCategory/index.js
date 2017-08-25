@@ -76,6 +76,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     getProductsViewed: PropTypes.func.isRequired,
     resetProductsByCategory: PropTypes.func.isRequired,
     getProductFeatured: PropTypes.func.isRequired,
+    totalCount: PropTypes.number.isRequired,
     loader: PropTypes.bool.isRequired,
     lazyload: PropTypes.bool.isRequired,
     productsByCategory: PropTypes.object.isRequired,
