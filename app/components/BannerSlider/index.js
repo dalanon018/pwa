@@ -5,7 +5,6 @@
 */
 
 import React from 'react'
-import styled from 'styled-components'
 import Slider from 'react-slick'
 import { Image } from 'semantic-ui-react'
 
@@ -16,45 +15,56 @@ import defaultImage from 'images/default-slider.jpg'
 // import messages from './messages';
 
 import {
-  BannerSliderWrapper
+  BannerSliderWrapper,
+  ImageWrapper,
+  BrandLogo
 } from './styles'
 
 import EmptyImage from 'images/broken-image.jpg'
-import SampleBanner from 'images/test-images/sample_banner.jpg'
 
-const ImageWrapper = styled.div`
-  background: url(${props => EmptyImage}) no-repeat center center / cover;
-  height: 200px;
-  width: 100%;
-
-  @media (min-width: 768px) {
-    height: 350px;
-  }
-`
-
-function BannerSlider ({loader}) {
-  return <HandleBlock loader={loader} />
+function BannerSlider ({
+  loader,
+  productPageTrigger,
+  images }) {
+  return <HandleBlock loader={loader} images={images} productPageTrigger={productPageTrigger} />
 }
 
-const HandleBlock = ({loader}) => {
+const HandleBlock = ({
+  loader,
+  productPageTrigger,
+  images }) => {
   let block
   const settings = {
-    autoplay: true,
+    autoplay: productPageTrigger && productPageTrigger.name && images.size > 1,
+    swipe: images.size > 1,
     autoplaySpeed: 3500,
-    dots: true,
-    infinite: true,
+    dots: images.size > 1,
+    infinite: productPageTrigger && !productPageTrigger.name,
     speed: 1000,
     arrows: false,
     slidesToShow: 1,
     slidesToScroll: 1
   }
+
   if (loader) {
     block = <DefaultState loader={loader} />
   } else {
     block = <BannerSliderWrapper>
       <Slider {...settings}>
-        <div><Image src={SampleBanner || defaultImage} /></div>
-        <div><Image src={SampleBanner || defaultImage} /></div>
+        {
+          images &&
+          images.map((item, index) => {
+            return (
+              <div key={index}>
+                {
+                  item.get('brandLogo') &&
+                  <BrandLogo brand={item.get('brandLogo') && item.get('brandLogo')} />
+                }
+                <Image src={item.get('image') || defaultImage} />
+              </div>
+            )
+          })
+        }
       </Slider>
     </BannerSliderWrapper>
   }
@@ -65,7 +75,7 @@ const DefaultState = () => {
   return (
     <BannerSliderWrapper>
       <EmptyDataBlock>
-        <ImageWrapper />
+        <ImageWrapper image={EmptyImage} />
       </EmptyDataBlock>
     </BannerSliderWrapper>
   )

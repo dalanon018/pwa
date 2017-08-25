@@ -24,18 +24,19 @@ import Brand from 'images/test-images/PENSHOPPE-TICKET.png'
 import Button from 'components/Button'
 import H3 from 'components/H3'
 import PopupSlide from 'components/PopupSlide'
+import ProductSlider from 'components/BannerSlider'
 
 import { calculateProductPrice } from 'utils/promo'
 
 import {
-  LoadingStateImage,
+  // LoadingStateImage,
   LoadingStateInfo
 } from 'components/LoadingBlock'
 
 import messages from './messages'
 import {
   ProductWrapper,
-  ImageBanner,
+  // ImageBanner,
   ProductMainContent,
   HeaderWrapper,
   CodeImage,
@@ -70,6 +71,8 @@ const Product = ({
   toggle,
   toggleClick,
   copied,
+  productSlider,
+  productPageTrigger,
 
   // For Phone Prompt Desktop Modal
   submit,
@@ -88,13 +91,24 @@ const Product = ({
     TwitterShareButton
   } = ShareButtons
 
+  const productImages = [product]
+  console.log('productImages', product.toJS())
+
   return (
     <ProductWrapper>
-      <ImageBanner className='mobile-visibility'>
-        <LoadingStateImage loading={loading}>
-          <Image src={Test0001} />
-        </LoadingStateImage>
-      </ImageBanner>
+      {/*
+        <ImageBanner className='mobile-visibility'>
+          <LoadingStateImage loading={loading}>
+            <Image src={Test0001} />
+          </LoadingStateImage>
+        </ImageBanner>
+      */}
+
+      <ProductSlider
+        images={productImages}
+        productPageTrigger={productPageTrigger}
+        loader={loading} />
+
       <DesktopImageBanner className='desktop-visibility'>
         <div className='background-wrapper'>
           <Grid padded>

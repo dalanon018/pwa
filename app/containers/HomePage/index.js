@@ -31,6 +31,8 @@ import WindowWidth from 'components/WindowWidth'
 import { getFeaturedProductsAction } from './actions'
 import { selectLoading, selectFeaturedProducts } from './selectors'
 
+import SampleBanner from 'images/test-images/sample_banner.jpg'
+
 import {
   getProductCategoriesAction
 } from 'containers/Buckets/actions'
@@ -115,16 +117,18 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       widescreen: 3
     }
 
+    const bannerImages = fromJS([
+      {
+        image: SampleBanner
+      }
+    ])
+
     return (
       <div>
         <Helmet
           title='Home Page'
           meta={[
             { name: 'description', content: 'A React.js Boilerplate application homepage' }
-          ]}
-          link={[
-            { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css' },
-            { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css' }
           ]}
         />
 
@@ -144,7 +148,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                 computer={8}
                 largeScreen={8}
                 widescreen={8}>
-                <BannerSlider loader={loader} />
+                <BannerSlider loader={loader} images={bannerImages} />
               </Grid.Column>
               <Grid.Column
                 className='banner-padding'
