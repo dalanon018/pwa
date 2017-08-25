@@ -41,6 +41,10 @@ export function App (props) {
             { property: 'og:description', content: 'description' },
             { property: 'og:image', content: 'image' }
           ]}
+          link={[
+            { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css' },
+            { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css' }
+          ]}
         />
         {React.Children.toArray(props.children)}
       </BodyWrapper>

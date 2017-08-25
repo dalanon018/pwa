@@ -30,7 +30,6 @@ import EmptyDataBlock from 'components/EmptyDataBlock'
 import defaultImage from 'images/default-product.jpg'
 
 import PromoTag from './sections/PromoTag'
-import ProductImage from 'images/test-images/samplebag.png'
 import EmptyImage from 'images/broken-image.jpg'
 import ParagraphImage from 'images/test-images/short-paragraph.png'
 
@@ -67,7 +66,7 @@ function ProductView ({
                   <PromoTag discount={product.get('discount')} />
                 }
                 <ImageWrapper>
-                  <Image src={ProductImage || defaultImage} />
+                  <Image src={product.get('image') || defaultImage} />
                 </ImageWrapper>
                 <ProductName>{product.get('title')}</ProductName>
                 <ProductPriceWrapper>
@@ -115,7 +114,7 @@ const DefaultState = () => {
     <Grid.Column className='padding__none--horizontal' mobile={8} tablet={4} computer={3} widescreen={3}>
       <EmptyDataBlock>
         <ProductWrapper>
-          <ImageWrapper background={EmptyImage} className='custom-height' />
+          <ImageWrapper background={EmptyImage} className='empty-image custom-height' />
           <Image src={ParagraphImage} height={50} />
         </ProductWrapper>
       </EmptyDataBlock>

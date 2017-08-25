@@ -19,10 +19,13 @@ const ProductWrapper = styled.div`
 `
 
 const ImageWrapper = styled.div`
-  background-color: #f0f0f0;
-  background: url(${props => props.background}) no-repeat center center / cover;
+  background-color: #F0F0F0;
   margin-bottom: 10px;
   width: 100%;
+
+  .empty-image {
+    background: url(${props => props.background}) no-repeat center center / cover;
+  }
 
   .image {
     width: 100%;
@@ -35,7 +38,7 @@ const ImageWrapper = styled.div`
 const ProductName = styled.p`
   color: #5b5b5b;
   font-family: 'helveticabold';
-  font-size: 8px;
+  font-size: 9px;
   margin-bottom: 3px;
   text-transform: uppercase;
 

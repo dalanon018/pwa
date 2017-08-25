@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const BannerSliderWrapper = styled.div`
-  background: #FFFFFF;
+  background: #F0F0F0;
   color: #333;
   margin: auto auto 20px;
   width: 100%;
@@ -10,8 +10,9 @@ const BannerSliderWrapper = styled.div`
     width: 100%;
   }
 
-  img {
-    width: 100%;
+  .slick-slide {
+    background-color: #F0F0F0;
+    position: relative;
   }
 
   .slick-dots {
@@ -45,6 +46,37 @@ const BannerSliderWrapper = styled.div`
   }
 `
 
+const ImageWrapper = styled.div`
+  background: url(${props => props.image}) no-repeat center center / cover;
+  height: 200px;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    height: 350px;
+  }
+`
+
+const BrandLogo = styled.div`
+  height: 45px;
+  position: absolute;
+  top: 15px;
+  width: 100%;
+
+  &:before {
+    background: url(${props => props.brand}) no-repeat center center / contain;
+    content: '';
+    height: 100%;
+    left: 50%;
+    margin-right: -50%;
+    position: absolute;
+    top: 0;
+    transform: translate(-50%);
+    width: 70%;
+  }
+`
+
 export {
-  BannerSliderWrapper
+  BannerSliderWrapper,
+  ImageWrapper,
+  BrandLogo
 }
