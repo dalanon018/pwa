@@ -17,7 +17,6 @@ import {
   contains,
   curry,
   equals,
-  identity,
   ifElse,
   partial,
   path,
@@ -138,8 +137,9 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
   _handlePageTitle () {
     const { params: { id } } = this.props
+    const IstagText = (tag) => `${tag} ITEMS`
 
-    const titleCondition = ifElse(isTag(this._tags), identity, this._isCategoryExist)
+    const titleCondition = ifElse(isTag(this._tags), IstagText, this._isCategoryExist)
     const titleComposition = compose(toUpper, titleCondition)
 
     return titleComposition(id)
