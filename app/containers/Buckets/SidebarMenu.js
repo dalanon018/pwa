@@ -16,8 +16,9 @@ import CategoriesImage from 'images/icons/category-icon.svg'
 
 const SidebarContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.3);
+  height: 100vh;
   left: 0;
-  overflow: hidden;
+  overflow: auto;
   position: fixed;
   top: 0;
   transition: width 0.3s;
@@ -26,7 +27,6 @@ const SidebarContainer = styled.div`
 `
 const SidebarWrapper = styled.div`
   background-color: #FFFFFF;
-  height: 100vh;
   overflow: auto;
   width: 260px;
 `
