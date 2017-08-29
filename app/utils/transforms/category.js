@@ -47,9 +47,9 @@ const transformCategory = (data) => {
       propOr({}, 'images')
     )
     return Object.assign({}, data, {
-      icon: applyImageUrl('Nav Icon')(data),
-      background: applyImageUrl('Background Image')(data),
-      main: applyImageUrl('Main Image')(data)
+      icon: applyImageUrl('NAV_ICON')(data),
+      background: applyImageUrl('BACKGROUND')(data),
+      main: applyImageUrl('MAIN')(data)
     })
   }
 
