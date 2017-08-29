@@ -1,7 +1,7 @@
 import moment from 'moment'
 import { takeLatest } from 'redux-saga'
 import { find, isEmpty, isEqual, noop } from 'lodash'
-import { compose, flatten, filter, fromPairs, contains, join, toPairs, lensProp, map, partial, propOr, head, ifElse, is, isNil, uniq, view } from 'ramda'
+import { compose, flatten, filter, fromPairs, contains, join, toPairs, lensProp, map, partial, prop, propOr, head, ifElse, is, isNil, sortBy, uniq, view } from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 
@@ -146,8 +146,9 @@ export function * getAccessToken () {
 
 export function * updateUICategories (req = Array) {
   const transform = yield req.map((data) => transformEachEntity(transformCategory, data))
+  const sortAsc = sortBy(prop('name'))
 
-  yield put(setProductCategoriesAction(transform))
+  yield put(setProductCategoriesAction(sortAsc(transform)))
 }
 
 export function * getCategories () {
