@@ -18,9 +18,10 @@ export const SET_NETWORK_ERROR = 'app/Buckets/SET_NETWORK_ERROR'
 export const SET_TOGGLE = 'app/Buckets/SET_TOGGLE'
 
 export const HIDE_BACK_BUTTON = [
-  '/',
-  '/home',
-  '/barcodes'
+  '',
+  'home',
+  'products-category',
+  'purchases'
 ]
 
 export const STATUSES = {

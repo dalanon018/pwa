@@ -155,7 +155,8 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   _hideBackButton () {
     const { routes } = this.props
     const { path } = routes.slice().pop()
-    return HIDE_BACK_BUTTON.includes(path)
+
+    return HIDE_BACK_BUTTON.includes(path.split('/')[1])
   }
 
   _displayHeader () {

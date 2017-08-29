@@ -9,5 +9,9 @@ export default defineMessages({
   header: {
     id: 'app.containers.SearchPage.header',
     defaultMessage: 'This is SearchPage container !'
+  },
+  emptyMessage: {
+    id: 'app.containers.SearchPage.emptyMessage',
+    defaultMessage: 'SEARCH NOT FOUND'
   }
 })

@@ -45,11 +45,15 @@ function productsByCategoryReducer (state = initialState, action) {
         .set('lazyload', !isEmpty(action.payload))
     }
     case RESET_PRODUCTS_CATEGORY:
-      return state.set('productsByCategory', fromJS([])).set('totalCount', 0)
+      return state
+        .set('productsByCategory', fromJS([]))
+        .set('totalCount', 0)
+        .set('loading', false)
 
     case SET_FEATURED_PRODUCTS:
       return state
         .set('productsFeatured', fromJS(action.payload))
+        .set('loading', false)
 
     case SET_PRODUCTS_COUNT:
       return state.set('totalCount', fromJS(action.payload))
