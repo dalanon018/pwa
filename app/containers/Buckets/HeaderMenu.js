@@ -166,8 +166,13 @@ const NavMenu = styled.div`
     transition: all 0.3s ease !important;
     width: 100%;
 
-    &:hover, &.active {
+    &.active {
       background-color: #F58322 !important;
+      color: #FFFFFF !important;
+    }
+
+    &:hover {
+      background-color: #f6a22d !important;
       color: #FFFFFF !important;
     }
   }
@@ -184,25 +189,33 @@ const CategoriesContainer = styled.div`
   z-index: 999999;
 
   .wrapper {
-    padding: 0 40px;
+    padding: 21px 15px 0;
+  }
+
+  .category-wrapper {
+    background-color: #f6a22d;
+    color: white;
+    padding: 5px 30px 25px !important;
   }
 `
 
 const CategoryItem = styled.p`
-  border-bottom: 1px solid #5B5B5B;
+  border-bottom: 1px solid #fff;
   padding: 20px 0;
   width: 100%;
 
   a {
-    color: #5B5B5B;
+    color: white;
     font-family: 'helveticalight';
-    font-size: 18px;
+    font-size: 17px;
     letter-spacing: 4px;
     line-height: 20px;
     text-transform: uppercase;
 
+
     &:hover {
-      color: #F58322;
+      color: white;
+      font-weight: 900;
     }
   }
 `
@@ -379,7 +392,7 @@ export default class MainMenu extends PureComponent {
           <CategoriesContainer display={this.state.show} onMouseOver={this._handleShowCategories} onMouseLeave={this._handleHideCategories}>
             <div className='wrapper'>
               <Grid padded>
-                <Grid.Row columns={3}>
+                <Grid.Row columns={3} className='category-wrapper'>
                   {
                     categories &&
                     categories.map((item, index) => {
