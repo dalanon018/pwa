@@ -257,7 +257,7 @@ const SelectMethodWrapper = styled.div`
     transform: translateY(-50%);
   }
   .ui.radio.checkbox .box:after, .ui.radio.checkbox label:after {
-    top: 41%;
+    top: 38%;
     transform: translateY(-50%);
   }
 
@@ -294,6 +294,7 @@ const LabelTitle = styled.p`
   font-size: 14px;
   letter-spacing: 2px;
   margin: 0;
+  width: 100%;
 
   @media (min-width: 768px) {
     color: #5B5B5B !important;

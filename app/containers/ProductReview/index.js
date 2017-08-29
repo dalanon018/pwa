@@ -42,7 +42,7 @@ import { calculateProductPrice } from 'utils/promo'
 
 import {
   LabelTitle,
-  LabelSubTitle,
+  // LabelSubTitle,
   LabelPrice
 } from './styles'
 
@@ -196,9 +196,11 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       <LabelTitle className='desktop__width--full'>
         <FormattedMessage {...messages.cashPrepaid} />
       </LabelTitle>
-      <LabelSubTitle className='desktop__width--full'>
-        Get free 10points by paying through prepaid!
-      </LabelSubTitle>
+      {/*
+        <LabelSubTitle className='desktop__width--full'>
+          Get free 10points by paying through prepaid!
+        </LabelSubTitle>
+      */}
       <LabelPrice className='desktop__width--full'>
         <span className='total'>PHP {calculateProductPrice(orderedProduct)}</span>
         {
