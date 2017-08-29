@@ -62,7 +62,7 @@ function * transformEachEntity (entity) {
 function * getLastViewedItems () {
   const products = yield call(getItem, LAST_VIEWS_KEY)
 
-  return products ? products.reverse() : []
+  return products || []
 }
 
 function getProductsCategory (response) {

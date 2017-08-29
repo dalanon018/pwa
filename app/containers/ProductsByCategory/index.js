@@ -108,6 +108,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this._displayFeaturesProduct = this._displayFeaturesProduct.bind(this)
     this._displayHeaderFeaturesProduct = this._displayHeaderFeaturesProduct.bind(this)
     this._displayNumberProducts = this._displayNumberProducts.bind(this)
+    this._displayRecentlyViewedHeader = this._displayRecentlyViewedHeader.bind(this)
   }
 
   _onScrollElement (evt) {
@@ -183,6 +184,18 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
           { totalCount }
           <FormattedMessage {...messages.items} />
         </ItemCount>
+      )
+    }
+
+    return null
+  }
+
+  _displayRecentlyViewedHeader () {
+    const { productsViewed } = this.props
+
+    if (productsViewed.size) {
+      return (
+        <H1 center><FormattedMessage {...messages.viewed} /></H1>
       )
     }
 
@@ -284,7 +297,6 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
   render () {
     const { productsByCategory, categories, productsViewed, loader, changeRoute, windowWidth } = this.props
-    console.log('loader', loader)
     return (
       <div>
         <NavCategories changeRoute={changeRoute} categories={categories} />
@@ -296,7 +308,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
             { this._displayNumberProducts() }
             <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} windowWidth={windowWidth} />
             {/* <Promo loader={loader} /> */}
-            <H1 center><FormattedMessage {...messages.viewed} /></H1>
+            { this._displayRecentlyViewedHeader() }
             <ProductView changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
           </Grid>
         </div>
