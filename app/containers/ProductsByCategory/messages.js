@@ -25,5 +25,9 @@ export default defineMessages({
   loadMore: {
     id: 'app.containers.ProductsByCategory.loadMore',
     defaultMessage: 'LOAD MORE'
+  },
+  emptyMessage: {
+    id: 'app.containers.ProductsByCategory.emptyMessage',
+    defaultMessage: 'THIS CATEGORY DOESN\'T HAVE ANY PRODUCTS YET'
   }
 })

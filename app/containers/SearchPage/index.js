@@ -14,6 +14,8 @@ import { createStructuredSelector } from 'reselect'
 
 import ProductResults from 'components/ProductResults'
 
+import EmptyProducts from './EmptyProducts'
+
 import {
   selectSearchProductLoading,
   selectSearchProduct,
@@ -42,6 +44,12 @@ const SearchListWrapper = styled.div`
 `
 
 export class SearchPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  /**
+   * Handler where we will able to identify if the user click search
+   * since search input component is not here.
+   */
+  _userSearch = false
+
   static propTypes = {
     product: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
@@ -64,6 +72,7 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
     this._handleClose = this._handleClose.bind(this)
     this._handleToggle = this._handleToggle.bind(this)
     this._displayProduct = this._displayProduct.bind(this)
+    this._displayEmpty = this._displayEmpty.bind(this)
   }
 
   _handleSubmit ({ value }) {
@@ -101,26 +110,24 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
     return null
   }
 
+  _displayEmpty () {
+    const { product, loading } = this.props
+
+    if (loading === false && product.size === 0 && this._userSearch === true) {
+      return (
+        <EmptyProducts />
+      )
+    }
+
+    return null
+  }
+
   componentWillUnmount () {
     this.props.setHandlersDefault()
   }
 
   componentWillReceiveProps (nextProps) {
-    const { productSuccess, productError, changeRoute } = nextProps
-
-    if (productSuccess && this.successSubmission) {
-      this._handleClose()
-      this.successSubmission = false
-
-      changeRoute('/review')
-    }
-
-    if (productError && this.successSubmission) {
-      this.setState({
-        modalToggle: productError
-      })
-      this.successSubmission = false
-    }
+    this._userSearch = true
   }
 
   render () {
@@ -132,7 +139,7 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
             { name: 'description', content: 'Description of SearchPage' }
           ]}
         />
-
+        { this._displayEmpty() }
         { this._displayProduct() }
       </SearchListWrapper>
     )

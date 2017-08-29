@@ -23,7 +23,6 @@ import {
   path,
   toUpper
 } from 'ramda'
-import messages from './messages'
 import styled from 'styled-components'
 
 import { Grid } from 'semantic-ui-react'
@@ -43,6 +42,9 @@ import {
   selectProductCategories,
   selectLoader
 } from 'containers/Buckets/selectors'
+
+import messages from './messages'
+import EmptyProducts from './EmptyProducts'
 
 import {
   getProductsByCategoryAction,
@@ -110,6 +112,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this._displayHeaderFeaturesProduct = this._displayHeaderFeaturesProduct.bind(this)
     this._displayNumberProducts = this._displayNumberProducts.bind(this)
     this._displayRecentlyViewedHeader = this._displayRecentlyViewedHeader.bind(this)
+    this._displayEmpty = this._displayEmpty.bind(this)
   }
 
   _onScrollElement (evt) {
@@ -197,6 +200,18 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     if (productsViewed.size) {
       return (
         <H1 center><FormattedMessage {...messages.viewed} /></H1>
+      )
+    }
+
+    return null
+  }
+
+  _displayEmpty () {
+    const { productsByCategory, loader } = this.props
+
+    if (loader === false && !(productsByCategory.size > 0)) {
+      return (
+        <EmptyProducts />
       )
     }
 
@@ -307,6 +322,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
             { this._displayFeaturesProduct() }
             <H1 center className='padding__top--25'>{ this._handlePageTitle() }</H1>
             { this._displayNumberProducts() }
+            { this._displayEmpty() }
             <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} windowWidth={windowWidth} />
             {/* <Promo loader={loader} /> */}
             { this._displayRecentlyViewedHeader() }
