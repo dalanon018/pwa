@@ -110,11 +110,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   render () {
     const { loader, productCategories, changeRoute, windowWidth, categoryLoader } = this.props
     const { products } = this.state
-    const grids = {
-      mobile: 4,
-      tablet: 4,
-      computer: 3,
-      widescreen: 3
+    const resposiveColumns = () => {
+      if (windowWidth >= 768) {
+        return 5
+      } else {
+        return 4
+      }
     }
 
     const bannerImages = fromJS([
@@ -166,13 +167,18 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         <div className='padding__horizontal--10'>
           <Grid padded>
             <H1 center> <FormattedMessage {...messages.featureProduct} /> </H1>
-            <ProductView changeRoute={changeRoute} loader={loader} products={products} windowWidth={windowWidth} />
+            <ProductView
+              changeRoute={changeRoute}
+              loader={loader}
+              products={products}
+              windowWidth={windowWidth} />
             { this._displayViewAll() }
             {/* <Promo loader={loader} /> */}
             <H1 center> <FormattedMessage {...messages.browseCategory} /> </H1>
             <Category
               loader={loader}
-              grids={grids}
+              resposiveColumns={resposiveColumns()}
+              windowWidth={windowWidth}
               margin='2'
               changeRoute={changeRoute}
               route='/products-category'

@@ -30,25 +30,26 @@ import {
 function Category ({
   loader,
   categories,
-  grids,
+  resposiveColumns,
+  windowWidth,
   margin,
   iconWidth,
   changeRoute,
   route,
   fontSize
 }) {
-  const { mobile, tablet, computer, widescreen } = grids
-
   return (
-    <Grid.Row>
+    <Grid.Row columns={resposiveColumns}>
       {
-        loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} margin={margin} grids={grids} />)
+        loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} margin={margin} />)
         : categories &&
         categories.valueSeq().map((category, index) => {
           const handleRedirect = () => changeRoute(`/products-category/${category.get('id')}`)
 
           return (
-            <Grid.Column key={index} className='padding__none--horizontal category-item' mobile={mobile} tablet={tablet} computer={computer} widescreen={widescreen}>
+            <Grid.Column
+              key={index}
+              className='padding__none--horizontal category-item' >
               <CategoryBlock margin={margin} width={iconWidth} onClick={handleRedirect}>
                 <Image className='category-image' src={category.get('background') ? category.get('background') : defaultCategoryBackground} />
                 <CategoryContent>
@@ -67,12 +68,10 @@ function Category ({
 }
 
 const DefaultState = ({
-  margin,
-  grids
+  margin
 }) => {
-  const { mobile, tablet, computer, widescreen } = grids
   return (
-    <Grid.Column className='padding__none--horizontal category-item' mobile={mobile} tablet={tablet} computer={computer} widescreen={widescreen}>
+    <Grid.Column className='padding__none--horizontal category-item'>
       <EmptyDataBlock>
         <CategoryBlock margin={margin} className='responsive-width'>
           <Image className='category-image' src={EmptyImage} />
