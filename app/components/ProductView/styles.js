@@ -23,15 +23,8 @@ const ImageWrapper = styled.div`
   margin-bottom: 10px;
   width: 100%;
 
-  .empty-image {
-    background: url(${props => props.background}) no-repeat center center / cover;
-  }
-
   .image {
     width: 100%;
-  }
-  &.custom-height {
-    height: 37vh;
   }
 `
 

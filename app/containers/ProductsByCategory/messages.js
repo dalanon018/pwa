@@ -16,7 +16,7 @@ export default defineMessages({
   },
   feature: {
     id: 'app.containers.ProductsByCategory.feature',
-    defaultMessage: 'FEATURED'
+    defaultMessage: 'FEATURED ITEMS'
   },
   noSeparator: {
     id: 'app.containers.ProductsByCategory.noSeparator',

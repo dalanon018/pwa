@@ -8,7 +8,8 @@ const BannerSliderWrapper = styled.div`
   width: 100%;
 
   img {
-    width: 100%;
+    width: ${props => props.productPageTrigger ? 'initial' : '100%'};
+    margin: ${props => props.productPageTrigger ? '15px auto 0' : 'inherit'};
   }
 
   .slick-slide {
