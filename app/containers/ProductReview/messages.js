@@ -46,7 +46,7 @@ export default defineMessages({
   },
   proceedNext: {
     id: `${idSuffix}.proceedNext`,
-    defaultMessage: 'PROCEED TO NEXT STEP'
+    defaultMessage: 'RESERVE FOR PAYMENT IN STORE'
   },
   errorHeader: {
     id: `${idSuffix}.errorHeader`,
