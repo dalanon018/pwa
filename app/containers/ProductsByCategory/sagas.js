@@ -72,6 +72,9 @@ function getProductsCategory (response) {
 
 export function * getProductByCategory (args) {
   const { payload: { offset, limit, id } } = args
+  let products = []
+  let count = 0
+
   const token = yield getAccessToken()
   const req = yield call(getRequestData, `${API_BASE_URL}/categories/${id}/enabled?offset=${offset}&limit=${limit}`, {
     method: 'GET',
@@ -83,18 +86,21 @@ export function * getProductByCategory (args) {
       map(transformEachEntity),
       propOr([], 'productList')
     )
-    const products = yield transform(req)
-    const count = yield getProductsCategory(req)
 
-    yield put(setProductsByCategoryAction(products))
-    yield put(setProductsCountsAction(count))
+    products = yield transform(req)
+    count = yield getProductsCategory(req)
   } else {
     yield put(setNetworkErrorAction('No cache data'))
   }
+
+  yield put(setProductsByCategoryAction(products))
+  yield put(setProductsCountsAction(count))
 }
 
 export function * getProductByTags (args) {
   const { payload: { offset, limit, id } } = args
+  let products = []
+  let count = 0
 
   const token = yield getAccessToken()
   const req = yield call(getRequestData, `${API_BASE_URL}/tags/${toUpper(id)}?deviceOrigin=PWA&offset=${offset}&limit=${limit}`, {
@@ -102,22 +108,26 @@ export function * getProductByTags (args) {
     token: token.access_token
   })
 
-  if (!req.err) {
+  if (!isEmpty(req)) {
     const transform = compose(
       map(transformEachEntity),
       filter(prop('cliqqCodes')),
       propOr([], 'productList')
     )
-    const products = yield transform(req)
-    const count = yield getProductsCategory(req)
-
-    yield put(setProductsByCategoryAction(products))
-    yield put(setProductsCountsAction(count))
+    products = yield transform(req)
+    count = yield getProductsCategory(req)
+  } else {
+    yield put(setNetworkErrorAction('No cache data'))
   }
+
+  yield put(setProductsByCategoryAction(products))
+  yield put(setProductsCountsAction(count))
 }
 
 export function * getProductByFeaturedCategory (args) {
   const { payload } = args
+  let products = []
+
   const token = yield getAccessToken()
   const req = yield call(getRequestData, `${API_BASE_URL}/categories/${payload}/enabled/FEATURED?offset=0&limit=4`, {
     method: 'GET',
@@ -130,11 +140,12 @@ export function * getProductByFeaturedCategory (args) {
       filter(prop('cliqqCodes')),
       propOr([], 'productList')
     )
-    const products = yield transform(req)
-    yield put(setFeaturedProductsAction(products))
+    products = yield transform(req)
   } else {
     yield put(setNetworkErrorAction('No cache data'))
   }
+
+  yield put(setFeaturedProductsAction(products))
 }
 
 export function * getProductsViewed () {

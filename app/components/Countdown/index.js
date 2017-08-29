@@ -28,9 +28,9 @@ class Countdown extends React.PureComponent { // eslint-disable-line react/prefe
     this._disableTimer = this._disableTimer.bind(this)
   }
 
-  _countdownTimer () {
-    const { endDate } = this.props
-
+  _countdownTimer (props) {
+    const { endDate } = props
+    console.log(endDate)
     let currentTime = moment().unix()
     let diffTime = endDate - currentTime
     let duration = moment.duration(diffTime * 1000, 'milliseconds')
@@ -77,6 +77,7 @@ class Countdown extends React.PureComponent { // eslint-disable-line react/prefe
     const [ hh, mm, ss ] = timer.split(':')
 
     if ((pT(hh) + pT(mm) + pT(ss)) < 0) {
+      console.log(1)
       clearInterval(this.countdownInterval)
       this.setState({
         timer: '00:00:00'
@@ -88,8 +89,9 @@ class Countdown extends React.PureComponent { // eslint-disable-line react/prefe
     clearInterval(this.countdownInterval)
   }
 
-  componentDidMount () {
-    this._countdownTimer()
+  componentWillReceiveProps (nextProps) {
+    console.log('Timer should start')
+    this._countdownTimer(nextProps)
   }
 
   componentDidUpdate (prevProps, prevState) {
