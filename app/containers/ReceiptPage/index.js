@@ -144,6 +144,7 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
         <Grid.Row>
           <Grid.Column>
             <ReceiptWrapper background={this._identifyBackground}>
+
               <Helmet
                 title='ReceiptPage'
                 meta={[
