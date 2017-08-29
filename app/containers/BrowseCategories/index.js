@@ -15,6 +15,7 @@ import { Grid } from 'semantic-ui-react'
 import Category from 'components/Category'
 import Footer from 'components/Footer'
 import H1 from 'components/H1'
+import WindowWidth from 'components/WindowWidth'
 
 import {
   getCategoriesAction
@@ -38,27 +39,31 @@ export class BrowseCategories extends React.PureComponent { // eslint-disable-li
   }
 
   render () {
-    const { categories, loader, changeRoute } = this.props
-    const grids = {
-      mobile: 8,
-      tablet: 8,
-      computer: 4,
-      widescreen: 4
+    const { categories, loader, changeRoute, windowWidth } = this.props
+    const resposiveColumns = () => {
+      if (windowWidth >= 768) {
+        return 5
+      } else if (windowWidth >= 500) {
+        return 3
+      } else {
+        return 2
+      }
     }
+
     return (
       <div>
         <div className='padding__horizontal--10'>
           <Grid padded>
             <H1 center className='padding__top--25'><FormattedMessage {...messages.header} /></H1>
             <Category
+              resposiveColumns={resposiveColumns()}
               margin='5'
               loader={loader}
               categories={categories}
               height='160'
               iconWidth='45'
               changeRoute={changeRoute}
-              fontSize='14'
-              grids={grids} />
+              fontSize='14' />
           </Grid>
         </div>
         <Footer />
@@ -80,4 +85,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BrowseCategories)
+export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(BrowseCategories))
