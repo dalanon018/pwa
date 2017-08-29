@@ -48,6 +48,7 @@ function ProductView ({
       return 2
     }
   }
+
   return (
     <CustomGridRow stretched columns={resposiveColumns()}>
       {
@@ -59,7 +60,7 @@ function ProductView ({
               key={`${product.get('cliqqCode')}-${index}`}
               className='padding__none--horizontal'
               onClick={goToProduct}>
-              <ProductWrapper loader={loader}>
+              <ProductWrapper>
                 {
                   !isEmpty(product.get('discount')) &&
                   <PromoTag discount={product.get('discount')} />
