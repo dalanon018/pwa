@@ -40,7 +40,8 @@ import {
 } from 'containers/Buckets/actions'
 
 import {
-  selectProductCategories
+  selectProductCategories,
+  selectLoader
 } from 'containers/Buckets/selectors'
 
 import {
@@ -296,10 +297,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   render () {
-    const { productsByCategory, categories, productsViewed, loader, changeRoute, windowWidth } = this.props
+    const { productsByCategory, categories, productsViewed, loader, changeRoute, windowWidth, categoryLoader } = this.props
     return (
       <div>
-        <NavCategories changeRoute={changeRoute} categories={categories} />
+        <NavCategories changeRoute={changeRoute} categories={categories} categoryLoader={categoryLoader} />
         <div className='padding__horizontal--10'>
           <Grid padded>
             { this._displayHeaderFeaturesProduct() }
@@ -325,7 +326,8 @@ const mapStateToProps = createStructuredSelector({
   categories: selectProductCategories(),
   loader: selectLoading(),
   lazyload: selectLazyload(),
-  totalCount: selectTotalCount()
+  totalCount: selectTotalCount(),
+  categoryLoader: selectLoader()
 })
 
 function mapDispatchToProps (dispatch) {

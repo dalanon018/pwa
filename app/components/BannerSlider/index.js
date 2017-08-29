@@ -52,14 +52,25 @@ const HandleBlock = ({
     slidesToScroll: 1
   }
 
+  const productPage = productPageTrigger && productPageTrigger.name === 'productPage'
+
   const mobileShow = () => {
-    return productPageTrigger && productPageTrigger.name === 'productPage' && windowWidth >= 768
+    return productPage && windowWidth >= 768
+  }
+
+  const imageSize = (image) => {
+    if (productPage) {
+      return `${image}?w=280&h=280&fit=clamp`
+    }
+    return image
   }
 
   if (loader) {
     block = <DefaultState loader={loader} />
   } else {
-    block = <BannerSliderWrapper productPageTrigger={productPageTrigger && productPageTrigger.name} productPageSlider={mobileShow()} >
+    block = <BannerSliderWrapper
+      productPageTrigger={productPage}
+      productPageSlider={mobileShow()} >
       <Slider {...settings}>
         {
           images &&
@@ -70,7 +81,7 @@ const HandleBlock = ({
                   item.get('brandLogo') &&
                   <BrandLogo brand={item.get('brandLogo') && item.get('brandLogo')} />
                 }
-                <Image src={item.get('image') || defaultImage} />
+                <Image src={(item.get('image') && imageSize(item.get('image'))) || defaultImage} />
               </div>
             )
           })

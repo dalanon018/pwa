@@ -30,7 +30,7 @@ import EmptyDataBlock from 'components/EmptyDataBlock'
 import defaultImage from 'images/default-product.jpg'
 
 import PromoTag from './sections/PromoTag'
-import EmptyImage from 'images/broken-image.jpg'
+import EmptyImage from 'images/default-product-loader.jpg'
 import ParagraphImage from 'images/test-images/short-paragraph.png'
 
 import { calculateProductPrice } from 'utils/promo'
@@ -59,7 +59,7 @@ function ProductView ({
               key={`${product.get('cliqqCode')}-${index}`}
               className='padding__none--horizontal'
               onClick={goToProduct}>
-              <ProductWrapper>
+              <ProductWrapper loader={loader}>
                 {
                   !isEmpty(product.get('discount')) &&
                   <PromoTag discount={product.get('discount')} />
@@ -113,7 +113,9 @@ const DefaultState = () => {
     <Grid.Column className='padding__none--horizontal' mobile={8} tablet={4} computer={3} widescreen={3}>
       <EmptyDataBlock>
         <ProductWrapper>
-          <ImageWrapper background={EmptyImage} className='empty-image custom-height' />
+          <ImageWrapper>
+            <Image src={EmptyImage} className='empty-image' />
+          </ImageWrapper>
           <Image src={ParagraphImage} height={50} />
         </ProductWrapper>
       </EmptyDataBlock>
