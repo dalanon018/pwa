@@ -73,7 +73,7 @@ const BrandLogo = styled.div`
     position: absolute;
     top: 0;
     transform: translate(-50%);
-    width: 70%;
+    width: 60%;
   }
 `
 
