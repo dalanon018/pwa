@@ -87,7 +87,15 @@ class Countdown extends React.PureComponent { // eslint-disable-line react/prefe
     clearInterval(this.countdownInterval)
   }
 
+  componentDidMount () {
+    this._countdownTimer(this.props)
+  }
+
   componentWillReceiveProps (nextProps) {
+    // We have to update countdown timer since it is not called on after ordering the item.
+    // we have to clear it since its already instantiated on did mount.
+    clearInterval(this.countdownInterval)
+
     this._countdownTimer(nextProps)
   }
 
