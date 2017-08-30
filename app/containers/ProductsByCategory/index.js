@@ -46,19 +46,19 @@ import messages from './messages'
 import EmptyProducts from './EmptyProducts'
 
 import {
+  getFeaturedProductsAction,
   getProductsByCategoryAction,
   getProductsByTagsAction,
   getProductsViewedAction,
-  resetProductsByCategoryAction,
-  getFeaturedProductsAction
+  resetProductsByCategoryAction
 } from './actions'
 
 import {
-  selectProductsByCategory,
-  selectLoading,
-  selectProductsViewed,
-  selectLazyload,
   selectFeaturedProducts,
+  selectLazyload,
+  selectLoading,
+  selectProductsByCategory,
+  selectProductsViewed,
   selectTotalCount
 } from './selectors'
 
@@ -67,7 +67,43 @@ const ItemCount = styled.p`
   letter-spacing: 2px;
   text-align: center;
   width: 100%;
+
+  @media (min-width: 768px) {
+    margin: 10px 0px 57px;
+  }
 `
+
+const ContentWrapper = styled.div`
+  @media (min-width: 768px) {
+    .header-label {
+      padding-bottom: 20px !important;
+    }
+
+    .header-label span {
+      font-size: 20px !important;
+    }
+
+    .category-title {
+      font-size: 20px !important;
+    }
+
+    .num-item-label, .num-item-label span {
+      color: #656565;
+      font-size: 17px !important;
+      letter-spacing: 3px;
+    }
+
+    .recent-label {
+      padding-bottom: 20px !important;
+      padding-top: 25px !important;
+    }
+
+    .recent-label span {
+      font-size: 20px !important;
+    }
+  }
+`
+
 const isTag = curry((tags, id) => contains(id, tags))
 
 export class ProductsByCategory extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -159,7 +195,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     const { productsFeatured } = this.props
     if (this._handleFeaturedProductsPerCategory() && productsFeatured.size) {
       return (
-        <H1 center className='padding__top--25'>
+        <H1 center className='header-label padding__top--25'>
           <FormattedMessage {...messages.feature} />
         </H1>
       )
@@ -184,7 +220,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
     if (productsByCategory.size) {
       return (
-        <ItemCount>
+        <ItemCount className='num-item-label'>
           { totalCount }
           <FormattedMessage {...messages.items} />
         </ItemCount>
@@ -199,7 +235,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
     if (productsViewed.size) {
       return (
-        <H1 center><FormattedMessage {...messages.viewed} /></H1>
+        <H1 className='recent-label' center><FormattedMessage {...messages.viewed} /></H1>
       )
     }
 
@@ -316,11 +352,11 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     return (
       <div>
         <NavCategories changeRoute={changeRoute} categories={categories} categoryLoader={categoryLoader} />
-        <div className='padding__horizontal--10'>
+        <ContentWrapper className='padding__horizontal--10'>
           <Grid padded>
             { this._displayHeaderFeaturesProduct() }
             { this._displayFeaturesProduct() }
-            <H1 center className='padding__top--25'>{ this._handlePageTitle() }</H1>
+            <H1 center className='category-title padding__top--25'>{ this._handlePageTitle() }</H1>
             { this._displayNumberProducts() }
             { this._displayEmpty() }
             <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} windowWidth={windowWidth} />
@@ -328,7 +364,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
             { this._displayRecentlyViewedHeader() }
             <ProductView changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
           </Grid>
-        </div>
+        </ContentWrapper>
         <Footer />
       </div>
     )

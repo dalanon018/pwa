@@ -43,7 +43,8 @@ import {
 } from 'containers/Buckets/selectors'
 
 import {
-  BannerWrapper
+  BannerWrapper,
+  ContentWrapper
 } from './styles'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -164,9 +165,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           </Grid>
         </BannerWrapper>
 
-        <div className='padding__horizontal--10'>
+        <ContentWrapper className='padding__horizontal--10'>
           <Grid padded>
-            <H1 center> <FormattedMessage {...messages.featureProduct} /> </H1>
+            <H1 className='header-label' center> <FormattedMessage {...messages.featureProduct} /> </H1>
             <ProductView
               changeRoute={changeRoute}
               loader={loader}
@@ -174,7 +175,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               windowWidth={windowWidth} />
             { this._displayViewAll() }
             {/* <Promo loader={loader} /> */}
-            <H1 center> <FormattedMessage {...messages.browseCategory} /> </H1>
+            <H1 className='header-label' center> <FormattedMessage {...messages.browseCategory} /> </H1>
             <Category
               loader={loader}
               resposiveColumns={resposiveColumns()}
@@ -187,7 +188,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               height='80'
               categories={productCategories} />
           </Grid>
-        </div>
+        </ContentWrapper>
         <Footer />
       </div>
     )

@@ -58,8 +58,8 @@ const CategoryItem = styled.div`
   // This is for Home page only
   @media (min-width: 768px) {
     img {
-      margin-bottom: 10px;
-      width: 60px;
+      margin-bottom: 0px;
+      width: 90px;
     }
   }
 `

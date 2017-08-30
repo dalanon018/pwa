@@ -53,6 +53,11 @@ const BarcodeListWrapper = styled.div`
 
   @media (min-width: 768px) {
     height: auto;
+
+    .header-label {
+      font-size: 17px !important;
+      font-weight: bold;
+    }
   }
 `
 
@@ -175,7 +180,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
             { name: 'description', content: 'List of barcodes' }
           ]}
         />
-        <H1 center>
+        <H1 className='header-label' center>
           <FormattedMessage {...messages.receiptsTitle} />
         </H1>
         <PurchasesList purchases={(purchases.size > 0)}>
