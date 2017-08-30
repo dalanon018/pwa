@@ -50,11 +50,11 @@ export default defineMessages({
   },
   errorHeader: {
     id: `${idSuffix}.errorHeader`,
-    defaultMessage: 'Something went Wrong'
+    defaultMessage: 'Uh Oh! This Page is no longer available, we\'ll redirect you to the home page.'
   },
   errorNoMobileProduct: {
     id: `${idSuffix}.errorNoMobileProduct`,
-    defaultMessage: 'No registered mobile / No product selected'
+    defaultMessage: ''
   },
   errorSubmission: {
     id: `${idSuffix}.errorNoMobileProduct`,
