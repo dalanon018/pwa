@@ -234,6 +234,8 @@ export default class MainMenu extends PureComponent {
     activeItem: null
   }
 
+  _searchInput
+
   constructor () {
     super()
 
@@ -250,6 +252,8 @@ export default class MainMenu extends PureComponent {
     this._handleCategoryRoute = this._handleCategoryRoute.bind(this)
     this._handlerPreventDefault = this._handlerPreventDefault.bind(this)
     this._handleActiveMenu = this._handleActiveMenu.bind(this)
+    this._inputReference = this._inputReference.bind(this)
+    this._handleSearchItem = this._handleSearchItem.bind(this)
   }
 
   _handleBarcodeClick () {
@@ -265,6 +269,23 @@ export default class MainMenu extends PureComponent {
   _handlerSearchClick () {
     const { changeRoute } = this.props
     changeRoute('/search')
+  }
+
+  _inputReference (inp) {
+    this._searchInput = inp
+  }
+
+  _handleSearchItem () {
+    const { searchProduct, changeRoute } = this.props
+
+    if (this._searchInput.value) {
+      changeRoute('/search')
+
+      // we should emulate it.
+      setTimeout(() =>
+        searchProduct({ id: this._searchInput.value })
+      , 1000)
+    }
   }
 
   _handleCategoryRoute (id) {
@@ -290,7 +311,7 @@ export default class MainMenu extends PureComponent {
 
   _handleActiveMenu () {
     const { currentRoute } = this.props
-    console.log('testing01', currentRoute)
+
     switch (currentRoute) {
       case 'home':
         this.setState({
@@ -362,10 +383,14 @@ export default class MainMenu extends PureComponent {
               </Grid.Column>
               <Grid.Column>
                 <InputWrapper>
-                  <Input type='text' placeholder={intl.formatMessage(messages.search)} />
-                  <Button onClick={() => {}} >
-                    <Icon name='search' />
-                  </Button>
+                  <Input
+                    type='text'
+                    placeholder={intl.formatMessage(messages.search)}>
+                    <input ref={this._inputReference} />
+                    <Button onClick={this._handleSearchItem} >
+                      <Icon name='search' />
+                    </Button>
+                  </Input>
                 </InputWrapper>
               </Grid.Column>
             </Grid.Row>
