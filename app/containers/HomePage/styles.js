@@ -8,11 +8,11 @@ const BannerWrapper = styled.div`
 const ContentWrapper = styled.div`
   @media(min-width: 768px) {
     .header-label {
-      padding: 35px 15px 14px !important;
+      padding: 35px 15px 14px;
     }
 
     .header-label span {
-      font-size: 20px !important;
+      font-size: 20px;
     }
   }
 `

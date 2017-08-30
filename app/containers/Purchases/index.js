@@ -55,7 +55,7 @@ const BarcodeListWrapper = styled.div`
     height: auto;
 
     .header-label {
-      font-size: 17px !important;
+      font-size: 17px;
       font-weight: bold;
     }
   }

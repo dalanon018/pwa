@@ -69,6 +69,7 @@ export class PopupSlide extends React.PureComponent {
     this._handleSubmit = this._handleSubmit.bind(this)
     this._goToTermsConditions = this._goToTermsConditions.bind(this)
     this._setDefaultMobileNumber = this._setDefaultMobileNumber.bind(this)
+    this._validateData = this._validateData.bind(this)
   }
 
   _goToTermsConditions () {
@@ -81,8 +82,16 @@ export class PopupSlide extends React.PureComponent {
     }, () => this._handleDisable())
   }
 
+  _validateData (data) {
+    let lastIndex = data.length - 1
+    let lastChar = data[lastIndex] === undefined ? '' : data[lastIndex]
+    return !isNaN(lastChar)
+  }
+
   _handleInput (e) {
-    if (e.target.value.length <= 10) {
+    let curValue = e.target.value
+
+    if (curValue.length <= 10 && this._validateData(curValue)) {
       e.preventDefault()
       this.setState({
         value: e.target.value,
@@ -170,10 +179,11 @@ export class PopupSlide extends React.PureComponent {
             <InputWrapper>
               <FormattedMessage {...messages.phonePrefix} />
               <Input
-                type='number'
+                type='text'
                 value={value}
                 onChange={this._handleInput}
-                placeholder='9XXXXXXXXX' />
+                placeholder='9XXXXXXXXX'
+                onpaste='return false' />
             </InputWrapper>
             {
               checkboxList.map((item, index) =>
