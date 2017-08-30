@@ -217,6 +217,7 @@ const CategoryItem = styled.p`
 
     &:hover {
       color: white;
+      font-size: 19px;
       font-weight: 900;
     }
   }
@@ -289,7 +290,7 @@ export default class MainMenu extends PureComponent {
 
   _handleActiveMenu () {
     const { currentRoute } = this.props
-
+    console.log('testing01', currentRoute)
     switch (currentRoute) {
       case 'home':
         this.setState({
@@ -307,8 +308,11 @@ export default class MainMenu extends PureComponent {
         })
         break
 
-      // default:
-      //   break;
+      default:
+        this.setState({
+          activeMenu: ''
+        })
+        break
     }
   }
 
