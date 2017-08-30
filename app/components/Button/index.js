@@ -18,6 +18,24 @@ const ButtonWrapper = styled.div`
   padding: 0 !important;
   text-align: center;
   width: 100%;
+
+  @media (min-width: 768px) {
+    ${
+      props => props.desktopLayout
+      ? `
+        text-align: left;
+
+        .custom-button {
+          max-width: 500px;
+          padding: 20px 40px !important;
+          width: 100%;
+        }
+      `
+      : ''
+    }
+
+    
+  }
 `
 
 const Wrapper = styled.div`
@@ -39,12 +57,12 @@ const ImageWrapper = styled.img`
   width: ${({ fontSize }) => (fontSize - 1)}px;
 `
 
-function ElemButton ({ children, size, ...rest }) {
+function ElemButton ({ children, size, desktopLayout, ...rest }) {
   let fontSize = size || 16
   // Render an anchor tag
   // If the Button has a handleRoute prop, we want to render a button
   return (
-    <ButtonWrapper>
+    <ButtonWrapper desktopLayout={desktopLayout}>
       <Button className='custom-button' {...rest} >
         <Wrapper>
           <TextWrapper fontSize={fontSize}>

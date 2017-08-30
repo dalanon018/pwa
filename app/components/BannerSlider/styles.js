@@ -3,14 +3,30 @@ import styled from 'styled-components'
 const BannerSliderWrapper = styled.div`
   background: #F0F0F0;
   color: #333;
-  display: ${props => props.productPageSlider ? 'none' : 'block'};
   margin: ${props => props.productPageTrigger ? '' : 'auto auto 20px'};
+  position: relative;
   width: 100%;
 
   img {
     width: ${props => props.productPageTrigger ? 'initial' : '100%'};
     margin: ${props => props.productPageTrigger ? '15px auto 0' : 'inherit'};
   }
+
+  ${
+    props =>
+    (props.windowWidth >= 768 &&
+    !props.homeRouteName) &&
+    `.slick-initialized {
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+    }`
+
+  }
+
+  
 
   .slick-slide {
     background-color: #F0F0F0;
@@ -74,6 +90,15 @@ const BrandLogo = styled.div`
     top: 0;
     transform: translate(-50%);
     width: 60%;
+  }
+
+  @media (min-width: 768px) {
+    height: 60px;
+    top: 25px;
+
+    &:before {
+      width: 70%;
+    }
   }
 `
 

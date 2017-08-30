@@ -109,8 +109,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render () {
-    const { loader, productCategories, changeRoute, windowWidth, categoryLoader } = this.props
+    const { loader, productCategories, changeRoute, windowWidth, categoryLoader, route } = this.props
     const { products } = this.state
+    const homeRouteName = route && route.name
     const resposiveColumns = () => {
       if (windowWidth >= 768) {
         return 5
@@ -150,7 +151,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                 computer={8}
                 largeScreen={8}
                 widescreen={8}>
-                <BannerSlider loader={loader} images={bannerImages} />
+                <BannerSlider loader={loader} images={bannerImages} homeRouteName={homeRouteName} />
               </Grid.Column>
               <Grid.Column
                 className='banner-padding'

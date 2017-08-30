@@ -303,11 +303,15 @@ svg#barcode {
     padding: 14px;
   }
   .custom-button {
+    font-family: 'helveticabold' !important;
+    letter-spacing: 5px;
     margin: 0 auto !important;
     padding: 12px 60px !important;
     width: initial;
-    font-family: 'helveticabold' !important;
-    letter-spacing: 2px;
+
+    span {
+      font-size: 14px;
+    }
   }
   .mobile-visibility {
     display: none !important;
