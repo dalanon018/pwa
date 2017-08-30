@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 
 import Firebase from 'utils/firebase-realtime'
 
@@ -36,6 +36,7 @@ import {
 
 import ModalWithHeader from 'components/ModalWithHeader'
 import Modal from 'components/PromptModal'
+import WindowWidth from 'components/WindowWidth'
 
 import messages from './messages'
 import HeaderMenu from './HeaderMenu'
@@ -76,7 +77,8 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     mobileNumbers: PropTypes.object,
     routes: PropTypes.array.isRequired,
     toggleError: PropTypes.bool.isRequired,
-    toggleMessage: PropTypes.string
+    toggleMessage: PropTypes.string,
+    intl: intlShape.isRequired
   }
 
   state = {
@@ -160,7 +162,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   _displayHeader () {
-    const { changeRoute, routes, searchProduct, setProductSearchList } = this.props
+    const { changeRoute, routes, searchProduct, setProductSearchList, windowWidth, intl } = this.props
     const { path } = routes.slice().pop()
     const currentRoute = routes.slice().pop().name
 
@@ -169,14 +171,13 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
      */
     const hideBackButton = this._hideBackButton()
 
-    if (path === '/search') {
+    if (path === '/search' && windowWidth < 768) {
       return (
         <SearchMenu
           clearSearch={setProductSearchList}
           searchProduct={searchProduct}
           hideBackButton={hideBackButton}
           leftButtonAction={this._handleLeftButtonAction}
-          show
         />
       )
     }
@@ -188,7 +189,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
         leftButtonAction={this._handleLeftButtonAction}
         changeRoute={changeRoute}
         currentRoute={currentRoute}
-        show
+        intl={intl}
       />
     )
   }
@@ -233,6 +234,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   render () {
     const { children, productCategories, changeRoute, toggleError, toggleMessage } = this.props
     const { toggleSidebar } = this.state
+
     return (
       <Wrapper>
         { this._displayHeader() }
@@ -280,4 +282,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Buckets)
+export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(injectIntl(Buckets)))

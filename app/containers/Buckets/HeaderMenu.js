@@ -4,12 +4,14 @@ import styled from 'styled-components'
 import {
   Image,
   Button,
-  // Icon,
-  // Input,
+  Icon,
+  Input,
   Grid
 } from 'semantic-ui-react'
 
 import { partial } from 'ramda'
+
+import messages from './messages'
 
 import BarcodeImage from 'images/icons/barcode-header.svg'
 import SearchImage from 'images/icons/search-header.svg'
@@ -131,29 +133,29 @@ const DesktopMenu = styled.div`
   }
 `
 
-// const InputWrapper = styled.div`
-//   display: flex;
-//   justify-content: flex-end;
-//   input {
-//     border-radius: 0 !important;
-//     font-family: 'helveticalight' !important;
-//     font-size: 18px;
-//     height: 50px;
-//     width: 490px;
-//   }
+const InputWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  input {
+    border-radius: 0 !important;
+    font-family: 'helveticalight' !important;
+    font-size: 18px;
+    height: 50px;
+    width: 490px;
+  }
 
-//   button {
-//     background-color: #F58322 !important;
-//     border-radius: 0 !important;
-//     padding: 10px 25px !important;
-//     i {
-//       color: #FFFFFF;
-//       font-size: 30px;
-//       margin: 0 !important;
-//       padding-top: 5px;
-//     }
-//   }
-// `
+  button {
+    background-color: #F58322 !important;
+    border-radius: 0 !important;
+    padding: 10px 25px !important;
+    i {
+      color: #FFFFFF;
+      font-size: 30px;
+      margin: 0 !important;
+      padding-top: 5px;
+    }
+  }
+`
 
 const NavMenu = styled.div`
   button {
@@ -315,7 +317,7 @@ export default class MainMenu extends PureComponent {
   }
 
   render () {
-    const { leftButtonAction, hideBackButton, categories } = this.props
+    const { leftButtonAction, hideBackButton, categories, intl } = this.props
     const { activeMenu } = this.state
 
     return (
@@ -354,16 +356,14 @@ export default class MainMenu extends PureComponent {
                   <Image className='brand' src={MainLogo} />
                 </A>
               </Grid.Column>
-              {/*
-                <Grid.Column>
-                  <InputWrapper>
-                    <Input type='text' placeholder='00001' />
-                    <Button onClick={() => {}} >
-                      <Icon name='search' />
-                    </Button>
-                  </InputWrapper>
-                </Grid.Column>
-              */}
+              <Grid.Column>
+                <InputWrapper>
+                  <Input type='text' placeholder={intl.formatMessage(messages.search)} />
+                  <Button onClick={() => {}} >
+                    <Icon name='search' />
+                  </Button>
+                </InputWrapper>
+              </Grid.Column>
             </Grid.Row>
           </Grid>
           <NavMenu>
