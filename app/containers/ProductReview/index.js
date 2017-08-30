@@ -264,7 +264,6 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
           open={modalToggle}
           name='warning'
           title={<FormattedMessage {...messages.errorHeader} />}
-          content={errorMessage}
           {
             ...Object.assign({}, (!isEntityEmpty(orderedProduct) && mobileNumber) ? {
               close: this._handleModalClose
