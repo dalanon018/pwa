@@ -290,6 +290,9 @@ export default class MainMenu extends PureComponent {
 
   _handleCategoryRoute (id) {
     const { changeRoute } = this.props
+    this.setState({
+      show: false
+    })
     changeRoute(`/products-category/${id}`)
   }
 
