@@ -101,39 +101,25 @@ const ModalDescription = ({ status, receipt }) => {
     RESERVED: null,
     UNPAID: (
       <FormattedMessage
-        id='unclaimedDescription'
-        defaultMessage={`Oh no! You were not able to pay within the hour. Would you like to reorder {name}? You will have another hour to pay for you item.`}
+        {...messages.unpaidDescription}
         values={{name: <b>{receipt.get('name')}</b>}} />
     ),
     CONFIRMED: (
       <FormattedMessage
-        id='confirmedDescription'
-        defaultMessage={`Your payment for {name}, is already processed!`}
+        {...messages.confirmedDescription}
         values={{name: <b>{receipt.get('name')}</b>}} />
     ),
     INTRANSIT: (
-      <FormattedMessage
-        id='intransitDescription'
-        defaultMessage={`Your item {name}, is on it's way to Store!`}
-        values={{name: <b>{receipt.get('name')}</b>}} />
+      <FormattedMessage {...messages.intransitDescription} />
     ),
     DELIVERED: (
-      <FormattedMessage
-        id='deliveredDescription'
-        defaultMessage={`Claim your {name} within 24 hours and earn 50 Cliqq points! Use points to redeem items instead of cash. `}
-        values={{name: <b>{receipt.get('name')}</b>}} />
+      <FormattedMessage {...messages.deliveredDescription} />
     ),
     CLAIMED: (
-      <FormattedMessage
-        id='claimedDescription'
-        defaultMessage={`Thank you for shopping with us! Here's 50 points for claiming your item early. You can use points to redeem items instead of cash.`}
-        values={{name: receipt.get('status')}} />
+      <FormattedMessage {...messages.claimedDescription} />
     ),
     UNCLAIMED: (
-      <FormattedMessage
-        id='unclaimedDescription'
-        defaultMessage={`Oh no! You were not able to pay within the hour. Would you like to reorder {name}? You will have another hour to pay for you item.`}
-        values={{name: <b>{receipt.get('name')}</b>}} />
+      <FormattedMessage {...messages.unclaimedDescription} />
     )
   })(null)(status)
 }
