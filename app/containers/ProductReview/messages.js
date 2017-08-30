@@ -18,7 +18,7 @@ export default defineMessages({
   },
   stepTwo: {
     id: `${idSuffix}.stepTwo`,
-    defaultMessage: 'SELECT PAYMENT METHOD'
+    defaultMessage: 'METHOD OF PAYMENT'
   },
   stepThree: {
     id: `${idSuffix}.stepThree`,
@@ -26,7 +26,7 @@ export default defineMessages({
   },
   viewDetails: {
     id: `${idSuffix}.viewDetails`,
-    defaultMessage: 'VIEW DETAILS'
+    defaultMessage: 'VIEW PRODUCT DETAILS'
   },
   productDetailsTitle: {
     id: `${idSuffix}.productDetailsTitle`,

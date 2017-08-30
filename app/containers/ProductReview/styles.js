@@ -25,24 +25,24 @@ const StepHead = styled.div`
   }
 
   span {
-    margin-left: 10px;
+    margin: 0 auto;
   }
 
-  &:before {
-    align-items: center;
-    border-radius: 50px;
-    border: 2px solid #8DC640;
-    color: #8DC640;
-    content: '${props => props.step}'
-    display: flex;
-    flex: none;
-    font-size: 14px;
-    height: 30px;
-    justify-content: center;
-    padding: 1px 0 1px 3px;
-    text-align: center;
-    width: 30px;
-  }
+  // &:before {
+  //   align-items: center;
+  //   border-radius: 50px;
+  //   border: 2px solid #8DC640;
+  //   color: #8DC640;
+  //   content: '${props => props.step}'
+  //   display: flex;
+  //   flex: none;
+  //   font-size: 14px;
+  //   height: 30px;
+  //   justify-content: center;
+  //   padding: 1px 0 1px 3px;
+  //   text-align: center;
+  //   width: 30px;
+  // }
 
   @media (min-width: 768px) {
     span {
