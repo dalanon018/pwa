@@ -24,12 +24,14 @@ import EmptyImage from 'images/broken-image.jpg'
 
 function BannerSlider ({
   loader,
+  homeRouteName,
   productPageTrigger,
   windowWidth,
   images }) {
   return <HandleBlock
     loader={loader}
     images={images}
+    homeRouteName={homeRouteName}
     productPageTrigger={productPageTrigger}
     windowWidth={windowWidth} />
 }
@@ -37,6 +39,7 @@ function BannerSlider ({
 const HandleBlock = ({
   loader,
   productPageTrigger,
+  homeRouteName,
   windowWidth,
   images }) => {
   let block
@@ -54,12 +57,10 @@ const HandleBlock = ({
 
   const productPage = productPageTrigger && productPageTrigger.name === 'productPage'
 
-  const mobileShow = () => {
-    return productPage && windowWidth >= 768
-  }
-
   const imageSize = (image) => {
-    if (productPage) {
+    if (productPage && windowWidth >= 768) {
+      return `${image}?w=450&h=450&fit=clamp`
+    } else if (productPage) {
       return `${image}?w=280&h=280&fit=clamp`
     }
     return image
@@ -68,9 +69,7 @@ const HandleBlock = ({
   if (loader) {
     block = <DefaultState loader={loader} />
   } else {
-    block = <BannerSliderWrapper
-      productPageTrigger={productPage}
-      productPageSlider={mobileShow()} >
+    block = <BannerSliderWrapper productPageTrigger={productPage} homeRouteName={homeRouteName} windowWidth={windowWidth}>
       <Slider {...settings}>
         {
           images &&

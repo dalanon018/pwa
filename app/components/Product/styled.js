@@ -10,8 +10,6 @@ export const ProductWrapper = styled(AnimateDiv)`
   flex-direction: column;
   flex: 1 0 auto;
   position: relative;
-
- ;
 `
 export const ImageBanner = styled(AnimateDiv)`
   align-self: stretch;
@@ -21,7 +19,15 @@ export const ImageBanner = styled(AnimateDiv)`
 `
 
 export const ProductMainContent = styled(AnimateDiv)`
-  margin: 20px 10px;
+  margin: 20px 0;
+  
+  @media (min-width: 768px) {
+    h3 {
+      font-size: 25px;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+  }
 `
 
 export const HeaderWrapper = styled(AnimateDiv)`
@@ -32,11 +38,19 @@ export const HeaderWrapper = styled(AnimateDiv)`
   justify-content: center;
   letter-spacing: 2px;
 
+  @media (min-width: 768px) {
+    font-size: 14px;
+    justify-content: flex-start;
+  }
 `
 export const CodeImage = styled.img`
   float: left;
   width: 32px;
   margin-right: 10px;
+
+  @media (min-width: 768px) {
+    width: 20px;
+  }
 `
 export const ProductPriceWrapper = styled(AnimateDiv)`
   align-self: stretch;
@@ -118,20 +132,18 @@ export const DetailsTitle = styled.p`
   margin: 10px 0;
 
   @media (min-width: 768px) {
-    font-family: 'helveticabold';
-    font-size: 18px;
+    font-size: 16px;
   }
 `
 export const DetailsDescription = styled.div`
-  p {
-    font-size: 12px
-    letter-spacing: 1px;
-    line-height: 1.5;
-  }
+  font-size: 12px;
+  letter-spacing: 1px;
+  line-height: 1.5;
 
   @media (min-width: 768px) {
     font-family: 'helveticalight';
     font-size: 14px;
+    font-weight: bold;
   }
 `
 export const ButtonContainer = styled(AnimateDiv)`
@@ -179,19 +191,6 @@ export const SocialContainer = styled.div`
 `
 
 // Desktop
-export const DesktopImageBanner = styled(AnimateDiv)`
-  width: 100%;
-
-  .background-wrapper {
-    background-color: #F0F0F0;
-    margin: 10px 14px;
-  }
-
-  .product-image {
-    margin: 0 auto;
-  }
-`
-
 export const BrandInfo = styled(AnimateDiv)`
   .brand-wrapper {
     display: block;
@@ -213,12 +212,6 @@ export const CodeWrapper = styled(AnimateDiv)`
   letter-spacing: 2px;
 `
 
-export const DesktopProductDetails = styled(AnimateDiv)`
-  &.desktop-visibility {
-    width: 100%;
-  }
-`
-
 export const ShareIcons = styled(AnimateDiv)`
   align-items: center;
   display: flex;
@@ -238,8 +231,18 @@ export const ShareIcons = styled(AnimateDiv)`
       margin: 0 2px;
     }
   }
+
+  svg {
+    cursor: pointer;
+  }
+
+  @media (min-width: 768px) {
+    margin: 20px 0;
+  }
 `
 export const DigitsWrapper = styled(AnimateDiv)`
+  margin: 10px 0;
+
   label {
     color: #aeaeae;
     font-family: 'helveticalight';
@@ -254,7 +257,7 @@ export const DesktopPriceWrapper = styled.div`
   p {
     color: ${props => props.colorHex ? props.colorHex : '#5B5B5B'};
     font-family: 'helveticabold';
-    font-size: 50px;
+    font-size: 40px;
     font-weight: bold;
     letter-spacing: 2px;
     margin-bottom: 0;
@@ -269,4 +272,10 @@ export const DesktopPriceWrapper = styled.div`
 
 export const OrderButtonWrapper = styled.div`
   text-align: center;
+
+  @media (min-width: 768px) {
+    .custom-button {
+      text-align: left !important;
+    }
+  }
 `
