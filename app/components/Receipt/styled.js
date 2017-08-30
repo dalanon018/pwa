@@ -1,5 +1,9 @@
 import styled from 'styled-components'
 
+import {
+  HIDE_BARCODE
+} from './constants'
+
 export const ReceiptWrapper = styled.div`
 `
 
@@ -117,6 +121,7 @@ export const ProductPrice = styled.p`
 export const BarcodeSVG = styled.svg`
   margin: 5px 0;
   width: 100%;
+  display: ${({ status }) => HIDE_BARCODE.includes(status) ? 'none' : 'block'};
 
   @media (min-width: 768px) {
     margin: 20px 0;
@@ -128,6 +133,7 @@ export const WrapperWarning = styled.div`
   margin: 0 auto;
   max-width: 492px;
   width: 100%;
+  text-transform: uppercase;
 
   @media (min-width: 768px) {
     img {

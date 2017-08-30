@@ -35,6 +35,10 @@ import {
   ButtonWrapper
 } from './styled'
 
+import {
+  HIDE_BARCODE
+} from './constants'
+
 const ComponentDetail = components => component => key =>
  key in components ? components[key] : component
 
@@ -132,11 +136,11 @@ const ButtonTrigger = ({ onClick, children }) => (
   </Button>
 )
 
-const ButtonRepurchaseHome = ({ status, goHomeFn, repurchaseFn }) =>
+const ButtonRepurchaseHome = ({ status, goReceiptPage, repurchaseFn }) =>
   ComponentDetail({
     RESERVED: (
-      <ButtonTrigger onClick={goHomeFn} >
-        <FormattedMessage {...messages.returnToHome} />
+      <ButtonTrigger onClick={goReceiptPage} >
+        <FormattedMessage {...messages.goToTrackOrder} />
       </ButtonTrigger>
     ),
     UNPAID: (
@@ -144,33 +148,26 @@ const ButtonRepurchaseHome = ({ status, goHomeFn, repurchaseFn }) =>
         <FormattedMessage {...messages.rePurchase} />
       </ButtonTrigger>),
     CONFIRMED: (
-      <ButtonTrigger onClick={goHomeFn} >
-        <FormattedMessage {...messages.returnToHome} />
+      <ButtonTrigger onClick={goReceiptPage} >
+        <FormattedMessage {...messages.goToTrackOrder} />
       </ButtonTrigger>),
     INTRANSIT: (
-      <ButtonTrigger onClick={goHomeFn} >
-        <FormattedMessage {...messages.returnToHome} />
+      <ButtonTrigger onClick={goReceiptPage} >
+        <FormattedMessage {...messages.goToTrackOrder} />
       </ButtonTrigger>),
     DELIVERED: (
-      <ButtonTrigger onClick={goHomeFn} >
-        <FormattedMessage {...messages.returnToHome} />
+      <ButtonTrigger onClick={goReceiptPage} >
+        <FormattedMessage {...messages.goToHistory} />
       </ButtonTrigger>),
     CLAIMED: (
-      <ButtonTrigger onClick={goHomeFn} >
-        <FormattedMessage {...messages.returnToHome} />
+      <ButtonTrigger onClick={goReceiptPage} >
+        <FormattedMessage {...messages.goToHistory} />
       </ButtonTrigger>),
     UNCLAIMED: (
-      <ButtonTrigger onClick={goHomeFn} >
-        <FormattedMessage {...messages.returnToHome} />
+      <ButtonTrigger onClick={goReceiptPage} >
+        <FormattedMessage {...messages.goToHistory} />
       </ButtonTrigger>)
   })(null)(status)
-
-const BarcodeDisplay = ({ status }) =>
-  ComponentDetail({
-    UNPAID: null
-  })(
-    <BarcodeSVG id='barcode' />
-  )(status)
 
 const HideStoreLocations = ({ status, store }) =>
   ComponentDetail({
@@ -190,7 +187,8 @@ class Receipt extends React.PureComponent {
     receipt: PropTypes.object.isRequired,
     statuses: PropTypes.object.isRequired,
     goHomeFn: PropTypes.func.isRequired,
-    repurchaseFn: PropTypes.func.isRequired
+    repurchaseFn: PropTypes.func.isRequired,
+    goReceiptPage: PropTypes.func.isRequired
   }
 
   constructor () {
@@ -201,7 +199,6 @@ class Receipt extends React.PureComponent {
 
   componentWillReceiveProps (nextProps) {
     const { receipt, statuses } = nextProps
-    const HIDE_BARCODE = ['UNPAID']
 
     /**
      * we have to make sure that we will initialize JsBarcode only if it is on the dom
@@ -232,7 +229,7 @@ class Receipt extends React.PureComponent {
   }
 
   render () {
-    const { receipt, statuses, goHomeFn, repurchaseFn, windowWidth } = this.props
+    const { receipt, statuses, goReceiptPage, repurchaseFn, windowWidth } = this.props
     const resposiveColumns = () => {
       if (windowWidth >= 768) {
         return 2
@@ -276,12 +273,12 @@ class Receipt extends React.PureComponent {
                   }} />
                 </PurchaseGeneralInfo>
                 <DetailStatus {...{ status: statuses[receipt.get('status')], receipt }} />
-                <BarcodeDisplay {...{ status: statuses[receipt.get('status')] }} />
+                <BarcodeSVG id='barcode' {...{ status: statuses[receipt.get('status')] }} />
                 <WarningContent>
                   <WarningStatus {...{ status: statuses[receipt.get('status')] }} />
                 </WarningContent>
                 <ButtonWrapper>
-                  <ButtonRepurchaseHome {...{ status: statuses[receipt.get('status')], goHomeFn, repurchaseFn }} />
+                  <ButtonRepurchaseHome {...{ status: statuses[receipt.get('status')], goReceiptPage, repurchaseFn }} />
                 </ButtonWrapper>
               </Grid.Column>
 

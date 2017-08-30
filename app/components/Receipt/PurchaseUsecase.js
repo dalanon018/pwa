@@ -28,6 +28,7 @@ const HeaderOrder = styled(HeaderBase)`
   align-items: center;
   font-size: 21px;
   line-height: 1.2;
+  text-transform: uppercase;
 `
 
 const ImageWrapper = styled.img`
