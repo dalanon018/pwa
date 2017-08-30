@@ -29,5 +29,9 @@ export default defineMessages({
   errorHeader: {
     id: 'app.containers.Bucket.errorHeader',
     defaultMessage: 'PAGE OFFLINE'
+  },
+  search: {
+    id: 'app.containers.Bucket.search',
+    defaultMessage: 'Search'
   }
 })
