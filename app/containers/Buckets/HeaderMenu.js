@@ -217,6 +217,7 @@ const CategoryItem = styled.p`
 
     &:hover {
       color: white;
+      font-size: 19px;
       font-weight: 900;
     }
   }
