@@ -189,6 +189,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
         leftButtonAction={this._handleLeftButtonAction}
         changeRoute={changeRoute}
         currentRoute={currentRoute}
+        searchProduct={searchProduct}
         intl={intl}
       />
     )
