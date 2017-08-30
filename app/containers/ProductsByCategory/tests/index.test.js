@@ -28,7 +28,7 @@ describe('<ProductsByCategory />', () => {
     const renderedComponent = shallow(
       <ProductsByCategory {...minProps} />
     )
-    expect(renderedComponent.find('div').length).toEqual(2)
+    expect(renderedComponent.find('div').length).toEqual(1)
   })
 
   it('should render a NavCategories', () => {
