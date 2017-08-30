@@ -19,6 +19,16 @@ describe('<Buckets />', () => {
     receiptsUpdated: fromJS([]),
     toggleError: false,
     toggleMessage: null,
+    intl: {
+      formatDate: () => {},
+      formatTime: () => {},
+      formatRelative: () => {},
+      formatNumber: () => {},
+      formatPlural: () => {},
+      formatMessage: () => {},
+      formatHTMLMessage: () => {},
+      now: () => {}
+    },
     routes: [{
       path: '/'
     }],
