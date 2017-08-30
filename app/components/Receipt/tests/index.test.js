@@ -20,6 +20,7 @@ const wrapper = (props = {}, enzyme = shallow) => enzyme(
 describe('<Receipt />', () => {
   const minProps = {
     goHomeFn: () => {},
+    goReceiptPage: () => {},
     repurchaseFn: () => {},
     receipt: fromJS({
       'trackingNumber': '344760497230963792',

@@ -8,31 +8,31 @@ import { defineMessages } from 'react-intl'
 export default defineMessages({
   RESERVED: {
     id: 'app.components.Receipt.RESERVED',
-    defaultMessage: 'YOU HAVE THIS TIME TO SHOW THIS RECEIPT TO THE STORE'
+    defaultMessage: 'You have this time to show this receipt to the store'
   },
   UNPAID: {
     id: 'app.components.Receipt.UNPAID',
-    defaultMessage: 'ITEM HAS EXPIRED. WOULD YOU LIKE TO REPURCHASE IT?'
+    defaultMessage: 'This item has expired. Would you like to repurchase it?'
   },
   CONFIRMED: {
     id: 'app.components.Receipt.CONFIRMED',
-    defaultMessage: 'WE\'VE RECEIVED YOUR PAYMENT FOR THIS ITEM'
+    defaultMessage: 'We\'ve received your payment for this item'
   },
   INTRANSIT: {
     id: 'app.components.Receipt.INTRANSIT',
-    defaultMessage: 'YOUR ITEM IS ON IT\'S WAY TO STORE'
+    defaultMessage: 'This item is on its way is on its way to the store'
   },
   DELIVERED: {
     id: 'app.components.Receipt.DELIVERED',
-    defaultMessage: 'ITEM IS READY FOR PICK UP'
+    defaultMessage: 'This item is now ready for pick up'
   },
   CLAIMED: {
     id: 'app.components.Receipt.CLAIMED',
-    defaultMessage: 'ITEM HAS ALREADY BEEN CLAIMED'
+    defaultMessage: 'This item has already been claimed!'
   },
   UNCLAIMED: {
     id: 'app.components.Receipt.UNCLAIMED',
-    defaultMessage: 'THIS ITEM HASN\'T BEEN CLAIMED'
+    defaultMessage: 'This item hasn\'t been claimed'
   },
   unknownStatus: {
     id: 'app.components.Receipt.unknownStatus',
@@ -60,26 +60,34 @@ export default defineMessages({
   },
   receiptInfoMessageReserve: {
     id: 'app.components.Receipt.receiptInfoMessageReserve',
-    defaultMessage: 'PAY ITEM BEFORE TIME EXPIRES'
+    defaultMessage: 'Pay Item Before it Expires'
   },
   receiptInfoMessageUnpaid: {
     id: 'app.components.Receipt.receiptInfoMessageUnpaid',
-    defaultMessage: 'ITEM IS ALREADY EXPIRED'
+    defaultMessage: 'Follow us on Social Media for all the latest updates'
   },
   receiptInfoMessageClaimEarly: {
     id: 'app.components.Receipt.receiptInfoMessageClaimEarly',
-    defaultMessage: 'EARN POINTS AND REWARDS BY CLAIMING YOUR ITEM EARLY'
+    defaultMessage: 'Follow us on Social Media for all the latest updates'
   },
   receiptInfoMessageUnclaimed: {
     id: 'app.components.Receipt.receiptInfoMessageUnclaimed',
-    defaultMessage: 'ITEM IS NOT CLAIMED PLEASE CALL OUR CUSTOMER SERVICE'
+    defaultMessage: 'You can call our customer service line for help on claiming'
   },
   returnToHome: {
     id: 'app.components.Receipt.returnToHome',
     defaultMessage: 'RETURN TO HOME'
   },
+  goToTrackOrder: {
+    id: 'app.components.Receipt.goToTrackOrder',
+    defaultMessage: 'Track Your Order'
+  },
+  goToHistory: {
+    id: 'app.components.Receipt.goToHistory',
+    defaultMessage: 'Receipt History'
+  },
   rePurchase: {
     id: 'app.components.Receipt.rePurchase',
-    defaultMessage: 'REPURCHASE'
+    defaultMessage: 'Repurchase Item'
   }
 })

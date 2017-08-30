@@ -82,6 +82,7 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
     this._identifyBackground = this._identifyBackground.bind(this)
     this._goToHomeFn = this._goToHomeFn.bind(this)
     this._repurchaseFn = this._repurchaseFn.bind(this)
+    this._goToPurchases = this._goToPurchases.bind(this)
     this._handleDoneInvalidReceipt = this._handleDoneInvalidReceipt.bind(this)
   }
 
@@ -101,6 +102,10 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
 
   _goToHomeFn () {
     this.props.changeRoute('/')
+  }
+
+  _goToPurchases () {
+    this.props.changeRoute('/purchases')
   }
 
   _repurchaseFn () {
@@ -159,6 +164,7 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
                 goHomeFn={this._goToHomeFn}
                 windowWidth={windowWidth}
                 repurchaseFn={this._repurchaseFn}
+                goReceiptPage={this._goToPurchases}
               />
 
               <Modal

@@ -26,6 +26,7 @@ const Timer = styled.div`
 `
 
 const HeaderOrder = styled(HeaderBase)`
+  text-transform: uppercase;
   font-size: ${({ status }) => (status === 'RESERVED') ? '14px' : '18px'};
   margin-bottom: 15px;
 `
