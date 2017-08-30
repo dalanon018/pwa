@@ -76,30 +76,30 @@ const ItemCount = styled.p`
 const ContentWrapper = styled.div`
   @media (min-width: 768px) {
     .header-label {
-      padding-bottom: 20px !important;
+      padding-bottom: 20px;
     }
 
     .header-label span {
-      font-size: 20px !important;
+      font-size: 20px;
     }
 
     .category-title {
-      font-size: 20px !important;
+      font-size: 20px;
     }
 
     .num-item-label, .num-item-label span {
       color: #656565;
-      font-size: 17px !important;
+      font-size: 17px;
       letter-spacing: 3px;
     }
 
     .recent-label {
-      padding-bottom: 20px !important;
-      padding-top: 25px !important;
+      padding-bottom: 20px;
+      padding-top: 25px;
     }
 
     .recent-label span {
-      font-size: 20px !important;
+      font-size: 20px;
     }
   }
 `
