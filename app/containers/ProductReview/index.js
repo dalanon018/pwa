@@ -91,9 +91,16 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   _handleModalClose () {
+    const { orderFail } = this.props
     this.setState({
       modalToggle: false
     })
+
+    // if orderFail size === 0 then means its not submission error
+    // its safe to redirect the user.
+    if (orderFail.size === 0) {
+      this.props.changeRoute('/')
+    }
   }
 
   _handleChange = (e, { value }) => {
@@ -129,11 +136,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   _handleDoneFetchOrderNoProductNorMobile () {
     this.setState({
       modalToggle: true,
-      errorMessage: <FormattedMessage {...messages.errorNoMobileProduct} />
+      errorMessage: ''
     })
-    setTimeout(() => {
-      this.props.changeRoute('/')
-    }, 5000)
   }
 
   _handleSubmissionSuccess (success) {
@@ -264,11 +268,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
           open={modalToggle}
           name='warning'
           title={<FormattedMessage {...messages.errorHeader} />}
-          {
-            ...Object.assign({}, (!isEntityEmpty(orderedProduct) && mobileNumber) ? {
-              close: this._handleModalClose
-            } : {})
-          }
+          content={errorMessage}
+          close={this._handleModalClose}
         />
       </div>
     )
