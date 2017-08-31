@@ -51,6 +51,10 @@ const ReceiptWrapper = styled.div`
   background: url(${({background}) => background}) no-repeat top right / cover;
   // min-height: 100vh;
   padding: 25px;
+
+  @media (min-width: 768px) {
+    padding: 50px 30px;
+  }
 `
 /**
  * Currying for instead of using *ugly SWITCH statement
@@ -139,9 +143,9 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
   }
 
   render () {
-    const { receipt, windowWidth } = this.props
+    const { receipt, windowWidth, loading, route } = this.props
     const { modalToggle } = this.state
-
+    const receiptPageName = route && route.name
     const widthResponsive = windowWidth >= 768
 
     return (
@@ -157,6 +161,8 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
                 ]}
               />
               <Receipt
+                receiptPageName={receiptPageName}
+                loading={loading}
                 statuses={STATUSES}
                 purchaseUsecases={PURCHASE_USECASE}
                 purchaseOrder={PURCHASE_ORDER}

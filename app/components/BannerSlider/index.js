@@ -23,6 +23,7 @@ import {
 import EmptyImage from 'images/broken-image.jpg'
 
 function BannerSlider ({
+  receiptPageName,
   loader,
   homeRouteName,
   windowWidth,
@@ -30,12 +31,14 @@ function BannerSlider ({
   return <HandleBlock
     loader={loader}
     images={images}
+    receiptPageName={receiptPageName}
     homeRouteName={homeRouteName}
     windowWidth={windowWidth} />
 }
 
 const HandleBlock = ({
   loader,
+  receiptPageName,
   homeRouteName,
   windowWidth,
   images }) => {
@@ -66,7 +69,7 @@ const HandleBlock = ({
   if (loader) {
     block = <DefaultState loader={loader} />
   } else {
-    block = <BannerSliderWrapper homeRouteName={homeRouteName} windowWidth={windowWidth}>
+    block = <BannerSliderWrapper homeRouteName={homeRouteName} windowWidth={windowWidth} receiptPageName={receiptPageName}>
       <Slider {...settings}>
         {
           images &&
@@ -74,10 +77,18 @@ const HandleBlock = ({
             return (
               <div key={index}>
                 {
-                  item.get('brandLogo') &&
-                  <BrandLogo brand={item.get('brandLogo') && item.get('brandLogo')} />
+                  receiptPageName
+                    ? item.getIn(['products', 'brandLogo']) &&
+                    <BrandLogo brand={item.getIn(['products', 'brandLogo']) && item.getIn(['products', 'brandLogo'])} />
+                    : item.get('brandLogo') &&
+                    <BrandLogo brand={item.get('brandLogo') && item.get('brandLogo')} />
                 }
-                <Image src={(item.get('image') && imageSize(item.get('image'))) || defaultImage} />
+                {
+                  receiptPageName
+                  ? <Image src={(item.getIn(['products', 'image']) && imageSize(item.getIn(['products', 'image']))) || defaultImage} />
+                  : <Image src={(item.get('image') && imageSize(item.get('image'))) || defaultImage} />
+                }
+
               </div>
             )
           })
