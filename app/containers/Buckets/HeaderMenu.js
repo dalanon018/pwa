@@ -254,6 +254,7 @@ export default class MainMenu extends PureComponent {
     this._handleActiveMenu = this._handleActiveMenu.bind(this)
     this._inputReference = this._inputReference.bind(this)
     this._handleSearchItem = this._handleSearchItem.bind(this)
+    this._handleKeyPress = this._handleKeyPress.bind(this)
   }
 
   _handleBarcodeClick () {
@@ -286,6 +287,16 @@ export default class MainMenu extends PureComponent {
         searchProduct({ id: this._searchInput.value })
       , 1000)
     }
+  }
+
+  _handleKeyPress (e) {
+    const code = e.keyCode || e.which
+
+    if (code === 13 && e.target.value) {
+      // we will update our search key here.
+      this._handleSearchItem()
+    }
+    return true
   }
 
   _handleCategoryRoute (id) {
@@ -342,6 +353,17 @@ export default class MainMenu extends PureComponent {
 
   componentDidUpdate () {
     this._handleActiveMenu()
+
+    const addEvent = this._searchInput.addEventListener || this._searchInput.attachEvent
+    addEvent('keypress', this._handleKeyPress, false)
+  }
+
+  componentWillUnmount () {
+    if (this._searchInput) {
+      // Reduce any memory leaks
+      const removeEvent = this._searchInput.removeEventListener || this._searchInput.detachEvent
+      removeEvent('keypress', this._handleKeyPress)
+    }
   }
 
   render () {

@@ -1,6 +1,18 @@
 import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 
+import {
+// concat,
+ // compose,
+ // map,
+ // join,
+ // toPairs,
+  identity,
+  ifElse
+ // partial,
+ // equals
+} from 'ramda'
+import { noop } from 'lodash'
 import { browserHistory } from 'react-router'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
@@ -64,6 +76,13 @@ const MainContent = styled.div`
 //   }
 // `
 
+// const fnSearchParams = (params) => compose(
+//   concat('?'),
+//   join('&'),
+//   map(join('=')),
+//   toPairs
+// )(params)
+
 export class Buckets extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     children: PropTypes.object.isRequired,
@@ -99,6 +118,8 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
     this._goToHome = this._goToHome.bind(this)
     this._goToReceipts = this._goToReceipts.bind(this)
+
+    this._handleBackButton = this._handleBackButton.bind(this)
   }
 
   _goToHome () {
@@ -115,11 +136,40 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     this.props.setNetworkError(null)
   }
 
-  _handleToggleSideBar () {
+  _handleBackButton (location) {
     const { toggleSidebar } = this.state
+
+    const noBackButton = ifElse(
+      identity,
+      this._handleToggleSideBar,
+      noop
+    )
+
+    return noBackButton(toggleSidebar)
+  }
+
+  _handleToggleSideBar () {
+    // const { changeRoute } = this.props
+    const { toggleSidebar } = this.state
+    const modalToggle = !toggleSidebar
+    // const params = { modalToggle }
+
     this.setState({
-      toggleSidebar: !toggleSidebar
+      toggleSidebar: modalToggle
     })
+
+    // const shouldAddParams = ifElse(
+    //   identity,
+    //   partial(fnSearchParams, [params]),
+    //   () => ''
+    // )
+    // const redirectURL = `${window.location.pathname}${shouldAddParams(modalToggle)}`
+    // const shouldRedirect = ifElse(
+    //   equals(window.location.pathname),
+    //   noop,
+    //   changeRoute,
+    // )
+    // return shouldRedirect(redirectURL)
   }
 
   /**
@@ -222,6 +272,8 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     const { getMobileNumbers, getCategories } = this.props
     getMobileNumbers()
     getCategories()
+
+    browserHistory.listen(this._handleBackButton)
   }
 
   componentWillReceiveProps (nextProps) {

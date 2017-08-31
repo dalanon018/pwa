@@ -17,7 +17,8 @@ import {
   compose,
   isNil,
   prop,
-  ifElse
+  ifElse,
+  F
 } from 'ramda'
 
 import Button from 'components/Button'
@@ -183,7 +184,7 @@ export class PopupSlide extends React.PureComponent {
                 value={value}
                 onChange={this._handleInput}
                 placeholder='9XXXXXXXXX'
-                onPaste={false} />
+                onPaste={F} />
             </InputWrapper>
             {
               checkboxList.map((item, index) =>
