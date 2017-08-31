@@ -147,6 +147,7 @@ class SearchMenu extends PureComponent {
     this._inputReference = this._inputReference.bind(this)
     this._handleKeyPress = this._handleKeyPress.bind(this)
     this._handleOnchange = this._handleOnchange.bind(this)
+    this._handlePressSearch = this._handlePressSearch.bind(this)
     this._clearInput = this._clearInput.bind(this)
   }
 
@@ -158,6 +159,14 @@ class SearchMenu extends PureComponent {
     this.setState({
       dirty: !isEmpty(evt.target.value)
     })
+  }
+
+  _handlePressSearch () {
+    const { searchProduct } = this.props
+    if (this._searchInput.value) {
+      // we will update our search key here.
+      searchProduct({ id: this._searchInput.value })
+    }
   }
 
   _handleKeyPress (e) {
@@ -210,7 +219,7 @@ class SearchMenu extends PureComponent {
             </Grid.Column>
             <SearchColumnWrapper className='padding__none--horizontal' verticalAlign='middle' width={13}>
               <SearchContainer>
-                <Icon name='search' color='black' size='large' />
+                <Icon name='search' color='black' size='large' onClick={this._handlePressSearch} />
                 <SearchInput
                   innerRef={this._inputReference}
                   placeholder={intl.formatMessage(messages.searchPlaceHolder)}

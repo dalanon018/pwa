@@ -299,6 +299,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     resetProductsByCategory()
 
     this.setState({
+      pageOffset: 0,
       offset: 0
     }, () => this._fetchProductByTagCategory(props))
   }

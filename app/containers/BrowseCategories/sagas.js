@@ -1,7 +1,7 @@
 // import { take, call, put, select } from 'redux-saga/effects';
 import { takeLatest } from 'redux-saga'
 import { isEqual, isEmpty, noop } from 'lodash'
-import { compose, propOr, ifElse, is } from 'ramda'
+import { compose, prop, propOr, sortBy, ifElse, is } from 'ramda'
 import { take, put, fork, cancel, call } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 // import request from 'utils/request'
@@ -91,8 +91,8 @@ export function * getCategories () {
 
 export function * updateUICategories (req = Array) {
   const transform = yield req.map((data) => transformEachEntity(transformCategory, data))
-
-  yield put(setCategoriesAction(transform))
+  const sortAsc = sortBy(prop('name'))
+  yield put(setCategoriesAction(sortAsc(transform)))
 }
 
 export function * getCategoriesSaga () {
