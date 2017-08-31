@@ -50,7 +50,6 @@ function DesktopBlock ({
   openModal,
   popup,
   product,
-  productPageTrigger,
   submit,
   toggle,
   toggleClick,
@@ -63,12 +62,11 @@ function DesktopBlock ({
     <div className='desktop-visibility'>
 
       <Grid padded>
-        <Grid.Row columns='equal' stretched>
+        <Grid.Row columns='equal'>
           <Grid.Column>
             <ProductSlider
               images={productImages}
               windowWidth={windowWidth}
-              productPageTrigger={productPageTrigger}
               loader={loading} />
           </Grid.Column>
           <Grid.Column>

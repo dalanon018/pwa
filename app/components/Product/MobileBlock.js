@@ -51,7 +51,6 @@ function MobileBlock ({
   loading,
   popup,
   product,
-  productPageTrigger,
   toggle,
   toggleClick,
   windowWidth
@@ -63,7 +62,6 @@ function MobileBlock ({
       <ProductSlider
         images={productImages}
         windowWidth={windowWidth}
-        productPageTrigger={productPageTrigger}
         loader={loading} />
 
       <ProductMainContent>

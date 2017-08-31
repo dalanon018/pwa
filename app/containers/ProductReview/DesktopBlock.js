@@ -11,18 +11,18 @@ import { FormattedMessage } from 'react-intl'
 import messages from './messages'
 
 import Button from 'components/Button'
+import ProductSlider from 'components/BannerSlider'
 
 import CliqqLogo from 'images/icons/cliqq.png'
 // import NextIcon from 'images/icons/greater-than-icon.svg'
 
 import {
-  StepHead,
-  ProductItem,
+  ButtonContainer,
   CliqqCodeWrapper,
+  DetailsWrapper,
   ProductName,
   SelectMethodWrapper,
-  DetailsWrapper,
-  ButtonContainer
+  StepHead
   // LocationButton
 } from './styles'
 
@@ -32,7 +32,9 @@ function DesktopBlock ({
   labelOne,
   labelTwo,
   orderRequesting,
+  windowWidth,
   modePayment,
+  productLoader,
   defaultImage,
 
   // function props
@@ -41,26 +43,16 @@ function DesktopBlock ({
   handleProceed,
   handleToBottom
 }) {
+  const productImages = [orderedProduct]
+
   return (
     <Grid padded>
       <Grid.Row columns='equal'>
         <Grid.Column>
-          <ProductItem brand={orderedProduct.get('brandLogo')}>
-            <Image src={orderedProduct.get('image') ? orderedProduct.get('image') : defaultImage} />
-          </ProductItem>
-          <DetailsWrapper>
-            <FormattedMessage {...messages.productDetailsTitle} />
-            <div dangerouslySetInnerHTML={{__html: orderedProduct.get('details')}} />
-            <FormattedMessage {...messages.productDeliveryTitle} />
-            <div dangerouslySetInnerHTML={{__html: orderedProduct.get('shipping')}} />
-            {/*
-                <FormattedMessage {...messages.stepThree} />
-                <p className='step-three'>Your default store will be the last store you visited</p>
-                <LocationButton onClick={handleStoreLocator} fluid icon={NextIcon}>
-                  <span>FIND STORE NEARBY</span>
-                </LocationButton>
-              */}
-          </DetailsWrapper>
+          <ProductSlider
+            images={productImages}
+            windowWidth={windowWidth}
+            loader={productLoader} />
         </Grid.Column>
         <Grid.Column>
           <StepHead step='1'>
@@ -100,14 +92,30 @@ function DesktopBlock ({
               </Form.Field>
             </Form>
           </SelectMethodWrapper>
+
+          <DetailsWrapper>
+            <FormattedMessage {...messages.productDetailsTitle} />
+            <div dangerouslySetInnerHTML={{__html: orderedProduct.get('details')}} />
+            <div className='mobile-visibility'>
+              <FormattedMessage {...messages.productDeliveryTitle} />
+              <div dangerouslySetInnerHTML={{__html: orderedProduct.get('shipping')}} />
+            </div>
+            {/*
+                <FormattedMessage {...messages.stepThree} />
+                <p className='step-three'>Your default store will be the last store you visited</p>
+                <LocationButton onClick={handleStoreLocator} fluid icon={NextIcon}>
+                  <span>FIND STORE NEARBY</span>
+                </LocationButton>
+              */}
+          </DetailsWrapper>
+
+          <ButtonContainer>
+            <Button onClick={handleProceed} primary loading={orderRequesting} desktopLayout>
+              <FormattedMessage {...messages.proceedNext} />
+            </Button>
+          </ButtonContainer>
+
         </Grid.Column>
-      </Grid.Row>
-      <Grid.Row>
-        <ButtonContainer>
-          <Button onClick={handleProceed} primary loading={orderRequesting}>
-            <FormattedMessage {...messages.proceedNext} />
-          </Button>
-        </ButtonContainer>
       </Grid.Row>
     </Grid>
   )

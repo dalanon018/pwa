@@ -45,10 +45,13 @@ const StepHead = styled.div`
   // }
 
   @media (min-width: 768px) {
+    margin-top: 20px;
+    
     span {
       font-family: 'helveticabold';
       font-size: 16px;
       letter-spacing: 3px;
+      margin: 0;
     }
 
     &:before {
@@ -91,14 +94,17 @@ const ProductItem = styled.div`
   }
 
   @media (min-width: 768px) {
+    align-items: center
+    display: flex;
     padding-top: 50px;
+
     .image {
-      width: 300px;
+      width: initial;
     }
     &:before {
-      height: 55px;
-      min-width: 300px;
-      top: 40px;
+      height: 60px;
+      top: 105px;
+      width: 80%;
     }
   }
 `
@@ -118,7 +124,13 @@ const CliqqCodeWrapper = styled.div`
   }
 
   @media (min-width: 768px) {
+    font-size: 14px;
     justify-content: flex-start;
+    margin: 10px 0 40px;
+    
+    .image {
+      width: 20px;
+    }
   }
 `
 
@@ -132,10 +144,12 @@ const ProductName = styled.div`
   text-transform: uppercase;
 
   @media (min-width: 768px) {
-    font-weight: bolder;
-    font-size: 19px;
-    text-align: left;
+    font-size: 25px;
     letter-spacing: 3px;
+    line-height: 32px;
+    margin-bottom: 15px;
+    text-align: left;
+    margin: 0;
   }
 `
 
@@ -188,23 +202,23 @@ const DetailsWrapper = styled.div`
   }
 
   @media (min-width: 768px) {
-    padding: 0;
+    font-family: 'helveticalight';
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 35px;
     margin: 30px 0;
+    padding: 0;
 
     span {
-      font-family: 'helveticabold';
+      display: block;
       font-size: 16px;
+      font-weight: bold;
       letter-spacing: 3px;
+      margin-bottom: 20px;
     }
 
-    p {
-      font-family: 'helveticalight';
-      font-size: 14px;
-      margin-bottom: 35px;
-
-      &.step-three {
-        margin-bottom: 10px;
-      }
+    &.step-three {
+      margin-bottom: 10px;
     }
   }
 `
@@ -263,6 +277,8 @@ const SelectMethodWrapper = styled.div`
 
   @media (min-width: 768px) {
     .checkbox {
+      max-width: 550px;
+
       .label-custom {
         flex-wrap: wrap;
         padding-left: 50px !important;
@@ -278,11 +294,12 @@ const SelectMethodWrapper = styled.div`
       input:checked~label:after {
         width: 5px;
         height: 11px;
-        left: 9px;
+        left: 8px;
         top: 42% !important;
       }
     }
     .checkbox {
+      border-radius: 10px;
       padding: 40px 30px;
     }
   }
@@ -316,6 +333,7 @@ const LabelSubTitle = styled.span`
 
 const LabelPrice = styled.div`
   margin-top: 10px;
+  line-height: initial;
 
   .total {
     color: #F88728;
@@ -336,9 +354,12 @@ const LabelPrice = styled.div`
   }
 
   @media (min-width: 768px) {
+    margin-top: 0;
+
     .total {
       font-size: 40px;
       font-weight: bolder;
+      letter-spacing: 3px;
     }
     .strike {
       margin-left: 10px;
@@ -348,10 +369,6 @@ const LabelPrice = styled.div`
   }
 
   @media (min-width: 900px) {
-    .total {
-      font-size: 50px;
-      letter-spacing: 3px;
-    }
     .strike {
       margin-left: 20px;
       font-size: 16px;
@@ -394,6 +411,7 @@ const ButtonContainer = styled.div`
   width: 100%;
 
   @media (min-width: 768px) {
+    padding: 0;
     position: static;
 
     button {
