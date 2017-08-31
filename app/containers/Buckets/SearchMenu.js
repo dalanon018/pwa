@@ -94,14 +94,15 @@ const SearchColumnWrapper = styled(Grid.Column)`
 `
 
 const SearchContainer = styled.div`
-  display: flex;
-  justify-content: flex-start;
   align-items: center;
+  display: flex;
   height: 36px;
+  justify-content: flex-start;
   padding: 0 5px;
 `
 
 const SearchInput = styled.input`
+  border: 0;
   color: #5B5B5B;
   font-size: 18px;
   letter-spacing: 1px;
