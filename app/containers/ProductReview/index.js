@@ -192,7 +192,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   render () {
-    const { orderedProduct, orderRequesting, mobileNumber } = this.props
+    const { orderedProduct, orderRequesting, mobileNumber, windowWidth, productLoader } = this.props
     const { errorMessage, modePayment, modalToggle } = this.state
     const cliqqCode = orderedProduct.get('cliqqCode') && orderedProduct.get('cliqqCode').first()
 
@@ -247,11 +247,13 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         </div>
         <div className='desktop-visibility'>
           <DesktopBlock
+            windowWidth={windowWidth}
             orderedProduct={orderedProduct}
             orderRequesting={orderRequesting}
             mobileNumber={mobileNumber}
             errorMessage={errorMessage}
             modePayment={modePayment}
+            productLoader={productLoader}
             modalToggle={modalToggle}
             defaultImage={defaultImage}
             cliqqCode={cliqqCode}

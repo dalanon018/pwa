@@ -3,25 +3,28 @@ import styled from 'styled-components'
 const BannerSliderWrapper = styled.div`
   background: #F0F0F0;
   color: #333;
-  margin: ${props => props.productPageTrigger ? '' : 'auto auto 20px'};
+  height: 100%;
+  margin: ${props => !props.homeRouteName ? 'inherit' : 'auto auto 20px'};
   position: relative;
   width: 100%;
 
   img {
-    width: ${props => props.productPageTrigger ? 'initial' : '100%'};
-    margin: ${props => props.productPageTrigger ? '15px auto 0' : 'inherit'};
+    width: ${props => !props.homeRouteName ? 'initial' : '100%'};
+    margin: ${props => !props.homeRouteName ? '15px auto 0' : 'inherit'};
   }
 
   ${
     props =>
     (props.windowWidth >= 768 &&
     !props.homeRouteName) &&
-    `.slick-initialized {
-      left: 50%;
-      position: absolute;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
+    ` max-height: 630px;
+
+      .slick-initialized {
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
     }`
 
   }

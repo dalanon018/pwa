@@ -25,40 +25,37 @@ import EmptyImage from 'images/broken-image.jpg'
 function BannerSlider ({
   loader,
   homeRouteName,
-  productPageTrigger,
   windowWidth,
   images }) {
   return <HandleBlock
     loader={loader}
     images={images}
     homeRouteName={homeRouteName}
-    productPageTrigger={productPageTrigger}
     windowWidth={windowWidth} />
 }
 
 const HandleBlock = ({
   loader,
-  productPageTrigger,
   homeRouteName,
   windowWidth,
   images }) => {
   let block
   const settings = {
-    autoplay: productPageTrigger && productPageTrigger.name && images.size > 1,
+    autoplay: homeRouteName && homeRouteName.name && images.size > 1,
     swipe: images.size > 1,
     autoplaySpeed: 3500,
     dots: images.size > 1,
-    infinite: productPageTrigger && !productPageTrigger.name,
+    infinite: homeRouteName && !homeRouteName.name,
     speed: 1000,
     arrows: false,
     slidesToShow: 1,
     slidesToScroll: 1
   }
 
-  const productPage = productPageTrigger && productPageTrigger.name === 'productPage'
+  const productPage = homeRouteName && homeRouteName.name === 'productPage'
 
   const imageSize = (image) => {
-    if (productPage && windowWidth >= 768) {
+    if (!homeRouteName && windowWidth >= 768) {
       return `${image}?w=450&h=450&fit=clamp`
     } else if (productPage) {
       return `${image}?w=280&h=280&fit=clamp`
@@ -69,7 +66,7 @@ const HandleBlock = ({
   if (loader) {
     block = <DefaultState loader={loader} />
   } else {
-    block = <BannerSliderWrapper productPageTrigger={productPage} homeRouteName={homeRouteName} windowWidth={windowWidth}>
+    block = <BannerSliderWrapper homeRouteName={homeRouteName} windowWidth={windowWidth}>
       <Slider {...settings}>
         {
           images &&

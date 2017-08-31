@@ -183,7 +183,7 @@ export class PopupSlide extends React.PureComponent {
                 value={value}
                 onChange={this._handleInput}
                 placeholder='9XXXXXXXXX'
-                onpaste='return false' />
+                onPaste={false} />
             </InputWrapper>
             {
               checkboxList.map((item, index) =>

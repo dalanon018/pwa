@@ -49,7 +49,7 @@ function MobileBlock ({
 }) {
   return (
     <Grid padded>
-      <Grid.Row className='mobile-visibility'>
+      <Grid.Row>
         <Grid.Column className='padding__none--horizontal'>
 
           <ReviewContainer>
