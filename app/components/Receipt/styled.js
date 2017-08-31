@@ -92,7 +92,6 @@ export const ReceiptDescription = styled.div`
 
 export const PurchaseGeneralInfo = styled.div`
   font-family: 'helveticalight';
-  margin-top: 20px;
   font-size: 12px;
 
   .item {
@@ -108,6 +107,7 @@ export const PurchaseGeneralInfo = styled.div`
 
 export const DetailTitle = styled.div`
   margin: 5px 0;
+  font-family: 'helveticalight';
 `
 
 export const ProductPrice = styled.p`
