@@ -43,48 +43,26 @@ const ComponentDetail = components => component => key =>
  key in components ? components[key] : component
 
 const DetailsContent = ({ title, children }) => (
-  <Grid>
-    <Grid.Row columns={2}>
-      <Grid.Column verticalAlign='middle'>
-        <DetailTitle> { title } </DetailTitle>
-      </Grid.Column>
-      <Grid.Column textAlign='right' verticalAlign='middle'>
-        { children }
-      </Grid.Column>
-    </Grid.Row>
-  </Grid>
+  <div className='item'>
+    <DetailTitle> { title } </DetailTitle>
+    { children }
+  </div>
 )
 
 const DetailStatus = ({ status, receipt }) => {
   return ComponentDetail({
     RESERVED: null,
-    UNPAID: null,
-    CONFIRMED: (
+    UNPAID: null
+  })(
+    <PurchaseGeneralInfo>
+      <DetailsContent title={<FormattedMessage {...messages.receiptTrackingTitle} />}>
+        { receipt.get('trackingNumber') }
+      </DetailsContent>
       <DetailsContent title={<FormattedMessage {...messages.receiptDatePurchasedTitle} />}>
-        { DateFormater(receipt.get('dateCreated')) }
+        { DateFormater(receipt.get('dateCreated'), 'MMM DD, YYYY | h:mm A') }
       </DetailsContent>
-    ),
-    INTRANSIT: (
-      <DetailsContent title={<FormattedMessage {...messages.receiptTrackingTitle} />}>
-        { receipt.get('trackingNumber') }
-      </DetailsContent>
-    ),
-    DELIVERED: (
-      <DetailsContent title={<FormattedMessage {...messages.receiptTrackingTitle} />}>
-        { receipt.get('trackingNumber') }
-      </DetailsContent>
-    ),
-    CLAIMED: (
-      <DetailsContent title={<FormattedMessage {...messages.receiptTrackingTitle} />}>
-        { receipt.get('trackingNumber') }
-      </DetailsContent>
-    ),
-    UNCLAIMED: (
-      <DetailsContent title={<FormattedMessage {...messages.receiptDatePurchasedTitle} />}>
-        { DateFormater(receipt.get('dateCreated')) }
-      </DetailsContent>
-    )
-  })(null)(status)
+    </PurchaseGeneralInfo>
+  )(status)
 }
 
 const WarningContent = ({ children }) => (
@@ -267,12 +245,14 @@ class Receipt extends React.PureComponent {
                     </DetailTitle>
                     <ProductPrice> PHP { receipt.get('amount') } </ProductPrice>
                   </div>
+                </PurchaseGeneralInfo>
+                <DetailStatus {...{ status: statuses[receipt.get('status')], receipt }} />
+                <PurchaseGeneralInfo>
                   <HideStoreLocations {...{
                     status: statuses[receipt.get('status')],
                     store: receipt.getIn(['storeName'])
                   }} />
                 </PurchaseGeneralInfo>
-                <DetailStatus {...{ status: statuses[receipt.get('status')], receipt }} />
                 <BarcodeSVG id='barcode' {...{ status: statuses[receipt.get('status')] }} />
                 <WarningContent>
                   <WarningStatus {...{ status: statuses[receipt.get('status')] }} />
