@@ -6,6 +6,7 @@ import { Grid } from 'semantic-ui-react'
 
 import Button from 'components/Button'
 import H6 from 'components/H6'
+import ProductSlider from 'components/BannerSlider'
 
 import CliqqLogo from 'images/icons/cliqq.png'
 import WarningIcon from 'images/icons/notice.png'
@@ -109,7 +110,7 @@ const WarningStatus = ({status}) => {
 }
 
 const ButtonTrigger = ({ onClick, children }) => (
-  <Button onClick={onClick} size={12} primary>
+  <Button onClick={onClick} size={12} primary className='custom-button'>
     { children }
   </Button>
 )
@@ -207,7 +208,7 @@ class Receipt extends React.PureComponent {
   }
 
   render () {
-    const { receipt, statuses, goReceiptPage, repurchaseFn, windowWidth } = this.props
+    const { receipt, statuses, goReceiptPage, repurchaseFn, windowWidth, loading, receiptPageName } = this.props
     const resposiveColumns = () => {
       if (windowWidth >= 768) {
         return 2
@@ -215,10 +216,22 @@ class Receipt extends React.PureComponent {
         return 1
       }
     }
+    const productImageHandler = () => {
+      if (windowWidth >= 768) {
+        return <Grid.Column>
+          <ProductSlider
+            receiptPageName={receiptPageName}
+            images={productImages}
+            windowWidth={windowWidth}
+            loader={loading} />
+        </Grid.Column>
+      }
+    }
+    const productImages = [receipt]
 
     return (
       <ReceiptWrapper>
-        <ProductWrapper >
+        <ProductWrapper className='mobile-visibility'>
           <ProductImage background={receipt.getIn(['products', 'image']) ? receipt.getIn(['products', 'image']) : defaultImage} />
           <ProductDescription>
             <CodeWrapper> <CodeImage src={CliqqLogo} />
@@ -234,40 +247,48 @@ class Receipt extends React.PureComponent {
 
         <ReceiptDescription>
           <Grid>
-            <Grid.Row columns={resposiveColumns()} stretched>
-              { this._renderPurchaseBanner() }
+            <Grid.Row columns={resposiveColumns()} stretched className='custom-row'>
+              {React.Children.toArray(productImageHandler())}
 
               <Grid.Column>
-                <PurchaseGeneralInfo>
-                  <div className='item'>
-                    <DetailTitle>
-                      <FormattedMessage {...messages.receiptPriceTitle} />
-                    </DetailTitle>
-                    <ProductPrice> PHP { receipt.get('amount') } </ProductPrice>
+                <div className='desktop-padding-wrapper'>
+                  <ProductDescription className='desktop-visibility'>
+                    <H6 uppercase> { receipt.getIn(['products', 'name']) } </H6>
+                    <CodeWrapper> <CodeImage src={CliqqLogo} />
+                      { receipt.getIn(['products', 'cliqqCode']) }
+                    </CodeWrapper>
+                  </ProductDescription>
+                  { this._renderPurchaseBanner() }
+                  <div className='desktop-list-margin'>
+                    <PurchaseGeneralInfo>
+                      <div className='item'>
+                        <DetailTitle>
+                          <FormattedMessage {...messages.receiptPriceTitle} />
+                        </DetailTitle>
+                        <ProductPrice> PHP { receipt.get('amount') } </ProductPrice>
+                      </div>
+                    </PurchaseGeneralInfo>
+                    <DetailStatus {...{ status: statuses[receipt.get('status')], receipt }} />
+                    <PurchaseGeneralInfo>
+                      <HideStoreLocations {...{
+                        status: statuses[receipt.get('status')],
+                        store: receipt.getIn(['storeName'])
+                      }} />
+                    </PurchaseGeneralInfo>
                   </div>
-                </PurchaseGeneralInfo>
-                <DetailStatus {...{ status: statuses[receipt.get('status')], receipt }} />
-                <PurchaseGeneralInfo>
-                  <HideStoreLocations {...{
-                    status: statuses[receipt.get('status')],
-                    store: receipt.getIn(['storeName'])
-                  }} />
-                </PurchaseGeneralInfo>
-                <BarcodeSVG id='barcode' {...{ status: statuses[receipt.get('status')] }} />
-                <WarningContent>
-                  <WarningStatus {...{ status: statuses[receipt.get('status')] }} />
-                </WarningContent>
-                <ButtonWrapper>
-                  <ButtonRepurchaseHome {...{ status: statuses[receipt.get('status')], goReceiptPage, repurchaseFn }} />
-                </ButtonWrapper>
+                  <BarcodeSVG id='barcode' {...{ status: statuses[receipt.get('status')] }} />
+                  <WarningContent>
+                    <WarningStatus {...{ status: statuses[receipt.get('status')] }} />
+                  </WarningContent>
+                  <ButtonWrapper>
+                    <ButtonRepurchaseHome {...{ status: statuses[receipt.get('status')], goReceiptPage, repurchaseFn }} />
+                  </ButtonWrapper>
+                </div>
               </Grid.Column>
-
             </Grid.Row>
           </Grid>
         </ReceiptDescription>
-
       </ReceiptWrapper>
-
     )
   }
 }

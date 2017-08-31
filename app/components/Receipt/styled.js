@@ -5,6 +5,11 @@ import {
 } from './constants'
 
 export const ReceiptWrapper = styled.div`
+  @media (min-width: 768px) {
+    .desktop-list-margin {
+      margin: 25px 0;
+    }
+  }
 `
 
 export const ProductWrapper = styled.div`
@@ -34,7 +39,7 @@ export const ProductDescription = styled.div`
   flex: 1 0 auto;
   justify-content: center;
   letter-spacing: 2px;
-  padding: 20px
+  padding: 20px;
   width: 70%;
 
   h6 {
@@ -43,12 +48,18 @@ export const ProductDescription = styled.div`
   }
 
   @media (min-width: 768px) {
-    width: 80%;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 0;
+    width: 100%;
+
     h6 {
       font-family: 'helveticabold';
-      font-size: 18px;
-      letter-spacing: 5px;
-      margin: 10px 0 20px 0;
+      font-size: 19px;
+      letter-spacing: 6px;
+      line-height: 20px;
+      margin-bottom: 25px;
+      text-align: center;
     }
   }
 `
@@ -56,9 +67,17 @@ export const CodeWrapper = styled.span`
   color: #AEAEAE;
 
   @media (min-width: 768px) {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    img {
+      width: 25px;
+    }
+    
     font-family: 'helveticabold';
-    font-size: 16px;
-    letter-spacing: 3px;
+    font-size: 20px;
+    letter-spacing: 6px;
   }
 `
 
@@ -86,7 +105,18 @@ export const ReceiptDescription = styled.div`
   color: #5B5B5B;
 
   @media (min-width: 768px) {
-    padding: 50px;
+    border-radius: 0;
+    border: 0;
+    padding: 0;
+    padding: 0;
+
+    .custom-row {
+      padding: 0 !important;
+    }
+
+    .desktop-padding-wrapper {
+      padding: 60px 30px 60px 0;
+    }
   }
 `
 
@@ -124,24 +154,26 @@ export const BarcodeSVG = styled.svg`
   display: ${({ status }) => HIDE_BARCODE.includes(status) ? 'none' : 'block'};
 
   @media (min-width: 768px) {
-    margin: 20px 0;
+    margin: 0 auto 15px;
+    width: inherit;
   }
 `
 
 export const WrapperWarning = styled.div`
   background-color: #8DC641;
-  margin: 0 auto;
-  max-width: 492px;
   width: 100%;
   text-transform: uppercase;
 
   @media (min-width: 768px) {
+    margin-bottom: 20px;
+
     img {
-      width: 50px;
+      width: 35px;
     }
     p {
-      font-size: 16px;
       font-family: 'helveticabold';
+      font-size: 15px;
+      letter-spacing: 0;
     }
   }
 `
@@ -157,4 +189,11 @@ export const ButtonWrapper = styled.div`
   display:flex;
   justify-content: center;
   margin-top: 10px;
+
+  @media (min-width: 768px) {
+    .custom-button {
+      padding: 20px 40px !important;
+      width: 100%;
+    }
+  }
 `

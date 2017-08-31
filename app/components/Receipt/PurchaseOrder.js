@@ -4,8 +4,6 @@ import { CountdownParser } from 'utils/date'
 
 import { FormattedMessage } from 'react-intl'
 
-import { Grid } from 'semantic-ui-react'
-
 import Countdown from 'components/Countdown'
 import PackageStatus from 'components/PackageStatus'
 
@@ -34,7 +32,7 @@ const HeaderOrder = styled(HeaderBase)`
 const PurchaseOrder = ({ status, receipt }) => {
   const currentStatus = status || 'unknownStatus'
   return (
-    <Grid.Column>
+    <div>
       <HeaderOrder>
         <FormattedMessage {...messages[currentStatus]} />
       </HeaderOrder>
@@ -47,7 +45,7 @@ const PurchaseOrder = ({ status, receipt }) => {
         }
       </HeaderOrder>
       <PackageStatus {...{ status }} />
-    </Grid.Column>
+    </div>
   )
 }
 

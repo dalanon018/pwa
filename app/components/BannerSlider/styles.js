@@ -17,7 +17,11 @@ const BannerSliderWrapper = styled.div`
     props =>
     (props.windowWidth >= 768 &&
     !props.homeRouteName) &&
-    ` max-height: 630px;
+    ` 
+      ${
+        props => !props.receiptPageName &&
+        'max-height: 630px;'
+      }
 
       .slick-initialized {
         left: 50%;
