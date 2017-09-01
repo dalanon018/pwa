@@ -59,6 +59,7 @@ const Product = ({
         loading={loading}
         mobileNumber={mobileNumber}
         modalStatus={modalStatus}
+        productPageTrigger={productPageTrigger}
         modalToggle={modalToggle}
         onClose={onClose}
         openModal={openModal}

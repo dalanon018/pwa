@@ -179,7 +179,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   render () {
     const { loading, product, toggle, route, windowWidth } = this.props
     const { modalToggle, prevMobileNumber, openModalPhoneDesktop } = this.state
-    const productPageTrigger = route
+    const productPageTrigger = route && route
 
     return (
       <div>
