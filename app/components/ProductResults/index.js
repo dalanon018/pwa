@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 
+import { Grid } from 'semantic-ui-react'
+
 import H6 from 'components/H6'
 
 import CliqqLogo from 'images/icons/cliqq.png'
@@ -75,21 +77,23 @@ class ProductResult extends React.PureComponent {
     const { product } = this.props
 
     return (
-      <PurchaseWrapper>
-        <ProductWrapper onClick={this._goToProduct}>
-          <ProductImage background={product.get('image') ? product.get('image') : defaultImage} />
-          <ProductDescription>
-            <CodeWrapper> <CodeImage src={CliqqLogo} />
-              { product.get('cliqqCode').join(', ') }
-            </CodeWrapper>
-            <H6 uppercase> { product.get('title') } </H6>
-            {
-              product.get('brandLogo') &&
-              <ProductLogoImage src={product.get('brandLogo')} />
-            }
-          </ProductDescription>
-        </ProductWrapper>
-      </PurchaseWrapper>
+      <Grid.Column>
+        <PurchaseWrapper>
+          <ProductWrapper onClick={this._goToProduct}>
+            <ProductImage background={product.get('image') ? product.get('image') : defaultImage} />
+            <ProductDescription>
+              <CodeWrapper> <CodeImage src={CliqqLogo} />
+                { product.get('cliqqCode').join(', ') }
+              </CodeWrapper>
+              <H6 uppercase> { product.get('title') } </H6>
+              {
+                product.get('brandLogo') &&
+                <ProductLogoImage src={product.get('brandLogo')} />
+              }
+            </ProductDescription>
+          </ProductWrapper>
+        </PurchaseWrapper>
+      </Grid.Column>
     )
   }
 }
