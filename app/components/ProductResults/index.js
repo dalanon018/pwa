@@ -80,7 +80,7 @@ class ProductResult extends React.PureComponent {
       <Grid.Column>
         <PurchaseWrapper>
           <ProductWrapper onClick={this._goToProduct}>
-            <ProductImage background={product.get('image') ? product.get('image') : defaultImage} />
+            <ProductImage background={product.get('image') ? product.get('image') : imageStock('default-slider.jpg')} />
             <ProductDescription>
               <CodeWrapper> <CodeImage src={CliqqLogo} />
                 { product.get('cliqqCode').join(', ') }
