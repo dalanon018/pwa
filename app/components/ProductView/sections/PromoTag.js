@@ -26,8 +26,4 @@ function PromoTag ({ discount }) {
   )
 }
 
-PromoTag.propTypes = {
-
-}
-
 export default PromoTag

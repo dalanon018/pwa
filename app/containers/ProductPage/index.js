@@ -13,11 +13,11 @@ import { createStructuredSelector } from 'reselect'
 import { noop } from 'lodash'
 import { ifElse, equals } from 'ramda'
 
+import { imageStock } from 'utils/image-stock'
+
 import Product from 'components/Product'
 import PopupSlide from 'components/PopupSlide'
 import WindowWidth from 'components/WindowWidth'
-
-import defaultImage from 'images/default-slider.jpg'
 
 import {
   selectLoader,
@@ -195,7 +195,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
           windowWidth={windowWidth}
           popup={this._handleToggle}
           copied={this._handleCopy}
-          defaultImage={defaultImage}
+          defaultImage={imageStock('default-slider.jpg')}
           toggle={this.state.socialToggle}
           toggleClick={this._handleSocialToggle}
           productPageTrigger={productPageTrigger}

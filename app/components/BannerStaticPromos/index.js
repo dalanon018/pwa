@@ -5,16 +5,10 @@
 */
 
 import React from 'react'
-// import styled from 'styled-components';
 
-// import { FormattedMessage } from 'react-intl'
-// import messages from './messages'
-
-import sampleBanner from 'images/test-images/sample-banner-promo.png'
-import EmptyImage from 'images/broken-image.jpg'
+import { imageStock } from 'utils/image-stock'
 
 import EmptyDataBlock from 'components/EmptyDataBlock'
-import defaultImage from 'images/default-banner-promo.png'
 
 import { Image } from 'semantic-ui-react'
 import { BannerWrapper } from './styles'
@@ -26,16 +20,16 @@ function BannerStaticPromos ({
     return (
       <BannerWrapper>
         <div className='item'>
-          <Image src={sampleBanner || defaultImage} />
+          <Image src={imageStock('sample-banner-promo.png') || imageStock('default-banner-promo.png')} />
         </div>
         <div className='item'>
-          <Image src={sampleBanner || defaultImage} />
+          <Image src={imageStock('sample-banner-promo.png') || imageStock('default-banner-promo.png')} />
         </div>
       </BannerWrapper>
     )
   } else {
     return (
-      <BannerWrapper background={EmptyImage}>
+      <BannerWrapper background={imageStock('broken-image.jpg')}>
         <EmptyDataBlock>
           <div className='item loader-image' />
         </EmptyDataBlock>

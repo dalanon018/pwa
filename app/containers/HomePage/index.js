@@ -12,6 +12,8 @@ import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
 import { fromJS } from 'immutable'
 
+import { imageStock } from 'utils/image-stock'
+
 import Helmet from 'react-helmet'
 import messages from './messages'
 
@@ -30,8 +32,6 @@ import WindowWidth from 'components/WindowWidth'
 
 import { getFeaturedProductsAction } from './actions'
 import { selectLoading, selectFeaturedProducts } from './selectors'
-
-import SampleBanner from 'images/test-images/sample_banner.jpg'
 
 import {
   getProductCategoriesAction
@@ -122,7 +122,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
     const bannerImages = fromJS([
       {
-        image: SampleBanner
+        image: imageStock('sample_banner.jpg')
       }
     ])
 

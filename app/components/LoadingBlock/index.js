@@ -10,8 +10,9 @@ import {
   Image
 } from 'semantic-ui-react'
 
+import { imageStock } from 'utils/image-stock'
+
 import EmptyDataBlock from 'components/EmptyDataBlock'
-import EmptyImage from 'images/broken-image.jpg'
 import ParagraphCenter from 'images/empty-center-text.png'
 import ParagraphLeft from 'images/empty-left-text.png'
 import { range } from 'lodash'
@@ -26,7 +27,7 @@ export const LoadingStateImage = ({ children, loading }) => {
   if (loading) {
     return (
       <EmptyDataBlock>
-        <Image src={EmptyImage} width='100%' />
+        <Image src={imageStock('broken-image.jpg')} width='100%' />
       </EmptyDataBlock>
     )
   }

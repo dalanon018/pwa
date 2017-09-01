@@ -8,8 +8,9 @@ import React from 'react'
 import Slider from 'react-slick'
 import { Image } from 'semantic-ui-react'
 
+import { imageStock } from 'utils/image-stock'
+
 import EmptyDataBlock from 'components/EmptyDataBlock'
-import defaultImage from 'images/default-slider.jpg'
 
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
@@ -19,8 +20,6 @@ import {
   ImageWrapper,
   BrandLogo
 } from './styles'
-
-import EmptyImage from 'images/broken-image.jpg'
 
 function BannerSlider ({
   receiptPageName,
@@ -85,8 +84,8 @@ const HandleBlock = ({
                 }
                 {
                   receiptPageName
-                  ? <Image src={(item.getIn(['products', 'image']) && imageSize(item.getIn(['products', 'image']))) || defaultImage} />
-                  : <Image src={(item.get('image') && imageSize(item.get('image'))) || defaultImage} />
+                  ? <Image src={(item.getIn(['products', 'image']) && imageSize(item.getIn(['products', 'image']))) || imageStock('default-slider.jpg')} />
+                  : <Image src={(item.get('image') && imageSize(item.get('image'))) || imageStock('default-slider.jpg')} />
                 }
 
               </div>
@@ -103,7 +102,7 @@ const DefaultState = () => {
   return (
     <BannerSliderWrapper>
       <EmptyDataBlock>
-        <ImageWrapper image={EmptyImage} />
+        <ImageWrapper image={imageStock('broken-image.jpg')} />
       </EmptyDataBlock>
     </BannerSliderWrapper>
   )

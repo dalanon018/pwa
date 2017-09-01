@@ -8,9 +8,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { Modal, Icon } from 'semantic-ui-react'
 
-// import { FormattedMessage } from 'react-intl'
-// import messages from './messages'
-
 const IconWrapper = styled.div`
   text-align: center;
 

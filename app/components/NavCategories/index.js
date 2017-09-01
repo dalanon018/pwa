@@ -6,6 +6,7 @@
 
 import React from 'react'
 import { range } from 'lodash'
+import { imageStock } from 'utils/image-stock'
 
 import { Grid } from 'semantic-ui-react'
 
@@ -19,7 +20,6 @@ import {
 } from './styles'
 
 import defaultImage from 'images/icons/default-nav-category.png'
-import emptyImage from 'images/broken-image.jpg'
 import moreIcon from 'images/icons/more-icon.svg'
 
 const CategoryBlock = ({
@@ -56,7 +56,7 @@ const CategoryLoader = () => {
         range(5).map((_, index) => {
           return (
             <CategoryItem key={index}>
-              <DefaultIcon background={emptyImage} />
+              <DefaultIcon background={imageStock('broken-image.jpg')} />
               <DefaultName />
             </CategoryItem>
           )
