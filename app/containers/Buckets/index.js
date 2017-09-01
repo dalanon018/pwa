@@ -3,12 +3,15 @@ import styled from 'styled-components'
 
 import {
 // concat,
- // compose,
+  compose,
  // map,
  // join,
  // toPairs,
+  equals,
   identity,
-  ifElse
+  ifElse,
+  head
+  // toPairs
  // partial,
  // equals
 } from 'ramda'
@@ -64,7 +67,6 @@ const MainContent = styled.div`
   margin-top: 47px;
   overflow: hidden;
   width: 100%;
-  -webkit-overflow-scrolling: auto;
 
   @media (min-width: 768px) {
     margin-top: 0;
@@ -84,6 +86,11 @@ const MainContent = styled.div`
 //   map(join('=')),
 //   toPairs
 // )(params)
+
+const collectionExist = (a, b) => compose(
+  equals(b),
+  head
+)(a)
 
 export class Buckets extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
@@ -134,15 +141,18 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   _collectionHas (a, b) {
-    for (var i = 0, len = a.length; i < len; i++) {
-      if (a[i] === b) return true
+    if (collectionExist(a, b)) {
+      return true
     }
+
     return false
   }
 
+  // @TODO: Refactor while loop!!!!
   _findParent (elm, selector) {
     let all = document.querySelectorAll(selector)
     let cur = elm.parentNode
+
     while (cur && !this._collectionHas(all, cur)) {
       cur = cur.parentNode
     }
@@ -349,6 +359,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     getCategories()
 
     browserHistory.listen(this._handleBackButton)
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+
   }
 
   componentWillUnmount () {
