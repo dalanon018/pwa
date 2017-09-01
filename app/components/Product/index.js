@@ -47,14 +47,6 @@ const Product = ({
 
   return (
     <div>
-      {/*
-        <ImageBanner className='mobile-visibility'>
-          <LoadingStateImage loading={loading}>
-            <Image src={Test0001} />
-          </LoadingStateImage>
-        </ImageBanner>
-      */}
-
       <DesktopBlock
         FacebookIcon={FacebookIcon}
         FacebookShareButton={FacebookShareButton}
@@ -88,7 +80,6 @@ const Product = ({
         toggle={toggle}
         toggleClick={toggleClick}
         windowWidth={windowWidth} />
-
     </div>
   )
 }

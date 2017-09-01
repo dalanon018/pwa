@@ -2,11 +2,11 @@ import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 
 import { Grid } from 'semantic-ui-react'
+import { imageStock } from 'utils/image-stock'
 
 import H6 from 'components/H6'
 
 import CliqqLogo from 'images/icons/cliqq.png'
-import defaultImage from 'images/default-slider.jpg'
 
 const PurchaseWrapper = styled.div`
   margin: 5px 0;

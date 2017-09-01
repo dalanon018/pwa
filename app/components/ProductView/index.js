@@ -9,12 +9,12 @@ import {
   range,
   isEmpty
 } from 'lodash'
-// import styled from 'styled-components';
+
+import { imageStock } from 'utils/image-stock'
 
 import { FormattedMessage } from 'react-intl'
 import messages from './messages'
 import { Grid, Image } from 'semantic-ui-react'
-// import ReactPaginate from 'react-paginate'
 
 import {
   CustomGridRow,
@@ -30,7 +30,6 @@ import EmptyDataBlock from 'components/EmptyDataBlock'
 import defaultImage from 'images/default-product.jpg'
 
 import PromoTag from './sections/PromoTag'
-import EmptyImage from 'images/default-product-loader.jpg'
 import ParagraphImage from 'images/test-images/short-paragraph.png'
 
 import { calculateProductPrice } from 'utils/promo'
@@ -115,7 +114,7 @@ const DefaultState = () => {
       <EmptyDataBlock>
         <ProductWrapper>
           <ImageWrapper>
-            <Image src={EmptyImage} className='empty-image' />
+            <Image src={imageStock('default-product-loader.jpg')} className='empty-image' />
           </ImageWrapper>
           <Image src={ParagraphImage} height={50} />
         </ProductWrapper>

@@ -147,9 +147,10 @@ export const DetailsDescription = styled.div`
   }
 `
 export const ButtonContainer = styled(AnimateDiv)`
+  background-color: #FFFFFF;
   bottom: 0;
   left: 0;
-  padding: 10px;
+  padding: 0 10px 10px;
   position: fixed;
   width: 100%;
   z-index: 1;

@@ -421,7 +421,7 @@ const ButtonContainer = styled.div`
 `
 
 const ReviewContainer = styled.div`
-  margin-bottom: 50px;
+  margin-bottom: 65px;
 `
 
 export {

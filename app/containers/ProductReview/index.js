@@ -14,6 +14,8 @@ import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import messages from './messages'
 
+import { imageStock } from 'utils/image-stock'
+
 import {
   getOrderProductAction,
   getMobileNumberAction,
@@ -30,8 +32,6 @@ import {
   selectSubmissionSuccess,
   selectSubmissionError
 } from './selectors'
-
-import defaultImage from 'images/default-slider.jpg'
 
 import Modal from 'components/PromptModal'
 import WindowWidth from 'components/WindowWidth'
@@ -236,7 +236,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             modalToggle={modalToggle}
             cliqqCode={cliqqCode}
             labelOne={labelOne}
-            defaultImage={defaultImage}
+            defaultImage={imageStock('default-slider.jpg')}
             labelTwo={labelTwo}
 
             // function props
@@ -255,7 +255,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             modePayment={modePayment}
             productLoader={productLoader}
             modalToggle={modalToggle}
-            defaultImage={defaultImage}
+            defaultImage={imageStock('default-slider.jpg')}
             cliqqCode={cliqqCode}
             labelOne={labelOne}
             labelTwo={labelTwo}

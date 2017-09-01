@@ -13,6 +13,7 @@ import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { Grid, Modal } from 'semantic-ui-react'
+import { imageStock } from 'utils/image-stock'
 
 import H1 from 'components/H1'
 import Purchase from 'components/Purchase'
@@ -26,7 +27,6 @@ import {
 } from 'containers/Buckets/constants'
 
 import EmptyPurchase from 'images/empty-purchases.svg'
-import defaultImage from 'images/default-slider.jpg'
 
 import messages from './messages'
 
@@ -191,7 +191,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
                   purchases.map((order, index) =>
                     <Grid.Column key={index}>
                       <Purchase
-                        defaultImage={defaultImage}
+                        defaultImage={imageStock('default-slider.jpg')}
                         key={order.get('trackingNumber')}
                         order={order}
                         statuses={STATUSES}

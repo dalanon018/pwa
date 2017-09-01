@@ -4,13 +4,14 @@ import JsBarcode from 'jsbarcode'
 import { FormattedMessage } from 'react-intl'
 import { Grid } from 'semantic-ui-react'
 
+import { imageStock } from 'utils/image-stock'
+
 import Button from 'components/Button'
 import H6 from 'components/H6'
 import ProductSlider from 'components/BannerSlider'
 
 import CliqqLogo from 'images/icons/cliqq.png'
 import WarningIcon from 'images/icons/notice.png'
-import defaultImage from 'images/default-slider.jpg'
 
 import { DateFormater } from 'utils/date'
 
@@ -232,7 +233,7 @@ class Receipt extends React.PureComponent {
     return (
       <ReceiptWrapper>
         <ProductWrapper className='mobile-visibility'>
-          <ProductImage background={receipt.getIn(['products', 'image']) ? receipt.getIn(['products', 'image']) : defaultImage} />
+          <ProductImage background={receipt.getIn(['products', 'image']) ? receipt.getIn(['products', 'image']) : imageStock('default-slider.jpg')} />
           <ProductDescription>
             <CodeWrapper> <CodeImage src={CliqqLogo} />
               { receipt.getIn(['products', 'cliqqCode']) }

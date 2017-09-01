@@ -5,16 +5,12 @@
 */
 
 import React, { PropTypes } from 'react'
-// import styled from 'styled-components'
-
-// import { FormattedMessage } from 'react-intl';
-// import messages from './messages';
+import { imageStock } from 'utils/image-stock'
 
 import EmptyDataBlock from 'components/EmptyDataBlock'
 
 import { Grid, Image } from 'semantic-ui-react'
-import EmptyImage from 'images/broken-image.jpg'
-import defaultImage from 'images/default-image.png'
+
 import defaultCategoryBackground from 'images/default-categories.jpg'
 
 import {
@@ -54,7 +50,7 @@ function Category ({
                 <Image className='category-image' src={category.get('background') ? category.get('background') : defaultCategoryBackground} />
                 <CategoryContent>
                   <CategoryItem width={iconWidth}>
-                    <Image src={category.get('main') ? category.get('main') : defaultImage} />
+                    <Image src={category.get('main') ? category.get('main') : imageStock('default-image.png')} />
                     <CategoryLabel fontSize={fontSize}>{category.get('name')}</CategoryLabel>
                   </CategoryItem>
                 </CategoryContent>
@@ -74,7 +70,7 @@ const DefaultState = ({
     <Grid.Column className='padding__none--horizontal category-item'>
       <EmptyDataBlock>
         <CategoryBlock margin={margin} className='responsive-width'>
-          <Image className='category-image' src={EmptyImage} />
+          <Image className='category-image' src={imageStock('broken-image.jpg')} />
         </CategoryBlock>
       </EmptyDataBlock>
     </Grid.Column>
