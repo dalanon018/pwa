@@ -294,6 +294,13 @@ svg#barcode {
   .banner-padding  {
     padding: 0;
   }
+
+  .ui.small.modal {
+    margin: auto !important;
+    max-width: 250px;
+    transform: translate(-50%, -50%);
+    width: 100% !important;
+  }
 }
 
 @media (min-width: 768px) {
@@ -380,5 +387,17 @@ svg#barcode {
         top: 3px;
       }
     }
+  }
+
+  .ui.small.modal {
+    max-width: 450px;
+  }
+}
+
+@media (min-width: 992px) {
+  .ui.modal {
+    margin: auto !important;
+    transform: translate(-50%, -50%);
+    width: 650px !important;
   }
 }
