@@ -355,6 +355,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     this._touchMoveRemoveListener()
   }
 
+  componentWillUnmount () {
+    this._touchMoveRemoveListener()
+  }
+
   componentWillReceiveProps (nextProps) {
     const { mobileNumbers } = nextProps
     /**
