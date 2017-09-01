@@ -24,12 +24,14 @@ import {
 function BannerSlider ({
   receiptPageName,
   loader,
+  productPageTrigger,
   homeRouteName,
   windowWidth,
   images }) {
   return <HandleBlock
     loader={loader}
     images={images}
+    productPageTrigger={productPageTrigger}
     receiptPageName={receiptPageName}
     homeRouteName={homeRouteName}
     windowWidth={windowWidth} />
@@ -38,6 +40,7 @@ function BannerSlider ({
 const HandleBlock = ({
   loader,
   receiptPageName,
+  productPageTrigger,
   homeRouteName,
   windowWidth,
   images }) => {
@@ -66,7 +69,7 @@ const HandleBlock = ({
   }
 
   if (loader) {
-    block = <DefaultState loader={loader} />
+    block = <DefaultState loader={loader} productPageTrigger={productPageTrigger} />
   } else {
     block = <BannerSliderWrapper homeRouteName={homeRouteName} windowWidth={windowWidth} receiptPageName={receiptPageName}>
       <Slider {...settings}>
@@ -98,10 +101,12 @@ const HandleBlock = ({
   return block
 }
 
-const DefaultState = () => {
+const DefaultState = ({
+  productPageTrigger
+}) => {
   return (
     <BannerSliderWrapper>
-      <EmptyDataBlock>
+      <EmptyDataBlock productPageTrigger={productPageTrigger}>
         <ImageWrapper image={imageStock('broken-image.jpg')} />
       </EmptyDataBlock>
     </BannerSliderWrapper>

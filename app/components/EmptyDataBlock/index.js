@@ -11,16 +11,26 @@ import styled from 'styled-components'
 // import messages from './messages'
 
 const EmptyDataBlockWrapper = styled.div`
-  position: relative;
+  ${props =>
+    props.pageTrigger === 'productPage'
+    ? `position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    left: 50%;`
+    : 'position: relative;'
+  }
 
   // not included on sorting
   animation:fadeIn ease-in 1;
   animation-duration: .5s;
 `
 
-function EmptyDataBlock ({children}) {
+function EmptyDataBlock ({children, productPageTrigger}) {
+  const productPageName = productPageTrigger && productPageTrigger.name
+
   return (
-    <EmptyDataBlockWrapper>
+    <EmptyDataBlockWrapper pageTrigger={productPageName}>
       { Children.toArray(children) }
     </EmptyDataBlockWrapper>
   )

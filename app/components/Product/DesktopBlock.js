@@ -50,6 +50,7 @@ function DesktopBlock ({
   openModal,
   popup,
   product,
+  productPageTrigger,
   submit,
   toggle,
   toggleClick,
@@ -66,6 +67,7 @@ function DesktopBlock ({
           <Grid.Column>
             <ProductSlider
               images={productImages}
+              productPageTrigger={productPageTrigger}
               windowWidth={windowWidth}
               loader={loading} />
           </Grid.Column>
