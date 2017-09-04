@@ -6,11 +6,11 @@ const CompressionPlugin = require('compression-webpack-plugin')
 const OfflinePlugin = require('offline-plugin')
 
 // dll caching
-const pkg = require(path.resolve(process.cwd(), 'package.json'))
-const dllPlugin = pkg.dllPlugin
+// const pkg = require(path.resolve(process.cwd(), 'package.json'))
+// const dllPlugin = pkg.dllPlugin
 
-// used the caching in the dev to speed compilation
-const dllPath = path.resolve(process.cwd(), dllPlugin.path || 'node_modules/react-boilerplate-dlls', 'reactBoilerplateDeps.json')
+// // used the caching in the dev to speed compilation
+// const dllPath = path.resolve(process.cwd(), dllPlugin.path || 'node_modules/react-boilerplate-dlls', 'reactBoilerplateDeps.json')
 
 module.exports = require('./webpack.base.babel')({
   // In production, we skip all hot-reloading stuff
@@ -88,13 +88,13 @@ module.exports = require('./webpack.base.babel')({
       test: /\.js$|\.css$|\.html$/,
       threshold: 10240,
       minRatio: 0.8
-    }),
+    })
 
     // Use DLLs
-    new webpack.DllReferencePlugin({
-      context: path.resolve(process.cwd(), 'app'),
-      manifest: require(dllPath)
-    })
+    // new webpack.DllReferencePlugin({
+    //   context: path.resolve(process.cwd(), 'app'),
+    //   manifest: require(dllPath)
+    // })
   ],
 
   performance: {
