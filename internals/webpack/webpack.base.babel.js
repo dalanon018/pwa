@@ -4,6 +4,7 @@
 
 const path = require('path')
 const webpack = require('webpack')
+const HappyPack = require('happypack')
 
 module.exports = (options) => ({
   entry: options.entry,
@@ -15,29 +16,22 @@ module.exports = (options) => ({
     loaders: [{
       test: /\.js$/, // Transform all .js files required somewhere with Babel
       exclude: /node_modules/,
-      loaders: 'babel-loader',
-      options: options.babelQuery
-    }, {
-      // Do not transform vendor's CSS with CSS-modules
-      // The point is that they remain in global scope.
-      // Since we require these CSS files in our JS or CSS files,
-      // they will be a part of our compilation either way.
-      // So, no need for ExtractTextPlugin here.
-      // test: /\.css$/,
-      // include: /node_modules/,
-      // loaders: ['style-loader', 'css-loader']
+      use: {
+        loader: 'happypack/loader?id=jsx',
+        options: options.babelQuery
+      }
     }, {
       // Preprocess our own .css files
       // This is the place to add your own loaders (e.g. sass/less etc.)
       // for a list of loaders, see https://webpack.js.org/loaders/#styling
-      // test: /\.css$/,
-      // exclude: [/node_modules/, /semantic/],
-      // use: ['style-loader', 'css-loader']
+      test: /\.css$/,
+      exclude: [/node_modules/, /semantic/],
+      loader: 'happypack/loader?id=styles'
     }, {
       // Preprocess 3rd party .css files located in node_modules
       test: /\.css$/,
       include: [/node_modules/, /semantic/],
-      loaders: ['style-loader', 'css-loader']
+      loader: ['style-loader', 'css-loader']
     }, {
       test: /\.(eot|svg|otf|ttf|woff|woff2)$/,
       loaders: 'file-loader'
@@ -73,7 +67,14 @@ module.exports = (options) => ({
     }]
   },
   plugins: options.plugins.concat([
-
+    new HappyPack({
+      id: 'jsx',
+      loaders: ['babel-loader']
+    }),
+    new HappyPack({
+      id: 'styles',
+      loaders: ['style-loader', 'css-loader']
+    }),
     new webpack.ProvidePlugin({
       // make fetch available
       fetch: 'exports-loader?self.fetch!whatwg-fetch'
