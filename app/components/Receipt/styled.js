@@ -5,6 +5,13 @@ import {
 } from './constants'
 
 export const ReceiptWrapper = styled.div`
+  
+  @media(min-width: 370px) {
+    .desktop-list-margin {
+      margin: 25px 0 15px;
+    }
+  }
+
   @media (min-width: 768px) {
     .desktop-list-margin {
       margin: 25px 0;
@@ -101,7 +108,7 @@ export const ReceiptDescription = styled.div`
   border-top-right-radius: 10px;
   border-top: 1px dashed #CCC;
   background-color: #FFF;
-  padding: 30px 20px;
+  padding: 20px 20px;
   color: #5B5B5B;
 
   @media (min-width: 768px) {
@@ -194,6 +201,10 @@ export const ButtonWrapper = styled.div`
     .custom-button {
       padding: 20px 40px !important;
       width: 100%;
+    }
+
+    .custom-button span {
+      font-size: 18px
     }
   }
 `

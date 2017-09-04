@@ -134,26 +134,25 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     this._handleMainContent = this._handleMainContent.bind(this)
     this._scrolledSidebarChecker = this._scrolledSidebarChecker.bind(this)
     this._findParent = this._findParent.bind(this)
-    this._collectionHas = this._collectionHas.bind(this)
     this._initY = this._initY.bind(this)
     this._touchMoveAddListener = this._touchMoveAddListener.bind(this)
     this._touchMoveRemoveListener = this._touchMoveRemoveListener.bind(this)
   }
 
-  _collectionHas (a, b) {
-    if (collectionExist(a, b)) {
-      return true
-    }
+  // _collectionHas (a, b) {
+  //   if (collectionExist(a, b)) {
+  //     return true
+  //   }
 
-    return false
-  }
+  //   return false
+  // }
 
   // @TODO: Refactor while loop!!!!
   _findParent (elm, selector) {
     let all = document.querySelectorAll(selector)
     let cur = elm.parentNode
 
-    while (cur && !this._collectionHas(all, cur)) {
+    while (cur && !collectionExist(all, cur)) {
       cur = cur.parentNode
     }
     return cur
