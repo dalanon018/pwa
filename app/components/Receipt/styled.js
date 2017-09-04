@@ -138,6 +138,7 @@ export const PurchaseGeneralInfo = styled.div`
   }
 
   @media (min-width: 768px) {
+    font-size: 18px;
     margin-top: 0;
   }
 `
@@ -153,6 +154,12 @@ export const ProductPrice = styled.p`
   font-size: 29px;
   line-height: inherit;
   text-transform: uppercase;
+
+  @media (min-width: 768px) {
+    font-size: 36px;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
 `
 
 export const BarcodeSVG = styled.svg`
@@ -168,11 +175,15 @@ export const BarcodeSVG = styled.svg`
 
 export const WrapperWarning = styled.div`
   background-color: #8DC641;
-  width: 100%;
+  padding: 20px;
+  position: relative;
+  text-align: center;
   text-transform: uppercase;
+  width: 100%;
 
   @media (min-width: 768px) {
     margin-bottom: 20px;
+    padding: 25px 30px;
 
     img {
       width: 35px;
@@ -183,13 +194,38 @@ export const WrapperWarning = styled.div`
       letter-spacing: 0;
     }
   }
+
+  @media (min-width: 1200px) {
+    padding: 25px 100px;
+  }
 `
 
 export const WarningDescription = styled.p`
-  font-family: 'helveticamedium';
   color: #FFFFFF;
+  font-family: 'helveticamedium';
   letter-spacing: 1px;
   line-height: 1.2;
+  padding: 0 20px;
+  position: relative;
+
+  &:before {
+    background: url(${props => props.icon})no-repeat center center / contain;
+    content: '';
+    height: 30px;
+    left: 0;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+  }
+
+  @media (min-width: 768px) {
+    padding: 0 50px;
+    &:before {
+      height: 40px;
+      width: 40px;
+    }
+  }
 `
 
 export const ButtonWrapper = styled.div`

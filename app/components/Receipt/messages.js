@@ -60,7 +60,7 @@ export default defineMessages({
   },
   receiptInfoMessageReserve: {
     id: 'app.components.Receipt.receiptInfoMessageReserve',
-    defaultMessage: 'Pay Item Before it Expires'
+    defaultMessage: 'Pay Item Before the time Expires'
   },
   receiptInfoMessageUnpaid: {
     id: 'app.components.Receipt.receiptInfoMessageUnpaid',

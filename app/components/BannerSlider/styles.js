@@ -18,7 +18,7 @@ const BannerSliderWrapper = styled.div`
     props =>
     (props.windowWidth >= 768 &&
       !props.receiptPageName) &&
-    'max-height: 630px;'
+    'max-height: 600px;'
   }
 
   .slick-initialized {
@@ -99,11 +99,11 @@ const BrandLogo = styled.div`
   }
 
   @media (min-width: 768px) {
-    height: 60px;
-    top: 25px;
+    height: 80px;
+    top: 10px;
 
     &:before {
-      width: 70%;
+      width: 80%;
     }
   }
 `
