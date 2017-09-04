@@ -329,7 +329,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   _handleShownModal () {
-    const { receiptsUpdated, setUpdatedReceipts } = this.props
+    const { receiptsUpdated, setUpdatedReceipts, windowWidth } = this.props
 
     return receiptsUpdated.map((receipt, index) =>
       <ModalWithHeader
@@ -339,6 +339,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
         setUpdatedReceipts={setUpdatedReceipts}
         goToHome={this._goToHome}
         goToReceipts={this._goToReceipts}
+        windowWidth={windowWidth}
       />
     )
   }
