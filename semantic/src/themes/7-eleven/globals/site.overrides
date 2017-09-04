@@ -4,21 +4,24 @@
 
 @font-face {
   font-family: 'helveticalight';
-  src: url('../src/themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Light.ttf')  format('truetype');
+  src: url('../src/themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Light.ttf')  format('truetype'),
+       url('../src/themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Light.eot?#iefix')  format('embedded-opentype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'helveticamedium';
-  src: url('../src/themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Medium.ttf')  format('truetype');
+  src: url('../src/themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Medium.ttf')  format('truetype'),
+       url('../src/themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Medium.eot?#iefix')  format('embedded-opentype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'helveticabold';
-  src: url('../src/themes/7-eleven/assets/fonts/helvetica/HelveticaNeu-Bold.ttf')  format('truetype');
+  src: url('../src/themes/7-eleven/assets/fonts/helvetica/HelveticaNeu-Bold.ttf')  format('truetype'),
+       url('../src/themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Bold.eot?#iefix')  format('embedded-opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -93,7 +96,7 @@ input.input-field {
   }
 }
 
-.ui.modal {
+.ui.modal-bak {
   height: initial;
 }
 
@@ -194,7 +197,7 @@ input.input-field {
 }
 
 svg#barcode {
-  height: auto !important;
+  // height: auto !important;
 }
 
 /*******************************
@@ -295,11 +298,19 @@ svg#barcode {
     padding: 0;
   }
 
-  .ui.small.modal {
+  .ui.small.modal-bak {
     margin: auto !important;
     max-width: 250px;
     transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
     width: 100% !important;
+  }
+
+  .ui.small.modal {
+    max-height: 100px;
   }
 }
 
@@ -328,6 +339,7 @@ svg#barcode {
   }
   .ui.modal {
     border-radius: 30px !important;
+    max-height: 400px;
   }
   .modal-popup-slide {
     input.input-field {
@@ -389,15 +401,19 @@ svg#barcode {
     }
   }
 
-  .ui.small.modal {
+  .ui.small.modal-bak {
     max-width: 450px;
   }
 }
 
 @media (min-width: 992px) {
-  .ui.modal {
+  .ui.modal-bak {
     margin: auto !important;
     transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
     width: 650px !important;
   }
 }

@@ -191,8 +191,8 @@ class SearchMenu extends PureComponent {
 
   componentDidMount () {
     // Evergreen event listener || IE8 event listener
-    const addEvent = this._searchInput.addEventListener || this._searchInput.attachEvent
-    addEvent('keypress', this._handleKeyPress, false)
+    // const addEvent = this._searchInput.addEventListener || this._searchInput.attachEvent
+    // addEvent('keypress', this._handleKeyPress, false)
   }
 
   componentWillUnmount () {
