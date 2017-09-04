@@ -2,6 +2,7 @@
 const express = require('express')
 const path = require('path')
 const compression = require('compression')
+const sslRedirect = require('heroku-ssl-redirect')
 const pkg = require(path.resolve(process.cwd(), 'package.json'))
 
 // Dev middleware
@@ -46,11 +47,17 @@ const addDevMiddlewares = (app, webpackConfig) => {
 const addProdMiddlewares = (app, options) => {
   const publicPath = options.publicPath || '/'
   const outputPath = options.outputPath || path.resolve(process.cwd(), 'build')
-
+  /**
+   * Heroku redirect everything to SSL
+   */
+  app.use(sslRedirect())
   // compression middleware compresses your server responses which makes them
   // smaller (applies also to assets). You can read more about that technique
   // and other good practices on official Express.js docs http://mxs.is/googmy
-  app.use(compression())
+  app.use(compression({
+    level: 9,
+    memLevel: 9
+  }))
   app.use(publicPath, express.static(outputPath))
 
   app.get('*', (req, res) => res.sendFile(path.resolve(outputPath, 'index.html')))
