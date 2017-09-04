@@ -16,7 +16,7 @@ const HeaderBase = styled.div`
 
 const Timer = styled.div`
   font-size: 60px;
-  margin: 20px 0;
+  margin: 0 0 20px;
 
   @media (min-width: 992px) {
     font-size: 100px;
@@ -26,7 +26,13 @@ const Timer = styled.div`
 const HeaderOrder = styled(HeaderBase)`
   text-transform: uppercase;
   font-size: ${({ status }) => (status === 'RESERVED') ? '14px' : '18px'};
-  margin-bottom: 15px;
+  margin-bottom: 5px;
+
+  @media(min-width: 370px) {
+    span {
+      font-size: 17px;
+    }
+  }
 `
 
 const PurchaseOrder = ({ status, receipt }) => {
