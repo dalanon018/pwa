@@ -5,15 +5,10 @@ const TextWrapper = styled.div`
   text-align: center;
 
   p {
-    font-size: 12px !important;
-    letter-spacing: 2px;
+    color: #5B5B5B;
+    font-size: 12px;
+    letter-spacing: 1px;
     line-height: 14px;
-
-    span {
-      b {
-        color: #5B5B5B;
-      }
-    }
   }
 `
 
@@ -28,11 +23,18 @@ const TitleHead = styled.div`
 
 const BannerHeader = styled.div`
   background: url(${props => props.background}) no-repeat top right / cover;
-  border-radius: 30px 30px 0 0;
   height: 85px;
   margin-bottom: 40px;
   position: relative;
   width: 100%;
+
+  @media (min-width: 370px) {
+    border-radius: 4px 4px 0 0;
+  }
+
+  @media (min-width: 768px) {
+    border-radius: 30px 30px 0 0;
+  }
 
   .image {
     height: 35px;
@@ -59,7 +61,7 @@ const BannerHeader = styled.div`
 `
 
 const ButtonWrapper = styled.div`
-  padding: 0 20px;
+  padding: 0;
   text-align: center;
   button {
     &:last-child {
@@ -77,8 +79,16 @@ const ButtonWrapper = styled.div`
 const ModalContainer = styled.div`
   border-radius: 30px;
   
-  .content {
-    padding: 30px 50px;
+  @media (min-width: 768px) {
+    .content {
+      padding: 30px 50px;
+    }
+  }
+
+  @media (min-width: 370px) {
+    .content {
+      padding: 15px 25px 30px;
+    }
   }
 `
 

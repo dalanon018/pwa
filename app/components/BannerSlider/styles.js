@@ -14,8 +14,6 @@ const BannerSliderWrapper = styled.div`
     margin: ${props => !props.homeRouteName ? '15px auto 0' : 'inherit'};
   }
 
-  ${props => console.log(!isNil(props.homeRouteName))}
-
   ${
     props =>
     (props.windowWidth >= 768 &&
