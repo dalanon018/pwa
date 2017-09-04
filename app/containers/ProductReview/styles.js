@@ -50,7 +50,7 @@ const StepHead = styled.div`
     span {
       font-family: 'helveticabold';
       font-size: 16px;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       margin: 0;
     }
 
@@ -124,8 +124,9 @@ const CliqqCodeWrapper = styled.div`
   }
 
   @media (min-width: 768px) {
-    font-size: 14px;
+    font-size: 16px;
     justify-content: flex-start;
+    letter-spacing: 4px;
     margin: 10px 0 40px;
     
     .image {
@@ -145,7 +146,7 @@ const ProductName = styled.div`
 
   @media (min-width: 768px) {
     font-size: 25px;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     line-height: 32px;
     margin-bottom: 15px;
     text-align: left;
@@ -211,9 +212,10 @@ const DetailsWrapper = styled.div`
 
     span {
       display: block;
+      font-family: 'helveticabold';
       font-size: 16px;
-      font-weight: bold;
-      letter-spacing: 3px;
+      font-weight: 100;
+      letter-spacing: 4px;
       margin-bottom: 20px;
     }
 
@@ -315,8 +317,9 @@ const LabelTitle = styled.p`
 
   @media (min-width: 768px) {
     color: #5B5B5B !important;
+    font-family: 'helveticabold';
     font-size: 16px;
-    letter-spacing: 3px;
+    letter-spacing: 5px;
   }
 `
 
@@ -357,7 +360,7 @@ const LabelPrice = styled.div`
     margin-top: 0;
 
     .total {
-      font-size: 40px;
+      font-size: 41px;
       font-weight: bolder;
       letter-spacing: 3px;
     }

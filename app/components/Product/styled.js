@@ -39,8 +39,9 @@ export const HeaderWrapper = styled(AnimateDiv)`
   letter-spacing: 2px;
 
   @media (min-width: 768px) {
-    font-size: 14px;
+    font-size: 16px;
     justify-content: flex-start;
+    letter-spacing: 4px;
   }
 `
 export const CodeImage = styled.img`
@@ -132,7 +133,9 @@ export const DetailsTitle = styled.p`
   margin: 10px 0;
 
   @media (min-width: 768px) {
+    font-family: 'helveticabold';
     font-size: 16px;
+    letter-spacing: 4px;
   }
 `
 export const DetailsDescription = styled.div`
@@ -250,11 +253,18 @@ export const DigitsWrapper = styled(AnimateDiv)`
     font-size: 16px;
     text-transform: uppercase;
   }
+
+  @media (min-width: 768px) {
+    label {
+      font-size: 15px;
+    }
+  }
 `
 
 export const DesktopPriceWrapper = styled.div`
   display: flex;
   align-items: flex-end;
+  
   p {
     color: ${props => props.colorHex ? props.colorHex : '#5B5B5B'};
     font-family: 'helveticabold';
@@ -268,6 +278,14 @@ export const DesktopPriceWrapper = styled.div`
   span {
     font-family: 'helveticalight';
     line-height: 20px;
+  }
+
+  @media (min-width: 768px) {
+    margin-top: 5px;
+    
+    p {
+      font-size: 41px;
+    }
   }
 `
 

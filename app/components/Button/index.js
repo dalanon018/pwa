@@ -26,7 +26,7 @@ const ButtonWrapper = styled.div`
         text-align: left;
 
         .custom-button {
-          max-width: 500px;
+          max-width: 530px;
           padding: 20px 40px !important;
           width: 100%;
         }

@@ -69,18 +69,9 @@ const DetailStatus = ({ status, receipt }) => {
 
 const WarningContent = ({ children }) => (
   <WrapperWarning>
-    <Grid padded>
-      <Grid.Row>
-        <Grid.Column verticalAlign='middle' width={3}>
-          <img src={WarningIcon} />
-        </Grid.Column>
-        <Grid.Column textAlign='center' verticalAlign='middle' width={12}>
-          <WarningDescription>
-            { children }
-          </WarningDescription>
-        </Grid.Column>
-      </Grid.Row>
-    </Grid>
+    <WarningDescription icon={WarningIcon}>
+      { children }
+    </WarningDescription>
   </WrapperWarning>
 )
 
