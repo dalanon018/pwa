@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { isNil } from 'ramda'
 
 const BannerSliderWrapper = styled.div`
   background: #F0F0F0;
@@ -13,27 +14,27 @@ const BannerSliderWrapper = styled.div`
     margin: ${props => !props.homeRouteName ? '15px auto 0' : 'inherit'};
   }
 
+  ${props => console.log(!isNil(props.homeRouteName))}
+
   ${
     props =>
     (props.windowWidth >= 768 &&
-    !props.homeRouteName) &&
-    ` 
-      ${
-        props => !props.receiptPageName &&
-        'max-height: 630px;'
-      }
-
-      .slick-initialized {
-        left: 50%;
-        position: absolute;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        width: 100%;
-    }`
-
+      !props.receiptPageName) &&
+    'max-height: 630px;'
   }
 
-  
+  .slick-initialized {
+    ${
+      props =>
+      (props.windowWidth >= 768 &&
+      isNil(props.homeRouteName)) &&
+      `left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;`
+    }
+  }
 
   .slick-slide {
     background-color: #F0F0F0;

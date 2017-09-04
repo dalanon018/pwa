@@ -36,6 +36,7 @@ import {
   BannerHeader,
   TextWrapper,
   TitleHead,
+  ModalContainer,
   ButtonWrapper
 } from './styles'
 
@@ -203,30 +204,31 @@ class ModalWithHeader extends React.PureComponent {
     return (
       <Modal
         defaultOpen
-        size='small'
         closeOnDimmerClick={false}
       >
-        <BannerHeader
-          background={ModalImages({ status: currentStatus }).banner}
-          iconBg={ModalImages({ status: currentStatus }).iconBg} >
-          <span>
-            <Image src={ModalImages({ status: currentStatus }).icon} />
-          </span>
-        </BannerHeader>
-        <Modal.Content>
-          <TextWrapper>
-            <TitleHead>
-              <ModalTitle {...{ status: currentStatus, receipt }} />
-            </TitleHead>
-            <p><ModalDescription {...{ status: currentStatus, receipt }} /></p>
-          </TextWrapper>
-          <ButtonWrapper>
-            <Button primary fluid onClick={this._closeModal}>
-              { primary }
-            </Button>
-            <TextButton text={secondary} close={() => this._fnFactory(onClick)} />
-          </ButtonWrapper>
-        </Modal.Content>
+        <ModalContainer>
+          <BannerHeader
+            background={ModalImages({ status: currentStatus }).banner}
+            iconBg={ModalImages({ status: currentStatus }).iconBg} >
+            <span>
+              <Image src={ModalImages({ status: currentStatus }).icon} />
+            </span>
+          </BannerHeader>
+          <Modal.Content>
+            <TextWrapper>
+              <TitleHead>
+                <ModalTitle {...{ status: currentStatus, receipt }} />
+              </TitleHead>
+              <p><ModalDescription {...{ status: currentStatus, receipt }} /></p>
+            </TextWrapper>
+            <ButtonWrapper>
+              <Button primary fluid onClick={this._closeModal}>
+                { primary }
+              </Button>
+              <TextButton text={secondary} close={() => this._fnFactory(onClick)} />
+            </ButtonWrapper>
+          </Modal.Content>
+        </ModalContainer>
       </Modal>
     )
   }

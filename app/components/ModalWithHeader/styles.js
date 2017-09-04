@@ -28,6 +28,7 @@ const TitleHead = styled.div`
 
 const BannerHeader = styled.div`
   background: url(${props => props.background}) no-repeat top right / cover;
+  border-radius: 30px 30px 0 0;
   height: 85px;
   margin-bottom: 40px;
   position: relative;
@@ -73,9 +74,18 @@ const ButtonWrapper = styled.div`
   }
 `
 
+const ModalContainer = styled.div`
+  border-radius: 30px;
+  
+  .content {
+    padding: 30px 50px;
+  }
+`
+
 export {
   BannerHeader,
   ButtonWrapper,
   TextWrapper,
+  ModalContainer,
   TitleHead
 }
