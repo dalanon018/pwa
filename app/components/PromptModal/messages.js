@@ -6,8 +6,8 @@
 import { defineMessages } from 'react-intl'
 
 export default defineMessages({
-  header: {
-    id: 'app.components.PromptModal.header',
-    defaultMessage: 'This is the PromptModal component !'
+  promptOk: {
+    id: 'app.components.PromptModal.promptOk',
+    defaultMessage: 'ok'
   }
 })
