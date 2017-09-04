@@ -327,7 +327,7 @@ svg#barcode {
     display: block !important;
   }
   .ui.modal {
-    border-radius: 50px !important;
+    border-radius: 30px !important;
   }
   .modal-popup-slide {
     input.input-field {

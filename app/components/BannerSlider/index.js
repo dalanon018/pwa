@@ -12,9 +12,6 @@ import { imageStock } from 'utils/image-stock'
 
 import EmptyDataBlock from 'components/EmptyDataBlock'
 
-// import { FormattedMessage } from 'react-intl';
-// import messages from './messages';
-
 import {
   BannerSliderWrapper,
   ImageWrapper,
