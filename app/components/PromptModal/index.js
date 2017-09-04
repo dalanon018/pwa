@@ -6,7 +6,13 @@
 
 import React from 'react'
 import styled from 'styled-components'
+
+import { FormattedMessage } from 'react-intl'
 import { Modal, Icon } from 'semantic-ui-react'
+
+import Button from 'components/Button'
+
+import messages from './messages'
 
 const IconWrapper = styled.div`
   text-align: center;
@@ -68,7 +74,12 @@ function PromptModal ({
           <Icon name={name} className='custom-icon' />
         </IconWrapper>
         <TitleHead>{title}</TitleHead>
-        <Content>{content}</Content>
+        <Content>
+          {content}
+          <Button primary fluid onClick={close}>
+            <FormattedMessage {...messages.promptOk} />
+          </Button>
+        </Content>
       </Modal.Content>
     </Modal>
   )
