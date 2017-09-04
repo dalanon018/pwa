@@ -24,7 +24,9 @@ import PaperBagIcon from 'images/icons/claimed-icon.svg'
 import CashierIcon from 'images/icons/paid-icon.svg'
 import WarningIcon from 'images/icons/warning-icon.svg'
 // import NoteIcon from 'images/icons/confirmation-icon.svg'
-import StarIcon from 'images/icons/star-icon.svg'
+// import StarIcon from 'images/icons/star-icon.svg'
+import IntransitIcon from 'images/icons/intransit-icon.svg'
+import UnclaimedIcon from 'images/icons/unclaimed-icon.svg'
 
 import {
   STATUSES
@@ -54,7 +56,7 @@ const ModalImages = ({ status }) => {
     },
     INTRANSIT: {
       banner: OrangeBackground,
-      icon: StarIcon
+      icon: IntransitIcon
     },
     DELIVERED: {
       banner: OrangeBackground,
@@ -66,7 +68,7 @@ const ModalImages = ({ status }) => {
     },
     UNCLAIMED: {
       banner: RedBackground,
-      icon: WarningIcon,
+      icon: UnclaimedIcon,
       iconBg: '#EB1E25'
     }
   })(null)(status)
