@@ -60,7 +60,7 @@ const Wrapper = styled.div`
   align-items: center;
   display: flex;
   justify-content: flex-start;
-  margin-top: 10px;
+  margin-top: 30px;
 `
 
 const IS_RESERVED_DONE = ['CONFIRMED', 'INTRANSIT', 'DELIVERED']

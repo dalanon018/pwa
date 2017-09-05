@@ -16,7 +16,7 @@ export default defineMessages({
   },
   CONFIRMED: {
     id: 'app.components.Receipt.CONFIRMED',
-    defaultMessage: 'We\'ve received your payment for this item'
+    defaultMessage: 'We\'ve received your payment for this item!'
   },
   INTRANSIT: {
     id: 'app.components.Receipt.INTRANSIT',
@@ -64,11 +64,11 @@ export default defineMessages({
   },
   receiptInfoMessageUnpaid: {
     id: 'app.components.Receipt.receiptInfoMessageUnpaid',
-    defaultMessage: 'Follow us on Social Media for all the latest updates'
+    defaultMessage: 'Follow us on Social Media for all the latest updates!'
   },
   receiptInfoMessageClaimEarly: {
     id: 'app.components.Receipt.receiptInfoMessageClaimEarly',
-    defaultMessage: 'Follow us on Social Media for all the latest updates'
+    defaultMessage: 'Follow us on Social Media for all the latest updates!'
   },
   receiptInfoMessageUnclaimed: {
     id: 'app.components.Receipt.receiptInfoMessageUnclaimed',
