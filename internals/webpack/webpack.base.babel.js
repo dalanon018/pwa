@@ -16,10 +16,7 @@ module.exports = (options) => ({
     loaders: [{
       test: /\.js$/, // Transform all .js files required somewhere with Babel
       exclude: /node_modules/,
-      use: {
-        loader: 'happypack/loader?id=jsx',
-        options: options.babelQuery
-      }
+      loader: 'happypack/loader?id=jsx'
     }, {
       // Preprocess our own .css files
       // This is the place to add your own loaders (e.g. sass/less etc.)
@@ -69,7 +66,10 @@ module.exports = (options) => ({
   plugins: options.plugins.concat([
     new HappyPack({
       id: 'jsx',
-      loaders: ['babel-loader']
+      loaders: [{
+        loader: 'babel-loader',
+        options: options.babelQuery
+      }]
     }),
     new HappyPack({
       id: 'styles',
