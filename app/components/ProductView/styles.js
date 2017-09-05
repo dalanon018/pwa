@@ -33,6 +33,7 @@ const ProductName = styled.p`
   font-family: 'helveticabold';
   font-size: 9px;
   margin-bottom: 3px;
+  min-height: 28px;
   text-transform: uppercase;
 
   @media (min-width: 768px) {

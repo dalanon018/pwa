@@ -48,6 +48,13 @@ function ProductView ({
     }
   }
 
+  const productName = (data) => {
+    if (data.length > 57) {
+      return `${data.slice(0, 57)}...`
+    }
+    return data
+  }
+
   return (
     <CustomGridRow stretched columns={resposiveColumns()}>
       {
@@ -67,7 +74,7 @@ function ProductView ({
                 <ImageWrapper>
                   <Image src={(product.get('image') && `${product.get('image')}?w=175&h=175&fit=clamp`) || defaultImage} />
                 </ImageWrapper>
-                <ProductName>{product.get('title')}</ProductName>
+                <ProductName>{ productName(product.get('title')) }</ProductName>
                 <ProductPriceWrapper>
                   <ProductPrice>
                     <FormattedMessage {...messages.peso} />
