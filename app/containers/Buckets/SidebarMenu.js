@@ -18,7 +18,7 @@ const SidebarContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.3);
   height: 100vh;
   left: 0;
-  overflow: auto;
+  overflow: ${({toggle}) => toggle ? 'auto' : 'hidden'};
   position: fixed;
   top: 0;
   transition: width 0.3s;
