@@ -135,10 +135,10 @@ if (!window.Intl) {
 // it's not most important operation and if main code fails,
 // we do not want it installed
 if (process.env.NODE_ENV === 'production') {
-  const Notification = require('utils/firebase-notification').default
+  // const Notification = require('utils/firebase-notification').default
 
   require('offline-plugin/runtime').install()
     // THIS IS FOR NOTIFICATION UNCOMMENT ONCE READY
 
-  Notification.install()
+  // Notification.install()
 }
