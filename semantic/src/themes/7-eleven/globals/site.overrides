@@ -96,8 +96,8 @@ input.input-field {
   }
 }
 
-.ui.modal-bak {
-  height: initial;
+.ui.modal {
+  height: auto;
 }
 
 .text {
@@ -250,6 +250,11 @@ svg#barcode {
         padding-top: 25px;
       }
     }
+    &__bottom {
+      &--15 {
+        padding-bottom: 15px;
+      }
+    }
     &__horizontal {
       &--none {
         padding-left: 0 !important;
@@ -325,7 +330,7 @@ svg#barcode {
     letter-spacing: 5px;
     margin: 0 auto !important;
     padding: 12px 60px !important;
-    width: initial;
+    width: auto;
 
     span {
       font-size: 16px;

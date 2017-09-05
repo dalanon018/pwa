@@ -15,16 +15,18 @@ import UNPAID from 'images/status/unpaid.svg'
 
 const PurchaseWrapper = styled.div`
   cursor: pointer;
+  height: 100%;
   margin: 5px 0;
 `
 
 const ProductWrapper = styled.div`
   background-color: #F0F0F0;
-  border: 2px solid  ${({status}) => status};
   border-radius: 5px;
+  border: 2px solid  ${({status}) => status};
   display: flex;
-  min-height: 160px;
+  height: 100%;
   margin: 0 auto;
+  min-height: 160px;
 `
 const ProductImage = styled.div`
   background: url(${({background}) => background}) no-repeat center / cover;
@@ -44,6 +46,7 @@ const ProductDescription = styled.div`
   h6 {
     line-height: 10px;
     text-align: right;
+    width: 100%;
   }
 `
 

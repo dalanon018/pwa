@@ -25,7 +25,8 @@ export const ProductWrapper = styled.div`
   border-bottom-right-radius: 10px;
   border-bottom: 2px dashed #AEAEAE;
   display: flex;
-  min-height: 140px;
+  // min-height: 140px;
+  padding: 10px 0;
   justify-content: space-between;
   margin: 0 auto;
 
@@ -52,6 +53,7 @@ export const ProductDescription = styled.div`
   h6 {
     line-height: 10px;
     text-align: right;
+    width: 100%;
   }
 
   @media (min-width: 768px) {

@@ -28,7 +28,7 @@ const BannerHeader = styled.div`
   position: relative;
   width: 100%;
 
-  @media (min-width: 370px) {
+  @media (min-width: 320px) {
     border-radius: 4px 4px 0 0;
   }
 
@@ -85,7 +85,7 @@ const ModalContainer = styled.div`
     }
   }
 
-  @media (min-width: 370px) {
+  @media (min-width: 320px) {
     .content {
       padding: 15px 25px 30px;
     }

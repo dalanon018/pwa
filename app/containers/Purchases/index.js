@@ -64,7 +64,7 @@ const BarcodeListWrapper = styled.div`
 const PurchasesList = styled.div`
   align-items: center;
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
   justify-content: ${({purchases}) => purchases ? 'flex-start' : 'center'};
 
   @media (min-width: 768px) {
@@ -189,7 +189,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
               { this._displayEmpty() }
               {
                   purchases.map((order, index) =>
-                    <Grid.Column key={index}>
+                    <Grid.Column key={index} className='padding__bottom--15'>
                       <Purchase
                         defaultImage={imageStock('default-slider.jpg')}
                         key={order.get('trackingNumber')}

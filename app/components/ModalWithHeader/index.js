@@ -197,16 +197,16 @@ class ModalWithHeader extends React.PureComponent {
   }
 
   render () {
-    const { receipt, goToHome, goToReceipts, windowWidth } = this.props
+    const { receipt, goToHome, goToReceipts } = this.props
     const currentStatus = STATUSES[toUpper(receipt.get('status'))] || ''
     const { primary, secondary, onClick } = ModalButtons({ status: currentStatus, goToHome, goToReceipts }) || {}
-    const modalSize = windowWidth >= 768 ? 'small' : 'large'
+    // const modalSize = windowWidth >= 768 ? 'small' : 'mini'
 
     return (
       <Modal
         defaultOpen
         closeOnDimmerClick={false}
-        size={modalSize}
+        /* size={modalSize} */
       >
         <ModalContainer>
           <BannerHeader

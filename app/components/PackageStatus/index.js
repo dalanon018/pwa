@@ -18,10 +18,12 @@ import INTRANSITDONE from 'images/status/intransit-done.svg'
 import DELIVEREDDONE from 'images/status/delivered-done.svg'
 
 const StatusImg = styled.img`
-  max-width: 50px;
+  max-width: 40px;
+  width: 100%;
 
   @media (min-width: 768px) {
     max-width: 70px
+    width: 100%;
   }
 `
 const StatusColumnWrapper = styled.div`
@@ -43,6 +45,7 @@ const StatusColumnConnectorWrapper = styled.div`
 
   @media (min-width: 768px) {
     flex-grow: 4;
+    width: 20%;
   }
 `
 
@@ -50,12 +53,14 @@ const StatusConnecter = styled.div`
   border-top: 2px dotted ${({ isDone }) => isDone ? '#8DC641' : '#5B5B5B'};
   height: 1px;
   width: 100%;
+  min-width: 30px;
 `
 
 const Wrapper = styled.div`
   align-items: center;
   display: flex;
   justify-content: flex-start;
+  margin-top: 10px;
 `
 
 const IS_RESERVED_DONE = ['CONFIRMED', 'INTRANSIT', 'DELIVERED']
