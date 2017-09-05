@@ -342,7 +342,7 @@ const LabelPrice = styled.div`
     color: #F88728;
     font-family: 'helveticabold';
     font-size: 25px;
-    line-height: inherit;
+    line-height: 48px;
     margin-right: 10px;
     margin: 0;
     text-transform: uppercase;

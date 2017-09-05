@@ -189,20 +189,6 @@ class SearchMenu extends PureComponent {
     clearSearch({})
   }
 
-  componentDidMount () {
-    // Evergreen event listener || IE8 event listener
-    const addEvent = this._searchInput.addEventListener || this._searchInput.attachEvent
-    addEvent('keypress', this._handleKeyPress, false)
-  }
-
-  componentWillUnmount () {
-    if (this._searchInput) {
-      // Reduce any memory leaks
-      const removeEvent = this._searchInput.removeEventListener || this._searchInput.detachEvent
-      removeEvent('keypress', this._handleKeyPress)
-    }
-  }
-
   render () {
     const { leftButtonAction, hideBackButton, intl } = this.props
     const { dirty } = this.state
@@ -222,8 +208,9 @@ class SearchMenu extends PureComponent {
                 <Icon name='search' color='black' size='large' onClick={this._handlePressSearch} />
                 <SearchInput
                   innerRef={this._inputReference}
-                  placeholder={intl.formatMessage(messages.searchPlaceHolder)}
                   onChange={this._handleOnchange}
+                  onKeyPress={this._handleKeyPress}
+                  placeholder={intl.formatMessage(messages.searchPlaceHolder)}
                 />
                 {
                   dirty &&

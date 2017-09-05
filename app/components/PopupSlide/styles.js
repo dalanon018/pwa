@@ -63,6 +63,7 @@ const BannerHeader = styled.div`
   width: 100%;
 
   .image {
+    align-self: center;
     width: 20px;
   }
 
