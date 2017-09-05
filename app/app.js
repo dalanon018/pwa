@@ -11,10 +11,11 @@ import 'babel-polyfill'
 // Import all the third party stuff
 import React from 'react'
 import ReactDOM from 'react-dom'
+import FontFaceObserver from 'fontfaceobserver'
+
 import { Provider } from 'react-redux'
 import { applyRouterMiddleware, Router, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
-import FontFaceObserver from 'fontfaceobserver'
 import { useScroll } from 'react-router-scroll'
 
 // import 'sanitize.css/sanitize.css'
@@ -134,10 +135,10 @@ if (!window.Intl) {
 // it's not most important operation and if main code fails,
 // we do not want it installed
 if (process.env.NODE_ENV === 'production') {
-  require('offline-plugin/runtime').install() // eslint-disable-line global-require
-}
+  // const Notification = require('utils/firebase-notification').default
 
-// Register push notification here
-// THIS IS FOR NOTIFICATION UNCOMMENT ONCE READY
-// const Notifications = new FirebaseNotifications()
-// Notifications.install()
+  require('offline-plugin/runtime').install()
+    // THIS IS FOR NOTIFICATION UNCOMMENT ONCE READY
+
+  // Notification.install()
+}

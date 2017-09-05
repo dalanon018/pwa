@@ -200,7 +200,7 @@ class ModalWithHeader extends React.PureComponent {
     const { receipt, goToHome, goToReceipts, windowWidth } = this.props
     const currentStatus = STATUSES[toUpper(receipt.get('status'))] || ''
     const { primary, secondary, onClick } = ModalButtons({ status: currentStatus, goToHome, goToReceipts }) || {}
-    const modalSize = windowWidth >= 768 ? 'small' : 'mini'
+    const modalSize = windowWidth >= 768 ? 'small' : 'large'
 
     return (
       <Modal
