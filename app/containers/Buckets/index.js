@@ -113,7 +113,6 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     toggleSidebar: false
   }
 
-  _mainContent
   _lastY
   _parentElement
 
@@ -131,18 +130,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     this._goToHome = this._goToHome.bind(this)
     this._goToReceipts = this._goToReceipts.bind(this)
     this._handleBackButton = this._handleBackButton.bind(this)
-    this._handleMainContent = this._handleMainContent.bind(this)
     this._scrolledSidebarChecker = this._scrolledSidebarChecker.bind(this)
     this._findParent = this._findParent.bind(this)
     this._initY = this._initY.bind(this)
-    this._touchMoveAddListener = this._touchMoveAddListener.bind(this)
-    this._touchMoveRemoveListener = this._touchMoveRemoveListener.bind(this)
   }
-
-  // _collectionHas (a, b) {
-  //   if (collectionExist(a, b)) {
-  //     return true
-  //   }
 
   //   return false
   // }
@@ -158,24 +149,14 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     return cur
   }
 
-  _touchMoveAddListener () {
-    const addEvent = this._mainContent.addEventListener
-    addEvent('touchmove', this._scrolledSidebarChecker, false)
-    addEvent('touchstart', this._initY, false)
-  }
-
-  _touchMoveRemoveListener () {
-    const removeEvent = this._mainContent.removeEventListener
-    removeEvent('touchmove', this._scrolledSidebarChecker)
-    removeEvent('touchstart', this._initY)
-  }
-
   _initY (e) {
     this._lastY = e.touches[0].clientY
+
     this._parentElement = this._findParent(e.target, '.sidebar-wrapper')
   }
 
   _scrolledSidebarChecker (e) {
+    console.log(e.target)
     let sideBarMenu = this._parentElement.firstElementChild
     let currentY = e.changedTouches[0].clientY
 
@@ -190,10 +171,6 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
         e.preventDefault()
       }
     }
-  }
-
-  _handleMainContent (content) {
-    this._mainContent = content
   }
 
   _goToHome () {
@@ -231,11 +208,11 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     let sidebarChecker = toggleSidebar ? 'scroll' : 'hidden'
     document.body.style.overflow = sidebarChecker
 
-    if (!toggleSidebar) {
-      this._touchMoveAddListener()
-    } else {
-      this._touchMoveRemoveListener()
-    }
+    // if (!toggleSidebar) {
+    //   this._touchMoveAddListener()
+    // } else {
+    //   this._touchMoveRemoveListener()
+    // }
 
     this.setState({
       toggleSidebar: modalToggle
@@ -361,14 +338,6 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     browserHistory.listen(this._handleBackButton)
   }
 
-  componentDidUpdate (prevProps, prevState) {
-
-  }
-
-  componentWillUnmount () {
-    this._touchMoveRemoveListener()
-  }
-
   componentWillReceiveProps (nextProps) {
     const { mobileNumbers } = nextProps
     /**
@@ -383,10 +352,14 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     return (
       <Wrapper toggleSidebar={toggleSidebar}>
         { this._displayHeader() }
-        <MainContent innerRef={this._handleMainContent} toggleSidebar={toggleSidebar}>
+        <MainContent
+          toggleSidebar={toggleSidebar} >
           { children }
         </MainContent>
-        <div className='sidebar-wrapper'>
+        <div
+          className='sidebar-wrapper'
+          onTouchMove={this._scrolledSidebarChecker}
+          onTouchStart={this._initY} >
           <SidebarMenu
             changeRoute={changeRoute}
             categories={productCategories}
