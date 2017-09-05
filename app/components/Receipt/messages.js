@@ -20,7 +20,7 @@ export default defineMessages({
   },
   INTRANSIT: {
     id: 'app.components.Receipt.INTRANSIT',
-    defaultMessage: 'This item is on its way is on its way to the store'
+    defaultMessage: 'This item is on its way to the store'
   },
   DELIVERED: {
     id: 'app.components.Receipt.DELIVERED',
