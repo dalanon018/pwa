@@ -22,13 +22,18 @@ const HeaderBase = styled.div`
 `
 
 const HeaderOrder = styled(HeaderBase)`
+  align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   font-size: 21px;
+  justify-content: center;
   line-height: 1.2;
   text-transform: uppercase;
+  width: 100%;
+
+  span {
+    width: 100%;
+  }
 `
 
 const ImageWrapper = styled.img`
