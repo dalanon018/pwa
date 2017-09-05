@@ -33,7 +33,7 @@ self.addEventListener('fetch', function (e) {
  */
 
 firebase.initializeApp({
-  'messagingSenderId': 'FIREBASE_SENDER_ID'
+  'messagingSenderId': '771793449038' // change this to prod once ready
 });
 
 const messaging = firebase.messaging();
