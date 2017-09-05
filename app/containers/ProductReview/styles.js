@@ -335,14 +335,13 @@ const LabelSubTitle = styled.span`
 `
 
 const LabelPrice = styled.div`
-  margin-top: 10px;
-  line-height: initial;
+  margin-top: 5px;
+  line-height: normal;
 
   .total {
     color: #F88728;
     font-family: 'helveticabold';
     font-size: 25px;
-    line-height: 48px;
     margin-right: 10px;
     margin: 0;
     text-transform: uppercase;

@@ -9,6 +9,7 @@ import H6 from 'components/H6'
 import CliqqLogo from 'images/icons/cliqq.png'
 
 const PurchaseWrapper = styled.div`
+  cursor: pointer;
   margin: 5px 0;
 `
 
@@ -38,6 +39,7 @@ const ProductDescription = styled.div`
   h6 {
     line-height: 10px;
     text-align: right;
+    width: 100%;
   }
 `
 

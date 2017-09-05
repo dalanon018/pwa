@@ -18,7 +18,7 @@ const Timer = styled.div`
   font-size: 60px;
   margin: 0 0 20px;
 
-  @media (min-width: 992px) {
+  @media (min-width: 1200px) {
     font-size: 100px;
   }
 `
