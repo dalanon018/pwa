@@ -1,23 +1,17 @@
-import Firebase from 'firebase'
+import Firebase from './firebase-install'
 
 class FirebaseDB {
-  constructor () {
-    Firebase.initializeApp({
-      apiKey: process.env.FIREBASE_API_KEY,
-      authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-      databaseURL: process.env.FIREBASE_DATABASE_URL,
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-      messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID
-    })
+  _Firebase
 
+  constructor (FirebaseInit) {
+    this._Firebase = FirebaseInit
     this.login = this.login.bind(this)
     this.getDB = this.getDB.bind(this)
     this.update = this.update.bind(this)
   }
 
   login () {
-    return Firebase.auth().signInWithEmailAndPassword(
+    return this._Firebase.auth().signInWithEmailAndPassword(
       process.env.FIREBASE_USERNAME,
       process.env.FIREBASE_PASSWORD
     )
@@ -27,7 +21,7 @@ class FirebaseDB {
    * get the root object [transactions]
    */
   getDB () {
-    return Firebase.database().ref().child(process.env.FIREBASE_MAIN_OBJECT)
+    return this._Firebase.database().ref().child(process.env.FIREBASE_MAIN_OBJECT)
   }
 
   /**
@@ -60,4 +54,4 @@ class FirebaseDB {
   }
 }
 
-export default new FirebaseDB()
+export default new FirebaseDB(Firebase)
