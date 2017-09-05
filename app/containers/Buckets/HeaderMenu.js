@@ -352,18 +352,7 @@ export default class MainMenu extends PureComponent {
   }
 
   componentDidUpdate () {
-    // this._handleActiveMenu()
-
-    // const addEvent = this._searchInput.addEventListener || this._searchInput.attachEvent
-    // addEvent('keypress', this._handleKeyPress, false)
-  }
-
-  componentWillUnmount () {
-    if (this._searchInput) {
-      // Reduce any memory leaks
-      // const removeEvent = this._searchInput.removeEventListener || this._searchInput.detachEvent
-      // removeEvent('keypress', this._handleKeyPress)
-    }
+    this._handleActiveMenu()
   }
 
   render () {
@@ -411,7 +400,10 @@ export default class MainMenu extends PureComponent {
                   <Input
                     type='text'
                     placeholder={intl.formatMessage(messages.search)}>
-                    <input ref={this._inputReference} onKeyPress={this._handleKeyPress} />
+                    <input
+                      ref={this._inputReference}
+                      onKeyPress={this._handleKeyPress}
+                    />
                     <Button onClick={this._handleSearchItem} >
                       <Icon name='search' />
                     </Button>
