@@ -399,7 +399,7 @@ export default class MainMenu extends PureComponent {
                 <InputWrapper>
                   <Input
                     type='text'
-                    placeholder={intl.formatMessage(messages.search)}>
+                    placeholder={intl.formatMessage(messages.searchPlaceHolder)}>
                     <input
                       ref={this._inputReference}
                       onKeyPress={this._handleKeyPress}

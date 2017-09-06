@@ -19,6 +19,7 @@ import DELIVEREDDONE from 'images/status/delivered-done.svg'
 
 const StatusImg = styled.img`
   max-width: 40px;
+  min-width: 34px;
   width: 100%;
 
   @media (min-width: 768px) {
@@ -27,7 +28,7 @@ const StatusImg = styled.img`
   }
 `
 const StatusColumnWrapper = styled.div`
-  flex-grow: 3;
+  flex-grow: 0;
   opacity: ${({ isDone, current }) => (isDone || current) ? '1' : '0.3'};
 `
 
@@ -53,7 +54,7 @@ const StatusConnecter = styled.div`
   border-top: 2px dotted ${({ isDone }) => isDone ? '#8DC641' : '#5B5B5B'};
   height: 1px;
   width: 100%;
-  min-width: 30px;
+  min-width: 10px;
 `
 
 const Wrapper = styled.div`
