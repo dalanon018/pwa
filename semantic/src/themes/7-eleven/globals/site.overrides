@@ -145,7 +145,12 @@ input.input-field {
     }
   }
 
-  #termsandconditions, #termsandconditionsprivacyhtml, #titlefaq {
+  #termsandconditions,
+  #termsandconditions-1,
+  #termsandconditionsprivacyhtml,
+  #titlefaq,
+  #titleprivacypolicy,
+  #privacypolicy {
     display: none;
   }
 
@@ -174,16 +179,18 @@ input.input-field {
   }
 }
 
+.terms-conditions {
+  p:first-of-type {
+    display: none;
+  }
+}
+
 .animation-fade {
   animation:fadeIn ease-in 1;
   animation-duration: .5s;
 
   p {
     font-family: 'helveticamedium';
-
-    &:first-of-type {
-      display: none;
-    }
   }
 }
 

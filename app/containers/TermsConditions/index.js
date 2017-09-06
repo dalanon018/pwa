@@ -37,7 +37,7 @@ export class TermsConditions extends React.PureComponent { // eslint-disable-lin
     const html = converter.makeHtml(markdown)
     return (
       <div>
-        <div className='document-helper'>
+        <div className='document-helper terms-conditions'>
           <Grid padded>
             <H1 center className='padding__top--25 padding__none--horizontal'>
               <FormattedMessage {...messages.header} />

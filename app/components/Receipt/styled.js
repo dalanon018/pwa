@@ -177,7 +177,7 @@ export const BarcodeSVG = styled.svg`
 
 export const WrapperWarning = styled.div`
   background-color: #8DC641;
-  padding: 20px;
+  padding: 10px 20px;
   position: relative;
   text-align: center;
   text-transform: uppercase;
