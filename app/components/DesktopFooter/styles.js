@@ -35,7 +35,7 @@ span {
 
 .item {
   position: relative;
-  margin-left: 40px !important;
+  margin-left: 20px !important;
   &:first-child {
     &:before {
       content: '';
@@ -45,8 +45,16 @@ span {
     bottom: 3px;
     color: #5B5B5B;
     content: '|';
-    left: -25px;
+    left: -13px;
     position: absolute;
+  }
+
+  @media (min-width: 992px) {
+    margin-left: 40px !important;
+
+    &:before {
+      left: -25px;
+    }
   }
 }
 
