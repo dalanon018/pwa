@@ -26,10 +26,11 @@ const ProductWrapper = styled.div`
   display: flex;
   height: 100%;
   margin: 0 auto;
-  min-height: 160px;
+  min-height: 140px;
 `
 const ProductImage = styled.div`
-  background: url(${({background}) => background}) no-repeat center / cover;
+  background: url(${({background}) => background}) no-repeat center / contain;
+  margin: 10px;
   width: 100%;
 `
 
@@ -41,12 +42,16 @@ const ProductDescription = styled.div`
   flex: 1 0 auto;
   justify-content: center;
   letter-spacing: 2px;
-  width: 70%;
+  width: 65%;
 
   h6 {
     line-height: 10px;
     text-align: right;
     width: 100%;
+  }
+
+  @media (min-width: 992px) {
+    width: 60%;
   }
 `
 
