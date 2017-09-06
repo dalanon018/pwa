@@ -8,7 +8,8 @@
   },
   "engines": {
     "npm": ">=4",
-    "node": "7.10.1"
+    "node": "7.10.1",
+    "yarn": "0.27.5"
   },
   "author": "Offshorly Devs",
   "license": "MIT",
