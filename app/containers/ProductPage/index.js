@@ -69,7 +69,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       prevMobileNumber: null,
       socialToggle: false,
       copied: false,
-      openModalPhoneDesktop: false
+      openModalPhoneDesktop: false,
+      showSlide: false
     }
 
     this._handleSubmit = this._handleSubmit.bind(this)
@@ -82,6 +83,14 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this._handleCopy = this._handleCopy.bind(this)
     this._handleModalOpen = this._handleModalOpen.bind(this)
     this._handleModalClose = this._handleModalClose.bind(this)
+    this._handleTouch = this._handleTouch.bind(this)
+  }
+
+  _handleTouch (e) {
+    const { showSlide } = this.state
+    if (showSlide) {
+      e.preventDefault()
+    }
   }
 
   _handleModalOpen () {
@@ -111,8 +120,12 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     })
   }
 
-  _handleToggle = () => {
+  _handleToggle = (e) => {
+    e.stopPropagation()
     this.props.setToggle()
+    this.setState({
+      showSlide: !this.state.showSlide
+    })
   }
 
   _handleSuccess () {
@@ -189,27 +202,29 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             { name: 'description', content: 'Description of ProductPage' }
           ]}
         />
-        <Product
-          loading={loading}
-          product={product}
-          windowWidth={windowWidth}
-          popup={this._handleToggle}
-          copied={this._handleCopy}
-          defaultImage={imageStock('default-slider.jpg')}
-          toggle={this.state.socialToggle}
-          toggleClick={this._handleSocialToggle}
-          productPageTrigger={productPageTrigger}
+        <div>
+          <Product
+            loading={loading}
+            product={product}
+            windowWidth={windowWidth}
+            popup={this._handleToggle}
+            copied={this._handleCopy}
+            defaultImage={imageStock('default-slider.jpg')}
+            toggle={this.state.socialToggle}
+            toggleClick={this._handleSocialToggle}
+            productPageTrigger={productPageTrigger}
 
-          // For Phone Prompt Desktop Modal
-          submit={this._handleSubmit}
-          closeModal={this._handleModalClose}
-          modalToggle={modalToggle}
-          openModal={this._handleModalOpen}
-          toggleModal={toggle}
-          modalStatus={openModalPhoneDesktop}
-          mobileNumber={prevMobileNumber}
-          onClose={this._handleToggle} />
-        <div className='mobile-visibility'>
+            // For Phone Prompt Desktop Modal
+            submit={this._handleSubmit}
+            closeModal={this._handleModalClose}
+            modalToggle={modalToggle}
+            openModal={this._handleModalOpen}
+            toggleModal={toggle}
+            modalStatus={openModalPhoneDesktop}
+            mobileNumber={prevMobileNumber}
+            onClose={this._handleToggle} />
+        </div>
+        <div className='mobile-visibility' onTouchMove={this._handleTouch}>
           <PopupSlide
             submit={this._handleSubmit}
             modalClose={this._handleClose}
