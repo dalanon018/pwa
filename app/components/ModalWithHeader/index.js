@@ -156,13 +156,13 @@ const ModalButtons = ({ status, goToHome, goToReceipts }) => {
     },
     CLAIMED: {
       primary: 'AWESOME! THANKS',
-      secondary: 'KEEP SHOPPING',
-      onClick: goToHome
+      secondary: 'RECEIPTS HISTORY',
+      onClick: goToReceipts
     },
     UNCLAIMED: {
       primary: 'GOT IT!',
-      secondary: 'BACK TO HOME',
-      onClick: goToHome
+      secondary: 'RECEIPTS HISTORY',
+      onClick: goToReceipts
     }
   })(null)(status)
 }
