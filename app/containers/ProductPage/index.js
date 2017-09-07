@@ -199,6 +199,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
         <Helmet
           title='ProductPage'
           meta={[
+            { property: 'fb:app_id', content: '1998676580363463' },
             { property: 'og:site_name', content: 'Cliqq Shop' },
             { property: 'og:url', content: `${window.location.href}` },
             { property: 'og:title', content: `${product.get('title')}` },
