@@ -63,7 +63,6 @@ module.exports = require('./webpack.base.babel')({
       // Externals we have to find a way to match this using RegEx
          // Will hande external API CALLS
       ServiceWorker: {
-        event: true,
         entry: path.join(process.cwd(), 'app/sw-handler.js')
       },
 
