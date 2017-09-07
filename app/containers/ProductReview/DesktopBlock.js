@@ -60,7 +60,7 @@ function DesktopBlock ({
           </StepHead>
           <ProductName className='text-center'>{orderedProduct.get('title')}</ProductName>
           <CliqqCodeWrapper>
-            <Image src={CliqqLogo} /> { cliqqCode }
+            <Image alt='Cliqq' src={CliqqLogo} /> { cliqqCode }
           </CliqqCodeWrapper>
 
           <StepHead step='2' className='margin__top-positive--20'>

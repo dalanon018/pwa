@@ -379,9 +379,9 @@ export default class MainMenu extends PureComponent {
               <Grid.Column verticalAlign='middle'>
                 <RightWrapper>
                   <SearchIcon>
-                    <Image src={SearchImage} size='mini' onClick={this._handlerSearchClick} />
+                    <Image alt='Cliqq' src={SearchImage} size='mini' onClick={this._handlerSearchClick} />
                   </SearchIcon>
-                  <Image src={BarcodeImage} size='mini' onClick={this._handleBarcodeClick} />
+                  <Image alt='Cliqq' src={BarcodeImage} size='mini' onClick={this._handleBarcodeClick} />
                 </RightWrapper>
               </Grid.Column>
             </Grid.Row>
@@ -392,7 +392,7 @@ export default class MainMenu extends PureComponent {
             <Grid.Row columns='equal' verticalAlign='middle'>
               <Grid.Column>
                 <A href='/'>
-                  <Image className='brand' src={MainLogo} />
+                  <Image alt='Cliqq' className='brand' src={MainLogo} />
                 </A>
               </Grid.Column>
               <Grid.Column>

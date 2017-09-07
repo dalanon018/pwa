@@ -79,13 +79,13 @@ function DesktopHeader () {
               <InfoWrapper>
                 <div className='info-item'>
                   <A href='tel:4857889'>
-                    <Image src={PhoneIcon} />
+                    <Image alt='Cliqq' src={PhoneIcon} />
                     <span>(02) 485-788-9</span>
                   </A>
                 </div>
                 <div className='info-item'>
                   <A href='mailto:customercare@7-elevem.com.ph'>
-                    <Image src={EnvelopeIcon} />
+                    <Image alt='Cliqq' src={EnvelopeIcon} />
                     <span>customercare@7-eleven.com.ph</span>
                   </A>
                 </div>
@@ -95,12 +95,12 @@ function DesktopHeader () {
               <SocialIconsWrapper>
                 <div className='social-item'>
                   <A href='https://www.facebook.com/711philippines' target='_blank'>
-                    <Image avatar src={FacebookIcon} />
+                    <Image alt='Cliqq' avatar src={FacebookIcon} />
                   </A>
                 </div>
                 <div className='social-item'>
                   <A href='https://twitter.com/711philippines?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor' target='_blank'>
-                    <Image avatar src={TwitterIcon} />
+                    <Image alt='Cliqq' avatar src={TwitterIcon} />
                   </A>
                 </div>
               </SocialIconsWrapper>

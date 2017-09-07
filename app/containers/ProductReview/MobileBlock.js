@@ -59,10 +59,10 @@ function MobileBlock ({
                   <FormattedMessage {...messages.stepOne} />
                 </StepHead>
                 <ProductItem brand={orderedProduct.get('brandLogo')}>
-                  <Image src={orderedProduct.get('image') ? orderedProduct.get('image') : defaultImage} />
+                  <Image alt='Cliqq' src={orderedProduct.get('image') ? orderedProduct.get('image') : defaultImage} />
                 </ProductItem>
                 <CliqqCodeWrapper>
-                  <Image src={CliqqLogo} /> { cliqqCode }
+                  <Image alt='Cliqq' src={CliqqLogo} /> { cliqqCode }
                 </CliqqCodeWrapper>
                 <ProductName className='text-center'>{orderedProduct.get('title')}</ProductName>
               </StepContent>

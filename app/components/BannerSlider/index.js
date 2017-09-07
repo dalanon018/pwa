@@ -84,8 +84,8 @@ const HandleBlock = ({
                 }
                 {
                   receiptPageName
-                  ? <Image src={(item.getIn(['products', 'image']) && imageSize(item.getIn(['products', 'image']))) || imageStock('default-slider.jpg')} />
-                  : <Image src={(item.get('image') && imageSize(item.get('image'))) || imageStock('default-slider.jpg')} />
+                  ? <Image alt='Cliqq' src={(item.getIn(['products', 'image']) && imageSize(item.getIn(['products', 'image']))) || imageStock('default-slider.jpg')} />
+                  : <Image alt='Cliqq' src={(item.get('image') && imageSize(item.get('image'))) || imageStock('default-slider.jpg')} />
                 }
 
               </div>
