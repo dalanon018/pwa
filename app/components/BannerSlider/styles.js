@@ -8,6 +8,7 @@ const BannerSliderWrapper = styled.div`
   margin: ${props => !props.homeRouteName ? 'inherit' : 'auto auto 20px'};
   position: relative;
   width: 100%;
+  display: block;
 
   img {
     width: ${props => !props.homeRouteName ? 'initial' : '100%'};
