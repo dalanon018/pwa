@@ -4,6 +4,7 @@ const path = require('path')
 const compression = require('compression')
 const sslRedirect = require('heroku-ssl-redirect')
 const pkg = require(path.resolve(process.cwd(), 'package.json'))
+const prerenderNode = require('prerender-node')
 
 // Dev middleware
 const addDevMiddlewares = (app, webpackConfig) => {
@@ -20,6 +21,7 @@ const addDevMiddlewares = (app, webpackConfig) => {
 
   app.use(middleware)
   app.use(webpackHotMiddleware(compiler))
+  app.use(prerenderNode)
 
   // Since webpackDevMiddleware uses memory-fs internally to store build
   // artifacts, we use it instead
