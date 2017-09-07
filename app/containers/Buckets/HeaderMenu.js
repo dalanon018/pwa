@@ -164,7 +164,7 @@ const NavMenu = styled.div`
     font-family: 'helveticabold' !important;
     font-size: 18px !important;
     letter-spacing: 4px;
-    padding: 20px 50px !important;
+    padding: 20px !important;
     transition: all 0.3s ease !important;
     width: 100%;
 
