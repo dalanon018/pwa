@@ -49,8 +49,18 @@ function ProductView ({
   }
 
   const productName = (data) => {
-    if (data.length > 57) {
-      return `${data.slice(0, 57)}...`
+    let maxChar = 47
+    switch (true) {
+      case (windowWidth >= 768 && windowWidth < 897):
+        maxChar = 26
+        break
+      case (windowWidth >= 897 && windowWidth < 1192):
+        maxChar = 37
+        break
+    }
+
+    if (data.length > maxChar) {
+      return `${data.slice(0, maxChar)}...`
     }
     return data
   }
