@@ -92,7 +92,7 @@ export class PopupSlide extends React.PureComponent {
   _handleInput (e) {
     let curValue = e.target.value
 
-    if (curValue.length <= 10 && this._validateData(curValue)) {
+    if (curValue.length <= 10 && this._validateData(curValue) && curValue !== ' ') {
       e.preventDefault()
       this.setState({
         value: e.target.value,
