@@ -1,13 +1,6 @@
 import styled from 'styled-components'
 
 const BannerWrapper = styled.div`
-  display: block;
-  height: 100%;
-  
-  @media (max-width: 320px) {
-    min-height: 224px;
-  }
-
   @media (min-width: 768px) {
     padding: 0 14px;
   }
