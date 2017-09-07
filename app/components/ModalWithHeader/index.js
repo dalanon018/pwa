@@ -136,8 +136,8 @@ const ModalButtons = ({ status, goToHome, goToReceipts }) => {
     },
     UNPAID: {
       primary: 'GOT IT!',
-      secondary: 'BACK TO HOME',
-      onClick: goToHome
+      secondary: 'RECEIPTS HISTORY',
+      onClick: goToReceipts
     },
     CONFIRMED: {
       primary: 'AWESOME! THANKS',
