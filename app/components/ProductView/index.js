@@ -49,16 +49,13 @@ function ProductView ({
   }
 
   const productName = (data) => {
-    let maxChar
+    let maxChar = 47
     switch (true) {
       case (windowWidth >= 768 && windowWidth < 897):
         maxChar = 26
         break
       case (windowWidth >= 897 && windowWidth < 1192):
         maxChar = 37
-        break
-      default:
-        maxChar = 47
         break
     }
 
