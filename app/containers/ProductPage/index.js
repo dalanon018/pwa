@@ -202,6 +202,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             { name: 'description', content: 'Description of ProductPage' },
 
             { property: 'og:title', content: `${product.get('title')}` },
+            { property: 'og:type', content: 'article' },
             { property: 'og:description', content: `${product.get('details')}` },
             { property: 'og:image', content: `${product.get('image')}` }
           ]}
