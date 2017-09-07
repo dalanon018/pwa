@@ -27,9 +27,8 @@ text-align: right;
 span {
   color: #5B5B5B;
   cursor: pointer;
-  font-family: 'helveticalight';
+  font-family: 'helveticamedium';
   font-size: 11px;
-  font-weight: 700;
   letter-spacing: 3px;
 }
 
@@ -68,9 +67,8 @@ span {
 const CopyRight = styled.p`
 color: #5B5B5B;
 cursor: pointer;
-font-family: 'helveticalight';
+font-family: 'helveticamedium';
 font-size: 11px;
-font-weight: bold;
 letter-spacing: 1px;
 margin-left: 15px;
 margin-top: 11px;

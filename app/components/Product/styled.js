@@ -144,9 +144,8 @@ export const DetailsDescription = styled.div`
   line-height: 1.5;
 
   @media (min-width: 768px) {
-    font-family: 'helveticalight';
+    font-family: 'helveticamedium';
     font-size: 14px;
-    font-weight: bold;
   }
 `
 export const ButtonContainer = styled(AnimateDiv)`
