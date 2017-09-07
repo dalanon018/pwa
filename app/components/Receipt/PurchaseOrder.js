@@ -1,10 +1,8 @@
 import React, { PropTypes } from 'react'
 import styled from 'styled-components'
-import { CountdownParser } from 'utils/date'
 
 import { FormattedMessage } from 'react-intl'
 
-import Countdown from 'components/Countdown'
 import PackageStatus from 'components/PackageStatus'
 
 import messages from './messages'
@@ -38,18 +36,29 @@ const HeaderOrder = styled(HeaderBase)`
   }
 `
 
-const PurchaseOrder = ({ status, receipt }) => {
+const ShowHeaderStatus = ({currentStatus, timer}) => {
+  if (timer === '00:00:00' && (currentStatus === 'RESERVED')) {
+    return (
+      <FormattedMessage {...messages.RESERVEDEXPIRED} />
+    )
+  }
+
+  return (
+    <FormattedMessage {...messages[currentStatus]} />
+  )
+}
+const PurchaseOrder = ({ status, receipt, timer }) => {
   const currentStatus = status || 'unknownStatus'
   return (
     <div>
       <HeaderOrder>
-        <FormattedMessage {...messages[currentStatus]} />
+        <ShowHeaderStatus {...{ currentStatus, timer }} />
       </HeaderOrder>
       <HeaderOrder {...{ status }} >
         {
           (status === 'RESERVED') &&
           <Timer>
-            <Countdown endDate={CountdownParser(receipt.get('claimExpiry'))} />
+            <p> { timer || '00:00:00'} </p>
           </Timer>
         }
       </HeaderOrder>
