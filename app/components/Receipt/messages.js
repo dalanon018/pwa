@@ -10,6 +10,10 @@ export default defineMessages({
     id: 'app.components.Receipt.RESERVED',
     defaultMessage: 'You have this time to show this receipt to the store'
   },
+  RESERVEDEXPIRED: {
+    id: 'app.components.Receipt.RESERVEDEXPIRED',
+    defaultMessage: 'Oops! You seem to be offline at the moment!'
+  },
   UNPAID: {
     id: 'app.components.Receipt.UNPAID',
     defaultMessage: 'This item has expired. Would you like to repurchase it?'
@@ -61,6 +65,10 @@ export default defineMessages({
   receiptInfoMessageReserve: {
     id: 'app.components.Receipt.receiptInfoMessageReserve',
     defaultMessage: 'Pay Item Before the time Expires'
+  },
+  receiptInfoMessageReserveExpired: {
+    id: 'app.components.Receipt.receiptInfoMessageReserveExpired',
+    defaultMessage: 'Go online to see if this receipt is still valid'
   },
   receiptInfoMessageUnpaid: {
     id: 'app.components.Receipt.receiptInfoMessageUnpaid',

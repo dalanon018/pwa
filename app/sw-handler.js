@@ -1,6 +1,3 @@
-importScripts('https://www.gstatic.com/firebasejs/3.5.2/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/3.5.2/firebase-messaging.js');
-
 const CACHE_NAME = '7-eleven-v0.0.0'
 const API_REQUESTS_URL = [
   'https://apidemo.cliqq.net:8443'
@@ -27,31 +24,3 @@ self.addEventListener('fetch', function (e) {
     )
   }
 })
-
-/**
- * THIS IS FOR NOTIFICATION FIREBASE
- */
-
-firebase.initializeApp({
-  'messagingSenderId': '771793449038' // change this to prod once ready
-});
-
-const messaging = firebase.messaging();
-
-messaging.setBackgroundMessageHandler((payload) => {
-  // Parses data received and sets accordingly
-  const data = JSON.parse(payload.data.notification);
-  const notificationTitle = data.title;
-  const notificationOptions = {
-    body: data.body,
-    icon: 'icon-96.png',
-    // actions: [
-    //   {action: 'confirmAttendance', title: '👍 Confirm attendance'},
-    //   {action: 'cancel', title: '👎 Not coming'}
-    // ],
-    // For additional data to be sent to event listeners, needs to be set in this data {}
-    // data: {confirm: data.confirm, decline: data.decline}
-  };
-
-  return self.registration.showNotification(notificationTitle, notificationOptions);
-});

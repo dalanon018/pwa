@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import JsBarcode from 'jsbarcode'
+import moment from 'moment'
 
 import { FormattedMessage } from 'react-intl'
 import { Grid } from 'semantic-ui-react'
@@ -13,7 +14,7 @@ import ProductSlider from 'components/BannerSlider'
 import CliqqLogo from 'images/icons/cliqq.png'
 import WarningIcon from 'images/icons/notice.png'
 
-import { DateFormater } from 'utils/date'
+import { DateFormater, CountdownParser } from 'utils/date'
 
 import PurchaseOrder from './PurchaseOrder'
 import PurchaseUsecase from './PurchaseUsecase'
@@ -75,10 +76,20 @@ const WarningContent = ({ children }) => (
   </WrapperWarning>
 )
 
-const WarningStatus = ({status}) => {
+const WarningCTAReserved = ({ timer }) => {
+  if (timer === '00:00:00') {
+    return (
+      <FormattedMessage {...messages.receiptInfoMessageReserveExpired} />
+    )
+  }
+
+  return <FormattedMessage {...messages.receiptInfoMessageReserve} />
+}
+
+const WarningStatus = ({status, timer}) => {
   return ComponentDetail({
     RESERVED: (
-      <FormattedMessage {...messages.receiptInfoMessageReserve} />
+      <WarningCTAReserved timer={timer} />
     ),
     UNPAID: (
       <FormattedMessage {...messages.receiptInfoMessageUnpaid} />
@@ -162,10 +173,92 @@ class Receipt extends React.PureComponent {
     goReceiptPage: PropTypes.func.isRequired
   }
 
+  /**
+   * holder for countdown interval
+   */
+  countdownInterval
+
+  state = {
+    timer: ''
+  }
+
   constructor () {
     super()
 
     this._renderPurchaseBanner = this._renderPurchaseBanner.bind(this)
+    this._countdownTimer = this._countdownTimer.bind(this)
+    this._startCountDownTimer = this._startCountDownTimer.bind(this)
+    this._disableTimer = this._disableTimer.bind(this)
+  }
+
+  _startCountDownTimer (props) {
+    const { receipt, statuses } = props
+
+    if (statuses[receipt.get('status')] === 'RESERVED') {
+      const endDate = CountdownParser(receipt.get('claimExpiry'))
+
+      clearInterval(this.countdownInterval)
+
+      this._countdownTimer(endDate)
+    }
+  }
+
+  _countdownTimer (endDate) {
+    let currentTime = moment().unix()
+    let diffTime = endDate - currentTime
+    let duration = moment.duration(diffTime * 1000, 'milliseconds')
+    let interval = 1000
+
+    this.countdownInterval = setInterval(() => {
+      duration = moment.duration(duration - interval, 'milliseconds')
+      const countHours = () => {
+        if (duration.hours().toString().length > 1) {
+          return duration.hours()
+        } else {
+          return '0' + duration.hours()
+        }
+      }
+      const countMinutes = () => {
+        if (duration.minutes().toString().length > 1) {
+          return duration.minutes()
+        } else {
+          return '0' + duration.minutes()
+        }
+      }
+      const countSeconds = () => {
+        if (duration.seconds().toString().length > 1) {
+          return duration.seconds()
+        } else {
+          return '0' + duration.seconds()
+        }
+      }
+
+      this.setState({
+        timer: `${countHours()}:${countMinutes()}:${countSeconds()}`
+      })
+    }, 1000)
+  }
+
+    /**
+   * we need to make sure that once the timer goes to negative then
+   * we need to clear our interval means its done
+   */
+  _disableTimer () {
+    const { timer } = this.state
+    const pT = parseInt
+
+    const [ hh, mm, ss ] = timer.split(':')
+
+    if ((pT(hh) + pT(mm) + pT(ss)) < 0) {
+      clearInterval(this.countdownInterval)
+      this.setState({
+        timer: '00:00:00'
+      })
+    }
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    this._disableTimer()
   }
 
   componentWillReceiveProps (nextProps) {
@@ -184,15 +277,22 @@ class Receipt extends React.PureComponent {
         displayValue: false
       })
     }
+
+    this._startCountDownTimer(nextProps)
+  }
+
+  componentWillUnmount () {
+    clearInterval(this.countdownInterval)
   }
 
   _renderPurchaseBanner () {
+    const { timer } = this.state
     const { statuses, receipt, purchaseOrder } = this.props
     const currentStatus = statuses[receipt.get('status')] || ''
 
     if (purchaseOrder.includes(currentStatus)) {
       return (
-        <PurchaseOrder status={currentStatus} receipt={receipt} />
+        <PurchaseOrder status={currentStatus} receipt={receipt} timer={timer} />
       )
     }
 
@@ -200,7 +300,9 @@ class Receipt extends React.PureComponent {
   }
 
   render () {
+    const { timer } = this.state
     const { receipt, statuses, goReceiptPage, repurchaseFn, windowWidth, loading, receiptPageName } = this.props
+
     const resposiveColumns = () => {
       if (windowWidth >= 768) {
         return 2
@@ -270,7 +372,7 @@ class Receipt extends React.PureComponent {
                   </div>
                   <BarcodeSVG id='barcode' {...{ status: statuses[receipt.get('status')] }} />
                   <WarningContent>
-                    <WarningStatus {...{ status: statuses[receipt.get('status')] }} />
+                    <WarningStatus {...{ status: statuses[receipt.get('status')], timer }} />
                   </WarningContent>
                   <ButtonWrapper>
                     <ButtonRepurchaseHome {...{ status: statuses[receipt.get('status')], goReceiptPage, repurchaseFn }} />
