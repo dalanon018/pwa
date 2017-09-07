@@ -4,7 +4,6 @@ import { isNil } from 'ramda'
 const BannerSliderWrapper = styled.div`
   background: #F0F0F0;
   color: #333;
-  height: 100%;
   margin: ${props => !props.homeRouteName ? 'inherit' : 'auto auto 20px'};
   position: relative;
   width: 100%;
