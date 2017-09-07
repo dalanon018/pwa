@@ -36,10 +36,7 @@ export function App (props) {
           titleTemplate='%s - 7-Eleven CliQQ'
           defaultTitle='7-Eleven CliQQ'
           meta={[
-            { name: 'description', content: 'A 7-Eleven CliQQ application' },
-            { property: 'og:title', content: 'title' },
-            { property: 'og:description', content: 'description' },
-            { property: 'og:image', content: 'image' }
+            { name: 'description', content: 'A 7-Eleven CliQQ application' }
           ]}
           link={[
             { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css' },
