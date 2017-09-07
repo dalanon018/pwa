@@ -165,7 +165,7 @@ export class PopupSlide extends React.PureComponent {
       <PopupWrapper toggle={toggle}>
         <BannerHeader background={BannerBg}>
           <span>
-            <Image src={MobileIcon} />
+            <Image alt='Cliqq' src={MobileIcon} />
           </span>
         </BannerHeader>
         <PopupContainer>

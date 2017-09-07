@@ -92,7 +92,6 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
 
   _identifyBackground () {
     const { receipt } = this.props
-
     return identifyBackground({
       RESERVED,
       UNPAID,

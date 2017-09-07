@@ -20,10 +20,10 @@ function BannerStaticPromos ({
     return (
       <BannerWrapper>
         <div className='item'>
-          <Image src={imageStock('sample-banner-promo.png') || imageStock('default-banner-promo.png')} />
+          <Image alt='Cliqq' src={imageStock('sample-banner-promo.png') || imageStock('default-banner-promo.png')} />
         </div>
         <div className='item'>
-          <Image src={imageStock('sample-banner-promo.png') || imageStock('default-banner-promo.png')} />
+          <Image alt='Cliqq' src={imageStock('sample-banner-promo.png') || imageStock('default-banner-promo.png')} />
         </div>
       </BannerWrapper>
     )

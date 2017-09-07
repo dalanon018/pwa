@@ -47,10 +47,10 @@ function Category ({
               key={index}
               className='padding__none--horizontal category-item' >
               <CategoryBlock margin={margin} width={iconWidth} onClick={handleRedirect}>
-                <Image className='category-image' src={category.get('background') ? category.get('background') : defaultCategoryBackground} />
+                <Image alt='Cliqq' className='category-image' src={category.get('background') ? category.get('background') : defaultCategoryBackground} />
                 <CategoryContent>
                   <CategoryItem width={iconWidth}>
-                    <Image src={category.get('main') ? category.get('main') : imageStock('default-image.png')} />
+                    <Image alt='Cliqq' src={category.get('main') ? category.get('main') : imageStock('default-image.png')} />
                     <CategoryLabel fontSize={fontSize}>{category.get('name')}</CategoryLabel>
                   </CategoryItem>
                 </CategoryContent>
@@ -70,7 +70,7 @@ const DefaultState = ({
     <Grid.Column className='padding__none--horizontal category-item'>
       <EmptyDataBlock>
         <CategoryBlock margin={margin} className='responsive-width'>
-          <Image className='category-image' src={imageStock('broken-image.jpg')} />
+          <Image alt='Cliqq' className='category-image' src={imageStock('broken-image.jpg')} />
         </CategoryBlock>
       </EmptyDataBlock>
     </Grid.Column>

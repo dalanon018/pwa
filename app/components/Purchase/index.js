@@ -148,7 +148,7 @@ class Purchase extends React.PureComponent {
   _getColorStatus (status) {
     return switchFn({
       RESERVED: '#41BDF2',
-      UNPAID: '#2081EC',
+      UNPAID: '#F23640',
       CONFIRMED: '#F58322',
       INTRANSIT: '#EFBA03',
       DELIVERED: '#8DC641',

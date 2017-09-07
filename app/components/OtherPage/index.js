@@ -16,7 +16,7 @@ function OtherPage ({ message, image }) {
     <div>
       <Wrapper>
         <div>
-          <Image src={image} />
+          <Image alt='Cliqq' src={image} />
           <H1>
             <div dangerouslySetInnerHTML={{__html: message}} />
           </H1>

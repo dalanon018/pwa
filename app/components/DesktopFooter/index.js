@@ -64,17 +64,17 @@ export class DesktopFooter extends React.PureComponent {
                     <List horizontal>
                       <List.Item>
                         <A href='https://www.facebook.com/711philippines' target='_blank'>
-                          <Image avatar src={FacebookIcon} />
+                          <Image alt='Cliqq' avatar src={FacebookIcon} />
                         </A>
                       </List.Item>
                       <List.Item>
                         <A href='https://twitter.com/711philippines?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor' target='_blank'>
-                          <Image avatar src={TwitterIcon} />
+                          <Image alt='Cliqq' avatar src={TwitterIcon} />
                         </A>
                       </List.Item>
                       <List.Item>
                         <A href='mailto:psc-corp@7-eleven.com.ph'>
-                          <Image avatar src={EmailIcon} />
+                          <Image alt='Cliqq' avatar src={EmailIcon} />
                         </A>
                       </List.Item>
                     </List>

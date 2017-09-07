@@ -67,6 +67,7 @@ const SidebarItem = ({ children, image }) => {
     <ItemWrapper>
       <ItemImage>
         <Image
+          alt='Cliqq'
           src={image}
           size='mini'
           centered

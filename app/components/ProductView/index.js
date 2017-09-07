@@ -82,7 +82,7 @@ function ProductView ({
                   <PromoTag discount={product.get('discount')} />
                 }
                 <ImageWrapper>
-                  <Image src={(product.get('image') && `${product.get('image')}?w=175&h=175&fit=clamp`) || defaultImage} />
+                  <Image alt='Cliqq' src={(product.get('image') && `${product.get('image')}?w=175&h=175&fit=clamp`) || defaultImage} />
                 </ImageWrapper>
                 <ProductName>{ productName(product.get('title')) }</ProductName>
                 <ProductPriceWrapper>
@@ -131,9 +131,9 @@ const DefaultState = () => {
       <EmptyDataBlock>
         <ProductWrapper>
           <ImageWrapper>
-            <Image src={imageStock('default-product-loader.jpg')} className='empty-image' />
+            <Image alt='Cliqq' src={imageStock('default-product-loader.jpg')} className='empty-image' />
           </ImageWrapper>
-          <Image src={ParagraphImage} height={50} />
+          <Image alt='Cliqq' src={ParagraphImage} height={50} />
         </ProductWrapper>
       </EmptyDataBlock>
     </Grid.Column>
