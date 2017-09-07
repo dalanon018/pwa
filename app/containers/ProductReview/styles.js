@@ -203,9 +203,8 @@ const DetailsWrapper = styled.div`
   }
 
   @media (min-width: 768px) {
-    font-family: 'helveticalight';
+    font-family: 'helveticamedium';
     font-size: 14px;
-    font-weight: bold;
     margin-bottom: 35px;
     margin: 30px 0;
     padding: 0;
