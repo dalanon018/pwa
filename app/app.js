@@ -19,7 +19,7 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import { useScroll } from 'react-router-scroll'
 
 // import 'sanitize.css/sanitize.css'
-import '../semantic/dist/semantic.min.css'
+// import '../semantic/dist/semantic.min.css'
 
 // Import root app
 import App from 'containers/App'
@@ -41,6 +41,10 @@ import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-48.png'
 import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-96.png'
 import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-144.png'
 import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-192.png'
+
+// import _redirect and .netlify for deployment
+import '!file-loader?name=[name]!./_redirects'
+import '!file-loader?name=[name].[ext]!./.netlify'
 
 /* eslint-enable import/no-webpack-loader-syntax */
 

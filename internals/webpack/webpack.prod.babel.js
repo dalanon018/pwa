@@ -4,6 +4,7 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 const OfflinePlugin = require('offline-plugin')
+// const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
 // dll caching
 // const pkg = require(path.resolve(process.cwd(), 'package.json'))
@@ -24,7 +25,12 @@ module.exports = require('./webpack.base.babel')({
     chunkFilename: '[name].[chunkhash].chunk.js'
   },
 
+  babelQuery: {
+    plugins: ['lodash', 'transform-semantic-ui-react-imports']
+  },
+
   plugins: [
+    // new LodashModuleReplacementPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       children: true,
