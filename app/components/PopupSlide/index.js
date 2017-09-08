@@ -86,13 +86,13 @@ export class PopupSlide extends React.PureComponent {
   _validateData (data) {
     let lastIndex = data.length - 1
     let lastChar = data[lastIndex] === undefined ? '' : data[lastIndex]
-    return !isNaN(lastChar)
+    return !isNaN(lastChar) && lastChar !== ' '
   }
 
   _handleInput (e) {
     let curValue = e.target.value
 
-    if (curValue.length <= 10 && this._validateData(curValue) && curValue !== ' ') {
+    if (curValue.length <= 10 && this._validateData(curValue)) {
       e.preventDefault()
       this.setState({
         value: e.target.value,
