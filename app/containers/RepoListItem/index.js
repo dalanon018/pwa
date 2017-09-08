@@ -33,7 +33,7 @@ export class RepoListItem extends React.PureComponent { // eslint-disable-line r
         <RepoLink rel='noopener' href={item.html_url} target='_blank'>
           {nameprefix + item.name}
         </RepoLink>
-        <IssueLink rel='noopener' rel='noopener' href={`${item.html_url}/issues`} target='_blank'>
+        <IssueLink rel='noopener' href={`${item.html_url}/issues`} target='_blank'>
           <IssueIcon />
           <FormattedNumber value={item.open_issues_count} />
         </IssueLink>

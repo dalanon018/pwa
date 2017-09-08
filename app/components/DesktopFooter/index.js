@@ -63,7 +63,7 @@ export class DesktopFooter extends React.PureComponent {
                   <SocialIcons>
                     <List horizontal>
                       <List.Item>
-                        <A rel='noopener' href='https://www.facebook.com/711philippines'  target='_blank'>
+                        <A rel='noopener' href='https://www.facebook.com/711philippines' target='_blank'>
                           <Image alt='Cliqq' avatar src={FacebookIcon} />
                         </A>
                       </List.Item>
