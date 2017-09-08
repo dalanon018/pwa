@@ -64,7 +64,8 @@ module.exports = require('./webpack.base.babel')({
 
       // No need to cache .htaccess. See http://mxs.is/googmp,
       // this is applied before any match in `caches` section
-      excludes: ['.htaccess'],
+      // no need to include .netlify & _redirects
+      excludes: ['.htaccess', '.netlify', '_redirects'],
 
       // Externals we have to find a way to match this using RegEx
          // Will hande external API CALLS

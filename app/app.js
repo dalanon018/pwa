@@ -20,6 +20,8 @@ import { useScroll } from 'react-router-scroll'
 
 // import 'sanitize.css/sanitize.css'
 // import '../semantic/dist/semantic.min.css'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 // Import root app
 import App from 'containers/App'
@@ -35,16 +37,15 @@ import LanguageProvider from 'containers/LanguageProvider'
 import '!file-loader?name=[name].[ext]!./favicon.ico'
 import '!file-loader?name=[name].[ext]!./manifest.json'
 import 'file-loader?name=[name].[ext]!./.htaccess' // eslint-disable-line import/extensions
+// import _redirect and .netlify for deployment
+import '!file-loader?name=[name]!./_redirects'
+import '!file-loader?name=[name].[ext]!./.netlify'
 
 // we need to add also the icon for our manifest
 import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-48.png'
 import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-96.png'
 import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-144.png'
 import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-192.png'
-
-// import _redirect and .netlify for deployment
-import '!file-loader?name=[name]!./_redirects'
-import '!file-loader?name=[name].[ext]!./.netlify'
 
 /* eslint-enable import/no-webpack-loader-syntax */
 
