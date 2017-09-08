@@ -5,13 +5,14 @@
 */
 
 import React, { PropTypes } from 'react'
-import { imageStock } from 'utils/image-stock'
 
 import EmptyDataBlock from 'components/EmptyDataBlock'
 
 import { Grid, Image } from 'semantic-ui-react'
 
 import defaultCategoryBackground from 'images/default-categories.jpg'
+
+import { imageStock, paramsImgix } from 'utils/image-stock'
 
 import {
   range
@@ -34,6 +35,12 @@ function Category ({
   route,
   fontSize
 }) {
+  const imgixOptions = {
+    auto: 'format',
+    q: 75,
+    lossless: 0
+  }
+
   return (
     <Grid.Row columns={resposiveColumns}>
       {
@@ -47,10 +54,10 @@ function Category ({
               key={index}
               className='padding__none--horizontal category-item' >
               <CategoryBlock margin={margin} width={iconWidth} onClick={handleRedirect}>
-                <Image alt='Cliqq' className='category-image' src={category.get('background') ? category.get('background') : defaultCategoryBackground} />
+                <Image alt='Cliqq' className='category-image' src={category.get('background') ? paramsImgix(category.get('background'), imgixOptions) : defaultCategoryBackground} />
                 <CategoryContent>
                   <CategoryItem width={iconWidth}>
-                    <Image alt='Cliqq' src={category.get('main') ? category.get('main') : imageStock('default-image.png')} />
+                    <Image alt='Cliqq' src={category.get('main') ? paramsImgix(category.get('main'), imgixOptions) : imageStock('default-image.png')} />
                     <CategoryLabel fontSize={fontSize}>{category.get('name')}</CategoryLabel>
                   </CategoryItem>
                 </CategoryContent>

@@ -11,7 +11,7 @@ import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { noop } from 'lodash'
-import { ifElse, equals } from 'ramda'
+import { ifElse, equals, lt } from 'ramda'
 
 import { imageStock } from 'utils/image-stock'
 
@@ -194,19 +194,25 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     const { modalToggle, prevMobileNumber, openModalPhoneDesktop } = this.state
     const productPageTrigger = route && route
 
+    const addMeta = ifElse(
+      lt(0),
+      () => [
+        { property: 'fb:app_id', content: '1998676580363463' },
+        { property: 'og:site_name', content: 'Cliqq Shop' },
+        { property: 'og:url', content: `${window.location.href}` },
+        { property: 'og:title', content: `${product.get('title')}` },
+        { property: 'og:type', content: 'product' },
+        { property: 'og:description', content: `${product.get('details')}` },
+        { property: 'og:image', content: `${product.get('image')}` }
+      ],
+      () => []
+    )
+
     return (
       <div>
         <Helmet
           title='ProductPage'
-          meta={[
-            { property: 'fb:app_id', content: '1998676580363463' },
-            { property: 'og:site_name', content: 'Cliqq Shop' },
-            { property: 'og:url', content: `${window.location.href}` },
-            { property: 'og:title', content: `${product.get('title')}` },
-            { property: 'og:type', content: 'product' },
-            { property: 'og:description', content: `${product.get('details')}` },
-            { property: 'og:image', content: `${product.get('image')}` }
-          ]}
+          meta={addMeta(product.size)}
         />
         <div>
           <Product

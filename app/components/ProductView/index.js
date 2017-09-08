@@ -10,8 +10,6 @@ import {
   isEmpty
 } from 'lodash'
 
-import { imageStock } from 'utils/image-stock'
-
 import { FormattedMessage } from 'react-intl'
 import messages from './messages'
 import { Grid, Image } from 'semantic-ui-react'
@@ -33,6 +31,7 @@ import PromoTag from './sections/PromoTag'
 import ParagraphImage from 'images/test-images/short-paragraph.png'
 
 import { calculateProductPrice } from 'utils/promo'
+import { imageStock, paramsImgix } from 'utils/image-stock'
 
 function ProductView ({
   loader,
@@ -40,6 +39,15 @@ function ProductView ({
   changeRoute,
   windowWidth
 }) {
+  const imgixOptions = {
+    w: 175,
+    h: 175,
+    fit: 'clamp',
+    auto: 'format',
+    q: 75,
+    lossless: 0
+  }
+
   const resposiveColumns = () => {
     if (windowWidth >= 768) {
       return 4
@@ -64,13 +72,13 @@ function ProductView ({
     }
     return data
   }
-
   return (
     <CustomGridRow stretched columns={resposiveColumns()}>
       {
         loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
         : products.valueSeq().map((product, index) => {
           const goToProduct = () => changeRoute(`/product/${product.get('cliqqCode').first()}`)
+
           return (
             <Grid.Column
               key={`${product.get('cliqqCode')}-${index}`}
@@ -82,7 +90,7 @@ function ProductView ({
                   <PromoTag discount={product.get('discount')} />
                 }
                 <ImageWrapper>
-                  <Image alt='Cliqq' src={(product.get('image') && `${product.get('image')}?w=175&h=175&fit=clamp`) || defaultImage} />
+                  <Image alt='Cliqq' src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || defaultImage} />
                 </ImageWrapper>
                 <ProductName>{ productName(product.get('title')) }</ProductName>
                 <ProductPriceWrapper>

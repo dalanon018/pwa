@@ -12,7 +12,7 @@ import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
 import { fromJS } from 'immutable'
 
-import { imageStock } from 'utils/image-stock'
+import { imageStock, paramsImgix } from 'utils/image-stock'
 
 import Helmet from 'react-helmet'
 import messages from './messages'
@@ -122,7 +122,11 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
     const bannerImages = fromJS([
       {
-        image: imageStock('sample_banner.jpg')
+        image: paramsImgix(imageStock('sample_banner.jpg'), {
+          auto: 'format',
+          q: 75,
+          lossless: 0
+        })
       }
     ])
 

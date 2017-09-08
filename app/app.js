@@ -11,7 +11,7 @@ import 'babel-polyfill'
 // Import all the third party stuff
 import React from 'react'
 import ReactDOM from 'react-dom'
-import FontFaceObserver from 'fontfaceobserver'
+// import FontFaceObserver from 'fontfaceobserver'
 
 import { Provider } from 'react-redux'
 import { applyRouterMiddleware, Router, browserHistory } from 'react-router'
@@ -19,7 +19,7 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import { useScroll } from 'react-router-scroll'
 
 // import 'sanitize.css/sanitize.css'
-// import '../semantic/dist/semantic.min.css'
+import '../semantic/dist/semantic.min.css'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
@@ -62,14 +62,14 @@ import createRoutes from './routes'
 
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
-const openSansObserver = new FontFaceObserver('Open Sans', {})
+// const openSansObserver = new FontFaceObserver('Open Sans', {})
 
-// When Open Sans is loaded, add a font-family using Open Sans to the body
-openSansObserver.load().then(() => {
-  document.body.classList.add('fontLoaded')
-}, () => {
-  document.body.classList.remove('fontLoaded')
-})
+// // When Open Sans is loaded, add a font-family using Open Sans to the body
+// openSansObserver.load().then(() => {
+//   document.body.classList.add('fontLoaded')
+// }, () => {
+//   document.body.classList.remove('fontLoaded')
+// })
 
 // Create redux store with history
 // this uses the singleton browserHistory provided by react-router
