@@ -4,24 +4,24 @@
 
 @font-face {
   font-family: 'helveticalight';
-  src: url('../src/themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Light.ttf')  format('truetype'),
-       url('../src/themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Light.eot?#iefix')  format('embedded-opentype');
+  src: url('themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Light.ttf')  format('truetype'),
+       url('themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Light.eot?#iefix')  format('embedded-opentype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'helveticamedium';
-  src: url('../src/themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Medium.ttf')  format('truetype'),
-       url('../src/themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Medium.eot?#iefix')  format('embedded-opentype');
+  src: url('themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Medium.ttf')  format('truetype'),
+       url('themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Medium.eot?#iefix')  format('embedded-opentype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'helveticabold';
-  src: url('../src/themes/7-eleven/assets/fonts/helvetica/HelveticaNeu-Bold.ttf')  format('truetype'),
-       url('../src/themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Bold.eot?#iefix')  format('embedded-opentype');
+  src: url('themes/7-eleven/assets/fonts/helvetica/HelveticaNeu-Bold.ttf')  format('truetype'),
+       url('themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Bold.eot?#iefix')  format('embedded-opentype');
   font-weight: normal;
   font-style: normal;
 }

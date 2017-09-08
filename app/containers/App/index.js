@@ -35,13 +35,6 @@ export function App (props) {
         <Helmet
           titleTemplate='%s - 7-Eleven CliQQ'
           defaultTitle='7-Eleven CliQQ'
-          meta={[
-            { name: 'description', content: 'A 7-Eleven CliQQ application' }
-          ]}
-          link={[
-            { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css' },
-            { rel: 'stylesheet', type: 'text/css', href: 'https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css' }
-          ]}
         />
         {React.Children.toArray(props.children)}
       </BodyWrapper>

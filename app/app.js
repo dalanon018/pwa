@@ -11,7 +11,7 @@ import 'babel-polyfill'
 // Import all the third party stuff
 import React from 'react'
 import ReactDOM from 'react-dom'
-import FontFaceObserver from 'fontfaceobserver'
+// import FontFaceObserver from 'fontfaceobserver'
 
 import { Provider } from 'react-redux'
 import { applyRouterMiddleware, Router, browserHistory } from 'react-router'
@@ -20,6 +20,8 @@ import { useScroll } from 'react-router-scroll'
 
 // import 'sanitize.css/sanitize.css'
 import '../semantic/dist/semantic.min.css'
+// import 'slick-carousel/slick/slick.css'
+// import 'slick-carousel/slick/slick-theme.css'
 
 // Import root app
 import App from 'containers/App'
@@ -35,6 +37,9 @@ import LanguageProvider from 'containers/LanguageProvider'
 import '!file-loader?name=[name].[ext]!./favicon.ico'
 import '!file-loader?name=[name].[ext]!./manifest.json'
 import 'file-loader?name=[name].[ext]!./.htaccess' // eslint-disable-line import/extensions
+// import _redirect and .netlify for deployment
+// import '!file-loader?name=[name]!./_redirects'
+// import '!file-loader?name=[name].[ext]!./.netlify'
 
 // we need to add also the icon for our manifest
 import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-48.png'
@@ -57,14 +62,14 @@ import createRoutes from './routes'
 
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
-const openSansObserver = new FontFaceObserver('Open Sans', {})
+// const openSansObserver = new FontFaceObserver('Open Sans', {})
 
-// When Open Sans is loaded, add a font-family using Open Sans to the body
-openSansObserver.load().then(() => {
-  document.body.classList.add('fontLoaded')
-}, () => {
-  document.body.classList.remove('fontLoaded')
-})
+// // When Open Sans is loaded, add a font-family using Open Sans to the body
+// openSansObserver.load().then(() => {
+//   document.body.classList.add('fontLoaded')
+// }, () => {
+//   document.body.classList.remove('fontLoaded')
+// })
 
 // Create redux store with history
 // this uses the singleton browserHistory provided by react-router

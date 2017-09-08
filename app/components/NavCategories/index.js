@@ -6,8 +6,6 @@
 
 import React from 'react'
 import { range } from 'lodash'
-import { imageStock } from 'utils/image-stock'
-
 import { Grid } from 'semantic-ui-react'
 
 import {
@@ -22,12 +20,20 @@ import {
 import defaultImage from 'images/icons/default-nav-category.png'
 import moreIcon from 'images/icons/more-icon.svg'
 
+import { imageStock, paramsImgix } from 'utils/image-stock'
+
 const CategoryBlock = ({
   index,
   handleRedirect,
   handleRoute,
   categories
 }) => {
+  const imgixOptions = {
+    auto: 'format',
+    q: 75,
+    lossless: 0
+  }
+
   return (
     <NavCategoriesContainer>
       {
@@ -35,7 +41,7 @@ const CategoryBlock = ({
         categories.valueSeq().map((category, index) => {
           return (
             <CategoryItem key={index} onClick={(id) => handleRedirect(category.get('id'))}>
-              <CategoryIcon background={category.get('icon') ? category.get('icon') : defaultImage} />
+              <CategoryIcon background={category.get('icon') ? paramsImgix(category.get('icon'), imgixOptions) : defaultImage} />
               <p>{category.get('name')}</p>
             </CategoryItem>
           )
