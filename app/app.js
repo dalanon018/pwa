@@ -38,7 +38,7 @@ import '!file-loader?name=[name].[ext]!./favicon.ico'
 import '!file-loader?name=[name].[ext]!./manifest.json'
 import 'file-loader?name=[name].[ext]!./.htaccess' // eslint-disable-line import/extensions
 // import _redirect and .netlify for deployment
-import '!file-loader?name=[name]!./_redirects'
+// import '!file-loader?name=[name]!./_redirects'
 // import '!file-loader?name=[name].[ext]!./.netlify'
 
 // we need to add also the icon for our manifest
