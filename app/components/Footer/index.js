@@ -49,12 +49,12 @@ export class Footer extends React.PureComponent {
               <SocialIcons>
                 <List horizontal>
                   <List.Item>
-                    <A href='https://www.facebook.com/711philippines' target='_blank'>
+                    <A rel='noopener' href='https://www.facebook.com/711philippines' target='_blank'>
                       <Image alt='Cliqq' avatar src={FacebookIcon} />
                     </A>
                   </List.Item>
                   <List.Item>
-                    <A href='https://twitter.com/711philippines?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor' target='_blank'>
+                    <A rel='noopener' href='https://twitter.com/711philippines?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor' target='_blank'>
                       <Image alt='Cliqq' avatar src={TwitterIcon} />
                     </A>
                   </List.Item>
