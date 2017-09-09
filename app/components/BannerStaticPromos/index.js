@@ -21,8 +21,8 @@ function BannerStaticPromos ({
   loader
 }) {
   const imgixOptions = {
-    auto: 'format',
-    q: 75,
+    auto: 'compress',
+    q: 35,
     lossless: 0
   }
 

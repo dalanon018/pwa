@@ -43,8 +43,8 @@ function ProductView ({
     w: 175,
     h: 175,
     fit: 'clamp',
-    auto: 'format',
-    q: 75,
+    auto: 'compress',
+    q: 35,
     lossless: 0
   }
 
@@ -134,12 +134,18 @@ function ProductView ({
 }
 
 const DefaultState = () => {
+  const imgixOptions = {
+    auto: 'compress',
+    q: 75,
+    lossless: 0
+  }
+
   return (
     <Grid.Column className='padding__none--horizontal' mobile={8} tablet={4} computer={3} widescreen={3}>
       <EmptyDataBlock>
         <ProductWrapper>
           <ImageWrapper>
-            <Image alt='Cliqq' src={imageStock('default-product-loader.jpg')} className='empty-image' />
+            <Image alt='Cliqq' src={paramsImgix(imageStock('default-product-loader.jpg'), imgixOptions)} className='empty-image' />
           </ImageWrapper>
           <Image alt='Cliqq' src={ParagraphImage} height={50} />
         </ProductWrapper>

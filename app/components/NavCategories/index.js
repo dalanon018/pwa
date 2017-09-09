@@ -22,18 +22,18 @@ import moreIcon from 'images/icons/more-icon.svg'
 
 import { imageStock, paramsImgix } from 'utils/image-stock'
 
+const imgixOptions = {
+  auto: 'compress',
+  q: 35,
+  lossless: 0
+}
+
 const CategoryBlock = ({
   index,
   handleRedirect,
   handleRoute,
   categories
 }) => {
-  const imgixOptions = {
-    auto: 'format',
-    q: 75,
-    lossless: 0
-  }
-
   return (
     <NavCategoriesContainer>
       {
@@ -62,7 +62,7 @@ const CategoryLoader = () => {
         range(5).map((_, index) => {
           return (
             <CategoryItem key={index}>
-              <DefaultIcon background={imageStock('broken-image.jpg')} />
+              <DefaultIcon background={paramsImgix(imageStock('broken-image.jpg'), imgixOptions)} />
               <DefaultName />
             </CategoryItem>
           )
