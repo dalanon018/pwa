@@ -5,6 +5,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const HappyPack = require('happypack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = (options) => ({
   entry: options.entry,
@@ -28,7 +29,10 @@ module.exports = (options) => ({
       // Preprocess 3rd party .css files located in node_modules
       test: /\.css$/,
       include: [/node_modules/, /semantic/],
-      loader: ['style-loader', 'css-loader']
+      use: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: 'css-loader'
+      })
     }, {
       test: /\.(eot|svg|otf|ttf|woff|woff2)$/,
       loaders: 'file-loader'
@@ -75,6 +79,9 @@ module.exports = (options) => ({
       id: 'styles',
       loaders: ['style-loader', 'css-loader']
     }),
+
+    new ExtractTextPlugin('styles.css'),
+
     new webpack.ProvidePlugin({
       // make fetch available
       fetch: 'exports-loader?self.fetch!whatwg-fetch'
