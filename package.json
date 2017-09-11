@@ -28,7 +28,7 @@
     "build:clean": "npm run test:clean && rimraf ./build",
     "build:dll": "node ./internals/scripts/dependencies.js",
     "build:semantic": "cd semantic && gulp build",
-    "netlify": "yarn build && cd build && netlify deploy",
+    "netlify": "yarn build && cd build &&  netlify deploy",
     "start": "cross-env NODE_ENV=development env-cmd .env node server",
     "start:tunnel": "npm run set:env && cross-env NODE_ENV=development ENABLE_TUNNEL=true node server",
     "start:production": "npm run test && npm run build && npm run start:prod",
@@ -234,6 +234,7 @@
     "localforage": "1.5.0",
     "lodash": "4.17.2",
     "minimist": "1.2.0",
+    "net": "1.0.2",
     "ramda": "0.24.1",
     "react": "15.4.2",
     "react-copy-to-clipboard": "5.0.0",
@@ -347,7 +348,8 @@
       "jest",
       "XMLHttpRequest",
       "cy",
-      "Cypress"
+      "Cypress",
+      "FB"
     ]
   }
 }

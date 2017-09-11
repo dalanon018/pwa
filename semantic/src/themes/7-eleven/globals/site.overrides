@@ -207,6 +207,12 @@ svg#barcode {
   // height: auto !important;
 }
 
+.unstyle-button {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
 /*******************************
         Responsive Overrides
 *******************************/
