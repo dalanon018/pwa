@@ -123,8 +123,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     const bannerImages = fromJS([
       {
         image: paramsImgix(imageStock('sample_banner.jpg'), {
-          auto: 'format',
-          q: 75,
+          auto: 'compress',
+          q: 35,
           lossless: 0
         })
       }

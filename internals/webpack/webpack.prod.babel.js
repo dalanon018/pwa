@@ -26,7 +26,7 @@ module.exports = require('./webpack.base.babel')({
   },
 
   babelQuery: {
-    plugins: ['lodash', 'transform-semantic-ui-react-imports']
+    plugins: ['lodash', 'ramda', 'transform-semantic-ui-react-imports']
   },
 
   plugins: [
