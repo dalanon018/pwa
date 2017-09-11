@@ -9,6 +9,7 @@ import ProductSlider from 'components/BannerSlider'
 import PopupSlide from 'components/PopupSlide'
 
 import { calculateProductPrice } from 'utils/promo'
+import { fbShare } from 'utils/fb-share'
 
 import {
   // LoadingStateImage,
@@ -116,17 +117,12 @@ function DesktopBlock ({
             <ShareIcons>
               <DetailsTitle>SHARE THIS ITEM:</DetailsTitle>
               <div className='icons-wrapper'>
-                <FacebookShareButton
-                  title={product.get('title')}
-                  description={product.get('details')}
-                  url={window.location.href}
-                  picture={product.get('image')} >
-                  <FacebookIcon size={25} round />
-                </FacebookShareButton>
+                <button className='unstyle-button' onClick={() => fbShare(product)}>
+                  <FacebookIcon round size={25} />
+                </button>
 
                 <TwitterShareButton
                   title={product.get('title')}
-                  // hashtags={['asd', 'qwe']}
                   via='711philippines'
                   url={window.location.href} >
                   <TwitterIcon size={25} round />

@@ -11,6 +11,7 @@ import H3 from 'components/H3'
 import ProductSlider from 'components/BannerSlider'
 
 import { calculateProductPrice } from 'utils/promo'
+import { fbShare } from 'utils/fb-share'
 
 import {
   // LoadingStateImage,
@@ -95,13 +96,9 @@ function MobileBlock ({
 
         <SocialButtonWrapper visibility={toggle}>
 
-          <FacebookShareButton
-            title={product.get('title')}
-            description={product.get('details')}
-            url={window.location.href}
-            picture={product.get('image')} >
-            <FacebookIcon size={40} round />
-          </FacebookShareButton>
+          <button className='unstyle-button' onClick={() => fbShare(product)}>
+            <FacebookIcon round size={40} />
+          </button>
 
           <TwitterShareButton
             title={product.get('title')}

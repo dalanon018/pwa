@@ -11,7 +11,7 @@ import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { noop } from 'lodash'
-import { ifElse, equals, lt } from 'ramda'
+import { ifElse, equals } from 'ramda'
 
 import { imageStock } from 'utils/image-stock'
 
@@ -174,34 +174,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     const { params: { id }, getProduct, getMobileNumbers } = this.props
     getProduct({ id })
     getMobileNumbers()
-
-    window.fbAsyncInit = function () {
-      const options = {
-        appId: '1998676580363463',
-        status: true,
-        xfbml: true, // parse social plugins on this page
-        version: 'v2.10' // use version 2.1
-      }
-
-      FB.init(options)
-
-      if (FB) {
-        FB.ui({
-          method: 'share_open_graph',
-          action_type: 'og.shares',
-          action_properties: JSON.stringify({
-            object: {
-              'og:url': 'https://google.com',
-              'og:title': 'this is a sample title',
-              'og:description': 'AAA!!!',
-              'og:image': 'https://cliqq.imgix.net/000CE.png'
-            }
-          })
-        }, response => {
-          console.log('response: ', response)
-        })
-      }
-    }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -222,33 +194,10 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     const { modalToggle, prevMobileNumber, openModalPhoneDesktop } = this.state
     const productPageTrigger = route && route
 
-    const addMeta = ifElse(
-      lt(0),
-      () => [
-        { property: 'fb:app_id', content: '1998676580363463' },
-        { property: 'og:site_name', content: 'Cliqq Shop' },
-        { property: 'og:url', content: `${window.location.href}` },
-        { property: 'og:title', content: `${product.get('title')}` },
-        { property: 'og:type', content: 'product' },
-        { property: 'og:description', content: `${product.get('details')}` },
-        { property: 'og:image', content: `${product.get('image')}` }
-      ],
-      () => []
-    )
-
     return (
       <div>
         <Helmet
           title={`ProductPage - ${product.get('title')}`}
-          meta={[
-            { property: 'fb:app_id', content: '1998676580363463' },
-            { property: 'og:site_name', content: 'Cliqq Shop' },
-            { property: 'og:url', content: `http://localhost:3000/product/000CE` },
-            { property: 'og:title', content: `title` },
-            { property: 'og:type', content: 'product' },
-            { property: 'og:description', content: `details` },
-            { property: 'og:image', content: `https://cliqq.imgix.net/000CE.png?w=450&h=450&fit=clamp` }
-          ]}
         />
         <div>
           <Product
