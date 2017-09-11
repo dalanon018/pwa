@@ -18,10 +18,7 @@ export const fbShare = (product) => {
           'og:title': product.get('title'),
           'og:description': product.get('details').replace(/(&nbsp;|<([^>]+)>)/ig, ' '),
           'og:image': product.get('image'),
-          'og:image:alt': product.get('title'),
-          // original image will be massive output on facebook share, just make it thumbnail to make it fancy
-          'og:image:width': 100,
-          'og:image:height': 100
+          'og:image:alt': product.get('title')
         }
       })
     }, response => {
