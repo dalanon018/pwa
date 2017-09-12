@@ -10,6 +10,7 @@ import CliqqLogo from 'images/icons/cliqq.png'
 
 const PurchaseWrapper = styled.div`
   cursor: pointer;
+  height: 100%;
   margin: 5px 0;
 `
 
