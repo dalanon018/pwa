@@ -16,6 +16,8 @@ import {
   ORDER_SUCCESS,
   ORDER_ERROR,
 
+  SET_STORE,
+
   SET_ORDER_HANDLER_DEFAULT
 } from './constants'
 
@@ -26,7 +28,8 @@ const initialState = fromJS({
   submissionError: {},
   productLoading: false,
   mobileNumber: null,
-  mobileLoading: false
+  mobileLoading: false,
+  storeLocation: {}
 })
 
 function productReviewReducer (state = initialState, action) {
@@ -62,6 +65,9 @@ function productReviewReducer (state = initialState, action) {
       return state
         .set('submissionSuccess', fromJS({}))
         .set('submissionError', fromJS({}))
+
+    case SET_STORE:
+      return state.set('storeLocation', fromJS(action.payload))
 
     default:
       return state

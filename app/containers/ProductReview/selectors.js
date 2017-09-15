@@ -48,6 +48,11 @@ const selectSubmissionError = () => createSelector(
   (substate) => substate.get('submissionError')
 )
 
+const selectStoreLocation = () => createSelector(
+  selectProductReviewDomain(),
+  (substate) => substate.get('storeLocation')
+)
+
 export {
   selectOrderProduct,
   selectMobileNumber,
@@ -55,5 +60,6 @@ export {
   selectMobileLoader,
   selectSubmitting,
   selectSubmissionSuccess,
-  selectSubmissionError
+  selectSubmissionError,
+  selectStoreLocation
 }
