@@ -11,6 +11,7 @@
 3. Use a smart `.npmrc`. By default, `npm` doesn’t save installed dependencies to package.json (and you should always track your dependencies!).
 4. `npm install -g standard` # standardjs
 5. `npm install -g babel-eslint`
+6. `npm install -g snazzy`
 
 ```bash
 $ npm config set save=true
