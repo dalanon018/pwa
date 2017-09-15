@@ -57,6 +57,8 @@ const isEntityEmpty = compose(equals(0), prop('size'))
 export class ProductReview extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     getOrderProduct: PropTypes.func.isRequired,
+    getStore: PropTypes.func.isRequired,
+    storeLocator: PropTypes.func.isRequired,
     productLoader: PropTypes.bool.isRequired,
     mobileLoader: PropTypes.bool.isRequired,
     orderedProduct: PropTypes.oneOfType([
@@ -66,7 +68,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     mobileNumber: PropTypes.string,
     orderRequesting: PropTypes.bool.isRequired,
     orderSuccess: PropTypes.object.isRequired,
-    orderFail: PropTypes.object.isRequired
+    orderFail: PropTypes.object.isRequired,
+    storeLocation: PropTypes.object
   }
 
   showStoreLocator = 'COD'

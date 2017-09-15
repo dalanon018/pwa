@@ -14,6 +14,8 @@ const wrapper = (props = {}, enzyme = shallow) => enzyme(
 describe('<ProductReview />', () => {
   const minProps = {
     getOrderProduct: () => {},
+    getStore: () => {},
+    storeLocator: () => {},
     getProductCategories: () => {},
     loader: false,
     orderedProduct: fromJS({

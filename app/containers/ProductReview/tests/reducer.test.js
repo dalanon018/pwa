@@ -17,7 +17,8 @@ describe('productReviewReducer', () => {
       submissionError: {},
       productLoading: false,
       mobileNumber: null,
-      mobileLoading: false
+      mobileLoading: false,
+      storeLocation: {}
     })
   })
 
