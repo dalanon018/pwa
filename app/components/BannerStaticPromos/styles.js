@@ -20,7 +20,7 @@ export const BannerWrapper = styled.div`
 
   .item {
     cursor: pointer;
-    height: 100%;
+    width: 100%;
     
     &:last-child {
       align-self: flex-end;
