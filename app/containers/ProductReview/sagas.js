@@ -1,32 +1,43 @@
 import moment from 'moment'
 import Firebase from 'utils/firebase-realtime'
 
-import { compose, is, ifElse, identity, map, uniq } from 'ramda'
-import { call, cancel, fork, put, take } from 'redux-saga/effects'
+import { compose, is, ifElse, identity, map, uniq, isEmpty } from 'ramda'
+import { call, cancel, fork, put, take, select } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { takeLatest } from 'redux-saga'
 
 import request from 'utils/request'
 import { getItem, setItem, removeItem } from 'utils/localStorage'
+import { fnSearchParams } from 'utils/http'
 
 import {
   GET_ORDER_PRODUCT,
   GET_MOBILE_NUMBER,
-  ORDER_SUBMIT
+  ORDER_SUBMIT,
+  GET_STORE,
+  STORE_LOCATOR
 } from './constants'
 
 import {
   setOrderProductAction,
   setMobileNumberAction,
   successOrderAction,
+  setStoreAction,
   errorOrderAction
 } from './actions'
 
 import {
+  selectMobileNumber
+} from './selectors'
+
+import {
   API_BASE_URL,
+  APP_BASE_URL,
+  STORE_LOCATOR_URL,
   CURRENT_PRODUCT_KEY,
   MOBILE_NUMBERS_KEY,
-  ORDERED_LIST_KEY
+  ORDERED_LIST_KEY,
+  STORE_LOCATIONS_KEY
 } from 'containers/App/constants'
 
 import {
@@ -65,12 +76,28 @@ function * getOrderList () {
   return orders || []
 }
 
+function * getStore () {
+  const store = yield call(getItem, STORE_LOCATIONS_KEY)
+  return store || {}
+}
+
 function * setOrderList (order) {
   const orders = yield getOrderList()
 
   let setOrders = orders.concat(order)
 
   return yield call(setItem, ORDERED_LIST_KEY, setOrders)
+}
+
+export function * storeLocator () {
+  const mobileNumber = yield select(selectMobileNumber())
+  const params = {
+    callbackURL: encodeURI(`${APP_BASE_URL}/review${fnSearchParams({ type: 'cod' })}`),
+    callbackMethod: 'GET',
+    mobileNumber: `0${mobileNumber}`
+  }
+
+  yield window.location.replace(`${STORE_LOCATOR_URL}${fnSearchParams(params)}`)
 }
 
 /**
@@ -86,6 +113,21 @@ function * updateFirebase ({ orderResponse: { trackingNumber, status }, complete
   } catch (e) {
     console.log('error on firebase', e)
   }
+}
+
+/**
+ * Here we will handle the store we visited
+ */
+function * updateStoreLocations ({ store }) {
+  if (!isEmpty(store)) {
+    yield call(setItem, STORE_LOCATIONS_KEY, store)
+    yield put(setStoreAction(store))
+  }
+}
+
+export function * getStoreLocation () {
+  const store = yield getStore()
+  yield put(setStoreAction(store))
 }
 
 export function * getOrderProduct () {
@@ -112,7 +154,7 @@ export function * getMobileNumber () {
 }
 
 export function * submitOrder (args) {
-  const { payload: { orderedProduct, mobileNumber, modePayment } } = args
+  const { payload: { orderedProduct, mobileNumber, modePayment, store } } = args
   const completeMobile = `0${mobileNumber}`
   const token = yield getAccessToken()
 
@@ -137,8 +179,12 @@ export function * submitOrder (args) {
       yield setOrderList(orderResponse)
       // we have to remove the current product since we already done with it.
       yield call(removeItem, CURRENT_PRODUCT_KEY)
+
       // we have to update the firebase
       yield updateFirebase({ orderResponse, completeMobile })
+
+      // update store locations
+      yield updateStoreLocations({ store })
 
       yield put(successOrderAction(orderResponse))
     } else {
@@ -158,6 +204,14 @@ export function * getMobileNumberSaga () {
   yield * takeLatest(GET_MOBILE_NUMBER, getMobileNumber)
 }
 
+export function * getStoreLocationSaga () {
+  yield * takeLatest(GET_STORE, getStoreLocation)
+}
+
+export function * storeLocatorSaga () {
+  yield * takeLatest(STORE_LOCATOR, storeLocator)
+}
+
 export function * submitOrderSaga () {
   yield * takeLatest(ORDER_SUBMIT, submitOrder)
 }
@@ -166,6 +220,9 @@ export function * productReviewSagas () {
   const watcher = yield [
     fork(getOrderProductSaga),
     fork(getMobileNumberSaga),
+
+    fork(getStoreLocationSaga),
+    fork(storeLocatorSaga),
 
     fork(submitOrderSaga)
   ]

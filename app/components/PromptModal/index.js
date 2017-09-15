@@ -33,14 +33,14 @@ const IconWrapper = styled.div`
   }
 `
 
-const TitleHead = styled.p`
+const TitleHead = styled.div`
   text-align: center;
   font-family: 'helveticabold';
   color: #5B5B5B;
   margin: 10px 0;
 `
 
-const Content = styled.p`
+const Content = styled.div`
   text-align: center;
   font-size: 12px;
 `

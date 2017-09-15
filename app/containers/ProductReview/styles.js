@@ -46,7 +46,7 @@ const StepHead = styled.div`
 
   @media (min-width: 768px) {
     margin-top: 20px;
-    
+
     span {
       font-family: 'helveticabold';
       font-size: 16px;
@@ -128,7 +128,7 @@ const CliqqCodeWrapper = styled.div`
     justify-content: flex-start;
     letter-spacing: 4px;
     margin: 10px 0 40px;
-    
+
     .image {
       width: 20px;
     }
@@ -163,7 +163,7 @@ const StepWrapper = styled.div`
   margin-bottom: 15px;
 
   &.visibility {
-    display: ${props => props.visibility ? 'block' : 'none'};
+    display: ${({ visibility }) => visibility ? 'block' : 'none'};
 
     span {
       align-self: flex-start;
@@ -236,7 +236,7 @@ const SelectMethodWrapper = styled.div`
     &.checked {
       border: 2px solid #8DC640;
     }
-    
+
     input:checked~label:after {
       // Don't sort this block
       content: '';
@@ -386,7 +386,7 @@ const LocationButton = styled(Button)`
   padding: 20px 10px !important;
   position: relative;
   text-align: left !important;
-  
+
   span {
     color: #333333;
   }

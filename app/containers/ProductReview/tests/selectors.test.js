@@ -2,7 +2,8 @@ import { fromJS } from 'immutable'
 
 import {
   selectOrderProduct,
-  selectMobileNumber
+  selectMobileNumber,
+  selectStoreLocation
 } from '../selectors'
 
 describe('ProductReview Selectors', () => {
@@ -34,6 +35,20 @@ describe('ProductReview Selectors', () => {
         }
       })
       expect(selectMobileNumberSelectors(mockedState)).toEqual(mobileNumber)
+    })
+  })
+
+  describe('selectStoreLocation', () => {
+    const selectStoreLocationSelectors = selectStoreLocation()
+
+    it('should get success submission', () => {
+      const storeLocation = '1'
+      const mockedState = fromJS({
+        productReview: {
+          storeLocation
+        }
+      })
+      expect(selectStoreLocationSelectors(mockedState)).toEqual(storeLocation)
     })
   })
 })

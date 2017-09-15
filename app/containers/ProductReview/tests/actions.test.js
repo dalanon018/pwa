@@ -6,7 +6,10 @@ import {
  setMobileNumberAction,
  submitOrderAction,
  successOrderAction,
- errorOrderAction
+ errorOrderAction,
+ getStoreAction,
+ setStoreAction,
+ storeLocatorAction
 } from '../actions'
 
 import {
@@ -18,7 +21,11 @@ import {
 
   ORDER_SUBMIT,
   ORDER_SUCCESS,
-  ORDER_ERROR
+  ORDER_ERROR,
+
+  GET_STORE,
+  SET_STORE,
+  STORE_LOCATOR
 } from '../constants'
 
 describe('ProductsReview actions', () => {
@@ -114,6 +121,46 @@ describe('ProductsReview actions', () => {
       }
 
       expect(errorOrderAction(payload)).toEqual(expectedResult)
+    })
+  })
+
+  describe('getStoreAction', () => {
+    it('get Previous Store', () => {
+      const expectedResult = {
+        type: GET_STORE
+      }
+
+      expect(getStoreAction()).toEqual(expectedResult)
+    })
+  })
+
+  describe('setStoreAction', () => {
+    const payload = {
+      storeLocation: 1000
+    }
+
+    it('get Previous Store', () => {
+      const expectedResult = {
+        type: SET_STORE,
+        payload
+      }
+
+      expect(setStoreAction(payload)).toEqual(expectedResult)
+    })
+  })
+
+  describe('storeLocatorAction', () => {
+    const payload = {
+      location: 'test'
+    }
+
+    it('get Previous Store', () => {
+      const expectedResult = {
+        type: STORE_LOCATOR,
+        payload
+      }
+
+      expect(storeLocatorAction(payload)).toEqual(expectedResult)
     })
   })
 })

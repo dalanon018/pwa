@@ -15,6 +15,10 @@ import {
   ORDER_SUCCESS,
   ORDER_ERROR,
 
+  GET_STORE,
+  SET_STORE,
+  STORE_LOCATOR,
+
   SET_ORDER_HANDLER_DEFAULT
 } from './constants'
 
@@ -68,5 +72,25 @@ export function errorOrderAction (payload) {
 export function setOrderHandlersDefaultAction () {
   return {
     type: SET_ORDER_HANDLER_DEFAULT
+  }
+}
+
+export function getStoreAction () {
+  return {
+    type: GET_STORE
+  }
+}
+
+export function setStoreAction (payload) {
+  return {
+    type: SET_STORE,
+    payload
+  }
+}
+
+export function storeLocatorAction (payload) {
+  return {
+    type: STORE_LOCATOR,
+    payload
   }
 }

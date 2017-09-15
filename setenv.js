@@ -4,6 +4,7 @@ if (env === 'production') {
   console.log(`TOKEN_URL=${process.env.TOKEN_URL}`)
   console.log(`API_BASE_URL=${process.env.API_BASE_URL}`)
   console.log(`APP_BASE_URL=${process.env.APP_BASE_URL}`)
+  console.log(`STORE_LOCATOR_URL=${process.env.STORE_LOCATOR_URL}`)
 
   console.log(`FIREBASE_API_KEY=${process.env.FIREBASE_API_KEY}`)
   console.log(`FIREBASE_AUTH_DOMAIN=${process.env.FIREBASE_AUTH_DOMAIN}`)
@@ -25,6 +26,7 @@ if (env === 'production') {
   console.log(`TOKEN_URL=https://apidemo.cliqq.net:8443/accounts/oauth2/token`)
   console.log(`API_BASE_URL=https://apidemo.cliqq.net:8443/ecms/api/v1`)
   console.log(`APP_BASE_URL=http://localhost:3000`)
+  console.log(`STORE_LOCATOR_URL=https://mapservice.cliqq.net`)
 
   console.log(`FIREBASE_API_KEY=AIzaSyBaKhRjF4feFUsPyezk8Hmu0u_PCbNb2oI`)
   console.log(`FIREBASE_AUTH_DOMAIN=realtimedb-a1d19.firebaseapp.com`)

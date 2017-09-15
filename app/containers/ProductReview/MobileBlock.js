@@ -15,7 +15,7 @@ import {
 import Button from 'components/Button'
 
 import CliqqLogo from 'images/icons/cliqq.png'
-// import NextIcon from 'images/icons/greater-than-icon.svg'
+import NextIcon from 'images/icons/greater-than-icon.svg'
 
 import {
   StepHead,
@@ -28,8 +28,8 @@ import {
   ViewDetails,
   ButtonContainer,
   StepWrapper,
-  ReviewContainer
-  // LocationButton
+  ReviewContainer,
+  LocationButton
 } from './styles'
 
 function MobileBlock ({
@@ -40,9 +40,10 @@ function MobileBlock ({
   orderRequesting,
   modePayment,
   defaultImage,
+  visibility,
 
   // function props
-  // handleStoreLocator,
+  handleStoreLocator,
   handleChange,
   handleProceed,
   handleToBottom
@@ -96,12 +97,11 @@ function MobileBlock ({
                         name='cash-prepaid'
                         value='CASH'
                         label={labelOne}
-                        // checked={modePayment === 'CASH'}
-                        defaultChecked
+                        checked={modePayment === 'CASH'}
                         onChange={handleChange}
                         />
                     </Form.Field>
-                    <Form.Field className='display__none'> {/* Cash on Deliver option */}
+                    <Form.Field> {/* Cash on Deliver option */}
                       <Checkbox
                         radio
                         name='cod'
@@ -116,21 +116,19 @@ function MobileBlock ({
                 </SelectMethodWrapper>
               </StepContent>
             </StepWrapper>
-
-            {/* <StepWrapper className='visibility' visibility={visibility}> */}
-            {/*
+            <StepWrapper className='visibility' visibility={visibility}>
               <StepWrapper>
                 <StepContent>
-                  <StepHead step='3' className='margin__top-positive--20'>
+                  <StepHead step='2' className='margin__top-positive--20'>
                     <FormattedMessage {...messages.stepThree} />
                     <p>Your default store will be the last store you visited</p>
                   </StepHead>
-                  <LocationButton onClick={this._handleStoreLocator} fluid icon={NextIcon}>
+                  <LocationButton onClick={handleStoreLocator} fluid icon={NextIcon}>
                     <span>FIND STORE NEARBY</span>
                   </LocationButton>
                 </StepContent>
               </StepWrapper>
-            */}
+            </StepWrapper>
             <ButtonContainer>
               <Button onClick={handleProceed} primary fluid loading={orderRequesting}><FormattedMessage {...messages.proceedNext} /></Button>
             </ButtonContainer>

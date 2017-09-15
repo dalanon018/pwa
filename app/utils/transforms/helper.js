@@ -1,4 +1,5 @@
 import { omit } from 'lodash'
+import { all, equals, isNil, map, compose, curry, complement, prop } from 'ramda'
 
 /**
  * Helper to check the data type so we know we are accepting what we accept
@@ -38,3 +39,18 @@ export const ValidateSchema = (schema, response) => {
  */
 export const SwitchFn = cases => defaultCase => key =>
  key in cases ? cases[key] : defaultCase
+
+/**
+ * function that will simply check if properties Exist
+ */
+export const PropertiesExists = curry((props, data) => compose(
+    compose(all, equals(true)),
+    map((property) => compose(complement(isNil), prop(property))(data))
+  )(props)
+)
+
+/**
+ * Empty
+ */
+export const EmptyObject = () => {}
+export const EmptyArray = () => []

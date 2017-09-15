@@ -59,5 +59,9 @@ export default defineMessages({
   errorSubmission: {
     id: `${idSuffix}.errorNoMobileProduct`,
     defaultMessage: 'There\'s problem with submission please try again.'
+  },
+  storeEmpty: {
+    id: `${idSuffix}.storeEmpty`,
+    defaultMessage: 'Please select a store location.'
   }
 })
