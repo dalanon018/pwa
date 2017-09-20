@@ -91,8 +91,9 @@ function * setOrderList (order) {
 
 export function * storeLocator () {
   const mobileNumber = yield select(selectMobileNumber())
+  // ${fnSearchParams({ type: 'cod' })}`)
   const params = {
-    callbackURL: encodeURI(`${APP_BASE_URL}/review${fnSearchParams({ type: 'cod' })}`),
+    callbackUrl: encodeURI(`${APP_BASE_URL}/review`),
     callbackMethod: 'GET',
     mobileNumber: `0${mobileNumber}`
   }
