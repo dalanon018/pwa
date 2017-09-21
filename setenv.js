@@ -28,7 +28,7 @@ if (env === 'production') {
   console.log(`TOKEN_URL=https://apidemo.cliqq.net:8443/accounts/oauth2/token`)
   console.log(`API_BASE_URL=https://apidemo.cliqq.net:8443/ecms/api/v1`)
   console.log(`APP_BASE_URL=http://localhost:3000`)
-  console.log(`STORE_LOCATOR_URL=https://mapservice.cliqq.net`)
+  console.log(`STORE_LOCATOR_URL=https://mapservice.cliqq.net/ajax/`)
 
   console.log(`FIREBASE_API_KEY=AIzaSyBaKhRjF4feFUsPyezk8Hmu0u_PCbNb2oI`)
   console.log(`FIREBASE_AUTH_DOMAIN=realtimedb-a1d19.firebaseapp.com`)
