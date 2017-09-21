@@ -22,6 +22,8 @@ if (env === 'production') {
   console.log(`OATH_RESPONSE_TYPE=${process.env.OATH_RESPONSE_TYPE}`)
   console.log(`OATH_GRANT_TYPE=${process.env.OATH_GRANT_TYPE}`)
 
+  console.log(`RECAPTCHA_SITE_KEY=${process.env.RECAPTCHA_SITE_KEY}`)
+
 } else {
   console.log(`TOKEN_URL=https://apidemo.cliqq.net:8443/accounts/oauth2/token`)
   console.log(`API_BASE_URL=https://apidemo.cliqq.net:8443/ecms/api/v1`)
@@ -43,4 +45,6 @@ if (env === 'production') {
   console.log(`OATH_CLIENT_SECRET=ecms-pwa-secret`)
   console.log(`OATH_RESPONSE_TYPE=token`)
   console.log(`OATH_GRANT_TYPE=client_credentials`)
+
+  console.log(`RECAPTCHA_SITE_KEY=Le2aDEUAAAAAC_B5o0Xy4_DAAb7Cmvsdrd4ury0`)
 }

@@ -7536,6 +7536,10 @@ react-addons-test-utils@15.4.2:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
+react-async-script@0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/react-async-script/-/react-async-script-0.8.0.tgz#c623ff2c7e959281f0aef70e241040dfb99fdff0"
+
 react-copy-to-clipboard@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-copy-to-clipboard/-/react-copy-to-clipboard-5.0.0.tgz#23ccdd7c4d9ec2cc763839e2a55b1220aeb4f33d"
@@ -7554,6 +7558,10 @@ react-dom@15.4.2:
     fbjs "^0.8.1"
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
+
+react-google-recaptcha@0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/react-google-recaptcha/-/react-google-recaptcha-0.8.1.tgz#b580bfe5c045150b46aa52150e695189b0b3027f"
 
 react-helmet@3.2.2:
   version "3.2.2"

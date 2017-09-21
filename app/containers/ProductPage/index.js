@@ -6,6 +6,7 @@
 
 import React, { PropTypes } from 'react'
 import Helmet from 'react-helmet'
+import Recaptcha from 'react-google-recaptcha'
 
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
@@ -43,6 +44,10 @@ import {
   selectToggle
 } from 'containers/Buckets/selectors'
 
+import {
+  RECAPTCHA_SITE_KEY
+} from 'containers/App/constants'
+
 export class ProductPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     getProduct: PropTypes.func.isRequired,
@@ -70,7 +75,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       socialToggle: false,
       copied: false,
       openModalPhoneDesktop: false,
-      showSlide: false
+      showSlide: false,
+      mobileNumber: ''
     }
 
     this._handleSubmit = this._handleSubmit.bind(this)
@@ -84,6 +90,24 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this._handleModalOpen = this._handleModalOpen.bind(this)
     this._handleModalClose = this._handleModalClose.bind(this)
     this._handleTouch = this._handleTouch.bind(this)
+    this._recaptchaRef = this._recaptchaRef.bind(this)
+    this._executeCaptcha = this._executeCaptcha.bind(this)
+  }
+
+  _recaptchaRef (ref) {
+    this.recaptcha = ref
+  }
+
+  _executeCaptcha (token) {
+    const { product, setCurrentProduct, updateMobileNumbers } = this.props
+    const { mobileNumber } = this.state
+
+    if (token) {
+      this.successSubmission = true
+
+      setCurrentProduct(product)
+      updateMobileNumbers(mobileNumber)
+    }
   }
 
   _handleTouch (e) {
@@ -106,12 +130,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   _handleSubmit ({ value }) {
-    const { product, setCurrentProduct, updateMobileNumbers } = this.props
-
-    this.successSubmission = true
-
-    setCurrentProduct(product)
-    updateMobileNumbers(value)
+    this.setState({
+      mobileNumber: value
+    }, () => this.recaptcha.execute())
   }
 
   _handleClose () {
@@ -230,6 +251,12 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             mobileNumber={prevMobileNumber}
             onClose={this._handleToggle} />
         </div>
+        <Recaptcha
+          ref={this._recaptchaRef}
+          size='invisible'
+          sitekey={RECAPTCHA_SITE_KEY}
+          onChange={this._executeCaptcha}
+        />
       </div>
     )
   }
