@@ -46,5 +46,5 @@ if (env === 'production') {
   console.log(`OATH_RESPONSE_TYPE=token`)
   console.log(`OATH_GRANT_TYPE=client_credentials`)
 
-  console.log(`RECAPTCHA_SITE_KEY=${Le2aDEUAAAAAC_B5o0Xy4_DAAb7Cmvsdrd4ury0}`)
+  console.log(`RECAPTCHA_SITE_KEY=Le2aDEUAAAAAC_B5o0Xy4_DAAb7Cmvsdrd4ury0`)
 }
