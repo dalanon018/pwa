@@ -1,4 +1,3 @@
-import { __, assoc, compose, ifElse, prop, propOr, is, partialRight, omit } from 'ramda'
 import 'whatwg-fetch'
 
 /**
@@ -9,6 +8,9 @@ import 'whatwg-fetch'
  * @return {object}          The parsed JSON from the request
  */
 function parseJSON (response) {
+  if (response.status === 204 || response.status === 205) {
+    return null
+  }
   return response.json()
 }
 
@@ -37,33 +39,8 @@ function checkStatus (response) {
  *
  * @return {object}           The response data
  */
-export default function request (url, options = {}) {
-  const headers = new Headers()
-  const omitProps = ['contentType', 'token']
-  const getTokenType = propOr('Bearer', 'tokenType', options)
-  const getToken = prop('token', options)
-  const getContent = prop('contentType', options)
-
-  const appendContentType = (data, contentType = 'application/json') => {
-    data.append('Content-Type', contentType)
-    return data
-  }
-
-  const appendAuthorization = (data, token = null, tokenType = null) => {
-    return ifElse(is(String), () => {
-      data.append('Authorization', `${tokenType} ${token}`)
-      return data
-    }, () => data)(token)
-  }
-
-  const appendHeader = (options, headers) => compose(
-    omit(omitProps),
-    assoc('headers', __, options),
-    partialRight(appendAuthorization, [getToken, getTokenType]),
-    partialRight(appendContentType, [getContent])
-  )(headers)
-
-  return fetch(url, appendHeader(options, headers))
+export default function request (url, options) {
+  return fetch(url, options)
     .then(checkStatus)
     .then(parseJSON)
 }

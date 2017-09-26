@@ -9,7 +9,6 @@ const A = styled.a`
 
   &:hover {
     color: #6cc0e5;
-    cursor: pointer;
   }
 `
 

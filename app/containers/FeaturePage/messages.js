@@ -54,7 +54,7 @@ export default defineMessages({
   },
   cssHeader: {
     id: 'boilerplate.containers.FeaturePage.css.header',
-    defaultMessage: 'Featured'
+    defaultMessage: 'Features'
   },
   cssMessage: {
     id: 'boilerplate.containers.FeaturePage.css.message',

@@ -9,8 +9,8 @@
 @fontName          : 'Lato';
 @fontSmoothing     : antialiased;
 
-@headerFont        : @fontName, 'Cabin', 'Helvetica Neue', Arial, Helvetica, sans-serif;
-@pageFont          : @fontName, 'Cabin', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+@headerFont        : @fontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+@pageFont          : @fontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;
 
 @googleFontName    : @fontName;
 @importGoogleFonts : false;
@@ -140,30 +140,6 @@
 @linkHoverUnderline  : @linkUnderline;
 
 /*-------------------
-    Scroll Bars
---------------------*/
-
-@useCustomScrollbars: true;
-
-@customScrollbarWidth: 10px;
-
-@trackBackground: rgba(0, 0, 0, 0.1);
-@trackBorderRadius: 0px;
-
-@thumbBorderRadius: 5px;
-@thumbBackground: rgba(0, 0, 0, 0.25);
-@thumbTransition: color 0.2s ease;
-
-@thumbInactiveBackground: rgba(0, 0, 0, 0.15);
-@thumbHoverBackground: rgba(128, 135, 139, 0.8);
-
-/* Inverted */
-@trackInvertedBackground: rgba(255, 255, 255, 0.1);
-@thumbInvertedBackground: rgba(255, 255, 255, 0.25);
-@thumbInvertedInactiveBackground: rgba(255, 255, 255, 0.15);
-@thumbInvertedHoverBackground: rgba(255, 255, 255, 0.35);
-
-/*-------------------
   Highlighted Text
 --------------------*/
 
@@ -219,18 +195,15 @@
 @orange           : #F58322;
 @yellow           : #FBBD08;
 @olive            : #B5CC18;
-@green            : #8DC640;
+@green            : #21BA45;
 @teal             : #00B5AD;
 @blue             : #2185D0;
 @violet           : #6435C9;
 @purple           : #A333C8;
 @pink             : #E03997;
 @brown            : #A5673F;
-@grey             : #AEAEAE;
+@grey             : #767676;
 @black            : #1B1C1D;
-
-/*---  Dark Colors  ---*/
-@darkGrey: #5B5B5B;
 
 /*---  Light Colors  ---*/
 @lightRed         : #FF695E;
@@ -244,7 +217,7 @@
 @lightPurple      : #DC73FF;
 @lightPink        : #FF8EDF;
 @lightBrown       : #D67C1C;
-@lightGrey        : #F0F0F0;
+@lightGrey        : #DCDDDE;
 @lightBlack       : #545454;
 
 /*---   Neutrals  ---*/
@@ -466,7 +439,7 @@
 
 @circularRadius                : 500rem;
 
-@borderColor               : rgba(91, 91, 91, 0.7);
+@borderColor               : rgba(34, 36, 38, 0.15);
 @strongBorderColor         : rgba(34, 36, 38, 0.22);
 @internalBorderColor       : rgba(34, 36, 38, 0.1);
 @selectedBorderColor       : rgba(34, 36, 38, 0.35);

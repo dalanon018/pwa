@@ -2,26 +2,14 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const CompressionPlugin = require('compression-webpack-plugin')
-const BrotliPlugin = require('brotli-webpack-plugin')
+const CompressionPlugin = require('compression-webpack-plugin')
 const OfflinePlugin = require('offline-plugin')
-// const WebpackMonitor = require('webpack-monitor')
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-// const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
-
-// dll caching
-// const pkg = require(path.resolve(process.cwd(), 'package.json'))
-// const dllPlugin = pkg.dllPlugin
-
-// // used the caching in the dev to speed compilation
-// const dllPath = path.resolve(process.cwd(), dllPlugin.path || 'node_modules/react-boilerplate-dlls', 'reactBoilerplateDeps.json')
 
 module.exports = require('./webpack.base.babel')({
   // In production, we skip all hot-reloading stuff
-  entry: {
-    vendor: ['react-dom', 'react', 'moment', 'styled-components', 'core-js', 'immutable', 'react-router', 'redux'],
-    app: path.join(process.cwd(), 'app/app.js')
-  },
+  entry: [
+    path.join(process.cwd(), 'app/app.js')
+  ],
 
   // Utilize long-term caching by adding content hashes (not compilation hashes) to compiled assets
   output: {
@@ -34,29 +22,16 @@ module.exports = require('./webpack.base.babel')({
   },
 
   plugins: [
-    // new BundleAnalyzerPlugin(),
-    // new WebpackMonitor({
-    //   launch: true
-    // }),
-
-    new webpack.optimize.UglifyJsPlugin(), // minify everything
-    new webpack.optimize.AggressiveMergingPlugin(), // Merge chunks
-
-    // new LodashModuleReplacementPlugin(),
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: 'vendor',
-    //   children: true,
-    //   minChunks: 2,
-    //   async: true
-    // }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['common', 'vendor'],
-      minChunks: 2
+      name: 'vendor',
+      children: true,
+      minChunks: 2,
+      async: true
     }),
 
     // Minify and optimize the index.html
     new HtmlWebpackPlugin({
-      hash: true,
       template: 'app/index.html',
       minify: {
         removeComments: true,
@@ -81,11 +56,10 @@ module.exports = require('./webpack.base.babel')({
 
       // No need to cache .htaccess. See http://mxs.is/googmp,
       // this is applied before any match in `caches` section
-      // no need to include .netlify & _redirects
       excludes: ['.htaccess', '.netlify', '_redirects'],
 
       // Externals we have to find a way to match this using RegEx
-         // Will hande external API CALLS
+      // Will hande external API CALLS
       ServiceWorker: {
         entry: path.join(process.cwd(), 'app/sw-handler.js')
       },
@@ -104,27 +78,16 @@ module.exports = require('./webpack.base.babel')({
 
       AppCache: false
     }),
+
     new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
 
-    // new CompressionPlugin({
-    //   asset: '[path].gz[query]',
-    //   algorithm: 'gzip',
-    //   test: /\.js$|\.css$|\.html$|\.png$|\.jpg$|\.jpeg$|\.svg$|\.ico$|\.gif$|\.ttf$|\.woff$|\.woff2$|\.eot$/,
-    //   threshold: 10240,
-    //   minRatio: 0.8
-    // }),
-    new BrotliPlugin({
-      asset: '[path].br[query]',
-      test: /\.js$|\.css$|\.html$|\.png$|\.jpg$|\.jpeg$|\.svg$|\.ico$|\.gif$|\.ttf$|\.woff$|\.woff2$|\.eot$/,
+    new CompressionPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.js$|\.css$|\.html$/,
       threshold: 10240,
       minRatio: 0.8
     })
-
-    // Use DLLs
-    // new webpack.DllReferencePlugin({
-    //   context: path.resolve(process.cwd(), 'app'),
-    //   manifest: require(dllPath)
-    // })
   ],
 
   performance: {

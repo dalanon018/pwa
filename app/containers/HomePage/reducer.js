@@ -1,37 +1,35 @@
 /*
+ * HomeReducer
  *
- * HomePage reducer
+ * The reducer takes care of our data. Using actions, we can change our
+ * application state.
+ * To add a new action, add it to the switch statement in the reducer function
  *
+ * Example:
+ * case YOUR_ACTION_CONSTANT:
+ *   return state.set('yourStateVariable', true);
  */
-
 import { fromJS } from 'immutable'
-import {
-  GET_FEATURED_PRODUCTS,
-  SET_FEATURED_PRODUCTS,
 
-  SET_PRODUCTS_COUNT
+import {
+  CHANGE_USERNAME
 } from './constants'
 
+// The initial state of the App
 const initialState = fromJS({
-  product: {},
-  loading: false,
-  totalCount: 0
+  username: ''
 })
 
-function homePageReducer (state = initialState, action) {
+function homeReducer (state = initialState, action) {
   switch (action.type) {
-    case GET_FEATURED_PRODUCTS:
-      return state.set('loading', true)
-    case SET_FEATURED_PRODUCTS:
-      return state
-        .set('product', fromJS(action.payload))
-        .set('loading', false)
+    case CHANGE_USERNAME:
 
-    case SET_PRODUCTS_COUNT:
-      return state.set('totalCount', fromJS(action.payload))
+      // Delete prefixed '@' from the github username
+      return state
+        .set('username', action.name.replace(/@/gi, ''))
     default:
       return state
   }
 }
 
-export default homePageReducer
+export default homeReducer

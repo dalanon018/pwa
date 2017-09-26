@@ -12,6 +12,6 @@ export default defineMessages({
   },
   features: {
     id: 'boilerplate.components.Header.features',
-    defaultMessage: 'Featured'
+    defaultMessage: 'Features'
   }
 })

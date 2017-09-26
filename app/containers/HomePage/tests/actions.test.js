@@ -1,41 +1,21 @@
-
 import {
-  getFeaturedProductsAction,
-  setFeaturedProductsAction,
-  setProductsCountsAction
-} from '../actions'
-import {
-  GET_FEATURED_PRODUCTS,
-  SET_FEATURED_PRODUCTS,
-
-  SET_PRODUCTS_COUNT
+  CHANGE_USERNAME
 } from '../constants'
 
-describe('HomePage actions', () => {
-  it('should call getFeaturedProductsAction', () => {
-    const payload = { id: 1 }
-    const expected = {
-      type: GET_FEATURED_PRODUCTS,
-      payload
-    }
-    expect(getFeaturedProductsAction(payload)).toEqual(expected)
-  })
+import {
+  changeUsername
+} from '../actions'
 
-  it('should call setFeaturedProductsAction', () => {
-    const payload = { id: 1, product: 'test1' }
-    const expected = {
-      type: SET_FEATURED_PRODUCTS,
-      payload
-    }
-    expect(setFeaturedProductsAction(payload)).toEqual(expected)
-  })
+describe('Home Actions', () => {
+  describe('changeUsername', () => {
+    it('should return the correct type and the passed name', () => {
+      const fixture = 'Max'
+      const expectedResult = {
+        type: CHANGE_USERNAME,
+        name: fixture
+      }
 
-  it('should call setProductsCountsAction', () => {
-    const payload = 1
-    const expected = {
-      type: SET_PRODUCTS_COUNT,
-      payload
-    }
-    expect(setProductsCountsAction(payload)).toEqual(expected)
+      expect(changeUsername(fixture)).toEqual(expectedResult)
+    })
   })
 })

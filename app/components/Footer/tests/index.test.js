@@ -1,23 +1,34 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { FormattedMessage } from 'react-intl'
 
-import { Footer } from '../index'
-
-const wrapper = (props = {}, enzyme = shallow) => shallow(
-  <Footer {...props} />
-)
+import A from 'components/A'
+import messages from '../messages'
+import Footer from '../index'
 
 describe('<Footer />', () => {
-  const minProps = {
-    changeRoute: () => {},
-    intl: {
-      formatMessage: () => {}
-    }
-  }
-  it('render without exploding', () => {
-    const renderComponent = wrapper(minProps)
-    expect(
-      renderComponent.length
-    ).toEqual(1)
+  it('should render the copyright notice', () => {
+    const renderedComponent = shallow(
+      <Footer />
+    )
+    expect(renderedComponent.contains(
+      <section>
+        <FormattedMessage {...messages.licenseMessage} />
+      </section>
+    )).toBe(true)
+  })
+
+  it('should render the credits', () => {
+    const renderedComponent = shallow(<Footer />)
+    expect(renderedComponent.contains(
+      <section>
+        <FormattedMessage
+          {...messages.authorMessage}
+          values={{
+            author: <A href='https://twitter.com/mxstbr'>Max Stoiber</A>
+          }}
+        />
+      </section>
+    )).toBe(true)
   })
 })

@@ -19,12 +19,9 @@
   "autoInstall": true,
   "rtl": false,
   "components": [
-    "api",
+    "reset",
+    "site",
     "button",
-    "checkbox",
-    "container",
-    "dimmer",
-    "grid",
     "header",
     "icon",
     "image",
@@ -32,13 +29,14 @@
     "label",
     "list",
     "loader",
-    "tab",
+    "grid",
+    "checkbox",
+    "dimmer",
     "modal",
     "popup",
     "progress",
-    "reset",
-    "site",
+    "api",
     "visibility"
   ],
-  "version": "2.2.10"
+  "version": "2.2.13"
 }

@@ -4,7 +4,6 @@ if (env === 'production') {
   console.log(`TOKEN_URL=${process.env.TOKEN_URL}`)
   console.log(`API_BASE_URL=${process.env.API_BASE_URL}`)
   console.log(`APP_BASE_URL=${process.env.APP_BASE_URL}`)
-  console.log(`MOBILE_REGISTRATION_URL=${process.env.MOBILE_REGISTRATION_URL}`)
   console.log(`STORE_LOCATOR_URL=${process.env.STORE_LOCATOR_URL}`)
 
   console.log(`FIREBASE_API_KEY=${process.env.FIREBASE_API_KEY}`)
@@ -24,13 +23,11 @@ if (env === 'production') {
   console.log(`OATH_GRANT_TYPE=${process.env.OATH_GRANT_TYPE}`)
 
   console.log(`RECAPTCHA_SITE_KEY=${process.env.RECAPTCHA_SITE_KEY}`)
-  console.log(`FB_SHARE_ID=${process.env.FB_SHARE_ID}`)
 
 } else {
   console.log(`TOKEN_URL=https://apidemo.cliqq.net:8443/accounts/oauth2/token`)
   console.log(`API_BASE_URL=https://apidemo.cliqq.net:8443/ecms/api/v1`)
   console.log(`APP_BASE_URL=http://localhost:3000`)
-  console.log(`MOBILE_REGISTRATION_URL=https://apidemo.cliqq.net:8443`)
   console.log(`STORE_LOCATOR_URL=https://mapservice.cliqq.net/ajax/`)
 
   console.log(`FIREBASE_API_KEY=AIzaSyBaKhRjF4feFUsPyezk8Hmu0u_PCbNb2oI`)
@@ -49,6 +46,5 @@ if (env === 'production') {
   console.log(`OATH_RESPONSE_TYPE=token`)
   console.log(`OATH_GRANT_TYPE=client_credentials`)
 
-  console.log(`RECAPTCHA_SITE_KEY=6Le2aDEUAAAAAC_B5o0Xy4_DAAb7Cmvsdrd4ury0`)
-  console.log(`FB_SHARE_ID=1998676580363463`)
+  console.log(`RECAPTCHA_SITE_KEY=Le2aDEUAAAAAC_B5o0Xy4_DAAb7Cmvsdrd4ury0`)
 }

@@ -1,25 +1,27 @@
-
 import { fromJS } from 'immutable'
-import homePageReducer from '../reducer'
-import { GET_FEATURED_PRODUCTS } from './../constants'
 
-describe('homePageReducer', () => {
+import homeReducer from '../reducer'
+import {
+  changeUsername
+} from '../actions'
+
+describe('homeReducer', () => {
   let state
   beforeEach(() => {
     state = fromJS({
-      product: {},
-      loading: true,
-      totalCount: 0
+      username: ''
     })
   })
 
-  it('returns the initial state', () => {
+  it('should return the initial state', () => {
     const expectedResult = state
-    expect(homePageReducer(undefined, {
-      type: GET_FEATURED_PRODUCTS,
-      payload: fromJS([
-        {test: 'passed'}
-      ])
-    })).toEqual(expectedResult)
+    expect(homeReducer(undefined, {})).toEqual(expectedResult)
+  })
+
+  it('should handle the changeUsername action correctly', () => {
+    const fixture = 'mxstbr'
+    const expectedResult = state.set('username', fixture)
+
+    expect(homeReducer(state, changeUsername(fixture))).toEqual(expectedResult)
   })
 })

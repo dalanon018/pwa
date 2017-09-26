@@ -5,31 +5,25 @@
  */
 import { defineMessages } from 'react-intl'
 
-const idSuffix = 'app.containers.HomePage'
-
 export default defineMessages({
-  header: {
-    id: `${idSuffix}.header`,
-    defaultMessage: 'This is HomePage container !'
+  startProjectHeader: {
+    id: 'boilerplate.containers.HomePage.start_project.header',
+    defaultMessage: 'Start your next react project in seconds'
   },
-  featureProduct: {
-    id: `${idSuffix}.featureProduct`,
-    defaultMessage: 'Featured Items'
+  startProjectMessage: {
+    id: 'boilerplate.containers.HomePage.start_project.message',
+    defaultMessage: 'A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices'
   },
-  browseCategory: {
-    id: `${idSuffix}.browseCategory`,
-    defaultMessage: 'Featured Categories'
+  trymeHeader: {
+    id: 'boilerplate.containers.HomePage.tryme.header',
+    defaultMessage: 'Try me!'
   },
-  browseBrands: {
-    id: `${idSuffix}.browseBrands`,
-    defaultMessage: 'Featured Brands'
+  trymeMessage: {
+    id: 'boilerplate.containers.HomePage.tryme.message',
+    defaultMessage: 'Show Github repositories by'
   },
-  productViewAll: {
-    id: `${idSuffix}.productViewAll`,
-    defaultMessage: 'View All'
-  },
-  searchPlaceholder: {
-    id: `${idSuffix}.searchPlaceholder`,
-    defaultMessage: 'Search for Products, Brands and More'
+  trymeAtPrefix: {
+    id: 'boilerplate.containers.HomePage.tryme.atPrefix',
+    defaultMessage: '@'
   }
 })

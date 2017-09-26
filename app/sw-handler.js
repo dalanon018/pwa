@@ -38,16 +38,6 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-/**
- * We need to register the notification click
- */
-self.addEventListener('notificationclick', function(event) {
-  event.notification.close();
-  event.waitUntil(
-    clients.openWindow(`${event.notification.data.url}/?utm_source=push`)
-  );
-})
-
 messaging.setBackgroundMessageHandler((payload) => {
   // Parses data received and sets accordingly
   const data = JSON.parse(payload.data.notification);
@@ -55,9 +45,12 @@ messaging.setBackgroundMessageHandler((payload) => {
   const notificationOptions = {
     body: data.body,
     icon: 'icon-96.png',
-    data: {
-      url: data.data.url
-    }
+    // actions: [
+    //   {action: 'confirmAttendance', title: '👍 Confirm attendance'},
+    //   {action: 'cancel', title: '👎 Not coming'}
+    // ],
+    // For additional data to be sent to event listeners, needs to be set in this data {}
+    // data: {confirm: data.confirm, decline: data.decline}
   };
 
   return self.registration.showNotification(notificationTitle, notificationOptions);

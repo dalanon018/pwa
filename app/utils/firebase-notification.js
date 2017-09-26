@@ -10,43 +10,32 @@ class Notification {
 
   constructor (FirebaseInit) {
     this._Firebase = FirebaseInit
-    this.requestPermission = this.requestPermission.bind(this)
-    this.install = this.install.bind(this)
-    this.refreshToken = this.refreshToken.bind(this)
   }
 
-  refreshToken (cb, currentToken) {
-    this._Firebase.messaging().getToken()
-    .then((token) => {
-      return currentToken !== token ? cb(null, token) : cb(new Error('Same Token'))
-    })
-    .catch((e) => {
-      console.log('error refresh token', e)
-      return cb(e)
-    })
-  }
-
-  requestPermission (cb) {
-    this._Firebase.messaging().requestPermission()
-    .then(() => this.refreshToken(cb))
-    .catch((e) => {
-      console.log('error permission', e)
-      return cb(e)
-    })
-  }
-
-  install (cb) {
-    this._Firebase.messaging().onMessage((payload) => {
+  install () {
+    this._messaging = this._Firebase.messaging()
+    this._messaging.onMessage((payload) => {
       console.log('Message received. ', payload)
       // ...
     })
+
     // On load register service worker
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then((registrations) => {
-        // we will only register the 1st one since thats our service worker
-        this._Firebase.messaging().useServiceWorker(registrations[0])
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').then((registration) => {
+          // Successfully registers service worker
+          console.log('ServiceWorker registration successful with scope: ', registration.scope)
+          this._messaging.useServiceWorker(registration)
+        })
+        .then(() => this._messaging.requestPermission())
+        .then(() => this._messaging.getToken()) // get token
+        .then((token) => {
+          console.log('TOKEN', token)
+        })
+        .catch((err) => {
+          console.log('ServiceWorker registration failed: ', err)
+        })
       })
-      .catch((e) => console.log('Registration failed error:', e))
     }
   }
 }

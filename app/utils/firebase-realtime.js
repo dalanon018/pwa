@@ -5,17 +5,17 @@ class FirebaseDB {
 
   constructor (FirebaseInit) {
     this._Firebase = FirebaseInit
-    // this.login = this.login.bind(this)
+    this.login = this.login.bind(this)
     this.getDB = this.getDB.bind(this)
     this.update = this.update.bind(this)
   }
 
-  // login () {
-  //   return this._Firebase.auth().signInWithEmailAndPassword(
-  //     process.env.FIREBASE_USERNAME,
-  //     process.env.FIREBASE_PASSWORD
-  //   )
-  // }
+  login () {
+    return this._Firebase.auth().signInWithEmailAndPassword(
+      process.env.FIREBASE_USERNAME,
+      process.env.FIREBASE_PASSWORD
+    )
+  }
 
   /**
    * get the root object [transactions]

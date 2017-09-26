@@ -18,21 +18,9 @@ export const fnSearchParams = (params) => compose(
   toPairs
 )(params)
 
-export const paramsImgix = (url, options) => {
-  const defaultOptions = {
-    ...options,
-    q: 50
-  }
-  return compose(
-    partialRight(concat, [fnSearchParams(defaultOptions)])
-  )(url)
-}
+export const paramsImgix = (url, options) => compose(
+  partialRight(concat, [fnSearchParams(options)])
+)(url)
 
-export const imageStock = (imageFileName, options = {}) => {
-  const defaultOptions = {
-    ...options,
-    q: 50
-  }
-
-  return `https://cliqqshop.imgix.net/${imageFileName}${fnSearchParams(defaultOptions)}`
-}
+export const imageStock = (imageFileName) =>
+  `https://cliqq.imgix.net/${imageFileName}`

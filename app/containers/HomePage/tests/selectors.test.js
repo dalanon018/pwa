@@ -1,41 +1,31 @@
 import { fromJS } from 'immutable'
+
 import {
-  selectFeaturedProducts,
-  selectLoading,
-  selectTotalCount
+  selectHome,
+  makeSelectUsername
 } from '../selectors'
 
-describe('HomePage Selectors', () => {
-  it('should get product', () => {
-    const selector = selectFeaturedProducts()
-    const product = fromJS([{ id: 1 }, { id: 3 }, { id: 3 }, { id: 4 }])
-    const mockedState = fromJS({
-      home: {
-        product
-      }
+describe('selectHome', () => {
+  it('should select the home state', () => {
+    const homeState = fromJS({
+      userData: {}
     })
-    expect(selector(mockedState)).toEqual(product)
+    const mockedState = fromJS({
+      home: homeState
+    })
+    expect(selectHome(mockedState)).toEqual(homeState)
   })
+})
 
-  it('should get loading', () => {
-    const selector = selectLoading()
-    const loading = false
+describe('makeSelectUsername', () => {
+  const usernameSelector = makeSelectUsername()
+  it('should select the username', () => {
+    const username = 'mxstbr'
     const mockedState = fromJS({
       home: {
-        loading
+        username
       }
     })
-    expect(selector(mockedState)).toEqual(loading)
-  })
-
-  it('should get totalCount', () => {
-    const selector = selectTotalCount()
-    const totalCount = 0
-    const mockedState = fromJS({
-      home: {
-        totalCount
-      }
-    })
-    expect(selector(mockedState)).toEqual(totalCount)
+    expect(usernameSelector(mockedState)).toEqual(username)
   })
 })

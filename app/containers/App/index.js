@@ -7,44 +7,41 @@
  */
 
 import React from 'react'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
+import { Switch, Route } from 'react-router-dom'
 
-import withProgressBar from 'components/ProgressBar'
+import HomePage from 'containers/HomePage/Loadable'
+import FeaturePage from 'containers/FeaturePage/Loadable'
+import NotFoundPage from 'containers/NotFoundPage/Loadable'
+import Header from 'components/Header'
+import Footer from 'components/Footer'
 
 const AppWrapper = styled.div`
-  display: block;
-  position: relative;
-`
-
-const BodyWrapper = styled.div`
-  max-width: calc(767px + 16px * 2);
+  max-width: calc(768px + 16px * 2);
   margin: 0 auto;
   display: flex;
-  height: 100%;
+  min-height: 100%;
+  padding: 0 16px;
   flex-direction: column;
-
-  @media (min-width: 1024px) {
-    max-width: none;
-  }
 `
 
-export function App (props) {
+export default function App () {
   return (
     <AppWrapper>
-      <BodyWrapper>
-        <Helmet
-          titleTemplate='%s - 7-Eleven CLiQQ'
-          defaultTitle='7-Eleven CLiQQ'
-        />
-        {React.Children.toArray(props.children)}
-      </BodyWrapper>
+      <Helmet
+        titleTemplate='%s - React.js Boilerplate'
+        defaultTitle='React.js Boilerplate'
+      >
+        <meta name='description' content='A React.js Boilerplate application' />
+      </Helmet>
+      <Header />
+      <Switch>
+        <Route exact path='/' component={HomePage} />
+        <Route path='/features' component={FeaturePage} />
+        <Route path='' component={NotFoundPage} />
+      </Switch>
+      <Footer />
     </AppWrapper>
   )
 }
-
-App.propTypes = {
-  children: React.PropTypes.node
-}
-
-export default withProgressBar(App)

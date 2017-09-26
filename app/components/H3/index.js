@@ -1,22 +1,9 @@
-import React, { PropTypes } from 'react'
-// import styled from 'styled-components'
+import React from 'react'
 
-import { Header } from 'semantic-ui-react'
-
-function H3 ({
-  children,
-  ...props
-}) {
+function H3 (props) {
   return (
-    <Header {...props} as='h3' className='color__secondary'>{children}</Header>
+    <h3 {...props} />
   )
-}
-
-H3.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.node
-  ]).isRequired
 }
 
 export default H3

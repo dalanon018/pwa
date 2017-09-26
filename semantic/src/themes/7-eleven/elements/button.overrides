@@ -4,38 +4,6 @@
 
 .ui.button {
   border-radius: 0;
-  font-family: @pageFont;
   font-weight: 300;
-  font-size: 16px;
-
-  &.primary {
-    background-color: @primaryColor;
-    color: @white;
-    margin: 0;
-    padding: 10px 40px !important;
-
-    span {
-      margin-right: 10px;
-    }
-
-    &:after {
-      -moz-osx-font-smoothing: grayscale;
-      -webkit-backface-visibility: hidden;
-      -webkit-font-smoothing: antialiased;
-      backface-visibility: hidden;
-      content: "\f101";
-      display: inline-block;
-      font-family: Icons;
-      font-size: 20px;
-      font-smoothing: antialiased;
-      font-style: normal;
-      font-weight: 400;
-      opacity: 1;
-      speak: none;
-      text-align: center;
-      text-decoration: inherit;
-      vertical-align: baseline;
-      // width: 1.5em;
-    }
-  }
+  padding: 10px 45px;
 }

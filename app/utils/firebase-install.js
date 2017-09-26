@@ -1,6 +1,4 @@
-import * as Firebase from 'firebase/app'
-import 'firebase/messaging'
-import 'firebase/database'
+import Firebase from 'firebase'
 
 Firebase.initializeApp({
   apiKey: process.env.FIREBASE_API_KEY,

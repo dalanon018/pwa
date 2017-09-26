@@ -5,6 +5,7 @@
  */
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { FormattedNumber } from 'react-intl'
@@ -30,10 +31,10 @@ export class RepoListItem extends React.PureComponent { // eslint-disable-line r
     // Put together the content of the repository
     const content = (
       <Wrapper>
-        <RepoLink rel='noopener' href={item.html_url} target='_blank'>
+        <RepoLink href={item.html_url} target='_blank'>
           {nameprefix + item.name}
         </RepoLink>
-        <IssueLink rel='noopener' href={`${item.html_url}/issues`} target='_blank'>
+        <IssueLink href={`${item.html_url}/issues`} target='_blank'>
           <IssueIcon />
           <FormattedNumber value={item.open_issues_count} />
         </IssueLink>
@@ -48,8 +49,8 @@ export class RepoListItem extends React.PureComponent { // eslint-disable-line r
 }
 
 RepoListItem.propTypes = {
-  item: React.PropTypes.object,
-  currentUser: React.PropTypes.string
+  item: PropTypes.object,
+  currentUser: PropTypes.string
 }
 
 export default connect(createStructuredSelector({

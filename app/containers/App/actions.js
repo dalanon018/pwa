@@ -18,10 +18,7 @@
 import {
   LOAD_REPOS,
   LOAD_REPOS_SUCCESS,
-  LOAD_REPOS_ERROR,
-
-  SET_CURRENT_SESSION,
-  SET_AUTHENTICATING
+  LOAD_REPOS_ERROR
 } from './constants'
 
 /**
@@ -62,27 +59,5 @@ export function repoLoadingError (error) {
   return {
     type: LOAD_REPOS_ERROR,
     error
-  }
-}
-
-/**
- * Sett if we have current session
- * @param {object} payload
- */
-export function setCurrentSessionAction (payload) {
-  return {
-    type: SET_CURRENT_SESSION,
-    payload
-  }
-}
-
-/**
- * Sett if we are currently authenticating
- * @param {object} payload
- */
-export function setAuthenticatingAction (payload) {
-  return {
-    type: SET_AUTHENTICATING,
-    payload
   }
 }
