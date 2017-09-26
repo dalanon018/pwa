@@ -40,7 +40,7 @@ function checkStatus (response) {
  *
  * @return {object}           The response data
  */
-export default function request (url, options) {
+export default function request (url, options = {}) {
   const headers = new Headers()
   const omitProps = ['contentType', 'token']
   const getToken = prop('token', options)
