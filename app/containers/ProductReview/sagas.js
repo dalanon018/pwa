@@ -1,5 +1,5 @@
 import moment from 'moment'
-import Firebase from 'utils/firebase-realtime'
+// import Firebase from 'utils/firebase-realtime'
 
 import { compose, is, ifElse, identity, map, uniq, isEmpty } from 'ramda'
 import { call, cancel, fork, put, take, select } from 'redux-saga/effects'
@@ -105,16 +105,16 @@ export function * storeLocator () {
  * Here we will save the transactions to firebase with the main key of mobile numbers
  * <mobile>: {transactionID: "status"}
  */
-function * updateFirebase ({ orderResponse: { trackingNumber, status }, completeMobile }) {
-  try {
-    yield Firebase.login()
-    yield Firebase.update(completeMobile, {
-      [trackingNumber]: status
-    })
-  } catch (e) {
-    console.log('error on firebase', e)
-  }
-}
+// function * updateFirebase ({ orderResponse: { trackingNumber, status }, completeMobile }) {
+//   try {
+//     yield Firebase.login()
+//     yield Firebase.update(completeMobile, {
+//       [trackingNumber]: status
+//     })
+//   } catch (e) {
+//     console.log('error on firebase', e)
+//   }
+// }
 
 /**
  * Here we will handle the store we visited
@@ -182,7 +182,7 @@ export function * submitOrder (args) {
       yield call(removeItem, CURRENT_PRODUCT_KEY)
 
       // we have to update the firebase
-      yield updateFirebase({ orderResponse, completeMobile })
+      // yield updateFirebase({ orderResponse, completeMobile })
 
       // update store locations
       yield updateStoreLocations({ store })
