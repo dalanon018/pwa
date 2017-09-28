@@ -124,8 +124,9 @@ module.exports = (options) => ({
         FIREBASE_STORAGE_BUCKET: JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET),
         FIREBASE_MESSAGING_SENDER_ID: JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID),
         FIREBASE_MAIN_OBJECT: JSON.stringify(process.env.FIREBASE_MAIN_OBJECT),
-        FIREBASE_USERNAME: JSON.stringify(process.env.FIREBASE_USERNAME),
-        FIREBASE_PASSWORD: JSON.stringify(process.env.FIREBASE_PASSWORD),
+        // we dont need to add this since it will be handle by the backend.
+        // FIREBASE_USERNAME: JSON.stringify(process.env.FIREBASE_USERNAME),
+        // FIREBASE_PASSWORD: JSON.stringify(process.env.FIREBASE_PASSWORD),
         OATH_CLIENT_ID: JSON.stringify(process.env.OATH_CLIENT_ID),
         OATH_CLIENT_SECRET: JSON.stringify(process.env.OATH_CLIENT_SECRET),
         OATH_RESPONSE_TYPE: JSON.stringify(process.env.OATH_RESPONSE_TYPE),
