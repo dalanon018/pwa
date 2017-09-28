@@ -1,16 +1,17 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Footer from '../index'
+import BrandsLists from '../index'
 
 const wrapper = (props = {}, enzyme = shallow) => shallow(
-  <Footer {...props} />
+  <BrandsLists {...props} />
 )
 
-describe('<Footer />', () => {
+describe('<BrandsLists />', () => {
   const minProps = {
-    changeRoute: () => {}
+    lists: []
   }
+
   it('render without exploding', () => {
     const renderComponent = wrapper(minProps)
     expect(
