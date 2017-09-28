@@ -1,10 +1,26 @@
 import styled from 'styled-components'
+import {
+  Label
+} from 'semantic-ui-react'
 
 const Wrapper = styled.footer`
-  display: flex;
-  justify-content: space-between;
-  padding: 3em 0;
-  border-top: 1px solid #666;
+  border-top: 1px solid #AEAEAE;
+  padding: 25px 15px 15px;
+  text-align: center;
 `
 
-export default Wrapper
+const SocialIcons = styled.div`
+  img {
+    height: inherit !important;
+    width: 40px !important;
+  }
+`
+const CopyRight = styled(Label)`
+  border: none !important
+`
+
+export {
+  Wrapper,
+  SocialIcons,
+  CopyRight
+}

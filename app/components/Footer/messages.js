@@ -5,15 +5,27 @@
  */
 import { defineMessages } from 'react-intl'
 
+const idSuffix = 'boilerplate.components.Footer'
+
 export default defineMessages({
-  licenseMessage: {
-    id: 'boilerplate.components.Footer.license.message',
-    defaultMessage: 'This project is licensed under the MIT license.'
+  stayConnected: {
+    id: `${idSuffix}.stayConnected.message`,
+    defaultMessage: 'Stay Connected'
   },
-  authorMessage: {
-    id: 'boilerplate.components.Footer.author.message',
-    defaultMessage: `
-      Made with love by {author}.
-    `
+  faq: {
+    id: `${idSuffix}.faq.message`,
+    defaultMessage: `FAQS`
+  },
+  termsConditions: {
+    id: `${idSuffix}.termsConditions.message`,
+    defaultMessage: `Terms & Conditions`
+  },
+  privacyPolicy: {
+    id: `${idSuffix}.privacyPolicy.message`,
+    defaultMessage: `Privacy Policy`
+  },
+  copyRight: {
+    id: `${idSuffix}.copyRight.message`,
+    defaultMessage: `© {year} Cliqq. All Rights Reserved.`
   }
 })

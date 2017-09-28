@@ -6,24 +6,20 @@
 import { defineMessages } from 'react-intl'
 
 export default defineMessages({
-  startProjectHeader: {
-    id: 'boilerplate.containers.HomePage.start_project.header',
-    defaultMessage: 'Start your next react project in seconds'
+  header: {
+    id: 'app.containers.HomePage.header',
+    defaultMessage: 'This is HomePage container !'
   },
-  startProjectMessage: {
-    id: 'boilerplate.containers.HomePage.start_project.message',
-    defaultMessage: 'A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices'
+  featureProducts: {
+    id: 'app.containers.HomePage.featureProducts',
+    defaultMessage: 'Featured Items'
   },
-  trymeHeader: {
-    id: 'boilerplate.containers.HomePage.tryme.header',
-    defaultMessage: 'Try me!'
+  featureCategories: {
+    id: 'app.containers.HomePage.featureCategories',
+    defaultMessage: 'Featured Categories'
   },
-  trymeMessage: {
-    id: 'boilerplate.containers.HomePage.tryme.message',
-    defaultMessage: 'Show Github repositories by'
-  },
-  trymeAtPrefix: {
-    id: 'boilerplate.containers.HomePage.tryme.atPrefix',
-    defaultMessage: '@'
+  featureBrands: {
+    id: 'app.containers.HomePage.featureBrands',
+    defaultMessage: 'Featured Brands'
   }
 })

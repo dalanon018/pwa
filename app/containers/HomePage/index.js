@@ -1,130 +1,117 @@
-/*
+/**
+ *
  * HomePage
  *
- * This is the first thing users see of our App, at the '/' route
  */
 
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { FormattedMessage } from 'react-intl'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
 import { createStructuredSelector } from 'reselect'
+import { compose } from 'redux'
+import {
+  Grid,
+  Image,
+  Header
+} from 'semantic-ui-react'
 
-import injectReducer from 'utils/injectReducer'
+import SliderSample from 'images/test-images/v2/slider.jpg'
 import injectSaga from 'utils/injectSaga'
-import { makeSelectRepos, makeSelectLoading, makeSelectError } from 'containers/App/selectors'
-import H2 from 'components/H2'
-import ReposList from 'components/ReposList'
-import AtPrefix from './AtPrefix'
-import CenteredSection from './CenteredSection'
-import Form from './Form'
-import Input from './Input'
-import Section from './Section'
-import messages from './messages'
-import { loadRepos } from '../App/actions'
-import { changeUsername } from './actions'
-import { makeSelectUsername } from './selectors'
+import injectReducer from 'utils/injectReducer'
+
+import SearchBox from 'components/SearchBox'
+
+// Test Images
+import Accessories from 'images/test-images/v2/Accessories.jpg'
+import Apparel from 'images/test-images/v2/Apparel.jpg'
+import SkinCare from 'images/test-images/v2/SkinCare.jpg'
+import HomeLiving from 'images/test-images/v2/HomeLiving.jpg'
+
+import Bench from 'images/test-images/v2/Bench.jpg'
+import Calbee from 'images/test-images/v2/Calbee.jpg'
+import Palmolive from 'images/test-images/v2/Palmolive.jpg'
+import Sony from 'images/test-images/v2/Sony.jpg'
+import Penshoppe from 'images/test-images/v2/Penshoppe.jpg'
+
+import {
+  makeSelectHomePage
+} from './selectors'
 import reducer from './reducer'
 import saga from './saga'
+import messages from './messages'
+
+import CategoriesLists from './CategoriesLists'
+import BrandsLists from './BrandsLists'
+
+const CategoriesData = [
+  Apparel,
+  HomeLiving,
+  Accessories,
+  SkinCare
+]
+
+const BrandsData = [
+  Bench,
+  Calbee,
+  Palmolive,
+  Sony,
+  Penshoppe
+]
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
-  /**
-   * when initial state username is not null, submit the form to load repos
-   */
-  componentDidMount () {
-    if (this.props.username && this.props.username.trim().length > 0) {
-      this.props.onSubmitForm()
-    }
-  }
-
   render () {
-    const { loading, error, repos } = this.props
-    const reposListProps = {
-      loading,
-      error,
-      repos
-    }
-
     return (
-      <article>
+      <div>
         <Helmet>
-          <title>Home Page</title>
-          <meta name='description' content='A React.js Boilerplate application homepage' />
+          <title>HomePage</title>
+          <meta name='description' content='Description of HomePage' />
         </Helmet>
-        <div>
-          <CenteredSection>
-            <H2>
-              <FormattedMessage {...messages.startProjectHeader} />
-            </H2>
-            <p>
-              <FormattedMessage {...messages.startProjectMessage} />
-            </p>
-          </CenteredSection>
-          <Section>
-            <H2>
-              <FormattedMessage {...messages.trymeHeader} />
-            </H2>
-            <Form onSubmit={this.props.onSubmitForm}>
-              <label htmlFor='username'>
-                <FormattedMessage {...messages.trymeMessage} />
-                <AtPrefix>
-                  <FormattedMessage {...messages.trymeAtPrefix} />
-                </AtPrefix>
-                <Input
-                  id='username'
-                  type='text'
-                  placeholder='mxstbr'
-                  value={this.props.username}
-                  onChange={this.props.onChangeUsername}
-                />
-              </label>
-            </Form>
-            <ReposList {...reposListProps} />
-          </Section>
-        </div>
-      </article>
+        <Grid padded>
+          <Grid.Row columns={1} verticalAlign='middle' color='grey'>
+            <Grid.Column >
+              <SearchBox />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+        <Image alt='slider' src={SliderSample} />
+        <Header as='h3' textAlign='center'>
+          <FormattedMessage {...messages.featureProducts} />
+        </Header>
+
+        <Header as='h3' textAlign='center'>
+          <FormattedMessage {...messages.featureCategories} />
+        </Header>
+        <CategoriesLists lists={CategoriesData} />
+
+        <Header as='h3' textAlign='center'>
+          <FormattedMessage {...messages.featureBrands} />
+        </Header>
+        <BrandsLists lists={BrandsData} />
+      </div>
     )
   }
 }
 
 HomePage.propTypes = {
-  loading: PropTypes.bool,
-  error: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.bool
-  ]),
-  repos: PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.bool
-  ]),
-  onSubmitForm: PropTypes.func,
-  username: PropTypes.string,
-  onChangeUsername: PropTypes.func
-}
-
-export function mapDispatchToProps (dispatch) {
-  return {
-    onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
-    onSubmitForm: (evt) => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault()
-      dispatch(loadRepos())
-    }
-  }
+  dispatch: PropTypes.func.isRequired
 }
 
 const mapStateToProps = createStructuredSelector({
-  repos: makeSelectRepos(),
-  username: makeSelectUsername(),
-  loading: makeSelectLoading(),
-  error: makeSelectError()
+  homepage: makeSelectHomePage()
 })
+
+function mapDispatchToProps (dispatch) {
+  return {
+    dispatch
+  }
+}
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps)
 
-const withReducer = injectReducer({ key: 'home', reducer })
-const withSaga = injectSaga({ key: 'home', saga })
+const withReducer = injectReducer({ key: 'homePage', reducer })
+const withSaga = injectSaga({ key: 'homePage', saga })
 
 export default compose(
   withReducer,

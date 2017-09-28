@@ -57,7 +57,7 @@ function HeaderMenu ({ showBack, hideSearch, hideBarcode }) {
 
   return (
     <Grid padded>
-      <Grid.Row columns={3} verticalAlign='middle' color='white'>
+      <Grid.Row columns={3} verticalAlign='middle'>
         <Grid.Column >
           { MenuToggle(true) }
         </Grid.Column>
