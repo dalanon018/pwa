@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Route } from 'react-router-dom'
 
-import Header from 'components/Header'
+import HeaderMenu from 'components/HeaderMenu'
 import Footer from 'components/Footer'
 import App from '../index'
 
@@ -11,7 +11,7 @@ describe('<App />', () => {
     const renderedComponent = shallow(
       <App />
     )
-    expect(renderedComponent.find(Header).length).toBe(1)
+    expect(renderedComponent.find(HeaderMenu).length).toBe(1)
   })
 
   it('should render some routes', () => {
