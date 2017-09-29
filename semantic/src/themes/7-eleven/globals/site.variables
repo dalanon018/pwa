@@ -13,7 +13,7 @@
 @pageFont          : @fontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;
 
 @googleFontName    : @fontName;
-@importGoogleFonts : false;
+@importGoogleFonts : true;
 @googleFontSizes   : '400,700,400italic,700italic';
 @googleSubset      : 'latin';
 
@@ -47,7 +47,7 @@
     Brand Colors
 --------------------*/
 
-@primaryColor        : @orange;
+@primaryColor        : @blue;
 @secondaryColor      : @black;
 
 @lightPrimaryColor   : @lightBlue;
@@ -140,6 +140,30 @@
 @linkHoverUnderline  : @linkUnderline;
 
 /*-------------------
+    Scroll Bars
+--------------------*/
+
+@useCustomScrollbars: true;
+
+@customScrollbarWidth: 10px;
+
+@trackBackground: rgba(0, 0, 0, 0.1);
+@trackBorderRadius: 0px;
+
+@thumbBorderRadius: 5px;
+@thumbBackground: rgba(0, 0, 0, 0.25);
+@thumbTransition: color 0.2s ease;
+
+@thumbInactiveBackground: rgba(0, 0, 0, 0.15);
+@thumbHoverBackground: rgba(128, 135, 139, 0.8);
+
+/* Inverted */
+@trackInvertedBackground: rgba(255, 255, 255, 0.1);
+@thumbInvertedBackground: rgba(255, 255, 255, 0.25);
+@thumbInvertedInactiveBackground: rgba(255, 255, 255, 0.15);
+@thumbInvertedHoverBackground: rgba(255, 255, 255, 0.35);
+
+/*-------------------
   Highlighted Text
 --------------------*/
 
@@ -192,7 +216,7 @@
 
 /*---  Colors  ---*/
 @red              : #DB2828;
-@orange           : #F58322;
+@orange           : #F2711C;
 @yellow           : #FBBD08;
 @olive            : #B5CC18;
 @green            : #21BA45;

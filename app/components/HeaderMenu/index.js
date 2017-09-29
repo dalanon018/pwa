@@ -26,8 +26,8 @@ const InlineImage = styled(Image)`
   margin-left: 20px;
 `
 const MainLogo = styled.img`
-width: 80px;
-height: 35px;
+  width: 80px;
+  height: 35px;
 `
 
 const Wrapper = styled(Grid)`

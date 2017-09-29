@@ -21,8 +21,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  padding: 20px;
 `
 const LabelBorderNone = styled(Label)`
   border: none !important
@@ -32,7 +30,7 @@ const View = ({ product }) => {
   return (
     <Grid.Column>
       <Wrapper>
-        <Image alt={product.get('title')} src={TestImage} fluid />
+        <Image alt={product.get('title')} src={TestImage} size='small' />
         <LabelBorderNone basic size='medium'>
           { product.get('brand') }
         </LabelBorderNone>
