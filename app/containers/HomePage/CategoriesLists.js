@@ -19,7 +19,7 @@ const CategoriesLists = ({ lists }) => {
 }
 
 CategoriesLists.propTypes = {
-  lists: PropTypes.array.isRequired
+  lists: PropTypes.object.isRequired
 }
 
 export default CategoriesLists

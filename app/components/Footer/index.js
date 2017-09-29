@@ -13,6 +13,9 @@ import FacebookIcon from 'images/icons/facebook-icon.svg'
 import TwitterIcon from 'images/icons/twitter-icon.svg'
 import EmailIcon from 'images/icons/email-icon.svg'
 
+import Delivery from 'images/deliveryPolicy.svg'
+import Return from 'images/returnPolicy.svg'
+
 import {
   Wrapper,
   SocialIcons,
@@ -34,6 +37,11 @@ function Footer () {
             <Header as='h3' textAlign='center'>
               <FormattedMessage {...messages.stayConnected} />
             </Header>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row>
+          <Grid.Column>
             <SocialIcons>
               <List horizontal>
                 <List.Item>
@@ -53,6 +61,24 @@ function Footer () {
                 </List.Item>
               </List>
             </SocialIcons>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row>
+          <Grid.Column>
+            <List horizontal divided size='small'>
+              <List.Item>
+                <Image alt='shipping' avatar src={Delivery} size='small' />
+              </List.Item>
+              <List.Item>
+                <Image alt='return' avatar src={Return} size='small' />
+              </List.Item>
+            </List>
+          </Grid.Column>
+        </Grid.Row>
+
+        <Grid.Row>
+          <Grid.Column>
             <List horizontal divided size='small'>
               <List.Item>
                 <FormattedMessage {...messages.faq} />
@@ -64,7 +90,11 @@ function Footer () {
                 <FormattedMessage {...messages.privacyPolicy} />
               </List.Item>
             </List>
+          </Grid.Column>
+        </Grid.Row>
 
+        <Grid.Row>
+          <Grid.Column>
             <CopyRight basic size='small'>
               <FormattedMessage
                 {...messages.copyRight}

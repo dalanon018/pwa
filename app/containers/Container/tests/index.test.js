@@ -1,9 +1,9 @@
 // import React from 'react';
 // import { shallow } from 'enzyme';
 
-// import ProductView from '../index';
+// import { Container } from '../index';
 
-describe('<ProductView />', () => {
+describe('<Container />', () => {
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(false)
   })

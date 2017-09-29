@@ -17,7 +17,7 @@ const BrandsLists = ({ lists }) => {
 }
 
 BrandsLists.propTypes = {
-  lists: PropTypes.array.isRequired
+  lists: PropTypes.object.isRequired
 }
 
 export default BrandsLists

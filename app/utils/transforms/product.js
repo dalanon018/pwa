@@ -36,6 +36,10 @@ const Schema = {
     name: 'images',
     type: ARRAY
   },
+  brandName: {
+    name: 'brand',
+    type: STRING
+  },
   brandLogo: {
     name: 'brandLogo',
     type: STRING

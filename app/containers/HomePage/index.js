@@ -22,22 +22,25 @@ import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
 import SearchBox from 'components/SearchBox'
-
-// Test Images
-import Accessories from 'images/test-images/v2/Accessories.jpg'
-import Apparel from 'images/test-images/v2/Apparel.jpg'
-import SkinCare from 'images/test-images/v2/SkinCare.jpg'
-import HomeLiving from 'images/test-images/v2/HomeLiving.jpg'
-
-import Bench from 'images/test-images/v2/Bench.jpg'
-import Calbee from 'images/test-images/v2/Calbee.jpg'
-import Palmolive from 'images/test-images/v2/Palmolive.jpg'
-import Sony from 'images/test-images/v2/Sony.jpg'
-import Penshoppe from 'images/test-images/v2/Penshoppe.jpg'
+import ProductView from 'components/ProductView'
 
 import {
-  makeSelectHomePage
+  selectFeaturedProducts,
+  selectProductsLoading,
+
+  selectFeaturedCategories,
+  selectCategoriesLoading,
+
+  selectFeaturedBrands,
+  selectBrandsLoading
 } from './selectors'
+
+import {
+  getFeaturedProductsAction,
+  getFeaturedCategoriesAction,
+  getFeaturedBrandsAction
+} from './actions'
+
 import reducer from './reducer'
 import saga from './saga'
 import messages from './messages'
@@ -45,27 +48,21 @@ import messages from './messages'
 import CategoriesLists from './CategoriesLists'
 import BrandsLists from './BrandsLists'
 
-const CategoriesData = [
-  Apparel,
-  HomeLiving,
-  Accessories,
-  SkinCare
-]
-
-const BrandsData = [
-  Bench,
-  Calbee,
-  Palmolive,
-  Sony,
-  Penshoppe
-]
-
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  componentDidMount () {
+    const { getProducts, getCategories, getBrands } = this.props
+    getProducts()
+    getCategories()
+    getBrands()
+  }
+
   render () {
+    const { products, categories, brands } = this.props
+
     return (
       <div>
         <Helmet>
-          <title>HomePage</title>
+          <title>Home</title>
           <meta name='description' content='Description of HomePage' />
         </Helmet>
         <Grid padded>
@@ -79,31 +76,51 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         <Header as='h3' textAlign='center'>
           <FormattedMessage {...messages.featureProducts} />
         </Header>
+        <ProductView products={products} />
 
         <Header as='h3' textAlign='center'>
           <FormattedMessage {...messages.featureCategories} />
         </Header>
-        <CategoriesLists lists={CategoriesData} />
+        <CategoriesLists lists={categories} />
 
         <Header as='h3' textAlign='center'>
           <FormattedMessage {...messages.featureBrands} />
         </Header>
-        <BrandsLists lists={BrandsData} />
+        <BrandsLists lists={brands} />
       </div>
     )
   }
 }
 
 HomePage.propTypes = {
+  products: PropTypes.object.isRequired,
+  categories: PropTypes.object.isRequired,
+  brands: PropTypes.object.isRequired,
+  productsLoading: PropTypes.bool.isRequired,
+  categoriesLoading: PropTypes.bool.isRequired,
+  brandsLoading: PropTypes.bool.isRequired,
+  getProducts: PropTypes.func.isRequired,
+  getCategories: PropTypes.func.isRequired,
+  getBrands: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired
 }
 
 const mapStateToProps = createStructuredSelector({
-  homepage: makeSelectHomePage()
+  products: selectFeaturedProducts(),
+  productsLoading: selectProductsLoading(),
+
+  categories: selectFeaturedCategories(),
+  categoriesLoading: selectCategoriesLoading(),
+
+  brands: selectFeaturedBrands(),
+  brandsLoading: selectBrandsLoading()
 })
 
 function mapDispatchToProps (dispatch) {
   return {
+    getProducts: () => dispatch(getFeaturedProductsAction()),
+    getCategories: () => dispatch(getFeaturedCategoriesAction()),
+    getBrands: () => dispatch(getFeaturedBrandsAction()),
     dispatch
   }
 }

@@ -5,133 +5,63 @@
 */
 
 import React from 'react'
-import { range } from 'lodash'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
-import {
-  identity,
-  ifElse
-} from 'ramda'
-import { FormattedMessage } from 'react-intl'
 import { Grid, Image, Label } from 'semantic-ui-react'
+import { FormattedMessage } from 'react-intl'
+
+// test image
+import TestImage from 'images/test-images/v2/Backpack.png'
 
 import messages from './messages'
-import {
-  ImageWrapper,
-  ProductInfo,
-  ProductPriceWrapper,
-  ProductWrapper,
-  RibbonWrapper,
-  ImageContent
-} from './styles'
 
-import EmptyDataBlock from 'components/EmptyDataBlock'
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-import ParagraphImage from 'images/test-images/short-paragraph.png'
+  padding: 20px;
+`
+const LabelBorderNone = styled(Label)`
+  border: none !important
+`
 
-import { imageStock, paramsImgix } from 'utils/image-stock'
-
-const imgixOptions = {
-  w: 300,
-  h: 300,
-  fit: 'clamp',
-  auto: 'compress',
-  q: 35,
-  lossless: 0
+const View = ({ product }) => {
+  return (
+    <Grid.Column>
+      <Wrapper>
+        <Image alt={product.get('title')} src={TestImage} fluid />
+        <LabelBorderNone basic size='medium'>
+          { product.get('brand') }
+        </LabelBorderNone>
+        <LabelBorderNone basic size='mini'>
+          { product.get('title') }
+        </LabelBorderNone>
+        <LabelBorderNone basic size='massive' color='orange'>
+          <FormattedMessage {...messages.peso} />
+          { product.get('price') }
+        </LabelBorderNone>
+      </Wrapper>
+    </Grid.Column>
+  )
 }
 
-function ProductView ({
-  loader,
-  products,
-  changeRoute,
-  windowWidth
-}) {
-  const columnCount = windowWidth > 767 ? 4 : 2
-
-  const toggleOrigDiscountPrice = (product) => {
-    const showPrice = product.get('discountPrice') || product.get('price')
-
-    return showPrice ? showPrice.toLocaleString() : 0
-  }
-
-  const showDiscountPrice = (component1, component2) => (condition) => ifElse(
-    identity,
-    () => component1,
-    () => component2
-  )(condition)
+function ProductView ({ products }) {
   return (
-    <Grid padded stretched columns={columnCount}>
+    <Grid container padded columns='2'>
       {
-        // we need to make sure to show this only if only if not items yet and we are loading
-        (loader && products.size === 0) ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
-        : products.valueSeq().map((product, index) => {
-          const goToProduct = () => changeRoute(`/product/${product.get('cliqqCode').first()}`)
-          const toggleDiscountLabel = showDiscountPrice(
-            <FormattedMessage {...messages.peso} />,
-            null
-          )
-          const toggleDiscountValue = showDiscountPrice(
-            parseFloat(product.get('price')).toLocaleString(),
-            null
-          )
-
-          return (
-            <Grid.Column
-              key={`${product.get('cliqqCode')}-${index}`}
-              onClick={goToProduct}>
-              <ProductWrapper>
-                <ImageWrapper>
-                  <ImageContent>
-                    <Image alt={product.get('title')} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
-                    {
-                      +product.get('quantity') === 0 &&
-                      <RibbonWrapper>
-                        <div className='ribbon-tag'>
-                          <FormattedMessage className='ribbon-text' {...messages.noStock} />
-                        </div>
-                      </RibbonWrapper>
-                    }
-                  </ImageContent>
-                </ImageWrapper>
-                <ProductInfo brandName={product.get('brand')}>
-                  <Label as='span' className='brand-name color__secondary' basic size='medium'>{product.getIn(['brand', 'name'])}</Label>
-                  <Label className='no-bottom-margin product-name color__secondary' as='p' basic size='tiny'>{product.get('title')}</Label>
-                  <ProductPriceWrapper>
-                    <Label className='product-price' as='b' color='orange' basic size='massive'>
-                      <FormattedMessage {...messages.peso} />
-                      { toggleOrigDiscountPrice(product) }
-                    </Label>
-                    <Label className='product-discount' as='span' color='grey' basic size='large'>
-                      { toggleDiscountLabel(product.get('discountPrice') !== 0) }
-                      { toggleDiscountValue(product.get('discountPrice') !== 0) }
-                    </Label>
-                  </ProductPriceWrapper>
-                </ProductInfo>
-              </ProductWrapper>
-            </Grid.Column>
-          )
-        })
+        products.map((product, idx) =>
+          <View product={product} key={idx} />
+        )
       }
     </Grid>
   )
 }
 
-const DefaultState = () => {
-  return (
-    <Grid.Column>
-      <EmptyDataBlock>
-        <ProductWrapper>
-          <ImageWrapper>
-            <Image alt='CLiQQ' src={imageStock('Brands-Default.jpg', imgixOptions)} className='empty-image' />
-          </ImageWrapper>
-          <Image alt='CLiQQ' src={ParagraphImage} height={50} />
-        </ProductWrapper>
-      </EmptyDataBlock>
-    </Grid.Column>
-  )
-}
-
 ProductView.propTypes = {
-
+  products: PropTypes.object.isRequired
 }
 
 export default ProductView

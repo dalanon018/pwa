@@ -5,23 +5,13 @@
  */
 import { defineMessages } from 'react-intl'
 
-const idSuffix = 'app.containers.ProductView'
-
 export default defineMessages({
   header: {
-    id: `${idSuffix}.header`,
+    id: 'app.components.ProductView.header',
     defaultMessage: 'This is the ProductView component !'
   },
-  sale: {
-    id: `${idSuffix}.sale`,
-    defaultMessage: 'SALE!'
-  },
   peso: {
-    id: `${idSuffix}.peso`,
+    id: 'app.components.ProductView.peso',
     defaultMessage: '₱ '
-  },
-  noStock: {
-    id: 'app.components.Product.noStock',
-    defaultMessage: 'OUT OF STOCK'
   }
 })

@@ -30,6 +30,12 @@ width: 80px;
 height: 35px;
 `
 
+const Wrapper = styled(Grid)`
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 99;
+`
+
 const toggleComponent = (componentA, componentB) => (condition) => {
   return ifElse(
     identity,
@@ -56,7 +62,7 @@ function HeaderMenu ({ showBack, hideSearch, hideBarcode }) {
   )
 
   return (
-    <Grid padded>
+    <Wrapper padded>
       <Grid.Row columns={3} verticalAlign='middle'>
         <Grid.Column >
           { MenuToggle(true) }
@@ -69,7 +75,7 @@ function HeaderMenu ({ showBack, hideSearch, hideBarcode }) {
           { ActivitiesToggle(hideBarcode) }
         </Grid.Column>
       </Grid.Row>
-    </Grid>
+    </Wrapper>
   )
 }
 
