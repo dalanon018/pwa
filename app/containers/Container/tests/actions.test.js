@@ -1,18 +1,82 @@
 
 import {
-  defaultAction
+  getMobileNumbersAction,
+  setMobileNumbersAction,
+
+  getUpdatedReceiptsAction,
+  setUpdatedReceiptsAction,
+
+  setNetworkErrorAction
 } from '../actions'
+
 import {
-  DEFAULT_ACTION
+  GET_MOBILE_NUMBERS,
+  SET_MOBILE_NUMBERS,
+
+  GET_RECEIPT_UPDATED,
+  SET_RECEIPT_UPDATED,
+
+  SET_NETWORK_ERROR
 } from '../constants'
 
 describe('Container actions', () => {
-  describe('Default Action', () => {
-    it('has a type of DEFAULT_ACTION', () => {
-      const expected = {
-        type: DEFAULT_ACTION
+  describe('getMobileNumbers', () => {
+    it('should request mobile numbers', () => {
+      const expectedResult = {
+        type: GET_MOBILE_NUMBERS
       }
-      expect(defaultAction()).toEqual(expected)
+
+      expect(getMobileNumbersAction()).toEqual(expectedResult)
+    })
+  })
+
+  describe('setMobileNumbers', () => {
+    it('should request mobile numbers', () => {
+      const payload = ['99999999', '8888888', '77777777']
+      const expectedResult = {
+        type: SET_MOBILE_NUMBERS,
+        payload
+      }
+
+      expect(setMobileNumbersAction(payload)).toEqual(expectedResult)
+    })
+  })
+
+  describe('getUpdatedReceiptsAction', () => {
+    it('should request updated reciepts', () => {
+      const expectedResult = {
+        type: GET_RECEIPT_UPDATED
+      }
+
+      expect(getUpdatedReceiptsAction()).toEqual(expectedResult)
+    })
+  })
+
+  describe('setUpdatedReceiptsAction', () => {
+    it('should request updated reciepts', () => {
+      const payload = [
+        { trackingNumber: '12345678', status: 'CONFIRMED' },
+        { trackingNumber: '87654321', status: 'IN-TRANSIT' }
+      ]
+      const expectedResult = {
+        type: SET_RECEIPT_UPDATED,
+        payload
+      }
+
+      expect(setUpdatedReceiptsAction(payload)).toEqual(expectedResult)
+    })
+  })
+
+  describe('setNetworkErrorAction', () => {
+    it('should set Error Message', () => {
+      const payload = 'Error'
+
+      const expectedResult = {
+        type: SET_NETWORK_ERROR,
+        payload
+      }
+
+      expect(setNetworkErrorAction(payload)).toEqual(expectedResult)
     })
   })
 })

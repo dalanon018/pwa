@@ -1,15 +1,16 @@
 import React from 'react'
+import { fromJS } from 'immutable'
 import { shallow } from 'enzyme'
 
-import BrandsLists from '../index'
+import CategoriesLists from '../CategoriesLists'
 
 const wrapper = (props = {}, enzyme = shallow) => shallow(
-  <BrandsLists {...props} />
+  <CategoriesLists {...props} />
 )
 
-describe('<BrandsLists />', () => {
+describe('<CategoriesLists />', () => {
   const minProps = {
-    lists: []
+    lists: fromJS([])
   }
 
   it('render without exploding', () => {

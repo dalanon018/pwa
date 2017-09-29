@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { fromJS } from 'immutable'
 
 import SearchBox from 'components/SearchBox'
 import CategoriesLists from '../CategoriesLists'
@@ -13,6 +14,15 @@ const wrapper = (props = {}, enzyme = shallow) => shallow(
 
 describe('<HomePage />', () => {
   const minProps = {
+    products: fromJS([]),
+    categories: fromJS([]),
+    brands: fromJS([]),
+    productsLoading: false,
+    categoriesLoading: false,
+    brandsLoading: false,
+    getProducts: () => {},
+    getCategories: () => {},
+    getBrands: () => {},
     dispatch: () => {}
   }
 
