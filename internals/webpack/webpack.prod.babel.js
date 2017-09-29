@@ -79,7 +79,7 @@ module.exports = require('./webpack.base.babel')({
       AppCache: false
     }),
 
-    // new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
 
     new CompressionPlugin({
       asset: '[path].gz[query]',
