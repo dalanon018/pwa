@@ -2,30 +2,6 @@
         Global Overrides
 *******************************/
 
-@font-face {
-  font-family: 'helveticalight';
-  src: url('themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Light.ttf')  format('truetype'),
-       url('themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Light.eot?#iefix')  format('embedded-opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'helveticamedium';
-  src: url('themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Medium.ttf')  format('truetype'),
-       url('themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Medium.eot?#iefix')  format('embedded-opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'helveticabold';
-  src: url('themes/7-eleven/assets/fonts/helvetica/HelveticaNeu-Bold.ttf')  format('truetype'),
-       url('themes/7-eleven/assets/fonts/helvetica/HelveticaNeue-Bold.eot?#iefix')  format('embedded-opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-
 /*******************************
         Color Overrides
 *******************************/
@@ -44,7 +20,8 @@
 
 body {
   color: @grey;
-  font-family: 'helveticamedium';
+  font-family: Cabin;
+  font-weight: 300;
   font-size: 12px;
 
   ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -87,7 +64,8 @@ input.input-field {
   border-radius: 0;
   border-right: 0;
   border-top: 0;
-  font-family: helveticamedium;
+  font-family: Cabin;
+  font-weight: 300;
   padding: 5px 15px;
   width: 100%;
 
@@ -127,7 +105,8 @@ input.input-field {
   #termsandconditions,
   #termsandconditions-1 {
     color: #5B5B5B;
-    font-family: 'helveticamedium';
+    font-family: 'Cabin';
+    font-weight: 300;
     font-size: 11px;
     letter-spacing: 1px;
     padding-left: 13px;
@@ -339,7 +318,8 @@ svg#barcode {
     padding: 14px;
   }
   .custom-button {
-    font-family: 'helveticabold' !important;
+    font-family: Cabin !important;
+    font-weight: 600;
     letter-spacing: 5px;
     margin: 0 auto !important;
     padding: 12px 60px !important;
@@ -398,7 +378,8 @@ svg#barcode {
     }
 
     p, li {
-      font-family: 'helveticalight';
+      font-family: 'Cabin';
+      font-weight: 300;
       font-size: 18px;
       line-height: 20px;
     }
@@ -407,7 +388,8 @@ svg#barcode {
       font-size: 18px;
       letter-spacing: 5px;
       padding-left: 25px;
-      font-family: 'helveticalight';
+      font-family: 'Cabin';
+      font-weight: 300;
 
       &:before {
         content: '-';

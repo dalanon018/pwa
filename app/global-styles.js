@@ -7,4 +7,16 @@ injectGlobal`
     height: 100%;
     width: 100%;
   }
+
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+
+  body.robotoLoaded {
+    font-family: 'Roboto', sans-serif;
+  }
+
+  body.cabinLoaded {
+    font-family: 'Cabin', sans-serif;
+  }
 `
