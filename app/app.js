@@ -11,7 +11,7 @@ import 'babel-polyfill'
 // Import all the third party stuff
 import React from 'react'
 import ReactDOM from 'react-dom'
-// import FontFaceObserver from 'fontfaceobserver'
+import FontFaceObserver from 'fontfaceobserver'
 
 import { Provider } from 'react-redux'
 import { applyRouterMiddleware, Router, browserHistory } from 'react-router'
@@ -62,14 +62,15 @@ import createRoutes from './routes'
 
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
-// const openSansObserver = new FontFaceObserver('Open Sans', {})
+const robotoObserver = new FontFaceObserver('Roboto', {})
+const cabinObserver = new FontFaceObserver('Cabin', {})
 
-// // When Open Sans is loaded, add a font-family using Open Sans to the body
-// openSansObserver.load().then(() => {
-//   document.body.classList.add('fontLoaded')
-// }, () => {
-//   document.body.classList.remove('fontLoaded')
-// })
+cabinObserver.load().then(() => {
+  document.body.classList.add('cabinLoaded')
+}, () => {
+  document.body.classList.remove('cabinLoaded')
+})
+robotoObserver.load()
 
 // Create redux store with history
 // this uses the singleton browserHistory provided by react-router
