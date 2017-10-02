@@ -261,18 +261,18 @@ export default function createRoutes (store) {
           }
         }, {
           path: '/brands/:id',
-          name: 'brandsPage',
+          name: 'brandPage',
           getComponent (nextState, cb) {
             const importModules = Promise.all([
-              import('containers/BrandsPage/reducer'),
-              import('containers/BrandsPage/sagas'),
-              import('containers/BrandsPage')
+              import('containers/BrandPage/reducer'),
+              import('containers/BrandPage/sagas'),
+              import('containers/BrandPage')
             ])
 
             const renderRoute = loadModule(cb)
 
             importModules.then(([reducer, sagas, component]) => {
-              injectReducer('brandsPage', reducer.default)
+              injectReducer('brandPage', reducer.default)
               injectSagas(sagas.default)
               renderRoute(component)
             })
