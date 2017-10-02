@@ -9,8 +9,8 @@
 @fontName          : 'Lato';
 @fontSmoothing     : antialiased;
 
-@headerFont        : @fontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;
-@pageFont          : @fontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+@headerFont        : @fontName, 'Cabin', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+@pageFont          : @fontName, 'Cabin', 'Helvetica Neue', Arial, Helvetica, sans-serif;
 
 @googleFontName    : @fontName;
 @importGoogleFonts : false;
@@ -47,7 +47,7 @@
     Brand Colors
 --------------------*/
 
-@primaryColor        : @orange;
+@primaryColor        : @blue;
 @secondaryColor      : @black;
 
 @lightPrimaryColor   : @lightBlue;
@@ -140,6 +140,30 @@
 @linkHoverUnderline  : @linkUnderline;
 
 /*-------------------
+    Scroll Bars
+--------------------*/
+
+@useCustomScrollbars: true;
+
+@customScrollbarWidth: 10px;
+
+@trackBackground: rgba(0, 0, 0, 0.1);
+@trackBorderRadius: 0px;
+
+@thumbBorderRadius: 5px;
+@thumbBackground: rgba(0, 0, 0, 0.25);
+@thumbTransition: color 0.2s ease;
+
+@thumbInactiveBackground: rgba(0, 0, 0, 0.15);
+@thumbHoverBackground: rgba(128, 135, 139, 0.8);
+
+/* Inverted */
+@trackInvertedBackground: rgba(255, 255, 255, 0.1);
+@thumbInvertedBackground: rgba(255, 255, 255, 0.25);
+@thumbInvertedInactiveBackground: rgba(255, 255, 255, 0.15);
+@thumbInvertedHoverBackground: rgba(255, 255, 255, 0.35);
+
+/*-------------------
   Highlighted Text
 --------------------*/
 
@@ -192,7 +216,7 @@
 
 /*---  Colors  ---*/
 @red              : #DB2828;
-@orange           : #F58322;
+@orange           : #F2711C;
 @yellow           : #FBBD08;
 @olive            : #B5CC18;
 @green            : #21BA45;
@@ -202,7 +226,7 @@
 @purple           : #A333C8;
 @pink             : #E03997;
 @brown            : #A5673F;
-@grey             : #767676;
+@grey             : #F0F0F0;
 @black            : #1B1C1D;
 
 /*---  Light Colors  ---*/
@@ -439,7 +463,7 @@
 
 @circularRadius                : 500rem;
 
-@borderColor               : rgba(34, 36, 38, 0.15);
+@borderColor               : rgba(91, 91, 91, 0.7);
 @strongBorderColor         : rgba(34, 36, 38, 0.22);
 @internalBorderColor       : rgba(34, 36, 38, 0.1);
 @selectedBorderColor       : rgba(34, 36, 38, 0.35);
