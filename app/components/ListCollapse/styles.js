@@ -1,9 +1,14 @@
 import styled from 'styled-components'
 
 const ListCollapseWrapper = styled.div`
-  .ui.accordion .accordion .active.content, .ui.accordion .active.content {
-    height: ${props => props.height}px !important;
-    transition: all .3s ease;
+  .ui.accordion {
+    border-bottom: 1px solid #F0F0F0;
+
+    &.accordion .active.content, .ui.accordion .active.content {
+      height: ${props => props.height}px !important;
+      margin-bottom: 15px;
+      transition: all .3s ease;
+    }
   }
 
   .ui.accordion .accordion .title~.content, .ui.accordion .title~.content {
@@ -12,10 +17,6 @@ const ListCollapseWrapper = styled.div`
     height: 0;
     padding: 0 !important;
     transition: all .3s ease;
-
-    p {
-      font-family: 'helveticalight';
-    }
     
     .collapse-content {
       padding: 5px 10px;
@@ -23,22 +24,25 @@ const ListCollapseWrapper = styled.div`
   }
 
   .title {
+    border-top: 1px solid #F0F0F0;
     color: #5B5B5B !important;
-    font-family: 'helveticamedium' !important;
-    font-size: 11px !important;
+    font-size: 14px !important;
     letter-spacing: 1px;
-    text-transform: uppercase;
+    padding: 15px 0;
 
     .icon {
+      float: right;
+      height: 12px;
+      margin-left: 20px;
+      padding: 8px;
       position: relative;
-      width: 8px;
-      height: 8px;
+      width: 12px;
 
       &:before,
       &:after{
         content: "";
         position: absolute;
-        background: #F6A22D !important;
+        background: #F58322 !important;
         transition: transform 0.25s ease-out;
       }
 

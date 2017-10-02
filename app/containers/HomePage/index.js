@@ -7,7 +7,7 @@
 import React, { PropTypes } from 'react'
 
 import { connect } from 'react-redux'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
 import { fromJS } from 'immutable'
@@ -17,14 +17,19 @@ import { imageStock, paramsImgix } from 'utils/image-stock'
 import Helmet from 'react-helmet'
 import messages from './messages'
 
-import { Grid } from 'semantic-ui-react'
+import { Grid, Button, Input } from 'semantic-ui-react'
 
 import NavCategories from 'components/NavCategories'
 import BannerSlider from 'components/BannerSlider'
 import ProductView from 'components/ProductView'
 import Category from 'components/Category'
 import H1 from 'components/H1'
-import Button from 'components/Button'
+import H2 from 'components/H2'
+import H3 from 'components/H3'
+import H4 from 'components/H4'
+import ListCollapse from 'components/ListCollapse'
+import ListFloated from 'components/ListFloated'
+// import Button from 'components/Button'
 import Footer from 'components/Footer'
 import StaticPromos from 'components/BannerStaticPromos'
 import WindowWidth from 'components/WindowWidth'
@@ -109,7 +114,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render () {
-    const { loader, productCategories, changeRoute, windowWidth, categoryLoader, route } = this.props
+    const { loader, productCategories, changeRoute, windowWidth, categoryLoader, route, intl } = this.props
     const { products } = this.state
     const homeRouteName = route && route.name
     const resposiveColumns = () => {
@@ -172,7 +177,21 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
         <ContentWrapper className='padding__horizontal--10'>
           <Grid padded>
-            <H1 className='header-label' center> <FormattedMessage {...messages.featureProduct} /> </H1>
+            <Grid.Row>
+              <Grid.Column>
+                <H1 className='header-label' text='SITE THEMING' />
+                <H1 className='header-label' text='Header One' />
+                <H2 className='header-label' text='Header Two' />
+                <H3 className='header-label' text='Header Three' />
+                <H4 className='header-label' text='Header Four' />
+                <Button onClick={() => {}} primary>Primary Button</Button>
+                <ListCollapse />
+                <ListFloated />
+                <Input placeholder='Search...' />
+              </Grid.Column>
+            </Grid.Row>
+            <H1 className='header-label'> <FormattedMessage {...messages.featureProduct} /> </H1>
+            <H3 className='header-label' text={intl.formatMessage(messages.featureProduct)} />
             <ProductView
               changeRoute={changeRoute}
               loader={loader}
@@ -180,7 +199,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               windowWidth={windowWidth} />
             { this._displayViewAll() }
             {/* <Promo loader={loader} /> */}
-            <H1 className='header-label' center> <FormattedMessage {...messages.browseCategory} /> </H1>
+            <H1 className='header-label'> <FormattedMessage {...messages.browseCategory} /> </H1>
             <Category
               loader={loader}
               resposiveColumns={resposiveColumns()}
@@ -216,4 +235,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(HomePage))
+export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(injectIntl(HomePage)))

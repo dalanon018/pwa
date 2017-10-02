@@ -34,8 +34,8 @@ class ListCollapse extends React.PureComponent {
         <ListCollapseWrapper height={this.state.height} open={this.state.open}>
           <Accordion>
             <Accordion.Title onClick={this._handleClick}>
-              <i className='icon' />
               Lorem ipsum dolor sit amet?
+              <i className='icon' />
             </Accordion.Title>
             <Accordion.Content>
               <div className='collapse-content'>
@@ -43,8 +43,8 @@ class ListCollapse extends React.PureComponent {
               </div>
             </Accordion.Content>
             <Accordion.Title onClick={this._handleClick}>
-              <i className='icon' />
               Lorem ipsum dolor sit amet?
+              <i className='icon' />
             </Accordion.Title>
             <Accordion.Content>
               <div className='collapse-content'>
@@ -53,8 +53,8 @@ class ListCollapse extends React.PureComponent {
               </div>
             </Accordion.Content>
             <Accordion.Title onClick={this._handleClick}>
-              <i className='icon' />
               Lorem ipsum dolor sit amet?
+              <i className='icon' />
             </Accordion.Title>
             <Accordion.Content>
               <div className='collapse-content'>

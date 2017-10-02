@@ -2,3 +2,28 @@
          Theme Overrides
 *******************************/
 
+.ui.header {
+  font-family: @pageFont;
+  font-weight: 300;
+  text-align: center;
+  width: 100%;
+}
+
+h1.ui.header {
+  font-size: 20px;
+}
+
+h2.ui.header {
+  color: @grey;
+  font-size: 22px;
+}
+
+h3.ui.header {
+  font-size: 16px;
+}
+
+h4.ui.header {
+  color: @grey;
+  font-family: Roboto;
+  font-size: 16px;
+}
