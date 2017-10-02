@@ -49,17 +49,12 @@ import './global-styles'
 const robotoObserver = new FontFaceObserver('Roboto', {})
 const cabinObserver = new FontFaceObserver('Cabin', {})
 
-robotoObserver.load().then(() => {
-  document.body.classList.add('robotoLoaded')
-}, () => {
-  document.body.classList.remove('robotoLoaded')
-})
-
 cabinObserver.load().then(() => {
   document.body.classList.add('cabinLoaded')
 }, () => {
   document.body.classList.remove('cabinLoaded')
 })
+robotoObserver.load()
 
 // Create redux store with history
 const initialState = {}

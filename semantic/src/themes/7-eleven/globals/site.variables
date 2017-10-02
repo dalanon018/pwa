@@ -226,7 +226,7 @@
 @purple           : #A333C8;
 @pink             : #E03997;
 @brown            : #A5673F;
-@grey             : #767676;
+@grey             : #F0F0F0;
 @black            : #1B1C1D;
 
 /*---  Light Colors  ---*/
@@ -463,7 +463,7 @@
 
 @circularRadius                : 500rem;
 
-@borderColor               : rgba(34, 36, 38, 0.15);
+@borderColor               : rgba(91, 91, 91, 0.7);
 @strongBorderColor         : rgba(34, 36, 38, 0.22);
 @internalBorderColor       : rgba(34, 36, 38, 0.1);
 @selectedBorderColor       : rgba(34, 36, 38, 0.35);

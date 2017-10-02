@@ -34,6 +34,11 @@ const Wrapper = styled(Grid)`
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 99;
+
+  & .row {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+  }
 `
 
 const toggleComponent = (componentA, componentB) => (condition) => {

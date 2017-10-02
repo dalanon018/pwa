@@ -5,6 +5,7 @@
  */
 
 import React from 'react'
+import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -48,6 +49,13 @@ import messages from './messages'
 import CategoriesLists from './CategoriesLists'
 import BrandsLists from './BrandsLists'
 
+const GridWrapper = styled(Grid)`
+  & .row {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+  }
+`
+
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   componentDidMount () {
     const { getProducts, getCategories, getBrands } = this.props
@@ -65,14 +73,16 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           <title>Home</title>
           <meta name='description' content='Description of HomePage' />
         </Helmet>
-        <Grid padded>
+        <GridWrapper padded>
           <Grid.Row columns={1} verticalAlign='middle' color='grey'>
             <Grid.Column >
               <SearchBox />
             </Grid.Column>
           </Grid.Row>
-        </Grid>
+        </GridWrapper>
+
         <Image alt='slider' src={SliderSample} />
+
         <Header as='h3' textAlign='center'>
           <FormattedMessage {...messages.featureProducts} />
         </Header>

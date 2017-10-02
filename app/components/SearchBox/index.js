@@ -17,7 +17,7 @@ import messages from './messages'
 function SearchBox ({ intl }) {
   return (
     <Input icon placeholder={intl.formatMessage(messages.placeHolder)} fluid>
-      <input />
+      <input className='search' />
       <Icon name='search' size='large' />
     </Input>
   )
