@@ -17,7 +17,7 @@ import { imageStock, paramsImgix } from 'utils/image-stock'
 import Helmet from 'react-helmet'
 import messages from './messages'
 
-import { Grid, Button, Input } from 'semantic-ui-react'
+import { Grid, Button, Input, Label } from 'semantic-ui-react'
 
 import NavCategories from 'components/NavCategories'
 import BannerSlider from 'components/BannerSlider'
@@ -29,7 +29,7 @@ import H3 from 'components/H3'
 import H4 from 'components/H4'
 import ListCollapse from 'components/ListCollapse'
 import ListFloated from 'components/ListFloated'
-// import Button from 'components/Button'
+import Brand from 'components/Brand'
 import Footer from 'components/Footer'
 import StaticPromos from 'components/BannerStaticPromos'
 import WindowWidth from 'components/WindowWidth'
@@ -94,10 +94,14 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
     if (featuredProducts.size > 4) {
       return (
-        <Button
-          onClick={this._displayFeatured}
-          primary
-        > <FormattedMessage {...messages.productViewAll} /> </Button>
+        <Grid>
+          <Grid.Row centered>
+            <Button
+              onClick={this._displayFeatured}
+              primary >
+              <FormattedMessage {...messages.productViewAll} /> </Button>
+          </Grid.Row>
+        </Grid>
       )
     }
 
@@ -129,13 +133,13 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     const { loader, productCategories, changeRoute, windowWidth, categoryLoader, route, intl } = this.props
     const { products } = this.state
     const homeRouteName = route && route.name
-    const resposiveColumns = () => {
-      if (windowWidth >= 768) {
-        return 5
-      } else {
-        return 4
-      }
-    }
+    // const resposiveColumns = () => {
+    //   if (windowWidth >= 768) {
+    //     return 5
+    //   } else {
+    //     return 4
+    //   }
+    // }
 
     const bannerImages = fromJS([
       {
@@ -163,7 +167,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           categories={productCategories} />
 
         <BannerWrapper>
-          <Grid>
+          <Grid padded>
             <Grid.Row stretched className='banner-padding'>
               <Grid.Column
                 className='banner-padding'
@@ -191,39 +195,50 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           <Grid padded>
             <Grid.Row>
               <Grid.Column>
-                <H1 className='header-label' text='SITE THEMING' />
-                <H1 className='header-label' text='Header One' />
-                <H2 className='header-label' text='Header Two' />
-                <H3 className='header-label' text='Header Three' />
-                <H4 className='header-label' text='Header Four' />
+                <H1 text='SITE THEMING' />
+                <H1 text='Header One' />
+                <H2 text='Header Two' />
+                <H3 text='Header Three' />
+                <H4 text='Header Four' />
                 <Button onClick={() => {}} primary>Primary Button</Button>
                 <ListCollapse />
                 <ListFloated />
                 <Input placeholder='Search...' />
+                <div>
+                  <Label as='p' basic size='mini'>Mini</Label>
+                  <Label as='p' basic size='tiny'>Tiny</Label>
+                  <Label as='p' basic size='small'>Small</Label>
+                  <Label as='p' basic size='medium'>Medium</Label>
+                  <Label as='p' basic size='large'>Large</Label>
+                  <Label as='p' basic size='big'>Big</Label>
+                  <Label as='p' basic size='huge'>Huge</Label>
+                  <Label as='p' basic size='massive'>Massive</Label>
+                </div>
               </Grid.Column>
             </Grid.Row>
-            <H1 className='header-label'> <FormattedMessage {...messages.featureProduct} /> </H1>
-            <H3 className='header-label' text={intl.formatMessage(messages.featureProduct)} />
-            <ProductView
-              changeRoute={changeRoute}
-              loader={loader}
-              products={products}
-              windowWidth={windowWidth} />
-            { this._displayViewAll() }
-            {/* <Promo loader={loader} /> */}
-            <H1 className='header-label'> <FormattedMessage {...messages.browseCategory} /> </H1>
-            <Category
-              loader={loader}
-              resposiveColumns={resposiveColumns()}
-              windowWidth={windowWidth}
-              margin='2'
-              changeRoute={changeRoute}
-              route='/products-category'
-              iconWidth='25'
-              fontSize='9'
-              height='80'
-              categories={productCategories} />
           </Grid>
+          <H3 text={intl.formatMessage(messages.featureProduct)} />
+          <ProductView
+            changeRoute={changeRoute}
+            loader={loader}
+            products={products}
+            windowWidth={windowWidth} />
+          { this._displayViewAll() }
+          {/* <Promo loader={loader} /> */}
+          <H3 text={intl.formatMessage(messages.browseCategory)} />
+          <Category
+            loader={loader}
+            // resposiveColumns={resposiveColumns()}
+            windowWidth={windowWidth}
+            margin='2'
+            changeRoute={changeRoute}
+            route='/products-category'
+            iconWidth='25'
+            fontSize='9'
+            height='80'
+            categories={productCategories} />
+          <H3 className='margin__none' text={intl.formatMessage(messages.browseBrands)} />
+          <Brand />
         </ContentWrapper>
         <Footer />
       </div>

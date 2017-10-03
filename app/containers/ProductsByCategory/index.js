@@ -24,8 +24,6 @@ import {
 } from 'ramda'
 import styled from 'styled-components'
 
-import { Grid } from 'semantic-ui-react'
-
 import H1 from 'components/H1'
 import NavCategories from 'components/NavCategories'
 import ProductView from 'components/ProductView'
@@ -195,7 +193,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     const { productsFeatured } = this.props
     if (this._handleFeaturedProductsPerCategory() && productsFeatured.size) {
       return (
-        <H1 center className='header-label padding__top--25'>
+        <H1 className='header-label padding__top--25'>
           <FormattedMessage {...messages.feature} />
         </H1>
       )
@@ -354,17 +352,15 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
       <div>
         <NavCategories changeRoute={changeRoute} categories={categories} categoryLoader={categoryLoader} />
         <ContentWrapper className='padding__horizontal--10'>
-          <Grid padded>
-            { this._displayHeaderFeaturesProduct() }
-            { this._displayFeaturesProduct() }
-            <H1 center className='category-title padding__top--25'>{ this._handlePageTitle() }</H1>
-            { this._displayNumberProducts() }
-            { this._displayEmpty() }
-            <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} windowWidth={windowWidth} />
-            {/* <Promo loader={loader} /> */}
-            { this._displayRecentlyViewedHeader() }
-            <ProductView changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
-          </Grid>
+          { this._displayHeaderFeaturesProduct() }
+          { this._displayFeaturesProduct() }
+          <H1 center className='category-title padding__top--25'>{ this._handlePageTitle() }</H1>
+          { this._displayNumberProducts() }
+          { this._displayEmpty() }
+          <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} windowWidth={windowWidth} />
+          {/* <Promo loader={loader} /> */}
+          { this._displayRecentlyViewedHeader() }
+          <ProductView changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
         </ContentWrapper>
         <Footer />
       </div>

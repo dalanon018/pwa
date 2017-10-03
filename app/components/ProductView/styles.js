@@ -1,26 +1,19 @@
 import styled from 'styled-components'
-import { Grid } from 'semantic-ui-react'
 
 const ProductWrapper = styled.div`
-  border-bottom: 3px solid #aeaeae;
   cursor: pointer;
   display: block;
-  margin: 0 3px 20px;
+  margin-bottom: 10px;
+  padding: 0 15px;
   position: relative;
+  text-align: center;
 
   // not included on sorting
   animation:fadeIn ease-in 1;
   animation-duration: .5s;
-
-  @media (min-width: 768px) {
-    border-bottom: 4px solid #aeaeae;
-    margin: 0 0 20px 0;
-  }
 `
 
 const ImageWrapper = styled.div`
-  background-color: #F0F0F0;
-  margin-bottom: 10px;
   width: 100%;
 
   .image {
@@ -28,26 +21,29 @@ const ImageWrapper = styled.div`
   }
 `
 
-const ProductName = styled.p`
-  color: #5b5b5b;
-  font-family: 'helveticabold';
-  font-size: 9px;
-  margin-bottom: 3px;
-  min-height: 28px;
-  text-transform: uppercase;
-
-  @media (min-width: 768px) {
-    font-size: 14px;
+const ProductInfo = styled.div`
+  .product-name {
+    margin-bottom: 7px;
   }
 `
 
 const ProductPriceWrapper = styled.div`
+  align-items: flex-end;
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
+  justify-content: center;
 
-  @media (min-width: 768px) {
-    margin-bottom: 30px;
+  .product-price {
+    color: #F58322 !important;
+    font-family: 'Roboto';
+    letter-spacing: -2px;
+    padding: 0;
+  }
+
+  .product-discount {
+    color: #AEAEAE !important;
+    font-family: 'Roboto';
+    letter-spacing: -2px;
+    text-decoration: line-through;
   }
 `
 
@@ -64,22 +60,6 @@ const ProductPrice = styled.p`
   @media (min-width: 375px) {
     font-size: 25px;
     line-height: initial;
-  }
-`
-
-const ProductPriceStrike = styled.span`
-  align-self: flex-end;
-  color: #aeaeae;
-  font-size: 9px;
-  line-height: initial;
-  text-decoration: line-through;
-  text-transform: uppercase;
-  
-  @media (min-width: 375px) {
-    font-size: 10px;
-  }
-  @media (min-width: 768px) {
-    font-size: 12px;
   }
 `
 
@@ -135,24 +115,10 @@ const RibbonWrapper = styled.div`
     }
 `
 
-const CustomGridRow = styled(Grid.Row)`
-  @media (min-width: 320px) {
-    padding-bottom: 0 !important;
-  }
-  @media (min-width: 768px) {
-    .padding__none--horizontal {
-      padding-left: 8px !important;
-      padding-right: 8px !important;
-    }
-  }
-`
-
 export {
-  CustomGridRow,
   ImageWrapper,
-  ProductName,
+  ProductInfo,
   ProductPrice,
-  ProductPriceStrike,
   ProductPriceWrapper,
   ProductWrapper,
   RibbonWrapper

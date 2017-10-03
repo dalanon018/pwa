@@ -3,10 +3,12 @@
 *******************************/
 
 .ui.header {
+  color: @darkGrey;
   font-family: @pageFont;
   font-weight: 300;
   text-align: center;
   width: 100%;
+  margin: 14px 0;
 }
 
 h1.ui.header {

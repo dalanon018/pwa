@@ -10,3 +10,7 @@
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
+.ui.grid>.divided.row>.column {
+  box-shadow: -1px 0 0 0 @grey;
+}

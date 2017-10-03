@@ -10,7 +10,7 @@ const idSuffix = 'boilerplate.components.Footer'
 export default defineMessages({
   stayConnected: {
     id: `${idSuffix}.stayConnected.message`,
-    defaultMessage: 'STAY CONNECTED'
+    defaultMessage: 'Stay Connected'
   },
   faq: {
     id: `${idSuffix}.faq.message`,
@@ -18,14 +18,14 @@ export default defineMessages({
   },
   termsConditions: {
     id: `${idSuffix}.termsConditions.message`,
-    defaultMessage: `TERMS AND CONDITIONS`
+    defaultMessage: `Terms & Conditions`
   },
   privacyPolicy: {
     id: `${idSuffix}.privacyPolicy.message`,
-    defaultMessage: `PRIVACY POLICY`
+    defaultMessage: `Privacy Policy`
   },
   copyRight: {
     id: `${idSuffix}.copyRight.message`,
-    defaultMessage: `© 2017 CLIQQ. ALL RIGHTS RESERVED.`
+    defaultMessage: `© 2017 Cliqq. All Rights Reserved`
   }
 })

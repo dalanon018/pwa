@@ -5,7 +5,7 @@
 */
 
 import React from 'react'
-import { List, Icon } from 'semantic-ui-react'
+import { List, Icon, Label } from 'semantic-ui-react'
 import styled from 'styled-components'
 
 const CustomIcon = styled(Icon)`
@@ -37,7 +37,9 @@ function ListFloated () {
         </List.Content>
         <Title>Lorem ipsum</Title>
         <List.Content>
-          <Content>Dolor sit amet</Content>
+          <Content>
+            <Label as='span' basic size='large'>Dolor sit amet</Label>
+          </Content>
         </List.Content>
       </CustomItem>
       <CustomItem>
@@ -46,7 +48,9 @@ function ListFloated () {
         </List.Content>
         <Title>Lorem ipsum</Title>
         <List.Content>
-          <Content>Dolor sit amet</Content>
+          <Content>
+            <Label as='span' basic size='large'>Dolor sit amet</Label>
+          </Content>
         </List.Content>
       </CustomItem>
     </List>

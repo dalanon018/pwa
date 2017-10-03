@@ -1,84 +1,25 @@
 import styled from 'styled-components'
 
-const CategoryBlock = styled.div`
+export const CategoryBlock = styled.div`
+  align-items: center;
+  background: url(${props => props.background})no-repeat center center /  cover;
   cursor: pointer;
-  margin: ${props => props.margin ? props.margin : '2'}px;
-
-  // not included on sorting
-  animation:fadeIn ease-in 1;
-  animation-duration: .5s;
-
-  &:before {
-    background-color: rgba(255, 255, 255, 0.7);
-    content: '';
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 1;
-  }
-
-  .category-image {
+  display: flex;
+  height: 100px;
+  justify-content: center;
+  position: relative;
+  
+  span {
+    color: #FFFFFF !important;
     position: relative;
-    width: 100%;
-  }
-
-  @media (min-width: 768px) {
-    margin: 0;
-  }
-
-`
-
-const CategoryLabel = styled.span`
-  color: #5b5b5b;
-  font-family: helveticabold;
-  font-size: ${props => props.fontSize}px;
-  line-height: 0;
-  text-transform: uppercase;
-
-  @media (min-width: 768px) {
-    font-size: 16px;
   }
 `
 
-const CategoryItem = styled.div`
-  align-self: center;
-  padding: 0 5px;
-  text-align: center;
-  z-index: 2;
-
-  @media (min-width: 320px) {
-    img {
-      margin: 0 auto;
-      width: ${props => props.width ? props.width : '30'}px;
-    }
-  }
-
-  // This is for Home page only
-  @media (min-width: 768px) {
-    img {
-      margin-bottom: 0px;
-      width: 90px;
-    }
-  }
-`
-
-const CategoryContent = styled.div`
+export const BackgroundLay = styled.div`
+  background-color: rgba(0, 0, 0, 0.2);
+  height: 100%;
+  left: 0;
   position: absolute;
   top: 0;
-  left: 0;
-  z-index: 1;
-  display: flex;
   width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
 `
-
-export {
-  CategoryLabel,
-  CategoryBlock,
-  CategoryContent,
-  CategoryItem
-}

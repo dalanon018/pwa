@@ -18,6 +18,6 @@ export default defineMessages({
   },
   peso: {
     id: `${idSuffix}.peso`,
-    defaultMessage: 'PHP '
+    defaultMessage: '₱ '
   }
 })
