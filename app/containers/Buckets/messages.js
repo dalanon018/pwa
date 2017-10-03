@@ -8,15 +8,23 @@ import { defineMessages } from 'react-intl'
 export default defineMessages({
   menuHome: {
     id: 'app.containers.Bucket.menuHome',
-    defaultMessage: 'HOME'
+    defaultMessage: 'Home'
   },
-  menuBarcode: {
-    id: 'app.containers.Bucket.menuBarcode',
-    defaultMessage: 'RECEIPTS'
+  menuActivity: {
+    id: 'app.containers.Bucket.menuActivity',
+    defaultMessage: 'My Activity'
   },
   menuCategories: {
     id: 'app.containers.Bucket.menuCategories',
-    defaultMessage: 'CATEGORIES'
+    defaultMessage: 'Categories'
+  },
+  menuBrands: {
+    id: 'app.containers.Bucket.menuBrands',
+    defaultMessage: 'Brands'
+  },
+  menuHelp: {
+    id: 'app.containers.Bucket.menuHelp',
+    defaultMessage: 'Help'
   },
   searchPlaceHolder: {
     id: 'app.containers.Bucket.searchPlaceHolder',

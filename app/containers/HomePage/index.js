@@ -201,7 +201,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                 <H3 text='Header Three' />
                 <H4 text='Header Four' />
                 <Button onClick={() => {}} primary>Primary Button</Button>
-                <ListCollapse />
+                <ListCollapse title='lorem ipsum'>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam eos repudiandae inventore debitis iusto ea esse eligendi voluptatum distinctio assumenda quam aliquid, unde ullam odit tenetur cum, explicabo quisquam a!</p>
+                </ListCollapse>
                 <Input placeholder='Search...' />
                 <div>
                   <Label as='p' basic size='mini'>Mini</Label>

@@ -2,12 +2,20 @@ import styled from 'styled-components'
 
 const ListCollapseWrapper = styled.div`
   .ui.accordion {
-    border-bottom: 1px solid #F0F0F0;
-
+    border: none !important;
+    margin-left: 20px
     &.accordion .active.content, .ui.accordion .active.content {
       height: auto;
       margin-bottom: 15px;
       transition: all .3s ease;
+    }
+
+    & .active.title {
+      color: #F58322 !important;
+
+      img.selected {
+        visibility: visible;
+      }
     }
   }
 
@@ -24,20 +32,26 @@ const ListCollapseWrapper = styled.div`
   }
 
   .title {
-    border-top: 1px solid #F0F0F0;
+    display: block;
+    border: none !important;
     color: #5B5B5B !important;
     font-size: 14px !important;
     letter-spacing: 1px;
-    padding: 15px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 5px 0;
+
+    img.selected {
+      margin: 0 !important;
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      visibility: hidden;
+    }
 
     .icon {
-      float: right;
+      float: none !important;
       height: 12px;
       margin-left: 20px;
-      padding: 8px;
+      padding: 5px;
       position: relative;
       width: 12px;
 
