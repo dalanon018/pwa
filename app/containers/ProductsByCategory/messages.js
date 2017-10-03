@@ -12,11 +12,11 @@ export default defineMessages({
   },
   items: {
     id: 'app.containers.ProductsByCategory.items',
-    defaultMessage: ' ITEMS'
+    defaultMessage: ' Items'
   },
   feature: {
     id: 'app.containers.ProductsByCategory.feature',
-    defaultMessage: 'FEATURED ITEMS'
+    defaultMessage: 'Featured Items'
   },
   noSeparator: {
     id: 'app.containers.ProductsByCategory.noSeparator',
