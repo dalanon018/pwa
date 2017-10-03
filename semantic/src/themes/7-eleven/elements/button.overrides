@@ -10,8 +10,9 @@
 
   &.primary {
     background-color: @primaryColor;
-    padding: 10px 40px !important;
     color: @white;
+    margin: 0;
+    padding: 10px 40px !important;
 
     &:after {
       -moz-osx-font-smoothing: grayscale;

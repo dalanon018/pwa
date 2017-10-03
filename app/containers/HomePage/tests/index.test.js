@@ -24,6 +24,6 @@ describe('<HomePage />', () => {
     const renderedComponent = shallow(
       <HomePage {...minProps} />
     )
-    expect(renderedComponent.find('div').length).toEqual(1)
+    expect(renderedComponent.find('div').length).toEqual(2)
   })
 })

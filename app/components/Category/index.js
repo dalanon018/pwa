@@ -5,24 +5,25 @@
 */
 
 import React, { PropTypes } from 'react'
-
 import EmptyDataBlock from 'components/EmptyDataBlock'
-
-import { Grid, Image } from 'semantic-ui-react'
-
+import { Grid, Label } from 'semantic-ui-react'
 import defaultCategoryBackground from 'images/default-categories.jpg'
-
 import { imageStock, paramsImgix } from 'utils/image-stock'
 
 import {
   range
 } from 'lodash'
 
+// import {
+//   CategoryBlock,
+//   CategoryContent,
+//   CategoryItem,
+//   CategoryLabel } from './styles'
+
 import {
   CategoryBlock,
-  CategoryContent,
-  CategoryItem,
-  CategoryLabel } from './styles'
+  BackgroundLay
+} from './styles'
 
 const imgixOptions = {
   auto: 'compress',
@@ -33,7 +34,6 @@ const imgixOptions = {
 function Category ({
   loader,
   categories,
-  resposiveColumns,
   windowWidth,
   margin,
   iconWidth,
@@ -42,7 +42,7 @@ function Category ({
   fontSize
 }) {
   return (
-    <Grid.Row columns={resposiveColumns}>
+    <Grid padded columns='1'>
       {
         loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} margin={margin} />)
         : categories &&
@@ -50,35 +50,26 @@ function Category ({
           const handleRedirect = () => changeRoute(`/products-category/${category.get('id')}`)
 
           return (
-            <Grid.Column
-              key={index}
-              className='padding__none--horizontal category-item' >
-              <CategoryBlock margin={margin} width={iconWidth} onClick={handleRedirect}>
-                <Image alt='Cliqq' className='category-image' src={category.get('background') ? paramsImgix(category.get('background'), imgixOptions) : defaultCategoryBackground} />
-                <CategoryContent>
-                  <CategoryItem width={iconWidth}>
-                    <Image alt='Cliqq' src={category.get('main') ? paramsImgix(category.get('main'), imgixOptions) : paramsImgix(imageStock('default-image.png'), imgixOptions)} />
-                    <CategoryLabel fontSize={fontSize}>{category.get('name')}</CategoryLabel>
-                  </CategoryItem>
-                </CategoryContent>
+            <Grid.Column key={index}>
+              <CategoryBlock
+                onClick={handleRedirect}
+                background={category.get('background') ? category.get('background') : defaultCategoryBackground}>
+                <BackgroundLay />
+                <Label as='span' basic size='massive'>{category.get('name')}</Label>
               </CategoryBlock>
             </Grid.Column>
           )
-        })
+        }).slice(0, 4)
       }
-    </Grid.Row>
+    </Grid>
   )
 }
 
-const DefaultState = ({
-  margin
-}) => {
+const DefaultState = () => {
   return (
-    <Grid.Column className='padding__none--horizontal category-item'>
+    <Grid.Column>
       <EmptyDataBlock>
-        <CategoryBlock margin={margin} className='responsive-width'>
-          <Image alt='Cliqq' className='category-image' src={paramsImgix(imageStock('broken-image.jpg'), imgixOptions)} />
-        </CategoryBlock>
+        <CategoryBlock background={paramsImgix(imageStock('broken-image.jpg'), imgixOptions)} />
       </EmptyDataBlock>
     </Grid.Column>
   )

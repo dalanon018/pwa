@@ -12,14 +12,11 @@ import {
 
 import { FormattedMessage } from 'react-intl'
 import messages from './messages'
-import { Grid, Image } from 'semantic-ui-react'
+import { Grid, Image, Label } from 'semantic-ui-react'
 
 import {
-  CustomGridRow,
   ImageWrapper,
-  ProductName,
-  ProductPrice,
-  ProductPriceStrike,
+  ProductInfo,
   ProductPriceWrapper,
   ProductWrapper
 } from './styles'
@@ -57,7 +54,7 @@ function ProductView ({
   }
 
   const productName = (data) => {
-    let maxChar = 47
+    let maxChar = 40
     switch (true) {
       case (windowWidth >= 768 && windowWidth < 897):
         maxChar = 26
@@ -73,7 +70,7 @@ function ProductView ({
     return data
   }
   return (
-    <CustomGridRow stretched columns={resposiveColumns()}>
+    <Grid stretched columns={resposiveColumns()}>
       {
         loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
         : products.valueSeq().map((product, index) => {
@@ -90,46 +87,35 @@ function ProductView ({
                   <PromoTag discount={product.get('discount')} />
                 }
                 <ImageWrapper>
-                  <Image alt='Cliqq' src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || defaultImage} />
+                  <Image alt={productName(product.get('title'))} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || defaultImage} />
                 </ImageWrapper>
-                <ProductName>{ productName(product.get('title')) }</ProductName>
-                <ProductPriceWrapper>
-                  <ProductPrice>
-                    <FormattedMessage {...messages.peso} />
-                    { calculateProductPrice(product) }
-                  </ProductPrice>
-                  <ProductPriceStrike>
-                    {
-                      !isEmpty(product.get('discount'))
-                      ? <FormattedMessage {...messages.peso} />
-                      : ''
-                    }
-                    {
-                      !isEmpty(product.get('discount')) &&
-                      parseFloat(product.get('price')).toLocaleString()
-                    }
-                  </ProductPriceStrike>
-                </ProductPriceWrapper>
+                <ProductInfo>
+                  <Label as='span' className='product-name' basic size='large'>Brand Name</Label>
+                  <Label as='p' basic size='small'>{productName(product.get('title'))}</Label>
+                  <ProductPriceWrapper>
+                    <Label className='product-price' as='b' basic size='massive'>
+                      <FormattedMessage {...messages.peso} />
+                      { calculateProductPrice(product) }
+                    </Label>
+                    <Label className='product-discount' as='span' basic size='large'>
+                      {
+                        !isEmpty(product.get('discount'))
+                        ? <FormattedMessage {...messages.peso} />
+                        : ''
+                      }
+                      {
+                        !isEmpty(product.get('discount')) &&
+                        parseFloat(product.get('price')).toLocaleString()
+                      }
+                    </Label>
+                  </ProductPriceWrapper>
+                </ProductInfo>
               </ProductWrapper>
-              {/*
-                <ReactPaginate
-                  previousLabel={"previous"}
-                  nextLabel={"next"}
-                  breakLabel={<a href="">...</a>}
-                  breakClassName={"break-me"}
-                  pageCount={this.state.pageCount}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={this.handlePageClick}
-                  containerClassName={"pagination"}
-                  subContainerClassName={"pages pagination"}
-                  activeClassName={"active"} />
-              */}
             </Grid.Column>
           )
         })
       }
-    </CustomGridRow>
+    </Grid>
   )
 }
 

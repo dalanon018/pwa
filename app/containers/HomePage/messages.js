@@ -18,10 +18,14 @@ export default defineMessages({
   },
   browseCategory: {
     id: `${idSuffix}.browseCategory`,
-    defaultMessage: 'BROWSE CATEGORIES'
+    defaultMessage: 'Featured Categories'
+  },
+  browseBrands: {
+    id: `${idSuffix}.browseBrands`,
+    defaultMessage: 'Featured Brands'
   },
   productViewAll: {
     id: `${idSuffix}.productViewAll`,
-    defaultMessage: 'VIEW ALL'
+    defaultMessage: 'View All'
   }
 })
