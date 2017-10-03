@@ -6,7 +6,10 @@ import {
   selectMobileNumbers,
   selectReceiptsUpdated,
   selectToggleError,
-  selectToggleMessage
+  selectToggleMessage,
+  selectPageTitle,
+  selectShowSearchIcon,
+  selectShowActivityIcon
 } from '../selectors'
 
 describe('Buckets Selectors', () => {
@@ -94,6 +97,48 @@ describe('Buckets Selectors', () => {
         }
       })
       expect(selectToggleMessageSelectors(mockedState)).toEqual(toggleMessage)
+    })
+  })
+
+  describe('selectPageTitle', () => {
+    const selectPageTitleSelectors = selectPageTitle()
+
+    it('should get updated pageTitle', () => {
+      const pageTitle = 'Admin'
+      const mockedState = fromJS({
+        buckets: {
+          pageTitle
+        }
+      })
+      expect(selectPageTitleSelectors(mockedState)).toEqual(pageTitle)
+    })
+  })
+
+  describe('selectShowSearchIcon', () => {
+    const selectShowSearchIconSelectors = selectShowSearchIcon()
+
+    it('should get updated searchIconShow', () => {
+      const searchIconShow = false
+      const mockedState = fromJS({
+        buckets: {
+          searchIconShow
+        }
+      })
+      expect(selectShowSearchIconSelectors(mockedState)).toEqual(searchIconShow)
+    })
+  })
+
+  describe('selectShowActivityIcon', () => {
+    const selectShowActivityIconSelectors = selectShowActivityIcon()
+
+    it('should get updated activityIconShow', () => {
+      const activityIconShow = false
+      const mockedState = fromJS({
+        buckets: {
+          activityIconShow
+        }
+      })
+      expect(selectShowActivityIconSelectors(mockedState)).toEqual(activityIconShow)
     })
   })
 })

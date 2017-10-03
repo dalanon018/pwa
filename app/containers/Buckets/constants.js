@@ -17,6 +17,15 @@ export const SET_NETWORK_ERROR = 'app/Buckets/SET_NETWORK_ERROR'
 
 export const SET_TOGGLE = 'app/Buckets/SET_TOGGLE'
 
+export const GET_PAGE_TITLE = 'app/Container/GET_PAGE_TITLE'
+export const SET_PAGE_TITLE = 'app/Container/SET_PAGE_TITLE'
+
+export const GET_SHOW_SEARCH_ICON = 'app/Container/GET_SHOW_SEARCH_ICON'
+export const SET_SHOW_SEARCH_ICON = 'app/Container/SET_SHOW_SEARCH_ICON'
+
+export const GET_SHOW_ACTIVITY_ICON = 'app/Container/GET_SHOW_ACTIVITY_ICON'
+export const SET_SHOW_ACTIVITY_ICON = 'app/Container/SET_SHOW_ACTIVITIES_ICON'
+
 export const HIDE_BACK_BUTTON = [
   '',
   'home',

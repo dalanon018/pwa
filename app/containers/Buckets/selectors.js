@@ -48,6 +48,21 @@ const selectLoader = () => createSelector(
   (substate) => substate.get('loader')
 )
 
+const selectPageTitle = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('pageTitle')
+)
+
+const selectShowSearchIcon = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('searchIconShow')
+)
+
+const selectShowActivityIcon = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('activityIconShow')
+)
+
 export {
   selectBucketDomain,
   selectToggle,
@@ -56,5 +71,8 @@ export {
   selectReceiptsUpdated,
   selectToggleError,
   selectToggleMessage,
-  selectLoader
+  selectLoader,
+  selectPageTitle,
+  selectShowSearchIcon,
+  selectShowActivityIcon
 }

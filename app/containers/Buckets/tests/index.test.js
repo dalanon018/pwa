@@ -19,6 +19,9 @@ describe('<Buckets />', () => {
     receiptsUpdated: fromJS([]),
     toggleError: false,
     toggleMessage: null,
+    pageTitle: null,
+    showSearchIcon: false,
+    showActivityIcon: false,
     intl: {
       formatDate: () => {},
       formatTime: () => {},

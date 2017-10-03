@@ -5,6 +5,15 @@
  */
 
 import {
+  GET_PAGE_TITLE,
+  SET_PAGE_TITLE,
+
+  GET_SHOW_SEARCH_ICON,
+  SET_SHOW_SEARCH_ICON,
+
+  GET_SHOW_ACTIVITY_ICON,
+  SET_SHOW_ACTIVITY_ICON,
+
   GET_PRODUCT_CATEGORIES,
   SET_PRODUCT_CATEGORIES,
 
@@ -18,6 +27,45 @@ import {
 
   SET_TOGGLE
 } from './constants'
+
+export function getPageTitleAction () {
+  return {
+    type: GET_PAGE_TITLE
+  }
+}
+
+export function setPageTitleAction (payload) {
+  return {
+    type: SET_PAGE_TITLE,
+    payload
+  }
+}
+
+export function getShowSearchIconAction () {
+  return {
+    type: GET_SHOW_SEARCH_ICON
+  }
+}
+
+export function setShowSearchIconAction (payload) {
+  return {
+    type: SET_SHOW_SEARCH_ICON,
+    payload
+  }
+}
+
+export function getShowActivityIconAction () {
+  return {
+    type: GET_SHOW_ACTIVITY_ICON
+  }
+}
+
+export function setShowActivityIconAction (payload) {
+  return {
+    type: SET_SHOW_ACTIVITY_ICON,
+    payload
+  }
+}
 
 export function getProductCategoriesAction () {
   return {

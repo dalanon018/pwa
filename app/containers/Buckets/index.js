@@ -29,7 +29,10 @@ import {
   selectMobileNumbers,
   selectReceiptsUpdated,
   selectToggleError,
-  selectToggleMessage
+  selectToggleMessage,
+  selectPageTitle,
+  selectShowSearchIcon,
+  selectShowActivityIcon
 } from './selectors'
 
 import {
@@ -106,7 +109,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     routes: PropTypes.array.isRequired,
     toggleError: PropTypes.bool.isRequired,
     toggleMessage: PropTypes.string,
-    intl: intlShape.isRequired
+    intl: intlShape.isRequired,
+    pageTitle: PropTypes.string,
+    showSearchIcon: PropTypes.bool.isRequired,
+    showActivityIcon: PropTypes.bool.isRequired
   }
 
   state = {
@@ -156,7 +162,6 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   _scrolledSidebarChecker (e) {
-    console.log(e.target)
     let sideBarMenu = this._parentElement.firstElementChild
     let currentY = e.changedTouches[0].clientY
 
@@ -272,7 +277,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   _displayHeader () {
-    const { changeRoute, routes, searchProduct, setProductSearchList, windowWidth, intl } = this.props
+    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, routes, searchProduct, setProductSearchList, windowWidth, intl } = this.props
     const { path } = routes.slice().pop()
     const currentRoute = routes.slice().pop().name
 
@@ -294,7 +299,9 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
     return (
       <HeaderMenu
-        categories={this.props.productCategories}
+        pageTitle={pageTitle}
+        showSearchIcon={showSearchIcon}
+        showActivityIcon={showActivityIcon}
         hideBackButton={hideBackButton}
         leftButtonAction={this._handleLeftButtonAction}
         changeRoute={changeRoute}
@@ -385,7 +392,10 @@ const mapStateToProps = createStructuredSelector({
   mobileNumbers: selectMobileNumbers(),
   receiptsUpdated: selectReceiptsUpdated(),
   toggleError: selectToggleError(),
-  toggleMessage: selectToggleMessage()
+  toggleMessage: selectToggleMessage(),
+  pageTitle: selectPageTitle(),
+  showSearchIcon: selectShowSearchIcon(),
+  showActivityIcon: selectShowActivityIcon()
 })
 
 function mapDispatchToProps (dispatch) {
