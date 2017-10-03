@@ -67,7 +67,7 @@ const Wrapper = styled.div`
 `
 
 const MainContent = styled.div`
-  margin-top: 47px;
+  margin-top: 50px;
   overflow: hidden;
   width: 100%;
 

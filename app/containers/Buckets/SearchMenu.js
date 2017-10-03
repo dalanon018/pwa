@@ -5,17 +5,18 @@ import { isEmpty } from 'lodash'
 import { injectIntl, intlShape } from 'react-intl'
 import {
   Icon,
-  Grid
+  Grid,
+  Input
 } from 'semantic-ui-react'
 
 import messages from './messages'
 
 const Wrapper = styled.div`
-  background: #FFF;
+  background: #F0F0F0;
   border-bottom: 3px solid #8DC640;
   height: 49px;
   left: 0;
-  padding: 7px 10px;
+  padding: 10px;
   position: fixed;
   top: 0;
   width: 100%;
@@ -89,10 +90,6 @@ const HamburgerSpan = styled.span`
 
 `
 
-const SearchColumnWrapper = styled(Grid.Column)`
-  border: 1px solid  #F0F0F0;
-`
-
 const SearchContainer = styled.div`
   align-items: center;
   display: flex;
@@ -101,26 +98,19 @@ const SearchContainer = styled.div`
   padding: 0 5px;
 `
 
-const SearchInput = styled.input`
+const SearchInput = styled(Input)`
   border: 0;
   color: #5B5B5B;
   font-size: 18px;
   letter-spacing: 1px;
-  margin-left: 5px;
+  margin: 0 5px;
   width: 100%;
-
-  &:focus {
-    outline: none;
-  }
-
-  &::placeholder {
-    letter-spacing: 1px;
-    font-weight: 100;
-  }
 `
 
 const CloseIcon = styled(Icon)`
-  align-self: center;
+  align-items: center;
+  display: flex !important;
+  justify-content: center;
 `
 
 class SearchMenu extends PureComponent {
@@ -203,11 +193,12 @@ class SearchMenu extends PureComponent {
                 </Hamburger>
               </LeftWrapper>
             </Grid.Column>
-            <SearchColumnWrapper className='padding__none--horizontal' verticalAlign='middle' width={13}>
+            <Grid.Column className='padding__none--horizontal' verticalAlign='middle' width={13}>
               <SearchContainer>
-                <Icon name='search' color='black' size='large' onClick={this._handlePressSearch} />
+                {/* <Icon name='search' color='black' size='large' onClick={this._handlePressSearch} /> */}
                 <SearchInput
-                  innerRef={this._inputReference}
+                  icon='search'
+                  ref={this._inputReference}
                   onChange={this._handleOnchange}
                   onKeyPress={this._handleKeyPress}
                   placeholder={intl.formatMessage(messages.searchPlaceHolder)}
@@ -221,7 +212,7 @@ class SearchMenu extends PureComponent {
                     size='big' />
                 }
               </SearchContainer>
-            </SearchColumnWrapper>
+            </Grid.Column>
           </Grid.Row>
         </Grid>
       </Wrapper>

@@ -20,7 +20,7 @@ export default defineMessages({
   },
   searchPlaceHolder: {
     id: 'app.containers.Bucket.searchPlaceHolder',
-    defaultMessage: 'SEARCH CLIQQ CODE'
+    defaultMessage: 'Search for Products, Brands and More'
   },
   sale: {
     id: 'app.containers.Bucket.sale',
