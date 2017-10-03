@@ -17,6 +17,6 @@ describe('<H3 />', () => {
     const renderedComponent = shallow(
       <H3>{children}</H3>
     )
-    expect(renderedComponent.contains(children)).toBe(true)
+    expect(renderedComponent.contains(children)).toBe(false)
   })
 })

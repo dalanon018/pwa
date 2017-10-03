@@ -19,8 +19,8 @@
 *******************************/
 
 body {
-  color: @grey;
-  font-family: Cabin;
+  color: @darkGrey;
+  font-family: @pageFont;
   font-weight: 300;
   font-size: 12px;
 

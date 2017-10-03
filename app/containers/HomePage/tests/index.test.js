@@ -11,7 +11,10 @@ describe('<HomePage />', () => {
     getProductCategories: () => {},
     loader: false,
     featuredProducts: fromJS([]),
-    productCategories: fromJS([])
+    productCategories: fromJS([]),
+    intl: {
+      formatMessage: () => {}
+    }
   }
 
   it('should render a div', () => {

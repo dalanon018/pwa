@@ -2,13 +2,19 @@
          Theme Overrides
 *******************************/
 
-.ui.input > input {
-  border-radius: 0;
+.ui.input {
+  input {
+    border-radius: 0;
+    color: @grey;
+    font-family: 'Roboto', sans-serif;
+
+    &:focus {
+      border-color: @darkGrey;
+    }
+  }
 }
 
-
 input[type="text"].search::-webkit-input-placeholder {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 300;
   font-style: italic;
+  font-weight: 300;
 }

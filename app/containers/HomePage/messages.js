@@ -14,7 +14,7 @@ export default defineMessages({
   },
   featureProduct: {
     id: `${idSuffix}.featureProduct`,
-    defaultMessage: 'FEATURED ITEMS'
+    defaultMessage: 'Featured Items'
   },
   browseCategory: {
     id: `${idSuffix}.browseCategory`,
