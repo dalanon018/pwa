@@ -18,7 +18,10 @@ describe('Buckets Reducer', () => {
       toggle: false,
       toggleError: false,
       toggleMessage: null,
-      loader: false
+      loader: false,
+      pageTitle: null,
+      searchIconShow: false,
+      activityIconShow: false
     })
   })
 

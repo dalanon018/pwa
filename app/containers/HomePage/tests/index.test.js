@@ -14,7 +14,10 @@ describe('<HomePage />', () => {
     productCategories: fromJS([]),
     intl: {
       formatMessage: () => {}
-    }
+    },
+    setPageTitle: () => {},
+    setShowSearchIcon: () => {},
+    setShowActivityIcon: () => {}
   }
 
   it('should render a div', () => {

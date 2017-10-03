@@ -39,7 +39,10 @@ import { getFeaturedProductsAction } from './actions'
 import { selectLoading, selectFeaturedProducts } from './selectors'
 
 import {
-  getProductCategoriesAction
+  getProductCategoriesAction,
+  setPageTitleAction,
+  setShowSearchIconAction,
+  setShowActivityIconAction
 } from 'containers/Buckets/actions'
 
 import {
@@ -65,7 +68,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     productCategories: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.object
-    ]).isRequired
+    ]).isRequired,
+    setPageTitle: PropTypes.func.isRequired,
+    setShowSearchIcon: PropTypes.func.isRequired,
+    setShowActivityIcon: PropTypes.func.isRequired
   }
 
   state = {
@@ -96,6 +102,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     }
 
     return null
+  }
+
+  componentWillMount () {
+    this.props.setPageTitle(null)
+    this.props.setShowSearchIcon(false)
+    this.props.setShowActivityIcon(true)
   }
 
   componentDidMount () {
@@ -228,6 +240,9 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
+    setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
+    setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
+    setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProduct: payload => dispatch(getFeaturedProductsAction(payload)),
     getProductCategories: payload => dispatch(getProductCategoriesAction(payload)),
     changeRoute: (url) => dispatch(push(url)),

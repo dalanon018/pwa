@@ -3,21 +3,15 @@ import styled from 'styled-components'
 
 import {
   Image,
-  Button,
-  Icon,
-  Input,
-  Grid
+  Grid,
+  Header
 } from 'semantic-ui-react'
 
-import { partial } from 'ramda'
-
-import messages from './messages'
+import { ifElse, identity } from 'ramda'
 
 import BarcodeImage from 'images/icons/barcode-header.svg'
 import SearchImage from 'images/icons/search-header.svg'
 import MainLogo from 'images/cliqq-logo.svg'
-
-import A from 'components/A'
 
 const Wrapper = styled.div`
   display: block;
@@ -47,11 +41,8 @@ const RightWrapper = styled.div`
   justify-content: flex-end;
 `
 
-const SearchIcon = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-right: 20px;
+const ActiviesIcon = styled.div`
+  margin-left: 20px;
 `
 
 const Hamburger = styled.div`
@@ -124,107 +115,19 @@ const MobileMenu = styled.div`
   z-index: 99;
 `
 
-const DesktopMenu = styled.div`
-  position: relative;
-
-  .brand {
-    display: inline-block !important;
-    width: 160px;
-  }
-`
-
-const InputWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  input {
-    border-radius: 0 !important;
-    font-family: 'helveticalight' !important;
-    font-size: 18px;
-    height: 50px;
-    width: 490px;
-  }
-
-  button {
-    background-color: #F58322 !important;
-    border-radius: 0 !important;
-    padding: 10px 25px !important;
-    i {
-      color: #FFFFFF;
-      font-size: 30px;
-      margin: 0 !important;
-      padding-top: 5px;
-    }
-  }
-`
-
-const NavMenu = styled.div`
-  button {
-    background-color: #F0F0F0 !important;
-    color: #5B5B5B;
-    font-family: 'helveticabold' !important;
-    font-size: 18px !important;
-    letter-spacing: 4px;
-    padding: 20px !important;
-    transition: all 0.3s ease !important;
-    width: 100%;
-
-    &.active {
-      background-color: #F58322 !important;
-      color: #FFFFFF !important;
-    }
-
-    &:hover {
-      background-color: #f6a22d !important;
-      color: #FFFFFF !important;
-    }
-  }
-`
-
-const CategoriesContainer = styled.div`
-  background-color: #FFFFFF;
-  display: ${props => props.display ? 'block' : 'none'};
-  min-height:378px;
-  padding: 10px 0;
-  position: absolute;
-  top: 170px;
-  width: 100%;
-  z-index: 999999;
-
-  .wrapper {
-    padding: 21px 15px 0;
-  }
-
-  .category-wrapper {
-    background-color: #f6a22d;
-    color: white;
-    padding: 5px 30px 25px !important;
-  }
-`
-
-const CategoryItem = styled.p`
-  border-bottom: 1px solid #fff;
-  padding: 20px 0;
-  width: 100%;
-
-  a {
-    color: white;
-    font-family: 'helveticalight';
-    font-size: 17px;
-    letter-spacing: 4px;
-    line-height: 20px;
-    text-transform: uppercase;
-
-
-    &:hover {
-      color: white;
-      font-size: 19px;
-      font-weight: 900;
-    }
-  }
-`
+const toggleComponent = (componentA, componentB) => (condition) => {
+  return ifElse(
+    identity,
+    () => componentA,
+    () => componentB
+  )(condition)
+}
 
 export default class MainMenu extends PureComponent {
   static propTypes= {
+    pageTitle: PropTypes.string,
+    showSearchIcon: PropTypes.bool.isRequired,
+    showActivityIcon: PropTypes.bool.isRequired,
     hideBackButton: PropTypes.bool.isRequired,
     leftButtonAction: PropTypes.func.isRequired,
     changeRoute: PropTypes.func.isRequired
@@ -243,40 +146,13 @@ export default class MainMenu extends PureComponent {
       show: false,
       activeMenu: 'home'
     }
-
-    this._handleBarcodeClick = this._handleBarcodeClick.bind(this)
-    this._handlerHomeClick = this._handlerHomeClick.bind(this)
-    this._handlerSearchClick = this._handlerSearchClick.bind(this)
-    this._handleShowCategories = this._handleShowCategories.bind(this)
-    this._handleHideCategories = this._handleHideCategories.bind(this)
-    this._handleCategoryRoute = this._handleCategoryRoute.bind(this)
-    this._handlerPreventDefault = this._handlerPreventDefault.bind(this)
-    this._handleActiveMenu = this._handleActiveMenu.bind(this)
-    this._inputReference = this._inputReference.bind(this)
-    this._handleSearchItem = this._handleSearchItem.bind(this)
-    this._handleKeyPress = this._handleKeyPress.bind(this)
   }
 
-  _handleBarcodeClick () {
-    const { changeRoute } = this.props
-    changeRoute('/purchases')
-  }
-
-  _handlerHomeClick () {
-    const { changeRoute } = this.props
-    changeRoute('/')
-  }
-
-  _handlerSearchClick () {
-    const { changeRoute } = this.props
-    changeRoute('/search')
-  }
-
-  _inputReference (inp) {
+  _inputReference = (inp) => {
     this._searchInput = inp
   }
 
-  _handleSearchItem () {
+  _handleSearchItem = () => {
     const { searchProduct, changeRoute } = this.props
 
     if (this._searchInput.value) {
@@ -289,7 +165,7 @@ export default class MainMenu extends PureComponent {
     }
   }
 
-  _handleKeyPress (e) {
+  _handleKeyPress = (e) => {
     const code = e.keyCode || e.which
 
     if (code === 13 && e.target.value) {
@@ -299,7 +175,7 @@ export default class MainMenu extends PureComponent {
     return true
   }
 
-  _handleCategoryRoute (id) {
+  _handleCategoryRoute = (id) => {
     const { changeRoute } = this.props
     this.setState({
       show: false
@@ -307,23 +183,19 @@ export default class MainMenu extends PureComponent {
     changeRoute(`/products-category/${id}`)
   }
 
-  _handleShowCategories () {
+  _handleShowCategories = () =>
     this.setState({
       show: true
     })
-  }
 
-  _handleHideCategories () {
+  _handleHideCategories = () =>
     this.setState({
       show: false
     })
-  }
 
-  _handlerPreventDefault (e) {
-    e.preventDefault()
-  }
+  _handlerPreventDefault = (e) => e.preventDefault()
 
-  _handleActiveMenu () {
+  _handleActiveMenu = () => {
     const { currentRoute } = this.props
 
     switch (currentRoute) {
@@ -356,8 +228,24 @@ export default class MainMenu extends PureComponent {
   }
 
   render () {
-    const { leftButtonAction, hideBackButton, categories, intl } = this.props
-    const { activeMenu } = this.state
+    const { leftButtonAction, hideBackButton, changeRoute, pageTitle, showSearchIcon, showActivityIcon } = this.props
+
+    const TitleToggle = toggleComponent(
+      <ImageLogo alt='logo' src={MainLogo} onClick={changeRoute.bind(this, '/')} />,
+      <Header as='h1'> { pageTitle } </Header>
+    )
+
+    const SearchToggle = toggleComponent(
+      <Image alt='Cliqq' src={SearchImage} size='mini' onClick={changeRoute.bind(this, '/search')} />,
+      null
+    )
+
+    const ActivitiesToggle = toggleComponent(
+      <ActiviesIcon>
+        <Image alt='Activities' src={BarcodeImage} size='mini' onClick={changeRoute.bind(this, '/purchases')} />
+      </ActiviesIcon>,
+      null
+    )
 
     return (
       <Wrapper>
@@ -373,89 +261,18 @@ export default class MainMenu extends PureComponent {
               </Grid.Column>
               <Grid.Column verticalAlign='middle'>
                 <CenterWrapper>
-                  <ImageLogo src={MainLogo} onClick={this._handlerHomeClick} />
+                  { TitleToggle(!pageTitle) }
                 </CenterWrapper>
               </Grid.Column>
               <Grid.Column verticalAlign='middle'>
                 <RightWrapper>
-                  <SearchIcon>
-                    <Image alt='Cliqq' src={SearchImage} size='mini' onClick={this._handlerSearchClick} />
-                  </SearchIcon>
-                  <Image alt='Cliqq' src={BarcodeImage} size='mini' onClick={this._handleBarcodeClick} />
+                  { SearchToggle(showSearchIcon) }
+                  { ActivitiesToggle(showActivityIcon) }
                 </RightWrapper>
               </Grid.Column>
             </Grid.Row>
           </Grid>
         </MobileMenu>
-        <DesktopMenu className='desktop-visibility'>
-          <Grid padded>
-            <Grid.Row columns='equal' verticalAlign='middle'>
-              <Grid.Column>
-                <A href='/'>
-                  <Image alt='Cliqq' className='brand' src={MainLogo} />
-                </A>
-              </Grid.Column>
-              <Grid.Column>
-                <InputWrapper>
-                  <Input
-                    type='text'
-                    placeholder={intl.formatMessage(messages.searchPlaceHolder)}>
-                    <input
-                      ref={this._inputReference}
-                      onKeyPress={this._handleKeyPress}
-                    />
-                    <Button onClick={this._handleSearchItem} >
-                      <Icon name='search' />
-                    </Button>
-                  </Input>
-                </InputWrapper>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-          <NavMenu>
-            <Grid padded>
-              <Grid.Row columns='equal'>
-                <Grid.Column>
-                  <Button
-                    active={activeMenu === 'home'}
-                    onClick={this._handlerHomeClick}>HOME</Button>
-                </Grid.Column>
-                <Grid.Column>
-                  <Button
-                    active={activeMenu === 'productsByCategory'}
-                    onClick={(e) => this._handlerPreventDefault(e)}
-                    onMouseOver={this._handleShowCategories}
-                    onMouseLeave={this._handleHideCategories}>CATEGORIES</Button>
-                </Grid.Column>
-                <Grid.Column>
-                  <Button
-                    active={activeMenu === 'purchases'}
-                    onClick={this._handleBarcodeClick}>RECEIPTS</Button>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </NavMenu>
-          <CategoriesContainer display={this.state.show} onMouseOver={this._handleShowCategories} onMouseLeave={this._handleHideCategories}>
-            <div className='wrapper'>
-              <Grid padded>
-                <Grid.Row columns={3} className='category-wrapper'>
-                  {
-                    categories &&
-                    categories.map((item, index) => {
-                      return (
-                        <Grid.Column key={index}>
-                          <CategoryItem>
-                            <A onClick={partial(this._handleCategoryRoute, [item.get('id')])}>{item.get('name')}</A>
-                          </CategoryItem>
-                        </Grid.Column>
-                      )
-                    })
-                  }
-                </Grid.Row>
-              </Grid>
-            </div>
-          </CategoriesContainer>
-        </DesktopMenu>
       </Wrapper>
     )
   }
