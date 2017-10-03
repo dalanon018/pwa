@@ -17,7 +17,17 @@ const ContentWrapper = styled.div`
   }
 `
 
+const SearchWrapper = styled.div`
+  background-color: #F0F0F0;
+  padding: 6px 14px;
+
+  .input {
+    width: 100%;
+  }
+`
+
 export {
   BannerWrapper,
-  ContentWrapper
+  ContentWrapper,
+  SearchWrapper
 }

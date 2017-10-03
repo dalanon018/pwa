@@ -7,14 +7,16 @@
 import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 import Helmet from 'react-helmet'
-
-import { Grid } from 'semantic-ui-react'
+import { injectIntl } from 'react-intl'
+import messages from './messages'
 
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
-import ProductResults from 'components/ProductResults'
+// import ProductResults from 'components/ProductResults'
+import SearchResult from 'components/SearchResult'
+import H3 from 'components/H3'
 import WindowWidth from 'components/WindowWidth'
 
 import EmptyProducts from './EmptyProducts'
@@ -43,7 +45,7 @@ import {
 const SearchListWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px 10px;
+  padding: 20px 0;
 `
 
 export class SearchPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -98,32 +100,26 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
   }
 
   _displayProduct () {
-    const { product, changeRoute, windowWidth } = this.props
-    const responsiveColumns = () => {
-      if (windowWidth >= 768 && windowWidth < 1299) {
-        return 2
-      } else if (windowWidth >= 1200) {
-        return 3
-      }
+    const { product, changeRoute, intl } = this.props
+    // const responsiveColumns = () => {
+    //   if (windowWidth >= 768 && windowWidth < 1299) {
+    //     return 2
+    //   } else if (windowWidth >= 1200) {
+    //     return 3
+    //   }
 
-      return 1
-    }
+    //   return 1
+    // }
 
     if (product.size > 0) {
       return (
-        <Grid>
-          <Grid.Row columns={responsiveColumns()}>
-            {
-              product.map((result) =>
-                <ProductResults
-                  key={result.get('cliqqCode').first()}
-                  product={result}
-                  changeRoute={changeRoute}
-                />
-              )
-            }
-          </Grid.Row>
-        </Grid>
+        <div>
+          <H3 text={intl.formatMessage(messages.header)} />
+          <SearchResult
+            // key={result.get('cliqqCode').first()}
+            product={product}
+            changeRoute={changeRoute} />
+        </div>
       )
     }
 
@@ -185,4 +181,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(SearchPage))
+export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(injectIntl(SearchPage)))

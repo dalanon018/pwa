@@ -19,7 +19,6 @@ import messages from './messages'
 
 import { Grid, Button, Input, Label } from 'semantic-ui-react'
 
-import NavCategories from 'components/NavCategories'
 import BannerSlider from 'components/BannerSlider'
 import ProductView from 'components/ProductView'
 import Category from 'components/Category'
@@ -28,7 +27,6 @@ import H2 from 'components/H2'
 import H3 from 'components/H3'
 import H4 from 'components/H4'
 import ListCollapse from 'components/ListCollapse'
-import ListFloated from 'components/ListFloated'
 import Brand from 'components/Brand'
 import Footer from 'components/Footer'
 import StaticPromos from 'components/BannerStaticPromos'
@@ -46,13 +44,14 @@ import {
 } from 'containers/Buckets/actions'
 
 import {
-  selectProductCategories,
-  selectLoader
+  selectProductCategories
+  // selectLoader
 } from 'containers/Buckets/selectors'
 
 import {
   BannerWrapper,
-  ContentWrapper
+  ContentWrapper,
+  SearchWrapper
 } from './styles'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -130,7 +129,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render () {
-    const { loader, productCategories, changeRoute, windowWidth, categoryLoader, route, intl } = this.props
+    const { loader, productCategories, changeRoute, windowWidth, route, intl } = this.props
     const { products } = this.state
     const homeRouteName = route && route.name
     // const resposiveColumns = () => {
@@ -160,11 +159,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           ]}
         />
 
-        <NavCategories
-          changeRoute={changeRoute}
-          categoryLoader={categoryLoader}
-          loader={loader}
-          categories={productCategories} />
+        <SearchWrapper>
+          <Input
+            onClick={changeRoute.bind(this, '/search')}
+            placeholder={intl.formatMessage(messages.searchPlaceholder)}
+            icon='search' />
+        </SearchWrapper>
 
         <BannerWrapper>
           <Grid padded>
@@ -202,7 +202,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                 <H4 text='Header Four' />
                 <Button onClick={() => {}} primary>Primary Button</Button>
                 <ListCollapse />
-                <ListFloated />
                 <Input placeholder='Search...' />
                 <div>
                   <Label as='p' basic size='mini'>Mini</Label>
@@ -249,8 +248,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 const mapStateToProps = createStructuredSelector({
   loader: selectLoading(),
   featuredProducts: selectFeaturedProducts(),
-  productCategories: selectProductCategories(),
-  categoryLoader: selectLoader()
+  productCategories: selectProductCategories()
+  // categoryLoader: selectLoader()
 })
 
 function mapDispatchToProps (dispatch) {

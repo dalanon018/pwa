@@ -27,5 +27,9 @@ export default defineMessages({
   productViewAll: {
     id: `${idSuffix}.productViewAll`,
     defaultMessage: 'View All'
+  },
+  searchPlaceholder: {
+    id: `${idSuffix}.searchPlaceholder`,
+    defaultMessage: 'Search for Products, Brands and More'
   }
 })

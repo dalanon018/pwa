@@ -3,8 +3,10 @@
 *******************************/
 
 .ui.label {
-  color: @darkGrey;
   background: transparent;
+  color: @darkGrey;
+  margin-left: 0;
+  margin-right: 0;
   
   &.basic {
     background: transparent;
