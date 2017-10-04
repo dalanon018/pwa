@@ -3,7 +3,7 @@ import { ifElse, map, gte } from 'ramda'
 import { Label } from 'semantic-ui-react'
 
 import ChildAccordion from 'components/ChildAccordion'
-import Selected from 'images/icons/drawer/Selected.svg'
+import Selected from 'images/icons/drawer/selected.svg'
 
 const SideBarChildMenu = ({ categories, changeRoute }) => {
   const isChildrenEmpty = (category) => {
