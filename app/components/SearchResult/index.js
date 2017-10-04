@@ -15,7 +15,6 @@ const CustomIcon = styled(Icon)`
 `
 const Title = styled(Label)`
   font-size: 18px;
-  color: #AEAEAE !important;
 `
 const Content = styled.p`
   font-size: 14px;
@@ -27,6 +26,15 @@ const CustomItem = styled(List.Item)`
     border-top: 1px solid #F0F0F0 !important;
   }
 `
+
+const _productTitle = (title) => {
+  const maxChar = 40
+
+  if (title.length > maxChar) {
+    return `${title.slice(0, maxChar)}. . .`
+  }
+  return title
+}
 
 function SearchResult ({ product, changeRoute }) {
   return (
@@ -43,7 +51,7 @@ function SearchResult ({ product, changeRoute }) {
               <Title as='span' basic size='large'>Brand Name</Title>
               <List.Content>
                 <Content>
-                  <Label as='span' basic size='medium'>{ result.get('title') }</Label>
+                  <Label as='span' basic size='medium'>{ _productTitle(result.get('title')) }</Label>
                 </Content>
               </List.Content>
             </CustomItem>
