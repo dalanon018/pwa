@@ -1,6 +1,6 @@
 /*
  *
- * ProductsByCategory
+ * ProductsByCategoryPage
  *
  */
 
@@ -19,8 +19,7 @@ import {
   equals,
   ifElse,
   partial,
-  path,
-  toUpper
+  path
 } from 'ramda'
 import styled from 'styled-components'
 
@@ -29,10 +28,14 @@ import NavCategories from 'components/NavCategories'
 import ProductView from 'components/ProductView'
 import Footer from 'components/Footer'
 import WindowWidth from 'components/WindowWidth'
+import { Label } from 'semantic-ui-react'
 // import Promo from 'components/Promo'
 
 import {
-  getProductCategoriesAction
+  getProductCategoriesAction,
+  setPageTitleAction,
+  setShowSearchIconAction,
+  setShowActivityIconAction
 } from 'containers/Buckets/actions'
 
 import {
@@ -60,18 +63,32 @@ import {
   selectTotalCount
 } from './selectors'
 
-const ItemCount = styled.p`
-  font-family: 'helveticalight';
-  letter-spacing: 2px;
-  text-align: center;
-  width: 100%;
+// const ItemCount = styled.p`
+//   font-family: 'helveticalight';
+//   letter-spacing: 2px;
+//   text-align: center;
+//   width: 100%;
 
-  @media (min-width: 768px) {
-    margin: 10px 0px 57px;
-  }
-`
+//   @media (min-width: 768px) {
+//     margin: 10px 0px 57px;
+//   }
+// `
 
 const ContentWrapper = styled.div`
+
+  .center-label {
+    text-align: center;
+  }
+
+  .no-bottom-margin {
+    margin-bottom: 0 !important;
+  }
+
+  .num-count {
+    font-family: Lato,Cabin,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    font-weight: 300;
+  }
+  
   @media (min-width: 768px) {
     .header-label {
       padding-bottom: 20px;
@@ -112,6 +129,9 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     getProductsViewed: PropTypes.func.isRequired,
     resetProductsByCategory: PropTypes.func.isRequired,
     getProductFeatured: PropTypes.func.isRequired,
+    setPageTitle: PropTypes.func.isRequired,
+    setShowSearchIcon: PropTypes.func.isRequired,
+    setShowActivityIcon: PropTypes.func.isRequired,
     totalCount: PropTypes.number.isRequired,
     loader: PropTypes.bool.isRequired,
     lazyload: PropTypes.bool.isRequired,
@@ -160,22 +180,19 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
   _isCategoryExist () {
     const { categories, params: { id } } = this.props
-
     if (categories.size) {
       const category = categories.find((cat) => cat.get('id') === id)
       return category ? category.get('name') : ''
     }
-
     return ''
   }
 
   _handlePageTitle () {
     const { params: { id } } = this.props
-    const IstagText = (tag) => `${tag} ITEMS`
+    const IstagText = (tag) => `${tag} Items`
 
     const titleCondition = ifElse(isTag(this._tags), IstagText, this._isCategoryExist)
-    const titleComposition = compose(toUpper, titleCondition)
-
+    const titleComposition = compose(titleCondition)
     return titleComposition(id)
   }
 
@@ -218,10 +235,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
     if (productsByCategory.size) {
       return (
-        <ItemCount className='num-item-label'>
+        <Label className='num-count center-label' as='p' basic size='mini'>
           { totalCount }
           <FormattedMessage {...messages.items} />
-        </ItemCount>
+        </Label>
       )
     }
 
@@ -233,7 +250,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
     if (productsViewed.size) {
       return (
-        <H1 className='recent-label' center><FormattedMessage {...messages.viewed} /></H1>
+        <H1 className='recent-label'><FormattedMessage {...messages.viewed} /></H1>
       )
     }
 
@@ -302,6 +319,17 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     }, () => this._fetchProductByTagCategory(props))
   }
 
+  componentWillMount () {
+    console.log(this.props.setPageTitle)
+    const { categories, params: { id } } = this.props
+    const category = categories.find((cat) => cat.get('id') === id)
+    let categoryName = category ? category.get('name') : ' '
+
+    this.props.setPageTitle(categoryName)
+    this.props.setShowSearchIcon(true)
+    this.props.setShowActivityIcon(true)
+  }
+
   componentDidMount () {
     const { getProductsViewed, getProductCategories } = this.props
 
@@ -353,8 +381,13 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
         <NavCategories changeRoute={changeRoute} categories={categories} categoryLoader={categoryLoader} />
         <ContentWrapper className='padding__horizontal--10'>
           { this._displayHeaderFeaturesProduct() }
+          <Label className='center-label' as='p' basic size='large'>
+            <FormattedMessage {...messages.feature} />
+          </Label>
           { this._displayFeaturesProduct() }
-          <H1 center className='category-title padding__top--25'>{ this._handlePageTitle() }</H1>
+          <Label className='center-label no-bottom-margin' as='p' basic size='large'>
+            { this._handlePageTitle() }
+          </Label>
           { this._displayNumberProducts() }
           { this._displayEmpty() }
           <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} windowWidth={windowWidth} />
@@ -381,6 +414,9 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
+    setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
+    setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
+    setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProductCategories: payload => dispatch(getProductCategoriesAction(payload)),
     getProductsByCategory: payload => dispatch(getProductsByCategoryAction(payload)),
     getProductsByTags: payload => dispatch(getProductsByTagsAction(payload)),

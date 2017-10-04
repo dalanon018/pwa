@@ -75,7 +75,7 @@ function ProductView ({
         loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
         : products.valueSeq().map((product, index) => {
           const goToProduct = () => changeRoute(`/product/${product.get('cliqqCode').first()}`)
-
+          console.log(product)
           return (
             <Grid.Column
               key={`${product.get('cliqqCode')}-${index}`}
@@ -90,8 +90,9 @@ function ProductView ({
                   <Image alt={productName(product.get('title'))} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || defaultImage} />
                 </ImageWrapper>
                 <ProductInfo>
-                  <Label as='span' className='product-name' basic size='large'>Brand Name</Label>
-                  <Label as='p' basic size='small'>{productName(product.get('title'))}</Label>
+                  <Label as='span' className='product-name' basic size='medium'>Brand Name</Label>
+                  {/* <Label as='p' basic size='small'>{productName(product.get('title'))}</Label> */}
+                  <Label className='no-bottom-margin' as='p' basic size='tiny'>All Day Backpack | Blue</Label>
                   <ProductPriceWrapper>
                     <Label className='product-price' as='b' basic size='massive'>
                       <FormattedMessage {...messages.peso} />
