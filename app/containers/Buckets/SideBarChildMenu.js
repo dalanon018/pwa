@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { ifElse, map, lte } from 'ramda'
+import { ifElse, map, gte } from 'ramda'
 import { Label } from 'semantic-ui-react'
 
 import ChildAccordion from 'components/ChildAccordion'
@@ -7,8 +7,8 @@ import Selected from 'images/icons/drawer/Selected.svg'
 
 const SideBarChildMenu = ({ categories, changeRoute }) => {
   const isChildrenEmpty = (category) => {
-    const size = category.getIn(['children'])
-    return lte(0, size || 0)
+    const size = category.getIn(['children']).size
+    return gte(0, size)
   }
 
   const Title = (category) => (
