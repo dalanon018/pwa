@@ -130,6 +130,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     resetProductsByCategory: PropTypes.func.isRequired,
     getProductFeatured: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
+    setShowSearchIcon: PropTypes.func.isRequired,
+    setShowActivityIcon: PropTypes.func.isRequired,
     totalCount: PropTypes.number.isRequired,
     loader: PropTypes.bool.isRequired,
     lazyload: PropTypes.bool.isRequired,
@@ -248,7 +250,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
     if (productsViewed.size) {
       return (
-        <H1 className='recent-label' center><FormattedMessage {...messages.viewed} /></H1>
+        <H1 className='recent-label'><FormattedMessage {...messages.viewed} /></H1>
       )
     }
 
@@ -318,9 +320,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   componentWillMount () {
+    console.log(this.props.setPageTitle)
     const { categories, params: { id } } = this.props
     const category = categories.find((cat) => cat.get('id') === id)
-    let categoryName = category ? category.get('name') : ''
+    let categoryName = category ? category.get('name') : ' '
 
     this.props.setPageTitle(categoryName)
     this.props.setShowSearchIcon(true)
@@ -378,11 +381,11 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
         <NavCategories changeRoute={changeRoute} categories={categories} categoryLoader={categoryLoader} />
         <ContentWrapper className='padding__horizontal--10'>
           { this._displayHeaderFeaturesProduct() }
-          <Label className='center-label' as='p' basic size='medium'>
+          <Label className='center-label' as='p' basic size='large'>
             <FormattedMessage {...messages.feature} />
           </Label>
           { this._displayFeaturesProduct() }
-          <Label className='center-label no-bottom-margin' as='p' basic size='medium'>
+          <Label className='center-label no-bottom-margin' as='p' basic size='large'>
             { this._handlePageTitle() }
           </Label>
           { this._displayNumberProducts() }

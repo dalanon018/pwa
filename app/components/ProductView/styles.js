@@ -22,15 +22,14 @@ const ImageWrapper = styled.div`
 `
 
 const ProductInfo = styled.div`
-  .product-name {
-    margin-bottom: 7px;
-  }
+  
 `
 
 const ProductPriceWrapper = styled.div`
   align-items: flex-end;
   display: flex;
   justify-content: center;
+  margin-top: 10px;
 
   .product-price {
     color: #F58322 !important;
@@ -51,7 +50,7 @@ const ProductPrice = styled.p`
   color: #F88728;
   font-family: 'helveticabold';
   line-height: inherit;
-  margin: 0;
+  margin-top: 0;
   text-transform: uppercase;
 
   @media (min-width: 320px) {
