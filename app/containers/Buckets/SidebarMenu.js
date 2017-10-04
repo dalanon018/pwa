@@ -7,10 +7,10 @@ import {
   List
 } from 'semantic-ui-react'
 
-import ChildAccordion from 'components/ChildAccordion'
 import ListCollapse from 'components/ListCollapse'
 
 import messages from './messages'
+import SideBarChildMenu from './SideBarChildMenu'
 
 import Home from 'images/icons/drawer/home.svg'
 import Barcode from 'images/icons/drawer/activity.svg'
@@ -38,46 +38,60 @@ const SidebarWrapper = styled.div`
 `
 
 const ListWrapper = styled(List.Item)`
-  padding: 15px 20px!important;
+  padding: 25px 30px!important;
+
+  & img {
+    margin-right: 10px !important;
+  }
 `
 
 const ListAccordionWrapper = styled(List.Item)`
   display: flex !important;
-  padding: 0 20px !important;
+  padding: 0 30px !important;
 
   & img {
-    margin-top: 25px !important;
+    margin-top: 20px !important;
+    margin-right: 10px !important;
   }
 
   & .content {
     width: 100%;
   }
-`
 
-const sampleCategories = [
-  {
-    id: 1,
-    name: 'test1',
-    children: [
-      { id: 10, name: 'test10' },
-      { id: 11, name: 'test11' },
-      { id: 12, name: 'test12' }
-    ]
-  },
-  {
-    id: 2,
-    name: 'test2',
-    children: [
-      { id: 20, name: 'test20' },
-      { id: 21, name: 'test21' },
-      { id: 22, name: 'test22' }
-    ]
-  },
-  {
-    id: 3,
-    name: 'test3'
+  & .ui.accordion {
+    border: none!important;
+
+    & .content.active .title-holder {
+      padding: 10px;
+
+      img.selected {
+        margin-top: 0 !important;
+        margin-right: 5px !important;
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+        visibility: hidden;
+      }
+    }
+
+    & .title {
+      border: none!important;
+      padding: 25px 0;
+    }
+
+    & .title.active {
+      padding-bottom: 10px;
+
+      img.selected {
+        visibility: visible !important;
+      }
+    }
+
+    & .content.active > .collapse-content{
+      padding: 0;
+    }
   }
-]
+`
 
 class SidebarMenu extends React.PureComponent {
   static propTypes = {
@@ -89,9 +103,7 @@ class SidebarMenu extends React.PureComponent {
 
   render () {
     const {
-      // categories,
-      // changeRoute,
-      toggleSidebar
+      categories, changeRoute, toggleSidebar
     //  toggleAction
     } = this.props
 
@@ -102,7 +114,7 @@ class SidebarMenu extends React.PureComponent {
             <ListWrapper>
               <Image alt='home' size='mini' src={Home} />
               <List.Content>
-                <Label as='p' size='huge'>
+                <Label as='p' className='margin__none' size='huge' onClick={changeRoute.bind(this, '/')}>
                   <FormattedMessage {...messages.menuHome} />
                 </Label>
               </List.Content>
@@ -110,7 +122,7 @@ class SidebarMenu extends React.PureComponent {
             <ListWrapper>
               <Image alt='activities' size='mini' src={Barcode} />
               <List.Content>
-                <Label as='p' size='huge'>
+                <Label as='p' className='margin__none' size='huge' onClick={changeRoute.bind(this, '/purchases')}>
                   <FormattedMessage {...messages.menuActivity} />
                 </Label>
               </List.Content>
@@ -119,21 +131,14 @@ class SidebarMenu extends React.PureComponent {
               <Image alt='categories' size='mini' src={Categories} />
               <List.Content>
                 <ListCollapse title={
-                  <Label as='p' size='huge'>
+                  <Label as='p' className='margin__none' size='huge' >
                     <FormattedMessage {...messages.menuCategories} />
                   </Label>
                 }>
-                  {
-                    sampleCategories.map((cat) =>
-                      <ChildAccordion key={cat.id} title={
-                        <Label as='p' size='big'>
-                          {cat.name}
-                        </Label>
-                      }>
-                        test
-                      </ChildAccordion>
-                    )
-                  }
+                  <SideBarChildMenu
+                    categories={categories}
+                    changeRoute={changeRoute}
+                  />
                 </ListCollapse>
               </List.Content>
             </ListAccordionWrapper>
@@ -141,7 +146,7 @@ class SidebarMenu extends React.PureComponent {
               <Image alt='brands' size='mini' src={Brands} />
               <List.Content>
                 <ListCollapse title={
-                  <Label as='p' size='huge'>
+                  <Label as='p' className='margin__none' size='huge'>
                     <FormattedMessage {...messages.menuBrands} />
                   </Label>
                 } >
@@ -152,7 +157,7 @@ class SidebarMenu extends React.PureComponent {
             <ListWrapper>
               <Image alt='help' size='mini' src={Help} />
               <List.Content>
-                <Label as='p' size='huge'>
+                <Label as='p' className='margin__none' size='huge'>
                   <FormattedMessage {...messages.menuHelp} />
                 </Label>
               </List.Content>

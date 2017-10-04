@@ -1,4 +1,6 @@
 import {
+  __,
+  assoc,
   adjust,
   compose,
   curry,
@@ -8,7 +10,8 @@ import {
   omit,
   toPairs,
   propOr,
-  propEq
+  propEq,
+  partial
 } from 'ramda'
 
 import {
@@ -29,6 +32,10 @@ const Schema = {
   name: {
     name: 'name',
     type: STRING
+  },
+  children: {
+    name: 'children',
+    type: ARRAY
   }
 }
 
@@ -53,9 +60,16 @@ const transformCategory = (data) => {
     })
   }
 
+  const applyChildren = (data) => compose(
+    assoc('children', __, data),
+    map(partial(mapKeys, [changeKey])),
+    propOr([], 'children')
+  )(data)
+
   const removeKeys = ['images']
   const adjustmentObject = compose(
     omit(removeKeys),
+    applyChildren,
     applyImage
   )
 

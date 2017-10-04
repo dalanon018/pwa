@@ -6,7 +6,12 @@ import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 
 import request from 'utils/request'
-import { getRequestData } from 'utils/offline-request'
+import {
+  // getRequestData
+ } from 'utils/offline-request'
+
+// FIXTURES
+import Categories from 'fixtures/categories-v2.json'
 
 import { transformCategory, transformOrder } from 'utils/transforms'
 import { getItem, setItem } from 'utils/localStorage'
@@ -27,7 +32,7 @@ import {
 } from './actions'
 
 import {
-  API_BASE_URL,
+  // API_BASE_URL,
 
   TOKEN_URL,
   OATH_CLIENT_ID,
@@ -55,11 +60,15 @@ function * transformEachEntity (transform, entity) {
 }
 
 function * requestCategories () {
-  const token = yield getAccessToken()
+  // const token = yield getAccessToken()
   const dbResource = yield call(getItem, CATEGORIES_KEY)
-  const req = yield call(getRequestData, `${API_BASE_URL}/categories`, {
-    method: 'GET',
-    token: token.access_token
+  // const req = yield call(getRequestData, `${API_BASE_URL}/categories`, {
+  //   method: 'GET',
+  //   token: token.access_token
+  // })
+
+  const req = Object.assign({}, {
+    categoryList: Categories
   })
 
   if (!isEmpty(req)) {

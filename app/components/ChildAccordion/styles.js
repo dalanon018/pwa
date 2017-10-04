@@ -9,48 +9,34 @@ const ListCollapseWrapper = styled.div`
       margin-bottom: 15px;
       transition: all .3s ease;
     }
-
-    & .active.title {
-      color: #F58322 !important;
-
-      img.selected {
-        visibility: visible;
-      }
-    }
   }
 
-  .ui.accordion .accordion .title~.content, .ui.accordion .title~.content {
+  .ui.accordion .title~.content {
     display: block !important;
     overflow: hidden;
     height: 0;
     padding: 0 !important;
     transition: all .3s ease;
+    margin: 0 !important;
 
     .collapse-content {
-      padding: 5px 10px;
+      padding: 5px 30px !important
     }
   }
 
-  .title {
-    display: block;
+  .ui.accordion > .title.child-accordion {
+    display: flex;
     border: none !important;
     color: #5B5B5B !important;
     font-size: 14px !important;
     letter-spacing: 1px;
-    padding: 5px 0;
-
-    img.selected {
-      margin: 0 !important;
-      width: 16px;
-      height: 16px;
-      display: inline-block;
-      visibility: hidden;
-    }
+    padding: 0 !important;
 
     .icon {
       float: none !important;
       height: 12px;
       margin-left: 20px;
+      margin-right: 6px!important;
       padding: 5px;
       position: relative;
       width: 12px;
@@ -83,7 +69,11 @@ const ListCollapseWrapper = styled.div`
     }
   }
 
-  .active.title {
+  .ui.accordion > .active.title.child-accordion {
+    span, p {
+      color: #F58322 !important;
+    }
+
     i.icon {
       cursor: pointer;
 

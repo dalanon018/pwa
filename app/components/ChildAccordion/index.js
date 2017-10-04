@@ -8,7 +8,6 @@ import React, { PropTypes } from 'react'
 import {
   Accordion
 } from 'semantic-ui-react'
-import Selected from 'images/icons/drawer/Selected.svg'
 
 import {
   ListCollapseWrapper
@@ -17,8 +16,7 @@ import {
 const ChildAccordion = ({ title, children }) => (
   <ListCollapseWrapper>
     <Accordion>
-      <Accordion.Title>
-        <img alt='selected' className='selected' src={Selected} />
+      <Accordion.Title className='child-accordion'>
         { title }
         <i className='icon' />
       </Accordion.Title>
@@ -45,22 +43,3 @@ ChildAccordion.propTypes = {
 }
 
 export default ChildAccordion
-
-//   render() {
-//     return (
-//       <ListCollapse title={'Categories'} >
-//         { categories.map((cat, index) =>
-//           <ChildAccordion key={index + 1} title={cat.name}>
-//             {cat.name}
-//           </ChildAccordion>
-//         )}
-//       </ListCollapse>
-//     );
-//   }
-// }
-
-// MultiAccordion.propTypes = {
-
-// };
-
-// export default MultiAccordion;
