@@ -20,6 +20,12 @@ import { LoadingStateInfo } from 'components/LoadingBlock'
 import { getMarkDownAction } from './actions'
 import { selectMarkdown, selectLoading } from './selectors'
 
+import {
+  setPageTitleAction,
+  setShowSearchIconAction,
+  setShowActivityIconAction
+} from 'containers/Buckets/actions'
+
 export class PrivacyPolicy extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     markdown: PropTypes.string,
@@ -29,6 +35,9 @@ export class PrivacyPolicy extends React.PureComponent { // eslint-disable-line 
   }
 
   componentDidMount () {
+    this.props.getMarkDown()
+    this.props.setPageTitle('Privacy Policy')
+    this.props.setShowSearchIcon(false)
     this.props.getMarkDown()
   }
 
@@ -61,6 +70,9 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
+    setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
+    setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
+    setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getMarkDown: payload => dispatch(getMarkDownAction()),
     dispatch
   }
