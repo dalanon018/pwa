@@ -130,10 +130,12 @@ class SidebarMenu extends React.PureComponent {
             <ListAccordionWrapper>
               <Image alt='categories' size='mini' src={Categories} />
               <List.Content>
-                <ListCollapse title={
-                  <Label as='p' className='margin__none' size='huge' >
-                    <FormattedMessage {...messages.menuCategories} />
-                  </Label>
+                <ListCollapse
+                  heightTransition
+                  title={
+                    <Label as='p' className='margin__none' size='huge' >
+                      <FormattedMessage {...messages.menuCategories} />
+                    </Label>
                 }>
                   <SideBarChildMenu
                     entities={categories}
@@ -146,10 +148,12 @@ class SidebarMenu extends React.PureComponent {
             <ListAccordionWrapper>
               <Image alt='brands' size='mini' src={Brands} />
               <List.Content>
-                <ListCollapse title={
-                  <Label as='p' className='margin__none' size='huge'>
-                    <FormattedMessage {...messages.menuBrands} />
-                  </Label>
+                <ListCollapse
+                  heightTransition
+                  title={
+                    <Label as='p' className='margin__none' size='huge'>
+                      <FormattedMessage {...messages.menuBrands} />
+                    </Label>
                 } >
                   <SideBarChildMenu
                     entities={brands}

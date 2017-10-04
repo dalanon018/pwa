@@ -1,26 +1,30 @@
 import styled from 'styled-components'
 import { Button } from 'semantic-ui-react'
 
+const ProductReviewWrapper = styled.div`
+  margin-bottom: 60px;
+`
+
 const StepHead = styled.div`
   align-items: center;
   color: #5B5B5B;
   display: flex;
   flex-wrap: wrap;
-  font-family: 'helveticabold';
+  font-family: 'Cabin';
   font-size: 13px;
   letter-spacing: 3px;
   margin-bottom: 15px;
   text-transform: uppercase;
 
   p {
+    width: 60%;
     align-self: flex-start;
     color: #AEAEAE;
     flex: none;
-    font-family: 'helveticamedium';
-    font-size: 10px;
+    font-family: 'Roboto';
+    font-size: 14px;
     letter-spacing: initial;
-    margin-left: 40px;
-    margin-top: -10px;
+    font-weight: 100;
     text-transform: none;
   }
 
@@ -48,14 +52,14 @@ const StepHead = styled.div`
     margin-top: 20px;
 
     span {
-      font-family: 'helveticabold';
+      font-family: 'Cabin';
       font-size: 16px;
       letter-spacing: 4px;
       margin: 0;
     }
 
     &:before {
-      font-family: 'helveticabold';
+      font-family: 'Cabin';
       font-size: 16px;
       height: 33px;
       justify-content: center;
@@ -66,30 +70,30 @@ const StepHead = styled.div`
 `
 
 const ProductItem = styled.div`
-  background-color: #F0F0F0;
-  padding: 20px 10px 8px;
+  padding: 30px 10px 8px;
   position: relative;
   text-align: center;
   width: 100%;
+  margin: 20px 0;
 
   &:before {
     background: url(${props => props.brand})no-repeat center center / contain;
     content: '';
-    height: 20px;
+    height: 35px;
     left: 50%;
     margin-right: -50%;
     position: absolute;
     text-align: center;
-    top: 20px;
+    top: 0;
     transform: translate(-50%);
-    min-width: 180px;
+    min-width: 200px;
     z-index: 2;
   }
 
   .image {
     margin: 0 auto;
     position: relative;
-    width: 150px;
+    width: 200px;
     z-index: 2;
   }
 
@@ -137,7 +141,7 @@ const CliqqCodeWrapper = styled.div`
 
 const ProductName = styled.div`
   color: #5B5B5B;
-  font-family: 'helveticabold';
+  font-family: 'Cabin';
   font-size: 18px;
   letter-spacing: 2px;
   margin: 20px 0;
@@ -154,13 +158,8 @@ const ProductName = styled.div`
   }
 `
 
-const StepContent = styled.div`
-  padding: 0 15px;
-`
-
 const StepWrapper = styled.div`
-  border-top: 3px solid #AEAEAE;
-  margin-bottom: 15px;
+  margin-bottom: 100px;
 
   &.visibility {
     display: ${({ visibility }) => visibility ? 'block' : 'none'};
@@ -182,7 +181,7 @@ const ViewDetails = styled.div`
     border-bottom: 1px solid #F0F0F0;
     border-top: 1px solid #F0F0F0;
     color: #5B5B5B !important;
-    font-family: 'helveticamedium' !important;
+    font-family: 'Cabin' !important;
     letter-spacing: 2px;
     padding: 15px 0 !important;
     text-align: center;
@@ -195,7 +194,7 @@ const DetailsWrapper = styled.div`
 
   span {
     font-size: 14px;
-    letter-spacing: 2px;
+    text-transform: capitalize;
   }
 
   p {
@@ -203,7 +202,7 @@ const DetailsWrapper = styled.div`
   }
 
   @media (min-width: 768px) {
-    font-family: 'helveticamedium';
+    font-family: 'Cabin';
     font-size: 14px;
     margin-bottom: 35px;
     margin: 30px 0;
@@ -211,7 +210,7 @@ const DetailsWrapper = styled.div`
 
     span {
       display: block;
-      font-family: 'helveticabold';
+      font-family: 'Cabin';
       font-size: 16px;
       font-weight: 100;
       letter-spacing: 4px;
@@ -225,13 +224,17 @@ const DetailsWrapper = styled.div`
 `
 
 const SelectMethodWrapper = styled.div`
+  padding: 0 14px;
+  width: 100%;
+
   .checkbox {
     border-radius: 5px;
-    border: 1px solid #F0F0F0;
+    border: 2px solid #F0F0F0;
     height: 100%;
     padding: 20px 10px;
     position: relative;
     width: 100%;
+    margin: 10px 0;
 
     &.checked {
       border: 2px solid #8DC640;
@@ -260,8 +263,9 @@ const SelectMethodWrapper = styled.div`
     }
 
     .label-custom {
+      align-items: center;
       display: flex;
-      flex-wrap: wrap;
+      justify-content: space-between;
       position: relative;
     }
   }
@@ -272,7 +276,7 @@ const SelectMethodWrapper = styled.div`
     transform: translateY(-50%);
   }
   .ui.radio.checkbox .box:after, .ui.radio.checkbox label:after {
-    top: 38%;
+    top: 39%;
     transform: translateY(-50%);
   }
 
@@ -308,15 +312,13 @@ const SelectMethodWrapper = styled.div`
 
 const LabelTitle = styled.p`
   color: #333333 !important;
-  font-family: 'helveticabold';
+  font-family: 'Cabin';
   font-size: 14px;
-  letter-spacing: 2px;
   margin: 0;
-  width: 100%;
 
   @media (min-width: 768px) {
     color: #5B5B5B !important;
-    font-family: 'helveticabold';
+    font-family: 'Cabin';
     font-size: 16px;
     letter-spacing: 5px;
   }
@@ -334,24 +336,31 @@ const LabelSubTitle = styled.span`
 `
 
 const LabelPrice = styled.div`
+  display: flex;
+  flex-wrap: wrap;
   margin-top: 5px;
+  text-align: right;
   line-height: normal;
 
   .total {
-    color: #F88728;
-    font-family: 'helveticabold';
-    font-size: 25px;
+    width: 100%;
+    color: #f58322;
+    font-family: 'Cabin';
+    font-size: 35px;
+    font-weight: 700;
+    letter-spacing: -2px;
     margin-right: 10px;
     margin: 0;
-    text-transform: uppercase;
   }
   .strike {
     align-self: flex-end;
-    color: #aeaeae;
-    font-size: 9px;
+    color: #AEAEAE;
+    font-size: 20px;
+    width: 100%;
+    font-family: 'Cabin';
+    font-weight: 700;
     line-height: initial;
     text-decoration: line-through;
-    text-transform: uppercase;
   }
 
   @media (min-width: 768px) {
@@ -380,8 +389,8 @@ const LabelPrice = styled.div`
 const LocationButton = styled(Button)`
   background: transparent !important;
   border-radius: 5px !important;
-  border: 1px solid #F0F0F0 !important;
-  font-family: 'helveticabold' !important;
+  border: 2px solid #F0F0F0 !important;
+  font-family: 'Cabin' !important;
   letter-spacing: 2px;
   padding: 20px 10px !important;
   position: relative;
@@ -404,12 +413,15 @@ const LocationButton = styled(Button)`
 `
 
 const ButtonContainer = styled.div`
-  background: #FFFFFF;
+  background: #f58322;
   bottom: 0;
   left: 0;
-  padding: 0 10px 10px;
   position: fixed;
   width: 100%;
+
+  .ui.button.primary {
+    padding: 20px 40px !important;
+  }
 
   @media (min-width: 768px) {
     padding: 0;
@@ -425,9 +437,13 @@ const ReviewContainer = styled.div`
   margin-bottom: 65px;
 `
 
+const MethodTitle = styled.div`
+  margin-top: 10px;
+  padding: 0 14px;
+`
+
 export {
   StepHead,
-  StepContent,
   SelectMethodWrapper,
   LabelSubTitle,
   ProductItem,
@@ -435,9 +451,11 @@ export {
   DetailsWrapper,
   LocationButton,
   CliqqCodeWrapper,
+  ProductReviewWrapper,
   ViewDetails,
   ButtonContainer,
   ProductName,
+  MethodTitle,
   LabelPrice,
   StepWrapper,
   LabelTitle

@@ -10,9 +10,11 @@ import { noop, isEmpty } from 'lodash'
 import { ifElse, equals, both, compose, prop, propOr, either } from 'ramda'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import messages from './messages'
+
+import { Grid, Label, Form, Checkbox, Image, Button } from 'semantic-ui-react'
 
 import { imageStock } from 'utils/image-stock'
 import { transformStore } from 'utils/transforms'
@@ -37,17 +39,35 @@ import {
   selectStoreLocation
 } from './selectors'
 
+import {
+  setPageTitleAction,
+  setShowSearchIconAction,
+  setShowActivityIconAction
+} from 'containers/Buckets/actions'
+
 import Modal from 'components/PromptModal'
 import WindowWidth from 'components/WindowWidth'
-import DesktopBlock from './DesktopBlock'
-import MobileBlock from './MobileBlock'
+import ListCollapse from 'components/ListCollapse'
+// import DesktopBlock from './DesktopBlock'
+// import MobileBlock from './MobileBlock'
 
 import { calculateProductPrice } from 'utils/promo'
+
+import NextIcon from 'images/icons/greater-than-icon.svg'
 
 import {
   LabelTitle,
   // LabelSubTitle,
-  LabelPrice
+  LabelPrice,
+  DetailsWrapper,
+  ButtonContainer,
+  SelectMethodWrapper,
+  ProductItem,
+  ProductReviewWrapper,
+  MethodTitle,
+  StepWrapper,
+  StepHead,
+  LocationButton
 } from './styles'
 
 // Helper
@@ -199,6 +219,10 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     getMobileNumber()
     getStore()
     selectQuery(query)
+
+    this.props.setPageTitle('Review Order')
+    this.props.setShowSearchIcon(false)
+    this.props.setShowActivityIcon(false)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -235,12 +259,16 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   render () {
-    const { orderedProduct, orderRequesting, mobileNumber, windowWidth, productLoader } = this.props
+    // const { mobileNumber, windowWidth, productLoader, intl } = this.props
+    const { orderedProduct, orderRequesting } = this.props
     const { errorMessage, modePayment, modalToggle, visibility } = this.state
-    const cliqqCode = orderedProduct.get('cliqqCode') && orderedProduct.get('cliqqCode').first()
+    console.log('visibility', visibility)
+    // const cliqqCode = orderedProduct.get('cliqqCode') && orderedProduct.get('cliqqCode').first()
     const labelOne = <label className='label-custom'>
       <LabelTitle className='desktop__width--full'>
-        <FormattedMessage {...messages.cashPrepaid} />
+        <Label as='span' basic size='big'>
+          <FormattedMessage {...messages.cashPrepaid} />
+        </Label>
       </LabelTitle>
       {/*
         <LabelSubTitle className='desktop__width--full'>
@@ -248,27 +276,121 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         </LabelSubTitle>
       */}
       <LabelPrice className='desktop__width--full'>
-        <span className='total'>PHP {calculateProductPrice(orderedProduct)}</span>
+        <span className='total'>
+          <FormattedMessage {...messages.peso} />
+          {calculateProductPrice(orderedProduct)}
+        </span>
         {
           !isEmpty(orderedProduct.get('discount')) &&
-          <span className='strike'>PHP {orderedProduct.get('price')}</span>
+          <span className='strike'>
+            <FormattedMessage {...messages.peso} />
+            {orderedProduct.get('price')}
+          </span>
         }
       </LabelPrice>
     </label>
 
     const labelTwo = <label className='label-custom'>
       <LabelTitle>
-        <FormattedMessage {...messages.cashDelivery} />
+        <Label as='span' basic size='big'>
+          <FormattedMessage {...messages.cashDelivery} />
+        </Label>
       </LabelTitle>
       <LabelPrice>
-        <span className='total'>PHP {calculateProductPrice(orderedProduct)}</span>
-        <span className='strike'>PHP {orderedProduct.get('price')}</span>
+        <span className='total'>
+          <FormattedMessage {...messages.peso} />
+          {calculateProductPrice(orderedProduct)}
+        </span>
+        {
+          !isEmpty(orderedProduct.get('discount')) &&
+          <span className='strike'>
+            <FormattedMessage {...messages.peso} />
+            {orderedProduct.get('price')}
+          </span>
+        }
       </LabelPrice>
     </label>
 
     return (
-      <div>
-        <div className='mobile-visibility'>
+      <ProductReviewWrapper>
+        <ProductItem brand={orderedProduct.get('brandLogo')}>
+          <Image alt='Cliqq' src={orderedProduct.get('image') ? orderedProduct.get('image') : imageStock('default-slider.jpg')} />
+          <Label as='p' basic size='big'>Brand Name</Label>
+          <Label as='p' basic size='big'>{orderedProduct.get('title')}</Label>
+        </ProductItem>
+        <ListCollapse title={
+          <Label as='p' className='margin__none' size='large'>
+            <FormattedMessage {...messages.viewDetails} />
+          </Label>
+        }>
+          <DetailsWrapper>
+            <FormattedMessage {...messages.productDetailsTitle} />
+            <div dangerouslySetInnerHTML={{__html: orderedProduct.get('details')}} />
+            <FormattedMessage {...messages.productDeliveryTitle} />
+            <div dangerouslySetInnerHTML={{__html: orderedProduct.get('shipping')}} />
+          </DetailsWrapper>
+        </ListCollapse>
+        <Grid padded>
+          <Grid.Row>
+            <MethodTitle>
+              <Label as='span' basic size='huge'>
+                <FormattedMessage {...messages.methodPayment} />
+              </Label>
+            </MethodTitle>
+          </Grid.Row>
+          <Grid.Row>
+            <SelectMethodWrapper>
+              <Form>
+                <Form.Field>
+                  <Checkbox
+                    radio
+                    name='cash-prepaid'
+                    value='CASH'
+                    label={labelOne}
+                    checked={modePayment === 'CASH'}
+                    onChange={this._handleChange}
+                    />
+                </Form.Field>
+                <Form.Field> {/* Cash on Deliver option */}
+                  <Checkbox
+                    radio
+                    name='cod'
+                    value='COD'
+                    label={labelTwo}
+                    checked={modePayment === 'COD'}
+                    onChange={this._handleChange}
+                    onClick={this._handleToBottom}
+                    />
+                </Form.Field>
+              </Form>
+            </SelectMethodWrapper>
+          </Grid.Row>
+        </Grid>
+        <StepWrapper className='visibility' visibility={visibility}>
+          <ListCollapse title={
+            <Label as='span' basic size='large'>
+              Choose a 7-11 store!
+            </Label>
+          }>
+            <StepWrapper>
+              <StepHead step='2'>
+                <p>Your Default Store will be the last store you visited</p>
+              </StepHead>
+              <LocationButton onClick={this._handleStoreLocator} fluid icon={NextIcon}>
+                <span>FIND STORE NEARBY</span>
+              </LocationButton>
+            </StepWrapper>
+          </ListCollapse>
+
+        </StepWrapper>
+
+        <ButtonContainer>
+          <Button onClick={this._handleProceed} primary fluid loading={orderRequesting}>
+            <FormattedMessage {...messages.proceedNext} />
+          </Button>
+        </ButtonContainer>
+
+        {/* <div className='mobile-visibility'>
           <MobileBlock
             orderedProduct={orderedProduct}
             orderRequesting={orderRequesting}
@@ -308,7 +430,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             handleStoreLocator={this._handleStoreLocator}
             handleToBottom={this._handleToBottom}
             handleProceed={this._handleProceed} />
-        </div>
+        </div> */}
         <Modal
           open={modalToggle}
           name='warning'
@@ -316,7 +438,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
           content=''
           close={this._handleModalClose}
         />
-      </div>
+      </ProductReviewWrapper>
     )
   }
 }
@@ -334,6 +456,9 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
+    setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
+    setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
+    setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getOrderProduct: () => dispatch(getOrderProductAction()),
     getMobileNumber: () => dispatch(getMobileNumberAction()),
     submitOrder: (payload) => dispatch(submitOrderAction(payload)),
@@ -345,4 +470,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(ProductReview))
+export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(injectIntl(ProductReview)))
