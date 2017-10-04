@@ -341,10 +341,11 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   componentDidMount () {
-    const { getMobileNumbers, getCategories } = this.props
+    const { getMobileNumbers, getCategories, getBrands } = this.props
 
     getMobileNumbers()
     getCategories()
+    getBrands()
 
     browserHistory.listen(this._handleBackButton)
   }
@@ -358,7 +359,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   render () {
-    const { children, productCategories, changeRoute, toggleError, toggleMessage } = this.props
+    const { children, productCategories, changeRoute, toggleError, toggleMessage, brands } = this.props
     const { toggleSidebar } = this.state
     return (
       <Wrapper toggleSidebar={toggleSidebar}>
@@ -374,6 +375,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
           <SidebarMenu
             changeRoute={changeRoute}
             categories={productCategories}
+            brands={brands}
             toggleSidebar={toggleSidebar}
             toggleAction={this._handleCloseSidebarClickPusher}
           />
