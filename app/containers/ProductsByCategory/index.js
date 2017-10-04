@@ -1,6 +1,6 @@
 /*
  *
- * ProductsByCategory
+ * ProductsByCategoryPage
  *
  */
 
