@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import { isNil } from 'ramda'
 
 const BannerSliderWrapper = styled.div`
-  background: #F0F0F0;
   color: #333;
   margin: ${props => !props.homeRouteName ? 'inherit' : 'auto auto 20px'};
   position: relative;
@@ -11,7 +10,7 @@ const BannerSliderWrapper = styled.div`
 
   img {
     width: ${props => !props.homeRouteName ? 'initial' : '100%'};
-    margin: ${props => !props.homeRouteName ? '15px auto 0' : 'inherit'};
+    margin: ${props => !props.homeRouteName ? '40px auto 0' : 'inherit'};
   }
 
   ${
@@ -36,7 +35,6 @@ const BannerSliderWrapper = styled.div`
   }
 
   .slick-slide {
-    background-color: #F0F0F0;
     position: relative;
   }
 

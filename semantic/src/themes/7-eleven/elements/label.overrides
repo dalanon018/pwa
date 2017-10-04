@@ -4,14 +4,10 @@
 
 .ui.label {
   background: transparent;
-<<<<<<< HEAD
   color: @darkGrey;
   margin-left: 0;
   margin-right: 0;
   
-=======
-
->>>>>>> Added sidebar and updated transformation to cater children category
   &.basic {
     background: transparent;
     border-radius: 0;
