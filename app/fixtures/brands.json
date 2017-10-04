@@ -1,0 +1,62 @@
+[
+  {
+    "brandCode": "1",
+    "name": "Penshoppe",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      }
+    ]
+  },
+  {
+    "brandCode": "2",
+    "name": "Bench",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      }
+    ]
+  },
+  {
+    "brandCode": "3",
+    "name": "Palmolive",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      }
+    ]
+  },
+  {
+    "brandCode": "4",
+    "name": "Jack & Jill",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      }
+    ]
+  },
+  {
+    "brandCode": "5",
+    "name": "Sony",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      }
+    ]
+  },
+  {
+    "brandCode": "6",
+    "name": "Samsung",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      }
+    ]
+  }
+]

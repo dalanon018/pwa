@@ -2,6 +2,7 @@ import { fromJS } from 'immutable'
 
 import {
   selectProductCategories,
+  selectBrands,
   selectToggle,
   selectMobileNumbers,
   selectReceiptsUpdated,
@@ -24,6 +25,20 @@ describe('Buckets Selectors', () => {
         }
       })
       expect(selectProductCategoriesSelectors(mockedState)).toEqual(categories)
+    })
+  })
+
+  describe('selectBrands', () => {
+    const selectBrandsSelectors = selectBrands()
+
+    it('should get brands', () => {
+      const brands = fromJS([1, 2, 3])
+      const mockedState = fromJS({
+        buckets: {
+          brands
+        }
+      })
+      expect(selectBrandsSelectors(mockedState)).toEqual(brands)
     })
   })
 

@@ -5,17 +5,18 @@ import { Label } from 'semantic-ui-react'
 import ChildAccordion from 'components/ChildAccordion'
 import Selected from 'images/icons/drawer/selected.svg'
 
-const SideBarChildMenu = ({ categories, changeRoute }) => {
-  const isChildrenEmpty = (category) => {
-    const size = category.getIn(['children']).size
+const SideBarChildMenu = ({ entities, changeRoute, location }) => {
+  const isChildrenEmpty = (entity) => {
+    const children = entity.getIn(['children'])
+    const size = children ? children.size : 0
     return gte(0, size)
   }
 
-  const Title = (category) => (
-    <div key={category.get('id')} className='title-holder'>
+  const Title = (entity) => (
+    <div key={entity.get('id')} className='title-holder'>
       <img alt='selected' className='selected' src={Selected} />
-      <Label as='span' className='margin__none' size='big' onClick={changeRoute.bind(this, `/products-category/${category.get('id')}`)}>
-        {category.get('name')}
+      <Label as='span' className='margin__none' size='big' onClick={changeRoute.bind(this, `/${location}/${entity.get('id')}`)}>
+        {entity.get('name')}
       </Label>
     </div>
   )
@@ -24,35 +25,35 @@ const SideBarChildMenu = ({ categories, changeRoute }) => {
     <Label
       key={children.get('id')} as='p' size='big'
       className='color-grey'
-      onClick={changeRoute.bind(this, `/products-category/${children.get('id')}`)}
+      onClick={changeRoute.bind(this, `/${location}/${children.get('id')}`)}
     >
       {children.get('name')}
     </Label>
   )
 
-  const RenderWrapper = (category) => (
-    <ChildAccordion key={category.get('id')} title={Title(category)}>
+  const RenderWrapper = (entity) => (
+    <ChildAccordion key={entity.get('id')} title={Title(entity)}>
       <div>
-        { map(RenderChildren, category.get('children')) }
+        { map(RenderChildren, entity.get('children')) }
       </div>
     </ChildAccordion>
   )
 
-  const shouldRenderAccordion = (category) => ifElse(
+  const shouldRenderAccordion = (entity) => ifElse(
     isChildrenEmpty,
     Title,
     RenderWrapper
-  )(category)
+  )(entity)
 
   return (
     <div>
-      { categories.map(shouldRenderAccordion) }
+      { entities.map(shouldRenderAccordion) }
     </div>
   )
 }
 
 SideBarChildMenu.propTypes = {
-  categories: PropTypes.object.isRequired,
+  entities: PropTypes.object.isRequired,
   changeRoute: PropTypes.func.isRequired
 }
 

@@ -103,7 +103,7 @@ class SidebarMenu extends React.PureComponent {
 
   render () {
     const {
-      categories, changeRoute, toggleSidebar
+      categories, brands, changeRoute, toggleSidebar
     //  toggleAction
     } = this.props
 
@@ -136,8 +136,9 @@ class SidebarMenu extends React.PureComponent {
                   </Label>
                 }>
                   <SideBarChildMenu
-                    categories={categories}
+                    entities={categories}
                     changeRoute={changeRoute}
+                    location='products-category'
                   />
                 </ListCollapse>
               </List.Content>
@@ -150,7 +151,11 @@ class SidebarMenu extends React.PureComponent {
                     <FormattedMessage {...messages.menuBrands} />
                   </Label>
                 } >
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam eos repudiandae inventore debitis iusto ea esse eligendi voluptatum distinctio assumenda quam aliquid, unde ullam odit tenetur cum, explicabo quisquam a!</p>
+                  <SideBarChildMenu
+                    entities={brands}
+                    changeRoute={changeRoute}
+                    location='products-brands'
+                  />
                 </ListCollapse>
               </List.Content>
             </ListAccordionWrapper>

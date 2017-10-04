@@ -12,13 +12,15 @@ import {
 
 // FIXTURES
 import Categories from 'fixtures/categories-v2.json'
+import Brands from 'fixtures/brands.json'
 
-import { transformCategory, transformOrder } from 'utils/transforms'
+import { transformCategory, transformBrand, transformOrder } from 'utils/transforms'
 import { getItem, setItem } from 'utils/localStorage'
 import { DateDifferece } from 'utils/date'
 
 import {
   GET_PRODUCT_CATEGORIES,
+  GET_BRANDS,
   GET_MOBILE_NUMBERS,
   GET_RECEIPT_UPDATED,
   STATUSES
@@ -26,6 +28,7 @@ import {
 
 import {
   setProductCategoriesAction,
+  setBrandsAction,
   setMobileNumbersAction,
   setUpdatedReceiptsAction,
   setNetworkErrorAction
@@ -43,7 +46,8 @@ import {
   ACCESS_TOKEN_KEY,
   MOBILE_NUMBERS_KEY,
   ORDERED_LIST_KEY,
-  CATEGORIES_KEY
+  CATEGORIES_KEY,
+  BRANDS_KEY
 } from 'containers/App/constants'
 
 import {
@@ -91,12 +95,52 @@ function * requestCategories () {
   }
 }
 
+function * requestBrands () {
+  // const token = yield getAccessToken()
+  const dbResource = yield call(getItem, BRANDS_KEY)
+  // const req = yield call(getRequestData, `${API_BASE_URL}/categories`, {
+  //   method: 'GET',
+  //   token: token.access_token
+  // })
+
+  const req = Object.assign({}, {
+    brandList: Brands
+  })
+
+  if (!isEmpty(req)) {
+    const getResults = propOr([], 'brandList')
+    const isObjectNotEqual = (data) => !isEqual(dbResource, data)
+
+    const shouldUpdate = ifElse(
+      isObjectNotEqual,
+      updateUIBrands,
+      noop
+    )
+
+    yield call(setItem, BRANDS_KEY, getResults(req))
+    yield * compose(
+      shouldUpdate,
+      getResults
+    )(req)
+  } else {
+    yield put(setNetworkErrorAction('No cache data'))
+  }
+}
+
 function * getCategoriesResource () {
   const categories = yield call(getItem, CATEGORIES_KEY)
 
   yield call(requestCategories)
 
   return categories
+}
+
+function * getBrandsResource () {
+  const brands = yield call(getItem, BRANDS_KEY)
+
+  yield call(requestBrands)
+
+  return brands
 }
 
 export function * requestAccessToken () {
@@ -160,12 +204,31 @@ export function * updateUICategories (req = Array) {
   yield put(setProductCategoriesAction(sortAsc(transform)))
 }
 
+// much better to have abstraction rather than coupling items.
+export function * updateUIBrands (req = Array) {
+  const transform = yield req.map((data) => transformEachEntity(transformBrand, data))
+  const sortAsc = sortBy(prop('name'))
+
+  yield put(setBrandsAction(sortAsc(transform)))
+}
+
 export function * getCategories () {
   // we need to see if we need to request this since we save this anyway to the browser
   const req = yield getCategoriesResource()
   const getResults = ifElse(
     is(Array),
     updateUICategories,
+    noop
+  )
+  yield getResults(req)
+}
+
+export function * getBrands () {
+  // we need to see if we need to request this since we save this anyway to the browser
+  const req = yield getBrandsResource()
+  const getResults = ifElse(
+    is(Array),
+    updateUIBrands,
     noop
   )
   yield getResults(req)
@@ -246,6 +309,10 @@ export function * getCategoriesSaga () {
   yield * takeLatest(GET_PRODUCT_CATEGORIES, getCategories)
 }
 
+export function * getBrandsSaga () {
+  yield * takeLatest(GET_BRANDS, getBrands)
+}
+
 export function * getMobileNumbersSaga () {
   yield * takeLatest(GET_MOBILE_NUMBERS, getMobileNumbers)
 }
@@ -258,6 +325,7 @@ export function * getUpdatedReceiptsSaga () {
 export function * bucketsSagas () {
   const watcher = yield [
     fork(getCategoriesSaga),
+    fork(getBrandsSaga),
     fork(getMobileNumbersSaga),
 
     fork(getUpdatedReceiptsSaga)

@@ -1,10 +1,22 @@
-// import React from 'react';
-// import { shallow } from 'enzyme';
+import React from 'react'
+import { fromJS } from 'immutable'
+import { shallow } from 'enzyme'
 
-// import Brand from '../index';
+import Brand from '../index'
+
+const wrapper = (props = {}, enzyme = shallow) => shallow(
+  <Brand {...props} />
+)
 
 describe('<Brand />', () => {
-  it('Expect to have unit tests specified', () => {
-    expect(true).toEqual(true)
+  const minProps = {
+    brands: fromJS([])
+  }
+
+  it('render without exploding', () => {
+    const renderComponent = wrapper(minProps)
+    expect(
+      renderComponent.length
+    ).toEqual(1)
   })
 })

@@ -26,6 +26,7 @@ import Firebase from 'utils/firebase-realtime'
 
 import {
   selectProductCategories,
+  selectBrands,
   selectMobileNumbers,
   selectReceiptsUpdated,
   selectToggleError,
@@ -37,6 +38,7 @@ import {
 
 import {
   getProductCategoriesAction,
+  getBrandsAction,
   getMobileNumbersAction,
   getUpdatedReceiptsAction,
   setUpdatedReceiptsAction,
@@ -99,12 +101,14 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   static propTypes = {
     children: PropTypes.object.isRequired,
     getCategories: PropTypes.func.isRequired,
+    getBrands: PropTypes.func.isRequired,
     getUpdatedReceipts: PropTypes.func.isRequired,
     changeRoute: PropTypes.func.isRequired,
     searchProduct: PropTypes.func.isRequired,
     setProductSearchList: PropTypes.func.isRequired,
     setNetworkError: PropTypes.func.isRequired,
     productCategories: PropTypes.object.isRequired,
+    brands: PropTypes.object.isRequired,
     mobileNumbers: PropTypes.object,
     routes: PropTypes.array.isRequired,
     toggleError: PropTypes.bool.isRequired,
@@ -337,10 +341,11 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   componentDidMount () {
-    const { getMobileNumbers, getCategories } = this.props
+    const { getMobileNumbers, getCategories, getBrands } = this.props
 
     getMobileNumbers()
     getCategories()
+    getBrands()
 
     browserHistory.listen(this._handleBackButton)
   }
@@ -354,7 +359,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   render () {
-    const { children, productCategories, changeRoute, toggleError, toggleMessage } = this.props
+    const { children, productCategories, changeRoute, toggleError, toggleMessage, brands } = this.props
     const { toggleSidebar } = this.state
     return (
       <Wrapper toggleSidebar={toggleSidebar}>
@@ -370,6 +375,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
           <SidebarMenu
             changeRoute={changeRoute}
             categories={productCategories}
+            brands={brands}
             toggleSidebar={toggleSidebar}
             toggleAction={this._handleCloseSidebarClickPusher}
           />
@@ -389,6 +395,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
 const mapStateToProps = createStructuredSelector({
   productCategories: selectProductCategories(),
+  brands: selectBrands(),
   mobileNumbers: selectMobileNumbers(),
   receiptsUpdated: selectReceiptsUpdated(),
   toggleError: selectToggleError(),
@@ -401,6 +408,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps (dispatch) {
   return {
     getCategories: () => dispatch(getProductCategoriesAction()),
+    getBrands: () => dispatch(getBrandsAction()),
     getMobileNumbers: () => dispatch(getMobileNumbersAction()),
     getUpdatedReceipts: (payload) => dispatch(getUpdatedReceiptsAction(payload)),
     setUpdatedReceipts: (payload) => dispatch(setUpdatedReceiptsAction(payload)),

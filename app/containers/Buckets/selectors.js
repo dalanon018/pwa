@@ -18,6 +18,11 @@ const selectProductCategories = () => createSelector(
   (substate) => substate.get('categories')
 )
 
+const selectBrands = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('brands')
+)
+
 const selectToggle = () => createSelector(
   selectBucketDomain(),
   (substate) => substate.get('toggle')
@@ -66,6 +71,7 @@ const selectShowActivityIcon = () => createSelector(
 export {
   selectBucketDomain,
   selectToggle,
+  selectBrands,
   selectProductCategories,
   selectMobileNumbers,
   selectReceiptsUpdated,

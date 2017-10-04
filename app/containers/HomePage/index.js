@@ -37,14 +37,14 @@ import { getFeaturedProductsAction } from './actions'
 import { selectLoading, selectFeaturedProducts } from './selectors'
 
 import {
-  getProductCategoriesAction,
   setPageTitleAction,
   setShowSearchIconAction,
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
 
 import {
-  selectProductCategories
+  selectProductCategories,
+  selectBrands
   // selectLoader
 } from 'containers/Buckets/selectors'
 
@@ -58,7 +58,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   static propTypes = {
     changeRoute: PropTypes.func.isRequired,
     getProduct: PropTypes.func.isRequired,
-    getProductCategories: PropTypes.func.isRequired,
     loader: PropTypes.bool.isRequired,
     featuredProducts: PropTypes.oneOfType([
       PropTypes.array,
@@ -115,7 +114,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
   componentDidMount () {
     this.props.getProduct()
-    this.props.getProductCategories()
   }
 
   componentWillReceiveProps (nextProps) {
@@ -129,7 +127,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render () {
-    const { loader, productCategories, changeRoute, windowWidth, route, intl } = this.props
+    const { loader, productCategories, featuredBrands, changeRoute, windowWidth, route, intl } = this.props
     const { products } = this.state
     const homeRouteName = route && route.name
     // const resposiveColumns = () => {
@@ -239,7 +237,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             height='80'
             categories={productCategories} />
           <H3 className='margin__none' text={intl.formatMessage(messages.browseBrands)} />
-          <Brand />
+          <Brand brands={featuredBrands} />
         </ContentWrapper>
         <Footer />
       </div>
@@ -250,7 +248,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 const mapStateToProps = createStructuredSelector({
   loader: selectLoading(),
   featuredProducts: selectFeaturedProducts(),
-  productCategories: selectProductCategories()
+  productCategories: selectProductCategories(),
+  featuredBrands: selectBrands()
   // categoryLoader: selectLoader()
 })
 
@@ -260,7 +259,6 @@ function mapDispatchToProps (dispatch) {
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProduct: payload => dispatch(getFeaturedProductsAction(payload)),
-    getProductCategories: payload => dispatch(getProductCategoriesAction(payload)),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
   }

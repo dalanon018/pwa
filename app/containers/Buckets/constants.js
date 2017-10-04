@@ -7,6 +7,9 @@
 export const GET_PRODUCT_CATEGORIES = 'app/Buckets/GET_PRODUCT_CATEGORIES'
 export const SET_PRODUCT_CATEGORIES = 'app/Buckets/SET_PRODUCT_CATEGORIES'
 
+export const GET_BRANDS = 'app/Buckets/GET_BRANDS'
+export const SET_BRANDS = 'app/Buckets/SET_BRANDS'
+
 export const GET_MOBILE_NUMBERS = 'app/Buckets/GET_MOBILE_NUMBERS'
 export const SET_MOBILE_NUMBERS = 'app/Buckets/SET_MOBILE_NUMBERS'
 
