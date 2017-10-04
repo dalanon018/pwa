@@ -13,7 +13,7 @@ import messages from './messages'
 
 const Wrapper = styled.div`
   background: #F0F0F0;
-  border-bottom: 3px solid #8DC640;
+  box-shadow: 1px 1px 2px #AEAEAE;
   height: 49px;
   left: 0;
   padding: 10px;
@@ -111,6 +111,8 @@ const CloseIcon = styled(Icon)`
   align-items: center;
   display: flex !important;
   justify-content: center;
+  margin-left: 10px !important;
+  margin-right: 0 !important;
 `
 
 class SearchMenu extends PureComponent {
@@ -186,7 +188,7 @@ class SearchMenu extends PureComponent {
       <Wrapper>
         <Grid>
           <Grid.Row>
-            <Grid.Column verticalAlign='middle' width={2}>
+            <Grid.Column className='padding__right--none' verticalAlign='middle' width={2}>
               <LeftWrapper onClick={leftButtonAction} >
                 <Hamburger>
                   <HamburgerSpan active={!hideBackButton}>toggle menu</HamburgerSpan>
@@ -207,7 +209,7 @@ class SearchMenu extends PureComponent {
                   dirty &&
                   <CloseIcon
                     onClick={this._clearInput}
-                    name='remove circle outline'
+                    name='remove'
                     color='orange'
                     size='big' />
                 }

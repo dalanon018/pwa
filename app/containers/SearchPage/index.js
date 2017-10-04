@@ -116,7 +116,6 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
         <div>
           <H3 text={intl.formatMessage(messages.header)} />
           <SearchResult
-            // key={result.get('cliqqCode').first()}
             product={product}
             changeRoute={changeRoute} />
         </div>

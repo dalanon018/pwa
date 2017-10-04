@@ -233,6 +233,9 @@ svg#barcode {
     }
     &__right {
       padding-right: 5px;
+      &--none {
+        padding-right: 0 !important;
+      }
     }
     &__left {
       padding-left: 5px;
