@@ -1,0 +1,92 @@
+[
+  {
+    "brandsCode": "1",
+    "name": "Penshoppe",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      }
+    ]
+  },
+  {
+    "brandsCode": "2",
+    "name": "Bench",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      }
+    ]
+  },
+  {
+    "brandsCode": "3",
+    "name": "Palmolive",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      }
+    ]
+  },
+  {
+    "brandsCode": "4",
+    "name": "Jack & Jill",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      }
+    ]
+  },
+  {
+    "brandsCode": "5",
+    "name": "Sony",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      }
+    ]
+  },
+  {
+    "brandsCode": "6",
+    "name": "Samsung",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      }
+    ]
+  },
+  {
+    "brandsCode": "7",
+    "name": "Health & Beauty",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      }
+    ]
+  },
+  {
+    "brandsCode": "8",
+    "name": "Home & Living",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      }
+    ]
+  },
+  {
+    "brandsCode": "9",
+    "name": "Laundry & Home care",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      }
+    ]
+  }
+]

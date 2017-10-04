@@ -15,6 +15,7 @@ describe('<Buckets />', () => {
   const minProps = {
     children: {},
     productCategories: fromJS({}),
+    brands: fromJS({}),
     mobileNumbers: fromJS([]),
     receiptsUpdated: fromJS([]),
     toggleError: false,
@@ -36,6 +37,7 @@ describe('<Buckets />', () => {
       path: '/'
     }],
     getCategories: () => {},
+    getBrands: () => {},
     getUpdatedReceipts: () => {},
     setUpdatedReceipts: () => {},
     searchProduct: () => {},

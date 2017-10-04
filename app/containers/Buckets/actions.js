@@ -17,6 +17,9 @@ import {
   GET_PRODUCT_CATEGORIES,
   SET_PRODUCT_CATEGORIES,
 
+  GET_BRANDS,
+  SET_BRANDS,
+
   GET_MOBILE_NUMBERS,
   SET_MOBILE_NUMBERS,
 
@@ -76,6 +79,19 @@ export function getProductCategoriesAction () {
 export function setProductCategoriesAction (payload) {
   return {
     type: SET_PRODUCT_CATEGORIES,
+    payload
+  }
+}
+
+export function getBrandsAction () {
+  return {
+    type: GET_BRANDS
+  }
+}
+
+export function setBrandsAction (payload) {
+  return {
+    type: SET_BRANDS,
     payload
   }
 }

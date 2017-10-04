@@ -12,6 +12,9 @@ import {
   getProductCategoriesAction,
   setProductCategoriesAction,
 
+  getBrandsAction,
+  setBrandsAction,
+
   getMobileNumbersAction,
   setMobileNumbersAction,
 
@@ -33,6 +36,9 @@ import {
 
   GET_PRODUCT_CATEGORIES,
   SET_PRODUCT_CATEGORIES,
+
+  GET_BRANDS,
+  SET_BRANDS,
 
   GET_MOBILE_NUMBERS,
   SET_MOBILE_NUMBERS,
@@ -133,6 +139,27 @@ describe('Buckets actions', () => {
       }
 
       expect(setProductCategoriesAction(payload)).toEqual(expectedResult)
+    })
+  })
+
+  describe('getBrandsAction', () => {
+    it('has type of GET_BRANDS', () => {
+      const expectedResult = {
+        type: GET_BRANDS
+      }
+      expect(getBrandsAction()).toEqual(expectedResult)
+    })
+  })
+
+  describe('setBrandsAction', () => {
+    it('has type of SET_BRANDS', () => {
+      const payload = ['brand1', 'brand2', 'brand3']
+      const expectedResult = {
+        type: SET_BRANDS,
+        payload
+      }
+
+      expect(setBrandsAction(payload)).toEqual(expectedResult)
     })
   })
 
