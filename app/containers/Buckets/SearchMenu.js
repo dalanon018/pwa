@@ -13,7 +13,7 @@ import messages from './messages'
 
 const Wrapper = styled.div`
   background: #F0F0F0;
-  box-shadow: 1px 1px 2px #AEAEAE;
+  box-shadow: 1px 1px 20px #F0F0F0;
   height: 49px;
   left: 0;
   padding: 10px;
