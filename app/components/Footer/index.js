@@ -75,8 +75,8 @@ export class Footer extends React.PureComponent {
               <AppInfo>
                 <Image src={DeliveryIcon} />
                 <section>
-                  <Label as='span' size='Tiny'>1 Dat In-Store Delivery</Label>
-                  <Label as='span' size='Tiny'>Free Shipping to Store</Label>
+                  <Label as='span' size='tiny'>1 Dat In-Store Delivery</Label>
+                  <Label as='span' size='tiny'>Free Shipping to Store</Label>
                 </section>
               </AppInfo>
             </Grid.Column>
@@ -84,8 +84,8 @@ export class Footer extends React.PureComponent {
               <AppInfo>
                 <Image src={ReturnIcon} />
                 <section>
-                  <Label as='span' size='Tiny'>Cliqq Return Policy</Label>
-                  <Label as='span' size='Tiny'>Change of Mind is Applicable</Label>
+                  <Label as='span' size='tiny'>Cliqq Return Policy</Label>
+                  <Label as='span' size='tiny'>Change of Mind is Applicable</Label>
                 </section>
               </AppInfo>
             </Grid.Column>

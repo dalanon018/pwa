@@ -1,0 +1,194 @@
+[
+  {
+    "categoryCode": "1",
+    "name": "Accessories",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      },
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "MAIN"
+      },
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "NAV_ICON"
+      }
+    ],
+    "children": [
+      {
+        "categoryCode": "100",
+        "name": "Accessories-100"
+      },
+      {
+        "categoryCode": "101",
+        "name": "Accessories-101"
+      }
+    ]
+  },
+  {
+    "categoryCode": "2",
+    "name": "Deodorant",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      },
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "MAIN"
+      },
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "NAV_ICON"
+      }
+    ],
+    "children": [
+      {
+        "categoryCode": "200",
+        "name": "Deodorant-201"
+      },
+      {
+        "categoryCode": "201",
+        "name": "Deodorant-101"
+      }
+    ]
+  },
+  {
+    "categoryCode": "3",
+    "name": "Electronics",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      },
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "MAIN"
+      },
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "NAV_ICON"
+      }
+    ],
+    "children": [
+      {
+        "categoryCode": "300",
+        "name": "Electronics-300"
+      },
+      {
+        "categoryCode": "301",
+        "name": "Electronics-301"
+      }
+    ]
+  },
+  {
+    "categoryCode": "4",
+    "name": "Fragrances",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      },
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "MAIN"
+      },
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "NAV_ICON"
+      }
+    ]
+  },
+  {
+    "categoryCode": "5",
+    "name": "Gadgets",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      },
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "MAIN"
+      },
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "NAV_ICON"
+      }
+    ]
+  },
+  {
+    "categoryCode": "6",
+    "name": "Hair Care",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      },
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "MAIN"
+      },
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "NAV_ICON"
+      }
+    ]
+  },
+  {
+    "categoryCode": "7",
+    "name": "Health & Beauty",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      },
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "MAIN"
+      },
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "NAV_ICON"
+      }
+    ]
+  },
+  {
+    "categoryCode": "8",
+    "name": "Home & Living",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      },
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "MAIN"
+      },
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "NAV_ICON"
+      }
+    ]
+  },
+  {
+    "categoryCode": "9",
+    "name": "Laundry & Home care",
+    "images": [
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "BACKGROUND"
+      },
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "MAIN"
+      },
+      {
+        "imageUrl": "https://cliqq.imgix.net/test/category/CategoriesAssets/accessories-bg.jpg",
+        "imageType": "NAV_ICON"
+      }
+    ]
+  }
+]

@@ -4,15 +4,19 @@ import { FormattedMessage } from 'react-intl'
 import {
   Image,
   Label,
-  Menu
+  List
 } from 'semantic-ui-react'
-import {
-  partial
-} from 'ramda'
+
+import ListCollapse from 'components/ListCollapse'
+
 import messages from './messages'
-import HomeImage from 'images/icons/home-icon.svg'
-import BarcodeImage from 'images/icons/barcode-icon.svg'
-import CategoriesImage from 'images/icons/category-icon.svg'
+import SideBarChildMenu from './SideBarChildMenu'
+
+import Home from 'images/icons/drawer/home.svg'
+import Barcode from 'images/icons/drawer/activity.svg'
+import Categories from 'images/icons/drawer/categories.svg'
+import Brands from 'images/icons/drawer/brands.svg'
+import Help from 'images/icons/drawer/help.svg'
 
 const SidebarContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.3);
@@ -28,75 +32,66 @@ const SidebarContainer = styled.div`
 const SidebarWrapper = styled.div`
   background-color: #FFFFFF;
   overflow: auto;
-  width: 260px;
+  width: 100%;
+  min-height: 100%;
+  padding: 49px 0;
 `
 
-const MenuNavWrapper = styled(Menu)`
-  height: 100%;
-`
+const ListWrapper = styled(List.Item)`
+  padding: 25px 30px!important;
 
-const ItemWrapper = styled.div`
-  display: flex;
-`
-
-const ItemImage = styled.span`
-`
-
-const ItemText = styled.span`
-  margin-left: 20px;
-  font-size: 18px;
-  align-self: center;
-`
-
-const UlWrapper = styled.ul`
-  margin-left: 9px;
-  font-size: 16px;
-  list-style:none
-`
-const Li = styled.li`
-  padding: 20px 0;
-  border-bottom: 1px solid #CCC;
-
-  &:last-child {
-    border: none;
+  & img {
+    margin-right: 10px !important;
   }
 `
 
-const SidebarItem = ({ children, image }) => {
-  return (
-    <ItemWrapper>
-      <ItemImage>
-        <Image
-          alt='Cliqq'
-          src={image}
-          size='mini'
-          centered
-        />
-      </ItemImage>
-      <ItemText>
-        { children }
-      </ItemText>
-    </ItemWrapper>
+const ListAccordionWrapper = styled(List.Item)`
+  display: flex !important;
+  padding: 0 30px !important;
 
-  )
-}
+  & img {
+    margin-top: 20px !important;
+    margin-right: 10px !important;
+  }
 
-const SideBarChildrenContainer = ({ changeRoute, categories }) => {
-  const handleRedirect = (id) => changeRoute(`/products-category/${id}`)
+  & .content {
+    width: 100%;
+  }
 
-  return (
-    <UlWrapper>
-      <Li onClick={partial(handleRedirect, ['sale'])}>
-        <FormattedMessage {...messages.sale} />
-      </Li>
-      {categories.map((category) => (
-        <Li key={category.get('name')} onClick={partial(handleRedirect, [category.get('id')])}>
-          { category.get('name').toUpperCase() }
-        </Li>
-      ))}
-    </UlWrapper>
-  )
-}
+  & .ui.accordion {
+    border: none!important;
+
+    & .content.active .title-holder {
+      padding: 10px;
+
+      img.selected {
+        margin-top: 0 !important;
+        margin-right: 5px !important;
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+        visibility: hidden;
+      }
+    }
+
+    & .title {
+      border: none!important;
+      padding: 25px 0;
+    }
+
+    & .title.active {
+      padding-bottom: 10px;
+
+      img.selected {
+        visibility: visible !important;
+      }
+    }
+
+    & .content.active > .collapse-content{
+      padding: 0;
+    }
+  }
+`
 
 class SidebarMenu extends React.PureComponent {
   static propTypes = {
@@ -106,47 +101,68 @@ class SidebarMenu extends React.PureComponent {
     toggleAction: PropTypes.func.isRequired
   }
 
-  constructor () {
-    super()
-
-    this._goHome = this._goHome.bind(this)
-    this._goReceipts = this._goReceipts.bind(this)
-  }
-
-  _goHome () {
-    this.props.changeRoute('/')
-  }
-
-  _goReceipts () {
-    this.props.changeRoute('purchases')
-  }
-
   render () {
-    const { categories, changeRoute, toggleSidebar, toggleAction } = this.props
+    const {
+      categories, changeRoute, toggleSidebar
+    //  toggleAction
+    } = this.props
 
     return (
-      <SidebarContainer toggle={toggleSidebar} onClick={toggleAction}>
+      <SidebarContainer toggle={toggleSidebar}>
         <SidebarWrapper>
-          <MenuNavWrapper vertical borderless>
-            <Menu.Item as={Label} name='home' onClick={this._goHome}>
-              <SidebarItem image={HomeImage}>
-                <FormattedMessage {...messages.menuHome} />
-              </SidebarItem>
-            </Menu.Item>
-            <Menu.Item name='barcode' onClick={this._goReceipts}>
-              <SidebarItem image={BarcodeImage}>
-                <FormattedMessage {...messages.menuBarcode} />
-              </SidebarItem>
-            </Menu.Item>
-            <Menu.Item name='categories'>
-              <SidebarItem image={CategoriesImage}>
-                <FormattedMessage {...messages.menuCategories} />
-              </SidebarItem>
-              {
-                <SideBarChildrenContainer categories={categories} changeRoute={changeRoute} />
-              }
-            </Menu.Item>
-          </MenuNavWrapper>
+          <List divided verticalAlign='middle' selection>
+            <ListWrapper>
+              <Image alt='home' size='mini' src={Home} />
+              <List.Content>
+                <Label as='p' className='margin__none' size='huge' onClick={changeRoute.bind(this, '/')}>
+                  <FormattedMessage {...messages.menuHome} />
+                </Label>
+              </List.Content>
+            </ListWrapper>
+            <ListWrapper>
+              <Image alt='activities' size='mini' src={Barcode} />
+              <List.Content>
+                <Label as='p' className='margin__none' size='huge' onClick={changeRoute.bind(this, '/purchases')}>
+                  <FormattedMessage {...messages.menuActivity} />
+                </Label>
+              </List.Content>
+            </ListWrapper>
+            <ListAccordionWrapper>
+              <Image alt='categories' size='mini' src={Categories} />
+              <List.Content>
+                <ListCollapse title={
+                  <Label as='p' className='margin__none' size='huge' >
+                    <FormattedMessage {...messages.menuCategories} />
+                  </Label>
+                }>
+                  <SideBarChildMenu
+                    categories={categories}
+                    changeRoute={changeRoute}
+                  />
+                </ListCollapse>
+              </List.Content>
+            </ListAccordionWrapper>
+            <ListAccordionWrapper>
+              <Image alt='brands' size='mini' src={Brands} />
+              <List.Content>
+                <ListCollapse title={
+                  <Label as='p' className='margin__none' size='huge'>
+                    <FormattedMessage {...messages.menuBrands} />
+                  </Label>
+                } >
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam eos repudiandae inventore debitis iusto ea esse eligendi voluptatum distinctio assumenda quam aliquid, unde ullam odit tenetur cum, explicabo quisquam a!</p>
+                </ListCollapse>
+              </List.Content>
+            </ListAccordionWrapper>
+            <ListWrapper>
+              <Image alt='help' size='mini' src={Help} />
+              <List.Content>
+                <Label as='p' className='margin__none' size='huge'>
+                  <FormattedMessage {...messages.menuHelp} />
+                </Label>
+              </List.Content>
+            </ListWrapper>
+          </List>
         </SidebarWrapper>
       </SidebarContainer>
     )
