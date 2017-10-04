@@ -63,6 +63,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       PropTypes.array,
       PropTypes.object
     ]).isRequired,
+    featuredBrands: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.object
+    ]).isRequired,
     productCategories: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.object

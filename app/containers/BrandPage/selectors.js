@@ -13,12 +13,30 @@ const selectBrandPageDomain = () => (state) => state.get('brandPage')
  * Default selector used by BrandPage
  */
 
-const makeSelectBrandPage = () => createSelector(
+const selectProductsByBrands = () => createSelector(
   selectBrandPageDomain(),
-  (substate) => substate.toJS()
+  (substate) => substate.get('productsByBrands')
 )
 
-export default makeSelectBrandPage
+const selectLoading = () => createSelector(
+  selectBrandPageDomain(),
+  subState => subState.get('loading')
+)
+
+const selectLazyload = () => createSelector(
+  selectBrandPageDomain(),
+  subState => subState.get('lazyload')
+)
+
+const selectFeaturedProducts = () => createSelector(
+  selectBrandPageDomain(),
+  subState => subState.get('productsFeatured')
+)
+
 export {
-  selectBrandPageDomain
+  selectBrandPageDomain,
+  selectProductsByBrands,
+  selectFeaturedProducts,
+  selectLoading,
+  selectLazyload
 }
