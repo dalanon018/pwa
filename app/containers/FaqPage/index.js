@@ -27,6 +27,12 @@ import { LoadingStateInfo } from 'components/LoadingBlock'
 import { getMarkDownAction } from './actions'
 import { selectMarkdown, selectLoading } from './selectors'
 
+import {
+  setPageTitleAction,
+  setShowSearchIconAction,
+  setShowActivityIconAction
+} from 'containers/Buckets/actions'
+
 // const IconWrapper = styled.div`
 //   margin-bottom: 20px;
 //   img {
@@ -59,6 +65,9 @@ export class FaqPage extends React.PureComponent { // eslint-disable-line react/
   }
 
   componentDidMount () {
+    this.props.getMarkDown()
+    this.props.setPageTitle('FAQ')
+    this.props.setShowSearchIcon(false)
     this.props.getMarkDown()
   }
 
@@ -132,6 +141,9 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
+    setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
+    setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
+    setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getMarkDown: payload => dispatch(getMarkDownAction()),
     dispatch
   }
