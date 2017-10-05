@@ -34,6 +34,6 @@ describe('<BrandPage />', () => {
     const renderedComponent = shallow(
       <BrandPage {...minProps} />
     )
-    expect(renderedComponent.find('ProductView').length).toEqual(2)
+    expect(renderedComponent.find('ProductView').length).toEqual(1)
   })
 })

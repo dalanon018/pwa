@@ -21,6 +21,6 @@ describe('<H3 />', () => {
         {children}
       </H3>
     )
-    expect(renderedComponent.contains(children)).toBe(false)
+    expect(renderedComponent.contains(children)).toEqual(true)
   })
 })

@@ -205,11 +205,11 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           <Grid padded>
             <Grid.Row>
               <Grid.Column>
-                <H1 text='SITE THEMING' />
-                <H1 text='Header One' />
-                <H2 text='Header Two' />
-                <H3 text='Header Three' />
-                <H4 text='Header Four' />
+                <H1> SITE THEMING </H1>
+                <H1> Header One </H1>
+                <H2> Header Two </H2>
+                <H3> Header Three </H3>
+                <H4> Header Four </H4>
                 <Button onClick={() => {}} primary>Primary Button</Button>
                 <ListCollapse title='lorem ipsum'>
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam eos repudiandae inventore debitis iusto ea esse eligendi voluptatum distinctio assumenda quam aliquid, unde ullam odit tenetur cum, explicabo quisquam a!</p>

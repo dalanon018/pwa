@@ -5,6 +5,7 @@ import H4 from '../index'
 
 describe('<H4 />', () => {
   const children = 'test'
+
   it('should render a prop', () => {
     const id = 'testId'
     const renderedComponent = shallow(
@@ -21,6 +22,6 @@ describe('<H4 />', () => {
         {children}
       </H4>
     )
-    expect(renderedComponent.contains(children)).toBe(false)
+    expect(renderedComponent.contains(children)).toEqual(true)
   })
 })
