@@ -4,7 +4,7 @@
 *
 */
 
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Slider from 'react-slick'
 import { Image } from 'semantic-ui-react'
 
@@ -48,7 +48,7 @@ const HandleBlock = ({
     slidesToScroll: 1
   }
 
-  if (loader) {
+  if (loader || images.length === 0) {
     block = <DefaultState loader={loader} />
   } else {
     block = <BannerSliderWrapper>
@@ -84,7 +84,10 @@ const DefaultState = ({
 }
 
 BannerSlider.propTypes = {
-
+  loader: PropTypes.bool.isRequired,
+  isInfinite: PropTypes.bool,
+  isAutoPlay: PropTypes.bool,
+  images: PropTypes.array.isRequired
 }
 
 export default BannerSlider

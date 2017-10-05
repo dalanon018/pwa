@@ -43,12 +43,13 @@ export class Footer extends React.PureComponent {
   }
 
   render () {
-    const { intl } = this.props
     return (
       <Wrapper className='mobile-visibility'>
         <Grid>
           <Grid.Row centered>
-            <H2 className='custom-header' text={intl.formatMessage(messages.stayConnected)} />
+            <H2 className='custom-header' >
+              <FormattedMessage {...messages.stayConnected} />
+            </H2>
             <SocialIcons>
               <List horizontal>
                 <List.Item>

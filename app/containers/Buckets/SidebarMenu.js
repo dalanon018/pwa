@@ -158,7 +158,7 @@ class SidebarMenu extends React.PureComponent {
                   <SideBarChildMenu
                     entities={brands}
                     changeRoute={changeRoute}
-                    location='products-brands'
+                    location='brands'
                   />
                 </ListCollapse>
               </List.Content>

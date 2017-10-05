@@ -75,7 +75,6 @@ function ProductView ({
         loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
         : products.valueSeq().map((product, index) => {
           const goToProduct = () => changeRoute(`/product/${product.get('cliqqCode').first()}`)
-          console.log(product)
           return (
             <Grid.Column
               key={`${product.get('cliqqCode')}-${index}`}

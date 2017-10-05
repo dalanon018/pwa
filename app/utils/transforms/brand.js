@@ -3,10 +3,12 @@ import {
   compose,
   curry,
   find,
+  filter,
   fromPairs,
   map,
   omit,
   toPairs,
+  prop,
   propOr,
   propEq
 } from 'ramda'
@@ -46,8 +48,16 @@ const transformBrand = (data) => {
       find(propEq('imageType', key)),
       propOr({}, 'images')
     )
+
+    const applyImageSliders = (key) => compose(
+      map(prop('imageUrl')),
+      filter(propEq('imageType', key)),
+      propOr({}, 'images')
+    )
+
     return Object.assign({}, data, {
-      background: applyImageUrl('BACKGROUND')(data)
+      background: applyImageUrl('BACKGROUND')(data),
+      sliders: applyImageSliders('SLIDER')(data)
     })
   }
 

@@ -2,42 +2,38 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { fromJS } from 'immutable'
 
-import { ProductsByCategory } from '../index'
+import { BrandPage } from '../index'
 
-describe('<ProductsByCategory />', () => {
+describe('<BrandPage />', () => {
   const minProps = {
     changeRoute: () => {},
-    getProductsByCategory: () => {},
-    getProductCategories: () => {},
-    getProductsViewed: () => {},
-    resetProductsByCategory: () => {},
+    getProductsByBrands: () => {},
+    resetProductsByBrands: () => {},
     getProductFeatured: () => {},
     setPageTitle: () => {},
     setShowSearchIcon: () => {},
     setShowActivityIcon: () => {},
-    totalCount: 0,
     loader: false,
     lazyload: false,
     params: {
       id: 'CAT1'
     },
-    productsByCategory: fromJS([]),
+    productsByBrands: fromJS([]),
     productsFeatured: fromJS([]),
-    productsViewed: fromJS([]),
-    categories: fromJS([])
+    brands: fromJS([])
   }
 
   it('should render a div', () => {
     const renderedComponent = shallow(
-      <ProductsByCategory {...minProps} />
+      <BrandPage {...minProps} />
     )
     expect(renderedComponent.find('div').length).toEqual(1)
   })
 
   it('should render a ProductView', () => {
     const renderedComponent = shallow(
-      <ProductsByCategory {...minProps} />
+      <BrandPage {...minProps} />
     )
-    expect(renderedComponent.find('ProductView').length).toEqual(2)
+    expect(renderedComponent.find('ProductView').length).toEqual(1)
   })
 })
