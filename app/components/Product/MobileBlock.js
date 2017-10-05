@@ -115,9 +115,7 @@ function MobileBlock ({
         <ProductDetails>
           <Label as='p' basic size='big'> <FormattedMessage {...messages.productDetailsTitle} /> </Label>
           <LoadingStateInfo loading={loading}>
-            <Label as='p' basic size='large' color='grey'>
-              <div dangerouslySetInnerHTML={{__html: product.get('details')}} />
-            </Label>
+            <div className='product-details' dangerouslySetInnerHTML={{__html: product.get('details')}} />
           </LoadingStateInfo>
         </ProductDetails>
         <ListCollapse title='Delivery & Returns Policy'>

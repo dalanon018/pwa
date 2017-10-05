@@ -154,7 +154,7 @@ export const ProductDetailsContainer = styled(AnimateDiv)`
 `
 export const ProductDetails = styled(ProductDetailsContainer)`
   border-bottom: 1px solid #F0F0F0;
-
+  color: #aeaeae;
   @media (min-width: 768px) {
     border-bottom: 0;
   }
