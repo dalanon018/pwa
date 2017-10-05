@@ -15,14 +15,16 @@ import {
   equals,
   ifElse,
   partial,
-  path
+  path,
+  lt
 } from 'ramda'
 import styled from 'styled-components'
 
 import ProductView from 'components/ProductView'
 import Footer from 'components/Footer'
 import WindowWidth from 'components/WindowWidth'
-import { Label } from 'semantic-ui-react'
+
+import H3 from 'components/H3'
 // import Promo from 'components/Promo'
 
 import {
@@ -52,50 +54,7 @@ import {
   selectProductsByBrands
 } from './selectors'
 
-const ContentWrapper = styled.div`
-
-  .center-label {
-    text-align: center;
-  }
-
-  .no-bottom-margin {
-    margin-bottom: 0 !important;
-  }
-
-  .num-count {
-    font-family: Lato,Cabin,'Helvetica Neue',Arial,Helvetica,sans-serif;
-    font-weight: 300;
-  }
-
-  @media (min-width: 768px) {
-    .header-label {
-      padding-bottom: 20px;
-    }
-
-    .header-label span {
-      font-size: 20px;
-    }
-
-    .category-title {
-      font-size: 20px;
-    }
-
-    .num-item-label, .num-item-label span {
-      color: #656565;
-      font-size: 17px;
-      letter-spacing: 3px;
-    }
-
-    .recent-label {
-      padding-bottom: 20px;
-      padding-top: 25px;
-    }
-
-    .recent-label span {
-      font-size: 20px;
-    }
-  }
-`
+const ContentWrapper = styled.div``
 
 export class BrandPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
@@ -130,8 +89,8 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     }
   }
 
-  _handlePageTitle = () => {
-    const { brands, params: { id } } = this.props
+  _handlePageTitle = (nextProps) => {
+    const { brands, params: { id } } = nextProps
     if (brands.size) {
       const brand = brands.find((entity) => entity.get('id') === id)
       return brand ? brand.get('name') : ''
@@ -195,7 +154,26 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     getProductFeatured(id)
   }
 
+  _displayFeaturedProducts = () => {
+    const { productsFeatured, loader, changeRoute, windowWidth } = this.props
+
+    const displayFeatured = ifElse(
+      lt(0),
+      () => (
+        <div>
+          <H3 text={<FormattedMessage {...messages.feature} />} />
+          <ProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} />
+        </div>
+      ),
+      noop
+    )
+
+    return displayFeatured(productsFeatured.size)
+  }
+
   componentWillMount () {
+    // we set this as text so it doesnt look
+    this.props.setPageTitle('..')
     this.props.setShowSearchIcon(true)
     this.props.setShowActivityIcon(true)
   }
@@ -236,23 +214,28 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
       this._fetchProductFeatured
     )
 
+    const updatePageTitle = ifElse(
+      compose(lt(0), path(['brands', 'size'])),
+      compose(
+        this.props.setPageTitle,
+        this._handlePageTitle
+      ),
+      noop
+    )
+
     updateFetchProduct(nextProps)
     updateFeaturedProducts(nextProps)
+    updatePageTitle(nextProps)
   }
 
   render () {
-    const { productsByBrands, productsFeatured, loader, changeRoute, windowWidth } = this.props
+    const { productsByBrands, loader, changeRoute, windowWidth } = this.props
+
     return (
       <div>
         <ContentWrapper className='padding__horizontal--10'>
-          <Label className='center-label' as='p' basic size='large'>
-            <FormattedMessage {...messages.feature} />
-          </Label>
-          <ProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} />
-
-          <Label className='center-label' as='p' basic size='large'>
-            <FormattedMessage {...messages.brandsTitle} />
-          </Label>
+          { this._displayFeaturedProducts() }
+          <H3 text={<FormattedMessage {...messages.brandsTitle} />} />
           { this._displayEmpty() }
           <ProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
         </ContentWrapper>

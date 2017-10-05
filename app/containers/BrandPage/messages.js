@@ -28,6 +28,6 @@ export default defineMessages({
   },
   emptyMessage: {
     id: 'app.containers.BrandsPage.emptyMessage',
-    defaultMessage: 'THIS CATEGORY DOESN\'T HAVE ANY PRODUCTS YET'
+    defaultMessage: 'This brand doesn\'t have any products yet.'
   }
 })
