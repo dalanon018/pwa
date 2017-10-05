@@ -8,7 +8,7 @@ import { defineMessages } from 'react-intl'
 export default defineMessages({
   RESERVED: {
     id: 'app.components.Receipt.RESERVED',
-    defaultMessage: 'You have this time to show this receipt to the store'
+    defaultMessage: 'You have this time to show this receipt to the store:'
   },
   RESERVEDEXPIRED: {
     id: 'app.components.Receipt.RESERVEDEXPIRED',
@@ -64,7 +64,9 @@ export default defineMessages({
   },
   receiptInfoMessageReserve: {
     id: 'app.components.Receipt.receiptInfoMessageReserve',
-    defaultMessage: 'Pay Item Before the time Expires'
+    // defaultMessage: 'Pay Item Before the time Expires'
+    defaultMessage: `Show thus barcode at any 7 Eleven
+    store within 1 Hour and pay for your item.`
   },
   receiptInfoMessageReserveExpired: {
     id: 'app.components.Receipt.receiptInfoMessageReserveExpired',
@@ -86,9 +88,9 @@ export default defineMessages({
     id: 'app.components.Receipt.returnToHome',
     defaultMessage: 'RETURN TO HOME'
   },
-  goToTrackOrder: {
-    id: 'app.components.Receipt.goToTrackOrder',
-    defaultMessage: 'Track Your Order'
+  viewActivity: {
+    id: 'app.components.Receipt.viewActivity',
+    defaultMessage: 'View Your Activity'
   },
   goToHistory: {
     id: 'app.components.Receipt.goToHistory',
@@ -97,5 +99,30 @@ export default defineMessages({
   rePurchase: {
     id: 'app.components.Receipt.rePurchase',
     defaultMessage: 'Repurchase Item'
+  },
+
+  validUntil: {
+    id: 'app.components.Receipt.validUntil',
+    defaultMessage: 'Valid Until:'
+  },
+  orderNumber: {
+    id: 'app.components.Receipt.orderNumber',
+    defaultMessage: 'Your Order Number:'
+  },
+  paymentMethod: {
+    id: 'app.components.Receipt.paymentMethod',
+    defaultMessage: 'Method of Payment:'
+  },
+  statusLabel: {
+    id: 'app.components.Receipt.statusLabel',
+    defaultMessage: 'Status:'
+  },
+  peso: {
+    id: `app.components.Receipt.peso`,
+    defaultMessage: '₱ '
+  },
+  mobileNumberLabel: {
+    id: `app.components.Receipt.mobileNumberLabel`,
+    defaultMessage: 'Mobile Number: '
   }
 })

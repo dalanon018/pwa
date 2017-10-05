@@ -4,21 +4,6 @@ import {
   HIDE_BARCODE
 } from './constants'
 
-export const ReceiptWrapper = styled.div`
-  
-  @media(min-width: 370px) {
-    .desktop-list-margin {
-      margin: 25px 0 15px;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .desktop-list-margin {
-      margin: 25px 0;
-    }
-  }
-`
-
 export const ProductWrapper = styled.div`
   background-color: #FFF;
   border-bottom-left-radius: 10px;
@@ -83,7 +68,7 @@ export const CodeWrapper = styled.span`
     img {
       width: 25px;
     }
-    
+
     font-family: 'helveticabold';
     font-size: 20px;
     letter-spacing: 6px;
@@ -165,22 +150,13 @@ export const ProductPrice = styled.p`
 `
 
 export const BarcodeSVG = styled.svg`
-  margin: 5px 0;
-  width: 100%;
   display: ${({ status }) => HIDE_BARCODE.includes(status) ? 'none' : 'block'};
-
-  @media (min-width: 768px) {
-    margin: 0 auto 15px;
-    width: inherit;
-  }
 `
 
 export const WrapperWarning = styled.div`
-  background-color: #8DC641;
-  padding: 10px 20px;
+  padding: 0 20px;
   position: relative;
-  text-align: center;
-  text-transform: uppercase;
+  margin: 30px 0;
   width: 100%;
 
   @media (min-width: 768px) {
@@ -190,35 +166,21 @@ export const WrapperWarning = styled.div`
     img {
       width: 35px;
     }
-    p {
-      font-family: 'helveticabold';
-      font-size: 15px;
-      letter-spacing: 0;
-    }
-  }
-
-  @media (min-width: 1200px) {
-    padding: 25px 100px;
   }
 `
 
 export const WarningDescription = styled.p`
-  color: #FFFFFF;
-  font-family: 'helveticamedium';
-  letter-spacing: 1px;
-  line-height: 1.2;
+  font-family: 'Roboto';
+  font-size: 14px;
+  line-height: 15px;
   padding: 0 20px;
   position: relative;
+  display: flex;
+  align-items: center;
 
-  &:before {
-    background: url(${props => props.icon})no-repeat center center / contain;
-    content: '';
-    height: 30px;
-    left: 0;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 30px;
+  .image {
+    width: 26px;
+    margin-right: 8px;
   }
 
   @media (min-width: 768px) {
@@ -230,19 +192,83 @@ export const WarningDescription = styled.p`
   }
 `
 
-export const ButtonWrapper = styled.div`
-  display:flex;
-  justify-content: center;
-  margin-top: 10px;
+export const ButtonContainer = styled.div`
+  background: #f58322;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+
+  .ui.button.primary {
+    padding: 20px 40px !important;
+  }
 
   @media (min-width: 768px) {
-    .custom-button {
-      padding: 20px 40px !important;
-      width: 100%;
-    }
-
-    .custom-button span {
-      font-size: 18px
-    }
+    padding: 0;
+    position: static;
   }
+`
+
+// ====================
+export const ReceiptWrapper = styled.div`
+  position: relative;
+`
+
+export const ReceiptContainer = styled.div`
+  box-shadow: 0px 0px 30px #F0F0F0;
+  background-color: #FFFFFF;
+  
+  margin: 50px 20px 0;
+`
+
+export const ReceiptHeader = styled.div`
+  background-color: #F0F0F0;
+  padding: 14px;
+`
+
+export const ReceiptContent = styled.div`
+  height: ${props => props.show}px;
+  opacity: 0;
+  width: 100%;
+  z-index: 1;
+  overflow: hidden;
+  -webkit-transition: all 2s ease;
+  -moz-transition: all 2s ease;
+  -o-transition: all 2s ease;
+  transition: all 2s ease;
+  ${'' /* box-shadow: 0px 0px 20px #F0F0F0;
+  background-color: #FFFFFF;
+  padding: 14px;
+  width: 100%; */}
+
+  .product-current-price {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -2px;
+    margin-right: 15px !important;
+    margin: 0;
+  }
+  .product-price {
+    align-self: flex-end;
+    color: #AEAEAE !important;
+    line-height: initial;
+    text-decoration: line-through;
+  }
+`
+
+export const Scanner = styled.div`
+  background-color: #000000;
+  border: 3px solid #5B5B5B;
+  height: 10px;
+  width: 100%;
+`
+
+export const ScannerWrapper = styled.div`
+  bottom: -5px;
+  left: 0;
+  padding: 0 15px;
+  position: absolute;
+  width: 100%;
+  z-index: -1;
 `

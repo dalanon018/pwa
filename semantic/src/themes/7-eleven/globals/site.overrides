@@ -79,6 +79,16 @@ input.input-field {
 }
 
 .text {
+  &__roboto {
+    &--light {
+      font-family: 'Roboto' !important;
+      font-weight: 100 !important;
+    }
+    &--bold {
+      font-family: 'Roboto' !important;
+      font-weight: 700 !important;
+    }
+  }
   &__align {
     &--center {
       text-align: center;
@@ -203,7 +213,7 @@ input.input-field {
 }
 
 svg#barcode {
-  // height: auto !important;
+  height: 60px !important;
 }
 
 .unstyle-button {
@@ -240,6 +250,9 @@ svg#barcode {
 
   /* Product Padding */
   .padding {
+    &__14 {
+      padding: 14px !important;
+    }
     &__none {
       padding: 0 !important;
       &--horizontal {
