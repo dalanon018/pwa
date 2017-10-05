@@ -23,7 +23,7 @@ import styled from 'styled-components'
 import ProductView from 'components/ProductView'
 import Footer from 'components/Footer'
 import WindowWidth from 'components/WindowWidth'
-
+import BannerSlider from 'components/BannerSlider'
 import H3 from 'components/H3'
 // import Promo from 'components/Promo'
 
@@ -77,6 +77,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   state = {
+    brandImages: [],
     pageOffset: 0,
     offset: 0,
     limit: 12
@@ -96,6 +97,12 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     const { brands, params: { id } } = nextProps
     if (brands.size) {
       const brand = brands.find((entity) => entity.get('id') === id)
+      const brandImages = brand.size ? brand.get('sliders').toArray() : []
+
+      this.setState({
+        brandImages
+      })
+
       return brand ? brand.get('name') : ''
     }
     return ''
@@ -235,9 +242,11 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
 
   render () {
     const { productsByBrands, loader, changeRoute, windowWidth } = this.props
+    const { brandImages } = this.state
 
     return (
       <div>
+        <BannerSlider isInfinite loader={loader} images={brandImages} />
         <ContentWrapper className='padding__horizontal--10'>
           { this._displayFeaturedProducts() }
           <H3>

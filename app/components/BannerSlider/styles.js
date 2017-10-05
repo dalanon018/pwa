@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 const BannerSliderWrapper = styled.div`
   color: #333;
-  margin: auto auto 20px;
   position: relative;
   width: 100%;
   display: block;
@@ -11,8 +10,6 @@ const BannerSliderWrapper = styled.div`
     width: 100%;
     margin: 0 auto;
   }
-
-  
 
   .slick-initialized {
     // left: 50%;
