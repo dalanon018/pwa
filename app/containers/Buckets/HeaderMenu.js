@@ -18,6 +18,11 @@ const Wrapper = styled.div`
   position: relative;
 `
 
+// for some reason the this doesn't look good to our header menu
+const MenuRow = styled(Grid.Row)`
+  padding-top: 15px !important;
+`
+
 const LeftWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -250,27 +255,27 @@ export default class MainMenu extends PureComponent {
     return (
       <Wrapper>
         <MobileMenu className='mobile-visibility'>
-          <Grid columns={3}>
-            <Grid.Row>
-              <Grid.Column verticalAlign='middle'>
+          <Grid>
+            <MenuRow>
+              <Grid.Column width={4} verticalAlign='middle'>
                 <LeftWrapper onClick={leftButtonAction} >
                   <Hamburger>
                     <HamburgerSpan active={!hideBackButton}>toggle menu</HamburgerSpan>
                   </Hamburger>
                 </LeftWrapper>
               </Grid.Column>
-              <Grid.Column verticalAlign='middle'>
+              <Grid.Column width={8} verticalAlign='middle'>
                 <CenterWrapper>
                   { TitleToggle(!pageTitle) }
                 </CenterWrapper>
               </Grid.Column>
-              <Grid.Column verticalAlign='middle'>
+              <Grid.Column width={4} verticalAlign='middle'>
                 <RightWrapper>
                   { SearchToggle(showSearchIcon) }
                   { ActivitiesToggle(showActivityIcon) }
                 </RightWrapper>
               </Grid.Column>
-            </Grid.Row>
+            </MenuRow>
           </Grid>
         </MobileMenu>
       </Wrapper>

@@ -19,16 +19,17 @@ import {
   equals,
   ifElse,
   partial,
-  path
+  path,
+  lt
 } from 'ramda'
 import styled from 'styled-components'
 
-import H1 from 'components/H1'
-import NavCategories from 'components/NavCategories'
 import ProductView from 'components/ProductView'
 import Footer from 'components/Footer'
 import WindowWidth from 'components/WindowWidth'
-import { Label } from 'semantic-ui-react'
+
+import H3 from 'components/H3'
+import H4 from 'components/H4'
 // import Promo from 'components/Promo'
 
 import {
@@ -75,20 +76,13 @@ import {
 // `
 
 const ContentWrapper = styled.div`
+  padding-top: 20px;
+  padding-bottom: 20px;
 
-  .center-label {
-    text-align: center;
+  h4.ui.header {
+    margin-top: 0 !important;
   }
 
-  .no-bottom-margin {
-    margin-bottom: 0 !important;
-  }
-
-  .num-count {
-    font-family: Lato,Cabin,'Helvetica Neue',Arial,Helvetica,sans-serif;
-    font-weight: 300;
-  }
-  
   @media (min-width: 768px) {
     .header-label {
       padding-bottom: 20px;
@@ -210,9 +204,9 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     const { productsFeatured } = this.props
     if (this._handleFeaturedProductsPerCategory() && productsFeatured.size) {
       return (
-        <H1 className='header-label padding__top--25'>
+        <H3>
           <FormattedMessage {...messages.feature} />
-        </H1>
+        </H3>
       )
     }
 
@@ -235,10 +229,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
     if (productsByCategory.size) {
       return (
-        <Label className='num-count center-label' as='p' basic size='mini'>
+        <H4>
           { totalCount }
           <FormattedMessage {...messages.items} />
-        </Label>
+        </H4>
       )
     }
 
@@ -250,7 +244,9 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
     if (productsViewed.size) {
       return (
-        <H1 className='recent-label'><FormattedMessage {...messages.viewed} /></H1>
+        <H3>
+          <FormattedMessage {...messages.viewed} />
+        </H3>
       )
     }
 
@@ -319,6 +315,12 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     }, () => this._fetchProductByTagCategory(props))
   }
 
+  componentWillMount () {
+    this.props.setPageTitle('..')
+    this.props.setShowSearchIcon(true)
+    this.props.setShowActivityIcon(true)
+  }
+
   componentDidMount () {
     const { getProductsViewed, getProductCategories } = this.props
 
@@ -359,34 +361,36 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
       this._fetchProductFeatured
     )
 
-    this.props.setPageTitle(this._handlePageTitle())
-    this.props.setShowSearchIcon(true)
-    this.props.setShowActivityIcon(true)
+    const updatePageTitle = ifElse(
+      compose(lt(0), path(['categories', 'size'])),
+      compose(
+        this.props.setPageTitle,
+        this._handlePageTitle
+      ),
+      noop
+    )
 
     updateFetchProduct(nextProps)
     updateFeaturedProducts(nextProps)
+    updatePageTitle(nextProps)
   }
 
   render () {
-    const { productsByCategory, categories, productsViewed, loader, changeRoute, windowWidth, categoryLoader } = this.props
+    const { productsByCategory, productsViewed, loader, changeRoute, windowWidth } = this.props
     return (
       <div>
-        <NavCategories changeRoute={changeRoute} categories={categories} categoryLoader={categoryLoader} />
         <ContentWrapper className='padding__horizontal--10'>
           { this._displayHeaderFeaturesProduct() }
-          <Label className='center-label' as='p' basic size='large'>
-            <FormattedMessage {...messages.feature} />
-          </Label>
           { this._displayFeaturesProduct() }
-          <Label className='center-label no-bottom-margin' as='p' basic size='large'>
-            { this._handlePageTitle() }
-          </Label>
-          { this._displayNumberProducts() }
+
+          <H3 className='margin__none'> {this._handlePageTitle()} </H3>
+          {this._displayNumberProducts()}
           { this._displayEmpty() }
           <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} windowWidth={windowWidth} />
-          {/* <Promo loader={loader} /> */}
+
           { this._displayRecentlyViewedHeader() }
           <ProductView changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
+
         </ContentWrapper>
         <Footer />
       </div>

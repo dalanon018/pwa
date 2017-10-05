@@ -228,7 +228,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          <H3 text={intl.formatMessage(messages.featureProduct)} />
+          <H3>
+            <FormattedMessage {...messages.featureProduct} />
+          </H3>
           <ProductView
             changeRoute={changeRoute}
             loader={loader}
@@ -236,7 +238,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             windowWidth={windowWidth} />
           { this._displayViewAll() }
           {/* <Promo loader={loader} /> */}
-          <H3 text={intl.formatMessage(messages.browseCategory)} />
+          <H3>
+            <FormattedMessage {...messages.browseCategory} />
+          </H3>
           <Category
             loader={loader}
             // resposiveColumns={resposiveColumns()}
@@ -248,7 +252,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             fontSize='9'
             height='80'
             categories={productCategories} />
-          <H3 className='margin__none' text={intl.formatMessage(messages.browseBrands)} />
+          <H3 className='margin__none'>
+            <FormattedMessage {...messages.browseBrands} />
+          </H3>
           <Brand brands={featuredBrands} />
         </ContentWrapper>
         <Footer />

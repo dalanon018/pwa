@@ -32,7 +32,6 @@ export const SET_SHOW_ACTIVITY_ICON = 'app/Container/SET_SHOW_ACTIVITIES_ICON'
 export const HIDE_BACK_BUTTON = [
   '',
   'home',
-  'products-category',
   'purchases'
 ]
 

@@ -54,7 +54,10 @@ import {
   selectProductsByBrands
 } from './selectors'
 
-const ContentWrapper = styled.div``
+const ContentWrapper = styled.div`
+  padding-top: 20px;
+  padding-bottom: 20px;
+`
 
 export class BrandPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
@@ -161,7 +164,9 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
       lt(0),
       () => (
         <div>
-          <H3 text={<FormattedMessage {...messages.feature} />} />
+          <H3>
+            <FormattedMessage {...messages.feature} />
+          </H3>
           <ProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} />
         </div>
       ),
@@ -235,7 +240,9 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
       <div>
         <ContentWrapper className='padding__horizontal--10'>
           { this._displayFeaturedProducts() }
-          <H3 text={<FormattedMessage {...messages.brandsTitle} />} />
+          <H3>
+            <FormattedMessage {...messages.brandsTitle} />
+          </H3>
           { this._displayEmpty() }
           <ProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
         </ContentWrapper>

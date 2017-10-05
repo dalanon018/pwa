@@ -8,7 +8,7 @@ import { defineMessages } from 'react-intl'
 export default defineMessages({
   viewed: {
     id: 'app.containers.ProductsByCategory.viewed',
-    defaultMessage: 'RECENTLY VIEWED'
+    defaultMessage: 'Recently Viewed'
   },
   items: {
     id: 'app.containers.ProductsByCategory.items',
@@ -28,6 +28,6 @@ export default defineMessages({
   },
   emptyMessage: {
     id: 'app.containers.ProductsByCategory.emptyMessage',
-    defaultMessage: 'THIS CATEGORY DOESN\'T HAVE ANY PRODUCTS YET'
+    defaultMessage: 'This category doesn\'t have any products yet.'
   }
 })

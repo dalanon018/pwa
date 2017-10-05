@@ -59,7 +59,9 @@ export class DesktopFooter extends React.PureComponent {
             <Grid padded>
               <Grid.Row columns='2' stretched>
                 <Grid.Column width={5}>
-                  <H1 className='custom-header'><FormattedMessage {...messages.stayConnected} /></H1>
+                  <H1 className='custom-header'>
+                    <FormattedMessage {...messages.stayConnected} />
+                  </H1>
                   <SocialIcons>
                     <List horizontal>
                       <List.Item>
