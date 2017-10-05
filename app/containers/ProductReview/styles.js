@@ -159,7 +159,10 @@ const ProductName = styled.div`
 `
 
 const StepWrapper = styled.div`
-  margin-bottom: 100px;
+  border-bottom: 1px solid #F0F0F0;
+  border-top: 1px solid #F0F0F0;
+  margin-bottom: 90px;
+  padding: 10px 14px;
 
   &.visibility {
     display: ${({ visibility }) => visibility ? 'block' : 'none'};

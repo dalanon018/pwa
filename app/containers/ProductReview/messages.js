@@ -8,21 +8,21 @@ import { defineMessages } from 'react-intl'
 const idSuffix = 'app.containers.ProductReview'
 
 export default defineMessages({
-  header: {
-    id: 'app.containers.ProductReview.header',
-    defaultMessage: 'This is ProductReview container !'
+  findStore: {
+    id: 'app.containers.ProductReview.findStore',
+    defaultMessage: 'Find Store Nearby'
   },
-  stepOne: {
-    id: `${idSuffix}.stepOne`,
-    defaultMessage: 'REVIEW ITEM TO PURCHASE'
+  defaultStore: {
+    id: `${idSuffix}.defaultStore`,
+    defaultMessage: 'Your Default Store will be the last store you visited'
   },
   methodPayment: {
     id: `${idSuffix}.methodPayment`,
     defaultMessage: 'Method of Payment'
   },
-  stepThree: {
-    id: `${idSuffix}.stepThree`,
-    defaultMessage: 'SELECT DELIVERY STORE'
+  chooseStore: {
+    id: `${idSuffix}.chooseStore`,
+    defaultMessage: 'Choose a 7-11 store!'
   },
   viewDetails: {
     id: `${idSuffix}.viewDetails`,

@@ -228,6 +228,10 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   componentWillReceiveProps (nextProps) {
     const { orderedProduct, productLoader, mobileNumber, mobileLoader, orderSuccess, orderFail, previousStore } = nextProps
     const { store } = this.state
+
+    if (!isEmpty(store)) {
+      this._handleToBottom()
+    }
     // handle once done fetching our ordered product
     ifElse(
       both(isEntityEmpty, isDoneRequesting(productLoader)), this._handleDoneFetchOrderNoProductNorMobile, noop
@@ -261,8 +265,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   render () {
     // const { mobileNumber, windowWidth, productLoader, intl } = this.props
     const { orderedProduct, orderRequesting } = this.props
-    const { errorMessage, modePayment, modalToggle, visibility } = this.state
-    console.log('visibility', visibility)
+    const { errorMessage, modePayment, modalToggle, visibility, store } = this.state
     // const cliqqCode = orderedProduct.get('cliqqCode') && orderedProduct.get('cliqqCode').first()
     const labelOne = <label className='label-custom'>
       <LabelTitle className='desktop__width--full'>
@@ -367,21 +370,19 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
           </Grid.Row>
         </Grid>
         <StepWrapper className='visibility' visibility={visibility}>
-          <ListCollapse title={
-            <Label as='span' basic size='large'>
-              Choose a 7-11 store!
-            </Label>
-          }>
-            <StepWrapper>
-              <StepHead step='2'>
-                <p>Your Default Store will be the last store you visited</p>
-              </StepHead>
-              <LocationButton onClick={this._handleStoreLocator} fluid icon={NextIcon}>
-                <span>FIND STORE NEARBY</span>
-              </LocationButton>
-            </StepWrapper>
-          </ListCollapse>
-
+          <Label as='p' basic size='large'>
+            <FormattedMessage {...messages.chooseStore} />
+          </Label>
+          <StepHead step='2'>
+            <p><FormattedMessage {...messages.defaultStore} /></p>
+          </StepHead>
+          <LocationButton onClick={this._handleStoreLocator} fluid icon={NextIcon}>
+            {
+              store && isEmpty(store)
+              ? <FormattedMessage {...messages.findStore} />
+              : <span>{store.id} {store.name}</span>
+            }
+          </LocationButton>
         </StepWrapper>
 
         <ButtonContainer>
