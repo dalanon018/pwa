@@ -2,13 +2,11 @@ import React from 'react'
 import { isEmpty } from 'lodash'
 import { FormattedMessage } from 'react-intl'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import { Icon, Popup } from 'semantic-ui-react'
-
-import ShareIconImage from 'images/icons/share-icon.svg'
+import { Icon, Popup, Image, Label } from 'semantic-ui-react'
 
 import Button from 'components/Button'
-import H3 from 'components/H3'
 import ProductSlider from 'components/BannerSlider'
+import ListCollapse from 'components/ListCollapse'
 
 import { calculateProductPrice } from 'utils/promo'
 import { fbShare } from 'utils/fb-share'
@@ -19,27 +17,21 @@ import {
 } from 'components/LoadingBlock'
 
 import messages from './messages'
+
+import DeliveryIcon from 'images/test-images/v2/delivery-icon.svg'
+import ReturnIcon from 'images/test-images/v2/return-icon.svg'
+
 import {
-  // ImageBanner,
   ButtonContainer,
-  CodeImage,
-  DetailsDescription,
-  DetailsTitle,
   DetailsWrapper,
-  HeaderWrapper,
   ProductDetails,
   ProductMainContent,
-  ProductPrice,
-  ProductPriceStrike,
-  ProductPriceTitle,
   ProductPriceWrapper,
   ProductWrapper,
-  ShareIcon,
-  ShareItemWrapper,
-  ShippingDetails,
-  SocialButtonWrapper,
   SocialContainer,
-  ProductImageSlider
+  ShareWrapper,
+  ProductImageSlider,
+  CollapseContent
 } from './styled'
 
 function MobileBlock ({
@@ -60,89 +52,106 @@ function MobileBlock ({
   const productImages = [product.get('image')]
   return (
     <ProductWrapper className='mobile-visibility'>
+      <Image className='brand-logo' alt='Cliqq' src={product.get('brandLogo')} />
       <ProductImageSlider>
         <ProductSlider
           images={productImages}
-          loader={loading} />
+          loader={loading}
+          isLowerdots />
       </ProductImageSlider>
       <ProductMainContent>
         <LoadingStateInfo loading={loading} center>
-          <HeaderWrapper>
-            <CodeImage src={cliqqLogo} /> { cliqqCode }
-          </HeaderWrapper>
-          <H3
-          > { product.get('title') } </H3>
+          <Label className='no-margin-bottom' as='p' basic size='big'>Brand Name</Label>
+          <Label as='p' basic size='big'>All Day Backpack | Wine</Label>
           <ProductPriceWrapper>
-            <ProductPriceTitle> <FormattedMessage {...messages.productPriceTitle} /> </ProductPriceTitle>
-            <ProductPrice>
-              PHP { calculateProductPrice(product) }
-            </ProductPrice>
-            {
-              !isEmpty(product.get('discount')) &&
-              <ProductPriceStrike>PHP {product.get('price')}</ProductPriceStrike>
-            }
+            <Label className='product-price' as='b' basic size='massive' color='orange'>
+              <FormattedMessage {...messages.peso} />
+              { calculateProductPrice(product) }
+            </Label>
+            <Label className='product-discount' as='span' basic size='huge'>
+              {
+                !isEmpty(product.get('discount'))
+                ? <FormattedMessage {...messages.peso} />
+                : ''
+              }
+              {
+                !isEmpty(product.get('discount')) &&
+                parseFloat(product.get('price')).toLocaleString()
+              }
+            </Label>
           </ProductPriceWrapper>
         </LoadingStateInfo>
       </ProductMainContent>
 
       <SocialContainer>
-        <ShareItemWrapper onClick={toggleClick}>
-          <ShareIcon src={ShareIconImage} /> SHARE ITEM
-        </ShareItemWrapper>
+        <ShareWrapper>
+          <p className='share-item ui big basic label'>Share Item:</p>
 
-        <SocialButtonWrapper visibility={toggle}>
-
-          <button className='unstyle-button' onClick={() => fbShare(product)}>
-            <FacebookIcon round size={40} />
+          <button className='unstyle-button share-button' onClick={() => fbShare(product)}>
+            <FacebookIcon round size={30} />
           </button>
 
           <TwitterShareButton
+            className='share-button'
             title={product.get('title')}
             via='711philippines'
             url={window.location.href} >
-            <TwitterIcon size={40} round />
+            <TwitterIcon size={30} round />
           </TwitterShareButton>
 
           <CopyToClipboard text={window.location.href}>
             <span onCopy={copied}>
               <Popup
-                trigger={<Icon name='linkify' className='copy-to-clipboard' />}
+                trigger={<Icon name='linkify' className='copy-to-clipboard share-button' />}
                 on='click'
                 hideOnScroll
                 content='Product URL copied' />
             </span>
           </CopyToClipboard>
-
-        </SocialButtonWrapper>
+        </ShareWrapper>
       </SocialContainer>
 
       <DetailsWrapper>
         <ProductDetails>
-          <DetailsTitle> <FormattedMessage {...messages.productDetailsTitle} /> </DetailsTitle>
+          <Label as='p' basic size='big'> <FormattedMessage {...messages.productDetailsTitle} /> </Label>
           <LoadingStateInfo loading={loading}>
-            <DetailsDescription>
+            <Label as='p' basic size='large' color='grey'>
               <div dangerouslySetInnerHTML={{__html: product.get('details')}} />
-            </DetailsDescription>
+            </Label>
           </LoadingStateInfo>
         </ProductDetails>
-        <ShippingDetails>
-          <DetailsTitle> <FormattedMessage {...messages.productDeliveryTitle} /> </DetailsTitle>
-          <LoadingStateInfo loading={loading}>
-            <DetailsDescription>
-              <div dangerouslySetInnerHTML={{__html: product.get('shipping')}} />
-            </DetailsDescription>
-          </LoadingStateInfo>
-        </ShippingDetails>
+        <ListCollapse title='Delivery & Returns Policy'>
+          <CollapseContent>
+            <Image src={DeliveryIcon} alt='Cliqq' />
+            <div className='collapse-description'>
+              <Label className='description-title' as='p' basic size='large'>Free In-Store Delivery</Label>
+              <Label as='p' color='grey' basic size='medium'>
+                Mega Manila: 1-3 Days <br />
+                Major Luzon Provinces: 3-5 Days <br />
+                Vis-Min Provinces: 7-14 Days
+              </Label>
+            </div>
+          </CollapseContent>
+          <CollapseContent>
+            <Image src={ReturnIcon} alt='Cliqq' />
+            <div className='collapse-description'>
+              <Label className='description-title' as='p' basic size='large'>Cliqq Return Policy</Label>
+              <Label as='p' color='grey' basic size='medium'>Not satisfied with your purchase? Depending on CLIQQ Care Policy, you can return your item anytime of the day <u>within 7 days</u> from claim date. Just go to your nearest 7/11 store where the item was purchased and get your Return Slip from the CLIQQ Kiosk and bring it to the cashier.</Label>
+            </div>
+          </CollapseContent>
+        </ListCollapse>
+        <ListCollapse title='Care Label'>
+          <Label as='p' color='grey' basic size='medium'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam eos repudiandae inventore debitis iusto ea esse eligendi voluptatum distinctio assumenda quam aliquid, unde ullam odit tenetur cum, explicabo quisquam a!</Label>
+        </ListCollapse>
+
         <ButtonContainer>
           <Button
             onClick={popup}
-            primary
-            fluid
             loading={loading}
-          > <FormattedMessage {...messages.orderNow} /> </Button>
+            primary
+            fluid > <FormattedMessage {...messages.orderNow} /> </Button>
         </ButtonContainer>
       </DetailsWrapper>
-
     </ProductWrapper>
   )
 }

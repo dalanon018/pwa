@@ -10,9 +10,18 @@ export const ProductWrapper = styled(AnimateDiv)`
   flex-direction: column;
   flex: 1 0 auto;
   position: relative;
+  padding-top: 20px;
+  margin-bottom: 70px;
 
+  .brand-logo {
+    width: 160px;
+    height: auto;
+    margin: 0 auto;
+  }
 `
 export const ProductImageSlider = styled.div`
+  border-bottom: 1px solid #EBEBEB;
+
   img {
     width: 60%;
   }
@@ -27,6 +36,7 @@ export const ImageBanner = styled(AnimateDiv)`
 
 export const ProductMainContent = styled(AnimateDiv)`
   margin: 20px 0;
+  text-align: center;
   
   @media (min-width: 768px) {
     h3 {
@@ -34,6 +44,10 @@ export const ProductMainContent = styled(AnimateDiv)`
       margin-bottom: 15px;
       text-align: left;
     }
+  }
+
+  .no-margin-bottom {
+    margin-bottom: 0 !important;
   }
 `
 
@@ -62,9 +76,24 @@ export const CodeImage = styled.img`
 `
 export const ProductPriceWrapper = styled(AnimateDiv)`
   align-self: stretch;
-  display: flex;
   align-items: center;
   flex-direction: column;
+  margin-top: 10px;
+
+  .product-price {
+    font-family: 'Roboto';
+    letter-spacing: -2px;
+    padding: 0;
+    font-size: 2.714286rem !important;
+  }
+
+  .product-discount {
+    color: #AEAEAE !important;
+    font-family: 'Roboto';
+    letter-spacing: -2px;
+    text-decoration: line-through;
+    margin-left: 10px;
+  }
 `
 export const ProductPriceTitle = styled.p`
   color: #AEAEAE;
@@ -115,7 +144,7 @@ export const DetailsWrapper = styled(AnimateDiv)`
   align-self: stretch;
 `
 export const ProductDetailsContainer = styled(AnimateDiv)`
-  padding: 25px 15px;
+  padding: 35px 25px;
   color: #5B5B5B;
   font-weight: 100;
 
@@ -159,7 +188,6 @@ export const ButtonContainer = styled(AnimateDiv)`
   background-color: #FFFFFF;
   bottom: 0;
   left: 0;
-  padding: 0 10px 10px;
   position: fixed;
   width: 100%;
   z-index: 1;
@@ -198,6 +226,43 @@ export const SocialButtonWrapper = styled.div`
 
 export const SocialContainer = styled.div`
   width: 100%;
+  display: flex;
+  border-top: 1px solid #F0F0F0;
+  border-bottom: 1px solid #F0F0F0;
+  padding: 10px 0;
+  text-align: center;
+`
+
+export const ShareWrapper = styled.div`
+  display: flex;
+  margin: 0 auto;
+
+  .share-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0 !important;
+    margin-right: 5px;
+  }
+
+  .share-button {
+    margin: 0 5px;
+  }
+
+  .copy-to-clipboard {
+    align-items: center;
+    background-color: #F6A22D;
+    border-radius: 50px;
+    color: #FFFFFF;
+    display: flex;
+    font-size: 18px;
+    height: 30px;
+    justify-content: center;
+    width: 30px;
+
+    &:before {
+      margin-top: 3px;
+    }
+  }
 `
 
 // Desktop
@@ -302,5 +367,21 @@ export const OrderButtonWrapper = styled.div`
     .custom-button {
       text-align: left !important;
     }
+  }
+`
+export const CollapseContent = styled.div`
+  display: flex;
+
+  img {
+    width: auto;
+    height: 30px;
+  }
+
+  div.collapse-description {
+    padding-left: 10px !important;
+  }
+
+  .description-title {
+    margin-bottom: 5px !important;
   }
 `

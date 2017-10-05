@@ -19,16 +19,15 @@ const ListCollapseWrapper = styled.div`
     transition: all .3s ease;
 
     .collapse-content {
-      padding: 5px 10px;
+      padding: 0 25px;
     }
   }
 
   .title {
     border-top: 1px solid #F0F0F0;
     color: #5B5B5B !important;
-    font-size: 14px !important;
-    letter-spacing: 1px;
-    padding: 15px 14px;
+    font-size: 16px !important;
+    padding: 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;

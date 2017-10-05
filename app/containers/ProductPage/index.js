@@ -37,7 +37,10 @@ import {
 } from './actions'
 
 import {
-  setToggleAction
+  setToggleAction,
+  setPageTitleAction,
+  setShowSearchIconAction,
+  setShowActivityIconAction
 } from 'containers/Buckets/actions'
 
 import {
@@ -208,6 +211,10 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
     // handle if theree's mobile number we can use as default
     ifElse((mobile) => mobile.size > 0, this._handleMobileRegistered, noop)(mobileNumbers)
+
+    this.props.setPageTitle('Product Details')
+    this.props.setShowSearchIcon(true)
+    this.props.setShowActivityIcon(true)
   }
 
   render () {
@@ -273,6 +280,9 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
+    setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
+    setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
+    setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProduct: (payload) => dispatch(getProductAction(payload)),
     setCurrentProduct: (payload) => dispatch(setCurrentProductAction(payload)),
     getMobileNumbers: () => dispatch(getMobileNumbersAction()),

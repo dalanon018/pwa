@@ -12,7 +12,7 @@ export default defineMessages({
   },
   productDetailsTitle: {
     id: 'app.components.Product.productDetailsTitle',
-    defaultMessage: 'PRODUCT DETAILS'
+    defaultMessage: 'Product Details'
   },
   productDeliveryTitle: {
     id: 'app.components.Product.productDeliveryTitle',
@@ -20,6 +20,10 @@ export default defineMessages({
   },
   orderNow: {
     id: 'app.components.Product.orderNow',
-    defaultMessage: 'ORDER NOW!'
+    defaultMessage: 'Order Now!'
+  },
+  peso: {
+    id: 'app.components.Product.peso',
+    defaultMessage: '₱ '
   }
 })

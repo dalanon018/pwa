@@ -139,6 +139,16 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         auto: 'compress',
         q: 35,
         lossless: 0
+      }),
+      paramsImgix(imageStock('sample_banner.jpg'), {
+        auto: 'compress',
+        q: 35,
+        lossless: 0
+      }),
+      paramsImgix(imageStock('sample_banner.jpg'), {
+        auto: 'compress',
+        q: 35,
+        lossless: 0
       })
     ]
 
