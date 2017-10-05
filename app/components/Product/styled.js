@@ -5,12 +5,19 @@ const AnimateDiv = styled.div`
   animation-duration: .5s;
 `
 export const ProductWrapper = styled(AnimateDiv)`
-  align-items: center;
+  // align-items: center;
   display: flex;
   flex-direction: column;
   flex: 1 0 auto;
   position: relative;
+
 `
+export const ProductImageSlider = styled.div`
+  img {
+    width: 60%;
+  }
+`
+
 export const ImageBanner = styled(AnimateDiv)`
   align-self: stretch;
   background-color: #F0F0F0;
