@@ -38,7 +38,8 @@ import {
   ShareItemWrapper,
   ShippingDetails,
   SocialButtonWrapper,
-  SocialContainer
+  SocialContainer,
+  ProductImageSlider
 } from './styled'
 
 function MobileBlock ({
@@ -56,25 +57,20 @@ function MobileBlock ({
   toggleClick,
   windowWidth
 }) {
-  const productImages = [product]
-
+  const productImages = [product.get('image')]
   return (
     <ProductWrapper className='mobile-visibility'>
-      <ProductSlider
-        images={productImages}
-        windowWidth={windowWidth}
-        loader={loading} />
-
+      <ProductImageSlider>
+        <ProductSlider
+          images={productImages}
+          loader={loading} />
+      </ProductImageSlider>
       <ProductMainContent>
         <LoadingStateInfo loading={loading} center>
           <HeaderWrapper>
             <CodeImage src={cliqqLogo} /> { cliqqCode }
           </HeaderWrapper>
           <H3
-            weight='300'
-            letterSpacing='4px'
-            uppercase
-            center
           > { product.get('title') } </H3>
           <ProductPriceWrapper>
             <ProductPriceTitle> <FormattedMessage {...messages.productPriceTitle} /> </ProductPriceTitle>
@@ -102,7 +98,6 @@ function MobileBlock ({
 
           <TwitterShareButton
             title={product.get('title')}
-            // hashtags={['asd', 'qwe']}
             via='711philippines'
             url={window.location.href} >
             <TwitterIcon size={40} round />

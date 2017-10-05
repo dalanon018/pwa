@@ -76,10 +76,6 @@ function DesktopBlock ({
             <ProductMainContent>
               <LoadingStateInfo loading={loading} center>
                 <H3
-                  weight='300'
-                  letterSpacing='4px'
-                  uppercase
-                  center
                 > { product.get('title') } </H3>
                 <HeaderWrapper>
                   <CodeImage src={cliqqLogo} /> { cliqqCode }

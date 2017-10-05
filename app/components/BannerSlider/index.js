@@ -14,61 +14,44 @@ import EmptyDataBlock from 'components/EmptyDataBlock'
 
 import {
   BannerSliderWrapper,
-  ImageWrapper,
-  BrandLogo
+  ImageWrapper
 } from './styles'
 
 function BannerSlider ({
-  receiptPageName,
   loader,
-  productPageTrigger,
-  homeRouteName,
-  windowWidth,
+  isInfinite,
+  isAutoPlay,
   images }) {
   return <HandleBlock
     loader={loader}
     images={images}
-    productPageTrigger={productPageTrigger}
-    receiptPageName={receiptPageName}
-    homeRouteName={homeRouteName}
-    windowWidth={windowWidth} />
+    isInfinite={isInfinite || false}
+    isAutoPlay={isAutoPlay || false}
+    />
 }
 
 const HandleBlock = ({
   loader,
-  receiptPageName,
-  productPageTrigger,
-  homeRouteName,
-  windowWidth,
+  isInfinite,
+  isAutoPlay,
   images }) => {
   let block
   const settings = {
-    autoplay: homeRouteName && homeRouteName.name && images.size > 1,
-    swipe: images.size > 1,
+    autoplay: isAutoPlay && images.length > 1,
+    swipe: images.length > 1,
     autoplaySpeed: 3500,
-    dots: images.size > 1,
-    infinite: homeRouteName && !homeRouteName.name,
+    dots: images.length > 1,
+    infinite: isInfinite,
     speed: 1000,
     arrows: false,
     slidesToShow: 1,
     slidesToScroll: 1
   }
 
-  const productPage = homeRouteName && homeRouteName.name === 'productPage'
-
-  const imageSize = (image) => {
-    if (!homeRouteName && windowWidth >= 768) {
-      return `${image}?w=450&h=450&fit=clamp`
-    } else if (productPage) {
-      return `${image}?w=280&h=280&fit=clamp`
-    }
-    return image
-  }
-
   if (loader) {
-    block = <DefaultState loader={loader} productPageTrigger={productPageTrigger} />
+    block = <DefaultState loader={loader} />
   } else {
-    block = <BannerSliderWrapper homeRouteName={homeRouteName} windowWidth={windowWidth} receiptPageName={receiptPageName}>
+    block = <BannerSliderWrapper>
       <Slider {...settings}>
         {
           images &&
@@ -76,18 +59,8 @@ const HandleBlock = ({
             return (
               <div key={index}>
                 {
-                  receiptPageName
-                    ? item.getIn(['products', 'brandLogo']) &&
-                    <BrandLogo brand={item.getIn(['products', 'brandLogo']) && item.getIn(['products', 'brandLogo'])} />
-                    : item.get('brandLogo') &&
-                    <BrandLogo brand={item.get('brandLogo') && item.get('brandLogo')} />
+                  (typeof item === 'string' ? <Image alt='Cliqq' src={item} /> : '')
                 }
-                {
-                  receiptPageName
-                  ? <Image alt='Cliqq' src={(item.getIn(['products', 'image']) && imageSize(item.getIn(['products', 'image']))) || imageStock('default-slider.jpg')} />
-                  : <Image alt='Cliqq' src={(item.get('image') && imageSize(item.get('image'))) || imageStock('default-slider.jpg')} />
-                }
-
               </div>
             )
           })

@@ -319,17 +319,6 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     }, () => this._fetchProductByTagCategory(props))
   }
 
-  componentWillMount () {
-    console.log(this.props.setPageTitle)
-    const { categories, params: { id } } = this.props
-    const category = categories.find((cat) => cat.get('id') === id)
-    let categoryName = category ? category.get('name') : ' '
-
-    this.props.setPageTitle(categoryName)
-    this.props.setShowSearchIcon(true)
-    this.props.setShowActivityIcon(true)
-  }
-
   componentDidMount () {
     const { getProductsViewed, getProductCategories } = this.props
 
@@ -369,6 +358,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
       noop,
       this._fetchProductFeatured
     )
+
+    this.props.setPageTitle(this._handlePageTitle())
+    this.props.setShowSearchIcon(true)
+    this.props.setShowActivityIcon(true)
 
     updateFetchProduct(nextProps)
     updateFeaturedProducts(nextProps)
