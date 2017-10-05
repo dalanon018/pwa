@@ -19,3 +19,7 @@
 .ui.grid>.divided.row>.column {
   box-shadow: -1px 0 0 0 @grey;
 }
+
+.ui.grid. > .row.bg-light-grey {
+  background-color: @lightGrey;
+}
