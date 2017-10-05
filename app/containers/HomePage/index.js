@@ -161,8 +161,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           ]}
         />
 
-        <Grid padded color='grey'>
-          <Grid.Row columns={1}>
+        <Grid padded>
+          <Grid.Row className='bg-light-grey' columns={1}>
             <Grid.Column>
               <Input
                 fluid
