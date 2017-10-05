@@ -4,6 +4,10 @@ import { fromJS } from 'immutable'
 
 import { HomePage } from '../index'
 
+const wrapper = (props = {}, enzyme = shallow) => shallow(
+  <HomePage {...props} />
+)
+
 describe('<HomePage />', () => {
   const minProps = {
     changeRoute: () => {},
@@ -21,10 +25,10 @@ describe('<HomePage />', () => {
     setShowActivityIcon: () => {}
   }
 
-  it('should render a div', () => {
-    const renderedComponent = shallow(
-      <HomePage {...minProps} />
-    )
-    expect(renderedComponent.find('div').length).toEqual(2)
+  it('render without exploding', () => {
+    const renderComponent = wrapper(minProps)
+    expect(
+      renderComponent.length
+    ).toEqual(1)
   })
 })

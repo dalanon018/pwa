@@ -17,21 +17,15 @@ import { imageStock, paramsImgix } from 'utils/image-stock'
 import Helmet from 'react-helmet'
 import messages from './messages'
 
-import { Grid, Button, Input, Label } from 'semantic-ui-react'
+import { Container, Grid, Button, Input } from 'semantic-ui-react'
 
 import BannerSlider from 'components/BannerSlider'
 import ProductView from 'components/ProductView'
 import Category from 'components/Category'
-import H1 from 'components/H1'
-import H2 from 'components/H2'
 import H3 from 'components/H3'
-import H4 from 'components/H4'
-import ListCollapse from 'components/ListCollapse'
 import Brand from 'components/Brand'
 import Footer from 'components/Footer'
-import StaticPromos from 'components/BannerStaticPromos'
 import WindowWidth from 'components/WindowWidth'
-// import Promo from 'components/Promo'
 
 import { getFeaturedProductsAction } from './actions'
 import { selectLoading, selectFeaturedProducts } from './selectors'
@@ -49,9 +43,7 @@ import {
 } from 'containers/Buckets/selectors'
 
 import {
-  BannerWrapper,
-  ContentWrapper,
-  SearchWrapper
+  BannerWrapper
 } from './styles'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -96,7 +88,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
     if (featuredProducts.size > 4) {
       return (
-        <Grid>
+        <Grid padded>
           <Grid.Row centered>
             <Button
               onClick={this._displayFeatured}
@@ -169,65 +161,23 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           ]}
         />
 
-        <SearchWrapper>
-          <Input
-            onClick={changeRoute.bind(this, '/search')}
-            placeholder={intl.formatMessage(messages.searchPlaceholder)}
-            icon='search' />
-        </SearchWrapper>
+        <Grid padded color='grey'>
+          <Grid.Row columns={1}>
+            <Grid.Column>
+              <Input
+                fluid
+                onClick={changeRoute.bind(this, '/search')}
+                placeholder={intl.formatMessage(messages.searchPlaceholder)}
+                icon='search' />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
 
         <BannerWrapper>
-          <Grid padded>
-            <Grid.Row stretched className='banner-padding'>
-              <Grid.Column
-                className='banner-padding'
-                mobile={16}
-                tablet={8}
-                computer={8}
-                largeScreen={8}
-                widescreen={8}>
-                <BannerSlider loader={loader} images={bannerImages} />
-              </Grid.Column>
-              <Grid.Column
-                className='banner-padding'
-                only='tablet'
-                tablet={8}
-                computer={8}
-                largeScreen={8}
-                widescreen={8}>
-                <StaticPromos loader={loader} />
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
+          <BannerSlider loader={loader} images={bannerImages} />
         </BannerWrapper>
 
-        <ContentWrapper className='padding__horizontal--10'>
-          <Grid padded>
-            <Grid.Row>
-              <Grid.Column>
-                <H1> SITE THEMING </H1>
-                <H1> Header One </H1>
-                <H2> Header Two </H2>
-                <H3> Header Three </H3>
-                <H4> Header Four </H4>
-                <Button onClick={() => {}} primary>Primary Button</Button>
-                <ListCollapse title='lorem ipsum'>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam eos repudiandae inventore debitis iusto ea esse eligendi voluptatum distinctio assumenda quam aliquid, unde ullam odit tenetur cum, explicabo quisquam a!</p>
-                </ListCollapse>
-                <Input placeholder='Search...' />
-                <div>
-                  <Label as='p' basic size='mini'>Mini</Label>
-                  <Label as='p' basic size='tiny'>Tiny</Label>
-                  <Label as='p' basic size='small'>Small</Label>
-                  <Label as='p' basic size='medium'>Medium</Label>
-                  <Label as='p' basic size='large'>Large</Label>
-                  <Label as='p' basic size='big'>Big</Label>
-                  <Label as='p' basic size='huge'>Huge</Label>
-                  <Label as='p' basic size='massive'>Massive</Label>
-                </div>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
+        <Container>
           <H3>
             <FormattedMessage {...messages.featureProduct} />
           </H3>
@@ -252,11 +202,11 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             fontSize='9'
             height='80'
             categories={productCategories} />
-          <H3 className='margin__none'>
+          <H3>
             <FormattedMessage {...messages.browseBrands} />
           </H3>
           <Brand brands={featuredBrands} />
-        </ContentWrapper>
+        </Container>
         <Footer />
       </div>
     )

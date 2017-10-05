@@ -19,6 +19,7 @@
   "autoInstall": true,
   "rtl": false,
   "components": [
+    "container",
     "reset",
     "site",
     "button",

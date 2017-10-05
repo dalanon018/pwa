@@ -2,13 +2,18 @@
          Theme Overrides
 *******************************/
 
-.ui.grid>.column:not(.row) {
+.ui.grid >.column:not(.row) {
   padding: 10px;
 }
 
-.ui.grid>.row {
+.ui.grid >.row {
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+.ui.grid > .row > .column {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .ui.grid>.divided.row>.column {
