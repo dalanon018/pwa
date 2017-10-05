@@ -216,7 +216,7 @@ export const ReceiptWrapper = styled.div`
 `
 
 export const ReceiptContainer = styled.div`
-  box-shadow: 0px 0px 30px #F0F0F0;
+  box-shadow: 0px 0px 10px #F0F0F0;
   background-color: #FFFFFF;
   
   margin: 50px 20px 0;

@@ -293,7 +293,7 @@ class Receipt extends React.PureComponent {
 
   _handleStatusString = (status) => {
     const index = status && status.slice(0, 1)
-    const body = status && status.toLowerCase().slice(1, -1)
+    const body = status && status.toLowerCase().slice(1)
     const text = `${index}${body}`
 
     if (!isNil(index && body)) {
