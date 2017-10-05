@@ -16,9 +16,9 @@ export default defineMessages({
     id: `${idSuffix}.stepOne`,
     defaultMessage: 'REVIEW ITEM TO PURCHASE'
   },
-  stepTwo: {
-    id: `${idSuffix}.stepTwo`,
-    defaultMessage: 'METHOD OF PAYMENT'
+  methodPayment: {
+    id: `${idSuffix}.methodPayment`,
+    defaultMessage: 'Method of Payment'
   },
   stepThree: {
     id: `${idSuffix}.stepThree`,
@@ -26,7 +26,7 @@ export default defineMessages({
   },
   viewDetails: {
     id: `${idSuffix}.viewDetails`,
-    defaultMessage: 'VIEW PRODUCT DETAILS'
+    defaultMessage: 'View Product Details'
   },
   productDetailsTitle: {
     id: `${idSuffix}.productDetailsTitle`,
@@ -38,15 +38,15 @@ export default defineMessages({
   },
   cashPrepaid: {
     id: `${idSuffix}.cashPrepaid`,
-    defaultMessage: 'CASH PREPAID'
+    defaultMessage: 'Cash Prepaid'
   },
   cashDelivery: {
     id: `${idSuffix}.cashDelivery`,
-    defaultMessage: 'CASH ON DELIVERY'
+    defaultMessage: 'Cash on Delivery'
   },
   proceedNext: {
     id: `${idSuffix}.proceedNext`,
-    defaultMessage: 'RESERVE FOR PAYMENT IN STORE'
+    defaultMessage: 'Next'
   },
   errorHeader: {
     id: `${idSuffix}.errorHeader`,
@@ -63,5 +63,9 @@ export default defineMessages({
   storeEmpty: {
     id: `${idSuffix}.storeEmpty`,
     defaultMessage: 'Please select a store location.'
+  },
+  peso: {
+    id: `${idSuffix}.peso`,
+    defaultMessage: '₱ '
   }
 })

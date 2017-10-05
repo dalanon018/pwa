@@ -40,10 +40,10 @@ class ListCollapse extends React.PureComponent {
   }
 
   render () {
-    const { title, children } = this.props
+    const { title, children, heightTransition } = this.props
     return (
       <Grid.Row>
-        <ListCollapseWrapper height={this.state.height} open={this.state.open}>
+        <ListCollapseWrapper heightTransition={!heightTransition} height={this.state.height} open={this.state.open}>
           <Accordion>
             <Accordion.Title onClick={this._handleClick}>
               { title }

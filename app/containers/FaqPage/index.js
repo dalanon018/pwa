@@ -68,7 +68,7 @@ export class FaqPage extends React.PureComponent { // eslint-disable-line react/
     this.props.getMarkDown()
     this.props.setPageTitle('FAQ')
     this.props.setShowSearchIcon(false)
-    this.props.getMarkDown()
+    this.props.setShowActivityIcon(false)
   }
 
   render () {

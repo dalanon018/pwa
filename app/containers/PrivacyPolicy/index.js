@@ -38,7 +38,7 @@ export class PrivacyPolicy extends React.PureComponent { // eslint-disable-line 
     this.props.getMarkDown()
     this.props.setPageTitle('Privacy Policy')
     this.props.setShowSearchIcon(false)
-    this.props.getMarkDown()
+    this.props.setShowActivityIcon(false)
   }
 
   render () {

@@ -5,7 +5,7 @@ const ListCollapseWrapper = styled.div`
     border-bottom: 1px solid #F0F0F0;
 
     &.accordion .active.content, .ui.accordion .active.content {
-      height: auto;
+      height: ${props => props.heightTransition ? props.height + 'px !important' : 'auto'};
       margin-bottom: 15px;
       transition: all .3s ease;
     }
@@ -28,7 +28,7 @@ const ListCollapseWrapper = styled.div`
     color: #5B5B5B !important;
     font-size: 14px !important;
     letter-spacing: 1px;
-    padding: 15px 0;
+    padding: 15px 14px;
     display: flex;
     justify-content: space-between;
     align-items: center;
