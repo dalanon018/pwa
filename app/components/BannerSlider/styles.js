@@ -5,10 +5,15 @@ const BannerSliderWrapper = styled.div`
   position: relative;
   width: 100%;
   display: block;
+  margin-bottom: 0;
 
   img {
     width: 100%;
     margin: 0 auto;
+  }
+
+  .slick-list {
+    padding-bottom: ${props => props.isLowerdots ? '15px' : '0'};
   }
 
   .slick-initialized {
@@ -37,12 +42,12 @@ const BannerSliderWrapper = styled.div`
       }
       &.slick-active {
         button:before {
-          color: #FFFFFF;
+          color: #DCDCDC;
           opacity: .90;
         }
       }
       button:before {
-        color: #FFFFFF;
+        color: #EBEBEB;
         font-size: 10px;
         opacity: .50;
       }

@@ -10,7 +10,7 @@ const wrapper = (props = {}, enzyme = shallow) => shallow(
 
 describe('<Brand />', () => {
   const minProps = {
-    brands: fromJS([])
+    brands: (fromJS([]))
   }
 
   it('render without exploding', () => {
