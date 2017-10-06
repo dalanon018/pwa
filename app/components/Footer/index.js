@@ -17,8 +17,8 @@ import messages from './messages'
 import FacebookIcon from 'images/icons/facebook-icon.svg'
 import TwitterIcon from 'images/icons/twitter-icon.svg'
 import EmailIcon from 'images/icons/email-icon.svg'
-import DeliveryIcon from 'images/test-images/v2/delivery-icon.svg'
-import ReturnIcon from 'images/test-images/v2/return-icon.svg'
+import DeliveryIcon from 'images/icons/delivery-icon.svg'
+import ReturnIcon from 'images/icons/return-icon.svg'
 
 import { Grid, Image, List, Label } from 'semantic-ui-react'
 

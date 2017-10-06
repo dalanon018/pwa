@@ -32,7 +32,7 @@ const PurchaseOrder = ({ status, receipt, timer }) => {
   const currentStatus = status || 'unknownStatus'
   return (
     <div>
-      <Label className='text__roboto--light' as='p' basic size='tiny'>
+      <Label className='text__roboto--light' as='p' basic size='large'>
         <ShowHeaderStatus {...{ currentStatus, timer }} />
       </Label>
       <HeaderOrder {...{ status }} >

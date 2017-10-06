@@ -17,7 +17,10 @@ describe('<ReceiptPage />', () => {
     receipt: fromJS({}),
     getReceipt: () => {},
     dispatch: () => {},
-    changeRoute: () => {}
+    changeRoute: () => {},
+    setPageTitle: () => {},
+    setShowSearchIcon: () => {},
+    setShowActivityIcon: () => {}
   }
 
   it('render without exploding', () => {

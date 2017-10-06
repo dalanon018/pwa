@@ -78,7 +78,10 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
     receipt: PropTypes.object.isRequired,
     getReceipt: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
-    changeRoute: PropTypes.func.isRequired
+    changeRoute: PropTypes.func.isRequired,
+    setPageTitle: PropTypes.func.isRequired,
+    setShowSearchIcon: PropTypes.func.isRequired,
+    setShowActivityIcon: PropTypes.func.isRequired
   }
 
   state = {
@@ -132,12 +135,15 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
     }, 5000)
   }
 
+  componentWillMount () {
+    this.props.setPageTitle('Your Receipt')
+    this.props.setShowSearchIcon(true)
+    this.props.setShowActivityIcon(false)
+  }
+
   componentDidMount () {
     const { params: { trackingNumber } } = this.props
     this.props.getReceipt({ trackingNumber })
-    this.props.setPageTitle('Your Receipt')
-    this.props.setShowSearchIcon(false)
-    this.props.setShowActivityIcon(false)
   }
 
   componentWillReceiveProps (nextProps) {
