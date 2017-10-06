@@ -1,79 +1,81 @@
 import React, { PropTypes } from 'react'
 import styled from 'styled-components'
+import { FormattedMessage } from 'react-intl'
+import messages from './messages'
 
 import {
-  Grid
+  Grid,
+  Image,
+  Label
 } from 'semantic-ui-react'
 
-import H6 from 'components/H6'
+import { isNil } from 'ramda'
+
+// import H6 from 'components/H6'
 import PackageStatus from 'components/PackageStatus'
 
-import CliqqLogo from 'images/icons/cliqq.png'
+import { paramsImgix } from 'utils/image-stock'
+
+// import CliqqLogo from 'images/icons/cliqq.png'
 import CLAIMED from 'images/status/claimed.svg'
 import UNCLAIMED from 'images/status/unclaimed.svg'
 import UNPAID from 'images/status/unpaid.svg'
 
-const PurchaseWrapper = styled.div`
-  cursor: pointer;
-  height: 100%;
-  margin: 5px 0;
-`
+// const PurchaseWrapper = styled.div`
+//   cursor: pointer;
+//   height: 100%;
+//   margin: 5px 0;
+// `
 
-const ProductWrapper = styled.div`
-  background-color: #F0F0F0;
-  border-radius: 5px;
-  border: 2px solid  ${({status}) => status};
+const PurchaseWrapper = styled.div`
+  width: 100%;
+  box-shadow: 0px 0px 20px #F0F0F0;
   display: flex;
   height: 100%;
   margin: 0 auto;
-  min-height: 140px;
-`
-const ProductImage = styled.div`
-  background: url(${({background}) => background}) no-repeat center / contain;
-  margin: 10px;
-  width: 100%;
+  min-height: 100px;
 `
 
-const ProductDescription = styled.div`
-  padding: 20px
-  align-items: flex-end;
+const PurchaseInfo = styled.div`
+  padding: 14px;
+`
+
+const PurchaseImage = styled.div`
+  background-color: #F0F0F0;
+`
+
+const StatusWrapper = styled.div`
+  background-color: ${({status}) => status};
+  text-align: center;
+  padding: 2px;
+
+  span {
+    color: #FFFFFF !important;
+  }
+`
+
+const OtherInfo = styled.div`
   display: flex;
-  flex-direction: column;
-  flex: 1 0 auto;
-  justify-content: center;
-  letter-spacing: 2px;
-  width: 65%;
+  justify-content: space-between;
+  align-items: flex-end;
 
-  h6 {
-    line-height: 10px;
+  .product-price {
+    font-size: 35px;
+    font-weight: 700;
+    letter-spacing: -2px;
+    margin: 0;
+  }
+
+  .status-info {
     text-align: right;
-    width: 100%;
+
+    p {
+      margin-bottom: 0;
+    }
   }
-
-  @media (min-width: 992px) {
-    width: 60%;
-  }
 `
 
-const ProductStatusWrapper = styled.div`
-  width: 100%;
-`
-
-const CodeWrapper = styled.span`
-  color: #AEAEAE;
-`
-
-const CodeImage = styled.img`
-  float: left;
-  width: 19px;
-  margin-right: 10px;
-`
-
-const ProductLogoImage = styled.img`
-  margin-bottom: 5px;
-  max-width: 100%;
-  width: 180px;
-`
+// =========================
 
 const StatusUseCaseImg = styled.img`
   width: 28px;
@@ -112,7 +114,7 @@ class Purchase extends React.PureComponent {
       UNPAID,
       CLAIMED,
       UNCLAIMED
-    })('#41BDF2')(currentStatus)
+    })('#F58322')(currentStatus)
   }
 
   _displayPackageStatus () {
@@ -147,39 +149,95 @@ class Purchase extends React.PureComponent {
    */
   _getColorStatus (status) {
     return switchFn({
-      RESERVED: '#41BDF2',
+      RESERVED: '#F58322',
       UNPAID: '#F23640',
       CONFIRMED: '#F58322',
       INTRANSIT: '#EFBA03',
-      DELIVERED: '#8DC641',
-      CLAIMED: '#16A483',
+      DELIVERED: '#8DC640',
+      CLAIMED: '#8DC640',
       UNCLAIMED: '#F23640'
-    })('#41BDF2')(status)
+    })('#F58322')(status)
+  }
+
+  _handleStatusString = (status) => {
+    const index = status && status.slice(0, 1)
+    const body = status && status.toLowerCase().slice(1)
+    const text = `${index}${body}`
+
+    if (!isNil(index && body)) {
+      return text
+    }
+  }
+
+  _productName = (data) => {
+    const { windowWidth } = this.props
+    let maxChar = 18
+
+    switch (true) {
+      case (windowWidth >= 375 && windowWidth <= 500):
+        maxChar = 28
+        break
+    }
+
+    if (data && data.length > maxChar) {
+      return `${data.slice(0, maxChar)}...`
+    }
+    return data
   }
 
   render () {
     const { order, statuses, defaultImage } = this.props
     const currentStatus = statuses[order.get('status')] || ''
 
+    const imgixOptions = {
+      w: 100,
+      h: 100,
+      fit: 'clamp',
+      auto: 'compress',
+      q: 35,
+      lossless: 0
+    }
+
     return (
-      <PurchaseWrapper>
-        <ProductWrapper status={this._getColorStatus(currentStatus)} onClick={this._goToReceipt}>
-          <ProductImage background={order.getIn(['products', 'image']) ? order.getIn(['products', 'image']) : defaultImage} />
-          <ProductDescription>
-            <CodeWrapper> <CodeImage src={CliqqLogo} />
-              { order.getIn(['products', 'cliqqCode']) }
-            </CodeWrapper>
-            <H6 uppercase> { order.getIn(['products', 'name']) } </H6>
-            {
-              order.getIn(['products', 'brandLogo']) &&
-              <ProductLogoImage src={order.getIn(['products', 'brandLogo'])} />
-            }
-            <ProductStatusWrapper>
-              { this._displayPackageStatus() }
-            </ProductStatusWrapper>
-          </ProductDescription>
-        </ProductWrapper>
-      </PurchaseWrapper>
+      <Grid.Row>
+        <Grid.Column>
+          <PurchaseWrapper onClick={this._goToReceipt}>
+            <PurchaseInfo>
+              <Label as='span' basic size='large'>
+            Brand Name
+          </Label>
+              <Label as='p' basic size='large'>
+                {this._productName(order.getIn(['products', 'name']))}
+              </Label>
+              <OtherInfo>
+                <Label className='product-price text__roboto' as='span' basic color='orange'>
+                  <FormattedMessage {...messages.peso} />
+                  {order.get('amount')}
+                </Label>
+                <div className='status-info'>
+                  <Label as='p' basic size='mini'>
+                Date Claimed:
+              </Label>
+                  <Label as='span' basic size='large'>
+                09-21-2017
+              </Label>
+                </div>
+              </OtherInfo>
+            </PurchaseInfo>
+            <PurchaseImage>
+              <Image
+                src={(order.getIn(['products', 'image']) &&
+                `${paramsImgix(order.getIn(['products', 'image']), imgixOptions)}`) ||
+                paramsImgix(defaultImage, imgixOptions)} />
+              <StatusWrapper status={this._getColorStatus(currentStatus)}>
+                <Label as='span' basic size='medium'>
+                  {this._handleStatusString(order.get('status'))}
+                </Label>
+              </StatusWrapper>
+            </PurchaseImage>
+          </PurchaseWrapper>
+        </Grid.Column>
+      </Grid.Row>
     )
   }
 }

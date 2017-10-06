@@ -21,7 +21,10 @@ describe('<Purchases />', () => {
     setModalToggle: () => {},
     setMobileNumber: () => {},
     dispatch: () => {},
-    changeRoute: () => {}
+    changeRoute: () => {},
+    setPageTitle: () => {},
+    setShowSearchIcon: () => {},
+    setShowActivityIcon: () => {}
   }
 
   it('render without exploding', () => {
