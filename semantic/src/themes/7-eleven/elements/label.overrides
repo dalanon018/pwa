@@ -7,12 +7,16 @@
   color: @darkGrey;
   margin-left: 0;
   margin-right: 0;
-  
+
   &.basic {
     background: transparent;
     border-radius: 0;
     border: 0;
     color: @darkGrey;
+
+    &.orange {
+      background-color: transparent !important;
+    }
   }
 }
 

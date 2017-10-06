@@ -348,7 +348,7 @@ const LabelPrice = styled.div`
   .total {
     width: 100%;
     color: #f58322;
-    font-family: 'Cabin';
+    font-family: 'Roboto';
     font-size: 35px;
     font-weight: 700;
     letter-spacing: -2px;
@@ -360,7 +360,7 @@ const LabelPrice = styled.div`
     color: #AEAEAE;
     font-size: 20px;
     width: 100%;
-    font-family: 'Cabin';
+    font-family: 'Roboto';
     font-weight: 700;
     line-height: initial;
     text-decoration: line-through;

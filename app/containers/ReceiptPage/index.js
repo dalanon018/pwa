@@ -15,8 +15,6 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { FormattedMessage } from 'react-intl'
 
-import { Grid } from 'semantic-ui-react'
-
 import Receipt from 'components/Receipt'
 import Modal from 'components/PromptModal'
 import WindowWidth from 'components/WindowWidth'
@@ -26,6 +24,12 @@ import {
   PURCHASE_ORDER,
   PURCHASE_USECASE
 } from 'containers/Buckets/constants'
+
+import {
+  setPageTitleAction,
+  setShowSearchIconAction,
+  setShowActivityIconAction
+} from 'containers/Buckets/actions'
 
 import RESERVED from 'images/ticket-backgrounds/reserve.png'
 import UNPAID from 'images/ticket-backgrounds/unpaid.png'
@@ -48,12 +52,13 @@ import {
 } from './actions'
 
 const ReceiptWrapper = styled.div`
-  background: url(${({background}) => background}) no-repeat top right / cover;
+  ${''}
   // min-height: 100vh;
-  padding: 25px;
+  // padding: 50px 14px;
+  margin-bottom: 60px;
 
   @media (min-width: 768px) {
-    padding: 50px 30px;
+    padding: 35px 30px;
   }
 `
 /**
@@ -130,6 +135,9 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
   componentDidMount () {
     const { params: { trackingNumber } } = this.props
     this.props.getReceipt({ trackingNumber })
+    this.props.setPageTitle('Your Receipt')
+    this.props.setShowSearchIcon(false)
+    this.props.setShowActivityIcon(false)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -145,43 +153,36 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
     const { receipt, windowWidth, loading, route } = this.props
     const { modalToggle } = this.state
     const receiptPageName = route && route.name
-    const widthResponsive = windowWidth >= 768
+    // const widthResponsive = windowWidth >= 768
 
     return (
-      <Grid padded={widthResponsive}>
-        <Grid.Row>
-          <Grid.Column>
-            <ReceiptWrapper background={this._identifyBackground}>
+      <ReceiptWrapper background={this._identifyBackground}>
+        <Helmet
+          title='ReceiptPage'
+          meta={[
+            { name: 'description', content: 'Description of ReceiptPage' }
+          ]}
+        />
+        <Receipt
+          receiptPageName={receiptPageName}
+          loading={loading}
+          statuses={STATUSES}
+          purchaseUsecases={PURCHASE_USECASE}
+          purchaseOrder={PURCHASE_ORDER}
+          receipt={receipt}
+          goHomeFn={this._goToHomeFn}
+          windowWidth={windowWidth}
+          repurchaseFn={this._repurchaseFn}
+          goReceiptPage={this._goToPurchases}
+        />
 
-              <Helmet
-                title='ReceiptPage'
-                meta={[
-                  { name: 'description', content: 'Description of ReceiptPage' }
-                ]}
-              />
-              <Receipt
-                receiptPageName={receiptPageName}
-                loading={loading}
-                statuses={STATUSES}
-                purchaseUsecases={PURCHASE_USECASE}
-                purchaseOrder={PURCHASE_ORDER}
-                receipt={receipt}
-                goHomeFn={this._goToHomeFn}
-                windowWidth={windowWidth}
-                repurchaseFn={this._repurchaseFn}
-                goReceiptPage={this._goToPurchases}
-              />
-
-              <Modal
-                open={modalToggle}
-                name='warning'
-                title={<FormattedMessage {...messages.errorMessageTitle} />}
-                content={<FormattedMessage {...messages.invalidTrackingNumber} />}
-              />
-            </ReceiptWrapper>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+        <Modal
+          open={modalToggle}
+          name='warning'
+          title={<FormattedMessage {...messages.errorMessageTitle} />}
+          content={<FormattedMessage {...messages.invalidTrackingNumber} />}
+        />
+      </ReceiptWrapper>
     )
   }
 }
@@ -193,6 +194,9 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
+    setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
+    setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
+    setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getReceipt: (payload) => dispatch(getReceiptAction(payload)),
     repurchase: (payload) => dispatch(requestReceiptAction(payload)),
     changeRoute: (url) => dispatch(push(url)),
