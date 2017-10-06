@@ -13,8 +13,7 @@ import {
 
 import { isEmpty } from 'lodash'
 import { FormattedMessage } from 'react-intl'
-import CopyToClipboard from 'react-copy-to-clipboard'
-import { Icon, Popup, Image, Label, Button } from 'semantic-ui-react'
+import { Image, Label, Button } from 'semantic-ui-react'
 
 import ProductSlider from 'components/BannerSlider'
 import ListCollapse from 'components/ListCollapse'
@@ -109,16 +108,6 @@ const Product = ({
               url={window.location.href} >
               <TwitterIcon size={30} round />
             </TwitterShareButton>
-
-            <CopyToClipboard text={window.location.href}>
-              <span onCopy={copied}>
-                <Popup
-                  trigger={<Icon name='linkify' className='copy-to-clipboard share-button' />}
-                  on='click'
-                  hideOnScroll
-                  content='Product URL copied' />
-              </span>
-            </CopyToClipboard>
           </ShareWrapper>
         </SocialContainer>
 
