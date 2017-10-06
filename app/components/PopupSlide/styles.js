@@ -46,12 +46,12 @@ const InputWrapper = styled.div`
   }
   
   span {
-    color: #AEAEAE;
+    font-size: 2.514286rem;
   }
 `
 
 const TextWrapper = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   text-align: center;
 `
 
@@ -68,7 +68,7 @@ const BannerHeader = styled.div`
   }
 
   span {
-    background-color: #F6A22D;
+    background-color: #D7D7D7;
     border-radius: 50px;
     border: 3px solid #FFFFFF;
     bottom: -35px;
@@ -85,20 +85,11 @@ const BannerHeader = styled.div`
   }
 `
 
-const TitleHead = styled.div`
-  font-family: 'helveticabold';
-  font-size:  14px;
-  letter-spacing: 2px;
-  margin-bottom: 15px;
-  text-transform: uppercase;
-`
-
 export {
   PopupWrapper,
   TextWrapper,
   PopupContainer,
   BannerHeader,
   InputWrapper,
-  TitleHead,
   PopupContent
 }

@@ -14,9 +14,8 @@ import {
 import { isEmpty } from 'lodash'
 import { FormattedMessage } from 'react-intl'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import { Icon, Popup, Image, Label } from 'semantic-ui-react'
+import { Icon, Popup, Image, Label, Button } from 'semantic-ui-react'
 
-import Button from 'components/Button'
 import ProductSlider from 'components/BannerSlider'
 import ListCollapse from 'components/ListCollapse'
 

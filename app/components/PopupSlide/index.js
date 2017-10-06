@@ -21,7 +21,6 @@ import {
   F
 } from 'ramda'
 
-import Button from 'components/Button'
 import CloseButton from 'components/CloseButton'
 import Input from 'components/InputField'
 import Checkbox from 'components/CheckboxField'
@@ -31,16 +30,13 @@ import A from 'components/A'
 import BannerBg from 'images/modal-bg-orange.png'
 import MobileIcon from 'images/icons/mobile-icon.svg'
 
-import { Image } from 'semantic-ui-react'
-
-// import { setItem } from 'utils/localStorage'
+import { Image, Label, Button } from 'semantic-ui-react'
 
 import {
   PopupWrapper,
   PopupContainer,
   InputWrapper,
   BannerHeader,
-  TitleHead,
   TextWrapper,
   PopupContent } from './styles'
 
@@ -171,14 +167,17 @@ export class PopupSlide extends React.PureComponent {
         <PopupContainer>
           <PopupContent>
             <TextWrapper>
-              <TitleHead>
+              <Label as='p' basic size='big'>
                 <FormattedMessage {...messages.register} />
-              </TitleHead>
-              <p><FormattedMessage {...messages.label} /></p>
+              </Label>
+              <Label as='p' basic color='grey' size='medium'><FormattedMessage {...messages.label} /></Label>
             </TextWrapper>
 
             <InputWrapper>
-              <FormattedMessage {...messages.phonePrefix} />
+              <Label as='span' basic color='grey' size='massive'>
+                <FormattedMessage {...messages.phonePrefix} />
+              </Label>
+
               <Input
                 type='text'
                 value={value}
@@ -199,9 +198,10 @@ export class PopupSlide extends React.PureComponent {
             <Button
               disabled={this.state.toggle}
               primary
+              fluid
               onClick={this._handleSubmit}>
-                  SUBMIT
-              </Button>
+                  Submit
+            </Button>
 
             <CloseButton close={onClose} text='Close' />
           </PopupContent>
