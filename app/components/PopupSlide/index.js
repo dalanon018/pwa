@@ -21,7 +21,6 @@ import {
   F
 } from 'ramda'
 
-import Button from 'components/Button'
 import CloseButton from 'components/CloseButton'
 import Input from 'components/InputField'
 import Checkbox from 'components/CheckboxField'
@@ -31,7 +30,7 @@ import A from 'components/A'
 import BannerBg from 'images/modal-bg-orange.png'
 import MobileIcon from 'images/icons/mobile-icon.svg'
 
-import { Image, Label } from 'semantic-ui-react'
+import { Image, Label, Button } from 'semantic-ui-react'
 
 import {
   PopupWrapper,
@@ -199,6 +198,7 @@ export class PopupSlide extends React.PureComponent {
             <Button
               disabled={this.state.toggle}
               primary
+              fluid
               onClick={this._handleSubmit}>
                   Submit
             </Button>

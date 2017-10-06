@@ -203,11 +203,6 @@ export const ButtonContainer = styled.div`
   .ui.button.primary {
     padding: 20px 40px !important;
   }
-
-  @media (min-width: 768px) {
-    padding: 0;
-    position: static;
-  }
 `
 
 // ====================
@@ -237,10 +232,6 @@ export const ReceiptContent = styled.div`
   -moz-transition: all 2s ease;
   -o-transition: all 2s ease;
   transition: all 2s ease;
-  ${'' /* box-shadow: 0px 0px 20px #F0F0F0;
-  background-color: #FFFFFF;
-  padding: 14px;
-  width: 100%; */}
 
   .product-current-price {
     font-size: 40px;

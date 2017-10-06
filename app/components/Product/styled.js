@@ -191,6 +191,10 @@ export const ButtonContainer = styled(AnimateDiv)`
   position: fixed;
   width: 100%;
   z-index: 1;
+
+  .ui.button.primary {
+    padding: 20px 40px !important;
+  }
 `
 
 export const SocialButtonWrapper = styled.div`
