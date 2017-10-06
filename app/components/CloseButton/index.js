@@ -13,15 +13,13 @@ import styled from 'styled-components'
 import { Button } from 'semantic-ui-react'
 
 const ButtonWrapper = styled.div`
-  margin: 10px 0;
+  margin-top: 15px;
   text-align: center;
 
   .button {
     background: transparent;
-    font-family: 'helveticamedium';
     letter-spacing: 2px;
     padding: 0;
-    text-transform: uppercase;
 
     &:hover, &:focus {
       background: transparent;
@@ -33,7 +31,7 @@ const ButtonWrapper = styled.div`
 function CloseButton ({close, text}) {
   return (
     <ButtonWrapper>
-      <Button onClick={close}>{text}</Button>
+      <Button onClick={close} size='large'>{text}</Button>
     </ButtonWrapper>
   )
 }

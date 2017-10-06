@@ -7,6 +7,7 @@
   color: @darkGrey;
   margin-left: 0;
   margin-right: 0;
+  line-height: 1.5;
 
   &.basic {
     background: transparent;
@@ -18,6 +19,38 @@
       background-color: transparent !important;
     }
   }
+
+  &.color-grey {
+    color: @grey;
+  }
+
+  &.font-roboto {
+    font-family: 'Roboto', san-serif;
+  }
+
+  &.weight-300 {
+    font-weight: 300;
+  }
+
+  &.weight-400 {
+    font-weight: 400;
+  }
+
+  &.weight-600 {
+    font-weight: 600;
+  }
+
+  &.weight-700 {
+    font-weight: 700;
+  }
+
+  &.italic {
+    font-style: italic;
+  }
+
+  &.center {
+    text-align: center;
+  }
 }
 
 p.ui.label {
@@ -28,10 +61,4 @@ p.ui.label {
 
 span.ui.label {
   padding: 0;
-}
-
-.ui.label {
-  &.color-grey {
-    color: @grey;
-  }
 }
