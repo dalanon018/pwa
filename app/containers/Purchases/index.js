@@ -12,10 +12,10 @@ import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
-import { Grid, Modal } from 'semantic-ui-react'
+import { Grid, Tab, Label, Image } from 'semantic-ui-react'
 import { imageStock } from 'utils/image-stock'
+import { isEmpty } from 'ramda'
 
-import H1 from 'components/H1'
 import Purchase from 'components/Purchase'
 import PopupSlide from 'components/PopupSlide'
 import WindowWidth from 'components/WindowWidth'
@@ -26,7 +26,13 @@ import {
   PURCHASE_USECASE
 } from 'containers/Buckets/constants'
 
-import EmptyPurchase from 'images/empty-purchases.svg'
+import {
+  setPageTitleAction,
+  setShowSearchIconAction,
+  setShowActivityIconAction
+} from 'containers/Buckets/actions'
+
+import EmptyPurchase from 'images/icons/sad-icon.svg'
 
 import messages from './messages'
 
@@ -45,35 +51,6 @@ import {
 
   setMobileNumberAction
 } from './actions'
-
-const BarcodeListWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 20px 10px;
-
-  @media (min-width: 768px) {
-    height: auto;
-
-    .header-label {
-      font-size: 17px;
-      font-weight: bold;
-    }
-  }
-`
-
-const PurchasesList = styled.div`
-  align-items: center;
-  display: flex;
-  // flex-direction: column;
-  justify-content: ${({purchases}) => purchases ? 'flex-start' : 'center'};
-
-  @media (min-width: 768px) {
-    display: block;
-    flex-direction: inherit;
-    justify-content: flex-start;
-    margin-top: 30px;
-  }
-`
 
 const EmptyWrapper = styled.div`
   align-items: center;
@@ -96,6 +73,20 @@ const EmptyWrapperText = styled.p`
   text-align: center;
 `
 
+const EmptyPurchaseWrapper = styled.div`
+  align-content: center;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  height: 72vh;
+  padding: 0 30px;
+
+  .image {
+    margin: 20px auto;
+    width: 80px;
+  }
+`
+
 export const EmptyPurchases = () => (
   <EmptyWrapper>
     <EmptyWrapperImg src={EmptyPurchase} />
@@ -114,6 +105,9 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
       PropTypes.array.isRequired,
       PropTypes.object.isRequired
     ]),
+    setPageTitle: PropTypes.func.isRequired,
+    setShowSearchIcon: PropTypes.func.isRequired,
+    setShowActivityIcon: PropTypes.func.isRequired,
     getApiPurchases: PropTypes.func.isRequired,
     changeRoute: PropTypes.func.isRequired,
     getModalToggle: PropTypes.func.isRequired,
@@ -149,6 +143,65 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
     return null
   }
 
+  _handlePurchases = () => {
+    const { purchases, changeRoute, windowWidth } = this.props
+
+    return (
+      <Grid padded>
+        {/* purchases={(purchases.size > 0)} */}
+        { this._displayEmpty() }
+        {
+          purchases.map((order, index) =>
+            <Purchase
+              className='padding__bottom--15'
+              defaultImage={imageStock('default-slider.jpg')}
+              key={order.get('trackingNumber')}
+              order={order}
+              windowWidth={windowWidth}
+              statuses={STATUSES}
+              purchaseUsecases={PURCHASE_USECASE}
+              purchaseOrders={PURCHASE_ORDER}
+              changeRoute={changeRoute}
+            />)
+        }
+      </Grid>
+
+    )
+  }
+
+  _handleEmptyPurchase = () => {
+    return (
+      <Grid padded>
+        <Grid.Row centered>
+          <Grid.Column textAlign='center'>
+            <EmptyPurchaseWrapper>
+              <Image src={EmptyPurchase} />
+              <Label className='text__roboto--light' as='p' basic size='large'>
+                Woops! It seems like you haven't bought anything yet. Let's fix that!
+              </Label>
+            </EmptyPurchaseWrapper>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    )
+  }
+
+  _handleShow = () => {
+    const { purchases } = this.props
+
+    if (isEmpty(purchases)) {
+      return this._handleEmptyPurchase()
+    }
+
+    return this._handlePurchases()
+  }
+
+  componentWillMount () {
+    this.props.setPageTitle('My Activity')
+    this.props.setShowSearchIcon(true)
+    this.props.setShowActivityIcon(false)
+  }
+
   componentDidMount () {
     const { getApiPurchases, getLocalPurchases, getModalToggle } = this.props
     // fetch
@@ -160,68 +213,31 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
   }
 
   render () {
-    const { purchases, changeRoute, modalToggle, setMobileNumber, windowWidth } = this.props
+    const { modalToggle, setMobileNumber } = this.props
 
-    const resposiveColumns = () => {
-      if (windowWidth >= 768 && windowWidth <= 1200) {
-        return 2
-      } else if (windowWidth >= 1200) {
-        return 3
-      } else {
-        return 1
-      }
-    }
+    const panes = [
+      { menuItem: 'Active', render: () => <Tab.Pane>{this._handleShow()}</Tab.Pane> },
+      { menuItem: 'Compeleted', render: () => <Tab.Pane>{this._handleShow()}</Tab.Pane> },
+      { menuItem: 'Expired', render: () => <Tab.Pane>{this._handleEmptyPurchase()}</Tab.Pane> }
+    ]
 
     return (
-      <BarcodeListWrapper>
+      <div>
         <Helmet
           title='Receipts'
           meta={[
             { name: 'description', content: 'List of barcodes' }
           ]}
         />
-        <H1 className='header-label' center>
-          <FormattedMessage {...messages.receiptsTitle} />
-        </H1>
-        <PurchasesList purchases={(purchases.size > 0)}>
-          <Grid>
-            <Grid.Row columns={resposiveColumns()}>
-              { this._displayEmpty() }
-              {
-                  purchases.map((order, index) =>
-                    <Grid.Column key={index} className='padding__bottom--15'>
-                      <Purchase
-                        defaultImage={imageStock('default-slider.jpg')}
-                        key={order.get('trackingNumber')}
-                        order={order}
-                        statuses={STATUSES}
-                        purchaseUsecases={PURCHASE_USECASE}
-                        purchaseOrders={PURCHASE_ORDER}
-                        changeRoute={changeRoute}
-                        />
-                    </Grid.Column>
-                  )
-                }
-            </Grid.Row>
-          </Grid>
-        </PurchasesList>
 
-        <div className='mobile-visibility'>
-          <PopupSlide
-            submit={setMobileNumber}
-            toggle={modalToggle}
-            onClose={this._goToHome}
-          />
-        </div>
-        <Modal open={windowWidth >= 768 && modalToggle}>
-          <div className='modal-popup-slide'>
-            <PopupSlide
-              submit={setMobileNumber}
-              toggle={modalToggle}
-              onClose={this._goToHome} />
-          </div>
-        </Modal>
-      </BarcodeListWrapper>
+        <Tab panes={panes} />
+
+        <PopupSlide
+          submit={setMobileNumber}
+          toggle={modalToggle}
+          onClose={this._goToHome}
+        />
+      </div>
     )
   }
 }
@@ -234,6 +250,9 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
+    setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
+    setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
+    setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getApiPurchases: (payload) => dispatch(getApiPurchasesAction(payload)),
     getLocalPurchases: () => dispatch(getStoragePurchasesAction()),
     getModalToggle: () => dispatch(getModalToggleAction()),
