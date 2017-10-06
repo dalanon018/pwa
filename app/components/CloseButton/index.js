@@ -7,18 +7,15 @@
 import React from 'react'
 import styled from 'styled-components'
 
-// import { FormattedMessage } from 'react-intl';
-// import messages from './messages';
-
-import { Button } from 'semantic-ui-react'
+import { Button, Label } from 'semantic-ui-react'
 
 const ButtonWrapper = styled.div`
-  margin-top: 15px;
+  margin: 10px 0;
+  padding: 10px 0;
   text-align: center;
 
   .button {
     background: transparent;
-    letter-spacing: 2px;
     padding: 0;
 
     &:hover, &:focus {
@@ -31,7 +28,7 @@ const ButtonWrapper = styled.div`
 function CloseButton ({close, text}) {
   return (
     <ButtonWrapper>
-      <Button onClick={close} size='large'>{text}</Button>
+      <Button onClick={close}><Label as='p' basic size='large'>{text}</Label></Button>
     </ButtonWrapper>
   )
 }

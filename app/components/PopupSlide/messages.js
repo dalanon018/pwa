@@ -14,7 +14,7 @@ export default defineMessages({
   },
   register: {
     id: `${idSuffix}.register`,
-    defaultMessage: 'Register your number'
+    defaultMessage: 'Register Your Number'
   },
   label: {
     id: `${idSuffix}.label`,

@@ -9,7 +9,7 @@ import styled from 'styled-components'
 
 // import { FormattedMessage } from 'react-intl';
 // import messages from './messages';
-import { Checkbox } from 'semantic-ui-react'
+import { Checkbox, Label } from 'semantic-ui-react'
 
 const CheckboxWrapper = styled.div`
   display: flex;
@@ -18,15 +18,15 @@ const CheckboxWrapper = styled.div`
   input:checked~label:after {
     color: #8DC640 !important;
   }
-  label {
-    color: #5B5B5B !important;
-    font-size: 14px;
+  span {
+    line-height: 17px !important;
   }
   #checkbox {
-    margin-right: 5px;
+    margin-right: 15px;
   }
   a {
     color: #F58322;
+    text-decoration: underline;
   }
 
   @media (min-width: 768px) {
@@ -40,7 +40,7 @@ function CheckboxField ({label, name, ...props}) {
   return (
     <CheckboxWrapper className='prompt-number'>
       <Checkbox id={name} {...props} />
-      <label htmlFor={name}>{label}</label>
+      <Label as='span' basic size='large' color='grey' htmlFor={name}>{label}</Label>
     </CheckboxWrapper>
   )
 }
