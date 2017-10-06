@@ -18,6 +18,7 @@ import { imageStock } from 'utils/image-stock'
 
 import Product from 'components/Product'
 import PopupSlide from 'components/PopupSlide'
+import PopupVerification from 'components/PopupVerification'
 import WindowWidth from 'components/WindowWidth'
 
 import {
@@ -77,8 +78,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       prevMobileNumber: null,
       socialToggle: false,
       copied: false,
-      openModalPhoneDesktop: false,
       showSlide: false,
+      showVerification: false,
       mobileNumber: ''
     }
 
@@ -90,11 +91,25 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this._handleMobileRegistered = this._handleMobileRegistered.bind(this)
     this._handleSocialToggle = this._handleSocialToggle.bind(this)
     this._handleCopy = this._handleCopy.bind(this)
-    this._handleModalOpen = this._handleModalOpen.bind(this)
-    this._handleModalClose = this._handleModalClose.bind(this)
     this._handleTouch = this._handleTouch.bind(this)
     this._recaptchaRef = this._recaptchaRef.bind(this)
     this._executeCaptcha = this._executeCaptcha.bind(this)
+    this._handleToggleVerification = this._handleToggleVerification.bind(this)
+    this._handleSubmitVerification = this._handleSubmitVerification.bind(this)
+  }
+
+  _handleSubmitVerification () {
+    const { product, setCurrentProduct, updateMobileNumbers } = this.props
+    const { mobileNumber } = this.state
+
+    setCurrentProduct(product)
+    updateMobileNumbers(mobileNumber)
+  }
+
+  _handleToggleVerification () {
+    this.setState({
+      showVerification: !this.state.showVerification
+    })
   }
 
   _recaptchaRef (ref) {
@@ -102,14 +117,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   _executeCaptcha (token) {
-    const { product, setCurrentProduct, updateMobileNumbers } = this.props
-    const { mobileNumber } = this.state
-
     if (token) {
       this.successSubmission = true
-
-      setCurrentProduct(product)
-      updateMobileNumbers(mobileNumber)
+      this._handleToggleVerification()
     }
   }
 
@@ -118,18 +128,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     if (showSlide) {
       e.preventDefault()
     }
-  }
-
-  _handleModalOpen () {
-    this.setState({
-      openModalPhoneDesktop: true
-    })
-  }
-
-  _handleModalClose () {
-    this.setState({
-      openModalPhoneDesktop: false
-    })
   }
 
   _handleSubmit ({ value }) {
@@ -219,7 +217,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   render () {
     const { loading, product, toggle, route, windowWidth } = this.props
-    const { modalToggle, prevMobileNumber, openModalPhoneDesktop } = this.state
+    const { modalToggle, prevMobileNumber, showVerification } = this.state
     const productPageTrigger = route && route
 
     return (
@@ -238,16 +236,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             toggle={this.state.socialToggle}
             toggleClick={this._handleSocialToggle}
             productPageTrigger={productPageTrigger}
-
-            // For Phone Prompt Desktop Modal
-            submit={this._handleSubmit}
-            closeModal={this._handleModalClose}
-            modalToggle={modalToggle}
-            openModal={this._handleModalOpen}
-            toggleModal={toggle}
-            modalStatus={openModalPhoneDesktop}
-            mobileNumber={prevMobileNumber}
-            onClose={this._handleToggle} />
+          />
         </div>
         <div className='mobile-visibility' onTouchMove={this._handleTouch}>
           <PopupSlide
@@ -257,6 +246,15 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             toggle={toggle}
             mobileNumber={prevMobileNumber}
             onClose={this._handleToggle} />
+        </div>
+        <div className='mobile-visibility' onTouchMove={this._handleTouch}>
+          <PopupVerification
+            submit={this._handleSubmitVerification}
+            modalClose={this._handleClose}
+            modalToggle={modalToggle}
+            toggle={showVerification}
+            mobileNumber={prevMobileNumber}
+            onClose={this._handleToggleVerification} />
         </div>
         <Recaptcha
           ref={this._recaptchaRef}
