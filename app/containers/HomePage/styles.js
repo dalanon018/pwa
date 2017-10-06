@@ -5,7 +5,11 @@ const BannerWrapper = styled.div`
     padding: 0 14px;
   }
 `
-
+const SearchWrapper = styled.div`
+  padding-right: 10px;
+  padding-left: 10px;
+`
 export {
-  BannerWrapper
+  BannerWrapper,
+  SearchWrapper
 }

@@ -4,7 +4,6 @@ const ProductWrapper = styled.div`
   cursor: pointer;
   display: block;
   margin-bottom: 10px;
-  padding: 0 15px;
   position: relative;
   text-align: center;
 
@@ -22,7 +21,7 @@ const ImageWrapper = styled.div`
 `
 
 const ProductInfo = styled.div`
-  
+
 `
 
 const ProductPriceWrapper = styled.div`

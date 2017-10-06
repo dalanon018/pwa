@@ -6,43 +6,37 @@
 import { defineMessages } from 'react-intl'
 
 export default defineMessages({
-  header: {
-    id: 'app.components.ModalWithHeader.header',
-    defaultMessage: 'This is the ModalWithHeader component !'
-  },
-
   reservedTitle: {
     id: 'app.components.ModalWithHeader.reservedTitle',
-    defaultMessage: 'ITEM IS READY FOR PICKUP!'
+    defaultMessage: ''
   },
   unpaidTitle: {
     id: 'app.components.ModalWithHeader.unpaidTitle',
-    defaultMessage: 'ITEM HAS EXPIRED'
+    defaultMessage: 'Item Has Been Expired'
   },
   confirmedTitle: {
     id: 'app.components.ModalWithHeader.confirmedTitle',
-    defaultMessage: 'CONFIRM OPTION'
+    defaultMessage: 'Item Has Been Paid!'
   },
   intransitTitle: {
     id: 'app.components.ModalWithHeader.intransitTitle',
-    defaultMessage: 'ITEM IS ON ITS WAY TO STORE'
+    defaultMessage: 'Item Is On Its Way To The Store'
   },
   deliveredTitle: {
     id: 'app.components.ModalWithHeader.deliveredTitle',
-    defaultMessage: 'ITEM IS READY FOR PICKUP!'
+    defaultMessage: 'Item Is Ready For Pick Up'
   },
   claimedTitle: {
     id: 'app.components.ModalWithHeader.claimedTitle',
-    defaultMessage: 'ITEM HAS BEEN CLAIMED!'
+    defaultMessage: 'Item Has Been Claimed'
   },
   unclaimedTitle: {
     id: 'app.components.ModalWithHeader.unclaimedTitle',
-    defaultMessage: 'ITEM HAS EXPIRED'
+    defaultMessage: 'Item Wasn\'t Claim'
   },
-
   reservedDescription: {
     id: 'app.components.ModalWithHeader.reservedDescription',
-    defaultMessage: 'reservedDescription TEXT'
+    defaultMessage: ''
   },
   unpaidDescription: {
     id: 'app.components.ModalWithHeader.unpaidDescription',
@@ -67,5 +61,37 @@ export default defineMessages({
   unclaimedDescription: {
     id: 'app.components.ModalWithHeader.unclaimedDescription',
     defaultMessage: 'You have not claimed your item within the seven day period. Kindly contact our customer service line for assistance. Thank you!'
+  },
+  buttonReserved: {
+    id: 'app.components.ModalWithHeader.buttonReserved',
+    defaultMessage: 'Thanks! I\'m on my way!'
+  },
+  buttonUnpaid: {
+    id: 'app.components.ModalWithHeader.buttonUnpaid',
+    defaultMessage: 'Got It!'
+  },
+  buttonConfirmed: {
+    id: 'app.components.ModalWithHeader.buttonConfirmed',
+    defaultMessage: 'Awesome Thanks!'
+  },
+  buttonIntransit: {
+    id: 'app.components.ModalWithHeader.buttonIntransit',
+    defaultMessage: 'Cool! I\'m Excited!'
+  },
+  buttonDelivered: {
+    id: 'app.components.ModalWithHeader.buttonDelivered',
+    defaultMessage: 'Awesome Thanks!'
+  },
+  buttonClaimed: {
+    id: 'app.components.ModalWithHeader.buttonClaimed',
+    defaultMessage: 'Awesome Thanks!'
+  },
+  buttonUnclaimed: {
+    id: 'app.components.ModalWithHeader.buttonUnclaimed',
+    defaultMessage: 'Got It!'
+  },
+  secondaryButton: {
+    id: 'app.components.ModalWithHeader.secondaryButton',
+    defaultMessage: 'View My Activities'
   }
 })

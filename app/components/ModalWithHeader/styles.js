@@ -1,24 +1,11 @@
 import styled from 'styled-components'
 
-const TextWrapper = styled.div`
-  margin-bottom: 20px;
-  text-align: center;
-
-  p {
-    color: #5B5B5B;
-    font-size: 12px;
-    letter-spacing: 1px;
-    line-height: 14px;
-  }
+const DetailsWrapper = styled.div`
+  margin: 10px;
 `
 
-const TitleHead = styled.div`
-  color: #5B5B5B;
-  font-family: 'helveticabold';
-  font-size:  14px;
-  letter-spacing: 2px;
-  margin-bottom: 15px;
-  text-transform: uppercase;
+const ButtonWrapper = styled.div`
+  text-align: center;
 `
 
 const BannerHeader = styled.div`
@@ -43,7 +30,7 @@ const BannerHeader = styled.div`
 
   span {
     align-items: center;
-    background-color: ${props => props.iconBg ? props.iconBg : '#F6A22D'};
+    background-color: ${props => props.iconBg ? props.iconBg : '#AEAEAE'};
     border-radius: 50px;
     border: 3px solid #FFFFFF;
     bottom: -35px;
@@ -60,25 +47,9 @@ const BannerHeader = styled.div`
   }
 `
 
-const ButtonWrapper = styled.div`
-  padding: 0;
-  text-align: center;
-  button {
-    &:last-child {
-      font-size: 12px;
-      margin-right: 0;
-      margin-top: 15px;
-    }
-  }
-
-  @media (min-width: 768px) {
-    padding: 0 80px;
-  }
-`
-
 const ModalContainer = styled.div`
   border-radius: 30px;
-  
+
   @media (min-width: 768px) {
     .content {
       padding: 30px 50px !important;
@@ -94,8 +65,7 @@ const ModalContainer = styled.div`
 
 export {
   BannerHeader,
-  ButtonWrapper,
-  TextWrapper,
+  DetailsWrapper,
   ModalContainer,
-  TitleHead
+  ButtonWrapper
 }

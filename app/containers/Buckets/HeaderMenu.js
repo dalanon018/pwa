@@ -106,6 +106,8 @@ const HamburgerSpan = styled.span`
 const MobileMenu = styled.div`
   background: #FFF;
   box-shadow: 1px 1px 20px #F0F0F0;
+  padding-right: 10px;
+  padding-left: 10px;
   height: 49px;
   left: 0;
   position: fixed;

@@ -23,6 +23,7 @@ import {
   lt
 } from 'ramda'
 import styled from 'styled-components'
+import { Container } from 'semantic-ui-react'
 
 import ProductView from 'components/ProductView'
 import Footer from 'components/Footer'
@@ -75,9 +76,9 @@ import {
 //   }
 // `
 
-const ContentWrapper = styled.div`
-  padding-top: 20px;
-  padding-bottom: 20px;
+const ContentWrapper = styled(Container)`
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
 
   h4.ui.header {
     margin-top: 0 !important;
@@ -379,7 +380,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     const { productsByCategory, productsViewed, loader, changeRoute, windowWidth } = this.props
     return (
       <div>
-        <ContentWrapper className='padding__horizontal--10'>
+        <ContentWrapper>
           { this._displayHeaderFeaturesProduct() }
           { this._displayFeaturesProduct() }
 

@@ -11,12 +11,10 @@ import { toUpper } from 'ramda'
 import { FormattedMessage } from 'react-intl'
 import messages from './messages'
 
-import { Modal, Image } from 'semantic-ui-react'
-
-import Button from 'components/Button'
+import { Button, Modal, Image, Label } from 'semantic-ui-react'
 import TextButton from 'components/CloseButton'
 
-import OrangeBackground from 'images/modal-bg-orange.png'
+import LightgreyBackground from 'images/modal-bg-lightgrey.png'
 import RedBackground from 'images/modal-bg-red.png'
 
 import StoreIcon from 'images/icons/ready-icon.svg'
@@ -34,9 +32,8 @@ import {
 
 import {
   BannerHeader,
-  TextWrapper,
-  TitleHead,
   ModalContainer,
+  DetailsWrapper,
   ButtonWrapper
 } from './styles'
 
@@ -52,19 +49,19 @@ const ModalImages = ({ status }) => {
       iconBg: '#EB1E25'
     },
     CONFIRMED: {
-      banner: OrangeBackground,
+      banner: LightgreyBackground,
       icon: CashierIcon
     },
     INTRANSIT: {
-      banner: OrangeBackground,
+      banner: LightgreyBackground,
       icon: IntransitIcon
     },
     DELIVERED: {
-      banner: OrangeBackground,
+      banner: LightgreyBackground,
       icon: StoreIcon
     },
     CLAIMED: {
-      banner: OrangeBackground,
+      banner: LightgreyBackground,
       icon: PaperBagIcon
     },
     UNCLAIMED: {
@@ -127,41 +124,41 @@ const ModalDescription = ({ status, receipt }) => {
   })(null)(status)
 }
 
-const ModalButtons = ({ status, goToHome, goToReceipts }) => {
+const ModalButtons = ({ status, goToReceipts }) => {
   return ComponentDetail({
     RESERVED: {
-      primary: 'THANKS! I\'M ON MY WAY!',
-      secondary: '',
-      onClick: goToHome
+      primary: <FormattedMessage {...messages.buttonReserved} />,
+      secondary: <FormattedMessage {...messages.secondaryButton} />,
+      onClick: goToReceipts
     },
     UNPAID: {
-      primary: 'GOT IT!',
-      secondary: 'RECEIPTS HISTORY',
+      primary: <FormattedMessage {...messages.buttonUnpaid} />,
+      secondary: <FormattedMessage {...messages.secondaryButton} />,
       onClick: goToReceipts
     },
     CONFIRMED: {
-      primary: 'AWESOME! THANKS',
-      secondary: 'TRACK YOUR ORDER',
+      primary: <FormattedMessage {...messages.buttonConfirmed} />,
+      secondary: <FormattedMessage {...messages.secondaryButton} />,
       onClick: goToReceipts
     },
     INTRANSIT: {
-      primary: 'COOL! I\'M EXCITED!',
-      secondary: 'TRACK YOUR ORDER',
+      primary: <FormattedMessage {...messages.buttonIntransit} />,
+      secondary: <FormattedMessage {...messages.secondaryButton} />,
       onClick: goToReceipts
     },
     DELIVERED: {
-      primary: 'AWESOME! THANKS',
-      secondary: 'RECEIPTS HISTORY',
+      primary: <FormattedMessage {...messages.buttonDelivered} />,
+      secondary: <FormattedMessage {...messages.secondaryButton} />,
       onClick: goToReceipts
     },
     CLAIMED: {
-      primary: 'AWESOME! THANKS',
-      secondary: 'RECEIPTS HISTORY',
+      primary: <FormattedMessage {...messages.buttonClaimed} />,
+      secondary: <FormattedMessage {...messages.secondaryButton} />,
       onClick: goToReceipts
     },
     UNCLAIMED: {
-      primary: 'GOT IT!',
-      secondary: 'RECEIPTS HISTORY',
+      primary: <FormattedMessage {...messages.buttonUnclaimed} />,
+      secondary: <FormattedMessage {...messages.secondaryButton} />,
       onClick: goToReceipts
     }
   })(null)(status)
@@ -197,9 +194,9 @@ class ModalWithHeader extends React.PureComponent {
   }
 
   render () {
-    const { receipt, goToHome, goToReceipts } = this.props
+    const { receipt, goToReceipts } = this.props
     const currentStatus = STATUSES[toUpper(receipt.get('status'))] || ''
-    const { primary, secondary, onClick } = ModalButtons({ status: currentStatus, goToHome, goToReceipts }) || {}
+    const { primary, secondary, onClick } = ModalButtons({ status: currentStatus, goToReceipts }) || {}
     // const modalSize = windowWidth >= 768 ? 'small' : 'mini'
 
     return (
@@ -217,14 +214,19 @@ class ModalWithHeader extends React.PureComponent {
             </span>
           </BannerHeader>
           <Modal.Content>
-            <TextWrapper>
-              <TitleHead>
-                <ModalTitle {...{ status: currentStatus, receipt }} />
-              </TitleHead>
-              <p><ModalDescription {...{ status: currentStatus, receipt }} /></p>
-            </TextWrapper>
+            <Label className='weight-600 center' as='p' size='big'>
+              <ModalTitle {...{ status: currentStatus, receipt }} />
+            </Label>
+            <DetailsWrapper>
+              <Label className='weight-300 font-roboto center' as='p' size='large'>
+                <ModalDescription {...{ status: currentStatus, receipt }} />
+              </Label>
+            </DetailsWrapper>
             <ButtonWrapper>
-              <Button primary fluid onClick={this._closeModal}>
+              <Button
+                onClick={this._closeModal}
+                primary
+              >
                 { primary }
               </Button>
               <TextButton text={secondary} close={() => this._fnFactory(onClick)} />
