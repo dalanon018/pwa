@@ -18,54 +18,38 @@ export default defineMessages({
     id: 'app.components.Receipt.UNPAID',
     defaultMessage: 'This item has expired. Would you like to repurchase it?'
   },
+  PROCESSING: {
+    id: 'app.components.Receipt.PROCESSING',
+    defaultMessage: 'This now serves as your official receipt for your item. Thank you for shopping with Cliqq!'
+  },
   CONFIRMED: {
     id: 'app.components.Receipt.CONFIRMED',
-    defaultMessage: 'We\'ve received your payment for this item!'
+    defaultMessage: 'This now serves as your official receipt for your item. Thank you for shopping with Cliqq!'
   },
   INTRANSIT: {
     id: 'app.components.Receipt.INTRANSIT',
-    defaultMessage: 'This item is on its way to the store'
+    defaultMessage: 'This now serves as your official receipt for your item. Thank you for shopping with Cliqq!'
   },
   DELIVERED: {
     id: 'app.components.Receipt.DELIVERED',
-    defaultMessage: 'This item is now ready for pick up'
+    defaultMessage: 'This now serves as your official receipt for your item. Thank you for shopping with Cliqq!'
   },
   CLAIMED: {
     id: 'app.components.Receipt.CLAIMED',
-    defaultMessage: 'This item has already been claimed!'
+    defaultMessage: 'This now serves as your official receipt for your item. Thank you for shopping with Cliqq!'
   },
   UNCLAIMED: {
     id: 'app.components.Receipt.UNCLAIMED',
-    defaultMessage: 'This item hasn\'t been claimed'
+    defaultMessage: 'This now serves as your official receipt for your item. Thank you for shopping with Cliqq!'
   },
   unknownStatus: {
     id: 'app.components.Receipt.unknownStatus',
     defaultMessage: ' ' // this one needs atleast a character that is why we have space, else it will return warning
   },
-  receiptPriceTitle: {
-    id: 'app.components.Receipt.receiptPriceTitle',
-    defaultMessage: 'PRICE:'
-  },
-  receiptDatePurchasedTitle: {
-    id: 'app.components.Receipt.receiptDatePurchasedTitle',
-    defaultMessage: 'DATE PURCHASED:'
-  },
-  receiptDateClaimedTitle: {
-    id: 'app.components.Receipt.receiptDateClaimedTitle',
-    defaultMessage: 'DATE CLAIMED:'
-  },
-  receiptTrackingTitle: {
-    id: 'app.components.Receipt.receiptTrackingTitle',
-    defaultMessage: 'TRACKING NO.:'
-  },
-  receiptStoreLocationTitle: {
-    id: 'app.components.Receipt.receiptStoreLocationTitle',
-    defaultMessage: 'STORE LOCATION:'
-  },
   receiptInfoMessageReserve: {
     id: 'app.components.Receipt.receiptInfoMessageReserve',
     // defaultMessage: 'Pay Item Before the time Expires'
-    defaultMessage: `Show thus barcode at any 7 Eleven
+    defaultMessage: `Show this barcode at any 7 Eleven
     store within 1 Hour and pay for your item.`
   },
   receiptInfoMessageReserveExpired: {
@@ -76,9 +60,17 @@ export default defineMessages({
     id: 'app.components.Receipt.receiptInfoMessageUnpaid',
     defaultMessage: 'Follow us on Social Media for all the latest updates!'
   },
-  receiptInfoMessageClaimEarly: {
-    id: 'app.components.Receipt.receiptInfoMessageClaimEarly',
-    defaultMessage: 'Follow us on Social Media for all the latest updates!'
+  receiptInfoMessagePaid: {
+    id: 'app.components.Receipt.receiptInfoMessagePaid',
+    defaultMessage: 'Please wait for an SMS telling you that your order is in the store'
+  },
+  receiptInfoMessageCashDelivered: {
+    id: 'app.components.Receipt.receiptInfoMessagePaid',
+    defaultMessage: 'Your item is now ready for pick up at {storeName}'
+  },
+  receiptInfoMessageCodDelivered: {
+    id: 'app.components.Receipt.receiptInfoMessagePaid',
+    defaultMessage: 'Please go to {storeName} and pay for your item at the cashier.'
   },
   receiptInfoMessageUnclaimed: {
     id: 'app.components.Receipt.receiptInfoMessageUnclaimed',
@@ -87,6 +79,14 @@ export default defineMessages({
   returnToHome: {
     id: 'app.components.Receipt.returnToHome',
     defaultMessage: 'RETURN TO HOME'
+  },
+  returnPolicyTitle: {
+    id: 'app.components.Receipt.returnToHome',
+    defaultMessage: 'Cliqq Return Policy'
+  },
+  returnPolicyDescription: {
+    id: 'app.components.Receipt.returnPolicyDescription',
+    defaultMessage: 'Change of Mind is Applicable. Return Policy is Valid for 7 Days upon claiming'
   },
   viewActivity: {
     id: 'app.components.Receipt.viewActivity',
@@ -99,11 +99,6 @@ export default defineMessages({
   rePurchase: {
     id: 'app.components.Receipt.rePurchase',
     defaultMessage: 'Repurchase Item'
-  },
-
-  validUntil: {
-    id: 'app.components.Receipt.validUntil',
-    defaultMessage: 'Valid Until:'
   },
   orderNumber: {
     id: 'app.components.Receipt.orderNumber',
@@ -124,5 +119,81 @@ export default defineMessages({
   mobileNumberLabel: {
     id: `app.components.Receipt.mobileNumberLabel`,
     defaultMessage: 'Mobile Number: '
+  },
+  dateCashRESERVED: {
+    id: 'app.components.Receipt.dateCashRESERVED',
+    defaultMessage: 'Valid Until'
+  },
+  dateCashRESERVEDEXPIRED: {
+    id: 'app.components.Receipt.dateCashRESERVEDEXPIRED',
+    defaultMessage: 'Valid Until'
+  },
+  dateCashUNPAID: {
+    id: 'app.components.Receipt.dateCashUNPAID',
+    defaultMessage: 'Valid Until'
+  },
+  dateCashCONFIRMED: {
+    id: 'app.components.Receipt.dateCashCONFIRMED',
+    defaultMessage: 'Date Paid'
+  },
+  dateCashINTRANSIT: {
+    id: 'app.components.Receipt.dateCashINTRANSIT',
+    defaultMessage: 'Date Paid'
+  },
+  dateCashDELIVERED: {
+    id: 'app.components.Receipt.dateDELIVERED',
+    defaultMessage: 'Date Delivered'
+  },
+  dateCashCLAIMED: {
+    id: 'app.components.Receipt.dateCashCLAIMED',
+    defaultMessage: 'Date Claimed'
+  },
+  dateCashUNCLAIMED: {
+    id: 'app.components.Receipt.dateCashUNCLAIMED',
+    defaultMessage: 'Date Delivered'
+  },
+  dateCodRESERVED: {
+    id: 'app.components.Receipt.dateCodRESERVED',
+    defaultMessage: 'Valid Until'
+  },
+  dateCodRESERVEDEXPIRED: {
+    id: 'app.components.Receipt.dateCodRESERVEDEXPIRED',
+    defaultMessage: 'Valid Until'
+  },
+  dateCodUNPAID: {
+    id: 'app.components.Receipt.dateCodUNPAID',
+    defaultMessage: 'Valid Until'
+  },
+  dateCodPROCESSING: {
+    id: 'app.components.Receipt.dateCodPROCESSING',
+    defaultMessage: 'Date Ordered'
+  },
+  dateCodCONFIRMED: {
+    id: 'app.components.Receipt.dateCodCONFIRMED',
+    defaultMessage: 'Date Ordered'
+  },
+  dateCodINTRANSIT: {
+    id: 'app.components.Receipt.dateCodINTRANSIT',
+    defaultMessage: 'Date Ordered'
+  },
+  dateCodDELIVERED: {
+    id: 'app.components.Receipt.dateDELIVERED',
+    defaultMessage: 'Date Delivered'
+  },
+  dateCodCLAIMED: {
+    id: 'app.components.Receipt.dateCodCLAIMED',
+    defaultMessage: 'Date Claimed'
+  },
+  dateCodUNCLAIMED: {
+    id: 'app.components.Receipt.dateCodUNCLAIMED',
+    defaultMessage: 'Date Delivered'
+  },
+  dateCashFieldDefault: {
+    id: 'app.components.Receipt.dateCashFieldDefault',
+    defaultMessage: 'Date'
+  },
+  dateCodFieldDefault: {
+    id: 'app.components.Receipt.dateCodFieldDefault',
+    defaultMessage: 'Date'
   }
 })

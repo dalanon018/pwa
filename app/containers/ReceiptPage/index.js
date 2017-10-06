@@ -132,12 +132,15 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
     }, 5000)
   }
 
+  componentWillMount () {
+    this.props.setPageTitle('Your Receipt')
+    this.props.setShowSearchIcon(true)
+    this.props.setShowActivityIcon(false)
+  }
+
   componentDidMount () {
     const { params: { trackingNumber } } = this.props
     this.props.getReceipt({ trackingNumber })
-    this.props.setPageTitle('Your Receipt')
-    this.props.setShowSearchIcon(false)
-    this.props.setShowActivityIcon(false)
   }
 
   componentWillReceiveProps (nextProps) {
