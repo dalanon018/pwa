@@ -43,7 +43,8 @@ import {
 } from 'containers/Buckets/selectors'
 
 import {
-  BannerWrapper
+  BannerWrapper,
+  SearchWrapper
 } from './styles'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -174,11 +175,13 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         <Grid padded>
           <Grid.Row className='bg-light-grey' columns={1}>
             <Grid.Column>
-              <Input
-                fluid
-                onClick={changeRoute.bind(this, '/search')}
-                placeholder={intl.formatMessage(messages.searchPlaceholder)}
-                icon='search' />
+              <SearchWrapper>
+                <Input
+                  fluid
+                  onClick={changeRoute.bind(this, '/search')}
+                  placeholder={intl.formatMessage(messages.searchPlaceholder)}
+                  icon='search' />
+              </SearchWrapper>
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -188,9 +191,14 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         </BannerWrapper>
 
         <Container>
-          <H3>
-            <FormattedMessage {...messages.featureProduct} />
-          </H3>
+          <Grid padded>
+            <Grid.Row columns={1}>
+              <H3>
+                <FormattedMessage {...messages.featureProduct} />
+              </H3>
+            </Grid.Row>
+          </Grid>
+
           <ProductView
             changeRoute={changeRoute}
             loader={loader}

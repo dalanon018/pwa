@@ -4,8 +4,7 @@
 
 
 .ui.container {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 10px;
   margin: 0;
 
   @media(min-width: 768px) {

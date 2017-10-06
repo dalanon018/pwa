@@ -70,7 +70,7 @@ function ProductView ({
     return data
   }
   return (
-    <Grid stretched columns={resposiveColumns()}>
+    <Grid padded stretched columns={resposiveColumns()}>
       {
         loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
         : products.valueSeq().map((product, index) => {
@@ -78,7 +78,6 @@ function ProductView ({
           return (
             <Grid.Column
               key={`${product.get('cliqqCode')}-${index}`}
-              className='padding__none--horizontal'
               onClick={goToProduct}>
               <ProductWrapper>
                 {

@@ -19,6 +19,7 @@ import {
   lt
 } from 'ramda'
 import styled from 'styled-components'
+import { Container } from 'semantic-ui-react'
 
 import ProductView from 'components/ProductView'
 import Footer from 'components/Footer'
@@ -54,7 +55,7 @@ import {
   selectProductsByBrands
 } from './selectors'
 
-const ContentWrapper = styled.div`
+const ContentWrapper = styled(Container)`
   padding-top: 20px;
   padding-bottom: 20px;
 `
