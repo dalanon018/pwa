@@ -11,7 +11,7 @@ const wrapper = (Component, props = {}, enzyme = shallow) => shallow(
   <Component {...props} />
 )
 
-describe('BannerSlider Styles', () => {
+describe('ModalWithHeader Styles', () => {
   it('BannerHeader should render without exploding', () => {
     const renderComponent = wrapper(BannerHeader)
     expect(
