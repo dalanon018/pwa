@@ -118,7 +118,11 @@ const Product = ({
               <div className='product-details' dangerouslySetInnerHTML={{__html: product.get('details')}} />
             </LoadingStateInfo>
           </ProductDetails>
-          <ListCollapse title='Delivery & Returns Policy'>
+          <ListCollapse title={
+            <Label as='p' className='margin__none' size='large' >
+              <FormattedMessage {...messages.deliveryReturnsPolicy} />
+            </Label>
+          }>
             <CollapseContent>
               <Image src={DeliveryIcon} alt='Cliqq' />
               <div className='collapse-description'>
@@ -138,7 +142,11 @@ const Product = ({
               </div>
             </CollapseContent>
           </ListCollapse>
-          <ListCollapse title='Care Label'>
+          <ListCollapse title={
+            <Label as='p' className='margin__none' size='large' >
+              <FormattedMessage {...messages.careLabel} />
+            </Label>
+          }>
             <Label as='p' color='grey' basic size='medium'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam eos repudiandae inventore debitis iusto ea esse eligendi voluptatum distinctio assumenda quam aliquid, unde ullam odit tenetur cum, explicabo quisquam a!</Label>
           </ListCollapse>
 

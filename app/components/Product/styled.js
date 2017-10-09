@@ -142,6 +142,10 @@ export const ShareIcon = styled.img`
 
 export const DetailsWrapper = styled(AnimateDiv)`
   align-self: stretch;
+
+  .accordion.ui .title {
+    padding: 25px !important;
+  }
 `
 export const ProductDetailsContainer = styled(AnimateDiv)`
   padding: 35px 25px;
