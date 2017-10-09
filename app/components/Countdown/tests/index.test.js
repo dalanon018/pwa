@@ -1,19 +1,32 @@
 import React from 'react'
+import { fromJS } from 'immutable'
 import { shallow } from 'enzyme'
 
 import Countdown from '../index'
 
-const wrapper = (props = {}, enzyme = shallow) => enzyme(
-  <Countdown {...props} />
+const TestInnerComponent = (props) => <div {...props} />
+
+const wrapper = (Component, props = {}, enzyme = shallow) => enzyme(
+  <Component {...props} />
 )
 
 describe('<Countdown />', () => {
   const minProps = {
-    endDate: 100000000
+    statuses: {},
+    receipt: fromJS({})
   }
 
-  it('render without exploding', () => {
-    const renderComponent = wrapper(minProps)
+  it('render inner component without exploding', () => {
+    const renderComponent = wrapper(TestInnerComponent)
+    expect(
+      renderComponent.length
+    ).toEqual(1)
+  })
+
+  it('should render the HOC without exploding', () => {
+    const HOC = Countdown(TestInnerComponent)
+    const renderComponent = wrapper(HOC, minProps)
+
     expect(
       renderComponent.length
     ).toEqual(1)

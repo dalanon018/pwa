@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import JsBarcode from 'jsbarcode'
-import moment from 'moment'
 
 import { isNil } from 'ramda'
 import { FormattedMessage } from 'react-intl'
@@ -9,7 +8,8 @@ import { Grid, Label, Button, Image } from 'semantic-ui-react'
 import WarningIcon from 'images/icons/instructions-icon.svg'
 import ReturnIcon from 'images/icons/receipts/return-icon-receipt.svg'
 
-import { CountdownParser, DateFormater } from 'utils/date' // DateFormater
+import { DateFormater } from 'utils/date' // DateFormater
+import Countdown from 'components/Countdown'
 
 import PurchaseOrder from './PurchaseOrder'
 import PurchaseUsecase from './PurchaseUsecase'
@@ -73,10 +73,11 @@ const WarningCTAReserved = ({ timer }) => {
 
 const WarningStatus = ({ status, timer, storeName, modePayment }) => {
   const keyMessage = modePayment === 'Cash' ? 'receiptInfoMessageCashDelivered' : 'receiptInfoMessageCodDelivered'
-
   return ComponentDetail({
     RESERVED: (
-      <WarningCTAReserved timer={timer} />
+      <GeneralInfo>
+        <WarningCTAReserved timer={timer} />
+      </GeneralInfo>
     ),
     UNPAID: (
       <GeneralInfo>
@@ -126,15 +127,6 @@ class Receipt extends React.PureComponent {
     goReceiptPage: PropTypes.func.isRequired
   }
 
-  /**
-   * holder for countdown interval
-   */
-  countdownInterval
-
-  state = {
-    timer: ''
-  }
-
   constructor () {
     super()
 
@@ -142,80 +134,10 @@ class Receipt extends React.PureComponent {
       show: '0'
     }
     this._renderPurchaseBanner = this._renderPurchaseBanner.bind(this)
-    this._countdownTimer = this._countdownTimer.bind(this)
-    this._startCountDownTimer = this._startCountDownTimer.bind(this)
-    this._disableTimer = this._disableTimer.bind(this)
-  }
-
-  _startCountDownTimer (props) {
-    const { receipt, statuses } = props
-
-    if (statuses[receipt.get('status')] === 'RESERVED') {
-      const endDate = CountdownParser(receipt.get('claimExpiry'))
-
-      clearInterval(this.countdownInterval)
-
-      this._countdownTimer(endDate)
-    }
-  }
-
-  _countdownTimer (endDate) {
-    let currentTime = moment().unix()
-    let diffTime = endDate - currentTime
-    let duration = moment.duration(diffTime * 1000, 'milliseconds')
-    let interval = 1000
-
-    this.countdownInterval = setInterval(() => {
-      duration = moment.duration(duration - interval, 'milliseconds')
-      const countHours = () => {
-        if (duration.hours().toString().length > 1) {
-          return duration.hours()
-        } else {
-          return '0' + duration.hours()
-        }
-      }
-      const countMinutes = () => {
-        if (duration.minutes().toString().length > 1) {
-          return duration.minutes()
-        } else {
-          return '0' + duration.minutes()
-        }
-      }
-      const countSeconds = () => {
-        if (duration.seconds().toString().length > 1) {
-          return duration.seconds()
-        } else {
-          return '0' + duration.seconds()
-        }
-      }
-
-      this.setState({
-        timer: `${countHours()}:${countMinutes()}:${countSeconds()}`
-      })
-    }, 1000)
-  }
-
-    /**
-   * we need to make sure that once the timer goes to negative then
-   * we need to clear our interval means its done
-   */
-  _disableTimer () {
-    const { timer } = this.state
-    const pT = parseInt
-
-    const [ hh, mm, ss ] = timer ? timer.split(':') : '00:00:00'
-
-    if ((pT(hh) + pT(mm) + pT(ss)) < 0) {
-      clearInterval(this.countdownInterval)
-      this.setState({
-        timer: '00:00:00'
-      })
-    }
   }
 
   _renderPurchaseBanner () {
-    const { timer } = this.state
-    const { statuses, receipt, purchaseOrder } = this.props
+    const { timer, statuses, receipt, purchaseOrder } = this.props
     const currentStatus = statuses[receipt.get('status')] || ''
 
     if (purchaseOrder.includes(currentStatus)) {
@@ -268,10 +190,6 @@ class Receipt extends React.PureComponent {
     }, 800)
   }
 
-  componentDidUpdate (prevProps, prevState) {
-    this._disableTimer()
-  }
-
   componentWillReceiveProps (nextProps) {
     const { receipt, statuses } = nextProps
 
@@ -288,18 +206,11 @@ class Receipt extends React.PureComponent {
         displayValue: false
       })
     }
-
-    this._startCountDownTimer(nextProps)
-  }
-
-  componentWillUnmount () {
-    clearInterval(this.countdownInterval)
   }
 
   render () {
-    const { timer, show } = this.state
-    const { receipt, statuses, goReceiptPage } = this.props
-
+    const { show } = this.state
+    const { timer, receipt, statuses, goReceiptPage } = this.props
     return (
       <div>
         <ReceiptWrapper>
@@ -384,4 +295,4 @@ class Receipt extends React.PureComponent {
   }
 }
 
-export default Receipt
+export default Countdown(Receipt)

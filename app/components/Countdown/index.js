@@ -1,114 +1,117 @@
 /**
 *
 * Countdown
+* A HOC component to hander our timer.
 *
 */
 
 import React, { PropTypes } from 'react'
 import moment from 'moment'
 
-class Countdown extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
-  static propTypes = {
-    endDate: PropTypes.number.isRequired
-  }
+import { CountdownParser } from 'utils/date' // DateFormater
 
-  /**
-   * holder for countdown interval
-   */
-  countdownInterval
+export default function (WrapperComponent) {
+  class Timer extends React.Component {
+    static propTypes = {
+      statuses: PropTypes.object.isRequired,
+      receipt: PropTypes.object.isRequired
+    }
 
-  state = {
-    timer: '00:00:00'
-  }
+    /**
+     * holder for countdown interval
+     */
+    countdownInterval
 
-  constructor () {
-    super()
+    state = {
+      timer: ''
+    }
 
-    this._countdownTimer = this._countdownTimer.bind(this)
-    this._disableTimer = this._disableTimer.bind(this)
-  }
+    _startCountDownTimer = (props) => {
+      const { receipt, statuses } = props
+      if (statuses[receipt.get('status')] === 'RESERVED') {
+        const endDate = CountdownParser(receipt.get('claimExpiry'))
 
-  _countdownTimer (props) {
-    const { endDate } = props
-    let currentTime = moment().unix()
-    let diffTime = endDate - currentTime
-    let duration = moment.duration(diffTime * 1000, 'milliseconds')
-    let interval = 1000
+        clearInterval(this.countdownInterval)
 
-    this.countdownInterval = setInterval(() => {
-      duration = moment.duration(duration - interval, 'milliseconds')
-      const countHours = () => {
-        if (duration.hours().toString().length > 1) {
-          return duration.hours()
-        } else {
-          return '0' + duration.hours()
-        }
+        this._countdownTimer(endDate)
       }
-      const countMinutes = () => {
-        if (duration.minutes().toString().length > 1) {
-          return duration.minutes()
-        } else {
-          return '0' + duration.minutes()
+    }
+
+    _countdownTimer = (endDate) => {
+      let currentTime = moment().unix()
+      let diffTime = endDate - currentTime
+      let duration = moment.duration(diffTime * 1000, 'milliseconds')
+      let interval = 1000
+
+      this.countdownInterval = setInterval(() => {
+        duration = moment.duration(duration - interval, 'milliseconds')
+        const countHours = () => {
+          if (duration.hours().toString().length > 1) {
+            return duration.hours()
+          } else {
+            return '0' + duration.hours()
+          }
         }
-      }
-      const countSeconds = () => {
-        if (duration.seconds().toString().length > 1) {
-          return duration.seconds()
-        } else {
-          return '0' + duration.seconds()
+        const countMinutes = () => {
+          if (duration.minutes().toString().length > 1) {
+            return duration.minutes()
+          } else {
+            return '0' + duration.minutes()
+          }
         }
+        const countSeconds = () => {
+          if (duration.seconds().toString().length > 1) {
+            return duration.seconds()
+          } else {
+            return '0' + duration.seconds()
+          }
+        }
+
+        this.setState({
+          timer: `${countHours()}:${countMinutes()}:${countSeconds()}`
+        })
+      }, 1000)
+    }
+
+    /**
+     * we need to make sure that once the timer goes to negative then
+     * we need to clear our interval means its done
+     */
+    _disableTimer = () => {
+      const { timer } = this.state
+      const pT = parseInt
+
+      const [ hh, mm, ss ] = timer ? timer.split(':') : ''
+
+      if ((pT(hh) + pT(mm) + pT(ss)) < 0) {
+        clearInterval(this.countdownInterval)
+        this.setState({
+          timer: '00:00:00'
+        })
       }
+    }
 
-      this.setState({
-        timer: `${countHours()}:${countMinutes()}:${countSeconds()}`
-      })
-    }, 1000)
-  }
-
-  /**
-   * we need to make sure that once the timer goes to negative then
-   * we need to clear our interval means its done
-   */
-  _disableTimer () {
-    const { timer } = this.state
-    const pT = parseInt
-
-    const [ hh, mm, ss ] = timer.split(':')
-
-    if ((pT(hh) + pT(mm) + pT(ss)) < 0) {
+    componentWillUnmount () {
       clearInterval(this.countdownInterval)
-      this.setState({
-        timer: '00:00:00'
-      })
+    }
+
+    componentDidUpdate (prevProps, prevState) {
+      this._disableTimer()
+    }
+
+    componentWillReceiveProps (nextProps) {
+      this._startCountDownTimer(nextProps)
+    }
+
+    render () {
+      return (
+        <WrapperComponent
+          {...this.state}
+          {...this.props}
+        />
+      )
     }
   }
 
-  componentWillUnmount () {
-    clearInterval(this.countdownInterval)
-  }
-
-  componentDidMount () {
-    this._countdownTimer(this.props)
-  }
-
-  componentWillReceiveProps (nextProps) {
-    // We have to update countdown timer since it is not called on after ordering the item.
-    // we have to clear it since its already instantiated on did mount.
-    clearInterval(this.countdownInterval)
-
-    this._countdownTimer(nextProps)
-  }
-
-  componentDidUpdate (prevProps, prevState) {
-    this._disableTimer()
-  }
-
-  render () {
-    const { timer } = this.state
-    return (
-      <p>{timer}</p>
-    )
-  }
+  return Timer
 }
-
-export default Countdown
