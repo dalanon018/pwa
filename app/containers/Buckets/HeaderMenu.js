@@ -4,7 +4,8 @@ import styled from 'styled-components'
 import {
   Image,
   Grid,
-  Header
+  Header,
+  Input
 } from 'semantic-ui-react'
 
 import { ifElse, identity } from 'ramda'
@@ -116,6 +117,15 @@ const MobileMenu = styled.div`
   z-index: 99;
 `
 
+const SearchInput = styled(Input)`
+  border: 0;
+  color: #5B5B5B;
+  font-size: 18px;
+  letter-spacing: 1px;
+  margin: 0 5px;
+  width: 100%;
+`
+
 const toggleComponent = (componentA, componentB) => (condition) => {
   return ifElse(
     identity,
@@ -135,7 +145,8 @@ export default class MainMenu extends PureComponent {
   }
 
   state = {
-    activeItem: null
+    activeItem: null,
+    windowHeightOffset: 0
   }
 
   _searchInput
@@ -224,12 +235,51 @@ export default class MainMenu extends PureComponent {
     }
   }
 
+  _handleHeightOffset = () => {
+    window.addEventListener('scroll', (e) => {
+      this.setState({
+        windowHeightOffset: window.pageYOffset
+      })
+    })
+  }
+
+  _handleUniqueHeader = () => {
+    const { pageTitle, changeRoute } = this.props
+    const { windowHeightOffset } = this.state
+
+    let centerElement = ''
+
+    const TitleToggle = toggleComponent(
+      <ImageLogo alt='logo' src={MainLogo} onClick={changeRoute.bind(this, '/')} />,
+      <Header as='h1'> { pageTitle } </Header>
+    )
+
+    if (windowHeightOffset >= 53) {
+      centerElement = <SearchInput
+        icon='search'
+        placeholder='Testtttt.......'
+        // ref={this._inputReference}
+        // onChange={this._handleOnchange}
+        // onKeyPress={this._handleKeyPress}
+        // placeholder={intl.formatMessage(messages.searchPlaceHolder)}
+      />
+    } else {
+      centerElement = TitleToggle(!pageTitle)
+    }
+
+    return centerElement
+  }
+
+  componentWillMount = () => {
+    this._handleHeightOffset()
+  }
+
   componentDidUpdate () {
     this._handleActiveMenu()
   }
 
   render () {
-    const { leftButtonAction, hideBackButton, changeRoute, pageTitle, showSearchIcon, showActivityIcon } = this.props
+    const { leftButtonAction, hideBackButton, changeRoute, pageTitle, showSearchIcon, showActivityIcon, currentRoute } = this.props
 
     const TitleToggle = toggleComponent(
       <ImageLogo alt='logo' src={MainLogo} onClick={changeRoute.bind(this, '/')} />,
@@ -250,7 +300,7 @@ export default class MainMenu extends PureComponent {
 
     return (
       <Wrapper>
-        <MobileMenu className='mobile-visibility'>
+        <MobileMenu className='header-wrapper'>
           <Grid padded>
             <Grid.Row>
               <Grid.Column width={4} verticalAlign='middle'>
@@ -262,7 +312,11 @@ export default class MainMenu extends PureComponent {
               </Grid.Column>
               <Grid.Column width={8} verticalAlign='middle'>
                 <CenterWrapper>
-                  { TitleToggle(!pageTitle) }
+                  {
+                    currentRoute === 'home'
+                    ? this._handleUniqueHeader()
+                    : TitleToggle(!pageTitle)
+                  }
                 </CenterWrapper>
               </Grid.Column>
               <Grid.Column width={4} verticalAlign='middle'>
