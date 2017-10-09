@@ -36,12 +36,17 @@ const PurchaseInfo = styled.div`
 const PurchaseImage = styled.div`
   background-color: #F0F0F0;
   min-width: 90px;
+  position: relative;
 `
 
 const StatusWrapper = styled.div`
   background-color: ${({status}) => status};
-  text-align: center;
+  bottom: 0;
+  left: 0;
   padding: 2px;
+  position: absolute;
+  text-align: center;
+  width: 100%;
 
   span {
     color: #FFFFFF !important;
