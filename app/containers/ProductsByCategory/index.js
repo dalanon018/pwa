@@ -33,6 +33,8 @@ import H3 from 'components/H3'
 import H4 from 'components/H4'
 import EmptyProducts from 'components/EmptyProductsBlock'
 
+import { Uppercase } from 'utils/string'
+
 import {
   getProductCategoriesAction,
   setPageTitleAction,
@@ -183,7 +185,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
   _handlePageTitle () {
     const { params: { id } } = this.props
-    const IstagText = (tag) => `${tag} Items`
+    const IstagText = (tag) => `${Uppercase(tag)} Items`
 
     const titleCondition = ifElse(isTag(this._tags), IstagText, this._isCategoryExist)
     const titleComposition = compose(titleCondition)
