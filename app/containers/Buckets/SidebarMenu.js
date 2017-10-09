@@ -101,6 +101,18 @@ class SidebarMenu extends React.PureComponent {
     toggleAction: PropTypes.func.isRequired
   }
 
+  _handletoHome = () => {
+    const { changeRoute } = this.props
+
+    changeRoute('/')
+  }
+
+  _handletoPurchase = () => {
+    const { changeRoute } = this.props
+
+    changeRoute('/purchases')
+  }
+
   render () {
     const {
       categories, brands, changeRoute, toggleSidebar
@@ -111,18 +123,18 @@ class SidebarMenu extends React.PureComponent {
       <SidebarContainer toggle={toggleSidebar}>
         <SidebarWrapper>
           <List divided verticalAlign='middle' selection>
-            <ListWrapper>
+            <ListWrapper onClick={this._handletoHome}>
               <Image alt='home' size='mini' src={Home} />
               <List.Content>
-                <Label as='p' className='margin__none' size='huge' onClick={changeRoute.bind(this, '/')}>
+                <Label as='p' className='margin__none' size='huge'>
                   <FormattedMessage {...messages.menuHome} />
                 </Label>
               </List.Content>
             </ListWrapper>
-            <ListWrapper>
+            <ListWrapper onClick={this._handletoPurchase}>
               <Image alt='activities' size='mini' src={Barcode} />
               <List.Content>
-                <Label as='p' className='margin__none' size='huge' onClick={changeRoute.bind(this, '/purchases')}>
+                <Label as='p' className='margin__none' size='huge'>
                   <FormattedMessage {...messages.menuActivity} />
                 </Label>
               </List.Content>

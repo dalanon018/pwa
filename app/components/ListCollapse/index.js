@@ -26,30 +26,39 @@ class ListCollapse extends React.PureComponent {
   constructor () {
     super()
     this.state = {
-      height: 0
+      height: 0,
+      activeIndex: null
     }
     this._handleClick = this._handleClick.bind(this)
   }
 
   _handleClick (e, data) {
-    const block = document.getElementsByClassName('content')
-    const elem = Array.prototype.slice.call(block, 0)
+    const { index } = data
+    const { activeIndex } = this.state
+    const newIndex = activeIndex === index ? -1 : index
+
+    const element = e.target.closest('.ui.accordion')
+    const block = element.getElementsByClassName('content')
+
     this.setState({
-      height: elem[data].lastChild.offsetHeight
+      activeIndex: newIndex,
+      height: block[0].firstChild.offsetHeight
     })
   }
 
   render () {
     const { title, children, heightTransition } = this.props
+    const { activeIndex, height } = this.state
+
     return (
       <Grid.Row>
-        <ListCollapseWrapper heightTransition={!heightTransition} height={this.state.height} open={this.state.open}>
+        <ListCollapseWrapper heightTransition={!heightTransition} height={height}>
           <Accordion>
-            <Accordion.Title onClick={this._handleClick}>
+            <Accordion.Title onClick={this._handleClick} active={activeIndex === 0} index={0}>
               { title }
               <i className='icon' />
             </Accordion.Title>
-            <Accordion.Content>
+            <Accordion.Content active={activeIndex === 0}>
               <div className='collapse-content'>
                 { children }
               </div>
