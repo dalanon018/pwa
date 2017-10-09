@@ -6,14 +6,13 @@
 
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { FormattedMessage } from 'react-intl'
+import { injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import messages from './messages'
 import { Grid } from 'semantic-ui-react'
 // import styled from 'styled-components'
 import showdown from 'showdown'
 
-import H1 from 'components/H1'
 import Footer from 'components/Footer'
 import { LoadingStateInfo } from 'components/LoadingBlock'
 
@@ -66,7 +65,7 @@ export class FaqPage extends React.PureComponent { // eslint-disable-line react/
 
   componentDidMount () {
     this.props.getMarkDown()
-    this.props.setPageTitle('FAQ')
+    this.props.setPageTitle(this.props.intl.formatMessage(messages.header))
     this.props.setShowSearchIcon(false)
     this.props.setShowActivityIcon(false)
   }
@@ -80,9 +79,6 @@ export class FaqPage extends React.PureComponent { // eslint-disable-line react/
       <div>
         <div className='document-helper'>
           <Grid padded>
-            <H1 center className='padding__top--25 padding__none--horizontal'>
-              <FormattedMessage {...messages.header} />
-            </H1>
             <LoadingStateInfo loading={loader} count='4'>
               <div className='animation-fade' dangerouslySetInnerHTML={{__html: html}} />
             </LoadingStateInfo>
@@ -149,4 +145,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FaqPage)
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(FaqPage))
