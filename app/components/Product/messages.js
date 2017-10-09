@@ -25,5 +25,13 @@ export default defineMessages({
   peso: {
     id: 'app.components.Product.peso',
     defaultMessage: '₱ '
+  },
+  deliveryReturnsPolicy: {
+    id: 'app.components.Product.deliveryReturnsPolicy',
+    defaultMessage: 'Delivery & Returns Policy'
+  },
+  careLabel: {
+    id: 'app.components.Product.careLabel',
+    defaultMessage: 'Care Label'
   }
 })
