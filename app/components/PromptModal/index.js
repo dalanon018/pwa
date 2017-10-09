@@ -8,9 +8,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { FormattedMessage } from 'react-intl'
-import { Modal, Icon } from 'semantic-ui-react'
-
-import Button from 'components/Button'
+import { Modal, Icon, Button, Label } from 'semantic-ui-react'
 
 import messages from './messages'
 
@@ -35,8 +33,6 @@ const IconWrapper = styled.div`
 
 const TitleHead = styled.div`
   text-align: center;
-  font-family: 'helveticabold';
-  color: #5B5B5B;
   margin: 10px 0;
 `
 
@@ -73,7 +69,11 @@ function PromptModal ({
         <IconWrapper background={color}>
           <Icon name={name} className='custom-icon' />
         </IconWrapper>
-        <TitleHead>{title}</TitleHead>
+        <TitleHead>
+          <Label as='span' centered basic size='large'>
+            {title}
+          </Label>
+        </TitleHead>
         <Content>
           {content}
           <Button primary fluid onClick={close}>

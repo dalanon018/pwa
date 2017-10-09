@@ -26,11 +26,16 @@ const PurchaseWrapper = styled.div`
 `
 
 const PurchaseInfo = styled.div`
+  align-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
   padding: 14px;
+  width: 100%;
 `
 
 const PurchaseImage = styled.div`
   background-color: #F0F0F0;
+  min-width: 90px;
 `
 
 const StatusWrapper = styled.div`
@@ -44,14 +49,16 @@ const StatusWrapper = styled.div`
 `
 
 const OtherInfo = styled.div`
+  align-items: flex-end;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  width: 100%;
 
   .product-price {
     font-size: 35px;
     font-weight: 700;
     letter-spacing: -2px;
+    line-height: 30px;
     margin: 0;
   }
 
@@ -163,8 +170,8 @@ class Purchase extends React.PureComponent {
     const { receipt, statuses, defaultImage } = this.props
     const currentStatus = statuses[receipt.get('status')] || ''
     const imgixOptions = {
-      w: 100,
-      h: 100,
+      w: 90,
+      h: 90,
       fit: 'clamp',
       auto: 'compress',
       q: 35,
@@ -176,12 +183,14 @@ class Purchase extends React.PureComponent {
         <Grid.Column>
           <PurchaseWrapper onClick={this._goToReceipt}>
             <PurchaseInfo>
-              <Label as='span' basic size='large'>
-            Brand Name
-          </Label>
-              <Label as='p' basic size='large'>
-                {this._productName(receipt.getIn(['products', 'name']))}
-              </Label>
+              <div>
+                <Label as='span' basic size='large'>
+                  Brand Name
+                </Label>
+                <Label as='p' basic size='large'>
+                  {this._productName(receipt.getIn(['products', 'name']))}
+                </Label>
+              </div>
               <OtherInfo>
                 <Label className='product-price text__roboto' as='span' basic color='orange'>
                   <FormattedMessage {...messages.peso} />
