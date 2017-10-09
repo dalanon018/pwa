@@ -13,12 +13,12 @@ import {
 const EntityPurchases = ({ entity, changeRoute, windowWidth }) => (
   <Grid padded>
     {
-      entity.map((order, index) =>
+      entity.map((receipt, index) =>
         <Purchase
           className='padding__bottom--15'
           defaultImage={imageStock('default-slider.jpg')}
-          key={order.get('trackingNumber')}
-          order={order}
+          key={receipt.get('trackingNumber')}
+          receipt={receipt}
           windowWidth={windowWidth}
           statuses={STATUSES}
           purchaseUsecases={PURCHASE_USECASE}
