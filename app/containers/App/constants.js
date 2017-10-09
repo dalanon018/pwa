@@ -24,6 +24,9 @@ export const OATH_RESPONSE_TYPE = process.env.OATH_RESPONSE_TYPE
 export const OATH_GRANT_TYPE = process.env.OATH_GRANT_TYPE
 export const RECAPTCHA_SITE_KEY = process.env.RECAPTCHA_SITE_KEY
 
+// so we can disable functions that for production only
+export const ENVIROMENT = process.env.NODE_ENV
+
 export const LAST_VIEWS_KEY = 'boilerplate/App/LAST_VIEWS'
 export const CURRENT_PRODUCT_KEY = 'boilerplate/App/CURRENT_PRODUCT'
 export const MOBILE_NUMBERS_KEY = 'boilerplate/App/MOBILE_NUMBERS'

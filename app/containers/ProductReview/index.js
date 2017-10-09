@@ -96,7 +96,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
   state = {
     store: {},
-    modePayment: '',
+    modePayment: 'CASH',
     visibility: false,
     modalToggle: false,
     errorMessage: ''
@@ -376,7 +376,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
           <StepHead step='2'>
             <p><FormattedMessage {...messages.defaultStore} /></p>
           </StepHead>
-          <LocationButton onClick={this._handleStoreLocator} fluid icon={NextIcon}>
+          <LocationButton onClick={this._handleStoreLocator} fluid iconBg={NextIcon}>
             {
               store && isEmpty(store)
               ? <FormattedMessage {...messages.findStore} />
@@ -391,47 +391,6 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
           </Button>
         </ButtonContainer>
 
-        {/* <div className='mobile-visibility'>
-          <MobileBlock
-            orderedProduct={orderedProduct}
-            orderRequesting={orderRequesting}
-            mobileNumber={mobileNumber}
-            errorMessage={errorMessage}
-            modePayment={modePayment}
-            modalToggle={modalToggle}
-            cliqqCode={cliqqCode}
-            labelOne={labelOne}
-            defaultImage={imageStock('default-slider.jpg')}
-            labelTwo={labelTwo}
-            visibility={visibility}
-
-            // function props
-            handleChange={this._handleChange}
-            handleStoreLocator={this._handleStoreLocator}
-            handleToBottom={this._handleToBottom}
-            handleProceed={this._handleProceed} />
-        </div>
-        <div className='desktop-visibility'>
-          <DesktopBlock
-            windowWidth={windowWidth}
-            orderedProduct={orderedProduct}
-            orderRequesting={orderRequesting}
-            mobileNumber={mobileNumber}
-            errorMessage={errorMessage}
-            modePayment={modePayment}
-            productLoader={productLoader}
-            modalToggle={modalToggle}
-            defaultImage={imageStock('default-slider.jpg')}
-            cliqqCode={cliqqCode}
-            labelOne={labelOne}
-            labelTwo={labelTwo}
-
-            // function props
-            handleChange={this._handleChange}
-            handleStoreLocator={this._handleStoreLocator}
-            handleToBottom={this._handleToBottom}
-            handleProceed={this._handleProceed} />
-        </div> */}
         <Modal
           open={modalToggle}
           name='warning'

@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from 'styled-components'
 import { Button } from 'semantic-ui-react'
 
@@ -389,7 +390,7 @@ const LabelPrice = styled.div`
   }
 `
 
-const LocationButton = styled(Button)`
+const LocationButton = styled(({iconBg, ...props}) => <Button {...props} />)`
   background: transparent !important;
   border-radius: 5px !important;
   border: 2px solid #F0F0F0 !important;
@@ -404,7 +405,7 @@ const LocationButton = styled(Button)`
   }
 
   &:after {
-    background: url(${props => props.icon}) no-repeat center center / contain;
+    background: url(${({ iconBg }) => iconBg}) no-repeat center center / contain;
     content: '';
     height: 15px;
     position: absolute;

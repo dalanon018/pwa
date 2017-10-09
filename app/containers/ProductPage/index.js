@@ -49,6 +49,7 @@ import {
 } from 'containers/Buckets/selectors'
 
 import {
+  ENVIROMENT,
   RECAPTCHA_SITE_KEY
 } from 'containers/App/constants'
 
@@ -133,7 +134,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   _handleSubmit ({ value }) {
     this.setState({
       mobileNumber: value
-    }, () => this.recaptcha.execute())
+    }, () => ENVIROMENT === 'production' ? this.recaptcha.execute() : this._executeCaptcha(true))
   }
 
   _handleClose () {
