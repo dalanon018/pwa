@@ -120,6 +120,10 @@ export default defineMessages({
     id: `app.components.Receipt.mobileNumberLabel`,
     defaultMessage: 'Mobile Number: '
   },
+  mobileNumberCode: {
+    id: `app.components.Receipt.mobileNumberCode`,
+    defaultMessage: '+(63) '
+  },
   dateCashRESERVED: {
     id: 'app.components.Receipt.dateCashRESERVED',
     defaultMessage: 'Valid Until'

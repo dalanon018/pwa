@@ -1,13 +1,16 @@
 import {
   __,
   compose,
-  is,
-  ifElse,
-  identity,
   concat,
+  drop,
+  identity,
+  ifElse,
+  is,
+  join,
+  match,
   slice,
-  toUpper,
-  toLower
+  toLower,
+  toUpper
 } from 'ramda'
 
 const Uppercase = (str) => ifElse(
@@ -19,6 +22,18 @@ const Uppercase = (str) => ifElse(
   identity
 )(str)
 
+const PhoneFormatter = (str) => ifElse(
+  is(String),
+  compose(
+    join('-'),
+    drop(1),
+    match(/^(\d{3})(\d{3})(\d{4})$/),
+    drop(1) // since number format is (0919) we have to remove the 0
+  ),
+  (x) => console.log('false', x)
+)(str)
+
 export {
-  Uppercase
+  Uppercase,
+  PhoneFormatter
 }

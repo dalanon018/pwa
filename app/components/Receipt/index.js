@@ -10,7 +10,7 @@ import WarningIcon from 'images/icons/instructions-icon.svg'
 import ReturnIcon from 'images/icons/receipts/return-icon-receipt.svg'
 
 import { DateFormater } from 'utils/date' // DateFormater
-import { Uppercase } from 'utils/string'
+import { Uppercase, PhoneFormatter } from 'utils/string'
 
 import PurchaseOrder from './PurchaseOrder'
 import PurchaseUsecase from './PurchaseUsecase'
@@ -205,6 +205,7 @@ class Receipt extends React.PureComponent {
   render () {
     const { show } = this.state
     const { timer, receipt, statuses, goReceiptPage } = this.props
+    console.log(receipt.get('mobileNumber'))
     return (
       <div>
         <ReceiptWrapper>
@@ -252,8 +253,10 @@ class Receipt extends React.PureComponent {
                 </Label>
                 <Label className='text__roboto--light' as='p' basic size='large' >
                   <FormattedMessage {...messages.mobileNumberLabel} />
-                (+63) 927-753-9249
-              </Label>
+
+                  <FormattedMessage {...messages.mobileNumberCode} />
+                  { PhoneFormatter(receipt.get('mobileNumber')) }
+                </Label>
                 <BarcodeSVG id='barcode' {...{ status: statuses[receipt.get('status')] }} />
                 <Grid.Row>
                   { this._renderPurchaseBanner() }
