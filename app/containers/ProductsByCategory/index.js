@@ -31,7 +31,9 @@ import WindowWidth from 'components/WindowWidth'
 
 import H3 from 'components/H3'
 import H4 from 'components/H4'
-// import Promo from 'components/Promo'
+import EmptyProducts from 'components/EmptyProductsBlock'
+
+import { Uppercase } from 'utils/string'
 
 import {
   getProductCategoriesAction,
@@ -46,7 +48,6 @@ import {
 } from 'containers/Buckets/selectors'
 
 import messages from './messages'
-import EmptyProducts from './EmptyProducts'
 
 import {
   getFeaturedProductsAction,
@@ -184,7 +185,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
   _handlePageTitle () {
     const { params: { id } } = this.props
-    const IstagText = (tag) => `${tag} Items`
+    const IstagText = (tag) => `${Uppercase(tag)} Items`
 
     const titleCondition = ifElse(isTag(this._tags), IstagText, this._isCategoryExist)
     const titleComposition = compose(titleCondition)
@@ -259,7 +260,9 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
     if (loader === false && !(productsByCategory.size > 0)) {
       return (
-        <EmptyProducts />
+        <EmptyProducts>
+          <FormattedMessage {...messages.emptyMessage} />
+        </EmptyProducts>
       )
     }
 

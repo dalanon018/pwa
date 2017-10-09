@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import JsBarcode from 'jsbarcode'
 
-import { isNil } from 'ramda'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Label, Button, Image } from 'semantic-ui-react'
 
@@ -11,6 +10,7 @@ import WarningIcon from 'images/icons/instructions-icon.svg'
 import ReturnIcon from 'images/icons/receipts/return-icon-receipt.svg'
 
 import { DateFormater } from 'utils/date' // DateFormater
+import { Uppercase } from 'utils/string'
 
 import PurchaseOrder from './PurchaseOrder'
 import PurchaseUsecase from './PurchaseUsecase'
@@ -163,16 +163,6 @@ class Receipt extends React.PureComponent {
     }, 500)
   }
 
-  _handleStatusString = (status) => {
-    const index = status && status.slice(0, 1)
-    const body = status && status.toLowerCase().slice(1)
-    const text = `${index}${body}`
-
-    if (!isNil(index && body)) {
-      return text
-    }
-  }
-
   // simply handle the color of the status
   _handleColorStatus = (status) => {
     return COMPLETED.includes(status) ? 'green' : 'orange'
@@ -227,7 +217,7 @@ class Receipt extends React.PureComponent {
                       <FormattedMessage {...messages.statusLabel} />
                     </Label>
                     <Label as='p' basic size='huge' color={this._handleColorStatus(statuses[receipt.get('status')])}>
-                      {this._handleStatusString(receipt.get('status'))}
+                      { Uppercase(receipt.get('status')) }
                     </Label>
                   </Grid.Column>
                   <Grid.Column floated='right' textAlign='right'>

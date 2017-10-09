@@ -26,6 +26,7 @@ import Footer from 'components/Footer'
 import WindowWidth from 'components/WindowWidth'
 import BannerSlider from 'components/BannerSlider'
 import H3 from 'components/H3'
+import EmptyProducts from 'components/EmptyProductsBlock'
 // import Promo from 'components/Promo'
 
 import {
@@ -40,7 +41,6 @@ import {
 } from 'containers/Buckets/selectors'
 
 import messages from './messages'
-import EmptyProducts from './EmptyProducts'
 
 import {
   getFeaturedProductsAction,
@@ -124,7 +124,9 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
 
     if (loader === false && !(productsByBrands.size > 0)) {
       return (
-        <EmptyProducts />
+        <EmptyProducts>
+          <FormattedMessage {...messages.emptyMessage} />
+        </EmptyProducts>
       )
     }
 

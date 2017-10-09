@@ -7,12 +7,12 @@ import {
   Label
 } from 'semantic-ui-react'
 import { FormattedMessage } from 'react-intl'
-import { isNil } from 'ramda'
 
 import Countdown from 'components/Countdown'
 
 import { paramsImgix } from 'utils/image-stock'
 import { DateFormater } from 'utils/date' // DateFormater
+import { Uppercase } from 'utils/string'
 
 import messages from './messages'
 
@@ -123,16 +123,6 @@ class Purchase extends React.PureComponent {
     })('#F58322')(status)
   }
 
-  _handleStatusString = (status) => {
-    const index = status && status.slice(0, 1)
-    const body = status && status.toLowerCase().slice(1)
-    const text = `${index}${body}`
-
-    if (!isNil(index && body)) {
-      return text
-    }
-  }
-
   _handleDateString = () => {
     const { receipt, statuses } = this.props
     const currentStatus = statuses[receipt.get('status')] || 'FieldDefault'
@@ -218,7 +208,7 @@ class Purchase extends React.PureComponent {
                 paramsImgix(defaultImage, imgixOptions)} />
               <StatusWrapper status={this._getColorStatus(currentStatus)}>
                 <Label as='span' basic size='medium'>
-                  {this._handleStatusString(receipt.get('status'))}
+                  { Uppercase(receipt.get('status')) }
                 </Label>
               </StatusWrapper>
             </PurchaseImage>

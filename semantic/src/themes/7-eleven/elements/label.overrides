@@ -24,6 +24,10 @@
     color: @grey;
   }
 
+   &.color-light-grey {
+    color: @lightGrey;
+  }
+
   &.font-roboto {
     font-family: 'Roboto', san-serif;
   }
