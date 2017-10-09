@@ -5,26 +5,15 @@
  */
 
 import React, { PropTypes } from 'react'
-import styled from 'styled-components'
 import Helmet from 'react-helmet'
 
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
-import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
-import { Grid, Tab, Label, Image } from 'semantic-ui-react'
-import { imageStock } from 'utils/image-stock'
-import { isEmpty } from 'ramda'
+import { Tab } from 'semantic-ui-react'
 
-import Purchase from 'components/Purchase'
 import PopupSlide from 'components/PopupSlide'
 import WindowWidth from 'components/WindowWidth'
-
-import {
-  STATUSES,
-  PURCHASE_ORDER,
-  PURCHASE_USECASE
-} from 'containers/Buckets/constants'
 
 import {
   setPageTitleAction,
@@ -32,14 +21,15 @@ import {
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
 
-import EmptyPurchase from 'images/icons/sad-icon.svg'
-
-import messages from './messages'
+import EmptyPurchase from './EmptyPurchases'
+import EntityPurchases from './EntityPurchases'
 
 import {
   selectLoader,
-  selectPurchases,
-  selectModalToggle
+  selectModalToggle,
+  selectActivePurchases,
+  selectCompletedPurchases,
+  selectExpiredPurchases
 } from './selectors'
 
 import {
@@ -52,56 +42,19 @@ import {
   setMobileNumberAction
 } from './actions'
 
-const EmptyWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-top: 20px;
-  width: 100%;
-`
-const EmptyWrapperImg = styled.img`
-  margin-bottom: 20px;
-  max-width: 200px;
-`
-
-const EmptyWrapperText = styled.p`
-  color: #F0F0F0;
-  font-size: 21px;
-  letter-spacing: 1px;
-  line-height: 1.5;
-  text-align: center;
-`
-
-const EmptyPurchaseWrapper = styled.div`
-  align-content: center;
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  height: 72vh;
-  padding: 0 30px;
-
-  .image {
-    margin: 20px auto;
-    width: 80px;
-  }
-`
-
-export const EmptyPurchases = () => (
-  <EmptyWrapper>
-    <EmptyWrapperImg src={EmptyPurchase} />
-    <EmptyWrapperText>
-      <FormattedMessage {...messages.emptyPurchases} />
-    </EmptyWrapperText>
-
-  </EmptyWrapper>
-)
-
 export class Purchases extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     loading: PropTypes.bool.isRequired,
     modalToggle: PropTypes.bool.isRequired,
-    purchases: PropTypes.oneOfType([
+    activePurchases: PropTypes.oneOfType([
+      PropTypes.array.isRequired,
+      PropTypes.object.isRequired
+    ]),
+    completedPurchases: PropTypes.oneOfType([
+      PropTypes.array.isRequired,
+      PropTypes.object.isRequired
+    ]),
+    expiredPurchases: PropTypes.oneOfType([
       PropTypes.array.isRequired,
       PropTypes.object.isRequired
     ]),
@@ -120,80 +73,24 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
     current: null
   }
 
-  constructor () {
-    super()
-
-    this._displayEmpty = this._displayEmpty.bind(this)
-    this._goToHome = this._goToHome.bind(this)
-  }
-
-  _goToHome () {
+  _goToHome = () => {
     this.props.changeRoute('/')
   }
 
-  _displayEmpty () {
-    const { purchases, loading } = this.props
+  _handleShow = (entity) => {
+    const { loading, changeRoute, windowWidth } = this.props
 
-    if (loading === false && !(purchases.size > 0)) {
-      return (
-        <EmptyPurchases />
-      )
+    if (loading === false && entity.size === 0) {
+      return <EmptyPurchase />
     }
 
-    return null
-  }
-
-  _handlePurchases = () => {
-    const { purchases, changeRoute, windowWidth } = this.props
-
     return (
-      <Grid padded>
-        {/* purchases={(purchases.size > 0)} */}
-        { this._displayEmpty() }
-        {
-          purchases.map((order, index) =>
-            <Purchase
-              className='padding__bottom--15'
-              defaultImage={imageStock('default-slider.jpg')}
-              key={order.get('trackingNumber')}
-              order={order}
-              windowWidth={windowWidth}
-              statuses={STATUSES}
-              purchaseUsecases={PURCHASE_USECASE}
-              purchaseOrders={PURCHASE_ORDER}
-              changeRoute={changeRoute}
-            />)
-        }
-      </Grid>
-
+      <EntityPurchases
+        entity={entity}
+        changeRoute={changeRoute}
+        windowWidth={windowWidth}
+      />
     )
-  }
-
-  _handleEmptyPurchase = () => {
-    return (
-      <Grid padded>
-        <Grid.Row centered>
-          <Grid.Column textAlign='center'>
-            <EmptyPurchaseWrapper>
-              <Image src={EmptyPurchase} />
-              <Label className='text__roboto--light' as='p' basic size='large'>
-                Woops! It seems like you haven't bought anything yet. Let's fix that!
-              </Label>
-            </EmptyPurchaseWrapper>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    )
-  }
-
-  _handleShow = () => {
-    const { purchases } = this.props
-
-    if (isEmpty(purchases)) {
-      return this._handleEmptyPurchase()
-    }
-
-    return this._handlePurchases()
   }
 
   componentWillMount () {
@@ -213,12 +110,12 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
   }
 
   render () {
-    const { modalToggle, setMobileNumber } = this.props
+    const { modalToggle, setMobileNumber, activePurchases, completedPurchases, expiredPurchases } = this.props
 
     const panes = [
-      { menuItem: 'Active', render: () => <Tab.Pane>{this._handleShow()}</Tab.Pane> },
-      { menuItem: 'Compeleted', render: () => <Tab.Pane>{this._handleShow()}</Tab.Pane> },
-      { menuItem: 'Expired', render: () => <Tab.Pane>{this._handleEmptyPurchase()}</Tab.Pane> }
+      { menuItem: 'Active', render: () => <Tab.Pane>{this._handleShow(activePurchases)}</Tab.Pane> },
+      { menuItem: 'Compeleted', render: () => <Tab.Pane>{this._handleShow(completedPurchases)}</Tab.Pane> },
+      { menuItem: 'Expired', render: () => <Tab.Pane>{this._handleShow(expiredPurchases)}</Tab.Pane> }
     ]
 
     return (
@@ -243,7 +140,9 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
 }
 
 const mapStateToProps = createStructuredSelector({
-  purchases: selectPurchases(),
+  activePurchases: selectActivePurchases(),
+  completedPurchases: selectCompletedPurchases(),
+  expiredPurchases: selectExpiredPurchases(),
   loading: selectLoader(),
   modalToggle: selectModalToggle()
 })

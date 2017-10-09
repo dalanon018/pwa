@@ -12,6 +12,6 @@ export default defineMessages({
   },
   emptyPurchases: {
     id: 'app.containers.Purchases.emptyPurchases',
-    defaultMessage: 'YOU HAVE NOT MADE ANY PURCHASES YET'
+    defaultMessage: 'Woops! It seems like you haven\'t bought anything yet. Let\'s fix that!'
   }
 })

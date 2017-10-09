@@ -5,11 +5,12 @@ import { isNil } from 'ramda'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Label, Button, Image } from 'semantic-ui-react'
 
+import Countdown from 'components/Countdown'
+
 import WarningIcon from 'images/icons/instructions-icon.svg'
 import ReturnIcon from 'images/icons/receipts/return-icon-receipt.svg'
 
 import { DateFormater } from 'utils/date' // DateFormater
-import Countdown from 'components/Countdown'
 
 import PurchaseOrder from './PurchaseOrder'
 import PurchaseUsecase from './PurchaseUsecase'
@@ -30,9 +31,12 @@ import {
 } from './styled'
 
 import {
-  HIDE_BARCODE,
-  COMPLETED
+  HIDE_BARCODE
 } from './constants'
+
+import {
+  COMPLETED
+} from 'containers/Buckets/constants'
 
 // @TODO: Mode of payment needed to come from receipt
 const modePayment = 'Cod'

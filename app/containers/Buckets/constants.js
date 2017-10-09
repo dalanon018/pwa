@@ -80,3 +80,12 @@ export const PURCHASE_USECASE = [
   'CLAIMED',
   'UNCLAIMED'
 ]
+
+export const COMPLETED = [
+  'CLAIMED'
+]
+
+export const EXPIRED = [
+  'UNPAID',
+  'UNCLAIMED'
+]

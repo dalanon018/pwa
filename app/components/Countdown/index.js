@@ -95,6 +95,10 @@ export default function (WrapperComponent) {
       clearInterval(this.countdownInterval)
     }
 
+    componentDidMount () {
+      this._startCountDownTimer(this.props)
+    }
+
     componentDidUpdate (prevProps, prevState) {
       this._disableTimer()
     }

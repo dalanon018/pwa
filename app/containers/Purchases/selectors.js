@@ -1,4 +1,9 @@
 import { createSelector } from 'reselect'
+import {
+  STATUSES,
+  COMPLETED,
+  EXPIRED
+} from 'containers/Buckets/constants'
 
 /**
  * Direct selector to the barcodeLists state domain
@@ -23,6 +28,30 @@ const selectPurchases = () => createSelector(
   (substate) => substate.get('purchases')
 )
 
+const selectActivePurchases = () => createSelector(
+  selectPurchases(),
+  (substate) => substate.filter((state) => {
+    const status = STATUSES[state.get('status')]
+    return !COMPLETED.includes(status) && !EXPIRED.includes(status)
+  })
+)
+
+const selectCompletedPurchases = () => createSelector(
+  selectPurchases(),
+  (substate) => substate.filter((state) => {
+    const status = STATUSES[state.get('status')]
+    return COMPLETED.includes(status)
+  })
+)
+
+const selectExpiredPurchases = () => createSelector(
+  selectPurchases(),
+  (substate) => substate.filter((state) => {
+    const status = STATUSES[state.get('status')]
+    return EXPIRED.includes(status)
+  })
+)
+
 const selectModalToggle = () => createSelector(
   selectBarcodeListsDomain(),
   (substate) => substate.get('modalToggle')
@@ -31,5 +60,8 @@ const selectModalToggle = () => createSelector(
 export {
   selectPurchases,
   selectLoader,
-  selectModalToggle
+  selectModalToggle,
+  selectActivePurchases,
+  selectCompletedPurchases,
+  selectExpiredPurchases
 }
