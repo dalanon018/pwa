@@ -8,6 +8,6 @@ import { defineMessages } from 'react-intl'
 export default defineMessages({
   header: {
     id: 'app.containers.PrivacyPolicy.header',
-    defaultMessage: 'PRIVACY POLICY'
+    defaultMessage: 'Privacy Policy'
   }
 })

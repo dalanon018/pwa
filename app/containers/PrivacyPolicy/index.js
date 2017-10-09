@@ -6,14 +6,13 @@
 
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { FormattedMessage } from 'react-intl'
+import { injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import messages from './messages'
 import showdown from 'showdown'
 
 import { Grid } from 'semantic-ui-react'
 
-import H1 from 'components/H1'
 import Footer from 'components/Footer'
 import { LoadingStateInfo } from 'components/LoadingBlock'
 
@@ -36,7 +35,7 @@ export class PrivacyPolicy extends React.PureComponent { // eslint-disable-line 
 
   componentDidMount () {
     this.props.getMarkDown()
-    this.props.setPageTitle('Privacy Policy')
+    this.props.setPageTitle(this.props.intl.formatMessage(messages.header))
     this.props.setShowSearchIcon(false)
     this.props.setShowActivityIcon(false)
   }
@@ -49,9 +48,6 @@ export class PrivacyPolicy extends React.PureComponent { // eslint-disable-line 
       <div>
         <div className='document-helper'>
           <Grid padded>
-            <H1 center className='padding__top--25 padding__none--horizontal'>
-              <FormattedMessage {...messages.header} />
-            </H1>
             <LoadingStateInfo loading={loader} count='4'>
               <div className='animation-fade' dangerouslySetInnerHTML={{__html: html}} />
             </LoadingStateInfo>
@@ -78,4 +74,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PrivacyPolicy)
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(PrivacyPolicy))
