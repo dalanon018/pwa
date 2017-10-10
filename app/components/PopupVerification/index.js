@@ -150,7 +150,7 @@ export class PopupVerification extends React.PureComponent {
               disabled={this.state.toggle}
               primary
               onClick={this._handleSubmit}>
-                  Submit
+              <FormattedMessage {...messages.submit} />
             </Button>
 
             <CloseButton close={onClose} text='Close' />
