@@ -57,6 +57,10 @@ const Schema = {
     name: 'storeName',
     type: STRING
   },
+  mobileNumber: {
+    name: 'mobileNumber',
+    type: STRING
+  },
   sevenConnectRefNum: {
     name: 'payCode',
     type: STRING

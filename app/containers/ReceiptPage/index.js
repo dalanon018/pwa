@@ -160,7 +160,6 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
     const { modalToggle } = this.state
     const receiptPageName = route && route.name
     // const widthResponsive = windowWidth >= 768
-
     return (
       <ReceiptWrapper background={this._identifyBackground}>
         <Helmet
