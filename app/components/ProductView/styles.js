@@ -3,7 +3,6 @@ import styled from 'styled-components'
 const ProductWrapper = styled.div`
   cursor: pointer;
   display: block;
-  margin-bottom: 10px;
   position: relative;
   text-align: center;
 
@@ -28,12 +27,12 @@ const ProductPriceWrapper = styled.div`
   align-items: flex-end;
   display: flex;
   justify-content: center;
-  margin-top: 10px;
 
   .product-price {
     color: #F58322 !important;
     font-family: 'Roboto';
     letter-spacing: -2px;
+    line-height: 30px;
     padding: 0;
   }
 

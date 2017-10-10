@@ -44,7 +44,8 @@ import {
 
 import {
   BannerWrapper,
-  SearchWrapper
+  SearchWrapper,
+  SearchContainer
 } from './styles'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -172,7 +173,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           ]}
         />
 
-        <div className='background__light-grey margin__horizontal--14'>
+        <SearchContainer className='background__light-grey'>
           <Grid padded>
             <Grid.Row columns={1}>
               <Grid.Column>
@@ -186,7 +187,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               </Grid.Column>
             </Grid.Row>
           </Grid>
-        </div>
+        </SearchContainer>
 
         <BannerWrapper>
           <BannerSlider loader={loader} images={bannerImages} />
