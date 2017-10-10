@@ -29,10 +29,8 @@ const CheckboxWrapper = styled.div`
     text-decoration: underline;
   }
 
-  @media (min-width: 768px) {
-    &.prompt-number {
-      justify-content: center;
-    }
+  &.prompt-number {
+    justify-content: center;
   }
 `
 

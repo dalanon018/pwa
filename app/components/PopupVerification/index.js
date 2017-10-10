@@ -135,6 +135,7 @@ export class PopupVerification extends React.PureComponent {
                 type='text'
                 value={value}
                 onChange={this._handleInput}
+                placeholder='XXXXXX'
                 onPaste={F} />
             </InputWrapper>
 
@@ -148,7 +149,6 @@ export class PopupVerification extends React.PureComponent {
             <Button
               disabled={this.state.toggle}
               primary
-              fluid
               onClick={this._handleSubmit}>
                   Submit
             </Button>

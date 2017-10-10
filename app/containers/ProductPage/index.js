@@ -302,7 +302,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             productPageTrigger={productPageTrigger}
           />
         </div>
-        <div className='mobile-visibility' onTouchMove={this._handleTouch}>
+        <div onTouchMove={this._handleTouch}>
           <PopupSlide
             handleCheckAw={this._handleCheck}
             handleDisableAw={this._handleDisable}
@@ -316,7 +316,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             toggleCheck={toggleCheck}
             handleToggleCheck={this._handleToggleCheck} />
         </div>
-        <div className='mobile-visibility' onTouchMove={this._handleTouch}>
+        <div onTouchMove={this._handleTouch}>
           <PopupVerification
             submit={this._handleSubmitVerification}
             modalClose={this._handleClose}
@@ -325,7 +325,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             mobileNumber={prevMobileNumber}
             onClose={this._handleToggleVerification} />
         </div>
-        <div className='mobile-visibility' onTouchMove={this._handleTouch}>
+        <div onTouchMove={this._handleTouch}>
           <TermsConditionsWrapper toggle={toggleTerms}>
             <div className='document-helper terms-conditions'>
               <Grid padded>

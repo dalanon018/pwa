@@ -11,13 +11,7 @@ const PopupWrapper = styled.div`
   transition: all .3s ease;
   width: 100%;
   z-index: 999;
-
-  @media (min-width: 768px) {
-    border-radius: 30px;
-    height: auto;
-    position: relative;
-    z-index: inherit;
-  }
+  text-align: center;
 `
 
 const PopupContainer = styled.div`
@@ -32,17 +26,17 @@ const PopupContent = styled.div`
 `
 
 const InputWrapper = styled.div`
-  align-items: center;
   display: flex;
   font-size: 30px;
-  justify-content: center;
   margin-bottom: 20px;
+  width: 222px;
+  margin: 20px auto;
 
   input {
     font-size: 30px;
     margin-left: 10px;
     padding: 4px 6px 0 6px;
-    width: 73%;
+    width: 100%;
   }
   
   span {

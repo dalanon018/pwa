@@ -74,8 +74,6 @@ export class PopupSlide extends React.PureComponent {
   }
 
   _handleCheck (e, data) {
-    // this.props.toggleCheck = data.checked
-    console.log('currentProps', this.props.toggleCheck)
     this.setState({
       check: data.checked
     }, () => this._handleDisable())
@@ -140,7 +138,6 @@ export class PopupSlide extends React.PureComponent {
     if (mobileNumber) {
       this._setDefaultMobileNumber(nextProps)
     }
-    console.log('nextProps', toggleCheck)
     this.setState({
       check: toggleCheck
     }, () => this._handleDisable())
@@ -162,7 +159,7 @@ export class PopupSlide extends React.PureComponent {
         {
           name: 'checkbox',
           label: (
-            <span>
+            <span className='test'>
               I have read and accepted the
               <A key={0} onClick={toggleTerms}> Terms and Conditions</A>
             </span>
@@ -212,7 +209,6 @@ export class PopupSlide extends React.PureComponent {
             <Button
               disabled={this.state.toggle}
               primary
-              fluid
               onClick={this._handleSubmit}>
                   Submit
             </Button>
