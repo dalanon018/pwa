@@ -151,10 +151,6 @@ export const ProductDetailsContainer = styled(AnimateDiv)`
   padding: 35px 25px;
   color: #5B5B5B;
   font-weight: 100;
-
-  @media (min-width: 768px) {
-   padding: 15px 0;
-  }
 `
 export const ProductDetails = styled(ProductDetailsContainer)`
   border-bottom: 1px solid #F0F0F0;
@@ -379,6 +375,7 @@ export const OrderButtonWrapper = styled.div`
 `
 export const CollapseContent = styled.div`
   display: flex;
+  padding: 5px 15px !important;
 
   img {
     width: auto;

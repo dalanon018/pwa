@@ -14,7 +14,10 @@ import {
 
   SET_MOBILE_NUMBERS,
 
-  SET_PRODUCT_HANDLER_DEFAULT
+  SET_PRODUCT_HANDLER_DEFAULT,
+
+  GET_MARKDOWN,
+  SET_MARKDOWN
 } from './constants'
 
 const initialState = fromJS({
@@ -23,7 +26,9 @@ const initialState = fromJS({
   mobileNumbers: [],
   requestProductSuccess: false,
   requestProductError: false,
-  currentProduct: {}
+  currentProduct: {},
+  markdown: '',
+  loading_markdown: false
 })
 
 function productPageReducer (state = initialState, action) {
@@ -49,6 +54,15 @@ function productPageReducer (state = initialState, action) {
     case SET_MOBILE_NUMBERS:
       return state
           .set('mobileNumbers', fromJS(action.payload))
+
+    case GET_MARKDOWN:
+      return state
+        .set('loading', true)
+
+    case SET_MARKDOWN:
+      return state
+        .set('markdown', action.payload)
+        .set('loading', false)
 
     case SET_PRODUCT_HANDLER_DEFAULT:
       return state

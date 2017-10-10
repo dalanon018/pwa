@@ -17,3 +17,7 @@ export const SET_PRODUCT_ERROR = 'app/ProductPage/SET_ERROR'
 
 // This will set our /success and error handler to default
 export const SET_PRODUCT_HANDLER_DEFAULT = 'app/ProductPage/SET_PRODUCT_HANDLER_DEFAULT'
+
+// Terms And Conditions
+export const GET_MARKDOWN = 'app/ProductPage/GET_MARKDOWN'
+export const SET_MARKDOWN = 'app/ProductPage/SET_MARKDOWN'

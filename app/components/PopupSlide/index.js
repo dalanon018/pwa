@@ -27,7 +27,7 @@ import Checkbox from 'components/CheckboxField'
 import Modal from 'components/PromptModal'
 import A from 'components/A'
 
-import BannerBg from 'images/modal-bg-orange.png'
+import BannerBg from 'images/modal-bg-lightgrey.png'
 import MobileIcon from 'images/icons/mobile-icon.svg'
 
 import { Image, Label, Button } from 'semantic-ui-react'
@@ -133,25 +133,35 @@ export class PopupSlide extends React.PureComponent {
   }
 
   componentWillReceiveProps (nextProps) {
-    const { mobileNumber } = nextProps
+    let { mobileNumber, toggleCheck } = nextProps
 
     if (mobileNumber) {
       this._setDefaultMobileNumber(nextProps)
     }
+    this.setState({
+      check: toggleCheck
+    }, () => this._handleDisable())
+  }
+
+  componentDidUpdate (pProps) {
+    const { handleToggleCheck } = pProps
+    const { check } = this.state
+
+    handleToggleCheck(check)
   }
 
   render () {
-    const { toggle, onClose, modalToggle, modalClose } = this.props
-    const { value } = this.state
+    const { toggle, onClose, modalToggle, modalClose, toggleTerms } = this.props
+    const { value, check } = this.state
 
     const checkboxList =
       [
         {
           name: 'checkbox',
           label: (
-            <span>
+            <span className='test'>
               I have read and accepted the
-              <A key={0} onClick={this._goToTermsConditions}> Terms and Conditions</A>
+              <A key={0} onClick={toggleTerms}> Terms and Conditions</A>
             </span>
           )
         }
@@ -191,6 +201,7 @@ export class PopupSlide extends React.PureComponent {
                   key={index}
                   className='margin__bottom-positive--20'
                   onChange={this._handleCheck}
+                  checked={check}
                   name={item.name}
                   label={item.label} />
               )
@@ -198,7 +209,6 @@ export class PopupSlide extends React.PureComponent {
             <Button
               disabled={this.state.toggle}
               primary
-              fluid
               onClick={this._handleSubmit}>
                   Submit
             </Button>

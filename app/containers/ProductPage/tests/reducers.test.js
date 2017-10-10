@@ -16,7 +16,9 @@ describe('Products Reducer', () => {
       mobileNumbers: [],
       requestProductSuccess: false,
       requestProductError: false,
-      currentProduct: {}
+      currentProduct: {},
+      markdown: '',
+      loading_markdown: false
     })
   })
 

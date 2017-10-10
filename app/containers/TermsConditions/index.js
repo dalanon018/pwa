@@ -6,7 +6,7 @@
 
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { injectIntl } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import messages from './messages'
 import showdown from 'showdown'
@@ -15,6 +15,7 @@ import { Grid } from 'semantic-ui-react'
 
 import Footer from 'components/Footer'
 import { LoadingStateInfo } from 'components/LoadingBlock'
+import H1 from 'components/H1'
 
 import { getMarkDownAction } from './actions'
 import { selectMarkdown, selectLoading } from './selectors'
@@ -47,6 +48,9 @@ export class TermsConditions extends React.PureComponent { // eslint-disable-lin
       <div>
         <div className='document-helper terms-conditions margin__top-positive--30'>
           <Grid padded>
+            <H1 className='padding__top--25 padding__none--horizontal'>
+              <FormattedMessage {...messages.header} />
+            </H1>
             <LoadingStateInfo loading={loader} count='4'>
               <div className='animation-fade' dangerouslySetInnerHTML={{__html: html}} />
             </LoadingStateInfo>

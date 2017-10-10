@@ -61,7 +61,7 @@ const Product = ({
 
   return (
     <div>
-      <ProductWrapper className='mobile-visibility'>
+      <ProductWrapper>
         <Image className='brand-logo' alt='Cliqq' src={product.get('brandLogo')} />
         <ProductImageSlider>
           <ProductSlider
@@ -134,26 +134,29 @@ const Product = ({
                 </Label>
               </div>
             </CollapseContent>
-            <CollapseContent>
-              {
+            {
                 product && product.get('returnable')
-                ? <div>
-                  <Image src={ReturnIcon} alt='Cliqq' />
-                  <div className='collapse-description'>
-                    <Label className='description-title' as='p' basic size='large'>Cliqq Return Policy</Label>
-                    <Label as='p' color='grey' basic size='medium'>Not satisfied with your purchase? Depending on CLIQQ Care Policy, you can return your item anytime of the day <u>within 7 days</u> from claim date. Just go to your nearest 7/11 store where the item was purchased and get your Return Slip from the CLIQQ Kiosk and bring it to the cashier.</Label>
-                  </div>
-                </div>
+                ? (
+                  <CollapseContent>
+                    <Image src={ReturnIcon} alt='Cliqq' />
+                    <div className='collapse-description'>
+                      <Label className='description-title' as='p' basic size='large'>Cliqq Return Policy</Label>
+                      <Label as='p' color='grey' basic size='medium'>Not satisfied with your purchase? Depending on CLIQQ Care Policy, you can return your item anytime of the day <u>within 7 days</u> from claim date. Just go to your nearest 7/11 store where the item was purchased and get your Return Slip from the CLIQQ Kiosk and bring it to the cashier.</Label>
+                    </div>
+                  </CollapseContent>
+                  )
                 : null
               }
-            </CollapseContent>
+
           </ListCollapse>
           <ListCollapse title={
             <Label as='p' className='margin__none' size='large' >
               <FormattedMessage {...messages.careLabel} />
             </Label>
           }>
-            <Label as='p' color='grey' basic size='medium'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam eos repudiandae inventore debitis iusto ea esse eligendi voluptatum distinctio assumenda quam aliquid, unde ullam odit tenetur cum, explicabo quisquam a!</Label>
+            <CollapseContent>
+              <Label as='p' color='grey' basic size='medium'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam eos repudiandae inventore debitis iusto ea esse eligendi voluptatum distinctio assumenda quam aliquid, unde ullam odit tenetur cum, explicabo quisquam a!</Label>
+            </CollapseContent>
           </ListCollapse>
 
           <ButtonContainer>

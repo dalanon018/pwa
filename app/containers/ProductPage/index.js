@@ -6,13 +6,19 @@
 
 import React, { PropTypes } from 'react'
 import Helmet from 'react-helmet'
+import styled from 'styled-components'
 import Recaptcha from 'react-google-recaptcha'
 
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
+import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
+import messages from './messages'
 import { noop } from 'lodash'
 import { ifElse, equals } from 'ramda'
+import showdown from 'showdown'
+
+import { Grid, Button } from 'semantic-ui-react'
 
 import { imageStock } from 'utils/image-stock'
 
@@ -20,13 +26,17 @@ import Product from 'components/Product'
 import PopupSlide from 'components/PopupSlide'
 import PopupVerification from 'components/PopupVerification'
 import WindowWidth from 'components/WindowWidth'
+import { LoadingStateInfo } from 'components/LoadingBlock'
+import H1 from 'components/H1'
 
 import {
   selectLoader,
   selectProduct,
   selectMobileNumbers,
   selectProductSuccess,
-  selectProductError
+  selectProductError,
+  selectMarkdown,
+  selectLoadingMarkdown
 } from './selectors'
 
 import {
@@ -34,7 +44,8 @@ import {
   setCurrentProductAction,
   getMobileNumbersAction,
   updateMobileNumbersAction,
-  setProductHandlersDefaultAction
+  setProductHandlersDefaultAction,
+  getMarkDownAction
 } from './actions'
 
 import {
@@ -52,6 +63,28 @@ import {
   ENVIROMENT,
   RECAPTCHA_SITE_KEY
 } from 'containers/App/constants'
+
+const TermsConditionsWrapper = styled.div`
+  background-color: #FFFFFF;
+  bottom: 0;
+  height: ${props => props.toggle ? '100vh' : '0'};
+  color: #5B5B5B;
+  left: 0;
+  overflow: auto;
+  position: fixed;
+  transition: all .3s ease;
+  -webkit-transition: all .3s ease;
+  width: 100%;
+  z-index: 1000;
+
+  .terms-conditions {
+    padding-top: 50px;
+  }
+
+  .ui.button.primary {
+    margin: 25px auto;
+  }
+`
 
 export class ProductPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
@@ -81,7 +114,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       copied: false,
       showSlide: false,
       showVerification: false,
-      mobileNumber: ''
+      mobileNumber: '',
+      toggleTerms: false,
+      toggleCheck: false
     }
 
     this._handleSubmit = this._handleSubmit.bind(this)
@@ -97,6 +132,31 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this._executeCaptcha = this._executeCaptcha.bind(this)
     this._handleToggleVerification = this._handleToggleVerification.bind(this)
     this._handleSubmitVerification = this._handleSubmitVerification.bind(this)
+    this._handleToggleTerms = this._handleToggleTerms.bind(this)
+    this._toggleCheck = this._toggleCheck.bind(this)
+    this._handleToggleCheck = this._handleToggleCheck.bind(this)
+  }
+
+  _handleToggleCheck (data) {
+    this.setState({
+      toggleCheck: data
+    })
+  }
+
+  _toggleCheck () {
+    this._handleToggleTerms()
+
+    this.setState({
+      toggleCheck: true
+    })
+  }
+
+  _handleToggleTerms () {
+    const { toggleTerms } = this.state
+
+    this.setState({
+      toggleTerms: !toggleTerms
+    })
   }
 
   _handleSubmitVerification () {
@@ -194,9 +254,10 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   componentDidMount () {
-    const { params: { id }, getProduct, getMobileNumbers } = this.props
+    const { params: { id }, getProduct, getMobileNumbers, getMarkDown } = this.props
     getProduct({ id })
     getMobileNumbers()
+    getMarkDown()
   }
 
   componentWillReceiveProps (nextProps) {
@@ -217,10 +278,12 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   render () {
-    const { loading, product, toggle, route, windowWidth } = this.props
-    const { modalToggle, prevMobileNumber, showVerification } = this.state
+    const { loading, product, toggle, route, windowWidth, markdown, loader } = this.props
+    const { modalToggle, prevMobileNumber, showVerification, toggleTerms, toggleCheck } = this.state
     const productPageTrigger = route && route
 
+    const converter = new showdown.Converter()
+    const html = converter.makeHtml(markdown)
     return (
       <div>
         <Helmet
@@ -239,16 +302,21 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             productPageTrigger={productPageTrigger}
           />
         </div>
-        <div className='mobile-visibility' onTouchMove={this._handleTouch}>
+        <div onTouchMove={this._handleTouch}>
           <PopupSlide
+            handleCheckAw={this._handleCheck}
+            handleDisableAw={this._handleDisable}
             submit={this._handleSubmit}
             modalClose={this._handleClose}
             modalToggle={modalToggle}
             toggle={toggle}
             mobileNumber={prevMobileNumber}
-            onClose={this._handleToggle} />
+            toggleTerms={this._handleToggleTerms}
+            onClose={this._handleToggle}
+            toggleCheck={toggleCheck}
+            handleToggleCheck={this._handleToggleCheck} />
         </div>
-        <div className='mobile-visibility' onTouchMove={this._handleTouch}>
+        <div onTouchMove={this._handleTouch}>
           <PopupVerification
             submit={this._handleSubmitVerification}
             modalClose={this._handleClose}
@@ -256,6 +324,21 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             toggle={showVerification}
             mobileNumber={prevMobileNumber}
             onClose={this._handleToggleVerification} />
+        </div>
+        <div onTouchMove={this._handleTouch}>
+          <TermsConditionsWrapper toggle={toggleTerms}>
+            <div className='document-helper terms-conditions'>
+              <Grid padded>
+                <H1 className='padding__top--25 padding__none--horizontal'>
+                  <FormattedMessage {...messages.headerTerms} />
+                </H1>
+                <LoadingStateInfo loading={loader} count='4'>
+                  <div className='animation-fade' dangerouslySetInnerHTML={{__html: html}} />
+                </LoadingStateInfo>
+                <Button primary onClick={this._toggleCheck}>Accept</Button>
+              </Grid>
+            </div>
+          </TermsConditionsWrapper>
         </div>
         <Recaptcha
           ref={this._recaptchaRef}
@@ -274,7 +357,9 @@ const mapStateToProps = createStructuredSelector({
   toggle: selectToggle(),
   mobileNumbers: selectMobileNumbers(),
   productSuccess: selectProductSuccess(),
-  productError: selectProductError()
+  productError: selectProductError(),
+  markdown: selectMarkdown(),
+  loader: selectLoadingMarkdown()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -289,6 +374,7 @@ function mapDispatchToProps (dispatch) {
     setToggle: (payload) => dispatch(setToggleAction(payload)),
     setHandlersDefault: () => dispatch(setProductHandlersDefaultAction()),
     changeRoute: (url) => dispatch(push(url)),
+    getMarkDown: payload => dispatch(getMarkDownAction()),
     dispatch
   }
 }
