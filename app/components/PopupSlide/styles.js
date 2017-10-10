@@ -12,6 +12,13 @@ const PopupWrapper = styled.div`
   width: 100%;
   z-index: 999;
   text-align: center;
+
+  // @media (min-width: 768px) {
+  //   border-radius: 30px;
+  //   height: auto;
+  //   position: relative;
+  //   z-index: inherit;
+  // }
 `
 
 const PopupContainer = styled.div`

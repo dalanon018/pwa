@@ -11,8 +11,6 @@ import Helmet from 'react-helmet'
 import styled from 'styled-components'
 
 import withProgressBar from 'components/ProgressBar'
-import DesktopHeader from 'components/DesktopHeader'
-import DesktopFooter from 'components/DesktopFooter'
 
 const AppWrapper = styled.div`
   display: block;
@@ -20,7 +18,7 @@ const AppWrapper = styled.div`
 `
 
 const BodyWrapper = styled.div`
-  max-width: calc(1200px + 16px * 2);
+  max-width: calc(767px + 16px * 2);
   margin: 0 auto;
   display: flex;
   height: 100%;
@@ -30,7 +28,6 @@ const BodyWrapper = styled.div`
 export function App (props) {
   return (
     <AppWrapper>
-      <DesktopHeader />
       <BodyWrapper>
         <Helmet
           titleTemplate='%s - 7-Eleven CliQQ'
@@ -38,7 +35,6 @@ export function App (props) {
         />
         {React.Children.toArray(props.children)}
       </BodyWrapper>
-      <DesktopFooter />
     </AppWrapper>
   )
 }

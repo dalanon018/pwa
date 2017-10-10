@@ -153,6 +153,9 @@ class Purchase extends React.PureComponent {
       case (windowWidth >= 375 && windowWidth <= 500):
         maxChar = 28
         break
+      case (windowWidth >= 767):
+        maxChar = 50
+        break
     }
 
     if (data && data.length > maxChar) {

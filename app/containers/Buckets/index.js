@@ -62,10 +62,6 @@ const MainContent = styled.div`
   margin-top: 50px;
   overflow: hidden;
   width: 100%;
-
-  @media (min-width: 768px) {
-    margin-top: 0;
-  }
 `
 
 export class Buckets extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -170,7 +166,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   _displayHeader = () => {
-    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, routes, searchProduct, setProductSearchList, windowWidth, intl } = this.props
+    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, routes, searchProduct, setProductSearchList, intl } = this.props
     const { path } = routes.slice().pop()
     const currentRoute = routes.slice().pop().name
 
@@ -179,7 +175,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
      */
     const hideBackButton = this._hideBackButton()
 
-    if (path === '/search' && windowWidth < 768) {
+    if (path === '/search') {
       return (
         <SearchMenu
           clearSearch={setProductSearchList}

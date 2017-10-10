@@ -27,8 +27,17 @@ const CustomItem = styled(List.Item)`
   }
 `
 
-const _productTitle = (title) => {
-  const maxChar = 40
+const _productTitle = (title, windowWidth) => {
+  let maxChar = 40
+
+  switch (true) {
+    case (windowWidth >= 375 && windowWidth <= 500):
+      maxChar = 40
+      break
+    case (windowWidth >= 767):
+      maxChar = 80
+      break
+  }
 
   if (title.length > maxChar) {
     return `${title.slice(0, maxChar)}. . .`
@@ -36,7 +45,7 @@ const _productTitle = (title) => {
   return title
 }
 
-function SearchResult ({ product, changeRoute }) {
+function SearchResult ({ product, changeRoute, windowWidth }) {
   return (
     <List divided verticalAlign='middle'>
       {
@@ -51,7 +60,7 @@ function SearchResult ({ product, changeRoute }) {
               <Title as='span' basic size='large'>Brand Name</Title>
               <List.Content>
                 <Content>
-                  <Label as='span' basic size='medium'>{ _productTitle(result.get('title')) }</Label>
+                  <Label as='span' basic size='medium'>{ _productTitle(result.get('title'), windowWidth) }</Label>
                 </Content>
               </List.Content>
             </CustomItem>

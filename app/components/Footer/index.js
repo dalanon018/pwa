@@ -44,7 +44,7 @@ export class Footer extends React.PureComponent {
 
   render () {
     return (
-      <Wrapper className='mobile-visibility'>
+      <Wrapper>
         <Grid>
           <Grid.Row centered>
             <H2 className='custom-header' >
@@ -73,10 +73,11 @@ export class Footer extends React.PureComponent {
 
           <Grid.Row columns='2' verticalAlign='middle' centered divided>
             <Grid.Column width={6}>
-              <AppInfo>
+              <AppInfo className='float__right'>
                 <Image src={DeliveryIcon} />
                 <section>
                   <Label as='span' size='tiny'>1 Dat In-Store Delivery</Label>
+                  <br />
                   <Label as='span' size='tiny'>Free Shipping to Store</Label>
                 </section>
               </AppInfo>
@@ -86,6 +87,7 @@ export class Footer extends React.PureComponent {
                 <Image src={ReturnIcon} />
                 <section>
                   <Label as='span' size='tiny'>Cliqq Return Policy</Label>
+                  <br />
                   <Label as='span' size='tiny'>Change of Mind is Applicable</Label>
                 </section>
               </AppInfo>

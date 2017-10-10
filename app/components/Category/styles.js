@@ -13,6 +13,10 @@ export const CategoryBlock = styled.div`
     color: #FFFFFF !important;
     position: relative;
   }
+
+  @media (min-width: 767px) {
+    height: 150px;
+  }
 `
 
 export const BackgroundLay = styled.div`

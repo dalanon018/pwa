@@ -172,19 +172,21 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           ]}
         />
 
-        <Grid padded>
-          <Grid.Row className='bg-light-grey' columns={1}>
-            <Grid.Column>
-              <SearchWrapper>
-                <Input
-                  fluid
-                  onClick={changeRoute.bind(this, '/search')}
-                  placeholder={intl.formatMessage(messages.searchPlaceholder)}
-                  icon='search' />
-              </SearchWrapper>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+        <div className='background__light-grey margin__horizontal--14'>
+          <Grid padded>
+            <Grid.Row columns={1}>
+              <Grid.Column>
+                <SearchWrapper>
+                  <Input
+                    fluid
+                    onClick={changeRoute.bind(this, '/search')}
+                    placeholder={intl.formatMessage(messages.searchPlaceholder)}
+                    icon='search' />
+                </SearchWrapper>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </div>
 
         <BannerWrapper>
           <BannerSlider loader={loader} images={bannerImages} />
