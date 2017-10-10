@@ -30,7 +30,7 @@ const PhoneFormatter = (str) => ifElse(
     match(/^(\d{3})(\d{3})(\d{4})$/),
     drop(1) // since number format is (0919) we have to remove the 0
   ),
-  (x) => console.log('false', x)
+  identity
 )(str)
 
 export {

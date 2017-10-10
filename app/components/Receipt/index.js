@@ -205,7 +205,6 @@ class Receipt extends React.PureComponent {
   render () {
     const { show } = this.state
     const { timer, receipt, statuses, goReceiptPage } = this.props
-    console.log(receipt.get('mobileNumber'))
     return (
       <div>
         <ReceiptWrapper>
