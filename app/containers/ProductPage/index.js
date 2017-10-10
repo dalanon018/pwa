@@ -357,7 +357,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
                   <div className='animation-fade' dangerouslySetInnerHTML={{__html: html}} />
                 </LoadingStateInfo>
                 <ButtonWrapper toggle={toggleTerms}>
-                  <Button primary fluid onClick={this._toggleCheck}>Yes, I Agree</Button>
+                  <Button primary fluid onClick={this._toggleCheck}><FormattedMessage {...messages.buttonLabelAgree} /></Button>
                 </ButtonWrapper>
               </Grid>
             </div>

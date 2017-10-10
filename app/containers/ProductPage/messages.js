@@ -13,5 +13,9 @@ export default defineMessages({
   headerTerms: {
     id: 'app.containers.ProductPage.headerTerms',
     defaultMessage: 'TERMS AND CONDITIONS'
+  },
+  buttonLabelAgree: {
+    id: 'app.containers.ProductPage.buttonLabelAgree',
+    defaultMessage: 'Yes, I Agree'
   }
 })

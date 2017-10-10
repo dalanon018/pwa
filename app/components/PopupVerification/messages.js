@@ -23,5 +23,9 @@ export default defineMessages({
   resend: {
     id: `${idSuffix}.resend`,
     defaultMessage: 'Resend Code'
+  },
+  submit: {
+    id: `${idSuffix}.submit`,
+    defaultMessage: 'Submit'
   }
 })

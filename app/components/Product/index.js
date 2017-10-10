@@ -59,7 +59,7 @@ const Product = ({
   } = ShareButtons
   const productImages = [product.get('image')]
   const brandLogo = product.get('brandLogo') ? (<Image className='brand-logo' alt='Cliqq' src={product.get('brandLogo')} />) : ''
-
+  
   return (
     <div>
       <ProductWrapper>
@@ -74,7 +74,7 @@ const Product = ({
         <ProductMainContent>
           <LoadingStateInfo loading={loading} center>
             <Label className='no-margin-bottom' as='p' basic size='big'>Brand Name</Label>
-            <Label as='p' basic size='big'>All Day Backpack | Wine</Label>
+            <Label as='p' basic size='big'>{product.get('title')}</Label>
             <ProductPriceWrapper>
               <Label className='product-price' as='b' basic size='massive' color='orange'>
                 <FormattedMessage {...messages.peso} />
@@ -97,7 +97,7 @@ const Product = ({
 
         <SocialContainer>
           <ShareWrapper>
-            <p className='share-item ui big basic label'>Share Item:</p>
+            <p className='share-item ui big basic label'><FormattedMessage {...messages.shareItem} /></p>
 
             <button className='unstyle-button share-button' onClick={() => fbShare(product)}>
               <FacebookIcon round size={30} />
@@ -128,11 +128,11 @@ const Product = ({
             <CollapseContent>
               <Image src={DeliveryIcon} alt='Cliqq' />
               <div className='collapse-description'>
-                <Label className='description-title' as='p' basic size='large'>Free In-Store Delivery</Label>
+                <Label className='description-title' as='p' basic size='large'><FormattedMessage {...messages.deliveryTitle} /></Label>
                 <Label as='p' color='grey' basic size='medium'>
-                  Mega Manila: 1-3 Days <br />
-                  Major Luzon Provinces: 3-5 Days <br />
-                  Vis-Min Provinces: 7-14 Days
+                  <FormattedMessage {...messages.deliveryContent1} /> <br />
+                  <FormattedMessage {...messages.deliveryContent2} /> <br />
+                  <FormattedMessage {...messages.deliveryContent3} />
                 </Label>
               </div>
             </CollapseContent>
@@ -142,8 +142,12 @@ const Product = ({
                   <CollapseContent>
                     <Image src={ReturnIcon} alt='Cliqq' />
                     <div className='collapse-description'>
-                      <Label className='description-title' as='p' basic size='large'>Cliqq Return Policy</Label>
-                      <Label as='p' color='grey' basic size='medium'>Not satisfied with your purchase? Depending on CLIQQ Care Policy, you can return your item anytime of the day <u>within 7 days</u> from claim date. Just go to your nearest 7/11 store where the item was purchased and get your Return Slip from the CLIQQ Kiosk and bring it to the cashier.</Label>
+                      <Label className='description-title' as='p' basic size='large'><FormattedMessage {...messages.returnPolicy} /></Label>
+                      <Label as='p' color='grey' basic size='medium'>
+                        <FormattedMessage {...messages.returnPolicyContent1} />
+                        <u><FormattedMessage {...messages.returnPolicyContent2} /></u>
+                        <FormattedMessage {...messages.returnPolicyContent3} />
+                      </Label>
                     </div>
                   </CollapseContent>
                   )
