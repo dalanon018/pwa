@@ -8,7 +8,7 @@ import {
   Input
 } from 'semantic-ui-react'
 
-import { ifElse, identity } from 'ramda'
+import { ifElse, identity, equals } from 'ramda'
 
 import BarcodeImage from 'images/icons/barcode-header.svg'
 import messages from './messages'
@@ -150,93 +150,7 @@ export default class MainMenu extends PureComponent {
     windowHeightOffset: 0
   }
 
-  _searchInput
-
-  constructor () {
-    super()
-
-    this.state = {
-      show: false,
-      activeMenu: 'home'
-    }
-  }
-
-  _inputReference = (inp) => {
-    this._searchInput = inp
-  }
-
-  _handleSearchItem = () => {
-    const { searchProduct, changeRoute } = this.props
-
-    if (this._searchInput.value) {
-      changeRoute('/search')
-
-      // we should emulate it.
-      setTimeout(() =>
-        searchProduct({ id: this._searchInput.value })
-      , 1000)
-    }
-  }
-
-  _handleKeyPress = (e) => {
-    const code = e.keyCode || e.which
-
-    if (code === 13 && e.target.value) {
-      // we will update our search key here.
-      this._handleSearchItem()
-    }
-    return true
-  }
-
-  _handleCategoryRoute = (id) => {
-    const { changeRoute } = this.props
-    this.setState({
-      show: false
-    })
-    changeRoute(`/products-category/${id}`)
-  }
-
   _handleGotoSearch = () => this.props.changeRoute('/search')
-
-  _handleShowCategories = () =>
-    this.setState({
-      show: true
-    })
-
-  _handleHideCategories = () =>
-    this.setState({
-      show: false
-    })
-
-  _handlerPreventDefault = (e) => e.preventDefault()
-
-  _handleActiveMenu = () => {
-    const { currentRoute } = this.props
-
-    switch (currentRoute) {
-      case 'home':
-        this.setState({
-          activeMenu: 'home'
-        })
-        break
-      case 'purchases':
-        this.setState({
-          activeMenu: 'purchases'
-        })
-        break
-      case 'productsByCategory':
-        this.setState({
-          activeMenu: 'productsByCategory'
-        })
-        break
-
-      default:
-        this.setState({
-          activeMenu: ''
-        })
-        break
-    }
-  }
 
   _updateScrollPosition = (e) => {
     this.setState({
@@ -245,58 +159,52 @@ export default class MainMenu extends PureComponent {
   }
 
   _handleUniqueHeader = () => {
-    const { pageTitle, changeRoute, intl } = this.props
+    const { pageTitle, changeRoute, intl, currentRoute } = this.props
     const { windowHeightOffset } = this.state
-
-    let centerElement = ''
 
     const TitleToggle = toggleComponent(
       <ImageLogo alt='logo' src={MainLogo} onClick={changeRoute.bind(this, '/')} />,
       <Header as='h1'> { pageTitle } </Header>
     )
 
-    if (windowHeightOffset >= 53) {
-      centerElement = <SearchInput
+    const ShowSearchInputLogo = toggleComponent(
+      <SearchInput
         icon='search'
         placeholder={intl.formatMessage(messages.searchPlaceHolder)}
         onClick={this._handleGotoSearch}
-      />
-    } else {
-      centerElement = TitleToggle(!pageTitle)
-    }
+      />,
+      TitleToggle(!pageTitle)
+    )
 
-    return centerElement
+    return ShowSearchInputLogo((currentRoute === 'home' && windowHeightOffset >= 53))
   }
 
   componentWillUnmount () {
     const { currentRoute } = this.props
+    const removeEventListener = ifElse(
+      equals('home'),
+      () => window.removeEventListener('scroll', this._updateScrollPosition),
+      () => {}
+    )
 
-    if (currentRoute === 'home') {
-      window.removeEventListener('scroll', this._updateScrollPosition)
-    }
+    removeEventListener(currentRoute)
   }
 
   componentWillMount = () => {
     const { currentRoute } = this.props
+    const addEventListener = ifElse(
+      equals('home'),
+      () => window.addEventListener('scroll', this._updateScrollPosition),
+      () => {}
+    )
 
-    if (currentRoute === 'home') {
-      window.addEventListener('scroll', this._updateScrollPosition)
-    }
-  }
-
-  componentDidUpdate () {
-    this._handleActiveMenu()
+    addEventListener(currentRoute)
   }
 
   render () {
-    const { leftButtonAction, hideBackButton, changeRoute, pageTitle, showSearchIcon, showActivityIcon, currentRoute } = this.props
+    const { leftButtonAction, hideBackButton, changeRoute, showSearchIcon, showActivityIcon, currentRoute } = this.props
 
     const homeRoute = currentRoute === 'home'
-
-    const TitleToggle = toggleComponent(
-      <ImageLogo alt='logo' src={MainLogo} onClick={changeRoute.bind(this, '/')} />,
-      <Header as='h1'> { pageTitle } </Header>
-    )
 
     const SearchToggle = toggleComponent(
       <Image alt='Cliqq' src={SearchImage} size='mini' onClick={changeRoute.bind(this, '/search')} />,
@@ -329,11 +237,7 @@ export default class MainMenu extends PureComponent {
                 width={homeRoute ? 12 : 8}
                 verticalAlign='middle'>
                 <CenterWrapper>
-                  {
-                    homeRoute
-                    ? this._handleUniqueHeader()
-                    : TitleToggle(!pageTitle)
-                  }
+                  { this._handleUniqueHeader() }
                 </CenterWrapper>
               </Grid.Column>
               <Grid.Column
