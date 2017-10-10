@@ -59,7 +59,7 @@ const Product = ({
   } = ShareButtons
   const productImages = [product.get('image')]
   const brandLogo = product.get('brandLogo') ? (<Image className='brand-logo' alt='Cliqq' src={product.get('brandLogo')} />) : ''
-  
+
   return (
     <div>
       <ProductWrapper>
