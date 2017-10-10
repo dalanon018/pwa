@@ -135,11 +135,17 @@ const Product = ({
               </div>
             </CollapseContent>
             <CollapseContent>
-              <Image src={ReturnIcon} alt='Cliqq' />
-              <div className='collapse-description'>
-                <Label className='description-title' as='p' basic size='large'>Cliqq Return Policy</Label>
-                <Label as='p' color='grey' basic size='medium'>Not satisfied with your purchase? Depending on CLIQQ Care Policy, you can return your item anytime of the day <u>within 7 days</u> from claim date. Just go to your nearest 7/11 store where the item was purchased and get your Return Slip from the CLIQQ Kiosk and bring it to the cashier.</Label>
-              </div>
+              {
+                product && product.get('returnable')
+                ? <div>
+                  <Image src={ReturnIcon} alt='Cliqq' />
+                  <div className='collapse-description'>
+                    <Label className='description-title' as='p' basic size='large'>Cliqq Return Policy</Label>
+                    <Label as='p' color='grey' basic size='medium'>Not satisfied with your purchase? Depending on CLIQQ Care Policy, you can return your item anytime of the day <u>within 7 days</u> from claim date. Just go to your nearest 7/11 store where the item was purchased and get your Return Slip from the CLIQQ Kiosk and bring it to the cashier.</Label>
+                  </div>
+                </div>
+                : null
+              }
             </CollapseContent>
           </ListCollapse>
           <ListCollapse title={

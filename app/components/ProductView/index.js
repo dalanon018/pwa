@@ -45,13 +45,13 @@ function ProductView ({
     lossless: 0
   }
 
-  const resposiveColumns = () => {
-    if (windowWidth >= 768) {
-      return 4
-    } else {
-      return 2
-    }
-  }
+  // const resposiveColumns = () => {
+  //   if (windowWidth >= 768) {
+  //     return 4
+  //   } else {
+  //     return 2
+  //   }
+  // }
 
   const productName = (data) => {
     let maxChar = 40
@@ -70,7 +70,7 @@ function ProductView ({
     return data
   }
   return (
-    <Grid padded stretched columns={resposiveColumns()}>
+    <Grid padded stretched columns={2}>
       {
         loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
         : products.valueSeq().map((product, index) => {
