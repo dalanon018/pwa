@@ -27,7 +27,7 @@ export default function WindowWidth (WrapperComponent) {
     }
 
     componentWillUnmount () {
-      window.addEventListener('resize', this._handleWidthResize)
+      window.removeEventListener('resize', this._handleWidthResize)
     }
 
     render () {
