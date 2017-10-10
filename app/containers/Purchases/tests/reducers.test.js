@@ -12,7 +12,9 @@ describe('Purchases Reducer', () => {
     state = fromJS({
       purchases: [],
       modalToggle: false,
-      loading: false
+      loading: false,
+      markdown: '',
+      loadingMarkdown: false
     })
   })
 

@@ -18,7 +18,7 @@ describe('Products Reducer', () => {
       requestProductError: false,
       currentProduct: {},
       markdown: '',
-      loading_markdown: false
+      loadingMarkdown: false
     })
   })
 

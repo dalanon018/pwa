@@ -29,7 +29,9 @@ import {
   selectModalToggle,
   selectActivePurchases,
   selectCompletedPurchases,
-  selectExpiredPurchases
+  selectExpiredPurchases,
+  selectMarkdown,
+  selectLoadingMarkdown
 } from './selectors'
 
 import {
@@ -39,7 +41,8 @@ import {
   getModalToggleAction,
   setModalToggleAction,
 
-  setMobileNumberAction
+  setMobileNumberAction,
+  getMarkDownAction
 } from './actions'
 
 export class Purchases extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -100,17 +103,19 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
   }
 
   componentDidMount () {
-    const { getApiPurchases, getLocalPurchases, getModalToggle } = this.props
+    const { getApiPurchases, getLocalPurchases, getModalToggle, getMarkDown } = this.props
     // fetch
     getModalToggle()
     // first we have to fetch what we already have on our local storage
     getLocalPurchases()
     // then we will call from our API
     getApiPurchases()
+
+    getMarkDown()
   }
 
   render () {
-    const { modalToggle, setMobileNumber, activePurchases, completedPurchases, expiredPurchases } = this.props
+    const { modalToggle, setMobileNumber, activePurchases, completedPurchases, expiredPurchases, markdown, loader } = this.props
 
     const panes = [
       { menuItem: 'Active', render: () => <Tab.Pane>{this._handleShow(activePurchases)}</Tab.Pane> },
@@ -133,6 +138,8 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
           submit={setMobileNumber}
           toggle={modalToggle}
           onClose={this._goToHome}
+          loader={loader}
+          markdown={markdown}
         />
       </div>
     )
@@ -144,7 +151,9 @@ const mapStateToProps = createStructuredSelector({
   completedPurchases: selectCompletedPurchases(),
   expiredPurchases: selectExpiredPurchases(),
   loading: selectLoader(),
-  modalToggle: selectModalToggle()
+  modalToggle: selectModalToggle(),
+  markdown: selectMarkdown(),
+  loader: selectLoadingMarkdown()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -158,6 +167,7 @@ function mapDispatchToProps (dispatch) {
     setModalToggle: (payload) => dispatch(setModalToggleAction(payload)),
     setMobileNumber: (payload) => dispatch(setMobileNumberAction(payload)),
     changeRoute: (url) => dispatch(push(url)),
+    getMarkDown: payload => dispatch(getMarkDownAction()),
     dispatch
   }
 }

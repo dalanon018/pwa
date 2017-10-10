@@ -22,6 +22,7 @@ import {
 
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
+import xhr from 'utils/xhr'
 
 // import request from 'utils/request'
 import { getRequestData } from 'utils/offline-request'
@@ -35,13 +36,15 @@ import {
 
   GET_MODAL_TOGGLE,
 
-  SET_MOBILE_NUMBER
+  SET_MOBILE_NUMBER,
+  GET_MARKDOWN
 } from './constants'
 
 import {
   setPurchasesAction,
 
-  setModalToggleAction
+  setModalToggleAction,
+  setMarkDownAction
 } from './actions'
 
 import {
@@ -199,6 +202,24 @@ export function * setMobileNumber (payload) {
   yield getApiPurchases()
 }
 
+export function * getMarkDown () {
+  const headers = new Headers()
+  headers.append('Content-Type', 'binary/octet-stream')
+
+  const url = 'https://s3-ap-southeast-1.amazonaws.com/cliqq.shop/docs/terms.md'
+  const req = yield call(xhr, url, {
+    method: 'GET',
+    headers
+  })
+  if (!req.err) {
+    yield put(setMarkDownAction(req))
+  }
+}
+
+export function * getMarkDownSaga () {
+  yield * takeLatest(GET_MARKDOWN, getMarkDown)
+}
+
 export function * getApiPurchasesSaga () {
   yield * takeLatest(GET_API_PURCHASES, getApiPurchases)
 }
@@ -223,7 +244,8 @@ export function * purchasesSagas () {
 
     fork(getModalToggleSaga),
 
-    fork(setMobileNumberSaga)
+    fork(setMobileNumberSaga),
+    fork(getMarkDownSaga)
   ]
 
   // Suspend execution until location changes

@@ -5,7 +5,6 @@
 */
 
 import React, { PropTypes } from 'react'
-// import styled from 'styled-components';
 
 import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
@@ -20,17 +19,20 @@ import {
   ifElse,
   F
 } from 'ramda'
+import showdown from 'showdown'
 
 import CloseButton from 'components/CloseButton'
 import Input from 'components/InputField'
 import Checkbox from 'components/CheckboxField'
 import Modal from 'components/PromptModal'
 import A from 'components/A'
+import H1 from 'components/H1'
+import { LoadingStateInfo } from 'components/LoadingBlock'
 
 import BannerBg from 'images/modal-bg-lightgrey.png'
 import MobileIcon from 'images/icons/mobile-icon.svg'
 
-import { Image, Label, Button } from 'semantic-ui-react'
+import { Image, Label, Button, Grid } from 'semantic-ui-react'
 
 import {
   PopupWrapper,
@@ -38,7 +40,9 @@ import {
   InputWrapper,
   BannerHeader,
   TextWrapper,
-  PopupContent } from './styles'
+  PopupContent,
+  TermsConditionsWrapper,
+  ButtonWrapper } from './styles'
 
 export class PopupSlide extends React.PureComponent {
   static propTypes = {
@@ -54,7 +58,9 @@ export class PopupSlide extends React.PureComponent {
   state = {
     value: '',
     toggle: true,
-    check: false
+    check: false,
+    toggleTerms: false,
+    markdownContent: ''
   }
 
   constructor (props) {
@@ -67,6 +73,34 @@ export class PopupSlide extends React.PureComponent {
     this._goToTermsConditions = this._goToTermsConditions.bind(this)
     this._setDefaultMobileNumber = this._setDefaultMobileNumber.bind(this)
     this._validateData = this._validateData.bind(this)
+    this._toggleTerms = this._toggleTerms.bind(this)
+    this._toggleCheck = this._toggleCheck.bind(this)
+    this._setMarkDownContent = this._setMarkDownContent.bind(this)
+  }
+
+  _setMarkDownContent (data) {
+    const converter = new showdown.Converter()
+    const html = converter.makeHtml(data)
+
+    this.setState({
+      markdownContent: html
+    })
+  }
+
+  _toggleCheck () {
+    this.setState({
+      check: true
+    }, () => this._handleDisable())
+
+    this._toggleTerms()
+  }
+
+  _toggleTerms () {
+    const { toggleTerms } = this.state
+
+    this.setState({
+      toggleTerms: !toggleTerms
+    })
   }
 
   _goToTermsConditions () {
@@ -133,96 +167,106 @@ export class PopupSlide extends React.PureComponent {
   }
 
   componentWillReceiveProps (nextProps) {
-    let { mobileNumber, toggleCheck } = nextProps
+    const { mobileNumber, markdown } = nextProps
 
     if (mobileNumber) {
       this._setDefaultMobileNumber(nextProps)
     }
-    this.setState({
-      check: toggleCheck
-    }, () => this._handleDisable())
-  }
 
-  componentDidUpdate (pProps) {
-    const { handleToggleCheck } = pProps
-    const { check } = this.state
-
-    handleToggleCheck(check)
+    if (markdown) {
+      this._setMarkDownContent(markdown)
+    }
   }
 
   render () {
-    const { toggle, onClose, modalToggle, modalClose, toggleTerms } = this.props
-    const { value, check } = this.state
+    const { toggle, onClose, modalToggle, modalClose, loader } = this.props
+    const { value, check, toggleTerms, markdownContent } = this.state
 
-    const checkboxList =
-      [
-        {
-          name: 'checkbox',
-          label: (
-            <span className='test'>
-              I have read and accepted the
-              <A key={0} onClick={toggleTerms}> Terms and Conditions</A>
-            </span>
-          )
-        }
-      ]
+    const checkboxList = [
+      {
+        name: 'checkbox',
+        label: (
+          <span className='test'>
+            I have read and accepted the
+            <A key={0} onClick={this._toggleTerms}> Terms and Conditions</A>
+          </span>
+        )
+      }
+    ]
 
     return (
-      <PopupWrapper toggle={toggle}>
-        <BannerHeader background={BannerBg}>
-          <span>
-            <Image alt='Cliqq' src={MobileIcon} />
-          </span>
-        </BannerHeader>
-        <PopupContainer>
-          <PopupContent>
-            <TextWrapper>
-              <Label as='p' basic size='big'>
-                <FormattedMessage {...messages.register} />
-              </Label>
-              <Label as='p' basic color='grey' size='medium'><FormattedMessage {...messages.label} /></Label>
-            </TextWrapper>
+      <div>
+        <PopupWrapper toggle={toggle}>
+          <BannerHeader background={BannerBg}>
+            <span>
+              <Image alt='Cliqq' src={MobileIcon} />
+            </span>
+          </BannerHeader>
+          <PopupContainer>
+            <PopupContent>
+              <TextWrapper>
+                <Label as='p' basic size='big'>
+                  <FormattedMessage {...messages.register} />
+                </Label>
+                <Label as='p' basic color='grey' size='medium'><FormattedMessage {...messages.label} /></Label>
+              </TextWrapper>
 
-            <InputWrapper>
-              <Label as='span' basic color='grey' size='massive'>
-                <FormattedMessage {...messages.phonePrefix} />
-              </Label>
+              <InputWrapper>
+                <Label as='span' basic color='grey' size='massive'>
+                  <FormattedMessage {...messages.phonePrefix} />
+                </Label>
 
-              <Input
-                type='text'
-                value={value}
-                onChange={this._handleInput}
-                placeholder='9XXXXXXXXX'
-                onPaste={F} />
-            </InputWrapper>
-            {
-              checkboxList.map((item, index) =>
-                <Checkbox
-                  key={index}
-                  className='margin__bottom-positive--20'
-                  onChange={this._handleCheck}
-                  checked={check}
-                  name={item.name}
-                  label={item.label} />
-              )
-            }
-            <Button
-              disabled={this.state.toggle}
-              primary
-              onClick={this._handleSubmit}>
-                  Submit
-            </Button>
+                <Input
+                  type='text'
+                  value={value}
+                  onChange={this._handleInput}
+                  placeholder='9XXXXXXXXX'
+                  onPaste={F} />
+              </InputWrapper>
+              {
+                checkboxList.map((item, index) =>
+                  <Checkbox
+                    key={index}
+                    className='margin__bottom-positive--20'
+                    onChange={this._handleCheck}
+                    checked={check}
+                    name={item.name}
+                    label={item.label} />
+                )
+              }
+              <Button
+                disabled={this.state.toggle}
+                primary
+                onClick={this._handleSubmit}>
+                    Submit
+              </Button>
 
-            <CloseButton close={onClose} text='Close' />
-          </PopupContent>
-        </PopupContainer>
-        <Modal
-          open={modalToggle}
-          name='remove'
-          close={modalClose}
-          title='Server Error'
-          content='System is under maintenance' />
-      </PopupWrapper>
+              <CloseButton close={onClose} text='Close' />
+            </PopupContent>
+          </PopupContainer>
+          <Modal
+            open={modalToggle}
+            name='remove'
+            close={modalClose}
+            title='Server Error'
+            content='System is under maintenance' />
+        </PopupWrapper>
+        <TermsConditionsWrapper toggle={toggleTerms}>
+          <div className='document-helper terms-conditions'>
+            <Grid padded>
+              <H1 className='padding__top--25 padding__none--horizontal'>
+                <FormattedMessage {...messages.headerTerms} />
+              </H1>
+              <LoadingStateInfo loading={loader} count='4'>
+                <div className='animation-fade' dangerouslySetInnerHTML={{__html: markdownContent}} />
+              </LoadingStateInfo>
+              <ButtonWrapper toggle={toggleTerms}>
+                <Button primary fluid onClick={this._toggleCheck}><FormattedMessage {...messages.buttonLabelAgree} /></Button>
+              </ButtonWrapper>
+            </Grid>
+          </div>
+        </TermsConditionsWrapper>
+      </div>
     )
   }
 }
