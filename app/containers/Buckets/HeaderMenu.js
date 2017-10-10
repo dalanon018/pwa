@@ -11,6 +11,7 @@ import {
 import { ifElse, identity } from 'ramda'
 
 import BarcodeImage from 'images/icons/barcode-header.svg'
+import messages from './messages'
 import SearchImage from 'images/icons/search-header.svg'
 import MainLogo from 'images/cliqq-logo.svg'
 
@@ -43,7 +44,7 @@ const RightWrapper = styled.div`
 `
 
 const ActiviesIcon = styled.div`
-  margin-left: 20px;
+  margin-left: ${props => props.marginLeft ? 0 : 20}px;
 `
 
 const Hamburger = styled.div`
@@ -195,6 +196,8 @@ export default class MainMenu extends PureComponent {
     changeRoute(`/products-category/${id}`)
   }
 
+  _handleGotoSearch = () => this.props.changeRoute('/search')
+
   _handleShowCategories = () =>
     this.setState({
       show: true
@@ -235,16 +238,14 @@ export default class MainMenu extends PureComponent {
     }
   }
 
-  _handleHeightOffset = () => {
-    window.addEventListener('scroll', (e) => {
-      this.setState({
-        windowHeightOffset: window.pageYOffset
-      })
+  _updateScrollPosition = (e) => {
+    this.setState({
+      windowHeightOffset: window.pageYOffset
     })
   }
 
   _handleUniqueHeader = () => {
-    const { pageTitle, changeRoute } = this.props
+    const { pageTitle, changeRoute, intl } = this.props
     const { windowHeightOffset } = this.state
 
     let centerElement = ''
@@ -257,11 +258,8 @@ export default class MainMenu extends PureComponent {
     if (windowHeightOffset >= 53) {
       centerElement = <SearchInput
         icon='search'
-        placeholder='Testtttt.......'
-        // ref={this._inputReference}
-        // onChange={this._handleOnchange}
-        // onKeyPress={this._handleKeyPress}
-        // placeholder={intl.formatMessage(messages.searchPlaceHolder)}
+        placeholder={intl.formatMessage(messages.searchPlaceHolder)}
+        onClick={this._handleGotoSearch}
       />
     } else {
       centerElement = TitleToggle(!pageTitle)
@@ -270,8 +268,20 @@ export default class MainMenu extends PureComponent {
     return centerElement
   }
 
+  componentWillUnmount () {
+    const { currentRoute } = this.props
+
+    if (currentRoute === 'home') {
+      window.removeEventListener('scroll', this._updateScrollPosition)
+    }
+  }
+
   componentWillMount = () => {
-    this._handleHeightOffset()
+    const { currentRoute } = this.props
+
+    if (currentRoute === 'home') {
+      window.addEventListener('scroll', this._updateScrollPosition)
+    }
   }
 
   componentDidUpdate () {
@@ -280,6 +290,8 @@ export default class MainMenu extends PureComponent {
 
   render () {
     const { leftButtonAction, hideBackButton, changeRoute, pageTitle, showSearchIcon, showActivityIcon, currentRoute } = this.props
+
+    const homeRoute = currentRoute === 'home'
 
     const TitleToggle = toggleComponent(
       <ImageLogo alt='logo' src={MainLogo} onClick={changeRoute.bind(this, '/')} />,
@@ -292,7 +304,7 @@ export default class MainMenu extends PureComponent {
     )
 
     const ActivitiesToggle = toggleComponent(
-      <ActiviesIcon>
+      <ActiviesIcon marginLeft={homeRoute}>
         <Image alt='Activities' src={BarcodeImage} size='mini' onClick={changeRoute.bind(this, '/purchases')} />
       </ActiviesIcon>,
       null
@@ -303,23 +315,30 @@ export default class MainMenu extends PureComponent {
         <MobileMenu className='header-wrapper'>
           <Grid padded>
             <Grid.Row>
-              <Grid.Column width={4} verticalAlign='middle'>
+              <Grid.Column
+                width={homeRoute ? 2 : 4}
+                verticalAlign='middle'>
                 <LeftWrapper onClick={leftButtonAction} >
                   <Hamburger>
                     <HamburgerSpan active={!hideBackButton}>toggle menu</HamburgerSpan>
                   </Hamburger>
                 </LeftWrapper>
               </Grid.Column>
-              <Grid.Column width={8} verticalAlign='middle'>
+              <Grid.Column
+                className={homeRoute ? 'padding__none' : null}
+                width={homeRoute ? 12 : 8}
+                verticalAlign='middle'>
                 <CenterWrapper>
                   {
-                    currentRoute === 'home'
+                    homeRoute
                     ? this._handleUniqueHeader()
                     : TitleToggle(!pageTitle)
                   }
                 </CenterWrapper>
               </Grid.Column>
-              <Grid.Column width={4} verticalAlign='middle'>
+              <Grid.Column
+                width={homeRoute ? 2 : 4}
+                verticalAlign='middle'>
                 <RightWrapper>
                   { SearchToggle(showSearchIcon) }
                   { ActivitiesToggle(showActivityIcon) }

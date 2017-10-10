@@ -17,6 +17,7 @@ import {
 
 import {
   ARRAY,
+  BOOLEAN,
   OBJECT,
   STRING,
   ValidateSchema
@@ -63,6 +64,10 @@ const Schema = {
   gtin: {
     name: 'barcode',
     type: STRING
+  },
+  returnable: {
+    name: 'returnable',
+    type: BOOLEAN
   }
 }
 
