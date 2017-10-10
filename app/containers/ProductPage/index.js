@@ -6,19 +6,14 @@
 
 import React, { PropTypes } from 'react'
 import Helmet from 'react-helmet'
-import styled from 'styled-components'
 import Recaptcha from 'react-google-recaptcha'
+import styled from 'styled-components'
 
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
-import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
-import messages from './messages'
 import { noop } from 'lodash'
 import { ifElse, equals } from 'ramda'
-import showdown from 'showdown'
-
-import { Grid, Button } from 'semantic-ui-react'
 
 import { imageStock } from 'utils/image-stock'
 
@@ -26,8 +21,6 @@ import Product from 'components/Product'
 import PopupSlide from 'components/PopupSlide'
 import PopupVerification from 'components/PopupVerification'
 import WindowWidth from 'components/WindowWidth'
-import { LoadingStateInfo } from 'components/LoadingBlock'
-import H1 from 'components/H1'
 
 import {
   selectLoader,
@@ -64,43 +57,6 @@ import {
   RECAPTCHA_SITE_KEY
 } from 'containers/App/constants'
 
-const TermsConditionsWrapper = styled.div`
-  background-color: #FFFFFF;
-  bottom: 0;
-  height: ${props => props.toggle ? '100vh' : '0'};
-  color: #5B5B5B;
-  left: 0;
-  overflow: auto;
-  position: fixed;
-  transition: all .3s ease;
-  -webkit-transition: all .3s ease;
-  width: 100%;
-  z-index: 1000;
-
-  .ui.button.primary {
-    padding: 25px 0;
-    bottom: 0;
-  }
-
-  .terms-conditions {
-    margin: 50px 0 70px !important;
-  }
-`
-
-const ButtonWrapper = styled.div`
-  background-color: #FFFFFF;
-  bottom: 0;
-  left: 0;
-  position: ${props => props.toggle ? 'fixed' : 'static'};
-  width: 100%;
-  z-index: 1;
-  padding: 0 !important;
-
-  .ui.button.primary {
-    padding: 20px 40px !important;
-  }
-`
-
 const RecaptchaWrapper = styled.div`
   display: none;
 `
@@ -134,7 +90,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       showSlide: false,
       showVerification: false,
       mobileNumber: '',
-      toggleTerms: false,
       toggleCheck: false
     }
 
@@ -151,31 +106,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this._executeCaptcha = this._executeCaptcha.bind(this)
     this._handleToggleVerification = this._handleToggleVerification.bind(this)
     this._handleSubmitVerification = this._handleSubmitVerification.bind(this)
-    this._handleToggleTerms = this._handleToggleTerms.bind(this)
-    this._toggleCheck = this._toggleCheck.bind(this)
-    this._handleToggleCheck = this._handleToggleCheck.bind(this)
-  }
-
-  _handleToggleCheck (data) {
-    this.setState({
-      toggleCheck: data
-    })
-  }
-
-  _toggleCheck () {
-    this._handleToggleTerms()
-
-    this.setState({
-      toggleCheck: true
-    })
-  }
-
-  _handleToggleTerms () {
-    const { toggleTerms } = this.state
-
-    this.setState({
-      toggleTerms: !toggleTerms
-    })
   }
 
   _handleSubmitVerification () {
@@ -300,11 +230,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   render () {
     const { loading, product, toggle, route, windowWidth, markdown, loader } = this.props
-    const { modalToggle, prevMobileNumber, showVerification, toggleTerms, toggleCheck } = this.state
+    const { modalToggle, prevMobileNumber, showVerification, toggleCheck } = this.state
     const productPageTrigger = route && route
-
-    const converter = new showdown.Converter()
-    const html = converter.makeHtml(markdown)
     return (
       <div>
         <Helmet
@@ -332,10 +259,10 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             modalToggle={modalToggle}
             toggle={toggle}
             mobileNumber={prevMobileNumber}
-            toggleTerms={this._handleToggleTerms}
             onClose={this._handleToggle}
             toggleCheck={toggleCheck}
-            handleToggleCheck={this._handleToggleCheck} />
+            loader={loader}
+            markdown={markdown} />
         </div>
         <div onTouchMove={this._handleTouch}>
           <PopupVerification
@@ -345,23 +272,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             toggle={showVerification}
             mobileNumber={prevMobileNumber}
             onClose={this._handleToggleVerification} />
-        </div>
-        <div onTouchMove={this._handleTouch}>
-          <TermsConditionsWrapper toggle={toggleTerms}>
-            <div className='document-helper terms-conditions'>
-              <Grid padded>
-                <H1 className='padding__top--25 padding__none--horizontal'>
-                  <FormattedMessage {...messages.headerTerms} />
-                </H1>
-                <LoadingStateInfo loading={loader} count='4'>
-                  <div className='animation-fade' dangerouslySetInnerHTML={{__html: html}} />
-                </LoadingStateInfo>
-                <ButtonWrapper toggle={toggleTerms}>
-                  <Button primary fluid onClick={this._toggleCheck}><FormattedMessage {...messages.buttonLabelAgree} /></Button>
-                </ButtonWrapper>
-              </Grid>
-            </div>
-          </TermsConditionsWrapper>
         </div>
         <RecaptchaWrapper>
           <Recaptcha

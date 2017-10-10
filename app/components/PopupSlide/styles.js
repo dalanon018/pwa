@@ -36,7 +36,7 @@ const InputWrapper = styled.div`
   display: flex;
   font-size: 30px;
   margin-bottom: 20px;
-  width: 222px;
+  width: 246px;
   margin: 20px auto;
 
   input {
@@ -86,11 +86,50 @@ const BannerHeader = styled.div`
   }
 `
 
+const TermsConditionsWrapper = styled.div`
+  background-color: #FFFFFF;
+  bottom: 0;
+  height: ${props => props.toggle ? '100vh' : '0'};
+  color: #5B5B5B;
+  left: 0;
+  overflow: auto;
+  position: fixed;
+  transition: all .3s ease;
+  -webkit-transition: all .3s ease;
+  width: 100%;
+  z-index: 1000;
+
+  .ui.button.primary {
+    padding: 25px 0;
+    bottom: 0;
+  }
+
+  .terms-conditions {
+    margin: 50px 0 70px !important;
+  }
+`
+
+const ButtonWrapper = styled.div`
+  background-color: #FFFFFF;
+  bottom: 0;
+  left: 0;
+  position: ${props => props.toggle ? 'fixed' : 'static'};
+  width: 100%;
+  z-index: 1;
+  padding: 0 !important;
+
+  .ui.button.primary {
+    padding: 20px 40px !important;
+  }
+`
+
 export {
   PopupWrapper,
   TextWrapper,
   PopupContainer,
   BannerHeader,
   InputWrapper,
-  PopupContent
+  PopupContent,
+  TermsConditionsWrapper,
+  ButtonWrapper
 }

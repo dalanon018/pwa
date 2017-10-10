@@ -23,5 +23,13 @@ export default defineMessages({
   phonePrefix: {
     id: `${idSuffix}.phonePrefix`,
     defaultMessage: '+63'
+  },
+  headerTerms: {
+    id: `${idSuffix}.headerTerms`,
+    defaultMessage: 'TERMS AND CONDITIONS'
+  },
+  buttonLabelAgree: {
+    id: `${idSuffix}.buttonLabelAgree`,
+    defaultMessage: 'Yes, I Agree'
   }
 })
