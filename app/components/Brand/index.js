@@ -13,6 +13,12 @@ import { Link } from 'react-router'
 
 const BrandWrapper = styled.div`
   cursor: pointer;
+
+  @media (min-width: 767px) {
+    .image {
+      width: 100%;
+    }
+  }
 `
 
 function Brand ({ brands }) {

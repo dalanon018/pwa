@@ -7,7 +7,7 @@
 import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 import Helmet from 'react-helmet'
-import { injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import messages from './messages'
 
 import { push } from 'react-router-redux'
@@ -100,7 +100,7 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
   }
 
   _displayProduct () {
-    const { product, changeRoute, intl } = this.props
+    const { product, changeRoute, windowWidth } = this.props
     // const responsiveColumns = () => {
     //   if (windowWidth >= 768 && windowWidth < 1299) {
     //     return 2
@@ -114,9 +114,10 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
     if (product.size > 0) {
       return (
         <div>
-          <H3 text={intl.formatMessage(messages.header)} />
+          <H3><FormattedMessage {...messages.header} /></H3>
           <SearchResult
             product={product}
+            windowWidth={windowWidth}
             changeRoute={changeRoute} />
         </div>
       )

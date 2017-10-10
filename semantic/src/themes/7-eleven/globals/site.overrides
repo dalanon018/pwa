@@ -79,6 +79,15 @@ p {
   z-index: 2 !important;
 }
 
+.float {
+  &__right {
+    float: right;
+  }
+  &__left {
+    float: left;
+  }
+}
+
 input.input-field {
   background: transparent;
   border-bottom: 3px solid #8DC640;
@@ -116,6 +125,12 @@ input.input-field {
     &--center {
       text-align: center;
     }
+  }
+}
+
+.background {
+  &__light-grey {
+    background-color: @lightGrey;
   }
 }
 
@@ -353,6 +368,11 @@ svg#barcode {
         }
       }
     }
+    &__horizontal {
+      &--14 {
+        margin: 0 14px;
+      }
+    }
   }
 
   /* Elements Responsive */
@@ -417,51 +437,6 @@ svg#barcode {
     &__width {
       &--full {
         width: 100%;
-      }
-    }
-  }
-
-  .document-helper {
-    h1 {
-      font-size: 35px;
-      letter-spacing: 10px;
-    }
-    h2,
-
-    #privacypolicy,
-
-    #termsandconditions,
-    #termsandconditions-1 {
-      font-size: 22px;
-      letter-spacing: 5px;
-      padding-left: 27px;
-
-      &:before {
-        font-size: 30px;
-        top: 10px;
-      }
-    }
-
-    p, li {
-      font-family: 'Cabin';
-      font-weight: 300;
-      font-size: 18px;
-      line-height: 20px;
-    }
-
-    h3 {
-      font-size: 18px;
-      letter-spacing: 5px;
-      padding-left: 25px;
-      font-family: 'Cabin';
-      font-weight: 300;
-
-      &:before {
-        content: '-';
-        font-size: 30px;
-        left: 0;
-        line-height: 9px;
-        top: 3px;
       }
     }
   }
