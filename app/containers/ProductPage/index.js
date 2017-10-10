@@ -77,13 +77,32 @@ const TermsConditionsWrapper = styled.div`
   width: 100%;
   z-index: 1000;
 
-  .terms-conditions {
-    padding-top: 50px;
+  .ui.button.primary {
+    padding: 25px 0;
+    bottom: 0;
   }
 
-  .ui.button.primary {
-    margin: 25px auto;
+  .terms-conditions {
+    margin: 50px 0 70px !important;
   }
+`
+
+const ButtonWrapper = styled.div`
+  background-color: #FFFFFF;
+  bottom: 0;
+  left: 0;
+  position: ${props => props.toggle ? 'fixed' : 'static'};
+  width: 100%;
+  z-index: 1;
+  padding: 0 !important;
+
+  .ui.button.primary {
+    padding: 20px 40px !important;
+  }
+`
+
+const RecaptchaWrapper = styled.div`
+  display: none;
 `
 
 export class ProductPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -194,7 +213,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   _handleSubmit ({ value }) {
     this.setState({
       mobileNumber: value
-    }, () => ENVIROMENT === 'production' ? this.recaptcha.execute() : this._executeCaptcha(true))
+    }, () =>
+      ENVIROMENT === 'production' ? this.recaptcha.execute() : this._executeCaptcha(true)
+    )
   }
 
   _handleClose () {
@@ -335,17 +356,21 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
                 <LoadingStateInfo loading={loader} count='4'>
                   <div className='animation-fade' dangerouslySetInnerHTML={{__html: html}} />
                 </LoadingStateInfo>
-                <Button primary onClick={this._toggleCheck}>Accept</Button>
+                <ButtonWrapper toggle={toggleTerms}>
+                  <Button primary fluid onClick={this._toggleCheck}>Yes, I Agree</Button>
+                </ButtonWrapper>
               </Grid>
             </div>
           </TermsConditionsWrapper>
         </div>
-        <Recaptcha
-          ref={this._recaptchaRef}
-          size='invisible'
-          sitekey={RECAPTCHA_SITE_KEY}
-          onChange={this._executeCaptcha}
-        />
+        <RecaptchaWrapper>
+          <Recaptcha
+            ref={this._recaptchaRef}
+            size='invisible'
+            sitekey={RECAPTCHA_SITE_KEY}
+            onChange={this._executeCaptcha}
+          />
+        </RecaptchaWrapper>
       </div>
     )
   }
