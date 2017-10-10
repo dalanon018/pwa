@@ -126,7 +126,7 @@ const DefaultState = () => {
   }
 
   return (
-    <Grid.Column className='padding__none--horizontal' mobile={8} tablet={4} computer={3} widescreen={3}>
+    <Grid.Column width={8}>
       <EmptyDataBlock>
         <ProductWrapper>
           <ImageWrapper>
