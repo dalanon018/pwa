@@ -39,10 +39,22 @@ const selectMobileNumbers = () => createSelector(
   (substate) => substate.get('mobileNumbers')
 )
 
+const selectMarkdown = () => createSelector(
+  selectProductPageDomain(),
+  (substate) => substate.get('markdown')
+)
+
+const selectLoadingMarkdown = () => createSelector(
+  selectProductPageDomain(),
+  (substate) => substate.get('loading')
+)
+
 export {
   selectLoader,
   selectProduct,
   selectMobileNumbers,
   selectProductSuccess,
-  selectProductError
+  selectProductError,
+  selectMarkdown,
+  selectLoadingMarkdown
 }

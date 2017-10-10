@@ -17,7 +17,10 @@ import {
   UPDATE_MOBILE_NUMBERS,
   SET_MOBILE_NUMBERS,
 
-  SET_PRODUCT_HANDLER_DEFAULT
+  SET_PRODUCT_HANDLER_DEFAULT,
+
+  GET_MARKDOWN,
+  SET_MARKDOWN
 } from './constants'
 
 export function getProductAction (payload) {
@@ -85,5 +88,18 @@ export function setMobileNumbersAction (payload) {
 export function setProductHandlersDefaultAction () {
   return {
     type: SET_PRODUCT_HANDLER_DEFAULT
+  }
+}
+
+export function getMarkDownAction () {
+  return {
+    type: GET_MARKDOWN
+  }
+}
+
+export function setMarkDownAction (payload) {
+  return {
+    type: SET_MARKDOWN,
+    payload
   }
 }

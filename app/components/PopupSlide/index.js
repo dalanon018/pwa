@@ -74,6 +74,8 @@ export class PopupSlide extends React.PureComponent {
   }
 
   _handleCheck (e, data) {
+    // this.props.toggleCheck = data.checked
+    console.log('currentProps', this.props.toggleCheck)
     this.setState({
       check: data.checked
     }, () => this._handleDisable())
@@ -133,16 +135,27 @@ export class PopupSlide extends React.PureComponent {
   }
 
   componentWillReceiveProps (nextProps) {
-    const { mobileNumber } = nextProps
+    let { mobileNumber, toggleCheck } = nextProps
 
     if (mobileNumber) {
       this._setDefaultMobileNumber(nextProps)
     }
+    console.log('nextProps', toggleCheck)
+    this.setState({
+      check: toggleCheck
+    }, () => this._handleDisable())
+  }
+
+  componentDidUpdate (pProps) {
+    const { handleToggleCheck } = pProps
+    const { check } = this.state
+
+    handleToggleCheck(check)
   }
 
   render () {
-    const { toggle, onClose, modalToggle, modalClose } = this.props
-    const { value } = this.state
+    const { toggle, onClose, modalToggle, modalClose, toggleTerms } = this.props
+    const { value, check } = this.state
 
     const checkboxList =
       [
@@ -151,7 +164,7 @@ export class PopupSlide extends React.PureComponent {
           label: (
             <span>
               I have read and accepted the
-              <A key={0} onClick={this._goToTermsConditions}> Terms and Conditions</A>
+              <A key={0} onClick={toggleTerms}> Terms and Conditions</A>
             </span>
           )
         }
@@ -191,6 +204,7 @@ export class PopupSlide extends React.PureComponent {
                   key={index}
                   className='margin__bottom-positive--20'
                   onChange={this._handleCheck}
+                  checked={check}
                   name={item.name}
                   label={item.label} />
               )
