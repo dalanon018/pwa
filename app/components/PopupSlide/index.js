@@ -59,7 +59,8 @@ export class PopupSlide extends React.PureComponent {
     value: '',
     toggle: true,
     check: false,
-    toggleTerms: false
+    toggleTerms: false,
+    markdownContent: ''
   }
 
   constructor (props) {
@@ -74,6 +75,16 @@ export class PopupSlide extends React.PureComponent {
     this._validateData = this._validateData.bind(this)
     this._toggleTerms = this._toggleTerms.bind(this)
     this._toggleCheck = this._toggleCheck.bind(this)
+    this._setMarkDownContent = this._setMarkDownContent.bind(this)
+  }
+
+  _setMarkDownContent (data) {
+    const converter = new showdown.Converter()
+    const html = converter.makeHtml(data)
+
+    this.setState({
+      markdownContent: html
+    })
   }
 
   _toggleCheck () {
@@ -156,16 +167,20 @@ export class PopupSlide extends React.PureComponent {
   }
 
   componentWillReceiveProps (nextProps) {
-    const { mobileNumber } = nextProps
+    const { mobileNumber, markdown } = nextProps
 
     if (mobileNumber) {
       this._setDefaultMobileNumber(nextProps)
     }
+
+    if (markdown) {
+      this._setMarkDownContent(markdown)
+    }
   }
 
   render () {
-    const { toggle, onClose, modalToggle, modalClose, markdown, loader } = this.props
-    const { value, check, toggleTerms } = this.state
+    const { toggle, onClose, modalToggle, modalClose, loader } = this.props
+    const { value, check, toggleTerms, markdownContent } = this.state
 
     const checkboxList = [
       {
@@ -178,9 +193,6 @@ export class PopupSlide extends React.PureComponent {
         )
       }
     ]
-
-    const converter = new showdown.Converter()
-    const html = converter.makeHtml(markdown)
 
     return (
       <div>
@@ -246,7 +258,7 @@ export class PopupSlide extends React.PureComponent {
                 <FormattedMessage {...messages.headerTerms} />
               </H1>
               <LoadingStateInfo loading={loader} count='4'>
-                <div className='animation-fade' dangerouslySetInnerHTML={{__html: html}} />
+                <div className='animation-fade' dangerouslySetInnerHTML={{__html: markdownContent}} />
               </LoadingStateInfo>
               <ButtonWrapper toggle={toggleTerms}>
                 <Button primary fluid onClick={this._toggleCheck}><FormattedMessage {...messages.buttonLabelAgree} /></Button>

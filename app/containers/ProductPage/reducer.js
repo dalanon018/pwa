@@ -28,7 +28,7 @@ const initialState = fromJS({
   requestProductError: false,
   currentProduct: {},
   markdown: '',
-  loading_markdown: false
+  loadingMarkdown: false
 })
 
 function productPageReducer (state = initialState, action) {

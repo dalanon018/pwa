@@ -23,7 +23,7 @@ const initialState = fromJS({
   modalToggle: false,
   loading: false,
   markdown: '',
-  loading_markdown: false
+  loadingMarkdown: false
 })
 
 function purchasesReducer (state = initialState, action) {

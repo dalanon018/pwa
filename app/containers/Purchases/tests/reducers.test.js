@@ -14,7 +14,7 @@ describe('Purchases Reducer', () => {
       modalToggle: false,
       loading: false,
       markdown: '',
-      loading_markdown: false
+      loadingMarkdown: false
     })
   })
 

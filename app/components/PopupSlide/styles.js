@@ -36,7 +36,7 @@ const InputWrapper = styled.div`
   display: flex;
   font-size: 30px;
   margin-bottom: 20px;
-  width: 246px;
+  width: 250px;
   margin: 20px auto;
 
   input {
