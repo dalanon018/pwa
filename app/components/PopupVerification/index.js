@@ -20,7 +20,7 @@ import CloseButton from 'components/CloseButton'
 import Input from 'components/InputField'
 import Modal from 'components/PromptModal'
 
-import BannerBg from 'images/modal-bg-orange.png'
+import BannerBg from 'images/modal-bg-lightgrey.png'
 import MobileIcon from 'images/icons/mobile-icon.svg'
 import ResendIcon from 'images/test-images/v2/Mail.svg'
 

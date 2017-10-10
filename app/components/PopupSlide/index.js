@@ -27,7 +27,7 @@ import Checkbox from 'components/CheckboxField'
 import Modal from 'components/PromptModal'
 import A from 'components/A'
 
-import BannerBg from 'images/modal-bg-orange.png'
+import BannerBg from 'images/modal-bg-lightgrey.png'
 import MobileIcon from 'images/icons/mobile-icon.svg'
 
 import { Image, Label, Button } from 'semantic-ui-react'
