@@ -17,3 +17,7 @@ export const GET_MODAL_TOGGLE = 'app/Purchases/GET_MODAL_TOGGLE'
 export const SET_MODAL_TOGGLE = 'app/Purchases/SET_MODAL_TOGGLE'
 
 export const SET_MOBILE_NUMBER = 'app/Purchases/SET_MOBILE_NUMBER'
+
+// Terms And Conditions
+export const GET_MARKDOWN = 'app/Purchases/GET_MARKDOWN'
+export const SET_MARKDOWN = 'app/Purchases/SET_MARKDOWN'

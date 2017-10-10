@@ -12,7 +12,10 @@ import {
   GET_MODAL_TOGGLE,
   SET_MODAL_TOGGLE,
 
-  SET_MOBILE_NUMBER
+  SET_MOBILE_NUMBER,
+
+  GET_MARKDOWN,
+  SET_MARKDOWN
 } from './constants'
 
 export function getApiPurchasesAction (payload) {
@@ -51,6 +54,19 @@ export function setModalToggleAction (payload) {
 export function setMobileNumberAction (payload) {
   return {
     type: SET_MOBILE_NUMBER,
+    payload
+  }
+}
+
+export function getMarkDownAction () {
+  return {
+    type: GET_MARKDOWN
+  }
+}
+
+export function setMarkDownAction (payload) {
+  return {
+    type: SET_MARKDOWN,
     payload
   }
 }

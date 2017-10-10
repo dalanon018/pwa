@@ -37,13 +37,6 @@ export function setProductAction (payload) {
   }
 }
 
-// export function getCurrentProductAction (payload) {
-//   return {
-//     type: GET_CURRENT_PRODUCT,
-//     payload
-//   }
-// }
-
 export function setCurrentProductAction (payload) {
   return {
     type: SET_CURRENT_PRODUCT,

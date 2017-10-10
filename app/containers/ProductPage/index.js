@@ -89,8 +89,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       copied: false,
       showSlide: false,
       showVerification: false,
-      mobileNumber: '',
-      toggleCheck: false
+      mobileNumber: ''
     }
 
     this._handleSubmit = this._handleSubmit.bind(this)
@@ -230,7 +229,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   render () {
     const { loading, product, toggle, route, windowWidth, markdown, loader } = this.props
-    const { modalToggle, prevMobileNumber, showVerification, toggleCheck } = this.state
+    const { modalToggle, prevMobileNumber, showVerification } = this.state
     const productPageTrigger = route && route
     return (
       <div>
@@ -260,7 +259,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             toggle={toggle}
             mobileNumber={prevMobileNumber}
             onClose={this._handleToggle}
-            toggleCheck={toggleCheck}
             loader={loader}
             markdown={markdown} />
         </div>
