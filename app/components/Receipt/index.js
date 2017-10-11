@@ -127,6 +127,8 @@ class Receipt extends React.PureComponent {
     goReceiptPage: PropTypes.func.isRequired
   }
 
+  _defaultModePayment = 'CASH'
+
   constructor () {
     super()
 
@@ -164,10 +166,15 @@ class Receipt extends React.PureComponent {
     return COMPLETED.includes(status) ? 'green' : 'orange'
   }
 
+  _handleModePayment = () => {
+    const { receipt } = this.props
+    return receipt.get('modePayment') || this._defaultModePayment
+  }
+
   _handleDateString = () => {
     const { receipt, statuses } = this.props
     const currentStatus = statuses[receipt.get('status')] || 'FieldDefault'
-    const modePayment = receipt.get('modePayment') || 'CASH'
+    const modePayment = this._handleModePayment()
 
     return (
       <FormattedMessage {...messages[`date${modePayment}${currentStatus}`]} />
@@ -221,7 +228,9 @@ class Receipt extends React.PureComponent {
                     <Label className='weight-400 color__secondary' as='span' basic size='tiny'>
                       <FormattedMessage {...messages.paymentMethod} />
                     </Label>
-                    <Label as='p' basic size='large' className='color__secondary'>Cash Prepaid</Label>
+                    <Label as='p' basic size='large' className='color__secondary'>
+                      <FormattedMessage {...messages[`${this._handleModePayment()}methodType`]} />
+                    </Label>
                   </Grid.Column>
 
                   <Grid.Column floated='left'>

@@ -108,6 +108,14 @@ export default defineMessages({
     id: 'app.components.Receipt.paymentMethod',
     defaultMessage: 'Method of Payment:'
   },
+  CASHmethodType: {
+    id: 'app.components.Receipt.CASHmethodType',
+    defaultMessage: 'Cash Prepaid'
+  },
+  CODmethodType: {
+    id: 'app.components.Receipt.CODmethodType',
+    defaultMessage: 'Cash on Delivery'
+  },
   statusLabel: {
     id: 'app.components.Receipt.statusLabel',
     defaultMessage: 'Status:'
