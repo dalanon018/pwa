@@ -156,7 +156,7 @@ export function * getMobileNumber () {
 
 export function * submitOrder (args) {
   const { payload: { orderedProduct, mobileNumber, modePayment, store } } = args
-  const completeMobile = `0${mobileNumber}`
+  const completeMobile = `+63${mobileNumber}`
   const token = yield getAccessToken()
 
   try {

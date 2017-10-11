@@ -122,21 +122,12 @@ function * findAndUpdateReceiptDetails (apiOrders) {
   return updateReceiptList(orders)
 }
 
-function * setOrderList (apiOrders, mobile) {
+function * setOrderList (apiOrders) {
   const orders = yield findAndUpdateReceiptDetails(apiOrders)
   const cleanOrders = compose(uniqBy(prop('trackingNumber')), compact)
-  const mobileNumber = `0${mobile}`
-  let currentOrders = Array.isArray(orders) ? orders : []
 
-  /**
-   * We need to make sure that mobile number is added to the
-   * order
-   */
-  const updatedApiOrders = apiOrders.map((order) => ({
-    ...order,
-    mobileNumber
-  }))
-  let setOrders = currentOrders.concat(updatedApiOrders)
+  let currentOrders = Array.isArray(orders) ? orders : []
+  let setOrders = currentOrders.concat(apiOrders)
 
   yield call(setItem, ORDERED_LIST_KEY, cleanOrders(setOrders))
 }
@@ -156,10 +147,7 @@ export function * getApiPurchases () {
     const getOrderListProp = propOr([], 'salesOrderList')
     const orderLists = getOrderListProp(req)
 
-    /**
-     * We have to update the mobile number for the api list
-     */
-    yield * setOrderList(orderLists, mobile)
+    yield * setOrderList(orderLists)
     const allOrders = yield * getOrderList()
 
     const transform = yield allOrders.map(transformEachEntity)
