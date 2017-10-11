@@ -380,6 +380,8 @@ export const CollapseContent = styled.div`
   img {
     width: auto;
     height: 30px;
+    min-width: 45px; 
+    flex: 0.1;
   }
 
   div.collapse-description {

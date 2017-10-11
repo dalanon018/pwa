@@ -36,11 +36,11 @@ const InputWrapper = styled.div`
   display: flex;
   font-size: 30px;
   margin-bottom: 20px;
-  width: 250px;
+  width: 280px;
   margin: 20px auto;
 
   input {
-    font-size: 30px;
+    font-size: 2.514286rem;
     margin-left: 10px;
     padding: 4px 6px 0 6px;
     width: 100%;
