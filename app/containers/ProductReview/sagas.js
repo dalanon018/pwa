@@ -195,6 +195,7 @@ export function * submitOrder (args) {
       yield put(errorOrderAction(order))
     }
   } catch (e) {
+    console.log(e.message)
     yield put(setNetworkErrorAction('Please make sure you have internet connection to order a product.'))
     yield put(errorOrderAction({}))
   }
