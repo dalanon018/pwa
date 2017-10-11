@@ -15,7 +15,6 @@ export const EmptyWrapper = styled.div`
 `
 
 export const EmptyWrapperText = styled.p`
-  color: #F0F0F0;
   font-size: 21px;
   letter-spacing: 1px;
   line-height: 1.5;
@@ -24,7 +23,7 @@ export const EmptyWrapperText = styled.p`
 
 const EmptyProducts = () => (
   <EmptyWrapper>
-    <EmptyWrapperText>
+    <EmptyWrapperText className='color__light-grey'>
       <FormattedMessage {...messages.emptyMessage} />
     </EmptyWrapperText>
   </EmptyWrapper>

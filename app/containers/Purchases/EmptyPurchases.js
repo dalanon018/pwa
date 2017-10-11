@@ -27,7 +27,7 @@ const EmptyPurchases = () => (
       <Grid.Column textAlign='center'>
         <EmptyPurchaseWrapper>
           <Image src={EmptyPurchase} />
-          <Label className='text__roboto--light' as='p' basic size='large'>
+          <Label className='text__roboto--light color__secondary' as='p' basic size='large'>
             <FormattedMessage {...messages.emptyPurchases} />
           </Label>
         </EmptyPurchaseWrapper>

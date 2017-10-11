@@ -120,7 +120,6 @@ const MobileMenu = styled.div`
 
 const SearchInput = styled(Input)`
   border: 0;
-  color: #5B5B5B;
   font-size: 18px;
   letter-spacing: 1px;
   margin: 0 5px;
@@ -164,11 +163,12 @@ export default class MainMenu extends PureComponent {
 
     const TitleToggle = toggleComponent(
       <ImageLogo alt='logo' src={MainLogo} onClick={changeRoute.bind(this, '/')} />,
-      <Header as='h1'> { pageTitle } </Header>
+      <Header className='color__secondary' as='h1'> { pageTitle } </Header>
     )
 
     const ShowSearchInputLogo = toggleComponent(
       <SearchInput
+        className='color__secondary'
         icon='search'
         placeholder={intl.formatMessage(messages.searchPlaceHolder)}
         onClick={this._handleGotoSearch}

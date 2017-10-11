@@ -144,6 +144,9 @@ input.input-field {
   &__white {
     color: @white !important;
   }
+  &__orange {
+    color: @orange !important;
+  }
 }
 
 .color {
@@ -161,6 +164,9 @@ input.input-field {
   }
   &__white {
     color: @white !important;
+  }
+  &__orange {
+    color: @orange !important;
   }
 }
 

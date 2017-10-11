@@ -126,7 +126,7 @@ class SidebarMenu extends React.PureComponent {
             <ListWrapper onClick={this._handletoHome}>
               <Image alt='home' size='mini' src={Home} />
               <List.Content>
-                <Label as='p' className='margin__none' size='huge'>
+                <Label as='p' className='margin__none color__secondary' size='huge'>
                   <FormattedMessage {...messages.menuHome} />
                 </Label>
               </List.Content>
@@ -134,7 +134,7 @@ class SidebarMenu extends React.PureComponent {
             <ListWrapper onClick={this._handletoPurchase}>
               <Image alt='activities' size='mini' src={Barcode} />
               <List.Content>
-                <Label as='p' className='margin__none' size='huge'>
+                <Label as='p' className='margin__none color__secondary' size='huge'>
                   <FormattedMessage {...messages.menuActivity} />
                 </Label>
               </List.Content>
@@ -145,7 +145,7 @@ class SidebarMenu extends React.PureComponent {
                 <ListCollapse
                   heightTransition
                   title={
-                    <Label as='p' className='margin__none' size='huge' >
+                    <Label as='p' className='margin__none color__secondary' size='huge' >
                       <FormattedMessage {...messages.menuCategories} />
                     </Label>
                 }>
@@ -163,7 +163,7 @@ class SidebarMenu extends React.PureComponent {
                 <ListCollapse
                   heightTransition
                   title={
-                    <Label as='p' className='margin__none' size='huge'>
+                    <Label as='p' className='margin__none color__secondary' size='huge'>
                       <FormattedMessage {...messages.menuBrands} />
                     </Label>
                 } >
@@ -178,7 +178,7 @@ class SidebarMenu extends React.PureComponent {
             <ListWrapper>
               <Image alt='help' size='mini' src={Help} />
               <List.Content>
-                <Label as='p' className='margin__none' size='huge'>
+                <Label as='p' className='margin__none color__secondary' size='huge'>
                   <FormattedMessage {...messages.menuHelp} />
                 </Label>
               </List.Content>

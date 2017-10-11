@@ -100,7 +100,6 @@ const SearchContainer = styled.div`
 
 const SearchInput = styled(Input)`
   border: 0;
-  color: #5B5B5B;
   font-size: 18px;
   letter-spacing: 1px;
   margin: 0 5px;
@@ -199,6 +198,7 @@ class SearchMenu extends PureComponent {
               <SearchContainer>
                 {/* <Icon name='search' color='black' size='large' onClick={this._handlePressSearch} /> */}
                 <SearchInput
+                  className='color__secondary'
                   icon='search'
                   ref={this._inputReference}
                   onChange={this._handleOnchange}

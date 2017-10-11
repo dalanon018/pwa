@@ -17,7 +17,6 @@ const Wrapper = styled.footer`
 
 const HelperLinks = styled.div`
   span {
-    color: #aeaeae;
     cursor: pointer;
     font-family: 'Roboto';
     font-size: 11px;
@@ -30,14 +29,6 @@ const HelperLinks = styled.div`
         content: '';
       }
     }
-    // &:before {
-    //   color: #aeaeae;
-    //   bottom: 5px;
-    //   display: block
-    //   content: '|';
-    //   left: -8px;
-    //   position: absolute;
-    // }
   }
 
   @media (min-width: 375px) {
@@ -48,7 +39,6 @@ const HelperLinks = styled.div`
 `
 
 const CopyRight = styled.p`
-  color: #5b5b5b;
   font-size: 9px;
 `
 
@@ -70,7 +60,6 @@ const AppInfo = styled.div`
       font-size: 8px !important;
 
       &:last-child {
-        color: #AEAEAE;
         font-size: 7px !important;
       }
     }

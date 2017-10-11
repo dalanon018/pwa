@@ -11,7 +11,7 @@ const EmptyProducts = ({ children }) => (
   <Grid padded>
     <Grid.Row columns={1}>
       <Grid.Column>
-        <EmptyWrapperText className='color-light-grey' as='p' size='massive' basic>
+        <EmptyWrapperText className='color__light-grey' as='p' size='massive' basic>
           { children }
         </EmptyWrapperText>
       </Grid.Column>

@@ -9,7 +9,6 @@ import { List, Icon, Label } from 'semantic-ui-react'
 import styled from 'styled-components'
 
 const CustomIcon = styled(Icon)`
-  color: #F58322;
   font-size: 16px !important;
   padding: 14px;
 `
@@ -55,12 +54,12 @@ function SearchResult ({ product, changeRoute, windowWidth }) {
               key={index}
               onClick={changeRoute.bind(this, `/product/${result.get('cliqqCode').first()}`)}>
               <List.Content floated='right'>
-                <CustomIcon name='chevron right' />
+                <CustomIcon className='color__orange' name='chevron right' />
               </List.Content>
-              <Title as='span' basic size='large'>Brand Name</Title>
+              <Title as='span' basic size='large' classNam='color__secondary'>Brand Name</Title>
               <List.Content>
                 <Content>
-                  <Label as='span' basic size='medium'>{ _productTitle(result.get('title'), windowWidth) }</Label>
+                  <Label as='span' basic size='medium' className='color__secondary'>{ _productTitle(result.get('title'), windowWidth) }</Label>
                 </Content>
               </List.Content>
             </CustomItem>

@@ -20,7 +20,6 @@ const ProductReviewWrapper = styled.div`
 
 const StepHead = styled.div`
   align-items: center;
-  color: #5B5B5B;
   display: flex;
   flex-wrap: wrap;
   font-family: 'Cabin';
@@ -32,7 +31,6 @@ const StepHead = styled.div`
   p {
     width: 60%;
     align-self: flex-start;
-    color: #AEAEAE;
     flex: none;
     font-family: 'Roboto';
     font-size: 14px;
@@ -85,7 +83,6 @@ const ProductItem = styled.div`
     }
   }
 `
-
 const StepWrapper = styled.div`
   border-bottom: 1px solid #F0F0F0;
   border-top: 1px solid #F0F0F0;
@@ -108,7 +105,6 @@ const StepWrapper = styled.div`
 `
 
 const DetailsWrapper = styled.div`
-  color: #5B5B5B;
   padding: 15px;
 
   .sub-title {
@@ -166,7 +162,6 @@ const SelectMethodWrapper = styled.div`
       // Don't sort this block
       content: '';
       background-color: #8DC640 !important;
-      color: #FFFFFF !important;
       left: 6px;
       top: ${props => props.checkHeight ? '29px' : '17px'};
       display: block;
@@ -228,27 +223,14 @@ const SelectMethodWrapper = styled.div`
 `
 
 const LabelTitle = styled.p`
-  color: #333333 !important;
   font-family: 'Cabin';
   font-size: 14px;
   margin: 0;
 
   @media (min-width: 768px) {
-    color: #5B5B5B !important;
     font-family: 'Cabin';
     font-size: 16px;
     letter-spacing: 5px;
-  }
-`
-
-const LabelSubTitle = styled.span`
-  color: #AEAEAE;
-  font-size: 10px;
-  width: 100%;
-
-  @media (min-width: 768px) {
-    font-size: 14px;
-    margin: 10px 0;
   }
 `
 
@@ -261,7 +243,6 @@ const LabelPrice = styled.div`
 
   .total {
     width: 100%;
-    color: #f58322;
     font-family: 'Roboto';
     font-size: 35px;
     font-weight: 700;
@@ -271,7 +252,6 @@ const LabelPrice = styled.div`
   }
   .strike {
     align-self: flex-end;
-    color: #AEAEAE;
     font-size: 20px;
     width: 100%;
     font-family: 'Roboto';
@@ -312,10 +292,6 @@ const LocationButton = styled(({iconBg, ...props}) => <Button {...props} />)`
   padding: 20px 10px !important;
   position: relative;
   text-align: left !important;
-
-  span {
-    color: #333333;
-  }
 
   &:after {
     background: url(${({ iconBg }) => iconBg}) no-repeat center center / contain;
@@ -363,7 +339,6 @@ const MethodTitle = styled.div`
 export {
   StepHead,
   SelectMethodWrapper,
-  LabelSubTitle,
   ProductItem,
   ReviewContainer,
   DetailsWrapper,

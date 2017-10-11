@@ -258,7 +258,7 @@ export class PopupSlide extends React.PureComponent {
                 <FormattedMessage {...messages.headerTerms} />
               </H1>
               <LoadingStateInfo loading={loader} count='4'>
-                <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: markdownContent}} />
+                <div className='animation-fade color__grey' dangerouslySetInnerHTML={{__html: markdownContent}} />
               </LoadingStateInfo>
               <ButtonWrapper toggle={toggleTerms}>
                 <Button primary fluid onClick={this._toggleCheck}><FormattedMessage {...messages.buttonLabelAgree} /></Button>

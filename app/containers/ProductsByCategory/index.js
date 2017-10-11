@@ -88,7 +88,6 @@ const ContentWrapper = styled(Container)`
     }
 
     .num-item-label, .num-item-label span {
-      color: #656565;
       font-size: 17px;
       letter-spacing: 3px;
     }
@@ -220,7 +219,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
     if (productsByCategory.size) {
       return (
-        <H4>
+        <H4 className='color__grey'>
           { totalCount }
           <FormattedMessage {...messages.items} />
         </H4>

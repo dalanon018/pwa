@@ -49,7 +49,7 @@ export class PrivacyPolicy extends React.PureComponent { // eslint-disable-line 
         <div className='document-helper'>
           <Grid padded>
             <LoadingStateInfo loading={loader} count='4'>
-              <div className='animation-fade' dangerouslySetInnerHTML={{__html: html}} />
+              <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
             </LoadingStateInfo>
           </Grid>
         </div>
