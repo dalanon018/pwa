@@ -88,7 +88,7 @@ function ProductView ({
           )
 
           const toggleDiscountValue = showDiscountPrice(
-            parseFloat(product.get('discountPrice')).toLocaleString(),
+            parseFloat(product.get('price')).toLocaleString(),
             null
           )
 
