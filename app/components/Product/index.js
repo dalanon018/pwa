@@ -71,7 +71,7 @@ const Product = ({
     () => component2
   )(condition)
   const toggleDiscount = showDiscountPrice(
-    <Label className='product-discount' as='span' basic size='huge'>
+    <Label className='product-discount' as='span' basic size='huge' color='grey'>
       <FormattedMessage {...messages.peso} />
       { product.get('price') &&
         parseFloat(product.get('price')).toLocaleString() }
