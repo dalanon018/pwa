@@ -46,7 +46,7 @@ const Schema = {
     type: STRING
   },
   priceList: {
-    name: 'price',
+    name: 'priceList',
     type: ARRAY
   },
   discountList: {
@@ -121,11 +121,18 @@ const transformProduct = (data) => {
   //   })
   // }
 
+  const applyChangeDiscountPrice = (data) => compose(
+    assoc('discountPrice', __, data),
+    propOr(0, 'amount'),
+    find(propEq('currency', 'DPHP')),
+    prop('priceList')
+  )(data)
+
   const applyChangePrice = (data) => compose(
     assoc('price', __, data),
     propOr(0, 'amount'),
     find(propEq('currency', 'PHP')),
-    prop('price')
+    prop('priceList')
   )(data)
 
   const removeKeys = ['images', 'discount']
@@ -133,6 +140,7 @@ const transformProduct = (data) => {
     omit(removeKeys),
     applyImage,
     applyChangeProductId,
+    applyChangeDiscountPrice,
     applyChangePrice
   )
 

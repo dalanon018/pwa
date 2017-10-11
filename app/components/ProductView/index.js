@@ -10,10 +10,14 @@ import {
   isEmpty
 } from 'lodash'
 
+import {
+  identity,
+  ifElse
+} from 'ramda'
 import { FormattedMessage } from 'react-intl'
-import messages from './messages'
 import { Grid, Image, Label } from 'semantic-ui-react'
 
+import messages from './messages'
 import {
   ImageWrapper,
   ProductInfo,
@@ -27,7 +31,6 @@ import defaultImage from 'images/default-product.jpg'
 import PromoTag from './sections/PromoTag'
 import ParagraphImage from 'images/test-images/short-paragraph.png'
 
-import { calculateProductPrice } from 'utils/promo'
 import { imageStock, paramsImgix } from 'utils/image-stock'
 
 function ProductView ({
@@ -45,14 +48,6 @@ function ProductView ({
     lossless: 0
   }
 
-  // const resposiveColumns = () => {
-  //   if (windowWidth >= 768) {
-  //     return 4
-  //   } else {
-  //     return 2
-  //   }
-  // }
-
   const productName = (data) => {
     let maxChar = 40
     switch (true) {
@@ -69,12 +64,34 @@ function ProductView ({
     }
     return data
   }
+
+  const toggleOrigDiscountPrice = (product) => {
+    return product.get('discountPrice') || product.get('price')
+  }
+
+  const showDiscountPrice = (component1, component2) => (condition) => ifElse(
+    identity,
+    () => component1,
+    () => component2
+  )(condition)
+
   return (
     <Grid padded stretched columns={2}>
       {
         loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
         : products.valueSeq().map((product, index) => {
           const goToProduct = () => changeRoute(`/product/${product.get('cliqqCode').first()}`)
+
+          const toggleDiscountLabel = showDiscountPrice(
+            <FormattedMessage {...messages.peso} />,
+            null
+          )
+
+          const toggleDiscountValue = showDiscountPrice(
+            parseFloat(product.get('discountPrice')).toLocaleString(),
+            null
+          )
+
           return (
             <Grid.Column
               key={`${product.get('cliqqCode')}-${index}`}
@@ -94,18 +111,11 @@ function ProductView ({
                   <ProductPriceWrapper>
                     <Label className='product-price' as='b' basic size='massive'>
                       <FormattedMessage {...messages.peso} />
-                      { calculateProductPrice(product) }
+                      { toggleOrigDiscountPrice(product) }
                     </Label>
                     <Label className='product-discount' as='span' basic size='large'>
-                      {
-                        !isEmpty(product.get('discount'))
-                        ? <FormattedMessage {...messages.peso} />
-                        : ''
-                      }
-                      {
-                        !isEmpty(product.get('discount')) &&
-                        parseFloat(product.get('price')).toLocaleString()
-                      }
+                      { toggleDiscountLabel(product.get('discountPrice') !== 0) }
+                      { toggleDiscountValue(product.get('discountPrice') !== 0) }
                     </Label>
                   </ProductPriceWrapper>
                 </ProductInfo>
