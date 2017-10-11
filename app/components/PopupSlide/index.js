@@ -205,7 +205,7 @@ export class PopupSlide extends React.PureComponent {
           <PopupContainer>
             <PopupContent>
               <TextWrapper>
-                <Label as='p' basic size='big'>
+                <Label as='p' basic size='big' className='color__secondary'>
                   <FormattedMessage {...messages.register} />
                 </Label>
                 <Label as='p' basic color='grey' size='medium'><FormattedMessage {...messages.label} /></Label>
@@ -254,11 +254,11 @@ export class PopupSlide extends React.PureComponent {
         <TermsConditionsWrapper toggle={toggleTerms}>
           <div className='document-helper terms-conditions'>
             <Grid padded>
-              <H1 className='padding__top--25 padding__none--horizontal'>
+              <H1 className='padding__top--25 padding__none--horizontal color__secondary'>
                 <FormattedMessage {...messages.headerTerms} />
               </H1>
               <LoadingStateInfo loading={loader} count='4'>
-                <div className='animation-fade' dangerouslySetInnerHTML={{__html: markdownContent}} />
+                <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: markdownContent}} />
               </LoadingStateInfo>
               <ButtonWrapper toggle={toggleTerms}>
                 <Button primary fluid onClick={this._toggleCheck}><FormattedMessage {...messages.buttonLabelAgree} /></Button>
