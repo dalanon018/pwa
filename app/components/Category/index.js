@@ -14,12 +14,6 @@ import {
   range
 } from 'lodash'
 
-// import {
-//   CategoryBlock,
-//   CategoryContent,
-//   CategoryItem,
-//   CategoryLabel } from './styles'
-
 import {
   CategoryBlock,
   BackgroundLay

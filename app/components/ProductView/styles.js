@@ -44,79 +44,9 @@ const ProductPriceWrapper = styled.div`
   }
 `
 
-const ProductPrice = styled.p`
-  color: #F88728;
-  font-family: 'helveticabold';
-  line-height: inherit;
-  margin-top: 0;
-  text-transform: uppercase;
-
-  @media (min-width: 320px) {
-    font-size: 23px;
-  }
-  @media (min-width: 375px) {
-    font-size: 25px;
-    line-height: initial;
-  }
-`
-
-const RibbonWrapper = styled.div`
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  right: 8px;
-
-  // sorting styles is sensitive on ribbon-tag class
-  .ribbon-tag {
-    background: #8DC640;
-    border-bottom: 2px solid #8DC640;
-    display: flex;
-    height: 60px;
-    justify-content: center;
-    line-height: 60px;
-    position: relative;
-    text-align: center;
-    vertical-align: middle;
-    width: 60px;
-
-    &:after, &:before {
-      content: '';
-      position: absolute;
-      border-top: 25px solid #8DC640;
-      height: 0;
-      width: 0;
-      top: 100%;
-    }
-
-    &:after {
-      border-left: 50px solid transparent;
-      right: 0px;
-    }
-
-    &:before {
-      border-right: 50px solid transparent;
-      left: 0px;
-    }
-
-    .ribbon-text {
-      align-items: center;
-      color: #FFFFFF;
-      display: inline-flex;
-      font-family: 'helveticabold';
-      font-size: 20px;
-      line-height: 20px;
-      margin-top: 10px;
-      padding: 5px;
-      text-align: center;
-      text-transform: uppercase;
-    }
-`
-
 export {
   ImageWrapper,
   ProductInfo,
-  ProductPrice,
   ProductPriceWrapper,
-  ProductWrapper,
-  RibbonWrapper
+  ProductWrapper
 }
