@@ -40,6 +40,7 @@ const ProductPriceWrapper = styled.div`
     color: #AEAEAE !important;
     font-family: 'Roboto';
     letter-spacing: -2px;
+    margin-left: 5px;
     text-decoration: line-through;
   }
 `

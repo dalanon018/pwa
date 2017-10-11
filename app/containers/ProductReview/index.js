@@ -7,7 +7,7 @@
 import React, { PropTypes } from 'react'
 
 import { noop, isEmpty } from 'lodash'
-import { ifElse, equals, both, compose, prop, propOr, either } from 'ramda'
+import { ifElse, equals, both, compose, prop, propOr, either, identity } from 'ramda'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -48,10 +48,6 @@ import {
 import Modal from 'components/PromptModal'
 import WindowWidth from 'components/WindowWidth'
 import ListCollapse from 'components/ListCollapse'
-// import DesktopBlock from './DesktopBlock'
-// import MobileBlock from './MobileBlock'
-
-import { calculateProductPrice } from 'utils/promo'
 
 import NextIcon from 'images/icons/greater-than-icon.svg'
 
@@ -195,6 +191,16 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     }
   }
 
+  _toggleOrigDiscountPrice = (product) => {
+    return product.get('discountPrice') || product.get('price')
+  }
+
+  _showDiscountPrice = (component1, component2) => (condition) => ifElse(
+    identity,
+    () => component1,
+    () => component2
+  )(condition)
+
   componentWillUnmount () {
     this.props.setHandlersDefault()
   }
@@ -263,10 +269,16 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   render () {
-    // const { mobileNumber, windowWidth, productLoader, intl } = this.props
     const { orderedProduct, orderRequesting } = this.props
     const { errorMessage, modePayment, modalToggle, visibility, store } = this.state
-    // const cliqqCode = orderedProduct.get('cliqqCode') && orderedProduct.get('cliqqCode').first()
+    const toggleDiscount = this._showDiscountPrice(
+      <span className='strike'>
+        <FormattedMessage {...messages.peso} />
+        { orderedProduct.get('price') &&
+          parseFloat(orderedProduct.get('price')).toLocaleString() }
+      </span>,
+      null
+    )
     const labelOne = <label className='label-custom'>
       <LabelTitle>
         <Label as='span' basic size='big'>
@@ -276,18 +288,11 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       <LabelPrice>
         <span className='total'>
           <FormattedMessage {...messages.peso} />
-          {calculateProductPrice(orderedProduct)}
+          { this._toggleOrigDiscountPrice(orderedProduct) }
         </span>
-        {
-          !isEmpty(orderedProduct.get('discount')) &&
-          <span className='strike'>
-            <FormattedMessage {...messages.peso} />
-            {orderedProduct.get('price')}
-          </span>
-        }
+        { toggleDiscount(orderedProduct.get('discountPrice') !== 0) }
       </LabelPrice>
     </label>
-
     const labelTwo = <label className='label-custom'>
       <LabelTitle>
         <Label as='span' basic size='big'>
@@ -297,15 +302,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       <LabelPrice>
         <span className='total'>
           <FormattedMessage {...messages.peso} />
-          {calculateProductPrice(orderedProduct)}
+          { this._toggleOrigDiscountPrice(orderedProduct) }
         </span>
-        {
-          !isEmpty(orderedProduct.get('discount')) &&
-          <span className='strike'>
-            <FormattedMessage {...messages.peso} />
-            {orderedProduct.get('price')}
-          </span>
-        }
+        { toggleDiscount(orderedProduct.get('discountPrice') !== 0) }
       </LabelPrice>
     </label>
 
@@ -325,10 +324,14 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
           </Label>
         }>
           <DetailsWrapper>
-            <FormattedMessage {...messages.productDetailsTitle} />
-            <div dangerouslySetInnerHTML={{__html: orderedProduct.get('details')}} />
-            <FormattedMessage {...messages.productDeliveryTitle} />
-            <div dangerouslySetInnerHTML={{__html: orderedProduct.get('shipping')}} />
+            <div className='sub-title'>
+              <FormattedMessage {...messages.productDetailsTitle} />
+            </div>
+            <div className='margin__bottom-positive--10' dangerouslySetInnerHTML={{__html: orderedProduct.get('details')}} />
+            <div className='sub-title'>
+              <FormattedMessage {...messages.productDeliveryTitle} />
+            </div>
+            <div dangerouslySetInnerHTML={{__html: orderedProduct.get('deliveryPromiseMessage')}} />
           </DetailsWrapper>
         </ListCollapse>
         <Grid padded>
