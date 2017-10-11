@@ -268,17 +268,12 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     const { errorMessage, modePayment, modalToggle, visibility, store } = this.state
     // const cliqqCode = orderedProduct.get('cliqqCode') && orderedProduct.get('cliqqCode').first()
     const labelOne = <label className='label-custom'>
-      <LabelTitle className='desktop__width--full'>
+      <LabelTitle>
         <Label as='span' basic size='big'>
           <FormattedMessage {...messages.cashPrepaid} />
         </Label>
       </LabelTitle>
-      {/*
-        <LabelSubTitle className='desktop__width--full'>
-          Get free 10points by paying through prepaid!
-        </LabelSubTitle>
-      */}
-      <LabelPrice className='desktop__width--full'>
+      <LabelPrice>
         <span className='total'>
           <FormattedMessage {...messages.peso} />
           {calculateProductPrice(orderedProduct)}
@@ -314,9 +309,12 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       </LabelPrice>
     </label>
 
+    const brandLogo = orderedProduct.get('brandLogo') ? (<Image className='brand-logo' alt='Cliqq' src={orderedProduct.get('brandLogo')} />) : ''
+
     return (
       <ProductReviewWrapper>
-        <ProductItem brand={orderedProduct.get('brandLogo')}>
+        {brandLogo}
+        <ProductItem>
           <Image alt='Cliqq' src={orderedProduct.get('image') ? orderedProduct.get('image') : imageStock('default-slider.jpg')} />
           <Label as='p' basic size='big'>Brand Name</Label>
           <Label as='p' basic size='big'>{orderedProduct.get('title')}</Label>

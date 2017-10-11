@@ -3,7 +3,19 @@ import styled from 'styled-components'
 import { Button } from 'semantic-ui-react'
 
 const ProductReviewWrapper = styled.div`
-  margin-bottom: 60px;
+  margin: 20px 0 60px;
+
+  .brand-logo {
+    width: 200px;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .brand-logo {
+      width: 300px;
+    }
+  }
 `
 
 const StepHead = styled.div`
@@ -71,25 +83,10 @@ const StepHead = styled.div`
 `
 
 const ProductItem = styled.div`
-  padding: 30px 10px 8px;
   position: relative;
   text-align: center;
   width: 100%;
-  margin: 20px 0;
-
-  &:before {
-    background: url(${props => props.brand})no-repeat center center / contain;
-    content: '';
-    height: 35px;
-    left: 50%;
-    margin-right: -50%;
-    position: absolute;
-    text-align: center;
-    top: 0;
-    transform: translate(-50%);
-    min-width: 200px;
-    z-index: 2;
-  }
+  margin-bottom: 20px;
 
   .image {
     margin: 0 auto;
@@ -97,19 +94,10 @@ const ProductItem = styled.div`
     width: 200px;
     z-index: 2;
   }
-
+  
   @media (min-width: 768px) {
-    align-items: center
-    display: flex;
-    padding-top: 50px;
-
     .image {
-      width: initial;
-    }
-    &:before {
-      height: 60px;
-      top: 105px;
-      width: 80%;
+      width: 350px;
     }
   }
 `
@@ -286,7 +274,6 @@ const SelectMethodWrapper = styled.div`
 
   @media (min-width: 768px) {
     .checkbox {
-      max-width: 550px;
 
       .label-custom {
         flex-wrap: wrap;
@@ -430,9 +417,10 @@ const ButtonContainer = styled.div`
   @media (min-width: 768px) {
     padding: 0;
     position: static;
+    
 
     button {
-      padding: 20px 70px!important
+      padding: 20px 70px!important;
     }
   }
 `
