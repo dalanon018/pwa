@@ -15,7 +15,7 @@ const SideBarChildMenu = ({ entities, changeRoute, location }) => {
   const Title = (entity) => (
     <div key={entity.get('id')} className='title-holder'>
       <img alt='selected' className='selected' src={Selected} />
-      <Label as='span' className='margin__none' size='big' onClick={changeRoute.bind(this, `/${location}/${entity.get('id')}`)}>
+      <Label as='span' className='margin__none color__secondary' size='big' onClick={changeRoute.bind(this, `/${location}/${entity.get('id')}`)}>
         {entity.get('name')}
       </Label>
     </div>
@@ -24,7 +24,7 @@ const SideBarChildMenu = ({ entities, changeRoute, location }) => {
   const RenderChildren = (children) => (
     <Label
       key={children.get('id')} as='p' size='big'
-      className='color-grey'
+      className='color__grey'
       onClick={changeRoute.bind(this, `/${location}/${children.get('id')}`)}
     >
       {children.get('name')}

@@ -29,7 +29,6 @@ const ProductPriceWrapper = styled.div`
   justify-content: center;
 
   .product-price {
-    color: #F58322 !important;
     font-family: 'Roboto';
     letter-spacing: -2px;
     line-height: 30px;
@@ -37,7 +36,6 @@ const ProductPriceWrapper = styled.div`
   }
 
   .product-discount {
-    color: #AEAEAE !important;
     font-family: 'Roboto';
     letter-spacing: -2px;
     margin-left: 5px;

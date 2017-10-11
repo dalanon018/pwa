@@ -44,7 +44,7 @@ const ComponentDetail = components => component => key =>
  key in components ? components[key] : component
 
 const GeneralInfo = ({ children }) => (
-  <WarningDescription>
+  <WarningDescription className='color__secondary'>
     <Image src={WarningIcon} />
     { children }
   </WarningDescription>
@@ -212,7 +212,7 @@ class Receipt extends React.PureComponent {
               <Grid>
                 <Grid.Row columns={2}>
                   <Grid.Column floated='left'>
-                    <Label className='weight-400' as='span' basic size='tiny'>
+                    <Label className='weight-400 color__secondary' as='span' basic size='tiny'>
                       <FormattedMessage {...messages.statusLabel} />
                     </Label>
                     <Label as='p' basic size='huge' color={this._handleColorStatus(statuses[receipt.get('status')])}>
@@ -220,36 +220,36 @@ class Receipt extends React.PureComponent {
                     </Label>
                   </Grid.Column>
                   <Grid.Column floated='right' textAlign='right'>
-                    <Label className='weight-400' as='span' basic size='tiny'>
+                    <Label className='weight-400 color__secondary' as='span' basic size='tiny'>
                       <FormattedMessage {...messages.paymentMethod} />
                     </Label>
-                    <Label as='p' basic size='large'>Cash Prepaid</Label>
+                    <Label as='p' basic size='large' className='color__secondary'>Cash Prepaid</Label>
                   </Grid.Column>
 
                   <Grid.Column floated='left'>
-                    <Label className='weight-400' as='span' basic size='tiny'>
+                    <Label className='weight-400 color__secondary' as='span' basic size='tiny'>
                       <FormattedMessage {...messages.orderNumber} />
                     </Label>
-                    <Label as='p' basic size='big'>{receipt.get('payCode')}</Label>
+                    <Label as='p' basic size='big' className='color__secondary'>{receipt.get('payCode')}</Label>
                   </Grid.Column>
                   <Grid.Column floated='right' textAlign='right'>
-                    <Label className='weight-400' as='span' basic size='tiny'>
+                    <Label className='weight-400 color__secondary' as='span' basic size='tiny'>
                       { this._handleDateString() }
                     </Label>
-                    <Label as='p' basic size='large'>{DateFormater(receipt.get('claimExpiry'), 'MM-DD-YYYY')}</Label>
+                    <Label as='p' basic size='large' className='color__secondary'>{DateFormater(receipt.get('claimExpiry'), 'MM-DD-YYYY')}</Label>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
             </ReceiptHeader>
             <ReceiptContent id='fadeMe' show={show}>
               <Grid padded className='scan padding__14' centered textAlign='center'>
-                <Label as='span' basic size='huge'>Brand Name</Label>
-                <Label as='p' basic size='huge'>{receipt.getIn(['products', 'name'])}</Label>
+                <Label as='span' basic size='huge' className='color__secondary'>Brand Name</Label>
+                <Label as='p' basic size='huge' className='color__secondary'>{receipt.getIn(['products', 'name'])}</Label>
                 <Label className='product-current-price text__roboto--bold' basic color='orange'>
                   <FormattedMessage {...messages.peso} />
                   { receipt.get('amount') }
                 </Label>
-                <Label className='text__roboto--light' as='p' basic size='large' >
+                <Label className='text__roboto--light color__secondary' as='p' basic size='large' >
                   <FormattedMessage {...messages.mobileNumberLabel} />
 
                   <FormattedMessage {...messages.mobileNumberCode} />

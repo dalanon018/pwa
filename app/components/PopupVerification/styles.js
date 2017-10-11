@@ -4,7 +4,6 @@ const PopupWrapper = styled.div`
   background-color: #FFFFFF;;
   bottom: 0;
   height: ${props => props.toggle ? '100vh' : '0'};
-  color: #5B5B5B;
   left: 0;
   overflow: auto;
   position: fixed;

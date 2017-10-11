@@ -48,11 +48,11 @@ export class TermsConditions extends React.PureComponent { // eslint-disable-lin
       <div>
         <div className='document-helper terms-conditions margin__top-positive--30'>
           <Grid padded>
-            <H1 className='padding__top--25 padding__none--horizontal'>
+            <H1 className='padding__top--25 padding__none--horizontal color__secondary'>
               <FormattedMessage {...messages.header} />
             </H1>
             <LoadingStateInfo loading={loader} count='4'>
-              <div className='animation-fade' dangerouslySetInnerHTML={{__html: html}} />
+              <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
             </LoadingStateInfo>
           </Grid>
         </div>

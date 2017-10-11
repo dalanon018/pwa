@@ -102,7 +102,6 @@ export const ReceiptContent = styled.div`
   }
   .product-price {
     align-self: flex-end;
-    color: #AEAEAE !important;
     line-height: initial;
     text-decoration: line-through;
   }

@@ -47,10 +47,6 @@ const StatusWrapper = styled.div`
   position: absolute;
   text-align: center;
   width: 100%;
-
-  span {
-    color: #FFFFFF !important;
-  }
 `
 
 const OtherInfo = styled.div`
@@ -182,10 +178,10 @@ class Purchase extends React.PureComponent {
           <PurchaseWrapper onClick={this._goToReceipt}>
             <PurchaseInfo>
               <div>
-                <Label as='span' basic size='large'>
+                <Label as='span' basic size='large' className='color__secondary'>
                   Brand Name
                 </Label>
-                <Label as='p' basic size='large'>
+                <Label as='p' basic size='large' className='color__secondary'>
                   {this._productName(receipt.getIn(['products', 'name']))}
                 </Label>
               </div>
@@ -195,10 +191,10 @@ class Purchase extends React.PureComponent {
                   {receipt.get('amount')}
                 </Label>
                 <div className='status-info'>
-                  <Label as='p' basic size='mini'>
+                  <Label as='p' basic size='mini' className='color__secondary'>
                     { this._handleDateString() }
                   </Label>
-                  <Label as='span' basic size='large'>
+                  <Label as='span' basic size='large' className='color__secondary'>
                     { this._handleDateValue() }
                   </Label>
                 </div>
@@ -210,7 +206,7 @@ class Purchase extends React.PureComponent {
                 `${paramsImgix(receipt.getIn(['products', 'image']), imgixOptions)}`) ||
                 paramsImgix(defaultImage, imgixOptions)} />
               <StatusWrapper status={this._getColorStatus(currentStatus)}>
-                <Label as='span' basic size='medium'>
+                <Label as='span' basic size='medium' className='color__white'>
                   { Uppercase(receipt.get('status')) }
                 </Label>
               </StatusWrapper>

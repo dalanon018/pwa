@@ -47,7 +47,7 @@ export class Footer extends React.PureComponent {
       <Wrapper>
         <Grid>
           <Grid.Row centered>
-            <H2 className='custom-header' >
+            <H2 className='custom-header color__secondary' >
               <FormattedMessage {...messages.stayConnected} />
             </H2>
             <SocialIcons>
@@ -76,9 +76,9 @@ export class Footer extends React.PureComponent {
               <AppInfo className='float__right'>
                 <Image src={DeliveryIcon} />
                 <section>
-                  <Label as='span' size='tiny'>1 Dat In-Store Delivery</Label>
+                  <Label as='span' size='tiny' className='color__secondary'>1 Dat In-Store Delivery</Label>
                   <br />
-                  <Label as='span' size='tiny'>Free Shipping to Store</Label>
+                  <Label as='span' size='tiny' basic color='grey'>Free Shipping to Store</Label>
                 </section>
               </AppInfo>
             </Grid.Column>
@@ -86,9 +86,9 @@ export class Footer extends React.PureComponent {
               <AppInfo>
                 <Image src={ReturnIcon} />
                 <section>
-                  <Label as='span' size='tiny'>Cliqq Return Policy</Label>
+                  <Label as='span' size='tiny' className='color__secondary'>Cliqq Return Policy</Label>
                   <br />
-                  <Label as='span' size='tiny'>Change of Mind is Applicable</Label>
+                  <Label as='span' size='tiny' basic color='grey'>Change of Mind is Applicable</Label>
                 </section>
               </AppInfo>
             </Grid.Column>
@@ -97,13 +97,13 @@ export class Footer extends React.PureComponent {
           <Grid.Row centered>
             <HelperLinks>
               <List horizontal divided>
-                <List.Item onClick={this._handleFaqRoute}>
+                <List.Item className='color__grey' onClick={this._handleFaqRoute}>
                   <FormattedMessage {...messages.faq} />
                 </List.Item>
-                <List.Item onClick={this._handleTermsConditionsRoute}>
+                <List.Item className='color__grey' onClick={this._handleTermsConditionsRoute}>
                   <FormattedMessage {...messages.termsConditions} />
                 </List.Item>
-                <List.Item onClick={this._handlePrivacyPolicy}>
+                <List.Item className='color__grey' onClick={this._handlePrivacyPolicy}>
                   <FormattedMessage {...messages.privacyPolicy} />
                 </List.Item>
               </List>
@@ -111,7 +111,7 @@ export class Footer extends React.PureComponent {
           </Grid.Row>
 
           <Grid.Row centered>
-            <CopyRight><FormattedMessage {...messages.copyRight} /></CopyRight>
+            <CopyRight className='color__secondary'><FormattedMessage {...messages.copyRight} /></CopyRight>
           </Grid.Row>
         </Grid>
       </Wrapper>

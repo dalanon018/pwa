@@ -271,7 +271,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     const { orderedProduct, orderRequesting } = this.props
     const { errorMessage, modePayment, modalToggle, visibility, store } = this.state
     const toggleDiscount = this._showDiscountPrice(
-      <span className='strike'>
+      <span className='strike color__grey'>
         <FormattedMessage {...messages.peso} />
         { orderedProduct.get('price') &&
           parseFloat(orderedProduct.get('price')).toLocaleString() }
@@ -280,12 +280,12 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     )
     const labelOne = <label className='label-custom'>
       <LabelTitle>
-        <Label as='span' basic size='big'>
+        <Label as='span' basic size='big' className='color__secondary'>
           <FormattedMessage {...messages.cashPrepaid} />
         </Label>
       </LabelTitle>
       <LabelPrice>
-        <span className='total'>
+        <span className='total color__orange'>
           <FormattedMessage {...messages.peso} />
           { this._toggleOrigDiscountPrice(orderedProduct) }
         </span>
@@ -294,12 +294,12 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     </label>
     const labelTwo = <label className='label-custom'>
       <LabelTitle>
-        <Label as='span' basic size='big'>
+        <Label as='span' basic size='big' className='color__secondary'>
           <FormattedMessage {...messages.cashDelivery} />
         </Label>
       </LabelTitle>
       <LabelPrice>
-        <span className='total'>
+        <span className='total color__orange'>
           <FormattedMessage {...messages.peso} />
           { this._toggleOrigDiscountPrice(orderedProduct) }
         </span>
@@ -313,29 +313,29 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         {brandLogo}
         <ProductItem>
           <Image alt='Cliqq' src={orderedProduct.get('image') ? orderedProduct.get('image') : imageStock('default-slider.jpg')} />
-          <Label as='p' basic size='big'>Brand Name</Label>
-          <Label as='p' basic size='big'>{orderedProduct.get('title')}</Label>
+          <Label as='p' basic size='big' className='color__secondary'>Brand Name</Label>
+          <Label as='p' basic size='big' className='color__secondary'>{orderedProduct.get('title')}</Label>
         </ProductItem>
         <ListCollapse title={
-          <Label as='p' className='margin__none' size='large'>
+          <Label as='p' className='margin__none color__secondary' size='large'>
             <FormattedMessage {...messages.viewDetails} />
           </Label>
         }>
           <DetailsWrapper>
-            <div className='sub-title'>
+            <div className='sub-title color__secondary'>
               <FormattedMessage {...messages.productDetailsTitle} />
             </div>
-            <div className='margin__bottom-positive--10' dangerouslySetInnerHTML={{__html: orderedProduct.get('details')}} />
-            <div className='sub-title'>
+            <div className='margin__bottom-positive--10 color__grey' dangerouslySetInnerHTML={{__html: orderedProduct.get('details')}} />
+            <div className='sub-title color__secondary'>
               <FormattedMessage {...messages.productDeliveryTitle} />
             </div>
-            <div dangerouslySetInnerHTML={{__html: orderedProduct.get('deliveryPromiseMessage')}} />
+            <div className='color__grey' dangerouslySetInnerHTML={{__html: orderedProduct.get('deliveryPromiseMessage')}} />
           </DetailsWrapper>
         </ListCollapse>
         <Grid padded>
           <Grid.Row>
             <MethodTitle>
-              <Label as='span' basic size='huge'>
+              <Label as='span' basic size='huge' className='color__secondary'>
                 <FormattedMessage {...messages.methodPayment} />
               </Label>
             </MethodTitle>
@@ -369,13 +369,13 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
           </Grid.Row>
         </Grid>
         <StepWrapper className='visibility' visibility={visibility}>
-          <Label as='p' basic size='large'>
+          <Label as='p' basic size='large' className='color__secondary'>
             <FormattedMessage {...messages.chooseStore} />
           </Label>
           <StepHead step='2'>
-            <p><FormattedMessage {...messages.defaultStore} /></p>
+            <p className='color__grey'><FormattedMessage {...messages.defaultStore} /></p>
           </StepHead>
-          <LocationButton onClick={this._handleStoreLocator} fluid iconBg={NextIcon}>
+          <LocationButton className='color__secondary' onClick={this._handleStoreLocator} fluid iconBg={NextIcon}>
             {
               store && isEmpty(store)
               ? <FormattedMessage {...messages.findStore} />
