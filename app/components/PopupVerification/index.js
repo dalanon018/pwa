@@ -124,7 +124,7 @@ export class PopupVerification extends React.PureComponent {
         <PopupContainer>
           <PopupContent>
             <TextWrapper>
-              <Label as='p' basic size='big'>
+              <Label as='p' basic size='big' className='color__secondary'>
                 <FormattedMessage {...messages.register} />
               </Label>
               <Label as='p' basic color='grey' size='medium'><FormattedMessage {...messages.label} /></Label>
@@ -142,7 +142,7 @@ export class PopupVerification extends React.PureComponent {
             <ResendWrapper>
               <div className='resend-content'>
                 <Image src={ResendIcon} />
-                <Label as='span' basic size='large'><FormattedMessage {...messages.resend} /></Label>
+                <Label as='span' basic size='large' className='color__secondary'><FormattedMessage {...messages.resend} /></Label>
               </div>
             </ResendWrapper>
 

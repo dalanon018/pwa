@@ -71,7 +71,7 @@ const Product = ({
     () => component2
   )(condition)
   const toggleDiscount = showDiscountPrice(
-    <Label className='product-discount' as='span' basic size='huge'>
+    <Label className='product-discount' as='span' basic size='huge' color='grey'>
       <FormattedMessage {...messages.peso} />
       { product.get('price') &&
         parseFloat(product.get('price')).toLocaleString() }
@@ -92,7 +92,7 @@ const Product = ({
         </ProductImageSlider>
         <ProductMainContent>
           <LoadingStateInfo loading={loading} center>
-            <Label className='no-margin-bottom' as='p' basic size='big'>Brand Name</Label>
+            <Label className='no-margin-bottom color__secondary' as='p' basic size='big'>Brand Name</Label>
             <Label as='p' basic size='big'>{product.get('title')}</Label>
             <ProductPriceWrapper>
               <Label className='product-price' as='b' basic size='massive' color='orange'>
@@ -106,7 +106,7 @@ const Product = ({
 
         <SocialContainer>
           <ShareWrapper>
-            <p className='share-item ui big basic label'><FormattedMessage {...messages.shareItem} /></p>
+            <p className='share-item ui big basic label color__secondary'><FormattedMessage {...messages.shareItem} /></p>
 
             <button className='unstyle-button share-button' onClick={() => fbShare(product)}>
               <FacebookIcon round size={30} />
@@ -124,20 +124,20 @@ const Product = ({
 
         <DetailsWrapper>
           <ProductDetails>
-            <Label as='p' basic size='big'> <FormattedMessage {...messages.productDetailsTitle} /> </Label>
-            <LoadingStateInfo loading={loading}>
-              <div className='product-details' dangerouslySetInnerHTML={{__html: product.get('details')}} />
+            <Label as='p' basic size='big' className='color__secondary'> <FormattedMessage {...messages.productDetailsTitle} /> </Label>
+            <LoadingStateInfo loading={loading} className='color__light-grey' >
+              <div className='product-details color__grey' dangerouslySetInnerHTML={{__html: product.get('details')}} />
             </LoadingStateInfo>
           </ProductDetails>
           <ListCollapse title={
-            <Label as='p' className='margin__none' size='large' >
+            <Label as='p' className='margin__none color__secondary' size='large' >
               <FormattedMessage {...messages.deliveryReturnsPolicy} />
             </Label>
           }>
             <CollapseContent>
               <Image src={DeliveryIcon} alt='Cliqq' />
               <div className='collapse-description'>
-                <Label className='description-title' as='p' basic size='large'><FormattedMessage {...messages.deliveryTitle} /></Label>
+                <Label className='description-title color__secondary' as='p' basic size='large'><FormattedMessage {...messages.deliveryTitle} /></Label>
                 <Label as='p' color='grey' basic size='medium'>
                   <span dangerouslySetInnerHTML={{__html: product.get('deliveryPromiseMessage')}} />
                 </Label>
@@ -149,7 +149,7 @@ const Product = ({
                   <CollapseContent>
                     <Image src={ReturnIcon} alt='Cliqq' />
                     <div className='collapse-description'>
-                      <Label className='description-title' as='p' basic size='large'><FormattedMessage {...messages.returnPolicy} /></Label>
+                      <Label className='description-title primary__secondary' as='p' basic size='large'><FormattedMessage {...messages.returnPolicy} /></Label>
                       <Label as='p' color='grey' basic size='medium'>
                         <span dangerouslySetInnerHTML={{__html: product.get('returnPolicy')}} />
                       </Label>

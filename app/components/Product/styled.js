@@ -50,21 +50,6 @@ export const ProductMainContent = styled(AnimateDiv)`
     margin-bottom: 0 !important;
   }
 `
-
-export const HeaderWrapper = styled(AnimateDiv)`
-  align-items: center;
-  color: #AEAEAE;
-  display: flex;
-  font-size: 21px;
-  justify-content: center;
-  letter-spacing: 2px;
-
-  @media (min-width: 768px) {
-    font-size: 16px;
-    justify-content: flex-start;
-    letter-spacing: 4px;
-  }
-`
 export const CodeImage = styled.img`
   float: left;
   width: 32px;
@@ -88,51 +73,11 @@ export const ProductPriceWrapper = styled(AnimateDiv)`
   }
 
   .product-discount {
-    color: #AEAEAE !important;
     font-family: 'Roboto';
     letter-spacing: -2px;
     text-decoration: line-through;
     margin-left: 10px;
   }
-`
-export const ProductPriceTitle = styled.p`
-  color: #AEAEAE;
-  font-size: 12px;
-  font-weight: 100;
-  text-transform: uppercase;
-`
-export const ProductPrice = styled.p`
-  color: #F88728;
-  font-family: 'helveticabold';
-  font-size: 29px;
-  line-height: inherit;
-  margin: 10px 0;
-  text-transform: uppercase;
-`
-export const ProductPriceStrike = styled.span`
-  color: #aeaeae;
-  font-size: 16px;
-  line-height: initial;
-  text-decoration: line-through;
-  text-transform: uppercase;
-
-  @media (min-width: 375px) {
-    font-size: 16px;
-  }
-`
-export const ShareItemWrapper = styled(AnimateDiv)`
-  align-items: center;
-  align-self: stretch;
-  border-bottom: 1px solid #F0F0F0;
-  border-top: 1px solid #F0F0F0;
-  color: #5B5B5B;
-  display: flex;
-  font-size: 16px;
-  justify-content: center;
-  letter-spacing: 1px;
-  padding: 17px 0;
-  text-transform: uppercase;
-  width: 100%;
 `
 
 export const ShareIcon = styled.img`
@@ -149,18 +94,13 @@ export const DetailsWrapper = styled(AnimateDiv)`
 `
 export const ProductDetailsContainer = styled(AnimateDiv)`
   padding: 35px 25px;
-  color: #5B5B5B;
   font-weight: 100;
 `
 export const ProductDetails = styled(ProductDetailsContainer)`
   border-bottom: 1px solid #F0F0F0;
-  color: #aeaeae;
   @media (min-width: 768px) {
     border-bottom: 0;
   }
-`
-export const ShippingDetails = styled(ProductDetailsContainer)`
-  margin-bottom: 60px;
 `
 export const DetailsTitle = styled.p`
   text-transform: uppercase;
@@ -197,37 +137,6 @@ export const ButtonContainer = styled(AnimateDiv)`
   }
 `
 
-export const SocialButtonWrapper = styled.div`
-  align-items: center;
-  border-bottom: 1px solid #F0F0F0;
-  display: flex;
-  height: ${props => props.visibility ? '60px' : '0'};
-  justify-content: center;
-  overflow: hidden;
-  transition: all 0.3s ease;
-
-  .SocialMediaShareButton {
-    margin: 0 10px;
-  }
-
-  .copy-to-clipboard {
-    align-items: center;
-    background-color: #F6A22D;
-    border-radius: 50px;
-    color: #FFFFFF;
-    display: flex;
-    font-size: 18px;
-    height: 40px;
-    justify-content: center;
-    margin: 0 10px;
-    width: 40px;
-
-    &:before {
-      margin-top: 3px;
-    }
-  }
-`
-
 export const SocialContainer = styled.div`
   width: 100%;
   display: flex;
@@ -251,22 +160,6 @@ export const ShareWrapper = styled.div`
   .share-button {
     margin: 0 5px;
   }
-
-  .copy-to-clipboard {
-    align-items: center;
-    background-color: #F6A22D;
-    border-radius: 50px;
-    color: #FFFFFF;
-    display: flex;
-    font-size: 18px;
-    height: 30px;
-    justify-content: center;
-    width: 30px;
-
-    &:before {
-      margin-top: 3px;
-    }
-  }
 `
 
 // Desktop
@@ -278,88 +171,6 @@ export const BrandInfo = styled(AnimateDiv)`
     img {
       float: right;
       width: 300px;
-    }
-  }
-`
-
-export const CodeWrapper = styled(AnimateDiv)`
-  align-items: center;
-  color: #AEAEAE;
-  display: flex;
-  font-size: 21px;
-  justify-content: flex-end;
-  letter-spacing: 2px;
-`
-
-export const ShareIcons = styled(AnimateDiv)`
-  align-items: center;
-  display: flex;
-  justify-content: flex-start;
-  margin: 10px 0;
-
-  p {
-    color: #5B5B5B;
-    margin-bottom: 0;
-    margin-right: 10px;
-  }
-
-  .icons-wrapper {
-    display: flex;
-
-    .SocialMediaShareButton {
-      margin: 0 2px;
-    }
-  }
-
-  svg {
-    cursor: pointer;
-  }
-
-  @media (min-width: 768px) {
-    margin: 20px 0;
-  }
-`
-export const DigitsWrapper = styled(AnimateDiv)`
-  margin: 10px 0;
-
-  label {
-    color: #aeaeae;
-    font-family: 'helveticalight';
-    font-size: 16px;
-    text-transform: uppercase;
-  }
-
-  @media (min-width: 768px) {
-    label {
-      font-size: 15px;
-    }
-  }
-`
-
-export const DesktopPriceWrapper = styled.div`
-  display: flex;
-  align-items: flex-end;
-  
-  p {
-    color: ${props => props.colorHex ? props.colorHex : '#5B5B5B'};
-    font-family: 'helveticabold';
-    font-size: 40px;
-    font-weight: bold;
-    letter-spacing: 2px;
-    margin-bottom: 0;
-    margin-right: 20px;
-  }
-
-  span {
-    font-family: 'helveticalight';
-    line-height: 20px;
-  }
-
-  @media (min-width: 768px) {
-    margin-top: 5px;
-    
-    p {
-      font-size: 41px;
     }
   }
 `
@@ -382,6 +193,7 @@ export const CollapseContent = styled.div`
     height: 30px;
     min-width: 45px; 
     flex: 0.1;
+    margin-top: 8px;
   }
 
   div.collapse-description {

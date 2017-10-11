@@ -8,7 +8,7 @@ function H3 ({
   ...props
 }) {
   return (
-    <Header {...props} as='h3'>{children}</Header>
+    <Header {...props} as='h3' className='color__secondary'>{children}</Header>
   )
 }
 

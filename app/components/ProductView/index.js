@@ -97,14 +97,15 @@ function ProductView ({
                   <Image alt={productName(product.get('title'))} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || defaultImage} />
                 </ImageWrapper>
                 <ProductInfo>
-                  <Label as='span' className='product-name' basic size='medium'>Brand Name</Label>
-                  <Label className='no-bottom-margin' as='p' basic size='tiny'>All Day Backpack | Blue</Label>
+                  <Label as='span' className='product-name color__secondary' basic size='medium'>Brand Name</Label>
+                  {/* <Label as='p' basic size='small'>{productName(product.get('title'))}</Label> */}
+                  <Label className='no-bottom-margin color__secondary' as='p' basic size='tiny'>All Day Backpack | Blue</Label>
                   <ProductPriceWrapper>
-                    <Label className='product-price' as='b' basic size='massive'>
+                    <Label className='product-price' as='b' color='orange' basic size='massive'>
                       <FormattedMessage {...messages.peso} />
                       { toggleOrigDiscountPrice(product) }
                     </Label>
-                    <Label className='product-discount' as='span' basic size='large'>
+                    <Label className='product-discount' as='span' color='grey' basic size='large'>
                       { toggleDiscountLabel(product.get('discountPrice') !== 0) }
                       { toggleDiscountValue(product.get('discountPrice') !== 0) }
                     </Label>

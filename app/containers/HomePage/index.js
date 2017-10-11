@@ -208,13 +208,11 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             products={products}
             windowWidth={windowWidth} />
           { this._displayViewAll() }
-          {/* <Promo loader={loader} /> */}
           <H3>
             <FormattedMessage {...messages.browseCategory} />
           </H3>
           <Category
             loader={loader}
-            // resposiveColumns={resposiveColumns()}
             windowWidth={windowWidth}
             margin='2'
             changeRoute={changeRoute}

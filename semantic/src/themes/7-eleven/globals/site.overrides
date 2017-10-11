@@ -129,8 +129,38 @@ input.input-field {
 }
 
 .background {
+  &__primary {
+    color: @primaryColor !important;
+  }
+  &__secondary {
+    color: @darkGrey !important;
+  }
+  &__grey {
+    color: @grey !important;
+  }
   &__light-grey {
-    background-color: @lightGrey;
+    color: @lightGrey !important;
+  }
+  &__white {
+    color: @white !important;
+  }
+}
+
+.color {
+  &__primary {
+    color: @primaryColor !important;
+  }
+  &__secondary {
+    color: @darkGrey !important;
+  }
+  &__grey {
+    color: @grey !important;
+  }
+  &__light-grey {
+    color: @lightGrey !important;
+  }
+  &__white {
+    color: @white !important;
   }
 }
 

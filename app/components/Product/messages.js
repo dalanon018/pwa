@@ -64,7 +64,7 @@ export default defineMessages({
   },
   returnPolicyContent2: {
     id: 'app.components.Product.returnPolicyContent2',
-    defaultMessage: 'within 7 days'
+    defaultMessage: 'within 7 days '
   },
   returnPolicyContent3: {
     id: 'app.components.Product.returnPolicyContent3',
