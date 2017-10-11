@@ -49,10 +49,12 @@ import {
 } from './actions'
 
 import {
-  selectFeaturedProducts,
   selectLazyload,
   selectLoading,
-  selectProductsByBrands
+  // selectProductsByBrands,
+  // selectFeaturedProducts,
+  selectProductsByBrandsItems,
+  selectProductsByBrandsFeatured
 } from './selectors'
 
 const ContentWrapper = styled(Container)`
@@ -96,6 +98,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
 
   _handlePageTitle = (nextProps) => {
     const { brands, params: { id } } = nextProps
+
     if (brands.size) {
       const brand = brands.find((entity) => entity.get('id') === id)
       const brandImages = brand.size ? brand.get('sliders').toArray() : []
@@ -265,8 +268,8 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
 }
 
 const mapStateToProps = createStructuredSelector({
-  productsByBrands: selectProductsByBrands(),
-  productsFeatured: selectFeaturedProducts(),
+  productsByBrands: selectProductsByBrandsItems(),
+  productsFeatured: selectProductsByBrandsFeatured(),
   brands: selectBrands(),
   loader: selectLoading(),
   lazyload: selectLazyload(),

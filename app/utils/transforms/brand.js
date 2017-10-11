@@ -16,6 +16,7 @@ import {
 import {
   ARRAY,
   STRING,
+  BOOLEAN,
   ValidateSchema
 } from './helper'
 
@@ -31,6 +32,10 @@ const Schema = {
   name: {
     name: 'name',
     type: STRING
+  },
+  isFeatured: {
+    name: 'isFeatured',
+    type: BOOLEAN
   }
 }
 

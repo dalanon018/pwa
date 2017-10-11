@@ -58,10 +58,12 @@ import {
 } from './actions'
 
 import {
-  selectFeaturedProducts,
   selectLazyload,
   selectLoading,
-  selectProductsByCategory,
+  // selectProductsByCategory,
+  // selectFeaturedProducts,
+  selectProductsByCategoryItems,
+  selectProductsByCategoryFeatured,
   selectProductsViewed,
   selectTotalCount
 } from './selectors'
@@ -391,9 +393,9 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 }
 
 const mapStateToProps = createStructuredSelector({
-  productsByCategory: selectProductsByCategory(),
+  productsByCategory: selectProductsByCategoryItems(),
   productsViewed: selectProductsViewed(),
-  productsFeatured: selectFeaturedProducts(),
+  productsFeatured: selectProductsByCategoryFeatured(),
   categories: selectProductCategories(),
   loader: selectLoading(),
   lazyload: selectLazyload(),

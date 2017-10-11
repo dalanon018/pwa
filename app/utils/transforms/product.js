@@ -72,6 +72,10 @@ const Schema = {
   returnPolicy: {
     name: 'returnPolicy',
     type: STRING
+  },
+  isFeatured: {
+    name: 'isFeatured',
+    type: BOOLEAN
   }
 }
 
