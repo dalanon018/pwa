@@ -53,7 +53,6 @@ import NextIcon from 'images/icons/greater-than-icon.svg'
 
 import {
   LabelTitle,
-  // LabelSubTitle,
   LabelPrice,
   DetailsWrapper,
   ButtonContainer,
@@ -307,7 +306,6 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         { toggleDiscount(orderedProduct.get('discountPrice') !== 0) }
       </LabelPrice>
     </label>
-
     const brandLogo = orderedProduct.get('brandLogo') ? (<Image className='brand-logo' alt='Cliqq' src={orderedProduct.get('brandLogo')} />) : ''
 
     return (
@@ -343,7 +341,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             </MethodTitle>
           </Grid.Row>
           <Grid.Row>
-            <SelectMethodWrapper>
+            <SelectMethodWrapper checkHeight={orderedProduct.get('discountPrice') !== 0}>
               <Form>
                 <Form.Field>
                   <Checkbox
