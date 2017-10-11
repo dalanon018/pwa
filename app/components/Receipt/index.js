@@ -38,7 +38,7 @@ import {
 } from 'containers/Buckets/constants'
 
 // @TODO: Mode of payment needed to come from receipt
-const modePayment = 'Cod'
+const modePayment = 'COD'
 
 const ComponentDetail = components => component => key =>
  key in components ? components[key] : component
@@ -75,7 +75,7 @@ const WarningCTAReserved = ({ timer }) => {
 }
 
 const WarningStatus = ({ status, timer, storeName, modePayment }) => {
-  const keyMessage = modePayment === 'Cash' ? 'receiptInfoMessageCashDelivered' : 'receiptInfoMessageCodDelivered'
+  const keyMessage = modePayment === 'CASH' ? 'receiptInfoMessageCASHDelivered' : 'receiptInfoMessageCODDelivered'
   return ComponentDetail({
     RESERVED: (
       <GeneralInfo>

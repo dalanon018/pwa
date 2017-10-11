@@ -73,7 +73,7 @@ const OtherInfo = styled.div`
 `
 
 // @TODO: Mode of payment needed to come from Order
-const modePayment = 'Cod'
+const modePayment = 'COD'
 
 /**
  * Currying for instead of using *ugly SWITCH statement
