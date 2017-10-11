@@ -37,9 +37,6 @@ import {
   COMPLETED
 } from 'containers/Buckets/constants'
 
-// @TODO: Mode of payment needed to come from receipt
-const modePayment = 'COD'
-
 const ComponentDetail = components => component => key =>
  key in components ? components[key] : component
 
@@ -170,6 +167,7 @@ class Receipt extends React.PureComponent {
   _handleDateString = () => {
     const { receipt, statuses } = this.props
     const currentStatus = statuses[receipt.get('status')] || 'FieldDefault'
+    const modePayment = receipt.get('modePayment') || 'CASH'
 
     return (
       <FormattedMessage {...messages[`date${modePayment}${currentStatus}`]} />
@@ -274,7 +272,7 @@ class Receipt extends React.PureComponent {
                   ...{
                     status: statuses[receipt.get('status')],
                     storeName: receipt.get('storeName'),
-                    modePayment,
+                    modePayment: receipt.get('modePayment'),
                     timer }} />
               </WrapperWarning>
             </Grid.Column>
