@@ -5,10 +5,7 @@
 */
 
 import React from 'react'
-import {
-  range,
-  isEmpty
-} from 'lodash'
+import { range } from 'lodash'
 
 import {
   identity,
@@ -28,7 +25,6 @@ import {
 import EmptyDataBlock from 'components/EmptyDataBlock'
 import defaultImage from 'images/default-product.jpg'
 
-import PromoTag from './sections/PromoTag'
 import ParagraphImage from 'images/test-images/short-paragraph.png'
 
 import { imageStock, paramsImgix } from 'utils/image-stock'
@@ -97,16 +93,11 @@ function ProductView ({
               key={`${product.get('cliqqCode')}-${index}`}
               onClick={goToProduct}>
               <ProductWrapper>
-                {
-                  !isEmpty(product.get('discount')) &&
-                  <PromoTag discount={product.get('discount')} />
-                }
                 <ImageWrapper>
                   <Image alt={productName(product.get('title'))} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || defaultImage} />
                 </ImageWrapper>
                 <ProductInfo>
                   <Label as='span' className='product-name' basic size='medium'>Brand Name</Label>
-                  {/* <Label as='p' basic size='small'>{productName(product.get('title'))}</Label> */}
                   <Label className='no-bottom-margin' as='p' basic size='tiny'>All Day Backpack | Blue</Label>
                   <ProductPriceWrapper>
                     <Label className='product-price' as='b' basic size='massive'>

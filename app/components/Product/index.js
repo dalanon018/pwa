@@ -11,14 +11,17 @@ import {
   generateShareIcon
 } from 'react-share'
 
-import { isEmpty } from 'lodash'
+import {
+  identity,
+  ifElse
+} from 'ramda'
+
 import { FormattedMessage } from 'react-intl'
 import { Image, Label, Button } from 'semantic-ui-react'
 
 import ProductSlider from 'components/BannerSlider'
 import ListCollapse from 'components/ListCollapse'
 
-import { calculateProductPrice } from 'utils/promo'
 import { fbShare } from 'utils/fb-share'
 
 import {LoadingStateInfo} from 'components/LoadingBlock'
@@ -59,6 +62,22 @@ const Product = ({
   } = ShareButtons
   const productImages = [product.get('image')]
   const brandLogo = product.get('brandLogo') ? (<Image className='brand-logo' alt='Cliqq' src={product.get('brandLogo')} />) : ''
+  const toggleOrigDiscountPrice = (product) => {
+    return product.get('discountPrice') || product.get('price')
+  }
+  const showDiscountPrice = (component1, component2) => (condition) => ifElse(
+    identity,
+    () => component1,
+    () => component2
+  )(condition)
+  const toggleDiscount = showDiscountPrice(
+    <Label className='product-discount' as='span' basic size='huge'>
+      <FormattedMessage {...messages.peso} />
+      { product.get('price') &&
+        parseFloat(product.get('price')).toLocaleString() }
+    </Label>,
+    null
+  )
 
   return (
     <div>
@@ -78,19 +97,9 @@ const Product = ({
             <ProductPriceWrapper>
               <Label className='product-price' as='b' basic size='massive' color='orange'>
                 <FormattedMessage {...messages.peso} />
-                { calculateProductPrice(product) }
+                { toggleOrigDiscountPrice(product) }
               </Label>
-              <Label className='product-discount' as='span' basic size='huge'>
-                {
-                  !isEmpty(product.get('discount'))
-                  ? <FormattedMessage {...messages.peso} />
-                  : ''
-                }
-                {
-                  !isEmpty(product.get('discount')) &&
-                  parseFloat(product.get('price')).toLocaleString()
-                }
-              </Label>
+              { toggleDiscount(product.get('discountPrice') !== 0) }
             </ProductPriceWrapper>
           </LoadingStateInfo>
         </ProductMainContent>
@@ -130,9 +139,7 @@ const Product = ({
               <div className='collapse-description'>
                 <Label className='description-title' as='p' basic size='large'><FormattedMessage {...messages.deliveryTitle} /></Label>
                 <Label as='p' color='grey' basic size='medium'>
-                  <FormattedMessage {...messages.deliveryContent1} /> <br />
-                  <FormattedMessage {...messages.deliveryContent2} /> <br />
-                  <FormattedMessage {...messages.deliveryContent3} />
+                  <span dangerouslySetInnerHTML={{__html: product.get('deliveryPromiseMessage')}} />
                 </Label>
               </div>
             </CollapseContent>
@@ -144,9 +151,7 @@ const Product = ({
                     <div className='collapse-description'>
                       <Label className='description-title' as='p' basic size='large'><FormattedMessage {...messages.returnPolicy} /></Label>
                       <Label as='p' color='grey' basic size='medium'>
-                        <FormattedMessage {...messages.returnPolicyContent1} />
-                        <u><FormattedMessage {...messages.returnPolicyContent2} /></u>
-                        <FormattedMessage {...messages.returnPolicyContent3} />
+                        <span dangerouslySetInnerHTML={{__html: product.get('returnPolicy')}} />
                       </Label>
                     </div>
                   </CollapseContent>

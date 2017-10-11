@@ -57,10 +57,6 @@ const Schema = {
     name: 'details',
     type: STRING
   },
-  deliveryPromiseMessage: {
-    name: 'shipping',
-    type: STRING
-  },
   gtin: {
     name: 'barcode',
     type: STRING
@@ -68,6 +64,14 @@ const Schema = {
   returnable: {
     name: 'returnable',
     type: BOOLEAN
+  },
+  deliveryPromiseMessage: {
+    name: 'deliveryPromiseMessage',
+    type: STRING
+  },
+  returnPolicy: {
+    name: 'returnPolicy',
+    type: STRING
   }
 }
 

@@ -45,22 +45,6 @@ const StepHead = styled.div`
     margin: 0 auto;
   }
 
-  // &:before {
-  //   align-items: center;
-  //   border-radius: 50px;
-  //   border: 2px solid #8DC640;
-  //   color: #8DC640;
-  //   content: '${props => props.step}'
-  //   display: flex;
-  //   flex: none;
-  //   font-size: 14px;
-  //   height: 30px;
-  //   justify-content: center;
-  //   padding: 1px 0 1px 3px;
-  //   text-align: center;
-  //   width: 30px;
-  // }
-
   @media (min-width: 768px) {
     margin-top: 20px;
 
@@ -184,13 +168,16 @@ const DetailsWrapper = styled.div`
   color: #5B5B5B;
   padding: 15px;
 
-  span {
-    font-size: 14px;
-    text-transform: capitalize;
+  .sub-title {
+    margin-bottom: 10px;
+    span {
+      font-size: 14px;
+      text-transform: capitalize;
+    }  
   }
 
   p {
-    margin: 10px 0 20px 0;
+    margin-bottom: 7px;
   }
 
   @media (min-width: 768px) {
@@ -268,7 +255,7 @@ const SelectMethodWrapper = styled.div`
     transform: translateY(-50%);
   }
   .ui.radio.checkbox .box:after, .ui.radio.checkbox label:after {
-    top: 39%;
+    top: 42%;
     transform: translateY(-50%);
   }
 
