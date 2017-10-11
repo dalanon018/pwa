@@ -126,16 +126,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
   render () {
     const { loader, productCategories, featuredBrands, changeRoute, windowWidth, intl } = this.props
-
     const { products } = this.state
-    // const resposiveColumns = () => {
-    //   if (windowWidth >= 768) {
-    //     return 5
-    //   } else {
-    //     return 4
-    //   }
-    // }
-
     const bannerImages = [
       paramsImgix(imageStock('sample_banner.jpg'), {
         auto: 'compress',
@@ -153,16 +144,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         lossless: 0
       })
     ]
-
-    // const bannerImages = fromJS([
-    //   {
-    //     image: paramsImgix(imageStock('sample_banner.jpg'), {
-    //       auto: 'compress',
-    //       q: 35,
-    //       lossless: 0
-    //     })
-    //   }
-    // ])
 
     return (
       <div>

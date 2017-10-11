@@ -20,7 +20,7 @@ const ImageWrapper = styled.div`
 `
 
 const ProductInfo = styled.div`
-
+  display: block;
 `
 
 const ProductPriceWrapper = styled.div`

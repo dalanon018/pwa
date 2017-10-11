@@ -66,17 +66,6 @@ import {
   selectTotalCount
 } from './selectors'
 
-// const ItemCount = styled.p`
-//   font-family: 'helveticalight';
-//   letter-spacing: 2px;
-//   text-align: center;
-//   width: 100%;
-
-//   @media (min-width: 768px) {
-//     margin: 10px 0px 57px;
-//   }
-// `
-
 const ContentWrapper = styled(Container)`
   padding-top: 20px !important;
   padding-bottom: 20px !important;

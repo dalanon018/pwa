@@ -86,51 +86,6 @@ const ProductItem = styled.div`
   }
 `
 
-const CliqqCodeWrapper = styled.div`
-  align-items: center;
-  color: #AEAEAE;
-  display: flex;
-  font-size: 18px;
-  justify-content: center;
-  letter-spacing: 2px;
-  margin: 10px 0;
-
-  .image {
-    width: 25px;
-    margin-right: 10px;
-  }
-
-  @media (min-width: 768px) {
-    font-size: 16px;
-    justify-content: flex-start;
-    letter-spacing: 4px;
-    margin: 10px 0 40px;
-
-    .image {
-      width: 20px;
-    }
-  }
-`
-
-const ProductName = styled.div`
-  color: #5B5B5B;
-  font-family: 'Cabin';
-  font-size: 18px;
-  letter-spacing: 2px;
-  margin: 20px 0;
-  text-align: center;
-  text-transform: uppercase;
-
-  @media (min-width: 768px) {
-    font-size: 25px;
-    letter-spacing: 4px;
-    line-height: 32px;
-    margin-bottom: 15px;
-    text-align: left;
-    margin: 0;
-  }
-`
-
 const StepWrapper = styled.div`
   border-bottom: 1px solid #F0F0F0;
   border-top: 1px solid #F0F0F0;
@@ -149,18 +104,6 @@ const StepWrapper = styled.div`
   &:first-child {
     border-top: 0;
     margin-bottom: 0;
-  }
-`
-
-const ViewDetails = styled.div`
-  .title {
-    border-bottom: 1px solid #F0F0F0;
-    border-top: 1px solid #F0F0F0;
-    color: #5B5B5B !important;
-    font-family: 'Cabin' !important;
-    letter-spacing: 2px;
-    padding: 15px 0 !important;
-    text-align: center;
   }
 `
 
@@ -225,7 +168,7 @@ const SelectMethodWrapper = styled.div`
       background-color: #8DC640 !important;
       color: #FFFFFF !important;
       left: 6px;
-      top: 4px;
+      top: ${props => props.checkHeight ? '29px' : '17px'};
       display: block;
       width: 5px;
       height: 9px;
@@ -252,10 +195,6 @@ const SelectMethodWrapper = styled.div`
   // Custom style alignment for checkbox semantic
   .ui.radio.checkbox .box:before, .ui.radio.checkbox label:before {
     top: 50%;
-    transform: translateY(-50%);
-  }
-  .ui.radio.checkbox .box:after, .ui.radio.checkbox label:after {
-    top: 42%;
     transform: translateY(-50%);
   }
 
@@ -429,11 +368,8 @@ export {
   ReviewContainer,
   DetailsWrapper,
   LocationButton,
-  CliqqCodeWrapper,
   ProductReviewWrapper,
-  ViewDetails,
   ButtonContainer,
-  ProductName,
   MethodTitle,
   LabelPrice,
   StepWrapper,

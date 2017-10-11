@@ -70,7 +70,7 @@ function PromptModal ({
           <Icon name={name} className='custom-icon' />
         </IconWrapper>
         <TitleHead>
-          <Label as='span' centered basic size='large'>
+          <Label as='span' basic size='large'>
             {title}
           </Label>
         </TitleHead>

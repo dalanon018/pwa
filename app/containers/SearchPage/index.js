@@ -101,15 +101,6 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
 
   _displayProduct () {
     const { product, changeRoute, windowWidth } = this.props
-    // const responsiveColumns = () => {
-    //   if (windowWidth >= 768 && windowWidth < 1299) {
-    //     return 2
-    //   } else if (windowWidth >= 1200) {
-    //     return 3
-    //   }
-
-    //   return 1
-    // }
 
     if (product.size > 0) {
       return (

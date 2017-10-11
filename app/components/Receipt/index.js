@@ -19,7 +19,6 @@ import messages from './messages'
 import {
   WrapperWarning,
   WarningDescription,
-
   BarcodeSVG,
   ButtonContainer,
   ReceiptContainer,
