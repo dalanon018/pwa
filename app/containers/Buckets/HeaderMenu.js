@@ -227,7 +227,7 @@ export default class MainMenu extends PureComponent {
   render () {
     const { leftButtonAction, hideBackButton, changeRoute, showSearchIcon, showActivityIcon, currentRoute } = this.props
 
-    const homeRoute = currentRoute === 'home' || currentRoute === 'termsConditions'
+    const homeRoute = currentRoute === 'home'
 
     const SearchToggle = toggleComponent(
       <Image alt='Cliqq' src={SearchImage} size='mini' onClick={changeRoute.bind(this, '/search')} />,
