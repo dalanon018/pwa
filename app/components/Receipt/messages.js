@@ -207,5 +207,17 @@ export default defineMessages({
   dateCODFieldDefault: {
     id: 'app.components.Receipt.dateCODFieldDefault',
     defaultMessage: 'Date'
+  },
+  pushNotifLabel: {
+    id: 'app.components.Receipt.pushNotifLabel',
+    defaultMessage: 'Push Notifications'
+  },
+  pushNotifDescription: {
+    id: 'app.components.Receipt.pushNotifDescription',
+    defaultMessage: 'Would you like to receive notifications on your phone for the latest updates on Cliqq?'
+  },
+  instructionsLabel: {
+    id: 'app.components.Receipt.instructionsLabel',
+    defaultMessage: 'Don\'t forget to take a screenshot of your receipt for validation purposes!'
   }
 })
