@@ -92,7 +92,11 @@ const Product = ({
         </ProductImageSlider>
         <ProductMainContent>
           <LoadingStateInfo loading={loading} center>
-            <Label className='no-margin-bottom color__secondary' as='p' basic size='big'>Brand Name</Label>
+            {
+              product.get('temporaryBrand')
+              ? <Label className='no-margin-bottom color__secondary' as='p' basic size='big'>Brand Name</Label>
+              : null
+            }
             <Label as='p' basic size='big'>{product.get('title')}</Label>
             <ProductPriceWrapper>
               <Label className='product-price' as='b' basic size='massive' color='orange'>

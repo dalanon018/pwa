@@ -47,7 +47,6 @@ export const ProductPriceWrapper = styled(AnimateDiv)`
   align-self: stretch;
   align-items: center;
   flex-direction: column;
-  margin-top: 10px;
 
   .product-price {
     font-family: 'Roboto';
