@@ -42,6 +42,8 @@ body {
 
   :focus, :hover, :active {
     outline: none !important;
+    background: transparent !important;
+    box-shadow: 0 !important;
   }
 }
 

@@ -9,19 +9,10 @@ export const BarcodeSVG = styled.svg`
 `
 
 export const WrapperWarning = styled.div`
-  padding: 0 20px;
+  padding: 0 10px;
   position: relative;
-  margin: 30px 0;
+  margin: 30px 0 10px;
   width: 100%;
-
-  @media (min-width: 768px) {
-    margin-bottom: 20px;
-    padding: 25px 30px;
-
-    img {
-      width: 35px;
-    }
-  }
 `
 
 export const WarningDescription = styled.div`
@@ -117,4 +108,18 @@ export const ScannerWrapper = styled.div`
   position: absolute;
   width: 100%;
   z-index: -1;
+`
+
+export const PushNotificationWrapper = styled.div`
+  border-top: 2px solid #F0F0F0;
+  border-bottom: 2px solid #F0F0F0;
+  margin-top: 40px;
+  padding: 14px;
+`
+
+export const InstructionsWrapper = styled.div`
+  padding: 0 10px;
+  position: relative;
+  margin-bottom: 30px;
+  width: 100%;
 `

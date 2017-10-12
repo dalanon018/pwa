@@ -12,7 +12,8 @@ import {
 import messages from './messages'
 
 const Wrapper = styled.div`
-  box-shadow: 1px 1px 20px #F0F0F0;
+  background: #F0F0F0;
+  box-shadow: 1px 1px 5px rgba(174,174,174, 0.8);
   height: 49px;
   left: 0;
   padding: 10px;

@@ -2,11 +2,12 @@ import React, { PropTypes } from 'react'
 import JsBarcode from 'jsbarcode'
 
 import { FormattedMessage } from 'react-intl'
-import { Grid, Label, Button, Image } from 'semantic-ui-react'
+import { Grid, Label, Button, Image, Checkbox } from 'semantic-ui-react'
 
 import Countdown from 'components/Countdown'
 
 import WarningIcon from 'images/icons/instructions-icon.svg'
+import ScreenshotIcon from 'images/icons/screenshot-icon.svg'
 import ReturnIcon from 'images/icons/receipts/return-icon-receipt.svg'
 
 import { DateFormater } from 'utils/date' // DateFormater
@@ -26,7 +27,9 @@ import {
   ReceiptContent,
   Scanner,
   ReceiptWrapper,
-  ScannerWrapper
+  ScannerWrapper,
+  PushNotificationWrapper,
+  InstructionsWrapper
 } from './styled'
 
 import {
@@ -273,6 +276,23 @@ class Receipt extends React.PureComponent {
             </ScannerWrapper>
           </ReceiptContainer>
         </ReceiptWrapper>
+        <PushNotificationWrapper>
+          <Grid padded>
+            <Grid.Row columns={2}>
+              <Grid.Column width={11}>
+                <Label as='p' basic size='large'>
+                  <FormattedMessage {...messages.pushNotifLabel} />
+                </Label>
+                <Label as='span' basic size='medium' className='text__roboto--light'>
+                  <FormattedMessage {...messages.pushNotifDescription} />
+                </Label>
+              </Grid.Column>
+              <Grid.Column width={5} textAlign='right'>
+                <Checkbox toggle />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </PushNotificationWrapper>
         <Grid padded centered textAlign='left'>
           <Grid.Row>
             <Grid.Column>
@@ -284,6 +304,21 @@ class Receipt extends React.PureComponent {
                     modePayment: receipt.get('modePayment'),
                     timer }} />
               </WrapperWarning>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+        <Grid padded centered textAlign='left'>
+          <Grid.Row>
+            <Grid.Column>
+              <InstructionsWrapper>
+                <WarningDescription className='color__secondary'>
+                  <Image src={ScreenshotIcon} />
+                  <Label className='text__roboto--light' as='span' size='large'>
+                    <FormattedMessage {...messages.instructionsLabel} />
+                  </Label>
+
+                </WarningDescription>
+              </InstructionsWrapper>
             </Grid.Column>
           </Grid.Row>
         </Grid>
