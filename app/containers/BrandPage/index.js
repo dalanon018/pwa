@@ -9,14 +9,18 @@ import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
-import { noop } from 'lodash'
+import { noop, debounce } from 'lodash'
 import {
+  allPass,
+  both,
   compose,
   equals,
+  gte,
+  identity,
   ifElse,
+  lt,
   partial,
-  path,
-  lt
+  path
 } from 'ramda'
 import styled from 'styled-components'
 import { Container } from 'semantic-ui-react'
@@ -27,6 +31,7 @@ import WindowWidth from 'components/WindowWidth'
 import BannerSlider from 'components/BannerSlider'
 import H3 from 'components/H3'
 import EmptyProducts from 'components/EmptyProductsBlock'
+import LoadingIndicator from 'components/LoadingIndicator'
 // import Promo from 'components/Promo'
 
 import {
@@ -49,15 +54,21 @@ import {
 } from './actions'
 
 import {
-  selectFeaturedProducts,
   selectLazyload,
   selectLoading,
-  selectProductsByBrands
+  // selectProductsByBrands,
+  // selectFeaturedProducts,
+  selectProductsByBrandsItems,
+  selectProductsByBrandsFeatured
 } from './selectors'
 
 const ContentWrapper = styled(Container)`
   padding-top: 20px;
   padding-bottom: 20px;
+`
+
+const WrapperLoadingIndicator = styled.div`
+  position: relative;
 `
 
 export class BrandPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -84,18 +95,40 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     limit: 12
   }
 
-  _onScrollElement = (evt) => {
+  constructor () {
+    super()
+
+    this._debounceScrolling = this._debounceScrolling.bind(this)
+
+    /**
+     * we need to define this since our debounce will have issue once we
+     * unmount our component and debounce function was'nt invoke yet.
+     */
+    this._cancellableDebounce = false
+  }
+
+  _debounceScrolling = debounce(this._onScrollElement, 200)
+
+  _onScrollElement () {
     const { lazyload } = this.props
     const scrollY = window.pageYOffset || document.documentElement.scrollTop
     const offset = 200
 
-    if (window.innerHeight < (scrollY + offset) && lazyload) {
-      this._displayMoreProducts()
-    }
+    const onBottom = () => lt(window.innerHeight, (scrollY + offset))
+    const notCancellable = () => equals(false, this._cancellableDebounce)
+
+    const displayMoreProducts = ifElse(
+      allPass([onBottom, identity, notCancellable]),
+      this._displayMoreProducts,
+      noop
+    )
+
+    return displayMoreProducts(lazyload)
   }
 
   _handlePageTitle = (nextProps) => {
     const { brands, params: { id } } = nextProps
+
     if (brands.size) {
       const brand = brands.find((entity) => entity.get('id') === id)
       const brandImages = brand.size ? brand.get('sliders').toArray() : []
@@ -186,6 +219,26 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     return displayFeatured(productsFeatured.size)
   }
 
+  /**
+   * We need to identify if we need to show the lazy load if
+   * items are more than equal to the limit and lazyload === true
+   */
+  _displayLazyLoadIndicator = () => {
+    const { lazyload, productsByBrands } = this.props
+    const { limit } = this.state
+    const itemsGreaterEqLimit = () => gte(productsByBrands.size, limit)
+    const showLoadingIndicator = ifElse(
+      both(identity, itemsGreaterEqLimit),
+      () => (
+        <WrapperLoadingIndicator>
+          <LoadingIndicator />
+        </WrapperLoadingIndicator>
+      ),
+      () => null
+    )
+    return showLoadingIndicator(lazyload)
+  }
+
   componentWillMount () {
     // we set this as text so it doesnt look
     this.props.setPageTitle('..')
@@ -198,13 +251,19 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     this._fetchProductByBrands(this.props)
     this._fetchProductFeatured(this.props)
 
-    window.addEventListener('scroll', this._onScrollElement)
+    window.addEventListener('scroll', this._debounceScrolling)
   }
 
   componentWillUnmount () {
     const { resetProductsByBrands } = this.props
 
-    window.removeEventListener('scroll', this._onScrollElement)
+    /**
+     * once we unmount we will tell our debounce
+     * that they shoud'nt run anymore
+     */
+    this._cancellableDebounce = true
+
+    window.removeEventListener('scroll', this._debounceScrolling)
 
     resetProductsByBrands()
   }
@@ -257,6 +316,8 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           </H3>
           { this._displayEmpty() }
           <ProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
+
+          { this._displayLazyLoadIndicator() }
         </ContentWrapper>
         <Footer />
       </div>
@@ -265,8 +326,8 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
 }
 
 const mapStateToProps = createStructuredSelector({
-  productsByBrands: selectProductsByBrands(),
-  productsFeatured: selectFeaturedProducts(),
+  productsByBrands: selectProductsByBrandsItems(),
+  productsFeatured: selectProductsByBrandsFeatured(),
   brands: selectBrands(),
   loader: selectLoading(),
   lazyload: selectLazyload(),

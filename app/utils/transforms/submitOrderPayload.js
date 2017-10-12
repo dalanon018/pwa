@@ -9,7 +9,7 @@ const COD = 'COD'
 
 const transformOrderPayload = (payload) => ifElse(
   equals(COD),
-  assoc('modePayment', __, payload),
+  assoc('paymentType', __, payload),
   () => ({ ...payload })
 )
 

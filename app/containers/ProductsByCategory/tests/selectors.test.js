@@ -1,6 +1,8 @@
 import { fromJS } from 'immutable'
 import {
   selectProductsByCategory,
+  selectProductsByCategoryItems,
+  selectProductsByCategoryFeatured,
   selectProductsViewed,
   selectLazyload,
   selectFeaturedProducts,
@@ -13,6 +15,34 @@ describe('makeSelectProductsByCategoryDomain', () => {
 
     it('should get products by categories', () => {
       const productsByCategory = fromJS([1, 2, 3, 4])
+      const mockedState = fromJS({
+        productsByCategory: {
+          productsByCategory
+        }
+      })
+      expect(selector(mockedState)).toEqual(productsByCategory)
+    })
+  })
+
+  describe('selectProductsByCategoryItems', () => {
+    const selector = selectProductsByCategoryItems()
+
+    it('should get products by categories items', () => {
+      const productsByCategory = fromJS([{ name: 1 }, { name: 2 }])
+      const mockedState = fromJS({
+        productsByCategory: {
+          productsByCategory
+        }
+      })
+      expect(selector(mockedState)).toEqual(productsByCategory)
+    })
+  })
+
+  describe('selectProductsByCategoryFeatured', () => {
+    const selector = selectProductsByCategoryFeatured()
+
+    it('should get products by categories featured', () => {
+      const productsByCategory = fromJS([{ isFeatured: true }])
       const mockedState = fromJS({
         productsByCategory: {
           productsByCategory

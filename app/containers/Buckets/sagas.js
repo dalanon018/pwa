@@ -6,13 +6,11 @@ import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 
 import request from 'utils/request'
-import {
-  // getRequestData
- } from 'utils/offline-request'
+import { getRequestData } from 'utils/offline-request'
 
 // FIXTURES
-import Categories from 'fixtures/categories-v2.json'
-import Brands from 'fixtures/brands.json'
+// import Categories from 'fixtures/categories-v2.json'
+// import Brands from 'fixtures/brands.json'
 
 import { transformCategory, transformBrand, transformOrder } from 'utils/transforms'
 import { getItem, setItem } from 'utils/localStorage'
@@ -35,7 +33,7 @@ import {
 } from './actions'
 
 import {
-  // API_BASE_URL,
+  API_BASE_URL,
 
   TOKEN_URL,
   OATH_CLIENT_ID,
@@ -64,15 +62,11 @@ function * transformEachEntity (transform, entity) {
 }
 
 function * requestCategories () {
-  // const token = yield getAccessToken()
+  const token = yield getAccessToken()
   const dbResource = yield call(getItem, CATEGORIES_KEY)
-  // const req = yield call(getRequestData, `${API_BASE_URL}/categories`, {
-  //   method: 'GET',
-  //   token: token.access_token
-  // })
-
-  const req = Object.assign({}, {
-    categoryList: Categories
+  const req = yield call(getRequestData, `${API_BASE_URL}/categories`, {
+    method: 'GET',
+    token: token.access_token
   })
 
   if (!isEmpty(req)) {
@@ -96,15 +90,11 @@ function * requestCategories () {
 }
 
 function * requestBrands () {
-  // const token = yield getAccessToken()
+  const token = yield getAccessToken()
   const dbResource = yield call(getItem, BRANDS_KEY)
-  // const req = yield call(getRequestData, `${API_BASE_URL}/categories`, {
-  //   method: 'GET',
-  //   token: token.access_token
-  // })
-
-  const req = Object.assign({}, {
-    brandList: Brands
+  const req = yield call(getRequestData, `${API_BASE_URL}/brands`, {
+    method: 'GET',
+    token: token.access_token
   })
 
   if (!isEmpty(req)) {
@@ -208,7 +198,6 @@ export function * updateUICategories (req = Array) {
 export function * updateUIBrands (req = Array) {
   const transform = yield req.map((data) => transformEachEntity(transformBrand, data))
   const sortAsc = sortBy(prop('name'))
-
   yield put(setBrandsAction(sortAsc(transform)))
 }
 

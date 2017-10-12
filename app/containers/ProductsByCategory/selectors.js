@@ -18,6 +18,16 @@ const selectProductsByCategory = () => createSelector(
   (substate) => substate.get('productsByCategory')
 )
 
+const selectProductsByCategoryItems = () => createSelector(
+  selectProductsByCategory(),
+  (substate) => substate.filter((state) => !state.get('isFeatured'))
+)
+
+const selectProductsByCategoryFeatured = () => createSelector(
+  selectProductsByCategory(),
+  (substate) => substate.filter((state) => state.get('isFeatured'))
+)
+
 const selectProductsViewed = () => createSelector(
   selectProductsByCategoryDomain(),
   (substate) => substate.get('productsViewed')
@@ -46,6 +56,8 @@ const selectTotalCount = () => createSelector(
 export {
   selectProductsByCategoryDomain,
   selectProductsByCategory,
+  selectProductsByCategoryItems,
+  selectProductsByCategoryFeatured,
   selectProductsViewed,
   selectLoading,
   selectLazyload,

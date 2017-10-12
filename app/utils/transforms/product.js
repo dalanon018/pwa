@@ -6,6 +6,7 @@ import {
   adjust,
   curry,
   compose,
+  filter,
   fromPairs,
   map,
   omit,
@@ -72,6 +73,10 @@ const Schema = {
   returnPolicy: {
     name: 'returnPolicy',
     type: STRING
+  },
+  isFeatured: {
+    name: 'isFeatured',
+    type: BOOLEAN
   }
 }
 
@@ -90,9 +95,16 @@ const transformProduct = (data) => {
       propOr({}, 'images')
     )
 
+    const applyImageSliders = (key) => compose(
+      map(prop('imageUrl')),
+      filter(propEq('imageType', key)),
+      propOr({}, 'images')
+    )
+
     return Object.assign({}, data, {
       image: applyImageUrl('PRIMARY')(data),
-      brandLogo: applyImageUrl('BRAND_LOGO')(data)
+      brandLogo: applyImageUrl('BRAND_LOGO')(data),
+      sliders: applyImageSliders('SLIDER')(data)
     })
   }
 
