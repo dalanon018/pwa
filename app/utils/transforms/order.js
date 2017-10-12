@@ -1,4 +1,5 @@
 import {
+  assoc,
   adjust,
   apply,
   compose,
@@ -7,7 +8,9 @@ import {
   fromPairs,
   map,
   omit,
-  toPairs
+  toPairs,
+  prop,
+  partial
 } from 'ramda'
 
 import {
@@ -15,6 +18,7 @@ import {
   STRING,
   ValidateSchema
 } from './helper'
+import modePayment from './modePayment'
 
 const Schema = {
   trackingNumber: {
@@ -64,6 +68,10 @@ const Schema = {
   sevenConnectRefNum: {
     name: 'payCode',
     type: STRING
+  },
+  paymentType: {
+    name: 'modePayment',
+    type: STRING
   }
 }
 
@@ -90,8 +98,16 @@ const transformOrder = (data) => {
     })
   }
 
+  const updateModePayment = (data, property) => assoc('modePayment', modePayment(property), data)
+
+  const adjustModePayment = (data) => compose(
+    partial(updateModePayment, [data]),
+    prop('modePayment')
+  )(data)
+
   const adjustmentObject = compose(
     omit(product),
+    adjustModePayment,
     addProductObject
   )
 

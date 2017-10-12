@@ -64,11 +64,11 @@ export default defineMessages({
     id: 'app.components.Receipt.receiptInfoMessagePaid',
     defaultMessage: 'Please wait for an SMS telling you that your order is in the store'
   },
-  receiptInfoMessageCashDelivered: {
+  receiptInfoMessageCASHDelivered: {
     id: 'app.components.Receipt.receiptInfoMessagePaid',
     defaultMessage: 'Your item is now ready for pick up at {storeName}'
   },
-  receiptInfoMessageCodDelivered: {
+  receiptInfoMessageCODDelivered: {
     id: 'app.components.Receipt.receiptInfoMessagePaid',
     defaultMessage: 'Please go to {storeName} and pay for your item at the cashier.'
   },
@@ -108,6 +108,14 @@ export default defineMessages({
     id: 'app.components.Receipt.paymentMethod',
     defaultMessage: 'Method of Payment:'
   },
+  CASHmethodType: {
+    id: 'app.components.Receipt.CASHmethodType',
+    defaultMessage: 'Cash Prepaid'
+  },
+  CODmethodType: {
+    id: 'app.components.Receipt.CODmethodType',
+    defaultMessage: 'Cash on Delivery'
+  },
   statusLabel: {
     id: 'app.components.Receipt.statusLabel',
     defaultMessage: 'Status:'
@@ -124,80 +132,80 @@ export default defineMessages({
     id: `app.components.Receipt.mobileNumberCode`,
     defaultMessage: '+(63) '
   },
-  dateCashRESERVED: {
-    id: 'app.components.Receipt.dateCashRESERVED',
+  dateCASHRESERVED: {
+    id: 'app.components.Receipt.dateCASHRESERVED',
     defaultMessage: 'Valid Until'
   },
-  dateCashRESERVEDEXPIRED: {
-    id: 'app.components.Receipt.dateCashRESERVEDEXPIRED',
+  dateCASHRESERVEDEXPIRED: {
+    id: 'app.components.Receipt.dateCASHRESERVEDEXPIRED',
     defaultMessage: 'Valid Until'
   },
-  dateCashUNPAID: {
-    id: 'app.components.Receipt.dateCashUNPAID',
+  dateCASHUNPAID: {
+    id: 'app.components.Receipt.dateCASHUNPAID',
     defaultMessage: 'Valid Until'
   },
-  dateCashCONFIRMED: {
-    id: 'app.components.Receipt.dateCashCONFIRMED',
+  dateCASHCONFIRMED: {
+    id: 'app.components.Receipt.dateCASHCONFIRMED',
     defaultMessage: 'Date Paid'
   },
-  dateCashINTRANSIT: {
-    id: 'app.components.Receipt.dateCashINTRANSIT',
+  dateCASHINTRANSIT: {
+    id: 'app.components.Receipt.dateCASHINTRANSIT',
     defaultMessage: 'Date Paid'
   },
-  dateCashDELIVERED: {
+  dateCASHDELIVERED: {
     id: 'app.components.Receipt.dateDELIVERED',
     defaultMessage: 'Date Delivered'
   },
-  dateCashCLAIMED: {
-    id: 'app.components.Receipt.dateCashCLAIMED',
+  dateCASHCLAIMED: {
+    id: 'app.components.Receipt.dateCASHCLAIMED',
     defaultMessage: 'Date Claimed'
   },
-  dateCashUNCLAIMED: {
-    id: 'app.components.Receipt.dateCashUNCLAIMED',
+  dateCASHUNCLAIMED: {
+    id: 'app.components.Receipt.dateCASHUNCLAIMED',
     defaultMessage: 'Date Delivered'
   },
-  dateCodRESERVED: {
-    id: 'app.components.Receipt.dateCodRESERVED',
+  dateCODRESERVED: {
+    id: 'app.components.Receipt.dateCODRESERVED',
     defaultMessage: 'Valid Until'
   },
-  dateCodRESERVEDEXPIRED: {
-    id: 'app.components.Receipt.dateCodRESERVEDEXPIRED',
+  dateCODRESERVEDEXPIRED: {
+    id: 'app.components.Receipt.dateCODRESERVEDEXPIRED',
     defaultMessage: 'Valid Until'
   },
-  dateCodUNPAID: {
-    id: 'app.components.Receipt.dateCodUNPAID',
+  dateCODUNPAID: {
+    id: 'app.components.Receipt.dateCODUNPAID',
     defaultMessage: 'Valid Until'
   },
-  dateCodPROCESSING: {
-    id: 'app.components.Receipt.dateCodPROCESSING',
+  dateCODPROCESSING: {
+    id: 'app.components.Receipt.dateCODPROCESSING',
     defaultMessage: 'Date Ordered'
   },
-  dateCodCONFIRMED: {
-    id: 'app.components.Receipt.dateCodCONFIRMED',
+  dateCODCONFIRMED: {
+    id: 'app.components.Receipt.dateCODCONFIRMED',
     defaultMessage: 'Date Ordered'
   },
-  dateCodINTRANSIT: {
-    id: 'app.components.Receipt.dateCodINTRANSIT',
+  dateCODINTRANSIT: {
+    id: 'app.components.Receipt.dateCODINTRANSIT',
     defaultMessage: 'Date Ordered'
   },
-  dateCodDELIVERED: {
+  dateCODDELIVERED: {
     id: 'app.components.Receipt.dateDELIVERED',
     defaultMessage: 'Date Delivered'
   },
-  dateCodCLAIMED: {
-    id: 'app.components.Receipt.dateCodCLAIMED',
+  dateCODCLAIMED: {
+    id: 'app.components.Receipt.dateCODCLAIMED',
     defaultMessage: 'Date Claimed'
   },
-  dateCodUNCLAIMED: {
-    id: 'app.components.Receipt.dateCodUNCLAIMED',
+  dateCODUNCLAIMED: {
+    id: 'app.components.Receipt.dateCODUNCLAIMED',
     defaultMessage: 'Date Delivered'
   },
-  dateCashFieldDefault: {
-    id: 'app.components.Receipt.dateCashFieldDefault',
+  dateCASHFieldDefault: {
+    id: 'app.components.Receipt.dateCASHFieldDefault',
     defaultMessage: 'Date'
   },
-  dateCodFieldDefault: {
-    id: 'app.components.Receipt.dateCodFieldDefault',
+  dateCODFieldDefault: {
+    id: 'app.components.Receipt.dateCODFieldDefault',
     defaultMessage: 'Date'
   }
 })

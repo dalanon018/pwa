@@ -72,9 +72,6 @@ const OtherInfo = styled.div`
   }
 `
 
-// @TODO: Mode of payment needed to come from Order
-const modePayment = 'Cod'
-
 /**
  * Currying for instead of using *ugly SWITCH statement
  * @param {*} cases
@@ -122,7 +119,7 @@ class Purchase extends React.PureComponent {
   _handleDateString = () => {
     const { receipt, statuses } = this.props
     const currentStatus = statuses[receipt.get('status')] || 'FieldDefault'
-
+    const modePayment = receipt.get('modePayment') || 'CASH'
     return (
       <FormattedMessage {...messages[`date${modePayment}${currentStatus}`]} />
     )

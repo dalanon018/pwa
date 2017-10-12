@@ -14,80 +14,80 @@ export default defineMessages({
     id: `app.components.Purchase.peso`,
     defaultMessage: '₱'
   },
-  dateCashRESERVED: {
-    id: 'app.components.Purchase.dateCashRESERVED',
+  dateCASHRESERVED: {
+    id: 'app.components.Purchase.dateCASHRESERVED',
     defaultMessage: 'Time Remaining'
   },
-  dateCashRESERVEDEXPIRED: {
-    id: 'app.components.Purchase.dateCashRESERVEDEXPIRED',
+  dateCASHRESERVEDEXPIRED: {
+    id: 'app.components.Purchase.dateCASHRESERVEDEXPIRED',
     defaultMessage: 'Time Remaining'
   },
-  dateCashUNPAID: {
-    id: 'app.components.Purchase.dateCashUNPAID',
+  dateCASHUNPAID: {
+    id: 'app.components.Purchase.dateCASHUNPAID',
     defaultMessage: 'Valid Until'
   },
-  dateCashCONFIRMED: {
-    id: 'app.components.Purchase.dateCashCONFIRMED',
+  dateCASHCONFIRMED: {
+    id: 'app.components.Purchase.dateCASHCONFIRMED',
     defaultMessage: 'Date Paid'
   },
-  dateCashINTRANSIT: {
-    id: 'app.components.Purchase.dateCashINTRANSIT',
+  dateCASHINTRANSIT: {
+    id: 'app.components.Purchase.dateCASHINTRANSIT',
     defaultMessage: 'Date Paid'
   },
-  dateCashDELIVERED: {
+  dateCASHDELIVERED: {
     id: 'app.components.Purchase.dateDELIVERED',
     defaultMessage: 'Date Delivered'
   },
-  dateCashCLAIMED: {
-    id: 'app.components.Purchase.dateCashCLAIMED',
+  dateCASHCLAIMED: {
+    id: 'app.components.Purchase.dateCASHCLAIMED',
     defaultMessage: 'Date Claimed'
   },
-  dateCashUNCLAIMED: {
-    id: 'app.components.Purchase.dateCashUNCLAIMED',
+  dateCASHUNCLAIMED: {
+    id: 'app.components.Purchase.dateCASHUNCLAIMED',
     defaultMessage: 'Date Delivered'
   },
-  dateCodRESERVED: {
-    id: 'app.components.Purchase.dateCodRESERVED',
+  dateCODRESERVED: {
+    id: 'app.components.Purchase.dateCODRESERVED',
     defaultMessage: 'Time Remaining'
   },
-  dateCodRESERVEDEXPIRED: {
-    id: 'app.components.Purchase.dateCodRESERVEDEXPIRED',
+  dateCODRESERVEDEXPIRED: {
+    id: 'app.components.Purchase.dateCODRESERVEDEXPIRED',
     defaultMessage: 'Time Remaining'
   },
-  dateCodUNPAID: {
-    id: 'app.components.Purchase.dateCodUNPAID',
+  dateCODUNPAID: {
+    id: 'app.components.Purchase.dateCODUNPAID',
     defaultMessage: 'Valid Until'
   },
-  dateCodPROCESSING: {
-    id: 'app.components.Purchase.dateCodPROCESSING',
+  dateCODPROCESSING: {
+    id: 'app.components.Purchase.dateCODPROCESSING',
     defaultMessage: 'Date Ordered'
   },
-  dateCodCONFIRMED: {
-    id: 'app.components.Purchase.dateCodCONFIRMED',
+  dateCODCONFIRMED: {
+    id: 'app.components.Purchase.dateCODCONFIRMED',
     defaultMessage: 'Date Ordered'
   },
-  dateCodINTRANSIT: {
-    id: 'app.components.Purchase.dateCodINTRANSIT',
+  dateCODINTRANSIT: {
+    id: 'app.components.Purchase.dateCODINTRANSIT',
     defaultMessage: 'Date Ordered'
   },
-  dateCodDELIVERED: {
+  dateCODDELIVERED: {
     id: 'app.components.Purchase.dateDELIVERED',
     defaultMessage: 'Date Delivered'
   },
-  dateCodCLAIMED: {
-    id: 'app.components.Purchase.dateCodCLAIMED',
+  dateCODCLAIMED: {
+    id: 'app.components.Purchase.dateCODCLAIMED',
     defaultMessage: 'Date Claimed'
   },
-  dateCodUNCLAIMED: {
-    id: 'app.components.Purchase.dateCodUNCLAIMED',
+  dateCODUNCLAIMED: {
+    id: 'app.components.Purchase.dateCODUNCLAIMED',
     defaultMessage: 'Date Delivered'
   },
-  dateCashFieldDefault: {
-    id: 'app.components.Purchase.dateCashFieldDefault',
+  dateCASHFieldDefault: {
+    id: 'app.components.Purchase.dateCASHFieldDefault',
     defaultMessage: 'Date'
   },
-  dateCodFieldDefault: {
-    id: 'app.components.Purchase.dateCodFieldDefault',
+  dateCODFieldDefault: {
+    id: 'app.components.Purchase.dateCODFieldDefault',
     defaultMessage: 'Date'
   }
 })

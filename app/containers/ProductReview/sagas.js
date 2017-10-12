@@ -9,6 +9,7 @@ import { takeLatest } from 'redux-saga'
 import request from 'utils/request'
 import { getItem, setItem, removeItem } from 'utils/localStorage'
 import { fnSearchParams } from 'utils/http'
+import { transformSubmitOrderPayload } from 'utils/transforms'
 
 import {
   GET_ORDER_PRODUCT,
@@ -53,20 +54,21 @@ import {
  * // eventually we will use this to transform the data from response of the order.
  * @param {*} body
  */
-function * transformResponse ({ order: { sevenConnectRefNum, transactionId, expiryDate, totalPrice, status }, completeMobile, orderedProduct, modePayment }) {
+function * transformResponse ({ order: { sevenConnectRefNum, transactionId, expiryDate, totalPrice, mobileNumber, paymentType, status }, orderedProduct }) {
   return {
     trackingNumber: transactionId,
     claimExpiry: expiryDate,
     dateCreated: moment().format('YYYY-MM-DD HH:mm:ss'),
     cliqqCode: orderedProduct.get('cliqqCode').first(),
-    currency: modePayment,
+    currency: paymentType,
     amount: totalPrice,
     quantity: 1,
     imageUrl: orderedProduct.get('image'),
     brandLogo: orderedProduct.get('brandLogo'),
     name: orderedProduct.get('title'),
-    mobileNumber: completeMobile,
+    mobileNumber,
     sevenConnectRefNum,
+    paymentType,
     status
   }
 }
@@ -158,24 +160,25 @@ export function * submitOrder (args) {
   const { payload: { orderedProduct, mobileNumber, modePayment, store } } = args
   const completeMobile = `0${mobileNumber}`
   const token = yield getAccessToken()
+  const postPayload = transformSubmitOrderPayload({
+    cliqqCode: orderedProduct.get('cliqqCode').first(),
+    quantity: 1,
+    deviceOrigin: 'PWA',
+    mobileNumber: completeMobile
+  })
 
   try {
     const order = yield call(request, `${API_BASE_URL}/orders`, {
       method: 'POST',
       token: token.access_token,
-      body: JSON.stringify({
-        cliqqCode: orderedProduct.get('cliqqCode').first(),
-        quantity: 1,
-        deviceOrigin: 'PWA',
-        mobileNumber: completeMobile
-      })
+      body: JSON.stringify(postPayload(modePayment))
     })
 
     // right now e have to emulate the response data
     // once response is success we have to pass it back so we can eventually redirect the user to the barcode page.
     if (order) {
       // make our transformer here that should be the same as getting purchase list.
-      const orderResponse = yield transformResponse({ order, orderedProduct, completeMobile, modePayment })
+      const orderResponse = yield transformResponse({ order, orderedProduct })
       // here we have to save it first to our storage.
       yield setOrderList(orderResponse)
       // we have to remove the current product since we already done with it.

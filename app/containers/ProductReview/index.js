@@ -204,7 +204,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     this.props.setHandlersDefault()
   }
 
-  async componentDidMount () {
+  componentDidMount () {
     const { router: { location: { query } }, getOrderProduct, getMobileNumber, getStore } = this.props
 
     const selectQuery = compose(

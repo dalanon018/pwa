@@ -28,7 +28,7 @@ const PhoneFormatter = (str) => ifElse(
     join('-'),
     drop(1),
     match(/^(\d{3})(\d{3})(\d{4})$/),
-    drop(1) // since number format is (0919) we have to remove the 0
+    drop(3) // since number format is (+63999) we have to remove the +63
   ),
   identity
 )(str)
