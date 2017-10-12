@@ -94,7 +94,7 @@ const Product = ({
           <LoadingStateInfo loading={loading} center>
             {
               product.get('temporaryBrand')
-              ? <Label className='no-margin-bottom color__secondary' as='p' basic size='big'>Brand Name</Label>
+              ? <Label className='no-margin-bottom color__secondary' as='p' basic size='big'>{product.get('temporaryBrand')}</Label>
               : null
             }
             <Label as='p' basic size='big'>{product.get('title')}</Label>

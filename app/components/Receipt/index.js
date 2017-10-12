@@ -253,7 +253,11 @@ class Receipt extends React.PureComponent {
             </ReceiptHeader>
             <ReceiptContent id='fadeMe' show={show}>
               <Grid padded className='scan padding__14' centered textAlign='center'>
-                <Label as='span' basic size='huge' className='color__secondary'>Brand Name</Label>
+                {
+                  receipt.getIn(['products', 'temporaryBrand'])
+                  ? <Label as='span' basic size='huge' className='color__secondary'>{receipt.getIn(['products', 'temporaryBrand'])}</Label>
+                  : null
+                }
                 <Label as='p' basic size='huge' className='color__secondary'>{receipt.getIn(['products', 'name'])}</Label>
                 <Label className='product-current-price text__roboto--bold' basic color='orange'>
                   <FormattedMessage {...messages.peso} />

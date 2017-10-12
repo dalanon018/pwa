@@ -313,7 +313,11 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         {brandLogo}
         <ProductItem>
           <Image alt='Cliqq' src={orderedProduct.get('image') ? orderedProduct.get('image') : imageStock('default-slider.jpg')} />
-          <Label as='p' basic size='big' className='color__secondary'>Brand Name</Label>
+          {
+            orderedProduct.get('temporaryBrand')
+            ? <Label as='p' basic size='big' className='color__secondary'>{orderedProduct.get('temporaryBrand')}</Label>
+            : null
+          }
           <Label as='p' basic size='big' className='color__secondary'>{orderedProduct.get('title')}</Label>
         </ProductItem>
         <ListCollapse title={

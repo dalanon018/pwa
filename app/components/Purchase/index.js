@@ -22,7 +22,7 @@ const PurchaseWrapper = styled.div`
   display: flex;
   height: 100%;
   margin: 0 auto;
-  min-height: 100px;
+  min-height: 114px;
 `
 
 const PurchaseInfo = styled.div`
@@ -174,9 +174,11 @@ class Purchase extends React.PureComponent {
           <PurchaseWrapper onClick={this._goToReceipt}>
             <PurchaseInfo>
               <div>
-                <Label as='span' basic size='large' className='color__secondary'>
-                  Brand Name
-                </Label>
+                {
+                  receipt.getIn(['products', 'temporaryBrand'])
+                  ? <Label as='span' basic size='large' className='color__secondary'>{receipt.getIn(['products', 'temporaryBrand'])}</Label>
+                  : null
+                }
                 <Label as='p' basic size='large' className='color__secondary'>
                   {this._productName(receipt.getIn(['products', 'name']))}
                 </Label>
