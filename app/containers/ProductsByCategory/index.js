@@ -9,18 +9,21 @@ import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
-import { noop } from 'lodash'
+import { noop, throttle } from 'lodash'
 import {
   F,
   T,
+  both,
   compose,
   contains,
   curry,
   equals,
+  gte,
+  identity,
   ifElse,
+  lt,
   partial,
-  path,
-  lt
+  path
 } from 'ramda'
 import styled from 'styled-components'
 import { Container } from 'semantic-ui-react'
@@ -28,6 +31,7 @@ import { Container } from 'semantic-ui-react'
 import ProductView from 'components/ProductView'
 import Footer from 'components/Footer'
 import WindowWidth from 'components/WindowWidth'
+import LoadingIndicator from 'components/LoadingIndicator'
 
 import H3 from 'components/H3'
 import H4 from 'components/H4'
@@ -105,6 +109,10 @@ const ContentWrapper = styled(Container)`
   }
 `
 
+const WrapperLoadingIndicator = styled.div`
+  position: relative;
+`
+
 const isTag = curry((tags, id) => contains(id, tags))
 
 export class ProductsByCategory extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -131,7 +139,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   state = {
     pageOffset: 0,
     offset: 0,
-    limit: 12
+    limit: 16 // we need this since we are including the feature items.
   }
 
   _tags = ['featured', 'sale']
@@ -259,6 +267,26 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     return null
   }
 
+  /**
+   * We need to identify if we need to show the lazy load if
+   * items are more than equal to the limit and lazyload === true
+   */
+  _displayLazyLoadIndicator = () => {
+    const { lazyload, productsByCategory } = this.props
+    const { limit } = this.state
+    const itemsGreaterEqLimit = () => gte(productsByCategory.size, limit)
+    const showLoadingIndicator = ifElse(
+      both(identity, itemsGreaterEqLimit),
+      () => (
+        <WrapperLoadingIndicator>
+          <LoadingIndicator />
+        </WrapperLoadingIndicator>
+      ),
+      () => null
+    )
+    return showLoadingIndicator(lazyload)
+  }
+
   _handleFeaturedProductsPerCategory () {
     const { params: { id } } = this.props
     const shouldNotDisplay = (id) => (isTag(this._tags)(id))
@@ -324,7 +352,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this._fetchProductByTagCategory(this.props)
     this._fetchProductFeatured(this.props)
 
-    window.addEventListener('scroll', this._onScrollElement)
+    window.addEventListener('scroll', throttle(this._onScrollElement, 200))
   }
 
   componentWillUnmount () {
@@ -381,6 +409,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
           {this._displayNumberProducts()}
           { this._displayEmpty() }
           <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} windowWidth={windowWidth} />
+
+          { this._displayLazyLoadIndicator() }
 
           { this._displayRecentlyViewedHeader() }
           <ProductView changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />

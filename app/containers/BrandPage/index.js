@@ -11,12 +11,15 @@ import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
 import { noop } from 'lodash'
 import {
+  both,
   compose,
   equals,
+  gte,
+  identity,
   ifElse,
+  lt,
   partial,
-  path,
-  lt
+  path
 } from 'ramda'
 import styled from 'styled-components'
 import { Container } from 'semantic-ui-react'
@@ -27,6 +30,7 @@ import WindowWidth from 'components/WindowWidth'
 import BannerSlider from 'components/BannerSlider'
 import H3 from 'components/H3'
 import EmptyProducts from 'components/EmptyProductsBlock'
+import LoadingIndicator from 'components/LoadingIndicator'
 // import Promo from 'components/Promo'
 
 import {
@@ -60,6 +64,10 @@ import {
 const ContentWrapper = styled(Container)`
   padding-top: 20px;
   padding-bottom: 20px;
+`
+
+const WrapperLoadingIndicator = styled.div`
+  position: relative;
 `
 
 export class BrandPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -189,6 +197,26 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     return displayFeatured(productsFeatured.size)
   }
 
+  /**
+   * We need to identify if we need to show the lazy load if
+   * items are more than equal to the limit and lazyload === true
+   */
+  _displayLazyLoadIndicator = () => {
+    const { lazyload, productsByBrands } = this.props
+    const { limit } = this.state
+    const itemsGreaterEqLimit = () => gte(productsByBrands.size, limit)
+    const showLoadingIndicator = ifElse(
+      both(identity, itemsGreaterEqLimit),
+      () => (
+        <WrapperLoadingIndicator>
+          <LoadingIndicator />
+        </WrapperLoadingIndicator>
+      ),
+      () => null
+    )
+    return showLoadingIndicator(lazyload)
+  }
+
   componentWillMount () {
     // we set this as text so it doesnt look
     this.props.setPageTitle('..')
@@ -260,6 +288,8 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           </H3>
           { this._displayEmpty() }
           <ProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
+
+          { this._displayLazyLoadIndicator() }
         </ContentWrapper>
         <Footer />
       </div>

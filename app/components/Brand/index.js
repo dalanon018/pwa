@@ -23,7 +23,6 @@ const BrandWrapper = styled.div`
 `
 
 function Brand ({ brands }) {
-  console.log(brands.toJS())
   return (
     <Grid padded columns='2'>
       {
