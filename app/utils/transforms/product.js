@@ -6,6 +6,7 @@ import {
   adjust,
   curry,
   compose,
+  filter,
   fromPairs,
   map,
   omit,
@@ -94,9 +95,16 @@ const transformProduct = (data) => {
       propOr({}, 'images')
     )
 
+    const applyImageSliders = (key) => compose(
+      map(prop('imageUrl')),
+      filter(propEq('imageType', key)),
+      propOr({}, 'images')
+    )
+
     return Object.assign({}, data, {
       image: applyImageUrl('PRIMARY')(data),
-      brandLogo: applyImageUrl('BRAND_LOGO')(data)
+      brandLogo: applyImageUrl('BRAND_LOGO')(data),
+      sliders: applyImageSliders('SLIDER')(data)
     })
   }
 
