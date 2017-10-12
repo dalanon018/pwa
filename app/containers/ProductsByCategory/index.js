@@ -9,10 +9,11 @@ import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
-import { noop, throttle } from 'lodash'
+import { noop, debounce } from 'lodash'
 import {
   F,
   T,
+  allPass,
   both,
   compose,
   contains,
@@ -160,16 +161,32 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this._displayNumberProducts = this._displayNumberProducts.bind(this)
     this._displayRecentlyViewedHeader = this._displayRecentlyViewedHeader.bind(this)
     this._displayEmpty = this._displayEmpty.bind(this)
+    this._debounceScrolling = this._debounceScrolling.bind(this)
+
+    /**
+     * we need to define this since our debounce will have issue once we
+     * unmount our component and debounce function was'nt invoke yet.
+     */
+    this._cancellableDebounce = false
   }
 
-  _onScrollElement (evt) {
+  _debounceScrolling = debounce(this._onScrollElement, 200)
+
+  _onScrollElement () {
     const { lazyload } = this.props
     const scrollY = window.pageYOffset || document.documentElement.scrollTop
     const offset = 200
 
-    if (window.innerHeight < (scrollY + offset) && lazyload) {
-      this._displayMoreProducts()
-    }
+    const onBottom = () => lt(window.innerHeight, (scrollY + offset))
+    const notCancellable = () => equals(false, this._cancellableDebounce)
+
+    const displayMoreProducts = ifElse(
+      allPass([onBottom, identity, notCancellable]),
+      this._displayMoreProducts,
+      noop
+    )
+
+    return displayMoreProducts(lazyload)
   }
 
   _isCategoryExist () {
@@ -352,13 +369,18 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this._fetchProductByTagCategory(this.props)
     this._fetchProductFeatured(this.props)
 
-    window.addEventListener('scroll', throttle(this._onScrollElement, 200))
+    window.addEventListener('scroll', this._debounceScrolling)
   }
 
   componentWillUnmount () {
     const { resetProductsByCategory } = this.props
+    /**
+     * once we unmount we will tell our debounce
+     * that they shoud'nt run anymore
+     */
+    this._cancellableDebounce = true
 
-    window.removeEventListener('scroll', this._onScrollElement)
+    window.removeEventListener('scroll', this._debounceScrolling)
 
     resetProductsByCategory()
   }

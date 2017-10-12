@@ -9,8 +9,9 @@ import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
-import { noop } from 'lodash'
+import { noop, debounce } from 'lodash'
 import {
+  allPass,
   both,
   compose,
   equals,
@@ -94,14 +95,35 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     limit: 12
   }
 
-  _onScrollElement = (evt) => {
+  constructor () {
+    super()
+
+    this._debounceScrolling = this._debounceScrolling.bind(this)
+
+    /**
+     * we need to define this since our debounce will have issue once we
+     * unmount our component and debounce function was'nt invoke yet.
+     */
+    this._cancellableDebounce = false
+  }
+
+  _debounceScrolling = debounce(this._onScrollElement, 200)
+
+  _onScrollElement () {
     const { lazyload } = this.props
     const scrollY = window.pageYOffset || document.documentElement.scrollTop
     const offset = 200
 
-    if (window.innerHeight < (scrollY + offset) && lazyload) {
-      this._displayMoreProducts()
-    }
+    const onBottom = () => lt(window.innerHeight, (scrollY + offset))
+    const notCancellable = () => equals(false, this._cancellableDebounce)
+
+    const displayMoreProducts = ifElse(
+      allPass([onBottom, identity, notCancellable]),
+      this._displayMoreProducts,
+      noop
+    )
+
+    return displayMoreProducts(lazyload)
   }
 
   _handlePageTitle = (nextProps) => {
@@ -229,13 +251,19 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     this._fetchProductByBrands(this.props)
     this._fetchProductFeatured(this.props)
 
-    window.addEventListener('scroll', this._onScrollElement)
+    window.addEventListener('scroll', this._debounceScrolling)
   }
 
   componentWillUnmount () {
     const { resetProductsByBrands } = this.props
 
-    window.removeEventListener('scroll', this._onScrollElement)
+    /**
+     * once we unmount we will tell our debounce
+     * that they shoud'nt run anymore
+     */
+    this._cancellableDebounce = true
+
+    window.removeEventListener('scroll', this._debounceScrolling)
 
     resetProductsByBrands()
   }
