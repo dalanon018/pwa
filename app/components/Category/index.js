@@ -48,8 +48,8 @@ function Category ({
               <CategoryBlock
                 onClick={handleRedirect}
                 background={category.get('background') ? category.get('background') : defaultCategoryBackground}>
-                <BackgroundLay />
-                <Label as='span' basic size='massive'>{category.get('name')}</Label>
+                <BackgroundLay className='background__black-transparent' />
+                <Label as='span' basic size='massive' className='color__white'>{category.get('name')}</Label>
               </CategoryBlock>
             </Grid.Column>
           )

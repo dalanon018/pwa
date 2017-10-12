@@ -32,7 +32,7 @@ export default defineMessages({
   },
   careLabel: {
     id: 'app.components.Product.careLabel',
-    defaultMessage: 'Care Label'
+    defaultMessage: 'Additional Details'
   },
   shareItem: {
     id: 'app.components.Product.shareItem',

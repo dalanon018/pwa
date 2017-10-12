@@ -34,7 +34,6 @@ const PurchaseInfo = styled.div`
 `
 
 const PurchaseImage = styled.div`
-  background-color: #F0F0F0;
   min-width: 90px;
   position: relative;
 `
@@ -197,7 +196,7 @@ class Purchase extends React.PureComponent {
                 </div>
               </OtherInfo>
             </PurchaseInfo>
-            <PurchaseImage>
+            <PurchaseImage className='background__light-grey'>
               <Image
                 src={(receipt.getIn(['products', 'image']) &&
                 `${paramsImgix(receipt.getIn(['products', 'image']), imgixOptions)}`) ||

@@ -115,9 +115,9 @@ export class PopupVerification extends React.PureComponent {
     const { value } = this.state
 
     return (
-      <PopupWrapper toggle={toggle}>
+      <PopupWrapper toggle={toggle} className='background__white'>
         <BannerHeader background={BannerBg}>
-          <span>
+          <span className='background__smoke-grey'>
             <Image alt='Cliqq' src={MobileIcon} />
           </span>
         </BannerHeader>

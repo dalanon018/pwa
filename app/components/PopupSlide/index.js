@@ -196,9 +196,9 @@ export class PopupSlide extends React.PureComponent {
 
     return (
       <div>
-        <PopupWrapper toggle={toggle}>
+        <PopupWrapper toggle={toggle} className='background__white'>
           <BannerHeader background={BannerBg}>
-            <span>
+            <span className='background__smoke-grey'>
               <Image alt='Cliqq' src={MobileIcon} />
             </span>
           </BannerHeader>
@@ -251,7 +251,7 @@ export class PopupSlide extends React.PureComponent {
             title='Server Error'
             content='System is under maintenance' />
         </PopupWrapper>
-        <TermsConditionsWrapper toggle={toggleTerms}>
+        <TermsConditionsWrapper toggle={toggleTerms} className='background__white'>
           <div className='document-helper terms-conditions'>
             <Grid padded>
               <H1 className='padding__top--25 padding__none--horizontal color__secondary'>

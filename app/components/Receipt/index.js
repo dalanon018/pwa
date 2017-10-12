@@ -212,8 +212,8 @@ class Receipt extends React.PureComponent {
     return (
       <div>
         <ReceiptWrapper>
-          <ReceiptContainer>
-            <ReceiptHeader>
+          <ReceiptContainer className='background__white'>
+            <ReceiptHeader className='background__light-grey'>
               <Grid>
                 <Grid.Row columns={2}>
                   <Grid.Column floated='left'>
@@ -269,7 +269,7 @@ class Receipt extends React.PureComponent {
               </Grid>
             </ReceiptContent>
             <ScannerWrapper>
-              <Scanner />
+              <Scanner className='background__black' />
             </ScannerWrapper>
           </ReceiptContainer>
         </ReceiptWrapper>
