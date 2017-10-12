@@ -44,7 +44,7 @@ export class Footer extends React.PureComponent {
 
   render () {
     return (
-      <Wrapper>
+      <Wrapper className='border_top__one--light-grey'>
         <Grid>
           <Grid.Row centered>
             <H2 className='custom-header color__secondary' >

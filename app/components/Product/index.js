@@ -84,7 +84,7 @@ const Product = ({
       <ProductWrapper>
 
         {brandLogo}
-        <ProductImageSlider>
+        <ProductImageSlider className='border_bottom__one--light-grey'>
           <ProductSlider
             images={productImages}
             loader={loading}
@@ -104,7 +104,7 @@ const Product = ({
           </LoadingStateInfo>
         </ProductMainContent>
 
-        <SocialContainer>
+        <SocialContainer className='border_bottom__one--light-grey border_top__one--light-grey'>
           <ShareWrapper>
             <p className='share-item ui big basic label color__secondary'><FormattedMessage {...messages.shareItem} /></p>
 
@@ -123,7 +123,7 @@ const Product = ({
         </SocialContainer>
 
         <DetailsWrapper>
-          <ProductDetails>
+          <ProductDetails className='border_bottom__one--light-grey'>
             <Label as='p' basic size='big' className='color__secondary'> <FormattedMessage {...messages.productDetailsTitle} /> </Label>
             <LoadingStateInfo loading={loading} className='color__light-grey' >
               <div className='product-details color__grey' dangerouslySetInnerHTML={{__html: product.get('details')}} />

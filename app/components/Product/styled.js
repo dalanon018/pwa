@@ -20,7 +20,6 @@ export const ProductWrapper = styled(AnimateDiv)`
   }
 `
 export const ProductImageSlider = styled.div`
-  border-bottom: 1px solid #EBEBEB;
 
   img {
     width: 60%;
@@ -79,7 +78,6 @@ export const ProductDetailsContainer = styled(AnimateDiv)`
 `
 
 export const ProductDetails = styled(ProductDetailsContainer)`
-  border-bottom: 1px solid #F0F0F0;
   @media (min-width: 768px) {
     border-bottom: 0;
   }
@@ -100,8 +98,6 @@ export const ButtonContainer = styled(AnimateDiv)`
 export const SocialContainer = styled.div`
   width: 100%;
   display: flex;
-  border-top: 1px solid #F0F0F0;
-  border-bottom: 1px solid #F0F0F0;
   padding: 10px 0;
   text-align: center;
 `

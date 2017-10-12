@@ -32,7 +32,6 @@ const BannerHeader = styled.div`
     align-items: center;
     background-color: ${props => props.iconBg ? props.iconBg : '#AEAEAE'};
     border-radius: 50px;
-    border: 3px solid #FFFFFF;
     bottom: -35px;
     display: flex;
     height: 75px;
