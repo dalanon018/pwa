@@ -18,6 +18,12 @@ import MainLogo from 'images/cliqq-logo.svg'
 const Wrapper = styled.div`
   display: block;
   position: relative;
+
+  .no-padding {
+    @media screen and (max-width: 767px) {
+      padding: 0 !important;
+    }
+  }
 `
 
 const LeftWrapper = styled.div`
@@ -45,6 +51,14 @@ const RightWrapper = styled.div`
 
 const ActiviesIcon = styled.div`
   margin-left: ${props => props.marginLeft ? 0 : 20}px;
+
+
+  @media screen and (max-width: 767px) {
+    margin-left: 10px !important;
+  }
+  @media screen and (max-width: 320px) {
+    margin-left: 4px !important;
+  }
 `
 
 const Hamburger = styled.div`
@@ -148,6 +162,16 @@ export default class MainMenu extends PureComponent {
     windowHeightOffset: 0
   }
 
+  __handleColumnSize = (currentRoute, place) => {
+    const pageSetWidth = {
+      home: {side: 2, middle: 12},
+      termsCondition: {side: 2, middle: 12},
+      productPage: {side: 3, middle: 10}
+    }
+
+    return pageSetWidth[currentRoute] ? pageSetWidth[currentRoute][place] : (place === 'side' ? 4 : 8)
+  }
+
   _handleGotoSearch = () => this.props.changeRoute('/search')
 
   _updateScrollPosition = (e) => {
@@ -203,7 +227,7 @@ export default class MainMenu extends PureComponent {
   render () {
     const { leftButtonAction, hideBackButton, changeRoute, showSearchIcon, showActivityIcon, currentRoute } = this.props
 
-    const homeRoute = currentRoute === 'home'
+    const homeRoute = currentRoute === 'home' || currentRoute === 'termsConditions'
 
     const SearchToggle = toggleComponent(
       <Image alt='Cliqq' src={SearchImage} size='mini' onClick={changeRoute.bind(this, '/search')} />,
@@ -223,7 +247,7 @@ export default class MainMenu extends PureComponent {
           <Grid padded>
             <Grid.Row>
               <Grid.Column
-                width={homeRoute ? 2 : 4}
+                width={this.__handleColumnSize(currentRoute, 'side')}
                 verticalAlign='middle'>
                 <LeftWrapper onClick={leftButtonAction} >
                   <Hamburger>
@@ -233,14 +257,15 @@ export default class MainMenu extends PureComponent {
               </Grid.Column>
               <Grid.Column
                 className={homeRoute ? 'padding__none' : null}
-                width={homeRoute ? 12 : 8}
+                width={this.__handleColumnSize(currentRoute, 'middle')}
                 verticalAlign='middle'>
                 <CenterWrapper>
                   { this._handleUniqueHeader() }
                 </CenterWrapper>
               </Grid.Column>
               <Grid.Column
-                width={homeRoute ? 2 : 4}
+                className='no-padding'
+                width={this.__handleColumnSize(currentRoute, 'side')}
                 verticalAlign='middle'>
                 <RightWrapper>
                   { SearchToggle(showSearchIcon) }
