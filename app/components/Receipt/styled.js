@@ -52,7 +52,6 @@ export const WarningDescription = styled.div`
 `
 
 export const ButtonContainer = styled.div`
-  background: #f58322;
   bottom: 0;
   left: 0;
   position: fixed;
@@ -71,13 +70,11 @@ export const ReceiptWrapper = styled.div`
 
 export const ReceiptContainer = styled.div`
   box-shadow: 0px 0px 10px rgba(174,174,174, 0.8);
-  background-color: #FFFFFF;
 
   margin: 50px 20px 0;
 `
 
 export const ReceiptHeader = styled.div`
-  background-color: #F0F0F0;
   padding: 14px;
 `
 
@@ -108,7 +105,6 @@ export const ReceiptContent = styled.div`
 `
 
 export const Scanner = styled.div`
-  background-color: #000000;
   border: 3px solid #5B5B5B;
   height: 10px;
   width: 100%;

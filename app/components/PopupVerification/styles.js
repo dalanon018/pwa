@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 
 const PopupWrapper = styled.div`
-  background-color: #FFFFFF;;
   bottom: 0;
   height: ${props => props.toggle ? '100vh' : '0'};
   left: 0;
@@ -64,7 +63,6 @@ const BannerHeader = styled.div`
   }
 
   span {
-    background-color: #D7D7D7;
     border-radius: 50px;
     border: 3px solid #FFFFFF;
     bottom: -35px;

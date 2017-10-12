@@ -19,7 +19,6 @@ import Brands from 'images/icons/drawer/brands.svg'
 import Help from 'images/icons/drawer/help.svg'
 
 const SidebarContainer = styled.div`
-  background-color: rgba(0, 0, 0, 0.3);
   height: 100vh;
   left: 0;
   overflow: ${({toggle}) => toggle ? 'auto' : 'hidden'};
@@ -30,7 +29,6 @@ const SidebarContainer = styled.div`
   z-index: 99;
 `
 const SidebarWrapper = styled.div`
-  background-color: #FFFFFF;
   overflow: auto;
   width: 100%;
   min-height: 100%;
@@ -120,8 +118,8 @@ class SidebarMenu extends React.PureComponent {
     } = this.props
 
     return (
-      <SidebarContainer toggle={toggleSidebar}>
-        <SidebarWrapper>
+      <SidebarContainer className='background__black-transparent' toggle={toggleSidebar}>
+        <SidebarWrapper className='background__white'>
           <List divided verticalAlign='middle' selection>
             <ListWrapper onClick={this._handletoHome}>
               <Image alt='home' size='mini' src={Home} />

@@ -170,7 +170,7 @@ const Product = ({
             </CollapseContent>
           </ListCollapse>
 
-          <ButtonContainer>
+          <ButtonContainer className='background__white'>
             <Button
               onClick={popup}
               loading={loading}

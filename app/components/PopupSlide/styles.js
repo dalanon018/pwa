@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 
 const PopupWrapper = styled.div`
-  background-color: #FFFFFF;;
   bottom: 0;
   height: ${props => props.toggle ? '100vh' : '0'};
   left: 0;
@@ -26,9 +25,6 @@ const PopupContainer = styled.div`
 
 const PopupContent = styled.div`
   padding: 15px 35px;
-  @media (min-width: 375px) {
-    padding: 15px 50px;
-  }
 `
 
 const InputWrapper = styled.div`
@@ -68,7 +64,6 @@ const BannerHeader = styled.div`
   }
 
   span {
-    background-color: #D7D7D7;
     border-radius: 50px;
     border: 3px solid #FFFFFF;
     bottom: -35px;
@@ -86,7 +81,6 @@ const BannerHeader = styled.div`
 `
 
 const TermsConditionsWrapper = styled.div`
-  background-color: #FFFFFF;
   bottom: 0;
   height: ${props => props.toggle ? '100vh' : '0'};
   left: 0;
@@ -108,7 +102,6 @@ const TermsConditionsWrapper = styled.div`
 `
 
 const ButtonWrapper = styled.div`
-  background-color: #FFFFFF;
   bottom: 0;
   left: 0;
   position: ${props => props.toggle ? 'fixed' : 'static'};

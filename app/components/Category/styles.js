@@ -10,7 +10,6 @@ export const CategoryBlock = styled.div`
   position: relative;
   
   span {
-    color: #FFFFFF !important;
     position: relative;
   }
 
@@ -20,7 +19,6 @@ export const CategoryBlock = styled.div`
 `
 
 export const BackgroundLay = styled.div`
-  background-color: rgba(0, 0, 0, 0.2);
   height: 100%;
   left: 0;
   position: absolute;

@@ -12,7 +12,6 @@ import {
 import messages from './messages'
 
 const Wrapper = styled.div`
-  background: #F0F0F0;
   box-shadow: 1px 1px 20px #F0F0F0;
   height: 49px;
   left: 0;
@@ -60,7 +59,6 @@ const HamburgerSpan = styled.span`
   left: 2px;
   right: 2px;
   height: 2px;
-  background: #5B5B5B;
   transition: transform 0.3s;
   transform: ${({active}) => active ? 'rotate(180deg)' : 'none'};
 
@@ -184,13 +182,13 @@ class SearchMenu extends PureComponent {
     const { leftButtonAction, hideBackButton, intl } = this.props
     const { dirty } = this.state
     return (
-      <Wrapper>
+      <Wrapper classname='background__light-grey'>
         <Grid>
           <Grid.Row>
             <Grid.Column className='padding__right--none' verticalAlign='middle' width={2}>
               <LeftWrapper onClick={leftButtonAction} >
                 <Hamburger>
-                  <HamburgerSpan active={!hideBackButton}>toggle menu</HamburgerSpan>
+                  <HamburgerSpan className='background__secondary' active={!hideBackButton}>toggle menu</HamburgerSpan>
                 </Hamburger>
               </LeftWrapper>
             </Grid.Column>

@@ -13,6 +13,9 @@
 @darkGrey: #5B5B5B;
 @white: #FFFFFF;
 @lightGrey: #F0F0F0;
+@smokeGrey: #D7D7D7;
+@black: #000000;
+@blackTransparent: rgba(0,0,0,0.2);
 
 /*******************************
         Element Overrides
@@ -130,22 +133,31 @@ input.input-field {
 
 .background {
   &__primary {
-    color: @primaryColor !important;
+    background-color: @primaryColor !important;
   }
   &__secondary {
-    color: @darkGrey !important;
+    background-color: @darkGrey !important;
   }
   &__grey {
-    color: @grey !important;
+    background-color: @grey !important;
   }
   &__light-grey {
-    color: @lightGrey !important;
+    background-color: @lightGrey !important;
+  }
+  &__smoke-grey {
+    background-color: @smokeGrey !important;
   }
   &__white {
-    color: @white !important;
+    background-color: @white !important;
   }
   &__orange {
-    color: @orange !important;
+    background-color: @orange !important;
+  }
+  &__black {
+    background-color: @black !important;
+  }
+  &__black-transparent {
+    background-color: @blackTransparent !important;
   }
 }
 

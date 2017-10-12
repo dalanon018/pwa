@@ -86,7 +86,6 @@ export const ProductDetails = styled(ProductDetailsContainer)`
 `
 
 export const ButtonContainer = styled(AnimateDiv)`
-  background-color: #FFFFFF;
   bottom: 0;
   left: 0;
   position: fixed;

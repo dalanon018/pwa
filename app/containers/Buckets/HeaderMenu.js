@@ -76,7 +76,6 @@ const HamburgerSpan = styled.span`
   left: 2px;
   right: 2px;
   height: 2px;
-  background: #5B5B5B;
   transition: transform 0.3s;
   transform: ${({active}) => active ? 'rotate(180deg)' : 'none'};
 
@@ -106,7 +105,6 @@ const HamburgerSpan = styled.span`
 `
 
 const MobileMenu = styled.div`
-  background: #FFF;
   box-shadow: 1px 1px 20px #F0F0F0;
   padding-right: 10px;
   padding-left: 10px;
@@ -220,7 +218,7 @@ export default class MainMenu extends PureComponent {
 
     return (
       <Wrapper>
-        <MobileMenu className='header-wrapper'>
+        <MobileMenu className='header-wrapper background__white'>
           <Grid padded>
             <Grid.Row>
               <Grid.Column
@@ -228,7 +226,7 @@ export default class MainMenu extends PureComponent {
                 verticalAlign='middle'>
                 <LeftWrapper onClick={leftButtonAction} >
                   <Hamburger>
-                    <HamburgerSpan active={!hideBackButton}>toggle menu</HamburgerSpan>
+                    <HamburgerSpan className='background__secondary' active={!hideBackButton}>toggle menu</HamburgerSpan>
                   </Hamburger>
                 </LeftWrapper>
               </Grid.Column>
