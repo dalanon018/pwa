@@ -44,7 +44,6 @@ const Hamburger = styled.div`
   appearance: none;
   box-shadow: none;
   border-radius: none;
-  border: none;
   cursor: pointer;
   transition: background 0.3s;
 
@@ -98,7 +97,6 @@ const SearchContainer = styled.div`
 `
 
 const SearchInput = styled(Input)`
-  border: 0;
   font-size: 18px;
   letter-spacing: 1px;
   margin: 0 5px;
@@ -188,7 +186,7 @@ class SearchMenu extends PureComponent {
           <Grid.Row>
             <Grid.Column className='padding__right--none' verticalAlign='middle' width={2}>
               <LeftWrapper onClick={leftButtonAction} >
-                <Hamburger>
+                <Hamburger className='border__none'>
                   <HamburgerSpan className='background__secondary' active={!hideBackButton}>toggle menu</HamburgerSpan>
                 </Hamburger>
               </LeftWrapper>
@@ -197,7 +195,7 @@ class SearchMenu extends PureComponent {
               <SearchContainer>
                 {/* <Icon name='search' color='black' size='large' onClick={this._handlePressSearch} /> */}
                 <SearchInput
-                  className='color__secondary'
+                  className='color__secondary border__none'
                   icon='search'
                   ref={this._inputReference}
                   onChange={this._handleOnchange}

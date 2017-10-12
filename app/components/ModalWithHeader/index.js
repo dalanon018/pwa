@@ -209,7 +209,7 @@ class ModalWithHeader extends React.PureComponent {
           <BannerHeader
             background={ModalImages({ status: currentStatus }).banner}
             iconBg={ModalImages({ status: currentStatus }).iconBg} >
-            <span>
+            <span className='border__three-white'>
               <Image alt='Cliqq' src={ModalImages({ status: currentStatus }).icon} />
             </span>
           </BannerHeader>

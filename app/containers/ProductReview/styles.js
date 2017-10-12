@@ -84,8 +84,6 @@ const ProductItem = styled.div`
   }
 `
 const StepWrapper = styled.div`
-  border-bottom: 1px solid #F0F0F0;
-  border-top: 1px solid #F0F0F0;
   margin-bottom: 90px;
   padding: 10px 14px;
 
@@ -286,7 +284,6 @@ const LabelPrice = styled.div`
 const LocationButton = styled(({iconBg, ...props}) => <Button {...props} />)`
   background: transparent !important;
   border-radius: 5px !important;
-  border: 2px solid #F0F0F0 !important;
   font-family: 'Cabin' !important;
   letter-spacing: 2px;
   padding: 20px 10px !important;

@@ -64,7 +64,6 @@ const BannerHeader = styled.div`
 
   span {
     border-radius: 50px;
-    border: 3px solid #FFFFFF;
     bottom: -35px;
     display: flex;
     height: 75px;

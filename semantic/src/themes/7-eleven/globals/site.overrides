@@ -93,7 +93,6 @@ p {
 
 input.input-field {
   background: transparent;
-  border-bottom: 3px solid #8DC640;
   border-left: 0;
   border-radius: 0;
   border-right: 0;
@@ -130,6 +129,40 @@ input.input-field {
     }
   }
 }
+
+.border {
+  &__one-primary {
+    border: 1px solid @primaryColor !important;
+  }
+  &__two-primary {
+    border: 2px solid @primaryColor !important;
+  }
+  &__three-white {
+    border: 3px solid @white !important;
+  }
+  &__two--light-grey {
+    border: 2px solid @lightGrey !important;
+  }
+  &__none {
+    border: 0;
+  }
+}
+
+.border_bottom {
+  &__one--light-grey {
+    border-bottom: 1px solid @lightGrey !important;
+  }
+  &__three--primary {
+    border-bottom: 3px solid @primaryColor !important;
+  }
+}
+
+.border_top {
+  &__one--light-grey {
+    border-top: 1px solid @lightGrey !important;
+  }
+}
+
 
 .background {
   &__primary {

@@ -368,14 +368,14 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             </SelectMethodWrapper>
           </Grid.Row>
         </Grid>
-        <StepWrapper className='visibility' visibility={visibility}>
+        <StepWrapper className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={visibility}>
           <Label as='p' basic size='large' className='color__secondary'>
             <FormattedMessage {...messages.chooseStore} />
           </Label>
           <StepHead step='2'>
             <p className='color__grey'><FormattedMessage {...messages.defaultStore} /></p>
           </StepHead>
-          <LocationButton className='color__secondary' onClick={this._handleStoreLocator} fluid iconBg={NextIcon}>
+          <LocationButton className='color__secondary border__two--light-grey' onClick={this._handleStoreLocator} fluid iconBg={NextIcon}>
             {
               store && isEmpty(store)
               ? <FormattedMessage {...messages.findStore} />
