@@ -21,6 +21,22 @@ const ImageWrapper = styled.div`
 
 const ProductInfo = styled.div`
   display: block;
+
+  .brand-name {
+    display: block;
+    height: ${props => props.brandName ? 'auto' : '16px'};
+  }
+
+  .product-name {
+    min-height: 30px;
+    padding: 0 5px !important;
+  }
+
+  @media (min-width: 767px) {
+    .product-name {
+      min-height: auto;
+    }
+  }
 `
 
 const ProductPriceWrapper = styled.div`

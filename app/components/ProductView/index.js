@@ -45,13 +45,10 @@ function ProductView ({
   }
 
   const productName = (data) => {
-    let maxChar = 40
+    let maxChar = 33
     switch (true) {
-      case (windowWidth >= 768 && windowWidth < 897):
-        maxChar = 26
-        break
-      case (windowWidth >= 897 && windowWidth < 1192):
-        maxChar = 37
+      case (windowWidth >= 767):
+        maxChar = 100
         break
     }
 
@@ -77,12 +74,10 @@ function ProductView ({
         loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
         : products.valueSeq().map((product, index) => {
           const goToProduct = () => changeRoute(`/product/${product.get('cliqqCode').first()}`)
-
           const toggleDiscountLabel = showDiscountPrice(
             <FormattedMessage {...messages.peso} />,
             null
           )
-
           const toggleDiscountValue = showDiscountPrice(
             parseFloat(product.get('price')).toLocaleString(),
             null
@@ -96,10 +91,9 @@ function ProductView ({
                 <ImageWrapper>
                   <Image alt={productName(product.get('title'))} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || defaultImage} />
                 </ImageWrapper>
-                <ProductInfo>
-                  <Label as='span' className='product-name color__secondary' basic size='medium'>Brand Name</Label>
-                  {/* <Label as='p' basic size='small'>{productName(product.get('title'))}</Label> */}
-                  <Label className='no-bottom-margin color__secondary' as='p' basic size='tiny'>All Day Backpack | Blue</Label>
+                <ProductInfo brandName={product.get('temporaryBrand')}>
+                  <Label as='span' className='brand-name color__secondary' basic size='medium'>{product.get('temporaryBrand')}</Label>
+                  <Label className='no-bottom-margin product-name color__secondary' as='p' basic size='tiny'>{productName(product.get('title'))}</Label>
                   <ProductPriceWrapper>
                     <Label className='product-price' as='b' color='orange' basic size='massive'>
                       <FormattedMessage {...messages.peso} />
