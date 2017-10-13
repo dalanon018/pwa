@@ -3,6 +3,8 @@ import { fromJS } from 'immutable'
 import {
   selectProductCategories,
   selectBrands,
+  selectFeaturedCategories,
+  selectFeaturedBrands,
   selectToggle,
   selectMobileNumbers,
   selectReceiptsUpdated,
@@ -39,6 +41,34 @@ describe('Buckets Selectors', () => {
         }
       })
       expect(selectBrandsSelectors(mockedState)).toEqual(brands)
+    })
+  })
+
+  describe('selectFeaturedCategories', () => {
+    const selectFeaturedCategoriesSelectors = selectFeaturedCategories()
+
+    it('should get brands', () => {
+      const categories = fromJS([{ isFeatured: true, name: 1 }])
+      const mockedState = fromJS({
+        buckets: {
+          categories
+        }
+      })
+      expect(selectFeaturedCategoriesSelectors(mockedState)).toEqual(categories)
+    })
+  })
+
+  describe('selectFeaturedBrands', () => {
+    const selectFeaturedBrandsSelectors = selectFeaturedBrands()
+
+    it('should get brands', () => {
+      const brands = fromJS([{ isFeatured: true, name: 1 }])
+      const mockedState = fromJS({
+        buckets: {
+          brands
+        }
+      })
+      expect(selectFeaturedBrandsSelectors(mockedState)).toEqual(brands)
     })
   })
 

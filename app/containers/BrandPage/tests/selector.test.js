@@ -1,7 +1,6 @@
 import { fromJS } from 'immutable'
 import {
   selectProductsByBrands,
-  selectFeaturedProducts,
   selectProductsByBrandsItems,
   selectProductsByBrandsFeatured,
   selectLazyload
@@ -61,20 +60,6 @@ describe('productsByBrandsDomain', () => {
         }
       })
       expect(selector(mockedState)).toEqual(lazyload)
-    })
-  })
-
-  describe('selectFeaturedProducts', () => {
-    const selector = selectFeaturedProducts()
-
-    it('should get productsFeatured', () => {
-      const productsFeatured = fromJS([1, 2, 3])
-      const mockedState = fromJS({
-        brandPage: {
-          productsFeatured
-        }
-      })
-      expect(selector(mockedState)).toEqual(productsFeatured)
     })
   })
 })

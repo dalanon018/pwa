@@ -5,7 +5,6 @@ import {
   selectProductsByCategoryFeatured,
   selectProductsViewed,
   selectLazyload,
-  selectFeaturedProducts,
   selectTotalCount
 } from '../selectors'
 
@@ -77,20 +76,6 @@ describe('makeSelectProductsByCategoryDomain', () => {
         }
       })
       expect(selector(mockedState)).toEqual(lazyload)
-    })
-  })
-
-  describe('selectFeaturedProducts', () => {
-    const selector = selectFeaturedProducts()
-
-    it('should get productsFeatured', () => {
-      const productsFeatured = fromJS([1, 2, 3])
-      const mockedState = fromJS({
-        productsByCategory: {
-          productsFeatured
-        }
-      })
-      expect(selector(mockedState)).toEqual(productsFeatured)
     })
   })
 

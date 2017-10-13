@@ -11,6 +11,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
 import { fromJS } from 'immutable'
+import { ifElse, identity } from 'ramda'
 
 import { imageStock, paramsImgix } from 'utils/image-stock'
 
@@ -37,9 +38,8 @@ import {
 } from 'containers/Buckets/actions'
 
 import {
-  selectProductCategories,
-  selectBrands
-  // selectLoader
+  selectFeaturedCategories,
+  selectFeaturedBrands
 } from 'containers/Buckets/selectors'
 
 import {
@@ -61,7 +61,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       PropTypes.array,
       PropTypes.object
     ]).isRequired,
-    productCategories: PropTypes.oneOfType([
+    featuredCategories: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.object
     ]).isRequired,
@@ -104,6 +104,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     return null
   }
 
+  _shouldDisplayHeader = (component) => ifElse(
+      identity,
+      () => component,
+      () => null
+    )
+
   componentWillMount () {
     this.props.setPageTitle(null)
     this.props.setShowSearchIcon(false)
@@ -125,7 +131,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render () {
-    const { loader, productCategories, featuredBrands, changeRoute, windowWidth, intl } = this.props
+    const { loader, featuredCategories, featuredBrands, changeRoute, windowWidth, intl } = this.props
     const { products } = this.state
     const bannerImages = [
       paramsImgix(imageStock('sample_banner.jpg'), {
@@ -189,9 +195,14 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             products={products}
             windowWidth={windowWidth} />
           { this._displayViewAll() }
-          <H3>
-            <FormattedMessage {...messages.browseCategory} />
-          </H3>
+
+          {
+            this._shouldDisplayHeader(
+              <H3>
+                <FormattedMessage {...messages.browseCategory} />
+              </H3>
+            )(featuredCategories.size > 0)
+          }
           <Category
             loader={loader}
             windowWidth={windowWidth}
@@ -201,10 +212,15 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             iconWidth='25'
             fontSize='9'
             height='80'
-            categories={productCategories} />
-          <H3>
-            <FormattedMessage {...messages.browseBrands} />
-          </H3>
+            categories={featuredCategories} />
+
+          {
+            this._shouldDisplayHeader(
+              <H3>
+                <FormattedMessage {...messages.browseBrands} />
+              </H3>
+            )(featuredBrands.size > 0)
+          }
           <Brand brands={featuredBrands} />
         </Container>
         <Footer />
@@ -216,9 +232,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 const mapStateToProps = createStructuredSelector({
   loader: selectLoading(),
   featuredProducts: selectFeaturedProducts(),
-  productCategories: selectProductCategories(),
-  featuredBrands: selectBrands()
-  // categoryLoader: selectLoader()
+  featuredCategories: selectFeaturedCategories(),
+  featuredBrands: selectFeaturedBrands()
 })
 
 function mapDispatchToProps (dispatch) {

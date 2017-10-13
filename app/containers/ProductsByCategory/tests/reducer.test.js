@@ -3,7 +3,6 @@ import productsByCategoryReducer from '../reducer'
 
 import {
   setProductsByCategoryAction,
-  setFeaturedProductsAction,
   setProductsCountsAction
 } from '../actions'
 
@@ -12,7 +11,6 @@ describe('productsByCategoryReducer', () => {
   beforeEach(() => {
     state = fromJS({
       productsByCategory: [],
-      productsFeatured: [],
       productsViewed: [],
       totalCount: 0,
       loading: false,
@@ -34,13 +32,6 @@ describe('productsByCategoryReducer', () => {
                             .set('lazyload', true)
 
     expect(productsByCategoryReducer(state, setProductsByCategoryAction(payload))).toEqual(expectedResult)
-  })
-
-  it('should update productsFeatured', () => {
-    const payload = ['cat1', 'cat2']
-    const expectedResult = state
-                            .set('productsFeatured', fromJS(payload))
-    expect(productsByCategoryReducer(state, setFeaturedProductsAction(payload))).toEqual(expectedResult)
   })
 
   it('should update totalCount', () => {

@@ -48,7 +48,6 @@ import {
 import messages from './messages'
 
 import {
-  getFeaturedProductsAction,
   getProductsByBrandsAction,
   resetProductsByBrandsAction
 } from './actions'
@@ -56,8 +55,6 @@ import {
 import {
   selectLazyload,
   selectLoading,
-  // selectProductsByBrands,
-  // selectFeaturedProducts,
   selectProductsByBrandsItems,
   selectProductsByBrandsFeatured
 } from './selectors'
@@ -76,7 +73,6 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     changeRoute: PropTypes.func.isRequired,
     getProductsByBrands: PropTypes.func.isRequired,
     resetProductsByBrands: PropTypes.func.isRequired,
-    getProductFeatured: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
@@ -189,17 +185,6 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     getProductsByBrands({ offset, limit, id })
   }
 
-  /**
-   * Here we will request for our data base on change of route. FEATURED
-   * @param {*w} props
-   */
-  _fetchProductFeatured = (props) => {
-    const { getProductFeatured, params: { id } } = props
-
-    // since this data is change and we know exactly
-    getProductFeatured(id)
-  }
-
   _displayFeaturedProducts = () => {
     const { productsFeatured, loader, changeRoute, windowWidth } = this.props
 
@@ -249,7 +234,6 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   componentDidMount () {
     // initial data
     this._fetchProductByBrands(this.props)
-    this._fetchProductFeatured(this.props)
 
     window.addEventListener('scroll', this._debounceScrolling)
   }
@@ -282,12 +266,6 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
       this._resetValuesAndFetch
     )
 
-    const updateFeaturedProducts = ifElse(
-      partial(isParamsEqual, [params.id]),
-      noop,
-      this._fetchProductFeatured
-    )
-
     const updatePageTitle = ifElse(
       compose(lt(0), path(['brands', 'size'])),
       compose(
@@ -298,7 +276,6 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     )
 
     updateFetchProduct(nextProps)
-    updateFeaturedProducts(nextProps)
     updatePageTitle(nextProps)
   }
 
@@ -340,7 +317,6 @@ function mapDispatchToProps (dispatch) {
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProductsByBrands: payload => dispatch(getProductsByBrandsAction(payload)),
-    getProductFeatured: payload => dispatch(getFeaturedProductsAction(payload)),
     resetProductsByBrands: () => dispatch(resetProductsByBrandsAction()),
     changeRoute: (url) => dispatch(push(url)),
     dispatch

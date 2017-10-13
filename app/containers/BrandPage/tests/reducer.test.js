@@ -2,8 +2,7 @@ import { fromJS } from 'immutable'
 import productsByBrandsReducer from '../reducer'
 
 import {
-  setProductsByBrandsAction,
-  setFeaturedProductsAction
+  setProductsByBrandsAction
 } from '../actions'
 
 describe('productsByBrandsReducer', () => {
@@ -11,7 +10,6 @@ describe('productsByBrandsReducer', () => {
   beforeEach(() => {
     state = fromJS({
       productsByBrands: [],
-      productsFeatured: [],
       loading: false,
       lazyload: false
     })
@@ -31,12 +29,5 @@ describe('productsByBrandsReducer', () => {
                             .set('lazyload', true)
 
     expect(productsByBrandsReducer(state, setProductsByBrandsAction(payload))).toEqual(expectedResult)
-  })
-
-  it('should update productsFeatured', () => {
-    const payload = ['brand1', 'brand2']
-    const expectedResult = state
-                            .set('productsFeatured', fromJS(payload))
-    expect(productsByBrandsReducer(state, setFeaturedProductsAction(payload))).toEqual(expectedResult)
   })
 })

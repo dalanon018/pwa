@@ -25,7 +25,7 @@ const selectProductsByCategoryItems = () => createSelector(
 
 const selectProductsByCategoryFeatured = () => createSelector(
   selectProductsByCategory(),
-  (substate) => substate.filter((state) => state.get('isFeatured'))
+  (substate) => substate.filter((state) => state.get('isFeatured')).slice(0, 4)
 )
 
 const selectProductsViewed = () => createSelector(

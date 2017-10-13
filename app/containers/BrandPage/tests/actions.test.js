@@ -2,19 +2,13 @@
 import {
   getProductsByBrandsAction,
   setProductsByBrandsAction,
-  resetProductsByBrandsAction,
-
-  getFeaturedProductsAction,
-  setFeaturedProductsAction
+  resetProductsByBrandsAction
 } from '../actions'
 
 import {
   GET_PRODUCTS_BRANDS,
   SET_PRODUCTS_BRANDS,
-  RESET_PRODUCTS_BRANDS,
-
-  GET_FEATURED_PRODUCTS,
-  SET_FEATURED_PRODUCTS
+  RESET_PRODUCTS_BRANDS
 } from '../constants'
 
 describe('Brands actions', () => {
@@ -44,24 +38,6 @@ describe('Brands actions', () => {
         payload
       }
       expect(resetProductsByBrandsAction(payload)).toEqual(expected)
-    })
-  })
-
-  describe('Products get Features', () => {
-    it('has a type of GET_FEATURED_PRODUCTS', () => {
-      const expected = {
-        type: GET_FEATURED_PRODUCTS
-      }
-      expect(getFeaturedProductsAction()).toEqual(expected)
-    })
-
-    it('has a type of SET_FEATURED_PRODUCTS', () => {
-      const payload = [ 1, 2, 3 ]
-      const expected = {
-        type: SET_FEATURED_PRODUCTS,
-        payload
-      }
-      expect(setFeaturedProductsAction(payload)).toEqual(expected)
     })
   })
 })

@@ -38,6 +38,10 @@ const Schema = {
     name: 'images',
     type: ARRAY
   },
+  brand: {
+    name: 'brand',
+    type: OBJECT
+  },
   brandLogo: {
     name: 'brandLogo',
     type: STRING
@@ -77,6 +81,10 @@ const Schema = {
   isFeatured: {
     name: 'isFeatured',
     type: BOOLEAN
+  },
+  additionalDetails: {
+    name: 'additionalDetails',
+    type: STRING
   }
 }
 

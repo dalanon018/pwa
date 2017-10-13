@@ -55,7 +55,6 @@ import {
 import messages from './messages'
 
 import {
-  getFeaturedProductsAction,
   getProductsByCategoryAction,
   getProductsByTagsAction,
   getProductsViewedAction,
@@ -65,8 +64,6 @@ import {
 import {
   selectLazyload,
   selectLoading,
-  // selectProductsByCategory,
-  // selectFeaturedProducts,
   selectProductsByCategoryItems,
   selectProductsByCategoryFeatured,
   selectProductsViewed,
@@ -123,7 +120,6 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     getProductCategories: PropTypes.func.isRequired,
     getProductsViewed: PropTypes.func.isRequired,
     resetProductsByCategory: PropTypes.func.isRequired,
-    getProductFeatured: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
@@ -151,7 +147,6 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this._handlePageTitle = this._handlePageTitle.bind(this)
     this._isCategoryExist = this._isCategoryExist.bind(this)
     this._fetchProductByTagCategory = this._fetchProductByTagCategory.bind(this)
-    this._fetchProductFeatured = this._fetchProductFeatured.bind(this)
     this._displayMoreProducts = this._displayMoreProducts.bind(this)
     this._onScrollElement = this._onScrollElement.bind(this)
     this._resetValuesAndFetch = this._resetValuesAndFetch.bind(this)
@@ -332,17 +327,6 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     executeFetchData(id)
   }
 
-  /**
-   * Here we will request for our data base on change of route. FEATURED
-   * @param {*w} props
-   */
-  _fetchProductFeatured (props) {
-    const { getProductFeatured, params: { id } } = props
-
-    // since this data is change and we know exactly
-    getProductFeatured(id)
-  }
-
   _resetValuesAndFetch (props) {
     const { resetProductsByCategory } = props
 
@@ -367,7 +351,6 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     getProductsViewed()
 
     this._fetchProductByTagCategory(this.props)
-    this._fetchProductFeatured(this.props)
 
     window.addEventListener('scroll', this._debounceScrolling)
   }
@@ -399,12 +382,6 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
       this._resetValuesAndFetch
     )
 
-    const updateFeaturedProducts = ifElse(
-      partial(isParamsEqual, [params.id]),
-      noop,
-      this._fetchProductFeatured
-    )
-
     const updatePageTitle = ifElse(
       compose(lt(0), path(['categories', 'size'])),
       compose(
@@ -415,7 +392,6 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     )
 
     updateFetchProduct(nextProps)
-    updateFeaturedProducts(nextProps)
     updatePageTitle(nextProps)
   }
 
@@ -464,7 +440,6 @@ function mapDispatchToProps (dispatch) {
     getProductsByCategory: payload => dispatch(getProductsByCategoryAction(payload)),
     getProductsByTags: payload => dispatch(getProductsByTagsAction(payload)),
     getProductsViewed: () => dispatch(getProductsViewedAction()),
-    getProductFeatured: payload => dispatch(getFeaturedProductsAction(payload)),
     resetProductsByCategory: () => dispatch(resetProductsByCategoryAction()),
     changeRoute: (url) => dispatch(push(url)),
     dispatch

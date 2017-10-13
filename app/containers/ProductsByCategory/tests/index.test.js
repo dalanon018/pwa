@@ -11,7 +11,6 @@ describe('<ProductsByCategory />', () => {
     getProductCategories: () => {},
     getProductsViewed: () => {},
     resetProductsByCategory: () => {},
-    getProductFeatured: () => {},
     setPageTitle: () => {},
     setShowSearchIcon: () => {},
     setShowActivityIcon: () => {},

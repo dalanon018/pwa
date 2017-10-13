@@ -4,9 +4,6 @@ import {
   setProductsByCategoryAction,
   resetProductsByCategoryAction,
 
-  getFeaturedProductsAction,
-  setFeaturedProductsAction,
-
   getProductsByTagsAction,
 
   getProductsViewedAction,
@@ -19,9 +16,6 @@ import {
   GET_PRODUCTS_CATEGORY,
   SET_PRODUCTS_CATEGORY,
   RESET_PRODUCTS_CATEGORY,
-
-  GET_FEATURED_PRODUCTS,
-  SET_FEATURED_PRODUCTS,
 
   GET_TAGS_PRODUCTS,
 
@@ -87,24 +81,6 @@ describe('ProductsByCategory actions', () => {
         payload
       }
       expect(setProductsViewedAction(payload)).toEqual(expected)
-    })
-  })
-
-  describe('Products get Features', () => {
-    it('has a type of GET_FEATURED_PRODUCTS', () => {
-      const expected = {
-        type: GET_FEATURED_PRODUCTS
-      }
-      expect(getFeaturedProductsAction()).toEqual(expected)
-    })
-
-    it('has a type of SET_FEATURED_PRODUCTS', () => {
-      const payload = [ 1, 2, 3 ]
-      const expected = {
-        type: SET_FEATURED_PRODUCTS,
-        payload
-      }
-      expect(setFeaturedProductsAction(payload)).toEqual(expected)
     })
   })
 
