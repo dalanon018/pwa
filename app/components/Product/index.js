@@ -164,15 +164,19 @@ const Product = ({
               }
 
           </ListCollapse>
-          <ListCollapse title={
-            <Label as='p' className='margin__none' size='large' >
-              <FormattedMessage {...messages.careLabel} />
-            </Label>
-          }>
-            <CollapseContent>
-              <Label as='p' color='grey' basic size='medium'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam eos repudiandae inventore debitis iusto ea esse eligendi voluptatum distinctio assumenda quam aliquid, unde ullam odit tenetur cum, explicabo quisquam a!</Label>
-            </CollapseContent>
-          </ListCollapse>
+          {
+            product.get('additionalDetails')
+            ? <ListCollapse title={
+              <Label as='p' className='margin__none' size='large' >
+                <FormattedMessage {...messages.additionalInfo} />
+              </Label>
+            }>
+              <CollapseContent>
+                <Label as='p' color='grey' basic size='medium'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam eos repudiandae inventore debitis iusto ea esse eligendi voluptatum distinctio assumenda quam aliquid, unde ullam odit tenetur cum, explicabo quisquam a!</Label>
+              </CollapseContent>
+            </ListCollapse>
+            : ''
+          }
 
           <ButtonContainer className='background__white'>
             <Button
