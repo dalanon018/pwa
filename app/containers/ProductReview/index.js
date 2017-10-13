@@ -268,7 +268,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   render () {
-    const { orderedProduct, orderRequesting } = this.props
+    const { orderedProduct, orderRequesting, changeRoute } = this.props
     const { errorMessage, modePayment, modalToggle, visibility, store } = this.state
     const toggleDiscount = this._showDiscountPrice(
       <span className='strike color__grey'>
@@ -306,7 +306,12 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         { toggleDiscount(orderedProduct.get('discountPrice') !== 0) }
       </LabelPrice>
     </label>
-    const brandLogo = orderedProduct.get('brandLogo') ? (<Image className='brand-logo' alt='Cliqq' src={orderedProduct.get('brandLogo')} />) : ''
+    const brandLogo = orderedProduct.get('brandLogo') ? (
+      <Image
+        className='brand-logo'
+        alt='Cliqq'
+        src={orderedProduct.get('brandLogo')}
+        onClick={changeRoute.bind(this, `/brands/${orderedProduct.getIn(['brand', 'code'])}`)} />) : ''
 
     return (
       <ProductReviewWrapper>
@@ -314,8 +319,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         <ProductItem>
           <Image alt='Cliqq' src={orderedProduct.get('image') ? orderedProduct.get('image') : imageStock('default-slider.jpg')} />
           {
-            orderedProduct.get('temporaryBrand')
-            ? <Label as='p' basic size='big' className='color__secondary'>{orderedProduct.get('temporaryBrand')}</Label>
+            orderedProduct.get('brand')
+            ? <Label as='p' basic size='big' className='color__secondary'>{orderedProduct.getIn(['brand', 'name'])}</Label>
             : null
           }
           <Label as='p' basic size='big' className='color__secondary'>{orderedProduct.get('title')}</Label>

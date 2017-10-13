@@ -91,8 +91,8 @@ function ProductView ({
                 <ImageWrapper>
                   <Image alt={productName(product.get('title'))} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || defaultImage} />
                 </ImageWrapper>
-                <ProductInfo brandName={product.get('temporaryBrand')}>
-                  <Label as='span' className='brand-name color__secondary' basic size='medium'>{product.get('temporaryBrand')}</Label>
+                <ProductInfo brandName={product.get('brand')}>
+                  <Label as='span' className='brand-name color__secondary' basic size='medium'>{product.getIn(['brand', 'name'])}</Label>
                   <Label className='no-bottom-margin product-name color__secondary' as='p' basic size='tiny'>{productName(product.get('title'))}</Label>
                   <ProductPriceWrapper>
                     <Label className='product-price' as='b' color='orange' basic size='massive'>

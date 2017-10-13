@@ -228,7 +228,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   render () {
-    const { loading, product, toggle, route, windowWidth, markdown, loader } = this.props
+    const { loading, product, toggle, route, windowWidth, markdown, loader, changeRoute } = this.props
     const { modalToggle, prevMobileNumber, showVerification } = this.state
     const productPageTrigger = route && route
     return (
@@ -247,6 +247,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             toggle={this.state.socialToggle}
             toggleClick={this._handleSocialToggle}
             productPageTrigger={productPageTrigger}
+            changeRoute={changeRoute}
           />
         </div>
         <div onTouchMove={this._handleTouch}>
