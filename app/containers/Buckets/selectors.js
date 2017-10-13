@@ -23,6 +23,16 @@ const selectBrands = () => createSelector(
   (substate) => substate.get('brands')
 )
 
+const selectFeaturedCategories = () => createSelector(
+  selectProductCategories(),
+  (substate) => substate.filter((state) => state.get('isFeatured')).slice(0, 4)
+)
+
+const selectFeaturedBrands = () => createSelector(
+  selectBrands(),
+  (substate) => substate.filter((state) => state.get('isFeatured')).slice(0, 4)
+)
+
 const selectToggle = () => createSelector(
   selectBucketDomain(),
   (substate) => substate.get('toggle')
@@ -73,6 +83,8 @@ export {
   selectToggle,
   selectBrands,
   selectProductCategories,
+  selectFeaturedCategories,
+  selectFeaturedBrands,
   selectMobileNumbers,
   selectReceiptsUpdated,
   selectToggleError,

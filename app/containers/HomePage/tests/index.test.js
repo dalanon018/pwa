@@ -15,7 +15,7 @@ describe('<HomePage />', () => {
     getProductCategories: () => {},
     loader: false,
     featuredProducts: fromJS([]),
-    productCategories: fromJS([]),
+    featuredCategories: fromJS([]),
     featuredBrands: fromJS([]),
     intl: {
       formatMessage: () => {}
