@@ -25,7 +25,7 @@ const selectProductsByBrandsItems = () => createSelector(
 
 const selectProductsByBrandsFeatured = () => createSelector(
   selectProductsByBrands(),
-  (substate) => substate.filter((state) => state.get('isFeatured'))
+  (substate) => substate.filter((state) => state.get('isFeatured')).slice(0, 4)
 )
 
 const selectLoading = () => createSelector(
@@ -38,17 +38,11 @@ const selectLazyload = () => createSelector(
   subState => subState.get('lazyload')
 )
 
-const selectFeaturedProducts = () => createSelector(
-  selectBrandPageDomain(),
-  subState => subState.get('productsFeatured')
-)
-
 export {
   selectBrandPageDomain,
   selectProductsByBrands,
   selectProductsByBrandsItems,
   selectProductsByBrandsFeatured,
-  selectFeaturedProducts,
   selectLoading,
   selectLazyload
 }

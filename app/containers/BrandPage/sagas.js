@@ -14,8 +14,6 @@ import { isEmpty } from 'lodash'
 import {
   compose,
   map,
-  filter,
-  prop,
   propOr
 } from 'ramda'
 
@@ -24,12 +22,10 @@ import { getRequestData } from 'utils/offline-request'
 import { transformProduct } from 'utils/transforms'
 
 import {
-  GET_PRODUCTS_BRANDS,
-  GET_FEATURED_PRODUCTS
+  GET_PRODUCTS_BRANDS
 } from './constants'
 import {
-  setProductsByBrandsAction,
-  setFeaturedProductsAction
+  setProductsByBrandsAction
 } from './actions'
 
 import {
@@ -59,7 +55,7 @@ export function * getProductByBrands (args) {
 
   // TODO: we need to change this to the correct url
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/categories/${id}/enabled?offset=${offset}&limit=${limit}`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/brands/${id}?offset=${offset}&limit=${limit}`, {
     method: 'GET',
     token: token.access_token
   })
@@ -78,46 +74,14 @@ export function * getProductByBrands (args) {
   yield put(setProductsByBrandsAction(products))
 }
 
-export function * getProductByFeaturedBrands (args) {
-  const { payload } = args
-  let products = []
-
-  const token = yield getAccessToken()
-
-  // TODO: we need to change this to the correct url
-  const req = yield call(getRequestData, `${API_BASE_URL}/categories/${payload}/enabled/FEATURED?offset=0&limit=4`, {
-    method: 'GET',
-    token: token.access_token
-  })
-
-  if (!isEmpty(req)) {
-    const transform = compose(
-      map(transformEachEntity),
-      filter(prop('cliqqCodes')),
-      propOr([], 'productList')
-    )
-    products = yield transform(req)
-  } else {
-    yield put(setNetworkErrorAction('No cache data'))
-  }
-
-  yield put(setFeaturedProductsAction(products))
-}
-
 export function * getProductByBrandsSaga () {
   yield * takeEvery(GET_PRODUCTS_BRANDS, getProductByBrands)
-}
-
-export function * getProductByFeaturedBrandsSaga () {
-  yield * takeEvery(GET_FEATURED_PRODUCTS, getProductByFeaturedBrands)
 }
 
 // Individual exports for testing
 export function * productsCategorySagas () {
   const watcher = yield [
-    fork(getProductByBrandsSaga),
-
-    fork(getProductByFeaturedBrandsSaga)
+    fork(getProductByBrandsSaga)
   ]
   yield take(LOCATION_CHANGE)
   yield watcher.map(task => cancel(task))

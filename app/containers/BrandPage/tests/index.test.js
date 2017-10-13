@@ -9,7 +9,6 @@ describe('<BrandPage />', () => {
     changeRoute: () => {},
     getProductsByBrands: () => {},
     resetProductsByBrands: () => {},
-    getProductFeatured: () => {},
     setPageTitle: () => {},
     setShowSearchIcon: () => {},
     setShowActivityIcon: () => {},

@@ -9,14 +9,11 @@ import { compact, isEmpty } from 'lodash'
 import {
   GET_PRODUCTS_BRANDS,
   SET_PRODUCTS_BRANDS,
-  RESET_PRODUCTS_BRANDS,
-
-  SET_FEATURED_PRODUCTS
+  RESET_PRODUCTS_BRANDS
 } from './constants'
 
 const initialState = fromJS({
   productsByBrands: [],
-  productsFeatured: [],
   loading: false,
   lazyload: false
 })
@@ -40,11 +37,6 @@ function brandPageReducer (state = initialState, action) {
     case RESET_PRODUCTS_BRANDS:
       return state
         .set('productsByBrands', fromJS([]))
-        .set('loading', false)
-
-    case SET_FEATURED_PRODUCTS:
-      return state
-        .set('productsFeatured', fromJS(action.payload))
         .set('loading', false)
 
     default:
