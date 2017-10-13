@@ -47,7 +47,7 @@ export const ButtonContainer = styled.div`
   left: 0;
   position: fixed;
   width: 100%;
-  z-index: 1;
+  z-index: 3;
 
   .ui.button.primary {
     padding: 20px 40px !important;

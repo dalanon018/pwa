@@ -30,8 +30,8 @@ export default defineMessages({
     id: 'app.components.Product.deliveryReturnsPolicy',
     defaultMessage: 'Delivery & Returns Policy'
   },
-  careLabel: {
-    id: 'app.components.Product.careLabel',
+  additionalInfo: {
+    id: 'app.components.Product.additionalInfo',
     defaultMessage: 'Additional Details'
   },
   shareItem: {
