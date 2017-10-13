@@ -26,13 +26,11 @@ import { getItem } from 'utils/localStorage'
 import {
   GET_PRODUCTS_CATEGORY,
   GET_TAGS_PRODUCTS,
-  GET_PRODUCTS_VIEWED,
-  GET_FEATURED_PRODUCTS
+  GET_PRODUCTS_VIEWED
 } from './constants'
 import {
   setProductsByCategoryAction,
   setProductsViewedAction,
-  setFeaturedProductsAction,
   setProductsCountsAction
 } from './actions'
 
@@ -124,30 +122,6 @@ export function * getProductByTags (args) {
   yield put(setProductsCountsAction(count))
 }
 
-export function * getProductByFeaturedCategory (args) {
-  const { payload } = args
-  let products = []
-
-  const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/categories/${payload}/enabled/FEATURED?offset=0&limit=4`, {
-    method: 'GET',
-    token: token.access_token
-  })
-
-  if (!isEmpty(req)) {
-    const transform = compose(
-      map(transformEachEntity),
-      filter(prop('cliqqCodes')),
-      propOr([], 'productList')
-    )
-    products = yield transform(req)
-  } else {
-    yield put(setNetworkErrorAction('No cache data'))
-  }
-
-  yield put(setFeaturedProductsAction(products))
-}
-
 export function * getProductsViewed () {
   const response = yield * getLastViewedItems()
 
@@ -162,10 +136,6 @@ export function * getProductByTagsSaga () {
   yield * takeEvery(GET_TAGS_PRODUCTS, getProductByTags)
 }
 
-export function * getProductByFeaturedCategorySaga () {
-  yield * takeEvery(GET_FEATURED_PRODUCTS, getProductByFeaturedCategory)
-}
-
 export function * getProductsViewedSaga () {
   yield * takeLatest(GET_PRODUCTS_VIEWED, getProductsViewed)
 }
@@ -176,8 +146,6 @@ export function * productsCategorySagas () {
     fork(getProductByCategorySaga),
 
     fork(getProductByTagsSaga),
-
-    fork(getProductByFeaturedCategorySaga),
 
     fork(getProductsViewedSaga)
   ]
