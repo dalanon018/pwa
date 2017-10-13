@@ -9,9 +9,6 @@ import {
   SET_PRODUCTS_CATEGORY,
   RESET_PRODUCTS_CATEGORY,
 
-  GET_FEATURED_PRODUCTS,
-  SET_FEATURED_PRODUCTS,
-
   GET_TAGS_PRODUCTS,
 
   GET_PRODUCTS_VIEWED,
@@ -37,20 +34,6 @@ export function setProductsByCategoryAction (payload) {
 export function resetProductsByCategoryAction (payload) {
   return {
     type: RESET_PRODUCTS_CATEGORY,
-    payload
-  }
-}
-
-export function getFeaturedProductsAction (payload) {
-  return {
-    type: GET_FEATURED_PRODUCTS,
-    payload
-  }
-}
-
-export function setFeaturedProductsAction (payload) {
-  return {
-    type: SET_FEATURED_PRODUCTS,
     payload
   }
 }
