@@ -130,7 +130,7 @@ const Product = ({
           <ProductDetails className='border_bottom__one--light-grey'>
             <Label as='p' basic size='big' className='color__secondary'> <FormattedMessage {...messages.productDetailsTitle} /> </Label>
             <LoadingStateInfo loading={loading} className='color__light-grey' >
-              <div className='product-details color__grey' dangerouslySetInnerHTML={{__html: product.get('details')}} />
+              <div className='product-details text__roboto--light color__dark-grey' dangerouslySetInnerHTML={{__html: product.get('details')}} />
             </LoadingStateInfo>
           </ProductDetails>
           <ListCollapse title={
@@ -142,7 +142,7 @@ const Product = ({
               <Image src={DeliveryIcon} alt='Cliqq' />
               <div className='collapse-description'>
                 <Label className='description-title color__secondary' as='p' basic size='large'><FormattedMessage {...messages.deliveryTitle} /></Label>
-                <Label as='p' color='grey' basic size='medium'>
+                <Label className='text__roboto--light color__dark-grey' as='p' basic size='medium'>
                   <span dangerouslySetInnerHTML={{__html: product.get('deliveryPromiseMessage')}} />
                 </Label>
               </div>
@@ -154,7 +154,7 @@ const Product = ({
                     <Image src={ReturnIcon} alt='Cliqq' />
                     <div className='collapse-description'>
                       <Label className='description-title primary__secondary' as='p' basic size='large'><FormattedMessage {...messages.returnPolicy} /></Label>
-                      <Label as='p' color='grey' basic size='medium'>
+                      <Label className='text__roboto--light color__dark-grey' as='p' basic size='medium'>
                         <span dangerouslySetInnerHTML={{__html: product.get('returnPolicy')}} />
                       </Label>
                     </div>

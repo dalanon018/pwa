@@ -24,7 +24,7 @@
     color: @grey;
   }
 
-   &.color-light-grey {
+  &.color-light-grey {
     color: @lightGrey;
   }
 
