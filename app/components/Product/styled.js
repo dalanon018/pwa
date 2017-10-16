@@ -11,7 +11,7 @@ export const ProductWrapper = styled(AnimateDiv)`
   flex: 1 0 auto;
   position: relative;
   padding-top: 20px;
-  margin-bottom: 80px;
+  margin-bottom: 58px;
 
   .brand-logo {
     width: 160px;
