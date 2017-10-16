@@ -11,7 +11,7 @@ const wrapper = (props = {}, enzyme = shallow) => shallow(
   </LazyLoading>
 )
 
-describe('<Brand />', () => {
+describe('<LazyLoading />', () => {
   const minProps = {
     lazyload: false,
     results: fromJS([]),
