@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import JsBarcode from 'jsbarcode'
 
+import { ifElse, equals } from 'ramda'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Label, Button, Image, Checkbox } from 'semantic-ui-react'
 
@@ -127,7 +128,9 @@ class Receipt extends React.PureComponent {
     statuses: PropTypes.object.isRequired,
     goHomeFn: PropTypes.func.isRequired,
     repurchaseFn: PropTypes.func.isRequired,
-    goReceiptPage: PropTypes.func.isRequired
+    goReceiptPage: PropTypes.func.isRequired,
+    isRegisteredPush: PropTypes.bool.isRequired,
+    registerPushNotification: PropTypes.func.isRequired
   }
 
   _defaultModePayment = 'CASH'
@@ -182,6 +185,40 @@ class Receipt extends React.PureComponent {
     return (
       <FormattedMessage {...messages[`date${modePayment}${currentStatus}`]} />
     )
+  }
+
+  _handlePushRegistrationUI = () => {
+    const { isRegisteredPush, registerPushNotification } = this.props
+    const displayUI = ifElse(
+      equals(false),
+      () => (
+        <PushNotificationWrapper>
+          <Grid padded>
+            <Grid.Row columns={2}>
+              <Grid.Column width={11}>
+                <Label as='p' basic size='large'>
+                  <FormattedMessage {...messages.pushNotifLabel} />
+                </Label>
+                <Label as='span' basic size='medium' className='text__roboto--light'>
+                  <FormattedMessage {...messages.pushNotifDescription} />
+                </Label>
+              </Grid.Column>
+              <Grid.Column width={5} textAlign='right'>
+                <Checkbox
+                  toggle
+                  checked={isRegisteredPush}
+                  value='register'
+                  onChange={registerPushNotification}
+                />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </PushNotificationWrapper>
+      ),
+      () => null
+    )
+
+    return displayUI(isRegisteredPush)
   }
 
   componentDidMount () {
@@ -280,23 +317,9 @@ class Receipt extends React.PureComponent {
             </ScannerWrapper>
           </ReceiptContainer>
         </ReceiptWrapper>
-        <PushNotificationWrapper>
-          <Grid padded>
-            <Grid.Row columns={2}>
-              <Grid.Column width={11}>
-                <Label as='p' basic size='large'>
-                  <FormattedMessage {...messages.pushNotifLabel} />
-                </Label>
-                <Label as='span' basic size='medium' className='text__roboto--light'>
-                  <FormattedMessage {...messages.pushNotifDescription} />
-                </Label>
-              </Grid.Column>
-              <Grid.Column width={5} textAlign='right'>
-                <Checkbox toggle />
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </PushNotificationWrapper>
+
+        { this._handlePushRegistrationUI() }
+
         <Grid padded centered textAlign='left'>
           <Grid.Row>
             <Grid.Column>
