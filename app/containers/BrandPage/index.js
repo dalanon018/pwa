@@ -9,14 +9,10 @@ import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
-import { noop, debounce } from 'lodash'
+import { noop } from 'lodash'
 import {
-  allPass,
-  both,
   compose,
   equals,
-  gte,
-  identity,
   ifElse,
   lt,
   partial,
@@ -31,8 +27,8 @@ import WindowWidth from 'components/WindowWidth'
 import BannerSlider from 'components/BannerSlider'
 import H3 from 'components/H3'
 import EmptyProducts from 'components/EmptyProductsBlock'
-import LoadingIndicator from 'components/LoadingIndicator'
 // import Promo from 'components/Promo'
+import LazyLoading from 'components/LazyLoading'
 
 import {
   setPageTitleAction,
@@ -64,10 +60,6 @@ const ContentWrapper = styled(Container)`
   padding-bottom: 20px;
 `
 
-const WrapperLoadingIndicator = styled.div`
-  position: relative;
-`
-
 export class BrandPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     changeRoute: PropTypes.func.isRequired,
@@ -89,37 +81,6 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     pageOffset: 0,
     offset: 0,
     limit: 12
-  }
-
-  constructor () {
-    super()
-
-    this._debounceScrolling = this._debounceScrolling.bind(this)
-
-    /**
-     * we need to define this since our debounce will have issue once we
-     * unmount our component and debounce function was'nt invoke yet.
-     */
-    this._cancellableDebounce = false
-  }
-
-  _debounceScrolling = debounce(this._onScrollElement, 200)
-
-  _onScrollElement () {
-    const { lazyload } = this.props
-    const scrollY = window.pageYOffset || document.documentElement.scrollTop
-    const offset = 200
-
-    const onBottom = () => lt(window.innerHeight, (scrollY + offset))
-    const notCancellable = () => equals(false, this._cancellableDebounce)
-
-    const displayMoreProducts = ifElse(
-      allPass([onBottom, identity, notCancellable]),
-      this._displayMoreProducts,
-      noop
-    )
-
-    return displayMoreProducts(lazyload)
   }
 
   _handlePageTitle = (nextProps) => {
@@ -204,26 +165,6 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     return displayFeatured(productsFeatured.size)
   }
 
-  /**
-   * We need to identify if we need to show the lazy load if
-   * items are more than equal to the limit and lazyload === true
-   */
-  _displayLazyLoadIndicator = () => {
-    const { lazyload, productsByBrands } = this.props
-    const { limit } = this.state
-    const itemsGreaterEqLimit = () => gte(productsByBrands.size, limit)
-    const showLoadingIndicator = ifElse(
-      both(identity, itemsGreaterEqLimit),
-      () => (
-        <WrapperLoadingIndicator>
-          <LoadingIndicator />
-        </WrapperLoadingIndicator>
-      ),
-      () => null
-    )
-    return showLoadingIndicator(lazyload)
-  }
-
   componentWillMount () {
     // we set this as text so it doesnt look
     this.props.setPageTitle('..')
@@ -234,22 +175,10 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   componentDidMount () {
     // initial data
     this._fetchProductByBrands(this.props)
-
-    window.addEventListener('scroll', this._debounceScrolling)
   }
 
   componentWillUnmount () {
-    const { resetProductsByBrands } = this.props
-
-    /**
-     * once we unmount we will tell our debounce
-     * that they shoud'nt run anymore
-     */
-    this._cancellableDebounce = true
-
-    window.removeEventListener('scroll', this._debounceScrolling)
-
-    resetProductsByBrands()
+    this.props.resetProductsByBrands()
   }
 
   componentWillReceiveProps (nextProps) {
@@ -280,21 +209,26 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   render () {
-    const { productsByBrands, loader, changeRoute, windowWidth } = this.props
-    const { brandImages } = this.state
+    const { productsByBrands, loader, changeRoute, windowWidth, lazyload } = this.props
+    const { brandImages, limit } = this.state
 
     return (
       <div>
         <BannerSlider isInfinite loader={loader} images={brandImages} />
         <ContentWrapper className='padding__horizontal--10'>
-          { this._displayFeaturedProducts() }
-          <H3>
-            <FormattedMessage {...messages.brandsTitle} />
-          </H3>
-          { this._displayEmpty() }
-          <ProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
-
-          { this._displayLazyLoadIndicator() }
+          <LazyLoading
+            lazyload={lazyload}
+            results={productsByBrands}
+            onScroll={this._displayMoreProducts}
+            limit={limit}
+          >
+            { this._displayFeaturedProducts() }
+            <H3>
+              <FormattedMessage {...messages.brandsTitle} />
+            </H3>
+            { this._displayEmpty() }
+            <ProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
+          </LazyLoading>
         </ContentWrapper>
         <Footer />
       </div>
