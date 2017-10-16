@@ -9,18 +9,14 @@ import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
-import { noop, debounce } from 'lodash'
+import { noop } from 'lodash'
 import {
   F,
   T,
-  allPass,
-  both,
   compose,
   contains,
   curry,
   equals,
-  gte,
-  identity,
   ifElse,
   lt,
   partial,
@@ -32,7 +28,7 @@ import { Container } from 'semantic-ui-react'
 import ProductView from 'components/ProductView'
 import Footer from 'components/Footer'
 import WindowWidth from 'components/WindowWidth'
-import LoadingIndicator from 'components/LoadingIndicator'
+import LazyLoading from 'components/LazyLoading'
 
 import H3 from 'components/H3'
 import H4 from 'components/H4'
@@ -107,10 +103,6 @@ const ContentWrapper = styled(Container)`
   }
 `
 
-const WrapperLoadingIndicator = styled.div`
-  position: relative;
-`
-
 const isTag = curry((tags, id) => contains(id, tags))
 
 export class ProductsByCategory extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -148,7 +140,6 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this._isCategoryExist = this._isCategoryExist.bind(this)
     this._fetchProductByTagCategory = this._fetchProductByTagCategory.bind(this)
     this._displayMoreProducts = this._displayMoreProducts.bind(this)
-    this._onScrollElement = this._onScrollElement.bind(this)
     this._resetValuesAndFetch = this._resetValuesAndFetch.bind(this)
     this._handleFeaturedProductsPerCategory = this._handleFeaturedProductsPerCategory.bind(this)
     this._displayFeaturesProduct = this._displayFeaturesProduct.bind(this)
@@ -156,32 +147,6 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this._displayNumberProducts = this._displayNumberProducts.bind(this)
     this._displayRecentlyViewedHeader = this._displayRecentlyViewedHeader.bind(this)
     this._displayEmpty = this._displayEmpty.bind(this)
-    this._debounceScrolling = this._debounceScrolling.bind(this)
-
-    /**
-     * we need to define this since our debounce will have issue once we
-     * unmount our component and debounce function was'nt invoke yet.
-     */
-    this._cancellableDebounce = false
-  }
-
-  _debounceScrolling = debounce(this._onScrollElement, 200)
-
-  _onScrollElement () {
-    const { lazyload } = this.props
-    const scrollY = window.pageYOffset || document.documentElement.scrollTop
-    const offset = 200
-
-    const onBottom = () => lt(window.innerHeight, (scrollY + offset))
-    const notCancellable = () => equals(false, this._cancellableDebounce)
-
-    const displayMoreProducts = ifElse(
-      allPass([onBottom, identity, notCancellable]),
-      this._displayMoreProducts,
-      noop
-    )
-
-    return displayMoreProducts(lazyload)
   }
 
   _isCategoryExist () {
@@ -229,7 +194,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     const { productsFeatured, changeRoute, loader, windowWidth } = this.props
     if (this._handleFeaturedProductsPerCategory() && productsFeatured.size) {
       return (
-        <ProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} />
+        <ProductView changeRoute={changeRoute} loader={loader} products={productsFeatured.slice(0, 4)} windowWidth={windowWidth} />
       )
     }
 
@@ -237,12 +202,12 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _displayNumberProducts () {
-    const { productsByCategory, totalCount } = this.props
+    const { productsByCategory, productsFeatured, totalCount } = this.props
 
     if (productsByCategory.size) {
       return (
         <H4 className='color__grey'>
-          { totalCount }
+          { totalCount - productsFeatured.size}
           <FormattedMessage {...messages.items} />
         </H4>
       )
@@ -277,26 +242,6 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     }
 
     return null
-  }
-
-  /**
-   * We need to identify if we need to show the lazy load if
-   * items are more than equal to the limit and lazyload === true
-   */
-  _displayLazyLoadIndicator = () => {
-    const { lazyload, productsByCategory } = this.props
-    const { limit } = this.state
-    const itemsGreaterEqLimit = () => gte(productsByCategory.size, limit)
-    const showLoadingIndicator = ifElse(
-      both(identity, itemsGreaterEqLimit),
-      () => (
-        <WrapperLoadingIndicator>
-          <LoadingIndicator />
-        </WrapperLoadingIndicator>
-      ),
-      () => null
-    )
-    return showLoadingIndicator(lazyload)
   }
 
   _handleFeaturedProductsPerCategory () {
@@ -351,21 +296,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     getProductsViewed()
 
     this._fetchProductByTagCategory(this.props)
-
-    window.addEventListener('scroll', this._debounceScrolling)
   }
 
   componentWillUnmount () {
-    const { resetProductsByCategory } = this.props
-    /**
-     * once we unmount we will tell our debounce
-     * that they shoud'nt run anymore
-     */
-    this._cancellableDebounce = true
-
-    window.removeEventListener('scroll', this._debounceScrolling)
-
-    resetProductsByCategory()
+    this.props.resetProductsByCategory()
   }
 
   componentWillReceiveProps (nextProps) {
@@ -396,21 +330,27 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   render () {
-    const { productsByCategory, productsViewed, loader, changeRoute, windowWidth } = this.props
+    const { productsByCategory, productsViewed, loader, changeRoute, lazyload, windowWidth } = this.props
+    const { limit } = this.state
     return (
       <div>
         <ContentWrapper>
-          { this._displayHeaderFeaturesProduct() }
-          { this._displayFeaturesProduct() }
+          <LazyLoading
+            lazyload={lazyload}
+            results={productsByCategory}
+            onScroll={this._displayMoreProducts}
+            limit={limit}
+          >
+            { this._displayHeaderFeaturesProduct() }
+            { this._displayFeaturesProduct() }
 
-          <H3 className='margin__none'> {this._handlePageTitle()} </H3>
-          {this._displayNumberProducts()}
-          { this._displayEmpty() }
-          <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} windowWidth={windowWidth} />
+            <H3 className='margin__none'> {this._handlePageTitle()} </H3>
+            {this._displayNumberProducts()}
+            { this._displayEmpty() }
+            <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} windowWidth={windowWidth} />
 
-          { this._displayLazyLoadIndicator() }
-
-          { this._displayRecentlyViewedHeader() }
+            { this._displayRecentlyViewedHeader() }
+          </LazyLoading>
           <ProductView changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
 
         </ContentWrapper>
