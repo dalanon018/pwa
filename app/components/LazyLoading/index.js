@@ -28,6 +28,7 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
     super()
 
     this._debounceScrolling = this._debounceScrolling.bind(this)
+    this._onScrollElement = this._onScrollElement.bind(this)
 
     /**
      * we need to define this since our debounce will have issue once we
