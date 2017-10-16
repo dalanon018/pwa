@@ -9,7 +9,7 @@ import Helmet from 'react-helmet'
 import styled from 'styled-components'
 
 import { noop } from 'lodash'
-import { ifElse, equals, both, compose, prop } from 'ramda'
+import { ifElse, equals, both, compose, prop, partial } from 'ramda'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -48,12 +48,15 @@ import {
 
 import {
   selectLoading,
-  selectReceipt
+  selectReceipt,
+  selectIsRegisteredPush
 } from './selectors'
 
 import {
   getReceiptAction,
-  requestReceiptAction
+  getRegisteredPushAction,
+  requestReceiptAction,
+  registerPushAction
 } from './actions'
 
 const ReceiptWrapper = styled.div`
@@ -81,16 +84,21 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
   static propTypes = {
     loading: PropTypes.bool.isRequired,
     receipt: PropTypes.object.isRequired,
+    isRegisteredPush: PropTypes.bool.isRequired,
     getReceipt: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
     changeRoute: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
-    setShowActivityIcon: PropTypes.func.isRequired
+    setShowActivityIcon: PropTypes.func.isRequired,
+    getRegisteredPush: PropTypes.func.isRequired,
+    registerPush: PropTypes.func.isRequired
   }
 
   state = {
-    modalToggle: false
+    modalToggle: false,
+    title: null,
+    content: null
   }
 
   constructor () {
@@ -101,6 +109,13 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
     this._repurchaseFn = this._repurchaseFn.bind(this)
     this._goToPurchases = this._goToPurchases.bind(this)
     this._handleDoneInvalidReceipt = this._handleDoneInvalidReceipt.bind(this)
+    this._processRegistrationNotification = this._processRegistrationNotification.bind(this)
+  }
+
+  _handleModalClose = () => {
+    this.setState({
+      modalToggle: false
+    })
   }
 
   _identifyBackground () {
@@ -133,18 +148,39 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
 
   _handleDoneInvalidReceipt () {
     this.setState({
-      modalToggle: true
+      modalToggle: true,
+      title: <FormattedMessage {...messages.errorMessageTitle} />,
+      content: <FormattedMessage {...messages.invalidTrackingNumber} />
     })
+
     setTimeout(() => {
       this.props.changeRoute('/')
     }, 5000)
+  }
+
+  _processRegistrationNotification (err, token) {
+    const { receipt, registerPush } = this.props
+    const processPushNotification = ifElse(
+      equals(null),
+      partial(registerPush, [{
+        mobileNumber: receipt.get('mobileNumber'),
+        token
+      }]),
+      () => this.setState({
+        modalToggle: true,
+        title: <FormattedMessage {...messages.pushErrorMessageTitle} />,
+        content: <FormattedMessage {...messages.pushErrorMessage} />
+      })
+    )
+
+    return processPushNotification(err)
   }
 
   _handleRegistrationPushNotification = (evt, { checked }) => {
     const isProduction = () => equals('production', ENVIROMENT)
     const registerPush = ifElse(
       both(equals(true), isProduction),
-      () => Notification.install(),
+      () => Notification.install(this._processRegistrationNotification),
       noop
     )
 
@@ -158,8 +194,9 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
   }
 
   componentDidMount () {
-    const { params: { trackingNumber } } = this.props
+    const { params: { trackingNumber }, getRegisteredPush } = this.props
     this.props.getReceipt({ trackingNumber })
+    getRegisteredPush()
   }
 
   componentWillReceiveProps (nextProps) {
@@ -172,8 +209,8 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
   }
 
   render () {
-    const { receipt, windowWidth, loading, route } = this.props
-    const { modalToggle } = this.state
+    const { receipt, isRegisteredPush, windowWidth, loading, route } = this.props
+    const { modalToggle, title, content } = this.state
     const receiptPageName = route && route.name
     // const widthResponsive = windowWidth >= 768
     return (
@@ -196,13 +233,15 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
           repurchaseFn={this._repurchaseFn}
           goReceiptPage={this._goToPurchases}
           registerPushNotification={this._handleRegistrationPushNotification}
+          isRegisteredPush={isRegisteredPush}
         />
 
         <Modal
           open={modalToggle}
           name='warning'
-          title={<FormattedMessage {...messages.errorMessageTitle} />}
-          content={<FormattedMessage {...messages.invalidTrackingNumber} />}
+          title={title}
+          content={content}
+          close={this._handleModalClose}
         />
       </ReceiptWrapper>
     )
@@ -211,7 +250,8 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
 
 const mapStateToProps = createStructuredSelector({
   receipt: selectReceipt(),
-  loading: selectLoading()
+  loading: selectLoading(),
+  isRegisteredPush: selectIsRegisteredPush()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -220,7 +260,9 @@ function mapDispatchToProps (dispatch) {
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getReceipt: (payload) => dispatch(getReceiptAction(payload)),
+    getRegisteredPush: () => dispatch(getRegisteredPushAction()),
     repurchase: (payload) => dispatch(requestReceiptAction(payload)),
+    registerPush: (payload) => dispatch(registerPushAction(payload)),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
   }

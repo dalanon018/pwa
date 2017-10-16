@@ -8,15 +8,19 @@ import { fromJS } from 'immutable'
 import {
   GET_RECEIPT,
   SET_RECEIPT,
+
   REPURCHASE_ITEM_REQUEST,
   REPURCHASE_ITEM_SUCCESS,
-  REPURCHASE_ITEM_ERROR
+  REPURCHASE_ITEM_ERROR,
+
+  SET_REGISTED_PUSH
 } from './constants'
 
 const initialState = fromJS({
   receipt: {},
   loading: false,
   repurchase: {},
+  isRegisteredPush: false,
   repurchaseSuccess: false,
   repurchaseError: null
 })
@@ -43,6 +47,9 @@ function receiptPageReducer (state = initialState, action) {
       return state
           .set('receipt', fromJS(action.payload))
           .set('loading', false)
+    case SET_REGISTED_PUSH:
+      return state
+          .set('isRegisteredPush', action.payload)
     default:
       return state
   }

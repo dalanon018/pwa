@@ -1,7 +1,8 @@
 import { fromJS } from 'immutable'
 
 import {
-  selectReceipt
+  selectReceipt,
+  selectIsRegisteredPush
 } from '../selectors'
 
 describe('Receipt Selectors', () => {
@@ -18,6 +19,20 @@ describe('Receipt Selectors', () => {
         }
       })
       expect(selectReceiptSelectors(mockedState)).toEqual(receipt)
+    })
+  })
+
+  describe('selectIsRegisteredPush', () => {
+    const selectIsRegisteredPushSelectors = selectIsRegisteredPush()
+
+    it('should get sector', () => {
+      const isRegisteredPush = false
+      const mockedState = fromJS({
+        receiptPage: {
+          isRegisteredPush
+        }
+      })
+      expect(selectIsRegisteredPushSelectors(mockedState)).toEqual(isRegisteredPush)
     })
   })
 })

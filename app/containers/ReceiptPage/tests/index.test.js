@@ -15,12 +15,15 @@ describe('<ReceiptPage />', () => {
   const minProps = {
     loading: false,
     receipt: fromJS({}),
+    isRegisteredPush: false,
     getReceipt: () => {},
     dispatch: () => {},
     changeRoute: () => {},
     setPageTitle: () => {},
     setShowSearchIcon: () => {},
-    setShowActivityIcon: () => {}
+    setShowActivityIcon: () => {},
+    getRegisteredPush: () => {},
+    registerPush: () => {}
   }
 
   it('render without exploding', () => {

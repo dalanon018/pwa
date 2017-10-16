@@ -22,6 +22,8 @@ describe('<Receipt />', () => {
     goHomeFn: () => {},
     goReceiptPage: () => {},
     repurchaseFn: () => {},
+    registerPushNotification: () => {},
+    isRegisteredPush: false,
     receipt: fromJS({
       'trackingNumber': '344760497230963792',
       'claimExpiry': '2017-08-13 00:17:08',

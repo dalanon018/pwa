@@ -13,5 +13,13 @@ export default defineMessages({
   invalidTrackingNumber: {
     id: 'app.containers.PurchaseEntity.invalidTrackingNumber',
     defaultMessage: 'This Receipt is invalid. Please make sure that you got the correcty tracking number.'
+  },
+  pushErrorMessageTitle: {
+    id: 'app.containers.PurchaseEntity.pushErrorMessageTitle',
+    defaultMessage: 'Register Push Notification Error'
+  },
+  pushErrorMessage: {
+    id: 'app.containers.PurchaseEntity.pushErrorMessage',
+    defaultMessage: 'Please make sure you allow Push Notification on your browser.'
   }
 })

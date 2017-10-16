@@ -18,7 +18,6 @@ class Notification {
       console.log('Message received. ', payload)
       // ...
     })
-
     // On load register service worker
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then((registrations) => {
@@ -28,11 +27,9 @@ class Notification {
       .then(() => this._messaging.requestPermission())
       .then(() => this._messaging.getToken()) // get token
       .then((token) => {
-        console.log('TOKEN', token)
+        cb(null, token)
       })
-      .catch((err) => {
-        console.log('ServiceWorker registration failed: ', err)
-      })
+      .catch(cb)
     }
   }
 }
