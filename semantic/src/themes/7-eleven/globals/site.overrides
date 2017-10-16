@@ -211,6 +211,9 @@ input.input-field {
   &__light-grey {
     color: @lightGrey !important;
   }
+  &__dark-grey {
+    color: @darkGrey !important;
+  }
   &__white {
     color: @white !important;
   }
@@ -337,6 +340,10 @@ input.input-field {
 
 svg#barcode {
   height: 60px !important;
+
+  g {
+    fill: @333333 !important;
+  }
 }
 
 .unstyle-button {

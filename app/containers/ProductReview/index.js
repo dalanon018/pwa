@@ -329,11 +329,11 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             <div className='sub-title color__secondary'>
               <FormattedMessage {...messages.productDetailsTitle} />
             </div>
-            <div className='margin__bottom-positive--10 color__grey' dangerouslySetInnerHTML={{__html: orderedProduct.get('details')}} />
+            <div className='margin__bottom-positive--10 text__roboto--light color__dark-grey' dangerouslySetInnerHTML={{__html: orderedProduct.get('details')}} />
             <div className='sub-title color__secondary'>
               <FormattedMessage {...messages.productDeliveryTitle} />
             </div>
-            <div className='color__grey' dangerouslySetInnerHTML={{__html: orderedProduct.get('deliveryPromiseMessage')}} />
+            <div className='text__roboto--light color__dark-grey' dangerouslySetInnerHTML={{__html: orderedProduct.get('deliveryPromiseMessage')}} />
           </DetailsWrapper>
         </ListCollapse>
         <Grid padded>
