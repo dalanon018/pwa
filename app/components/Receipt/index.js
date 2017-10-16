@@ -127,7 +127,8 @@ class Receipt extends React.PureComponent {
     statuses: PropTypes.object.isRequired,
     goHomeFn: PropTypes.func.isRequired,
     repurchaseFn: PropTypes.func.isRequired,
-    goReceiptPage: PropTypes.func.isRequired
+    goReceiptPage: PropTypes.func.isRequired,
+    registerPushNotification: PropTypes.func.isRequired
   }
 
   _defaultModePayment = 'CASH'
@@ -211,7 +212,7 @@ class Receipt extends React.PureComponent {
 
   render () {
     const { show } = this.state
-    const { timer, receipt, statuses, goReceiptPage } = this.props
+    const { timer, receipt, statuses, goReceiptPage, registerPushNotification } = this.props
     return (
       <div>
         <ReceiptWrapper>
@@ -292,7 +293,11 @@ class Receipt extends React.PureComponent {
                 </Label>
               </Grid.Column>
               <Grid.Column width={5} textAlign='right'>
-                <Checkbox toggle />
+                <Checkbox
+                  toggle
+                  value='register'
+                  onChange={registerPushNotification}
+                />
               </Grid.Column>
             </Grid.Row>
           </Grid>

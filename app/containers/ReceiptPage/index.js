@@ -18,6 +18,7 @@ import { FormattedMessage } from 'react-intl'
 import Receipt from 'components/Receipt'
 import Modal from 'components/PromptModal'
 import WindowWidth from 'components/WindowWidth'
+import Notification from 'utils/firebase-notification'
 
 import {
   STATUSES,
@@ -40,6 +41,10 @@ import CLAIMED from 'images/ticket-backgrounds/claimed.png'
 import UNCLAIMED from 'images/ticket-backgrounds/not-claimed.png'
 
 import messages from './messages'
+
+import {
+  ENVIROMENT
+} from 'containers/App/constants'
 
 import {
   selectLoading,
@@ -135,6 +140,17 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
     }, 5000)
   }
 
+  _handleRegistrationPushNotification = (evt, { checked }) => {
+    const isProduction = () => equals('production', ENVIROMENT)
+    const registerPush = ifElse(
+      both(equals(true), isProduction),
+      () => Notification.install(),
+      noop
+    )
+
+    registerPush(checked)
+  }
+
   componentWillMount () {
     this.props.setPageTitle('Your Receipt')
     this.props.setShowSearchIcon(true)
@@ -179,6 +195,7 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
           windowWidth={windowWidth}
           repurchaseFn={this._repurchaseFn}
           goReceiptPage={this._goToPurchases}
+          registerPushNotification={this._handleRegistrationPushNotification}
         />
 
         <Modal
