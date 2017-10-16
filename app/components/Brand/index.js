@@ -12,7 +12,7 @@ import { Link } from 'react-router'
 
 import defaultCategoryBackground from 'images/default-categories.jpg'
 
-const BrandWrapper = styled.div`
+export const BrandWrapper = styled.div`
   cursor: pointer;
 
   @media (min-width: 767px) {

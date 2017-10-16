@@ -32,7 +32,7 @@ function BannerSlider ({
     />
 }
 
-const HandleBlock = ({
+export const HandleBlock = ({
   loader,
   isInfinite,
   isAutoPlay,
@@ -74,7 +74,7 @@ const HandleBlock = ({
   return block
 }
 
-const DefaultState = ({
+export const DefaultState = ({
   productPageTrigger
 }) => {
   return (

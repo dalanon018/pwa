@@ -59,7 +59,7 @@ function Category ({
   )
 }
 
-const DefaultState = () => {
+export const DefaultState = () => {
   return (
     <Grid.Column>
       <EmptyDataBlock>
