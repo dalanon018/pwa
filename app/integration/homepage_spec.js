@@ -60,16 +60,24 @@ describe('Should render home', () => {
     cy.get('.slick-slider').should('exist')
   })
 
-  it('Homepage should FEATURED PRODUCTS AND BROWSE CATEGORY', () => {
+  it('Homepage should Featured Items', () => {
     cy.visit('/')
-    cy.contains('FEATURED PRODUCTS')
-    cy.contains('BROWSE CATEGORY')
+    cy.contains('Featured Items')
   })
 
-  it('It should contain products', () => {
-    cy.visit('/')
-    cy.wait('5000')
+  describe('spying', function () {
+    beforeEach(function () {
+      // We use cy.visit({onBeforeLoad: ...}) to spy on
+      // window.fetch before any app code runs
+      cy.visit('http://localhost:3000', {
+        onBeforeLoad (win) {
+          cy.spy(win, 'fetch')
+        }
+      })
+    })
 
-    cy.get('.dFAASG').should('exist')
+    it('requests for featured items', function () {
+      cy.window().its('fetch').should('be.calledWith', 'https://apidemo.cliqq.net:8443/ecms/api/v1/tags/FEATURED?deviceOrigin=PWA&offset=0&limit=5')
+    })
   })
 })

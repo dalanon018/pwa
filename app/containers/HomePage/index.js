@@ -160,7 +160,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           ]}
         />
 
-        <SearchContainer className='background__light-grey'>
+        <SearchContainer className='background__light-grey' data-attribute='search'>
           <Grid padded>
             <Grid.Row columns={1}>
               <Grid.Column>

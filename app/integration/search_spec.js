@@ -1,25 +1,27 @@
 describe('Search Page', () => {
   beforeEach(() => {
     cy.visit('/')
-    cy.get('.fEYmzt > img').click()
+    cy.get('[data-attribute="search"] input').click()
   })
 
   it('It should visit search page', () => {
     cy.url().should('contain', 'search')
   })
 
-  it('It should search product 00001', () => {
-    cy.get('input.dFUpKy').type('00001{enter}')
-    cy.wait(3000)
+  describe('stubbing search page', () => {
+    beforeEach(function () {
+      cy.visit('http://localhost:3000/search', {
+        onBeforeLoad (win) {
+          cy.spy(win, 'fetch')
+        }
+      })
+    })
 
-    cy.get('.jRJKuv').should('exist')
-  })
+    it('It should search product bag', () => {
+      const searchItem = 'bag'
 
-  it('It should go to product page', () => {
-    cy.get('input.dFUpKy').type('00001{enter}')
-    cy.wait(3000)
-
-    cy.get('.jRJKuv').click()
-    cy.url().should('contain', 'product')
+      cy.get('input').type(`${searchItem}{enter}`)
+      cy.window().its('fetch').should('be.calledWith', `https://apidemo.cliqq.net:8443/ecms/api/v1/search/${searchItem}?deviceOrigin=PWA`)
+    })
   })
 })
