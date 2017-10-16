@@ -165,7 +165,7 @@ export default class MainMenu extends PureComponent {
   __handleColumnSize = (currentRoute, place) => {
     const pageSetWidth = {
       home: {side: 2, middle: 12},
-      termsCondition: {side: 2, middle: 12},
+      termsConditions: {side: 2, middle: 12},
       productPage: {side: 3, middle: 10}
     }
 
