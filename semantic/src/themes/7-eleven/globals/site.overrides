@@ -52,6 +52,10 @@ div [data-reactroot],
   padding: 0;
 }
 
+.grecaptcha-badge {
+  visibility: hidden !important;
+}
+
 .ui.tabular {
   background-color: @lightGrey;
   display: flex;

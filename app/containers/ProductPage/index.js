@@ -58,7 +58,7 @@ import {
 } from 'containers/App/constants'
 
 const RecaptchaWrapper = styled.div`
-  display: none;
+  visibility: hidden;
 `
 
 export class ProductPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
