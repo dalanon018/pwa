@@ -137,7 +137,7 @@ export function * getApiPurchases () {
   const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
   // we will only get the last mobileNumber used
   const mobile = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
-  const req = yield call(getRequestData, `${API_BASE_URL}/purchases/0${mobile}?deviceOrigin=PWA`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/purchases/0${mobile}?deviceOrigin=PWA&offset=0&limit=100`, {
     method: 'GET',
     token: token.access_token
   })
