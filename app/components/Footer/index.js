@@ -54,25 +54,25 @@ export class Footer extends React.PureComponent {
               <List horizontal>
                 <List.Item>
                   <A rel='noopener' href='https://www.facebook.com/711philippines' target='_blank'>
-                    <Image alt='Cliqq' avatar src={FacebookIcon} />
+                    <Image alt='Cliqq' src={FacebookIcon} />
                   </A>
                 </List.Item>
                 <List.Item>
                   <A rel='noopener' href='https://twitter.com/711philippines?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor' target='_blank'>
-                    <Image alt='Cliqq' avatar src={TwitterIcon} />
+                    <Image alt='Cliqq' src={TwitterIcon} />
                   </A>
                 </List.Item>
                 <List.Item>
                   <A href='mailto:psc-corp@7-eleven.com.ph'>
-                    <Image alt='Cliqq' avatar src={EmailIcon} />
+                    <Image alt='Cliqq' src={EmailIcon} />
                   </A>
                 </List.Item>
               </List>
             </SocialIcons>
           </Grid.Row>
 
-          <Grid.Row columns='2' verticalAlign='middle' centered divided>
-            <Grid.Column width={6}>
+          <Grid.Row columns='equal' verticalAlign='middle' centered divided>
+            <Grid.Column>
               <AppInfo className='float__right'>
                 <Image src={DeliveryIcon} />
                 <section>
@@ -82,7 +82,7 @@ export class Footer extends React.PureComponent {
                 </section>
               </AppInfo>
             </Grid.Column>
-            <Grid.Column width={6}>
+            <Grid.Column>
               <AppInfo>
                 <Image src={ReturnIcon} />
                 <section>

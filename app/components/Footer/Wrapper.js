@@ -45,6 +45,7 @@ const SocialIcons = styled.div`
   img {
     height: inherit !important;
     width: 32px !important;
+    margin: 0 7px;
   }
 `
 

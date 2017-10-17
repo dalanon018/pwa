@@ -338,7 +338,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
           <Image alt='Cliqq' src={orderedProduct.get('image') ? orderedProduct.get('image') : imageStock('default-slider.jpg')} />
           {
             orderedProduct.get('brand')
-            ? <Label as='p' basic size='big' className='color__secondary'>{orderedProduct.getIn(['brand', 'name'])}</Label>
+            ? <Label as='span' basic size='big' className='color__secondary'>{orderedProduct.getIn(['brand', 'name'])}</Label>
             : null
           }
           <Label as='p' basic size='big' className='color__secondary'>{orderedProduct.get('title')}</Label>
@@ -373,6 +373,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                 <Form.Field>
                   <Checkbox
                     radio
+                    className='margin__bottom-positive--20'
                     name='cash-prepaid'
                     value='CASH'
                     label={labelOne}
@@ -395,11 +396,11 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
           </Grid.Row>
         </Grid>
         <StepWrapper className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={visibility}>
-          <Label as='p' basic size='large' className='color__secondary'>
+          <Label as='p' basic size='big' className='color__secondary'>
             <FormattedMessage {...messages.chooseStore} />
           </Label>
           <StepHead step='2'>
-            <p className='color__grey'><FormattedMessage {...messages.defaultStore} /></p>
+            <p><FormattedMessage {...messages.defaultStore} /></p>
           </StepHead>
           <LocationButton className='color__secondary border__two--light-grey' onClick={this._handleStoreLocator} fluid iconBg={NextIcon}>
             {

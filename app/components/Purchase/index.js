@@ -18,7 +18,7 @@ import messages from './messages'
 
 const PurchaseWrapper = styled.div`
   width: 100%;
-  box-shadow: 0px 0px 20px #F0F0F0;
+  box-shadow: 0px 0px 10px rgba(174,174,174, 0.5);
   display: flex;
   height: 100%;
   margin: 0 auto;
