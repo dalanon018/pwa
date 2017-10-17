@@ -19,7 +19,10 @@ import {
   SET_STORE,
   STORE_LOCATOR,
 
-  SET_ORDER_HANDLER_DEFAULT
+  SET_ORDER_HANDLER_DEFAULT,
+
+  GET_BLACKLIST,
+  SET_BLACKLIST
 } from './constants'
 
 export function getOrderProductAction () {
@@ -91,6 +94,19 @@ export function setStoreAction (payload) {
 export function storeLocatorAction (payload) {
   return {
     type: STORE_LOCATOR,
+    payload
+  }
+}
+
+export function getBlackListAction () {
+  return {
+    type: GET_BLACKLIST
+  }
+}
+
+export function setBlackListAction (payload) {
+  return {
+    type: SET_BLACKLIST,
     payload
   }
 }

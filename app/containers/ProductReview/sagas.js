@@ -1,7 +1,7 @@
 import moment from 'moment'
 // import Firebase from 'utils/firebase-realtime'
 
-import { compose, is, ifElse, identity, map, uniq, isEmpty } from 'ramda'
+import { compose, is, ifElse, identity, map, uniq, isEmpty, propOr } from 'ramda'
 import { call, cancel, fork, put, take, select } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { takeLatest } from 'redux-saga'
@@ -16,7 +16,8 @@ import {
   GET_MOBILE_NUMBER,
   ORDER_SUBMIT,
   GET_STORE,
-  STORE_LOCATOR
+  STORE_LOCATOR,
+  GET_BLACKLIST
 } from './constants'
 
 import {
@@ -24,7 +25,8 @@ import {
   setMobileNumberAction,
   successOrderAction,
   setStoreAction,
-  errorOrderAction
+  errorOrderAction,
+  setBlackListAction
 } from './actions'
 
 import {
@@ -200,6 +202,26 @@ export function * submitOrder (args) {
   }
 }
 
+export function * getIsBlackList () {
+  const token = yield getAccessToken()
+  const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
+  // we will only get the last mobileNumber used
+  const mobile = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
+
+  try {
+    const req = yield call(request, `${API_BASE_URL}/customers/0${mobile}`, {
+      method: 'GET',
+      token: token.access_token
+    })
+    const isBlackListedProp = propOr(false, 'blacklisted')
+    const isBlackListed = isBlackListedProp(req)
+    yield (put(setBlackListAction(isBlackListed)))
+  } catch (e) {
+    // means offline and we need to black list it for safety
+    yield (put(setBlackListAction(true)))
+  }
+}
+
 export function * getOrderProductSaga () {
   yield * takeLatest(GET_ORDER_PRODUCT, getOrderProduct)
 }
@@ -220,10 +242,16 @@ export function * submitOrderSaga () {
   yield * takeLatest(ORDER_SUBMIT, submitOrder)
 }
 
+export function * getIsBlackListSaga () {
+  yield * takeLatest(GET_BLACKLIST, getIsBlackList)
+}
+
 export function * productReviewSagas () {
   const watcher = yield [
     fork(getOrderProductSaga),
     fork(getMobileNumberSaga),
+
+    fork(getIsBlackListSaga),
 
     fork(getStoreLocationSaga),
     fork(storeLocatorSaga),
