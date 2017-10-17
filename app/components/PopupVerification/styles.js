@@ -18,6 +18,9 @@ const PopupContainer = styled.div`
 
 const PopupContent = styled.div`
   padding: 15px 35px;
+  max-width: 355px;
+  margin: 0 auto;
+
   @media (min-width: 375px) {
     padding: 15px 50px;
   }

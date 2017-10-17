@@ -22,7 +22,7 @@ import Modal from 'components/PromptModal'
 
 import BannerBg from 'images/modal-bg-lightgrey.png'
 import MobileIcon from 'images/icons/mobile-icon.svg'
-import ResendIcon from 'images/test-images/v2/Mail.svg'
+import ResendIcon from 'images/icons/resend.png'
 
 import { Image, Label, Button } from 'semantic-ui-react'
 
@@ -148,6 +148,7 @@ export class PopupVerification extends React.PureComponent {
 
             <Button
               disabled={this.state.toggle}
+              fluid
               primary
               onClick={this._handleSubmit}>
               <FormattedMessage {...messages.submit} />

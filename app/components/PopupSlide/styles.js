@@ -18,24 +18,39 @@ const PopupContainer = styled.div`
 
 const PopupContent = styled.div`
   padding: 15px 35px;
+  max-width: 355px;
+  margin: 0 auto;
+
+  @media screen and (max-width: 374px) {
+    padding: 15px;
+  }
+
 `
 
 const InputWrapper = styled.div`
   display: flex;
   font-size: 30px;
   margin-bottom: 20px;
-  width: 280px;
   margin: 20px auto;
 
   input {
     font-size: 2.514286rem;
     margin-left: 10px;
-    padding: 4px 6px 0 6px;
+    padding: 2px 6px 0 6px;
     width: 100%;
+    font-weight: bold !important;
+
+    @media screen and (max-width: 374px) {
+      font-size: 2.5rem;
+      padding: 1px 6px 0 6px;
+    }
   }
   
   span {
     font-size: 2.514286rem;
+    @media screen and (max-width: 374px) {
+      font-size: 2.5rem;
+    }
   }
 `
 
