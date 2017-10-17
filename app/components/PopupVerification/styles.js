@@ -91,10 +91,14 @@ const ResendWrapper = styled.div`
     margin: 0 auto;
   }
 
+  span {
+    margin-left: 10px;
+  }
+
   img {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
+    width: 16px;
+    height: 16px;
+    margin: auto 0;
   }
 `
 
