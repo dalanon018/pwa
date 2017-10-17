@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { fromJS } from 'immutable'
 import { shallow } from 'enzyme'
 
