@@ -8,9 +8,7 @@ import React, { PropTypes } from 'react'
 
 import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
-import { createStructuredSelector } from 'reselect'
 import messages from './messages'
-import { push } from 'react-router-redux'
 import { noop } from 'lodash'
 import {
   compose,
@@ -51,8 +49,7 @@ export class PopupSlide extends React.PureComponent {
     toggle: PropTypes.bool.isRequired,
     modalClose: PropTypes.func,
     modalToggle: PropTypes.bool,
-    mobileNumber: PropTypes.string,
-    changeRoute: PropTypes.func
+    mobileNumber: PropTypes.string
   }
 
   state = {
@@ -70,7 +67,6 @@ export class PopupSlide extends React.PureComponent {
     this._handleCheck = this._handleCheck.bind(this)
     this._handleDisable = this._handleDisable.bind(this)
     this._handleSubmit = this._handleSubmit.bind(this)
-    this._goToTermsConditions = this._goToTermsConditions.bind(this)
     this._setDefaultMobileNumber = this._setDefaultMobileNumber.bind(this)
     this._validateData = this._validateData.bind(this)
     this._toggleTerms = this._toggleTerms.bind(this)
@@ -101,10 +97,6 @@ export class PopupSlide extends React.PureComponent {
     this.setState({
       toggleTerms: !toggleTerms
     })
-  }
-
-  _goToTermsConditions () {
-    this.props.changeRoute('/terms-conditions')
   }
 
   _handleCheck (e, data) {
@@ -237,6 +229,7 @@ export class PopupSlide extends React.PureComponent {
               <Button
                 disabled={this.state.toggle}
                 primary
+                fluid
                 onClick={this._handleSubmit}>
                     Submit
               </Button>
@@ -271,15 +264,4 @@ export class PopupSlide extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-
-})
-
-function mapDispatchToProps (dispatch) {
-  return {
-    changeRoute: (url) => dispatch(push(url)),
-    dispatch
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PopupSlide)
+export default connect()(PopupSlide)

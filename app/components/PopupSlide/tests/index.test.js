@@ -1,5 +1,6 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { IntlProvider } from 'react-intl'
+import { shallow, mount } from 'enzyme'
 
 import { PopupSlide } from '../index'
 
@@ -25,6 +26,8 @@ const wrapper = (props = {}, enzyme = shallow) => shallow(
   <PopupSlide {...props} />
 )
 
+// const _setMarkDownContent = () => {}
+
 describe('<PopupSlide />', () => {
   const minProps = {
     submit: () => {},
@@ -33,7 +36,8 @@ describe('<PopupSlide />', () => {
     changeRoute: () => {},
     modalToggle: false,
     toggle: false,
-    mobileNumber: '9123456780'
+    mobileNumber: '9123456780',
+    markdown: ''
   }
 
   it('render without exploding', () => {
@@ -41,6 +45,17 @@ describe('<PopupSlide />', () => {
     expect(
       renderComponent.length
     ).toEqual(1)
+  })
+
+  it('markdown props has value', () => {
+    const renderComponent = mount(
+      <IntlProvider locale='en'>
+        <PopupSlide {...minProps} />
+      </IntlProvider>
+    )
+
+    renderComponent.setProps({ markdown: 'test' })
+    expect(renderComponent.props().markdown).toBe('test')
   })
 
   it('renders one <PopupWrapper/> styled component', () => {
