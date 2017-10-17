@@ -4,7 +4,7 @@ import {
   BannerWrapper
 } from '../styles'
 
-const wrapper = (Component, props = {}, enzyme = shallow) => shallow(
+const wrapper = (Component, props = {}, enzyme = shallow) => enzyme(
   <Component {...props} />
 )
 
