@@ -24,6 +24,10 @@ const Wrapper = styled.div`
       padding: 0 !important;
     }
   }
+
+  .header-menu-grid {
+    height: 100%;
+  }
 `
 
 const LeftWrapper = styled.div`
@@ -106,14 +110,14 @@ const HamburgerSpan = styled.span`
   &::before {
     transform-origin: top right;
     transition: transform 0.3s, width 0.3s, top 0.3s;
-    top: ${({active}) => active ? '0' : '-8px'};
+    top: ${({active}) => active ? '0' : '-5px'};
     transform: ${({active}) => active ? 'translateX(0) translateY(0) rotate(45deg)' : 'none'};
   }
 
   &::after {
     transform-origin: bottom right;
     transition: transform 0.3s, width 0.3s, bottom 0.3s;
-    bottom: ${({active}) => active ? '0' : '-8px'};;
+    bottom: ${({active}) => active ? '0' : '-5px'};;
     transform: ${({active}) => active ? 'translateX(0) translateY(0) rotate(-45deg)' : 'none'};
   }
 `
@@ -244,7 +248,7 @@ export default class MainMenu extends PureComponent {
     return (
       <Wrapper>
         <MobileMenu className='header-wrapper background__white'>
-          <Grid padded>
+          <Grid padded className='header-menu-grid'>
             <Grid.Row>
               <Grid.Column
                 width={this.__handleColumnSize(currentRoute, 'side')}

@@ -16,7 +16,6 @@ import {
 
   SET_PRODUCT_HANDLER_DEFAULT,
 
-  GET_MARKDOWN,
   SET_MARKDOWN
 } from './constants'
 
@@ -55,14 +54,9 @@ function productPageReducer (state = initialState, action) {
       return state
           .set('mobileNumbers', fromJS(action.payload))
 
-    case GET_MARKDOWN:
-      return state
-        .set('loading', true)
-
     case SET_MARKDOWN:
       return state
         .set('markdown', action.payload)
-        .set('loading', false)
 
     case SET_PRODUCT_HANDLER_DEFAULT:
       return state
