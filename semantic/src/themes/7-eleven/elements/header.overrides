@@ -20,7 +20,7 @@ h2.ui.header {
 }
 
 h3.ui.header {
-  font-size: 16px;
+  font-size: 16.5px;
 }
 
 h4.ui.header {

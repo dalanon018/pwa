@@ -21,9 +21,6 @@ const CheckboxWrapper = styled.div`
   span {
     line-height: 17px !important;
   }
-  #checkbox {
-    margin-right: 15px;
-  }
   a {
     color: #F58322;
     text-decoration: underline;

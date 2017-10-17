@@ -82,6 +82,13 @@ p {
   line-height: 1em;
 }
 
+.search.icon {
+  color: @darkGrey;
+  font-size: 18px;
+  opacity: 1 !important;
+  width: 35px !important;
+}
+
 .ui.loader {
   z-index: 2 !important;
 }

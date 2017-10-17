@@ -10,11 +10,16 @@ import messages from './messages'
 
 const Timer = styled.div`
   font-size: 25px;
+  font-weight: 700;
 `
 
 const HeaderOrder = styled.div`
   ${''}
   font-size: 11px;
+`
+
+const TimerWrapper = styled.div`
+  padding: 0 50px;
 `
 
 const ShowHeaderStatus = ({currentStatus, timer}) => {
@@ -31,8 +36,8 @@ const ShowHeaderStatus = ({currentStatus, timer}) => {
 const PurchaseOrder = ({ status, receipt, timer }) => {
   const currentStatus = status || 'unknownStatus'
   return (
-    <div>
-      <Label className='text__roboto--light color__secondary' as='p' basic size='large'>
+    <TimerWrapper>
+      <Label className='text__roboto--light color__secondary' as='p' basic size='medium'>
         <ShowHeaderStatus {...{ currentStatus, timer }} />
       </Label>
       <HeaderOrder {...{ status }} >
@@ -44,7 +49,7 @@ const PurchaseOrder = ({ status, receipt, timer }) => {
         }
       </HeaderOrder>
       {/* <PackageStatus {...{ status }} /> */}
-    </div>
+    </TimerWrapper>
   )
 }
 

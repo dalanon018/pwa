@@ -178,7 +178,7 @@ export class PopupSlide extends React.PureComponent {
       {
         name: 'checkbox',
         label: (
-          <span className='test'>
+          <span className='checkbox-label'>
             I have read and accepted the
             <A key={0} onClick={this._toggleTerms}> Terms and Conditions</A>
           </span>
@@ -197,7 +197,7 @@ export class PopupSlide extends React.PureComponent {
           <PopupContainer>
             <PopupContent>
               <TextWrapper>
-                <Label as='p' basic size='big' className='color__secondary'>
+                <Label as='p' basic size='huge' className='color__secondary'>
                   <FormattedMessage {...messages.register} />
                 </Label>
                 <Label as='p' basic color='grey' size='medium'><FormattedMessage {...messages.label} /></Label>

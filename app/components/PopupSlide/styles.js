@@ -14,6 +14,10 @@ const PopupWrapper = styled.div`
 
 const PopupContainer = styled.div`
   padding: 10px;
+
+  .checkbox-label {
+    text-align: left;
+  }
 `
 
 const PopupContent = styled.div`

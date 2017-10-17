@@ -5,7 +5,7 @@ const BannerSliderWrapper = styled.div`
   position: relative;
   width: 100%;
   display: block;
-  margin-bottom: 0;
+  margin-bottom: 10px;
 
   img {
     width: 100%;

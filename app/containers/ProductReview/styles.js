@@ -85,10 +85,14 @@ const ProductItem = styled.div`
 `
 const StepWrapper = styled.div`
   margin-bottom: 90px;
-  padding: 10px 14px;
+  padding: 15px 14px;
 
   &.visibility {
     display: ${({ visibility }) => visibility ? 'block' : 'none'};
+    // height: ${({ visibility }) => visibility ? '175px' : '0'};
+    // margin-bottom: ${({ visibility }) => visibility ? '90px' : '0'}; !important;
+    // padding: ${({ visibility }) => visibility ? '15px 14px' : '0'}; !important;
+    transition: all .3s ease;
 
     span {
       align-self: flex-start;
@@ -147,10 +151,9 @@ const SelectMethodWrapper = styled.div`
     border-radius: 5px;
     border: 2px solid #F0F0F0;
     height: 100%;
-    padding: 20px 10px;
+    padding: 10px;
     position: relative;
     width: 100%;
-    margin: 10px 0;
 
     &.checked {
       border: 2px solid #8DC640;
@@ -161,7 +164,7 @@ const SelectMethodWrapper = styled.div`
       content: '';
       background-color: #8DC640 !important;
       left: 6px;
-      top: ${props => props.checkHeight ? '30px' : '18px'};
+      top: ${props => props.checkHeight ? '29px' : '17px'};
       display: block;
       width: 5px;
       height: 9px;
