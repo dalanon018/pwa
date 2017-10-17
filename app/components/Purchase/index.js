@@ -175,8 +175,8 @@ class Purchase extends React.PureComponent {
             <PurchaseInfo>
               <div>
                 {
-                  receipt.getIn(['products', 'temporaryBrand'])
-                  ? <Label as='span' basic size='large' className='color__secondary'>{receipt.getIn(['products', 'temporaryBrand'])}</Label>
+                  receipt.getIn(['products', 'brand'])
+                  ? <Label as='span' basic size='large' className='color__secondary'>{receipt.getIn(['products', 'brand', 'name'])}</Label>
                   : null
                 }
                 <Label as='p' basic size='large' className='color__secondary'>

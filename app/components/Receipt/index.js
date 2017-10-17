@@ -291,8 +291,8 @@ class Receipt extends React.PureComponent {
             <ReceiptContent id='fadeMe' show={show}>
               <Grid padded className='scan padding__14' centered textAlign='center'>
                 {
-                  receipt.getIn(['products', 'temporaryBrand'])
-                  ? <Label as='span' basic size='huge' className='color__secondary'>{receipt.getIn(['products', 'temporaryBrand'])}</Label>
+                  receipt.getIn(['products', 'brand'])
+                  ? <Label as='span' basic size='huge' className='color__secondary'>{receipt.getIn(['products', 'brand', 'name'])}</Label>
                   : null
                 }
                 <Label as='p' basic size='huge' className='color__secondary'>{receipt.getIn(['products', 'name'])}</Label>
