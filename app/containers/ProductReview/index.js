@@ -71,7 +71,7 @@ import {
 const isDoneRequesting = (loader) => () => (loader === false)
 const isEntityEmpty = compose(equals(0), prop('size'))
 
-const ShowCodComponent = ({ isBlackListed, ...rest }) => {
+export const ShowCodComponent = ({ isBlackListed, ...rest }) => {
   const showComponent = ifElse(
     identity,
     () => null,
@@ -91,12 +91,14 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     storeLocator: PropTypes.func.isRequired,
     productLoader: PropTypes.bool.isRequired,
     mobileLoader: PropTypes.bool.isRequired,
+    isBlackListed: PropTypes.bool.isRequired,
     orderedProduct: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.object
     ]).isRequired,
     mobileNumber: PropTypes.string,
     orderRequesting: PropTypes.bool.isRequired,
+    getBlackList: PropTypes.func.isRequired,
     orderSuccess: PropTypes.object.isRequired,
     orderFail: PropTypes.object.isRequired,
     storeLocation: PropTypes.object

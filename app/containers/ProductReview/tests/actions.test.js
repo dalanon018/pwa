@@ -9,7 +9,9 @@ import {
  errorOrderAction,
  getStoreAction,
  setStoreAction,
- storeLocatorAction
+ storeLocatorAction,
+ getBlackListAction,
+ setBlackListAction
 } from '../actions'
 
 import {
@@ -25,7 +27,10 @@ import {
 
   GET_STORE,
   SET_STORE,
-  STORE_LOCATOR
+  STORE_LOCATOR,
+
+  GET_BLACKLIST,
+  SET_BLACKLIST
 } from '../constants'
 
 describe('ProductsReview actions', () => {
@@ -161,6 +166,24 @@ describe('ProductsReview actions', () => {
       }
 
       expect(storeLocatorAction(payload)).toEqual(expectedResult)
+    })
+  })
+
+  describe('BlackLists Actions', () => {
+    it('should get blackList', () => {
+      const expectedResult = {
+        type: GET_BLACKLIST
+      }
+      expect(getBlackListAction()).toEqual(expectedResult)
+    })
+
+    it('should set blackList', () => {
+      const payload = true
+      const expectedResult = {
+        type: SET_BLACKLIST,
+        payload
+      }
+      expect(setBlackListAction(payload)).toEqual(expectedResult)
     })
   })
 })

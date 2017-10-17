@@ -2,7 +2,8 @@ import React from 'react'
 
 import { fromJS } from 'immutable'
 import { shallow } from 'enzyme'
-import { ProductReview } from '../index'
+import { Checkbox } from 'semantic-ui-react'
+import { ProductReview, ShowCodComponent } from '../index'
 
 const children = (<h1>Test</h1>)
 const wrapper = (props = {}, enzyme = shallow) => enzyme(
@@ -17,6 +18,8 @@ describe('<ProductReview />', () => {
     getStore: () => {},
     storeLocator: () => {},
     getProductCategories: () => {},
+    getBlackList: () => {},
+    isBlackListed: false,
     loader: false,
     orderedProduct: fromJS({
       'product_id': '0001',
@@ -44,5 +47,21 @@ describe('<ProductReview />', () => {
     expect(
       renderComponent.length
     ).toEqual(1)
+  })
+
+  it('should render <ShowCodComponent/> null if isBlackListed === true', () => {
+    const props = {
+      isBlackListed: true
+    }
+    const renderComponent = shallow(<ShowCodComponent {...props} />)
+    expect(renderComponent.html()).toEqual(null)
+  })
+
+  it('should render <ShowCodComponent/> CheckBox if isBlackListed === false', () => {
+    const props = {
+      isBlackListed: false
+    }
+    const renderComponent = shallow(<ShowCodComponent {...props} />)
+    expect(renderComponent.find(Checkbox).length).toEqual(1)
   })
 })
