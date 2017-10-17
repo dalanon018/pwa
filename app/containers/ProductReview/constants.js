@@ -19,3 +19,7 @@ export const STORE_LOCATOR = 'app/ProductReview/STORE_LOCATOR'
 
 // This will set our /success and error handler to default
 export const SET_ORDER_HANDLER_DEFAULT = 'app/ProductReview/SET_ORDER_HANDLER_DEFAULT'
+
+// Blacklist
+export const GET_BLACKLIST = 'app/ProductReview/GET_BLACKLIST'
+export const SET_BLACKLIST = 'app/ProductReview/SET_BLACKLIST'

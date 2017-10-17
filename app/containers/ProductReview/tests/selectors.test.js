@@ -3,7 +3,8 @@ import { fromJS } from 'immutable'
 import {
   selectOrderProduct,
   selectMobileNumber,
-  selectStoreLocation
+  selectStoreLocation,
+  selectBlackListed
 } from '../selectors'
 
 describe('ProductReview Selectors', () => {
@@ -49,6 +50,20 @@ describe('ProductReview Selectors', () => {
         }
       })
       expect(selectStoreLocationSelectors(mockedState)).toEqual(storeLocation)
+    })
+  })
+
+  describe('selectBlackListed', () => {
+    const selectBlackListedSelectors = selectBlackListed()
+
+    it('should get success submission', () => {
+      const isBlackListed = true
+      const mockedState = fromJS({
+        productReview: {
+          isBlackListed
+        }
+      })
+      expect(selectBlackListedSelectors(mockedState)).toEqual(isBlackListed)
     })
   })
 })

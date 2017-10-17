@@ -18,7 +18,9 @@ import {
 
   SET_STORE,
 
-  SET_ORDER_HANDLER_DEFAULT
+  SET_ORDER_HANDLER_DEFAULT,
+
+  SET_BLACKLIST
 } from './constants'
 
 const initialState = fromJS({
@@ -29,7 +31,8 @@ const initialState = fromJS({
   productLoading: false,
   mobileNumber: null,
   mobileLoading: false,
-  storeLocation: {}
+  storeLocation: {},
+  isBlackListed: true
 })
 
 function productReviewReducer (state = initialState, action) {
@@ -68,6 +71,10 @@ function productReviewReducer (state = initialState, action) {
 
     case SET_STORE:
       return state.set('storeLocation', fromJS(action.payload))
+
+    case SET_BLACKLIST:
+      return state
+        .set('isBlackListed', action.payload)
 
     default:
       return state

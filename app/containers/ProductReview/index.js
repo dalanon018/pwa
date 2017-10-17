@@ -25,7 +25,8 @@ import {
   submitOrderAction,
   setOrderHandlersDefaultAction,
   getStoreAction,
-  storeLocatorAction
+  storeLocatorAction,
+  getBlackListAction
 } from './actions'
 
 import {
@@ -36,7 +37,8 @@ import {
   selectSubmitting,
   selectSubmissionSuccess,
   selectSubmissionError,
-  selectStoreLocation
+  selectStoreLocation,
+  selectBlackListed
 } from './selectors'
 
 import {
@@ -69,6 +71,19 @@ import {
 const isDoneRequesting = (loader) => () => (loader === false)
 const isEntityEmpty = compose(equals(0), prop('size'))
 
+export const ShowCodComponent = ({ isBlackListed, ...rest }) => {
+  const showComponent = ifElse(
+    identity,
+    () => null,
+    () => (
+      <Form.Field> {/* Cash on Deliver option */}
+        <Checkbox {...rest} />
+      </Form.Field>
+    )
+  )
+  return showComponent(isBlackListed)
+}
+
 export class ProductReview extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     getOrderProduct: PropTypes.func.isRequired,
@@ -76,12 +91,14 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     storeLocator: PropTypes.func.isRequired,
     productLoader: PropTypes.bool.isRequired,
     mobileLoader: PropTypes.bool.isRequired,
+    isBlackListed: PropTypes.bool.isRequired,
     orderedProduct: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.object
     ]).isRequired,
     mobileNumber: PropTypes.string,
     orderRequesting: PropTypes.bool.isRequired,
+    getBlackList: PropTypes.func.isRequired,
     orderSuccess: PropTypes.object.isRequired,
     orderFail: PropTypes.object.isRequired,
     storeLocation: PropTypes.object
@@ -205,7 +222,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   componentDidMount () {
-    const { router: { location: { query } }, getOrderProduct, getMobileNumber, getStore } = this.props
+    const { router: { location: { query } }, getOrderProduct, getMobileNumber, getStore, getBlackList } = this.props
 
     const selectQuery = compose(
       ifElse(
@@ -222,6 +239,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
     getOrderProduct()
     getMobileNumber()
+    getBlackList()
     getStore()
     selectQuery(query)
 
@@ -268,7 +286,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   render () {
-    const { orderedProduct, orderRequesting, changeRoute } = this.props
+    const { orderedProduct, orderRequesting, changeRoute, isBlackListed } = this.props
     const { errorMessage, modePayment, modalToggle, visibility, store } = this.state
     const toggleDiscount = this._showDiscountPrice(
       <span className='strike color__grey'>
@@ -362,17 +380,16 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                     onChange={this._handleChange}
                     />
                 </Form.Field>
-                <Form.Field> {/* Cash on Deliver option */}
-                  <Checkbox
-                    radio
-                    name='cod'
-                    value='COD'
-                    label={labelTwo}
-                    checked={modePayment === 'COD'}
-                    onChange={this._handleChange}
-                    onClick={this._handleToBottom}
-                    />
-                </Form.Field>
+                <ShowCodComponent
+                  radio
+                  isBlackListed={isBlackListed}
+                  name='cod'
+                  value='COD'
+                  label={labelTwo}
+                  checked={modePayment === 'COD'}
+                  onChange={this._handleChange}
+                  onClick={this._handleToBottom}
+                />
               </Form>
             </SelectMethodWrapper>
           </Grid.Row>
@@ -419,7 +436,8 @@ const mapStateToProps = createStructuredSelector({
   orderRequesting: selectSubmitting(),
   orderSuccess: selectSubmissionSuccess(),
   orderFail: selectSubmissionError(),
-  previousStore: selectStoreLocation()
+  previousStore: selectStoreLocation(),
+  isBlackListed: selectBlackListed()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -427,6 +445,7 @@ function mapDispatchToProps (dispatch) {
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
+    getBlackList: () => dispatch(getBlackListAction()),
     getOrderProduct: () => dispatch(getOrderProductAction()),
     getMobileNumber: () => dispatch(getMobileNumberAction()),
     submitOrder: (payload) => dispatch(submitOrderAction(payload)),
