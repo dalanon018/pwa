@@ -3,9 +3,12 @@ import { fromJS } from 'immutable'
 import { shallow } from 'enzyme'
 import ProductView from '../index'
 
-// const wrapper = (props = {}, enzyme = shallow) => shallow(
-//   <ProductView {...props} />
-// )
+import {
+  ImageWrapper,
+  ProductInfo,
+  ProductPriceWrapper,
+  ProductWrapper
+} from '../styles'
 
 describe('<ProductView />', () => {
   const minProps = {
@@ -18,16 +21,27 @@ describe('<ProductView />', () => {
     expect(renderedComponent.find('div').length).toEqual(0)
   })
 
-  // it('render without exploding', () => {
-  //   const renderComponent = wrapper()
-  //   expect(
-  //     renderComponent.length
-  //   ).toEqual(1)
-  // })
-
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(true)
   })
 
-  // TODO: We have to add some test cases here...
+  it('renders zero <ImageWrapper/> styled component', () => {
+    const ShallowedWrapper = shallow(<ProductView {...minProps} />)
+    expect(ShallowedWrapper.find(ImageWrapper)).toHaveLength(0)
+  })
+
+  it('renders zero <ProductInfo/> styled component', () => {
+    const ShallowedWrapper = shallow(<ProductView {...minProps} />)
+    expect(ShallowedWrapper.find(ProductInfo)).toHaveLength(0)
+  })
+
+  it('renders zero <ProductWrapper/> styled component', () => {
+    const ShallowedWrapper = shallow(<ProductView {...minProps} />)
+    expect(ShallowedWrapper.find(ProductWrapper)).toHaveLength(0)
+  })
+
+  it('renders zero <ProductPriceWrapper/> styled component', () => {
+    const ShallowedWrapper = shallow(<ProductView {...minProps} />)
+    expect(ShallowedWrapper.find(ProductPriceWrapper)).toHaveLength(0)
+  })
 })
