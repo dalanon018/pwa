@@ -71,8 +71,8 @@ function SearchResult ({ product, changeRoute, windowWidth }) {
               </List.Content>
               <ItemWrapper>
                 {
-                  result.get('temporaryBrand')
-                  ? <Title as='span' basic size='large' className='color__secondary'>{result.get('temporaryBrand')}</Title>
+                  result.get('brand')
+                  ? <Title as='span' basic size='large' className='color__secondary'>{result.getIn(['brand', 'name'])}</Title>
                   : null
                 }
                 <List.Content>

@@ -49,6 +49,7 @@ const Product = ({
   loading,
   popup,
   toggle,
+  changeRoute,
   toggleClick,
   defaultImage,
   copied,
@@ -61,7 +62,12 @@ const Product = ({
     TwitterShareButton
   } = ShareButtons
   const productImages = [product.get('image')]
-  const brandLogo = product.get('brandLogo') ? (<Image className='brand-logo' alt='Cliqq' src={product.get('brandLogo')} />) : ''
+  const brandLogo = product.get('brandLogo') ? (
+    <Image
+      className='brand-logo'
+      alt='Cliqq'
+      src={product.get('brandLogo')}
+      onClick={changeRoute.bind(this, `/brands/${product.getIn(['brand', 'code'])}`)} />) : ''
   const toggleOrigDiscountPrice = (product) => {
     return product.get('discountPrice') || product.get('price')
   }
@@ -93,8 +99,8 @@ const Product = ({
         <ProductMainContent>
           <LoadingStateInfo loading={loading} center>
             {
-              product.get('temporaryBrand')
-              ? <Label className='no-margin-bottom color__secondary' as='p' basic size='big'>{product.get('temporaryBrand')}</Label>
+              product.get('brand')
+              ? <Label className='no-margin-bottom color__secondary' as='p' basic size='big'>{product.getIn(['brand', 'name'])}</Label>
               : null
             }
             <Label as='p' basic size='big'>{product.get('title')}</Label>

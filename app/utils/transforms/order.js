@@ -14,6 +14,7 @@ import {
 } from 'ramda'
 
 import {
+  OBJECT,
   NUMBER,
   STRING,
   ValidateSchema
@@ -24,6 +25,10 @@ const Schema = {
   trackingNumber: {
     name: 'trackingNumber',
     type: STRING
+  },
+  brand: {
+    name: 'brand',
+    type: OBJECT
   },
   imageUrl: {
     name: 'image',
@@ -83,7 +88,7 @@ const transformOrder = (data) => {
   const changeKey = (key) => Schema[key].name
   const applySchemaName = mapKeys(changeKey, data)
   // what product object should have
-  const product = ['name', 'image', 'brandLogo', 'cliqqCode']
+  const product = ['name', 'image', 'brandLogo', 'cliqqCode', 'brand']
 
   const addProductObject = (data) => {
     const shouldBeIncluded = (key) => product.includes(key)
