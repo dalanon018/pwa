@@ -141,5 +141,8 @@ if (!window.Intl) {
 // it's not most important operation and if main code fails,
 // we do not want it installed
 if (process.env.NODE_ENV === 'production') {
+  const Notification = require('utils/firebase-notification').default
+  // we need to make sure that offline is register before we can install our notification
   require('offline-plugin/runtime').install()
+  Notification.install()
 }

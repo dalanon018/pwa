@@ -61,7 +61,8 @@ const Product = ({
   const {
     TwitterShareButton
   } = ShareButtons
-  const productImages = [product.get('image')]
+  const productSliders = product.get('sliders') ? product.get('sliders').toArray() : []
+  const productImages = [product.get('image')].concat(productSliders)
   const brandLogo = product.get('brandLogo') ? (
     <Image
       className='brand-logo'

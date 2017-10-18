@@ -24,7 +24,9 @@ import {
 
   SET_TOGGLE,
 
-  GET_PRODUCT_CATEGORIES
+  GET_PRODUCT_CATEGORIES,
+
+  SET_REGISTED_PUSH
 } from './constants'
 
 const initialState = fromJS({
@@ -38,7 +40,8 @@ const initialState = fromJS({
   loader: false,
   pageTitle: null,
   searchIconShow: false,
-  activityIconShow: false
+  activityIconShow: false,
+  isRegisteredPush: false
 })
 
 function bucketsReducer (state = initialState, action) {
@@ -80,6 +83,11 @@ function bucketsReducer (state = initialState, action) {
         .set('toggleMessage', action.payload)
         .set('toggleError', Boolean(toggle))
     }
+
+    case SET_REGISTED_PUSH:
+      return state
+        .set('isRegisteredPush', action.payload)
+
     default:
       return state
   }

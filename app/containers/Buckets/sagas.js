@@ -15,13 +15,16 @@ import { getRequestData } from 'utils/offline-request'
 import { transformCategory, transformBrand, transformOrder } from 'utils/transforms'
 import { getItem, setItem } from 'utils/localStorage'
 import { DateDifferece } from 'utils/date'
+import { getBrowserInfo } from 'utils/http'
 
 import {
   GET_PRODUCT_CATEGORIES,
   GET_BRANDS,
   GET_MOBILE_NUMBERS,
   GET_RECEIPT_UPDATED,
-  STATUSES
+  STATUSES,
+  REGISTER_PUSH,
+  GET_REGISTED_PUSH
 } from './constants'
 
 import {
@@ -29,7 +32,8 @@ import {
   setBrandsAction,
   setMobileNumbersAction,
   setUpdatedReceiptsAction,
-  setNetworkErrorAction
+  setNetworkErrorAction,
+  setRegisteredPushAction
 } from './actions'
 
 import {
@@ -40,6 +44,7 @@ import {
   OATH_CLIENT_SECRET,
   OATH_RESPONSE_TYPE,
   OATH_GRANT_TYPE,
+  REGISTERED_PUSH,
 
   ACCESS_TOKEN_KEY,
   MOBILE_NUMBERS_KEY,
@@ -294,6 +299,40 @@ export function * getUpdatedReceipts (payload) {
   }
 }
 
+export function * registerPushNotification (payload) {
+  const { payload: { token } } = payload
+  const authToken = yield getAccessToken()
+  const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
+  // we will only get the last mobileNumber used
+  const mobileNumber = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
+  const { name } = getBrowserInfo()
+
+  try {
+    yield call(request, `${API_BASE_URL}/browserToken`, {
+      method: 'POST',
+      token: authToken.access_token,
+      body: JSON.stringify({
+        browser: name,
+        mobileNumber,
+        token
+      })
+    })
+
+    // we will set the registered to true
+    yield call(setItem, REGISTERED_PUSH, token)
+    yield put(setRegisteredPushAction(token))
+  } catch (e) {
+    yield put(setNetworkErrorAction('Please make sure you have internet connection to order a product.'))
+    yield put(setRegisteredPushAction(false))
+  }
+}
+
+export function * getIsRegisteredPush () {
+  const isRegistered = yield call(getItem, REGISTERED_PUSH)
+
+  yield put(setRegisteredPushAction(isRegistered || false))
+}
+
 export function * getCategoriesSaga () {
   yield * takeLatest(GET_PRODUCT_CATEGORIES, getCategories)
 }
@@ -310,6 +349,14 @@ export function * getUpdatedReceiptsSaga () {
   yield * takeLatest(GET_RECEIPT_UPDATED, getUpdatedReceipts)
 }
 
+export function * registerPushNotificationSaga () {
+  yield * takeLatest(REGISTER_PUSH, registerPushNotification)
+}
+
+export function * getIsRegisteredPushSaga () {
+  yield * takeLatest(GET_REGISTED_PUSH, getIsRegisteredPush)
+}
+
 // All sagas to be loaded
 export function * bucketsSagas () {
   const watcher = yield [
@@ -317,7 +364,11 @@ export function * bucketsSagas () {
     fork(getBrandsSaga),
     fork(getMobileNumbersSaga),
 
-    fork(getUpdatedReceiptsSaga)
+    fork(getUpdatedReceiptsSaga),
+
+    fork(registerPushNotificationSaga),
+
+    fork(getIsRegisteredPushSaga)
   ]
 
   // Suspend execution until location changes

@@ -78,6 +78,11 @@ const selectShowActivityIcon = () => createSelector(
   (substate) => substate.get('activityIconShow')
 )
 
+const selectIsRegisteredPush = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('isRegisteredPush')
+)
+
 export {
   selectBucketDomain,
   selectToggle,
@@ -92,5 +97,6 @@ export {
   selectLoader,
   selectPageTitle,
   selectShowSearchIcon,
-  selectShowActivityIcon
+  selectShowActivityIcon,
+  selectIsRegisteredPush
 }

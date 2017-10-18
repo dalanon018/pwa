@@ -13,7 +13,6 @@ describe('Receipt Reducer', () => {
       receipt: {},
       loading: false,
       repurchase: {},
-      isRegisteredPush: false,
       repurchaseSuccess: false,
       repurchaseError: null
     })

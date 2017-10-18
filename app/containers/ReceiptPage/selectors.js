@@ -38,17 +38,11 @@ const selectRepurchaseError = () => createSelector(
   (substate) => substate.get('repurchaseError')
 )
 
-const selectIsRegisteredPush = () => createSelector(
-  selectPurchaseEntityDomain(),
-  (substate) => substate.get('isRegisteredPush')
-)
-
 export {
   selectPurchaseEntityDomain,
   selectReceipt,
   selectLoading,
   selectRepurchase,
   selectRepurchaseSuccess,
-  selectRepurchaseError,
-  selectIsRegisteredPush
+  selectRepurchaseError
 }

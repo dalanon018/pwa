@@ -29,6 +29,10 @@ export const SET_SHOW_SEARCH_ICON = 'app/Container/SET_SHOW_SEARCH_ICON'
 export const GET_SHOW_ACTIVITY_ICON = 'app/Container/GET_SHOW_ACTIVITY_ICON'
 export const SET_SHOW_ACTIVITY_ICON = 'app/Container/SET_SHOW_ACTIVITIES_ICON'
 
+export const REGISTER_PUSH = 'app/Container/REGISTER_PUSH'
+export const GET_REGISTED_PUSH = 'app/Container/GET_REGISTED_PUSH'
+export const SET_REGISTED_PUSH = 'app/Container/SET_REGISTED_PUSH'
+
 export const HIDE_BACK_BUTTON = [
   '',
   'home',

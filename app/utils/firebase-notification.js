@@ -10,11 +10,26 @@ class Notification {
 
   constructor (FirebaseInit) {
     this._Firebase = FirebaseInit
+    this.requestPermission = this.requestPermission.bind(this)
+    this.install = this.install.bind(this)
+    this.refreshToken = this.refreshToken.bind(this)
+  }
+
+  refreshToken (cb, currentToken) {
+    this._Firebase.messaging().getToken()
+    .then((token) => {
+      return currentToken !== token ? cb(null, token) : cb(new Error('Same Token'))
+    })
+    .catch(cb)
+  }
+
+  requestPermission (cb) {
+    this._Firebase.messaging().requestPermission()
+    .then(() => this.refreshToken(cb))
   }
 
   install (cb) {
-    this._messaging = this._Firebase.messaging()
-    this._messaging.onMessage((payload) => {
+    this._Firebase.messaging().onMessage((payload) => {
       console.log('Message received. ', payload)
       // ...
     })
@@ -22,14 +37,9 @@ class Notification {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then((registrations) => {
         // we will only register the 1st one since thats our service worker
-        this._messaging.useServiceWorker(registrations[0])
+        this._Firebase.messaging().useServiceWorker(registrations[0])
       })
-      .then(() => this._messaging.requestPermission())
-      .then(() => this._messaging.getToken()) // get token
-      .then((token) => {
-        cb(null, token)
-      })
-      .catch(cb)
+      .catch((e) => console.log('Registration failed error:', e))
     }
   }
 }

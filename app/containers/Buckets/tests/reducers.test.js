@@ -22,7 +22,8 @@ describe('Buckets Reducer', () => {
       loader: false,
       pageTitle: null,
       searchIconShow: false,
-      activityIconShow: false
+      activityIconShow: false,
+      isRegisteredPush: false
     })
   })
 
