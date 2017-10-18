@@ -25,7 +25,7 @@ const Wrapper = styled.div`
 
 const LeftWrapper = styled.div`
   display: flex;
-  justify-content: flex-start;
+  padding-left: 10px;
 
   animation:fadeIn ease-in 1;
   animation-duration: .5s;

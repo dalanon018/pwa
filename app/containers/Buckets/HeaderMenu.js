@@ -55,6 +55,11 @@ const ImageLogo = styled.img`
 const RightWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+
+  .mini {
+    height: 20px !important;
+    width: 20px !important;
+  }
 `
 
 const ActiviesIcon = styled.div`
@@ -62,7 +67,7 @@ const ActiviesIcon = styled.div`
 
 
   @media screen and (max-width: 767px) {
-    margin-left: 10px !important;
+    margin-left: 15px !important;
   }
   @media screen and (max-width: 320px) {
     margin-left: 4px !important;

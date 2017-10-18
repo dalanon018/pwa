@@ -84,7 +84,7 @@ p {
 
 .search.icon {
   color: @darkGrey;
-  font-size: 18px;
+  font-size: 16px;
   opacity: 1 !important;
   width: 35px !important;
 }

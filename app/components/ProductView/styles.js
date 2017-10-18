@@ -46,14 +46,14 @@ const ProductPriceWrapper = styled.div`
 
   .product-price {
     font-family: 'Roboto';
-    letter-spacing: -2px;
+    letter-spacing: -1.5px;
     line-height: 30px;
     padding: 0;
   }
 
   .product-discount {
     font-family: 'Roboto';
-    letter-spacing: -2px;
+    letter-spacing: -1.5px;
     margin-left: 5px;
     text-decoration: line-through;
   }

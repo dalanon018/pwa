@@ -67,6 +67,19 @@ export const ReceiptContainer = styled.div`
 
 export const ReceiptHeader = styled.div`
   padding: 14px;
+
+  @media (min-width: 320px) and (max-width:374px) {
+    .order-number {
+      p {
+        font-size: 15px !important;
+      }
+    }
+    .product-status {
+      p {
+        font-size: 15px !important;
+      }
+    }
+  }
 `
 
 export const ReceiptContent = styled.div`
