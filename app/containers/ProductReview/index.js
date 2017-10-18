@@ -71,18 +71,11 @@ import {
 const isDoneRequesting = (loader) => () => (loader === false)
 const isEntityEmpty = compose(equals(0), prop('size'))
 
-export const ShowCodComponent = ({ isBlackListed, ...rest }) => {
-  const showComponent = ifElse(
-    identity,
-    () => null,
-    () => (
-      <Form.Field> {/* Cash on Deliver option */}
-        <Checkbox {...rest} />
-      </Form.Field>
-    )
-  )
-  return showComponent(isBlackListed)
-}
+export const ShowCodComponent = ({ isBlackListed, ...rest }) => (
+  <Form.Field> {/* Cash on Deliver option */}
+    <Checkbox disabled={isBlackListed} {...rest} />
+  </Form.Field>
+)
 
 export class ProductReview extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
