@@ -28,6 +28,10 @@ const Wrapper = styled.div`
   .header-menu-grid {
     height: 100%;
   }
+
+  .custom-column {
+    padding: 0 8px !important;
+  }
 `
 
 const LeftWrapper = styled.div`
@@ -110,14 +114,14 @@ const HamburgerSpan = styled.span`
   &::before {
     transform-origin: top right;
     transition: transform 0.3s, width 0.3s, top 0.3s;
-    top: ${({active}) => active ? '0' : '-5px'};
+    top: ${({active}) => active ? '0' : '-7px'};
     transform: ${({active}) => active ? 'translateX(0) translateY(0) rotate(45deg)' : 'none'};
   }
 
   &::after {
     transform-origin: bottom right;
     transition: transform 0.3s, width 0.3s, bottom 0.3s;
-    bottom: ${({active}) => active ? '0' : '-5px'};;
+    bottom: ${({active}) => active ? '0' : '-7px'};;
     transform: ${({active}) => active ? 'translateX(0) translateY(0) rotate(-45deg)' : 'none'};
   }
 `
@@ -251,6 +255,7 @@ export default class MainMenu extends PureComponent {
           <Grid padded className='header-menu-grid'>
             <Grid.Row>
               <Grid.Column
+                className='custom-column'
                 width={this.__handleColumnSize(currentRoute, 'side')}
                 verticalAlign='middle'>
                 <LeftWrapper onClick={leftButtonAction} >
