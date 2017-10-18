@@ -9,7 +9,7 @@ import Helmet from 'react-helmet'
 import styled from 'styled-components'
 
 import { noop } from 'lodash'
-import { ifElse, equals, both, compose, prop, partial } from 'ramda'
+import { allPass, ifElse, equals, both, compose, prop, partial } from 'ramda'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -18,7 +18,6 @@ import { FormattedMessage } from 'react-intl'
 import Receipt from 'components/Receipt'
 import Modal from 'components/PromptModal'
 import WindowWidth from 'components/WindowWidth'
-import Notification from 'utils/firebase-notification'
 
 import RESERVED from 'images/ticket-backgrounds/reserve.png'
 import UNPAID from 'images/ticket-backgrounds/unpaid.png'
@@ -177,9 +176,13 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
   }
 
   _handleRegistrationPushNotification = (evt, { checked }) => {
+    // we have to put this on this level since we are having problem with testing since instantiated firebase was not injected properly
+    const Notification = (ENVIROMENT === 'production') ? require('utils/firebase-notification').default : null
+
     const isProduction = () => equals('production', ENVIROMENT)
+    const notificationIsNotNull = () => !equals(null, Notification)
     const registerPush = ifElse(
-      both(equals(true), isProduction),
+      allPass([equals(true), isProduction, notificationIsNotNull]),
       () => Notification.requestPermission(this._processRegistrationNotification),
       noop
     )

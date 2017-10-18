@@ -10,6 +10,7 @@ class Notification {
 
   constructor (FirebaseInit) {
     this._Firebase = FirebaseInit
+
     this._messaging = this._Firebase.messaging()
   }
 
