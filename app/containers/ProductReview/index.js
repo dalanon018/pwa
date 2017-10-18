@@ -286,7 +286,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   render () {
-    const { orderedProduct, orderRequesting, changeRoute, isBlackListed } = this.props
+    const { orderedProduct, orderRequesting, isBlackListed } = this.props
     const { errorMessage, modePayment, modalToggle, visibility, store } = this.state
     const toggleDiscount = this._showDiscountPrice(
       <span className='strike color__grey'>
@@ -328,8 +328,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       <Image
         className='brand-logo'
         alt='Cliqq'
-        src={orderedProduct.get('brandLogo')}
-        onClick={changeRoute.bind(this, `/brands/${orderedProduct.getIn(['brand', 'code'])}`)} />) : ''
+        src={orderedProduct.get('brandLogo')} />) : ''
 
     return (
       <ProductReviewWrapper>

@@ -256,7 +256,7 @@ class Receipt extends React.PureComponent {
             <ReceiptHeader className='background__light-grey'>
               <Grid>
                 <Grid.Row columns={2}>
-                  <Grid.Column floated='left'>
+                  <Grid.Column floated='left' width={9} className='product-status'>
                     <Label className='weight-400 color__secondary' as='span' basic size='small'>
                       <FormattedMessage {...messages.statusLabel} />
                     </Label>
@@ -264,7 +264,7 @@ class Receipt extends React.PureComponent {
                       { Uppercase(receipt.get('status')) }
                     </Label>
                   </Grid.Column>
-                  <Grid.Column floated='right' textAlign='right'>
+                  <Grid.Column floated='right' textAlign='right' width={7}>
                     <Label className='weight-400 color__secondary' as='span' basic size='small'>
                       <FormattedMessage {...messages.paymentMethod} />
                     </Label>
@@ -273,13 +273,13 @@ class Receipt extends React.PureComponent {
                     </Label>
                   </Grid.Column>
 
-                  <Grid.Column floated='left'>
+                  <Grid.Column floated='left' className='order-number' width={9}>
                     <Label className='weight-400 color__secondary' as='span' basic size='small'>
                       <FormattedMessage {...messages.orderNumber} />
                     </Label>
                     <Label as='p' basic size='big' className='color__secondary'>{receipt.get('payCode')}</Label>
                   </Grid.Column>
-                  <Grid.Column floated='right' textAlign='right'>
+                  <Grid.Column floated='right' textAlign='right' width={7}>
                     <Label className='weight-400 color__secondary' as='span' basic size='small'>
                       { this._handleDateString() }
                     </Label>
