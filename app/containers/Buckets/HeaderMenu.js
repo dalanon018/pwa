@@ -175,7 +175,7 @@ export default class MainMenu extends PureComponent {
     windowHeightOffset: 0
   }
 
-  __handleColumnSize = (currentRoute, place) => {
+  _handleColumnSize = (currentRoute, place) => {
     const pageSetWidth = {
       home: {left: 2, middle: 12, right: 2},
       termsConditions: {left: 2, middle: 12, right: 2},
@@ -261,7 +261,7 @@ export default class MainMenu extends PureComponent {
             <Grid.Row>
               <Grid.Column
                 className='custom-column'
-                width={this.__handleColumnSize(currentRoute, 'left')}
+                width={this._handleColumnSize(currentRoute, 'left')}
                 verticalAlign='middle'>
                 <LeftWrapper onClick={leftButtonAction} >
                   <Hamburger>
@@ -271,7 +271,7 @@ export default class MainMenu extends PureComponent {
               </Grid.Column>
               <Grid.Column
                 className={homeRoute ? 'no-padding-left' : null}
-                width={this.__handleColumnSize(currentRoute, 'middle')}
+                width={this._handleColumnSize(currentRoute, 'middle')}
                 verticalAlign='middle'>
                 <CenterWrapper>
                   { this._handleUniqueHeader() }
@@ -279,7 +279,7 @@ export default class MainMenu extends PureComponent {
               </Grid.Column>
               <Grid.Column
                 className='no-padding'
-                width={this.__handleColumnSize(currentRoute, 'right')}
+                width={this._handleColumnSize(currentRoute, 'right')}
                 verticalAlign='middle'>
                 <RightWrapper>
                   { SearchToggle(showSearchIcon) }

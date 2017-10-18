@@ -40,7 +40,7 @@ export default defineMessages({
   },
   unpaidDescription: {
     id: 'app.components.ModalWithHeader.unpaidDescription',
-    defaultMessage: '`Oh no! You were not able to pay within the hour. Would you like to reorder {name}? You will have another hour to pay for youR item.`'
+    defaultMessage: '`Oh no! You were not able to pay. Would you like to reorder {name}?`'
   },
   confirmedDescription: {
     id: 'app.components.ModalWithHeader.confirmedDescription',
@@ -68,7 +68,7 @@ export default defineMessages({
   },
   buttonUnpaid: {
     id: 'app.components.ModalWithHeader.buttonUnpaid',
-    defaultMessage: 'Got It!'
+    defaultMessage: 'Repurchase!'
   },
   buttonConfirmed: {
     id: 'app.components.ModalWithHeader.buttonConfirmed',

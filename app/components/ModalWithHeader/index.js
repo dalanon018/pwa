@@ -62,7 +62,8 @@ const ModalImages = ({ status }) => {
     },
     CLAIMED: {
       banner: LightgreyBackground,
-      icon: PaperBagIcon
+      icon: PaperBagIcon,
+      iconBg: '#D7D7D7'
     },
     UNCLAIMED: {
       banner: RedBackground,
