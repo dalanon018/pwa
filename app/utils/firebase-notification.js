@@ -18,7 +18,6 @@ class Notification {
   refreshToken (cb, currentToken) {
     this._Firebase.messaging().getToken()
     .then((token) => {
-      console.log('current', currentToken)
       return currentToken !== token ? cb(null, token) : cb(new Error('Same Token'))
     })
     .catch(cb)
