@@ -20,6 +20,14 @@ import Modal from 'components/PromptModal'
 import WindowWidth from 'components/WindowWidth'
 import Notification from 'utils/firebase-notification'
 
+import RESERVED from 'images/ticket-backgrounds/reserve.png'
+import UNPAID from 'images/ticket-backgrounds/unpaid.png'
+import CONFIRMED from 'images/ticket-backgrounds/paid.png'
+import INTRANSIT from 'images/ticket-backgrounds/intransit.png'
+import DELIVERED from 'images/ticket-backgrounds/pickup.png'
+import CLAIMED from 'images/ticket-backgrounds/claimed.png'
+import UNCLAIMED from 'images/ticket-backgrounds/not-claimed.png'
+
 import {
   STATUSES,
   PURCHASE_ORDER,
@@ -29,22 +37,15 @@ import {
 import {
   setPageTitleAction,
   setShowSearchIconAction,
-  setShowActivityIconAction
+  setShowActivityIconAction,
+  registerPushAction
 } from 'containers/Buckets/actions'
-
-import RESERVED from 'images/ticket-backgrounds/reserve.png'
-import UNPAID from 'images/ticket-backgrounds/unpaid.png'
-import CONFIRMED from 'images/ticket-backgrounds/paid.png'
-import INTRANSIT from 'images/ticket-backgrounds/intransit.png'
-import DELIVERED from 'images/ticket-backgrounds/pickup.png'
-import CLAIMED from 'images/ticket-backgrounds/claimed.png'
-import UNCLAIMED from 'images/ticket-backgrounds/not-claimed.png'
-
-import messages from './messages'
 
 import {
   ENVIROMENT
 } from 'containers/App/constants'
+
+import messages from './messages'
 
 import {
   selectLoading,
@@ -55,8 +56,7 @@ import {
 import {
   getReceiptAction,
   getRegisteredPushAction,
-  requestReceiptAction,
-  registerPushAction
+  requestReceiptAction
 } from './actions'
 
 const ReceiptWrapper = styled.div`
@@ -180,7 +180,7 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
     const isProduction = () => equals('production', ENVIROMENT)
     const registerPush = ifElse(
       both(equals(true), isProduction),
-      () => Notification.install(this._processRegistrationNotification),
+      () => Notification.requestPermission(this._processRegistrationNotification),
       noop
     )
 

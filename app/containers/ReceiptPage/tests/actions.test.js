@@ -3,7 +3,6 @@ import {
   getReceiptAction,
   setReceiptAction,
 
-  registerPushAction,
   getRegisteredPushAction,
   setRegisteredPushAction
 } from '../actions'
@@ -11,7 +10,6 @@ import {
   GET_RECEIPT,
   SET_RECEIPT,
 
-  REGISTER_PUSH,
   GET_REGISTED_PUSH,
   SET_REGISTED_PUSH
 } from '../constants'
@@ -45,19 +43,6 @@ describe('Receipt actions', () => {
   })
 
   describe('PushNotification Actions', () => {
-    it('it should call registerPushAction', () => {
-      const payload = {
-        mobileNumber: 123456,
-        token: 1234567
-      }
-      const expectedResult = {
-        type: REGISTER_PUSH,
-        payload
-      }
-
-      expect(registerPushAction(payload)).toEqual(expectedResult)
-    })
-
     it('it should call GET_REGISTED_PUSH', () => {
       const expectedResult = {
         type: GET_REGISTED_PUSH

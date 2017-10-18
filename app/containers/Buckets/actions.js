@@ -28,7 +28,9 @@ import {
 
   SET_NETWORK_ERROR,
 
-  SET_TOGGLE
+  SET_TOGGLE,
+
+  REGISTER_PUSH
 } from './constants'
 
 export function getPageTitleAction () {
@@ -133,6 +135,13 @@ export function setToggleAction (payload) {
 export function setNetworkErrorAction (payload) {
   return {
     type: SET_NETWORK_ERROR,
+    payload
+  }
+}
+
+export function registerPushAction (payload) {
+  return {
+    type: REGISTER_PUSH,
     payload
   }
 }

@@ -21,7 +21,9 @@ import {
   getUpdatedReceiptsAction,
   setUpdatedReceiptsAction,
 
-  setNetworkErrorAction
+  setNetworkErrorAction,
+
+  registerPushAction
 } from '../actions'
 
 import {
@@ -46,7 +48,9 @@ import {
   GET_RECEIPT_UPDATED,
   SET_RECEIPT_UPDATED,
 
-  SET_NETWORK_ERROR
+  SET_NETWORK_ERROR,
+
+  REGISTER_PUSH
 } from '../constants'
 
 describe('Buckets actions', () => {
@@ -220,6 +224,21 @@ describe('Buckets actions', () => {
       }
 
       expect(setNetworkErrorAction(payload)).toEqual(expectedResult)
+    })
+  })
+
+  describe('PushNotification Actions', () => {
+    it('it should call registerPushAction', () => {
+      const payload = {
+        mobileNumber: 123456,
+        token: 1234567
+      }
+      const expectedResult = {
+        type: REGISTER_PUSH,
+        payload
+      }
+
+      expect(registerPushAction(payload)).toEqual(expectedResult)
     })
   })
 })
