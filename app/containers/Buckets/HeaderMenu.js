@@ -226,7 +226,7 @@ export default class MainMenu extends PureComponent {
     removeEventListener(currentRoute)
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     const { currentRoute } = this.props
     const addEventListener = ifElse(
       equals('home'),
