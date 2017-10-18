@@ -36,10 +36,15 @@ import {
 } from 'containers/Buckets/constants'
 
 import {
+  selectIsRegisteredPush
+} from 'containers/Buckets/selectors'
+
+import {
   setPageTitleAction,
   setShowSearchIconAction,
   setShowActivityIconAction,
-  registerPushAction
+  registerPushAction,
+  getRegisteredPushAction
 } from 'containers/Buckets/actions'
 
 import {
@@ -50,13 +55,11 @@ import messages from './messages'
 
 import {
   selectLoading,
-  selectReceipt,
-  selectIsRegisteredPush
+  selectReceipt
 } from './selectors'
 
 import {
   getReceiptAction,
-  getRegisteredPushAction,
   requestReceiptAction
 } from './actions'
 
@@ -160,11 +163,10 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
   }
 
   _processRegistrationNotification (err, token) {
-    const { receipt, registerPush } = this.props
+    const { registerPush } = this.props
     const processPushNotification = ifElse(
       equals(null),
       partial(registerPush, [{
-        mobileNumber: receipt.get('mobileNumber'),
         token
       }]),
       () => this.setState({

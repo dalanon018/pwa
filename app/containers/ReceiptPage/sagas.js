@@ -11,19 +11,16 @@ import { getItem } from 'utils/localStorage'
 
 import {
   GET_RECEIPT,
-  REPURCHASE_ITEM_REQUEST,
-  GET_REGISTED_PUSH
+  REPURCHASE_ITEM_REQUEST
 } from './constants'
 
 import {
-  setReceiptAction,
-  setRegisteredPushAction
+  setReceiptAction
   // successReceiptAction,
   // errorReceiptAction
 } from './actions'
 
 import {
-  REGISTERED_PUSH,
   ORDERED_LIST_KEY
 } from 'containers/App/constants'
 
@@ -67,12 +64,6 @@ export function * getReceipt (payload) {
   yield put(setReceiptAction(response))
 }
 
-export function * getIsRegisteredPush () {
-  const isRegistered = yield call(getItem, REGISTERED_PUSH)
-
-  yield put(setRegisteredPushAction(isRegistered || false))
-}
-
 export function * getReceiptSaga () {
   yield * takeLatest(GET_RECEIPT, getReceipt)
 }
@@ -81,18 +72,12 @@ export function * requestRepurchaseItemSaga () {
   yield * takeLatest(REPURCHASE_ITEM_REQUEST, requestRepurchaseItem)
 }
 
-export function * getIsRegisteredPushSaga () {
-  yield * takeLatest(GET_REGISTED_PUSH, getIsRegisteredPush)
-}
-
 // All sagas to be loaded
 export function * receiptSagas () {
   const watcher = yield [
     fork(getReceiptSaga),
 
-    fork(requestRepurchaseItemSaga),
-
-    fork(getIsRegisteredPushSaga)
+    fork(requestRepurchaseItemSaga)
   ]
 
   // Suspend execution until location changes

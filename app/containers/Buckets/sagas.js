@@ -23,7 +23,8 @@ import {
   GET_MOBILE_NUMBERS,
   GET_RECEIPT_UPDATED,
   STATUSES,
-  REGISTER_PUSH
+  REGISTER_PUSH,
+  GET_REGISTED_PUSH
 } from './constants'
 
 import {
@@ -31,7 +32,8 @@ import {
   setBrandsAction,
   setMobileNumbersAction,
   setUpdatedReceiptsAction,
-  setNetworkErrorAction
+  setNetworkErrorAction,
+  setRegisteredPushAction
 } from './actions'
 
 import {
@@ -56,8 +58,7 @@ import {
 } from 'containers/Purchases/actions'
 
 import {
-  setReceiptAction,
-  setRegisteredPushAction
+  setReceiptAction
 } from 'containers/ReceiptPage/actions'
 
 function * transformEachEntity (transform, entity) {
@@ -299,8 +300,11 @@ export function * getUpdatedReceipts (payload) {
 }
 
 export function * registerPushNotification (payload) {
-  const { payload: { mobileNumber, token } } = payload
+  const { payload: { token } } = payload
   const authToken = yield getAccessToken()
+  const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
+  // we will only get the last mobileNumber used
+  const mobileNumber = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
   const { name } = getBrowserInfo()
 
   try {
@@ -315,12 +319,18 @@ export function * registerPushNotification (payload) {
     })
 
     // we will set the registered to true
-    yield call(setItem, REGISTERED_PUSH, true)
-    yield put(setRegisteredPushAction(true))
+    yield call(setItem, REGISTERED_PUSH, token)
+    yield put(setRegisteredPushAction(token))
   } catch (e) {
     yield put(setNetworkErrorAction('Please make sure you have internet connection to order a product.'))
     yield put(setRegisteredPushAction(false))
   }
+}
+
+export function * getIsRegisteredPush () {
+  const isRegistered = yield call(getItem, REGISTERED_PUSH)
+
+  yield put(setRegisteredPushAction(isRegistered || false))
 }
 
 export function * getCategoriesSaga () {
@@ -343,6 +353,10 @@ export function * registerPushNotificationSaga () {
   yield * takeLatest(REGISTER_PUSH, registerPushNotification)
 }
 
+export function * getIsRegisteredPushSaga () {
+  yield * takeLatest(GET_REGISTED_PUSH, getIsRegisteredPush)
+}
+
 // All sagas to be loaded
 export function * bucketsSagas () {
   const watcher = yield [
@@ -352,7 +366,9 @@ export function * bucketsSagas () {
 
     fork(getUpdatedReceiptsSaga),
 
-    fork(registerPushNotificationSaga)
+    fork(registerPushNotificationSaga),
+
+    fork(getIsRegisteredPushSaga)
   ]
 
   // Suspend execution until location changes

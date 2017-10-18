@@ -10,10 +10,7 @@ import {
 
   REPURCHASE_ITEM_REQUEST,
   REPURCHASE_ITEM_SUCCESS,
-  REPURCHASE_ITEM_ERROR,
-
-  GET_REGISTED_PUSH,
-  SET_REGISTED_PUSH
+  REPURCHASE_ITEM_ERROR
 } from './constants'
 
 export function getReceiptAction (payload) {
@@ -47,19 +44,6 @@ export function successReceiptAction (payload) {
 export function errorReceiptAction (payload) {
   return {
     type: REPURCHASE_ITEM_ERROR,
-    payload
-  }
-}
-
-export function getRegisteredPushAction () {
-  return {
-    type: GET_REGISTED_PUSH
-  }
-}
-
-export function setRegisteredPushAction (payload) {
-  return {
-    type: SET_REGISTED_PUSH,
     payload
   }
 }

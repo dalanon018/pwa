@@ -23,7 +23,9 @@ import {
 
   setNetworkErrorAction,
 
-  registerPushAction
+  registerPushAction,
+  getRegisteredPushAction,
+  setRegisteredPushAction
 } from '../actions'
 
 import {
@@ -50,7 +52,9 @@ import {
 
   SET_NETWORK_ERROR,
 
-  REGISTER_PUSH
+  REGISTER_PUSH,
+  GET_REGISTED_PUSH,
+  SET_REGISTED_PUSH
 } from '../constants'
 
 describe('Buckets actions', () => {
@@ -239,6 +243,24 @@ describe('Buckets actions', () => {
       }
 
       expect(registerPushAction(payload)).toEqual(expectedResult)
+    })
+
+    it('it should call GET_REGISTED_PUSH', () => {
+      const expectedResult = {
+        type: GET_REGISTED_PUSH
+      }
+
+      expect(getRegisteredPushAction()).toEqual(expectedResult)
+    })
+
+    it('it should call SET_REGISTED_PUSH', () => {
+      const payload = false
+      const expectedResult = {
+        type: SET_REGISTED_PUSH,
+        payload
+      }
+
+      expect(setRegisteredPushAction(payload)).toEqual(expectedResult)
     })
   })
 })

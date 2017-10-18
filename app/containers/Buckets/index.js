@@ -3,7 +3,11 @@ import styled from 'styled-components'
 
 import {
   identity,
-  ifElse
+  ifElse,
+  is,
+  both,
+  equals,
+  partial
 } from 'ramda'
 import { noop } from 'lodash'
 import { browserHistory } from 'react-router'
@@ -13,6 +17,7 @@ import { createStructuredSelector } from 'reselect'
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 
 import Firebase from 'utils/firebase-realtime'
+import Notification from 'utils/firebase-notification'
 
 import {
   selectProductCategories,
@@ -23,7 +28,8 @@ import {
   selectToggleMessage,
   selectPageTitle,
   selectShowSearchIcon,
-  selectShowActivityIcon
+  selectShowActivityIcon,
+  selectIsRegisteredPush
 } from './selectors'
 
 import {
@@ -32,12 +38,18 @@ import {
   getMobileNumbersAction,
   getUpdatedReceiptsAction,
   setUpdatedReceiptsAction,
-  setNetworkErrorAction
+  setNetworkErrorAction,
+  registerPushAction,
+  getRegisteredPushAction
 } from './actions'
 
 import {
   HIDE_BACK_BUTTON
 } from './constants'
+
+import {
+  ENVIROMENT
+} from 'containers/App/constants'
 
 import {
   getSearchProductAction,
@@ -83,7 +95,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     intl: intlShape.isRequired,
     pageTitle: PropTypes.string,
     showSearchIcon: PropTypes.bool.isRequired,
-    showActivityIcon: PropTypes.bool.isRequired
+    showActivityIcon: PropTypes.bool.isRequired,
+    isRegisteredPush: PropTypes.bool.isRequired,
+    registerPush: PropTypes.func.isRequired,
+    getRegisteredPush: PropTypes.func.isRequired
   }
 
   state = {
@@ -225,10 +240,35 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     })
   }
 
+  _firebaseHandleRefreshTokenSubmission = (err, token) => {
+    const { registerPush } = this.props
+    const processPushNotification = ifElse(
+      equals(null),
+      partial(registerPush, [{
+        token
+      }]),
+      noop
+    )
+
+    return processPushNotification(err)
+  }
+
+  _firebaseHandleRefreshToken = (currentToken) => {
+    const isProduction = () => equals('production', ENVIROMENT)
+    const registerPush = ifElse(
+      both(is(String), isProduction),
+      partial(Notification.refreshToken, [this._firebaseHandleRefreshTokenSubmission]),
+      noop
+    )
+
+    registerPush(currentToken)
+  }
+
   componentDidMount () {
-    const { getMobileNumbers, getCategories, getBrands } = this.props
+    const { getMobileNumbers, getCategories, getBrands, getRegisteredPush } = this.props
 
     getMobileNumbers()
+    getRegisteredPush()
     getCategories()
     getBrands()
 
@@ -236,11 +276,14 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   componentWillReceiveProps (nextProps) {
-    const { mobileNumbers } = nextProps
+    const { mobileNumbers, isRegisteredPush } = nextProps
     /**
      * whenever theres new mobile number we have to listen for all the order
      */
     Firebase.listen(mobileNumbers, this._firebaseListener)
+
+    // if isRegister
+    this._firebaseHandleRefreshToken(isRegisteredPush)
   }
 
   render () {
@@ -285,7 +328,8 @@ const mapStateToProps = createStructuredSelector({
   toggleMessage: selectToggleMessage(),
   pageTitle: selectPageTitle(),
   showSearchIcon: selectShowSearchIcon(),
-  showActivityIcon: selectShowActivityIcon()
+  showActivityIcon: selectShowActivityIcon(),
+  isRegisteredPush: selectIsRegisteredPush()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -299,6 +343,8 @@ function mapDispatchToProps (dispatch) {
     searchProduct: (payload) => dispatch(getSearchProductAction(payload)),
     setProductSearchList: (payload) => dispatch(setSearchProductAction(payload)),
     setNetworkError: (payload) => dispatch(setNetworkErrorAction(payload)),
+    registerPush: (payload) => dispatch(registerPushAction(payload)),
+    getRegisteredPush: () => dispatch(getRegisteredPushAction()),
     dispatch
   }
 }

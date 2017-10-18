@@ -23,6 +23,7 @@ describe('<Buckets />', () => {
     pageTitle: null,
     showSearchIcon: false,
     showActivityIcon: false,
+    isRegisteredPush: false,
     intl: {
       formatDate: () => {},
       formatTime: () => {},
@@ -44,7 +45,9 @@ describe('<Buckets />', () => {
     setProductSearchList: () => {},
     setNetworkError: () => {},
     dispatch: () => {},
-    changeRoute: () => {}
+    changeRoute: () => {},
+    getRegisteredPush: () => {},
+    registerPush: () => {}
 
   }
 

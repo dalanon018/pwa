@@ -12,7 +12,8 @@ import {
   selectToggleMessage,
   selectPageTitle,
   selectShowSearchIcon,
-  selectShowActivityIcon
+  selectShowActivityIcon,
+  selectIsRegisteredPush
 } from '../selectors'
 
 describe('Buckets Selectors', () => {
@@ -184,6 +185,20 @@ describe('Buckets Selectors', () => {
         }
       })
       expect(selectShowActivityIconSelectors(mockedState)).toEqual(activityIconShow)
+    })
+  })
+
+  describe('selectIsRegisteredPush', () => {
+    const selectIsRegisteredPushSelectors = selectIsRegisteredPush()
+
+    it('should get sector', () => {
+      const isRegisteredPush = false
+      const mockedState = fromJS({
+        buckets: {
+          isRegisteredPush
+        }
+      })
+      expect(selectIsRegisteredPushSelectors(mockedState)).toEqual(isRegisteredPush)
     })
   })
 })

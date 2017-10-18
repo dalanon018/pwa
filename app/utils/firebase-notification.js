@@ -12,15 +12,21 @@ class Notification {
     this._Firebase = FirebaseInit
     this.requestPermission = this.requestPermission.bind(this)
     this.install = this.install.bind(this)
+    this.refreshToken = this.refreshToken.bind(this)
+  }
+
+  refreshToken (cb, currentToken) {
+    this._Firebase.messaging().getToken()
+    .then((token) => {
+      console.log('current', currentToken)
+      return currentToken !== token ? cb(null, token) : cb(new Error('Same Token'))
+    })
+    .catch(cb)
   }
 
   requestPermission (cb) {
     this._Firebase.messaging().requestPermission()
-    .then(() => this._Firebase.messaging().getToken()) // get token
-    .then((token) => {
-      cb(null, token)
-    })
-    .catch(cb)
+    .then(() => this.refreshToken(cb))
   }
 
   install (cb) {
