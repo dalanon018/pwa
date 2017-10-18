@@ -20,7 +20,9 @@ import {
   SET_PRODUCT_HANDLER_DEFAULT,
 
   GET_MARKDOWN,
-  SET_MARKDOWN
+  SET_MARKDOWN,
+  MOBILE_REGISTRATION,
+  SET_VERIFICATION_CODE
 } from './constants'
 
 export function getProductAction (payload) {
@@ -67,6 +69,20 @@ export function getMobileNumbersAction () {
 export function updateMobileNumbersAction (payload) {
   return {
     type: UPDATE_MOBILE_NUMBERS,
+    payload
+  }
+}
+
+export function setVerificationCodeAction (payload) {
+  return {
+    type: SET_VERIFICATION_CODE,
+    payload
+  }
+}
+
+export function mobileRegistrationAction (payload) {
+  return {
+    type: MOBILE_REGISTRATION,
     payload
   }
 }

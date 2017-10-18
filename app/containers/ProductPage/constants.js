@@ -21,3 +21,7 @@ export const SET_PRODUCT_HANDLER_DEFAULT = 'app/ProductPage/SET_PRODUCT_HANDLER_
 // Terms And Conditions
 export const GET_MARKDOWN = 'app/ProductPage/GET_MARKDOWN'
 export const SET_MARKDOWN = 'app/ProductPage/SET_MARKDOWN'
+
+export const SET_VERIFICATION_CODE = 'app/ProductPage/SET_VERIFICATION_CODE'
+
+export const MOBILE_REGISTRATION = 'app/ProductPage/MOBILE_REGISTRATION'
