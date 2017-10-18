@@ -108,7 +108,7 @@ const TermsConditionsWrapper = styled.div`
   }
 
   .terms-conditions {
-    margin: 50px 0 70px !important;
+    margin-bottom: 70px !important;
   }
 `
 
@@ -125,6 +125,24 @@ const ButtonWrapper = styled.div`
   }
 `
 
+const TermsConditionsHeader = styled.div`
+  padding: 0.2rem 0;
+  box-shadow: 1px 1px 5px rgba(174,174,174, 0.8);
+  width: 100%;
+  margin-bottom: 30px;
+
+  .back-icon-container {
+    display: flex;
+    height: 100%;
+
+    img {
+      margin: auto 0;
+      width: 20px;
+      height: 20px;
+    }
+  }
+`
+
 export {
   PopupWrapper,
   TextWrapper,
@@ -133,5 +151,6 @@ export {
   InputWrapper,
   PopupContent,
   TermsConditionsWrapper,
-  ButtonWrapper
+  ButtonWrapper,
+  TermsConditionsHeader
 }

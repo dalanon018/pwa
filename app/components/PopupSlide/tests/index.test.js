@@ -9,7 +9,6 @@ import Input from 'components/InputField'
 import Checkbox from 'components/CheckboxField'
 import Modal from 'components/PromptModal'
 import A from 'components/A'
-import H1 from 'components/H1'
 import { LoadingStateInfo } from 'components/LoadingBlock'
 
 import {
@@ -121,11 +120,6 @@ describe('<PopupSlide />', () => {
   it('renders zero <A/> component', () => {
     const renderComponent = wrapper(minProps)
     expect(renderComponent.find(A)).toHaveLength(0)
-  })
-
-  it('renders one <H1/> component', () => {
-    const renderComponent = wrapper(minProps)
-    expect(renderComponent.find(H1)).toHaveLength(1)
   })
 
   it('renders one <LoadingStateInfo/> component', () => {
