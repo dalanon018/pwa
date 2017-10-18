@@ -70,7 +70,10 @@ const ActiviesIcon = styled.div`
   margin-left: ${props => props.marginLeft ? 0 : 20}px;
 
   @media screen and (max-width: 767px) {
-    margin-left: ${props => props.marginLeft ? '0' : '10px'} !important;
+    margin-left: 15px !important;
+  }
+  @media screen and (max-width: 320px) {
+    margin-left: 4px !important;
   }
 `
 
@@ -175,14 +178,14 @@ export default class MainMenu extends PureComponent {
     windowHeightOffset: 0
   }
 
-  _handleColumnSize = (currentRoute, place) => {
+  __handleColumnSize = (currentRoute, place) => {
     const pageSetWidth = {
-      home: {left: 2, middle: 12, right: 2},
-      termsConditions: {left: 2, middle: 12, right: 2},
-      productPage: {left: 3, middle: 9, right: 4}
+      home: {side: 2, middle: 12},
+      termsConditions: {side: 2, middle: 12},
+      productPage: {side: 3, middle: 10}
     }
 
-    return pageSetWidth[currentRoute] ? pageSetWidth[currentRoute][place] : (place === 'left' || place === 'right' ? 4 : 8)
+    return pageSetWidth[currentRoute] ? pageSetWidth[currentRoute][place] : (place === 'side' ? 4 : 8)
   }
 
   _handleGotoSearch = () => this.props.changeRoute('/search')
@@ -261,7 +264,7 @@ export default class MainMenu extends PureComponent {
             <Grid.Row>
               <Grid.Column
                 className='custom-column'
-                width={this._handleColumnSize(currentRoute, 'left')}
+                width={this.__handleColumnSize(currentRoute, 'side')}
                 verticalAlign='middle'>
                 <LeftWrapper onClick={leftButtonAction} >
                   <Hamburger>
@@ -271,7 +274,7 @@ export default class MainMenu extends PureComponent {
               </Grid.Column>
               <Grid.Column
                 className={homeRoute ? 'no-padding-left' : null}
-                width={this._handleColumnSize(currentRoute, 'middle')}
+                width={this.__handleColumnSize(currentRoute, 'middle')}
                 verticalAlign='middle'>
                 <CenterWrapper>
                   { this._handleUniqueHeader() }
@@ -279,7 +282,7 @@ export default class MainMenu extends PureComponent {
               </Grid.Column>
               <Grid.Column
                 className='no-padding'
-                width={this._handleColumnSize(currentRoute, 'right')}
+                width={this.__handleColumnSize(currentRoute, 'side')}
                 verticalAlign='middle'>
                 <RightWrapper>
                   { SearchToggle(showSearchIcon) }
