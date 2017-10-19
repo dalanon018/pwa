@@ -131,6 +131,11 @@ const TermsConditionsHeader = styled.div`
   width: 100%;
   margin-bottom: 30px;
 
+  .tc-header-label {
+    width: 100%;
+    text-align: center;
+  }
+
   .back-icon-container {
     display: flex;
     height: 100%;
