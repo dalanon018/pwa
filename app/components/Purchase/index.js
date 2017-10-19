@@ -13,8 +13,8 @@ import Countdown from 'components/Countdown'
 
 import { paramsImgix } from 'utils/image-stock'
 import { DateFormater } from 'utils/date' // DateFormater
-import { Uppercase } from 'utils/string'
 
+import purchasesMessages from 'containers/Purchases/messages'
 import {
   COD_DATE_ORDERED_STATUS
 } from 'containers/Buckets/constants'
@@ -156,6 +156,15 @@ class Purchase extends React.PureComponent {
     )(currentStatus)
   }
 
+  _handleStatusTitle = () => {
+    const { receipt, statuses } = this.props
+    const currentStatus = statuses[receipt.get('status')] || 'UNKNOWN'
+
+    return (
+      <FormattedMessage {...purchasesMessages[`titleStatus${currentStatus}`]} />
+    )
+  }
+
   _productName = (data) => {
     const { windowWidth } = this.props
     let maxChar = 18
@@ -224,7 +233,7 @@ class Purchase extends React.PureComponent {
                 paramsImgix(defaultImage, imgixOptions)} />
               <StatusWrapper status={this._getColorStatus(currentStatus)}>
                 <Label as='span' basic size='medium' className='color__white'>
-                  { Uppercase(receipt.get('status')) }
+                  { this._handleStatusTitle() }
                 </Label>
               </StatusWrapper>
             </PurchaseImage>

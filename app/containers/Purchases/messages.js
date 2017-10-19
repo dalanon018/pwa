@@ -13,5 +13,46 @@ export default defineMessages({
   emptyPurchases: {
     id: 'app.containers.Purchases.emptyPurchases',
     defaultMessage: 'Woops! It seems like you haven\'t bought anything yet. Let\'s fix that!'
+  },
+  // Here we will define the status titles
+  titleStatusRESERVED: {
+    id: 'app.components.Purchases.titleStatusRESERVED',
+    defaultMessage: 'Reserved'
+  },
+  titleStatusRESERVEDEXPIRED: {
+    id: 'app.components.Purchases.titleStatusRESERVEDEXPIRED',
+    defaultMessage: 'Reserved'
+  },
+  titleStatusUNPAID: {
+    id: 'app.components.Purchases.titleStatusUNPAID',
+    defaultMessage: 'Expired'
+  },
+  titleStatusPROCESSING: {
+    id: 'app.components.Purchases.titleStatusPROCESSING',
+    defaultMessage: 'Processing'
+  },
+  titleStatusCONFIRMED: {
+    id: 'app.components.Purchases.titleStatusCONFIRMED',
+    defaultMessage: 'Confirmed'
+  },
+  titleStatusINTRANSIT: {
+    id: 'app.components.Purchases.titleStatusINTRANSIT',
+    defaultMessage: 'In-Transit'
+  },
+  titleStatusDELIVERED: {
+    id: 'app.components.Purchases.titleStatusDELIVERED',
+    defaultMessage: 'For Pick-Up'
+  },
+  titleStatusCLAIMED: {
+    id: 'app.components.Purchases.titleStatusCLAIMED',
+    defaultMessage: 'Claimed'
+  },
+  titleStatusUNCLAIMED: {
+    id: 'app.components.Purchases.titleStatusUNCLAIMED',
+    defaultMessage: 'Unclaimed'
+  },
+  titleStatusUNKNOWN: {
+    id: 'app.components.Purchases.unkntitleStatusUnknownownStatus',
+    defaultMessage: ' ' // this one needs atleast a character that is why we have space, else it will return warning
   }
 })

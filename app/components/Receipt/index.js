@@ -12,7 +12,7 @@ import ScreenshotIcon from 'images/icons/screenshot-icon.svg'
 import ReturnIcon from 'images/icons/receipts/return-icon-receipt.svg'
 
 import { DateFormater } from 'utils/date' // DateFormater
-import { Uppercase, PhoneFormatter } from 'utils/string'
+import { PhoneFormatter } from 'utils/string'
 
 import PurchaseOrder from './PurchaseOrder'
 import PurchaseUsecase from './PurchaseUsecase'
@@ -36,6 +36,8 @@ import {
 import {
   HIDE_BARCODE
 } from './constants'
+
+import purchasesMessages from 'containers/Purchases/messages'
 
 import {
   COMPLETED,
@@ -168,6 +170,15 @@ class Receipt extends React.PureComponent {
     }, 500)
   }
 
+  _handleStatusTitle = () => {
+    const { receipt, statuses } = this.props
+    const currentStatus = statuses[receipt.get('status')] || 'UNKNOWN'
+
+    return (
+      <FormattedMessage {...purchasesMessages[`titleStatus${currentStatus}`]} />
+    )
+  }
+
   // simply handle the color of the status
   _handleColorStatus = (status) => {
     return COMPLETED.includes(status) ? 'green' : 'orange'
@@ -276,7 +287,7 @@ class Receipt extends React.PureComponent {
                       <FormattedMessage {...messages.statusLabel} />
                     </Label>
                     <Label as='p' basic size='huge' color={this._handleColorStatus(statuses[receipt.get('status')])}>
-                      { Uppercase(receipt.get('status')) }
+                      { this._handleStatusTitle() }
                     </Label>
                   </Grid.Column>
                   <Grid.Column floated='right' textAlign='right' width={7}>
