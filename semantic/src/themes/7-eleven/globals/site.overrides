@@ -45,6 +45,10 @@ body {
   }
 }
 
+div[style^="visibility: hidden; position: absolute; width:100%;"] {
+  top: 10px !important;
+}
+
 #app,
 div [data-reactroot],
 .container {
