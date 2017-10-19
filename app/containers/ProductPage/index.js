@@ -38,7 +38,9 @@ import {
   getMobileNumbersAction,
   updateMobileNumbersAction,
   setProductHandlersDefaultAction,
-  getMarkDownAction
+  getMarkDownAction,
+  setVerificationCodeAction,
+  mobileRegistrationAction
 } from './actions'
 
 import {
@@ -108,8 +110,10 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   _handleSubmitVerification () {
-    const { product, setCurrentProduct, updateMobileNumbers } = this.props
+    const { product, setCurrentProduct, updateMobileNumbers, setVerificationCode } = this.props
     const { mobileNumber } = this.state
+
+    setVerificationCode(true)
 
     setCurrentProduct(product)
     updateMobileNumbers(mobileNumber)
@@ -140,6 +144,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   _handleSubmit ({ value }) {
+    const { mobileRegistration } = this.props
+    mobileRegistration(true)
+
     this.setState({
       mobileNumber: value
     }, () =>
@@ -309,6 +316,8 @@ function mapDispatchToProps (dispatch) {
     setHandlersDefault: () => dispatch(setProductHandlersDefaultAction()),
     changeRoute: (url) => dispatch(push(url)),
     getMarkDown: payload => dispatch(getMarkDownAction()),
+    setVerificationCode: payload => dispatch(setVerificationCodeAction(payload)),
+    mobileRegistration: payload => dispatch(mobileRegistrationAction(payload)),
     dispatch
   }
 }

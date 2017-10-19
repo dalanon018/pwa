@@ -24,11 +24,11 @@ import Input from 'components/InputField'
 import Checkbox from 'components/CheckboxField'
 import Modal from 'components/PromptModal'
 import A from 'components/A'
-import H1 from 'components/H1'
 import { LoadingStateInfo } from 'components/LoadingBlock'
 
 import BannerBg from 'images/modal-bg-lightgrey.png'
 import MobileIcon from 'images/icons/mobile-icon.svg'
+import BackIcon from 'images/icons/back.svg'
 
 import { Image, Label, Button, Grid } from 'semantic-ui-react'
 
@@ -40,7 +40,8 @@ import {
   TextWrapper,
   PopupContent,
   TermsConditionsWrapper,
-  ButtonWrapper } from './styles'
+  ButtonWrapper,
+  TermsConditionsHeader } from './styles'
 
 export class PopupSlide extends React.PureComponent {
   static propTypes = {
@@ -247,9 +248,23 @@ export class PopupSlide extends React.PureComponent {
         <TermsConditionsWrapper toggle={toggleTerms} className='background__white'>
           <div className='document-helper terms-conditions'>
             <Grid padded>
-              <H1 className='padding__top--25 padding__none--horizontal color__secondary'>
-                <FormattedMessage {...messages.headerTerms} />
-              </H1>
+              <TermsConditionsHeader>
+                <Grid padded>
+                  <Grid.Row>
+                    <Grid.Column width={3}>
+                      <div className='back-icon-container'>
+                        <Image alt='Cliqq' src={BackIcon} onClick={this._toggleTerms} />
+                      </div>
+                    </Grid.Column>
+                    <Grid.Column width={10}>
+                      <Label as='span' size='large' >
+                        <FormattedMessage {...messages.headerTerms} />
+                      </Label>
+                    </Grid.Column>
+                    <Grid.Column width={3} />
+                  </Grid.Row>
+                </Grid>
+              </TermsConditionsHeader>
               <LoadingStateInfo loading={loader} count='4'>
                 <div className='animation-fade color__grey' dangerouslySetInnerHTML={{__html: markdownContent}} />
               </LoadingStateInfo>

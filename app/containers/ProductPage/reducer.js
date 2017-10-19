@@ -16,7 +16,11 @@ import {
 
   SET_PRODUCT_HANDLER_DEFAULT,
 
-  SET_MARKDOWN
+  SET_MARKDOWN,
+
+  MOBILE_REGISTRATION,
+
+  SET_VERIFICATION_CODE
 } from './constants'
 
 const initialState = fromJS({
@@ -27,7 +31,9 @@ const initialState = fromJS({
   requestProductError: false,
   currentProduct: {},
   markdown: '',
-  loadingMarkdown: false
+  loadingMarkdown: false,
+  requestMobileRegistration: false,
+  verificationCode: false
 })
 
 function productPageReducer (state = initialState, action) {
@@ -62,6 +68,15 @@ function productPageReducer (state = initialState, action) {
       return state
         .set('requestProductSuccess', false)
         .set('requestProductError', false)
+
+    case MOBILE_REGISTRATION:
+      return state
+        .set('requestMobileRegistration', action.payload)
+
+    case SET_VERIFICATION_CODE:
+      return state
+        .set('verificationCode', action.payload)
+
     default:
       return state
   }

@@ -18,7 +18,9 @@ import {
 
   GET_MOBILE_NUMBERS,
   UPDATE_MOBILE_NUMBERS,
-  GET_MARKDOWN
+  GET_MARKDOWN,
+  MOBILE_REGISTRATION,
+  SET_VERIFICATION_CODE
 } from './constants'
 import {
   setProductAction,
@@ -125,6 +127,22 @@ export function * updateMobileNumbers (args) {
   yield put(setMobileNumbersAction(mobileRegistrations))
 }
 
+export function * registerMobileNumber () {
+  // console.log('testing','mobileRegistrationSaga')
+}
+
+export function * mobileRegistrationSaga () {
+  yield * takeLatest(MOBILE_REGISTRATION, registerMobileNumber)
+}
+
+export function * verificationCode () {
+  // console.log('testing','verificationCodeSaga')
+}
+
+export function * verificationCodeSaga () {
+  yield * takeLatest(SET_VERIFICATION_CODE, verificationCode)
+}
+
 export function * getProductSaga () {
   yield * takeLatest(GET_PRODUCT, getProduct)
 }
@@ -169,7 +187,10 @@ export function * productSagas () {
     // Getter and Setter for mobile numbers
     fork(getMobileNumbersSaga),
     fork(updateMobileNumbersSaga),
-    fork(getMarkDownSaga)
+    fork(getMarkDownSaga),
+
+    fork(mobileRegistrationSaga),
+    fork(verificationCodeSaga)
   ]
 
   // Suspend execution until location changes

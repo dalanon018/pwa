@@ -26,7 +26,7 @@ export default defineMessages({
   },
   headerTerms: {
     id: `${idSuffix}.headerTerms`,
-    defaultMessage: 'TERMS AND CONDITIONS'
+    defaultMessage: 'TERMS & CONDITIONS'
   },
   buttonLabelAgree: {
     id: `${idSuffix}.buttonLabelAgree`,

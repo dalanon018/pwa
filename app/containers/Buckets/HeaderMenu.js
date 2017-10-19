@@ -21,8 +21,12 @@ const Wrapper = styled.div`
 
   .no-padding {
     @media screen and (max-width: 767px) {
-      padding: 0 !important;
+      padding-left: 0 !important;
     }
+  }
+
+  .no-padding-left {
+    padding-left: 0 !important;
   }
 
   .header-menu-grid {
@@ -64,7 +68,6 @@ const RightWrapper = styled.div`
 
 const ActiviesIcon = styled.div`
   margin-left: ${props => props.marginLeft ? 0 : 20}px;
-
 
   @media screen and (max-width: 767px) {
     margin-left: 15px !important;
@@ -175,7 +178,7 @@ export default class MainMenu extends PureComponent {
     windowHeightOffset: 0
   }
 
-  __handleColumnSize = (currentRoute, place) => {
+  _handleColumnSize = (currentRoute, place) => {
     const pageSetWidth = {
       home: {side: 2, middle: 12},
       termsConditions: {side: 2, middle: 12},
@@ -261,7 +264,7 @@ export default class MainMenu extends PureComponent {
             <Grid.Row>
               <Grid.Column
                 className='custom-column'
-                width={this.__handleColumnSize(currentRoute, 'side')}
+                width={this._handleColumnSize(currentRoute, 'side')}
                 verticalAlign='middle'>
                 <LeftWrapper onClick={leftButtonAction} >
                   <Hamburger>
@@ -270,8 +273,8 @@ export default class MainMenu extends PureComponent {
                 </LeftWrapper>
               </Grid.Column>
               <Grid.Column
-                className={homeRoute ? 'padding__none' : null}
-                width={this.__handleColumnSize(currentRoute, 'middle')}
+                className={homeRoute ? 'no-padding-left' : null}
+                width={this._handleColumnSize(currentRoute, 'middle')}
                 verticalAlign='middle'>
                 <CenterWrapper>
                   { this._handleUniqueHeader() }
@@ -279,7 +282,7 @@ export default class MainMenu extends PureComponent {
               </Grid.Column>
               <Grid.Column
                 className='no-padding'
-                width={this.__handleColumnSize(currentRoute, 'side')}
+                width={this._handleColumnSize(currentRoute, 'side')}
                 verticalAlign='middle'>
                 <RightWrapper>
                   { SearchToggle(showSearchIcon) }

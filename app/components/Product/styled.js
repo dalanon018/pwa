@@ -80,6 +80,12 @@ export const ProductDetails = styled(ProductDetailsContainer)`
   @media (min-width: 768px) {
     border-bottom: 0;
   }
+
+  .product-details {
+    p {
+      line-height: 1.4285em !important;
+    }
+  }
 `
 
 export const ButtonContainer = styled(AnimateDiv)`
