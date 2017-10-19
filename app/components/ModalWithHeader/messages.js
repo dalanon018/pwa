@@ -68,7 +68,7 @@ export default defineMessages({
   },
   buttonUnpaid: {
     id: 'app.components.ModalWithHeader.buttonUnpaid',
-    defaultMessage: 'Repurchase!'
+    defaultMessage: 'Got It!'
   },
   buttonConfirmed: {
     id: 'app.components.ModalWithHeader.buttonConfirmed',
@@ -89,6 +89,10 @@ export default defineMessages({
   buttonUnclaimed: {
     id: 'app.components.ModalWithHeader.buttonUnclaimed',
     defaultMessage: 'Got It!'
+  },
+  secondaryRepurchaseButton: {
+    id: 'app.components.ModalWithHeader.secondaryRepurchaseButton',
+    defaultMessage: 'Repurchase Item'
   },
   secondaryButton: {
     id: 'app.components.ModalWithHeader.secondaryButton',

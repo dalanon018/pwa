@@ -18,7 +18,8 @@ import {
 
   SET_MARKDOWN,
 
-  MOBILE_REGISTRATION,
+  SUCCESS_MOBILE_REGISTRATION,
+  ERROR_MOBILE_REGISTRATION,
 
   SET_VERIFICATION_CODE
 } from './constants'
@@ -32,7 +33,8 @@ const initialState = fromJS({
   currentProduct: {},
   markdown: '',
   loadingMarkdown: false,
-  requestMobileRegistration: false,
+  mobileRegistrationSuccess: false,
+  mobileRegistrationError: null,
   verificationCode: false
 })
 
@@ -69,9 +71,14 @@ function productPageReducer (state = initialState, action) {
         .set('requestProductSuccess', false)
         .set('requestProductError', false)
 
-    case MOBILE_REGISTRATION:
+    case SUCCESS_MOBILE_REGISTRATION:
       return state
-        .set('requestMobileRegistration', action.payload)
+        .set('mobileRegistrationSuccess', true)
+        .set('mobileRegistrationError', null)
+    case ERROR_MOBILE_REGISTRATION:
+      return state
+        .set('mobileRegistrationError', action.payload)
+        .set('mobileRegistrationSuccess', false)
 
     case SET_VERIFICATION_CODE:
       return state

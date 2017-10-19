@@ -28,7 +28,7 @@ const BodyWrapper = styled.div`
 export function App (props) {
   return (
     <AppWrapper>
-      <BodyWrapper>
+      <BodyWrapper className='test'>
         <Helmet
           titleTemplate='%s - 7-Eleven CliQQ'
           defaultTitle='7-Eleven CliQQ'

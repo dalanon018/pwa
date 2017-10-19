@@ -19,7 +19,7 @@ import {
   GET_MOBILE_NUMBERS,
   UPDATE_MOBILE_NUMBERS,
   GET_MARKDOWN,
-  MOBILE_REGISTRATION,
+  REQUEST_MOBILE_REGISTRATION,
   SET_VERIFICATION_CODE
 } from './constants'
 import {
@@ -27,7 +27,9 @@ import {
   setMobileNumbersAction,
   setProductSuccessAction,
   setProductErrorAction,
-  setMarkDownAction
+  setMarkDownAction,
+  successMobileRegistrationAction,
+  errorMobileRegistrationAction
 } from './actions'
 
 import {
@@ -127,12 +129,24 @@ export function * updateMobileNumbers (args) {
   yield put(setMobileNumbersAction(mobileRegistrations))
 }
 
-export function * registerMobileNumber () {
-  // console.log('testing','mobileRegistrationSaga')
+export function * registerMobileNumber (args) {
+  // const { payload } = args
+
+  try {
+    // const token = yield getAccessToken()
+    // const req = yield call(request, `${API_BASE_URL}/registration`, {
+    //   method: 'GET',
+    //   token: token.access_token
+    // })
+    // throw new Error('Error Registration')
+    yield put(successMobileRegistrationAction())
+  } catch (e) {
+    yield put(errorMobileRegistrationAction(e.message))
+  }
 }
 
 export function * mobileRegistrationSaga () {
-  yield * takeLatest(MOBILE_REGISTRATION, registerMobileNumber)
+  yield * takeLatest(REQUEST_MOBILE_REGISTRATION, registerMobileNumber)
 }
 
 export function * verificationCode () {

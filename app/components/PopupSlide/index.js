@@ -73,6 +73,11 @@ export class PopupSlide extends React.PureComponent {
     this._toggleTerms = this._toggleTerms.bind(this)
     this._toggleCheck = this._toggleCheck.bind(this)
     this._setMarkDownContent = this._setMarkDownContent.bind(this)
+    this._handleTouch = this._handleTouch.bind(this)
+  }
+
+  _handleTouch (e) {
+    e.preventDefault()
   }
 
   _setMarkDownContent (data) {
@@ -189,7 +194,7 @@ export class PopupSlide extends React.PureComponent {
 
     return (
       <div>
-        <PopupWrapper toggle={toggle} className='background__white'>
+        <PopupWrapper onTouchMove={this._handleTouch} toggle={toggle} className='background__white'>
           <BannerHeader background={BannerBg}>
             <span className='background__smoke-grey border__three-white'>
               <Image alt='Cliqq' src={MobileIcon} />
@@ -248,7 +253,7 @@ export class PopupSlide extends React.PureComponent {
         <TermsConditionsWrapper toggle={toggleTerms} className='background__white'>
           <div className='document-helper terms-conditions'>
             <Grid padded>
-              <TermsConditionsHeader>
+              <TermsConditionsHeader toggle={toggleTerms} className='background__white'>
                 <Grid padded>
                   <Grid.Row>
                     <Grid.Column width={3}>
@@ -266,7 +271,7 @@ export class PopupSlide extends React.PureComponent {
                 </Grid>
               </TermsConditionsHeader>
               <LoadingStateInfo loading={loader} count='4'>
-                <div className='animation-fade color__grey' dangerouslySetInnerHTML={{__html: markdownContent}} />
+                <div className='animation-fade tc-content color__grey' dangerouslySetInnerHTML={{__html: markdownContent}} />
               </LoadingStateInfo>
               <ButtonWrapper toggle={toggleTerms}>
                 <Button primary fluid onClick={this._toggleCheck}><FormattedMessage {...messages.buttonLabelAgree} /></Button>
