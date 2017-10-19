@@ -15,7 +15,7 @@
     border: 0;
     color: @darkGrey;
 
-    &.orange, &.green {
+    &.orange, &.green, &.red {
       background-color: transparent !important;
     }
   }

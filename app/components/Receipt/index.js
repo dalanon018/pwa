@@ -1,7 +1,17 @@
 import React, { PropTypes } from 'react'
 import JsBarcode from 'jsbarcode'
 
-import { ifElse, equals, both, partial } from 'ramda'
+import {
+  T,
+  always,
+  both,
+  cond,
+  contains,
+  equals,
+  ifElse,
+  partial,
+  partialRight
+} from 'ramda'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Label, Button, Image, Checkbox } from 'semantic-ui-react'
 
@@ -41,6 +51,7 @@ import purchasesMessages from 'containers/Purchases/messages'
 
 import {
   COMPLETED,
+  EXPIRED,
   COD_DATE_ORDERED_STATUS
 } from 'containers/Buckets/constants'
 
@@ -180,9 +191,11 @@ class Receipt extends React.PureComponent {
   }
 
   // simply handle the color of the status
-  _handleColorStatus = (status) => {
-    return COMPLETED.includes(status) ? 'green' : 'orange'
-  }
+  _handleColorStatus = cond([
+    [partialRight(contains, [COMPLETED]), always('green')],
+    [partialRight(contains, [EXPIRED]), always('red')],
+    [T, always('orange')]
+  ])
 
   _handleModePayment = () => {
     const { receipt } = this.props
