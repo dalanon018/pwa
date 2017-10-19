@@ -26,7 +26,11 @@ import {
   SUCCESS_MOBILE_REGISTRATION,
   ERROR_MOBILE_REGISTRATION,
 
-  SET_VERIFICATION_CODE
+  SET_VERIFICATION_CODE,
+
+  REQUEST_VERIFICATION_CODE,
+  SUCCESS_VERIFICATION_CODE,
+  ERROR_VERIFICATION_CODE
 } from './constants'
 
 export function getProductAction (payload) {
@@ -126,6 +130,27 @@ export function getMarkDownAction () {
 export function setMarkDownAction (payload) {
   return {
     type: SET_MARKDOWN,
+    payload
+  }
+}
+
+export function requestVerificationCodeAction (payload) {
+  return {
+    type: REQUEST_VERIFICATION_CODE,
+    payload
+  }
+}
+
+export function successVerificationCodeAction (payload) {
+  return {
+    type: SUCCESS_VERIFICATION_CODE,
+    payload
+  }
+}
+
+export function errorVerificationCodeAction (payload) {
+  return {
+    type: ERROR_VERIFICATION_CODE,
     payload
   }
 }

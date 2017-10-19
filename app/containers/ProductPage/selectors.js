@@ -59,6 +59,16 @@ const selectMobileRegistrationError = () => createSelector(
   (substate) => substate.get('mobileRegistrationError')
 )
 
+const selectVerificationCodeSuccess = () => createSelector(
+  selectProductPageDomain(),
+  (substate) => substate.get('verificationCodeSuccess')
+)
+
+const selectVerificationCodeError = () => createSelector(
+  selectProductPageDomain(),
+  (substate) => substate.get('verificationCodeError')
+)
+
 export {
   selectLoader,
   selectProduct,
@@ -68,5 +78,7 @@ export {
   selectMarkdown,
   selectLoadingMarkdown,
   selectMobileRegistrationSuccess,
-  selectMobileRegistrationError
+  selectMobileRegistrationError,
+  selectVerificationCodeSuccess,
+  selectVerificationCodeError
 }

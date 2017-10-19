@@ -32,7 +32,9 @@ import {
   selectMarkdown,
   selectLoadingMarkdown,
   selectMobileRegistrationSuccess,
-  selectMobileRegistrationError
+  selectMobileRegistrationError,
+  selectVerificationCodeSuccess,
+  selectVerificationCodeError
 } from './selectors'
 
 import {
@@ -43,7 +45,8 @@ import {
   setProductHandlersDefaultAction,
   getMarkDownAction,
   setVerificationCodeAction,
-  requestMobileRegistrationAction
+  requestMobileRegistrationAction,
+  requestVerificationCodeAction
 } from './actions'
 
 import {
@@ -93,7 +96,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.state = {
       modalToggle: false,
       prevMobileNumber: null,
-
+      verificationCode: '',
       socialToggle: false,
       copied: false,
       showSlide: false,
@@ -116,13 +119,24 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this._executeCaptcha = this._executeCaptcha.bind(this)
     this._handleToggleVerification = this._handleToggleVerification.bind(this)
     this._handleSubmitVerification = this._handleSubmitVerification.bind(this)
+    this._handleSuccessVerificationCode = this._handleSuccessVerificationCode.bind(this)
   }
 
-  _handleSubmitVerification () {
+  _handleSubmitVerification ({ value }) {
+    // this.setState({
+    //   verificationCode: value
+    // })
+    const { requestVerificationCode } = this.props
+
+    requestVerificationCode(value)
+
+    this.props.setToggle()
+  }
+
+  _handleSuccessVerificationCode = () => {
     const { product, setCurrentProduct, updateMobileNumbers } = this.props
     const { mobileNumber } = this.state
 
-    this.props.setToggle()
     setCurrentProduct(product)
     updateMobileNumbers(mobileNumber)
   }
@@ -241,7 +255,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   componentWillReceiveProps (nextProps) {
-    const { productSuccess, productError, mobileNumbers, mobileRegistrationError, mobileRegistrationSuccess } = nextProps
+    const { productSuccess, productError, mobileNumbers, mobileRegistrationError, mobileRegistrationSuccess, verificationCodeSuccess, verificationCodeError } = nextProps
 
     // handle if submission is success
     ifElse(equals(true), this._handleSuccess, noop)(productSuccess)
@@ -254,6 +268,12 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
     // handle if mobile registration is error
     ifElse(complement(equals(null)), this._handleErrorMobileRegistration, noop)(mobileRegistrationError)
+
+    // handle if verification code is success
+    ifElse(equals(true), this._handleSuccessVerificationCode, noop)(verificationCodeSuccess)
+
+    // handle if verification code is error
+    ifElse(complement(equals(null)), this._handleErrorMobileRegistration, noop)(verificationCodeError)
 
     // handle if theree's mobile number we can use as default
     ifElse((mobile) => mobile.size > 0, this._handleMobileRegistered, noop)(mobileNumbers)
@@ -339,7 +359,9 @@ const mapStateToProps = createStructuredSelector({
   markdown: selectMarkdown(),
   loader: selectLoadingMarkdown(),
   mobileRegistrationSuccess: selectMobileRegistrationSuccess(),
-  mobileRegistrationError: selectMobileRegistrationError()
+  mobileRegistrationError: selectMobileRegistrationError(),
+  verificationCodeSuccess: selectVerificationCodeSuccess(),
+  verificationCodeError: selectVerificationCodeError()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -357,6 +379,7 @@ function mapDispatchToProps (dispatch) {
     getMarkDown: payload => dispatch(getMarkDownAction()),
     setVerificationCode: payload => dispatch(setVerificationCodeAction(payload)),
     requestmobileRegistration: payload => dispatch(requestMobileRegistrationAction(payload)),
+    requestVerificationCode: payload => dispatch(requestVerificationCodeAction(payload)),
     dispatch
   }
 }

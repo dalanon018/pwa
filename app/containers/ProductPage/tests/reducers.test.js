@@ -21,7 +21,9 @@ describe('Products Reducer', () => {
       loadingMarkdown: false,
       mobileRegistrationSuccess: false,
       mobileRegistrationError: null,
-      verificationCode: false
+      verificationCode: false,
+      verificationCodeSuccess: false,
+      verificationCodeError: null
     })
   })
 
