@@ -45,7 +45,7 @@ body {
   }
 }
 
-div[style^="visibility: hidden; position: absolute; width:100%;"] {
+div[style^="visibility: visible; position: absolute;"] {
   top: 10px !important;
 }
 
