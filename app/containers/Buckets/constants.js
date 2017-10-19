@@ -93,3 +93,8 @@ export const EXPIRED = [
   'UNPAID',
   'UNCLAIMED'
 ]
+
+export const COD_DATE_ORDERED_STATUS = [
+  'CONFIRMED',
+  'INTRANSIT'
+]

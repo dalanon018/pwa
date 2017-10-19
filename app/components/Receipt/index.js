@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import JsBarcode from 'jsbarcode'
 
-import { ifElse, equals } from 'ramda'
+import { ifElse, equals, both, partial } from 'ramda'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Label, Button, Image, Checkbox } from 'semantic-ui-react'
 
@@ -38,7 +38,8 @@ import {
 } from './constants'
 
 import {
-  COMPLETED
+  COMPLETED,
+  COD_DATE_ORDERED_STATUS
 } from 'containers/Buckets/constants'
 
 const ComponentDetail = components => component => key =>
@@ -187,6 +188,20 @@ class Receipt extends React.PureComponent {
     )
   }
 
+  _handleDateValue = () => {
+    const { receipt, statuses } = this.props
+    const currentStatus = statuses[receipt.get('status')] || ''
+    const statusCASHNotAffected = (status) => !COD_DATE_ORDERED_STATUS.includes(status)
+
+    const showDate = ifElse(
+      both(equals(this._defaultModePayment), partial(statusCASHNotAffected, [currentStatus])),
+      () => receipt.get('claimExpiry'),
+      () => receipt.get('dateCreated')
+    )
+
+    return DateFormater(showDate(receipt.get('modePayment')), 'MM-DD-YYYY')
+  }
+
   _handlePushRegistrationUI = () => {
     const { isRegisteredPush, registerPushNotification } = this.props
     const displayUI = ifElse(
@@ -283,7 +298,7 @@ class Receipt extends React.PureComponent {
                     <Label className='weight-400 color__secondary' as='span' basic size='small'>
                       { this._handleDateString() }
                     </Label>
-                    <Label as='p' basic size='large' className='color__secondary'>{DateFormater(receipt.get('claimExpiry'), 'MM-DD-YYYY')}</Label>
+                    <Label as='p' basic size='large' className='color__secondary'>{ this._handleDateValue()}</Label>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
