@@ -1,7 +1,17 @@
 import React, { PropTypes } from 'react'
 import JsBarcode from 'jsbarcode'
 
-import { ifElse, equals } from 'ramda'
+import {
+  T,
+  always,
+  both,
+  cond,
+  contains,
+  equals,
+  ifElse,
+  partial,
+  partialRight
+} from 'ramda'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Label, Button, Image, Checkbox } from 'semantic-ui-react'
 
@@ -12,7 +22,7 @@ import ScreenshotIcon from 'images/icons/screenshot-icon.svg'
 import ReturnIcon from 'images/icons/receipts/return-icon-receipt.svg'
 
 import { DateFormater } from 'utils/date' // DateFormater
-import { Uppercase, PhoneFormatter } from 'utils/string'
+import { PhoneFormatter } from 'utils/string'
 
 import PurchaseOrder from './PurchaseOrder'
 import PurchaseUsecase from './PurchaseUsecase'
@@ -37,8 +47,12 @@ import {
   HIDE_BARCODE
 } from './constants'
 
+import purchasesMessages from 'containers/Purchases/messages'
+
 import {
-  COMPLETED
+  COMPLETED,
+  EXPIRED,
+  COD_DATE_ORDERED_STATUS
 } from 'containers/Buckets/constants'
 
 const ComponentDetail = components => component => key =>
@@ -167,10 +181,21 @@ class Receipt extends React.PureComponent {
     }, 500)
   }
 
-  // simply handle the color of the status
-  _handleColorStatus = (status) => {
-    return COMPLETED.includes(status) ? 'green' : 'orange'
+  _handleStatusTitle = () => {
+    const { receipt, statuses } = this.props
+    const currentStatus = statuses[receipt.get('status')] || 'UNKNOWN'
+
+    return (
+      <FormattedMessage {...purchasesMessages[`titleStatus${currentStatus}`]} />
+    )
   }
+
+  // simply handle the color of the status
+  _handleColorStatus = cond([
+    [partialRight(contains, [COMPLETED]), always('green')],
+    [partialRight(contains, [EXPIRED]), always('red')],
+    [T, always('orange')]
+  ])
 
   _handleModePayment = () => {
     const { receipt } = this.props
@@ -185,6 +210,20 @@ class Receipt extends React.PureComponent {
     return (
       <FormattedMessage {...messages[`date${modePayment}${currentStatus}`]} />
     )
+  }
+
+  _handleDateValue = () => {
+    const { receipt, statuses } = this.props
+    const currentStatus = statuses[receipt.get('status')] || ''
+    const statusCASHNotAffected = (status) => !COD_DATE_ORDERED_STATUS.includes(status)
+
+    const showDate = ifElse(
+      both(equals(this._defaultModePayment), partial(statusCASHNotAffected, [currentStatus])),
+      () => receipt.get('claimExpiry'),
+      () => receipt.get('dateCreated')
+    )
+
+    return DateFormater(showDate(receipt.get('modePayment')), 'MM-DD-YYYY')
   }
 
   _handlePushRegistrationUI = () => {
@@ -261,7 +300,7 @@ class Receipt extends React.PureComponent {
                       <FormattedMessage {...messages.statusLabel} />
                     </Label>
                     <Label as='p' basic size='huge' color={this._handleColorStatus(statuses[receipt.get('status')])}>
-                      { Uppercase(receipt.get('status')) }
+                      { this._handleStatusTitle() }
                     </Label>
                   </Grid.Column>
                   <Grid.Column floated='right' textAlign='right' width={7}>
@@ -283,7 +322,7 @@ class Receipt extends React.PureComponent {
                     <Label className='weight-400 color__secondary' as='span' basic size='small'>
                       { this._handleDateString() }
                     </Label>
-                    <Label as='p' basic size='large' className='color__secondary'>{DateFormater(receipt.get('claimExpiry'), 'MM-DD-YYYY')}</Label>
+                    <Label as='p' basic size='large' className='color__secondary'>{ this._handleDateValue()}</Label>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>

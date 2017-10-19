@@ -49,13 +49,13 @@ describe('<ProductReview />', () => {
     ).toEqual(1)
   })
 
-  // it('should render <ShowCodComponent/> null if isBlackListed === true', () => {
-  //   const props = {
-  //     isBlackListed: true
-  //   }
-  //   const renderComponent = shallow(<ShowCodComponent {...props} />)
-  //   expect(renderComponent.html()).toEqual(null)
-  // })
+  it('should render <ShowCodComponent/> Checkbox disabled isBlackListed === true', () => {
+    const props = {
+      isBlackListed: true
+    }
+    const renderComponent = shallow(<ShowCodComponent {...props} />)
+    expect(renderComponent.find(Checkbox).props().disabled).toEqual(true)
+  })
 
   it('should render <ShowCodComponent/> CheckBox if isBlackListed === false', () => {
     const props = {

@@ -6,13 +6,18 @@ import {
   Image,
   Label
 } from 'semantic-ui-react'
+import { ifElse, equals, both, partial } from 'ramda'
 import { FormattedMessage } from 'react-intl'
 
 import Countdown from 'components/Countdown'
 
 import { paramsImgix } from 'utils/image-stock'
 import { DateFormater } from 'utils/date' // DateFormater
-import { Uppercase } from 'utils/string'
+
+import purchasesMessages from 'containers/Purchases/messages'
+import {
+  COD_DATE_ORDERED_STATUS
+} from 'containers/Buckets/constants'
 
 import messages from './messages'
 
@@ -124,6 +129,20 @@ class Purchase extends React.PureComponent {
     )
   }
 
+  _handleDateVisible = () => {
+    const { receipt, statuses } = this.props
+    const currentStatus = statuses[receipt.get('status')] || ''
+    const statusCASHNotAffected = (status) => !COD_DATE_ORDERED_STATUS.includes(status)
+
+    const showDate = ifElse(
+      both(equals(this._defaultModePayment), partial(statusCASHNotAffected, [currentStatus])),
+      () => receipt.get('claimExpiry'),
+      () => receipt.get('dateCreated')
+    )
+
+    return DateFormater(showDate(receipt.get('modePayment')), 'MM-DD-YYYY')
+  }
+
   _handleDateValue = () => {
     const { timer, receipt, statuses } = this.props
     const currentStatus = statuses[receipt.get('status')]
@@ -133,8 +152,17 @@ class Purchase extends React.PureComponent {
       RESERVED: <p> { Timer } </p>,
       UNPAID: <p> { Timer } </p>
     })(
-      DateFormater(receipt.get('claimExpiry'), 'MM-DD-YYYY')
+      this._handleDateVisible()
     )(currentStatus)
+  }
+
+  _handleStatusTitle = () => {
+    const { receipt, statuses } = this.props
+    const currentStatus = statuses[receipt.get('status')] || 'UNKNOWN'
+
+    return (
+      <FormattedMessage {...purchasesMessages[`titleStatus${currentStatus}`]} />
+    )
   }
 
   _productName = (data) => {
@@ -205,7 +233,7 @@ class Purchase extends React.PureComponent {
                 paramsImgix(defaultImage, imgixOptions)} />
               <StatusWrapper status={this._getColorStatus(currentStatus)}>
                 <Label as='span' basic size='medium' className='color__white'>
-                  { Uppercase(receipt.get('status')) }
+                  { this._handleStatusTitle() }
                 </Label>
               </StatusWrapper>
             </PurchaseImage>
