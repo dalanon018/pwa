@@ -233,7 +233,7 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
           receipt={receipt}
           goHomeFn={this._goToHomeFn}
           windowWidth={windowWidth}
-          repurchaseFn={this._repurchaseFn}
+          goToProduct={this._repurchaseFn}
           goReceiptPage={this._goToPurchases}
           registerPushNotification={this._handleRegistrationPushNotification}
           isRegisteredPush={isRegisteredPush}
