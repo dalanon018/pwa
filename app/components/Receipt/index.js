@@ -141,7 +141,7 @@ class Receipt extends React.PureComponent {
     receipt: PropTypes.object.isRequired,
     statuses: PropTypes.object.isRequired,
     goHomeFn: PropTypes.func.isRequired,
-    repurchaseFn: PropTypes.func.isRequired,
+    goToProduct: PropTypes.func.isRequired,
     goReceiptPage: PropTypes.func.isRequired,
     isRegisteredPush: PropTypes.bool.isRequired,
     registerPushNotification: PropTypes.func.isRequired
@@ -260,6 +260,23 @@ class Receipt extends React.PureComponent {
     return displayUI(isRegisteredPush)
   }
 
+  _handleButtonFunctionality = () => {
+    const { receipt, statuses, goReceiptPage, goToProduct } = this.props
+    const currentStatus = statuses[receipt.get('status')] || ''
+
+    return ComponentDetail({
+      UNPAID: (
+        <Button fluid onClick={goToProduct} primary>
+          <FormattedMessage {...messages.rePurchase} />
+        </Button>
+      )
+    })(
+      <Button fluid onClick={goReceiptPage} primary>
+        <FormattedMessage {...messages.viewActivity} />
+      </Button>
+    )(currentStatus)
+  }
+
   componentDidMount () {
     this._handleScanAnimate()
     setTimeout(() => {
@@ -287,7 +304,7 @@ class Receipt extends React.PureComponent {
 
   render () {
     const { show } = this.state
-    const { timer, receipt, statuses, goReceiptPage } = this.props
+    const { timer, receipt, statuses } = this.props
     return (
       <div>
         <ReceiptWrapper>
@@ -389,9 +406,7 @@ class Receipt extends React.PureComponent {
           </Grid.Row>
         </Grid>
         <ButtonContainer>
-          <Button fluid onClick={goReceiptPage} primary>
-            <FormattedMessage {...messages.viewActivity} />
-          </Button>
+          { this._handleButtonFunctionality() }
         </ButtonContainer>
       </div>
     )
