@@ -118,6 +118,11 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     changeRoute('/purchases')
   }
 
+  _goToProducts = (productId) => {
+    const { changeRoute } = this.props
+    changeRoute(`/product/${productId}`)
+  }
+
   _handleNetworkErrorMessage = () => {
     this.props.setNetworkError(null)
   }
@@ -227,6 +232,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
         setUpdatedReceipts={setUpdatedReceipts}
         goToHome={this._goToHome}
         goToReceipts={this._goToReceipts}
+        goToProducts={this._goToProducts}
         windowWidth={windowWidth}
       />
     )

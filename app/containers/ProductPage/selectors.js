@@ -49,6 +49,16 @@ const selectLoadingMarkdown = () => createSelector(
   (substate) => substate.get('loading')
 )
 
+const selectMobileRegistrationSuccess = () => createSelector(
+  selectProductPageDomain(),
+  (substate) => substate.get('mobileRegistrationSuccess')
+)
+
+const selectMobileRegistrationError = () => createSelector(
+  selectProductPageDomain(),
+  (substate) => substate.get('mobileRegistrationError')
+)
+
 export {
   selectLoader,
   selectProduct,
@@ -56,5 +66,7 @@ export {
   selectProductSuccess,
   selectProductError,
   selectMarkdown,
-  selectLoadingMarkdown
+  selectLoadingMarkdown,
+  selectMobileRegistrationSuccess,
+  selectMobileRegistrationError
 }

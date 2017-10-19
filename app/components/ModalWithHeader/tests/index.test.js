@@ -42,7 +42,8 @@ describe('<ModalWithHeader />', () => {
     ]),
     setUpdatedReceipts: () => {},
     goToHome: () => {},
-    goToReceipts: () => {}
+    goToReceipts: () => {},
+    goToProducts: () => {}
   }
 
   it('render without exploding', () => {

@@ -21,7 +21,11 @@ import {
 
   GET_MARKDOWN,
   SET_MARKDOWN,
-  MOBILE_REGISTRATION,
+
+  REQUEST_MOBILE_REGISTRATION,
+  SUCCESS_MOBILE_REGISTRATION,
+  ERROR_MOBILE_REGISTRATION,
+
   SET_VERIFICATION_CODE
 } from './constants'
 
@@ -80,9 +84,22 @@ export function setVerificationCodeAction (payload) {
   }
 }
 
-export function mobileRegistrationAction (payload) {
+export function requestMobileRegistrationAction (payload) {
   return {
-    type: MOBILE_REGISTRATION,
+    type: REQUEST_MOBILE_REGISTRATION,
+    payload
+  }
+}
+
+export function successMobileRegistrationAction () {
+  return {
+    type: SUCCESS_MOBILE_REGISTRATION
+  }
+}
+
+export function errorMobileRegistrationAction (payload) {
+  return {
+    type: ERROR_MOBILE_REGISTRATION,
     payload
   }
 }

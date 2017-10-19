@@ -13,7 +13,7 @@ import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { noop } from 'lodash'
-import { ifElse, equals } from 'ramda'
+import { ifElse, equals, complement } from 'ramda'
 
 import { imageStock } from 'utils/image-stock'
 
@@ -21,6 +21,7 @@ import Product from 'components/Product'
 import PopupSlide from 'components/PopupSlide'
 import PopupVerification from 'components/PopupVerification'
 import WindowWidth from 'components/WindowWidth'
+import Modal from 'components/PromptModal'
 
 import {
   selectLoader,
@@ -29,7 +30,9 @@ import {
   selectProductSuccess,
   selectProductError,
   selectMarkdown,
-  selectLoadingMarkdown
+  selectLoadingMarkdown,
+  selectMobileRegistrationSuccess,
+  selectMobileRegistrationError
 } from './selectors'
 
 import {
@@ -40,7 +43,7 @@ import {
   setProductHandlersDefaultAction,
   getMarkDownAction,
   setVerificationCodeAction,
-  mobileRegistrationAction
+  requestMobileRegistrationAction
 } from './actions'
 
 import {
@@ -61,6 +64,7 @@ import {
 
 const RecaptchaWrapper = styled.div`
   visibility: hidden;
+  
 `
 
 export class ProductPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -74,7 +78,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     toggle: PropTypes.bool.isRequired,
     productSuccess: PropTypes.bool.isRequired,
     productError: PropTypes.bool.isRequired,
-    mobileNumbers: PropTypes.object.isRequired
+    mobileNumbers: PropTypes.object.isRequired,
+    mobileRegistrationSuccess: PropTypes.bool,
+    mobileRegistrationError: PropTypes.string
   }
 
   /**
@@ -87,11 +93,14 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.state = {
       modalToggle: false,
       prevMobileNumber: null,
+
       socialToggle: false,
       copied: false,
       showSlide: false,
       showVerification: false,
-      mobileNumber: ''
+      mobileNumber: '',
+      errModalToggle: false,
+      errorMessage: ''
     }
 
     this._handleSubmit = this._handleSubmit.bind(this)
@@ -110,11 +119,10 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   _handleSubmitVerification () {
-    const { product, setCurrentProduct, updateMobileNumbers, setVerificationCode } = this.props
+    const { product, setCurrentProduct, updateMobileNumbers } = this.props
     const { mobileNumber } = this.state
 
-    setVerificationCode(true)
-
+    this.props.setToggle()
     setCurrentProduct(product)
     updateMobileNumbers(mobileNumber)
   }
@@ -130,9 +138,14 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   _executeCaptcha (token) {
+    const { requestmobileRegistration } = this.props
+    const { mobileNumber } = this.state
+
     if (token) {
       this.successSubmission = true
-      this._handleToggleVerification()
+
+      requestmobileRegistration(mobileNumber)
+      // this._handleToggleVerification()
     }
   }
 
@@ -144,9 +157,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   _handleSubmit ({ value }) {
-    const { mobileRegistration } = this.props
-    mobileRegistration(true)
-
     this.setState({
       mobileNumber: value
     }, () =>
@@ -157,6 +167,12 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   _handleClose () {
     this.setState({
       modalToggle: false
+    })
+  }
+
+  _handleErrModalClose = () => {
+    this.setState({
+      errModalToggle: false
     })
   }
 
@@ -186,6 +202,13 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       })
       this.successSubmission = false
     }
+  }
+
+  _handleErrorMobileRegistration = (error) => {
+    this.setState({
+      errModalToggle: true,
+      errorMessage: error
+    })
   }
 
   _handleMobileRegistered (mobileNumbers) {
@@ -218,13 +241,19 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   componentWillReceiveProps (nextProps) {
-    const { productSuccess, productError, mobileNumbers } = nextProps
+    const { productSuccess, productError, mobileNumbers, mobileRegistrationError, mobileRegistrationSuccess } = nextProps
 
     // handle if submission is success
     ifElse(equals(true), this._handleSuccess, noop)(productSuccess)
 
     // handle if submission is error
     ifElse(equals(true), this._handleError, noop)(productError)
+
+    // handle if mobile registration is success
+    ifElse(equals(true), this._handleToggleVerification, noop)(mobileRegistrationSuccess)
+
+    // handle if mobile registration is error
+    ifElse(complement(equals(null)), this._handleErrorMobileRegistration, noop)(mobileRegistrationError)
 
     // handle if theree's mobile number we can use as default
     ifElse((mobile) => mobile.size > 0, this._handleMobileRegistered, noop)(mobileNumbers)
@@ -236,7 +265,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   render () {
     const { loading, product, toggle, route, windowWidth, markdown, loader, changeRoute } = this.props
-    const { modalToggle, prevMobileNumber, showVerification } = this.state
+    const { modalToggle, prevMobileNumber, showVerification, errModalToggle, errorMessage } = this.state
     const productPageTrigger = route && route
     return (
       <div>
@@ -257,7 +286,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             changeRoute={changeRoute}
           />
         </div>
-        <div onTouchMove={this._handleTouch}>
+        <div>
           <PopupSlide
             handleCheckAw={this._handleCheck}
             handleDisableAw={this._handleDisable}
@@ -287,6 +316,14 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             onChange={this._executeCaptcha}
           />
         </RecaptchaWrapper>
+
+        <Modal
+          open={errModalToggle}
+          name='warning'
+          title={errorMessage}
+          content=''
+          close={this._handleErrModalClose}
+        />
       </div>
     )
   }
@@ -300,7 +337,9 @@ const mapStateToProps = createStructuredSelector({
   productSuccess: selectProductSuccess(),
   productError: selectProductError(),
   markdown: selectMarkdown(),
-  loader: selectLoadingMarkdown()
+  loader: selectLoadingMarkdown(),
+  mobileRegistrationSuccess: selectMobileRegistrationSuccess(),
+  mobileRegistrationError: selectMobileRegistrationError()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -317,7 +356,7 @@ function mapDispatchToProps (dispatch) {
     changeRoute: (url) => dispatch(push(url)),
     getMarkDown: payload => dispatch(getMarkDownAction()),
     setVerificationCode: payload => dispatch(setVerificationCodeAction(payload)),
-    mobileRegistration: payload => dispatch(mobileRegistrationAction(payload)),
+    requestmobileRegistration: payload => dispatch(requestMobileRegistrationAction(payload)),
     dispatch
   }
 }

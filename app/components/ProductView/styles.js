@@ -24,7 +24,9 @@ const ProductInfo = styled.div`
 
   .brand-name {
     display: block;
-    height: ${props => props.brandName ? 'auto' : '16px'};
+    height: ${props => props.brandName ? 'auto' : '19px'};
+    min-height: 19px;
+    max-height: 19px;
   }
 
   .product-name {

@@ -19,7 +19,8 @@ describe('Products Reducer', () => {
       currentProduct: {},
       markdown: '',
       loadingMarkdown: false,
-      requestMobileRegistration: false,
+      mobileRegistrationSuccess: false,
+      mobileRegistrationError: null,
       verificationCode: false
     })
   })

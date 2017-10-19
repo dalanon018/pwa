@@ -125,7 +125,7 @@ const ModalDescription = ({ status, receipt }) => {
   })(null)(status)
 }
 
-const ModalButtons = ({ status, goToReceipts }) => {
+const ModalButtons = ({ status, goToReceipts, goToProducts }) => {
   return ComponentDetail({
     RESERVED: {
       primary: <FormattedMessage {...messages.buttonReserved} />,
@@ -134,8 +134,8 @@ const ModalButtons = ({ status, goToReceipts }) => {
     },
     UNPAID: {
       primary: <FormattedMessage {...messages.buttonUnpaid} />,
-      secondary: <FormattedMessage {...messages.secondaryButton} />,
-      onClick: goToReceipts
+      secondary: <FormattedMessage {...messages.secondaryRepurchaseButton} />,
+      onClick: goToProducts
     },
     CONFIRMED: {
       primary: <FormattedMessage {...messages.buttonConfirmed} />,
@@ -195,9 +195,9 @@ class ModalWithHeader extends React.PureComponent {
   }
 
   render () {
-    const { receipt, goToReceipts } = this.props
+    const { receipt, goToReceipts, goToProducts } = this.props
     const currentStatus = STATUSES[toUpper(receipt.get('status'))] || ''
-    const { primary, secondary, onClick } = ModalButtons({ status: currentStatus, goToReceipts }) || {}
+    const { primary, secondary, onClick } = ModalButtons({ status: currentStatus, goToReceipts, goToProducts: goToProducts.bind(null, receipt.get('cliqqCode')) }) || {}
     // const modalSize = windowWidth >= 768 ? 'small' : 'mini'
 
     return (

@@ -110,6 +110,12 @@ const TermsConditionsWrapper = styled.div`
   .terms-conditions {
     margin-bottom: 70px !important;
   }
+
+  .tc-content {
+    padding-top: 80px;
+    overflow-y: auto;
+    height: 100vh;
+  }
 `
 
 const ButtonWrapper = styled.div`
@@ -130,6 +136,10 @@ const TermsConditionsHeader = styled.div`
   box-shadow: 1px 1px 5px rgba(174,174,174, 0.8);
   width: 100%;
   margin-bottom: 30px;
+  position: ${props => props.toggle ? 'fixed' : 'static'};
+  top: 0;
+  left: 0;
+  z-index: 1;
 
   .tc-header-label {
     width: 100%;
