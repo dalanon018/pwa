@@ -257,7 +257,7 @@ export class PopupSlide extends React.PureComponent {
                       </div>
                     </Grid.Column>
                     <Grid.Column width={10}>
-                      <Label as='span' size='large' >
+                      <Label as='span' size='large' className='tc-header-label'>
                         <FormattedMessage {...messages.headerTerms} />
                       </Label>
                     </Grid.Column>
