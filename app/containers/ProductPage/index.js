@@ -146,7 +146,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     // })
     const { requestVerificationCode } = this.props
 
-    requestVerificationCode(value)
+    requestVerificationCode(true)
 
     this.props.setToggle()
   }
@@ -156,7 +156,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     const { mobileNumber } = this.state
 
     this.successSubmission = true
-
     setCurrentProduct(product)
     updateMobileNumbers(mobileNumber)
   }
