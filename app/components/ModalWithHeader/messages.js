@@ -32,7 +32,7 @@ export default defineMessages({
   },
   unclaimedTitle: {
     id: 'app.components.ModalWithHeader.unclaimedTitle',
-    defaultMessage: 'Item Wasn\'t Claim'
+    defaultMessage: 'Item Wasn\'t Claimed'
   },
   reservedDescription: {
     id: 'app.components.ModalWithHeader.reservedDescription',
@@ -60,7 +60,7 @@ export default defineMessages({
   },
   unclaimedDescription: {
     id: 'app.components.ModalWithHeader.unclaimedDescription',
-    defaultMessage: 'You have not claimed your item within the seven day period. Kindly contact our customer service line for assistance. Thank you!'
+    defaultMessage: 'You have not claimed your item. Kindly contact our customer service line for assistance. Thank you!'
   },
   buttonReserved: {
     id: 'app.components.ModalWithHeader.buttonReserved',

@@ -21,7 +21,11 @@ import {
   SUCCESS_MOBILE_REGISTRATION,
   ERROR_MOBILE_REGISTRATION,
 
-  SET_VERIFICATION_CODE
+  SET_VERIFICATION_CODE,
+
+  REQUEST_MOBILE_REGISTRATION,
+  SUCCESS_VERIFICATION_CODE,
+  ERROR_VERIFICATION_CODE
 } from './constants'
 
 const initialState = fromJS({
@@ -35,7 +39,9 @@ const initialState = fromJS({
   loadingMarkdown: false,
   mobileRegistrationSuccess: false,
   mobileRegistrationError: null,
-  verificationCode: false
+  verificationCode: false,
+  verificationCodeSuccess: false,
+  verificationCodeError: null
 })
 
 function productPageReducer (state = initialState, action) {
@@ -71,6 +77,11 @@ function productPageReducer (state = initialState, action) {
         .set('requestProductSuccess', false)
         .set('requestProductError', false)
 
+    case REQUEST_MOBILE_REGISTRATION:
+      return state
+        .set('mobileRegistrationSuccess', false)
+        .set('mobileRegistrationError', null)
+
     case SUCCESS_MOBILE_REGISTRATION:
       return state
         .set('mobileRegistrationSuccess', true)
@@ -79,6 +90,16 @@ function productPageReducer (state = initialState, action) {
       return state
         .set('mobileRegistrationError', action.payload)
         .set('mobileRegistrationSuccess', false)
+
+    case SUCCESS_VERIFICATION_CODE:
+      return state
+        .set('verificationSuccess', true)
+        .set('verificationError', null)
+
+    case ERROR_VERIFICATION_CODE:
+      return state
+        .set('verificationSuccess', false)
+        .set('verificationError', action.payload)
 
     case SET_VERIFICATION_CODE:
       return state

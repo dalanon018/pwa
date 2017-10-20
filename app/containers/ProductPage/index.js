@@ -13,7 +13,7 @@ import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { noop } from 'lodash'
-import { ifElse, equals, complement } from 'ramda'
+import { ifElse, both, equals, complement } from 'ramda'
 
 import { imageStock } from 'utils/image-stock'
 
@@ -32,7 +32,9 @@ import {
   selectMarkdown,
   selectLoadingMarkdown,
   selectMobileRegistrationSuccess,
-  selectMobileRegistrationError
+  selectMobileRegistrationError,
+  selectVerificationCodeSuccess,
+  selectVerificationCodeError
 } from './selectors'
 
 import {
@@ -43,7 +45,8 @@ import {
   setProductHandlersDefaultAction,
   getMarkDownAction,
   setVerificationCodeAction,
-  requestMobileRegistrationAction
+  requestMobileRegistrationAction,
+  requestVerificationCodeAction
 } from './actions'
 
 import {
@@ -88,19 +91,25 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
    */
   successSubmission = false
 
+    /**
+   * this will handle if success is valid after mobile Registration Submission
+   */
+  mobileSuccessSubmission = false
+
   constructor () {
     super()
     this.state = {
       modalToggle: false,
       prevMobileNumber: null,
-
+      verificationCode: '',
       socialToggle: false,
       copied: false,
       showSlide: false,
       showVerification: false,
       mobileNumber: '',
       errModalToggle: false,
-      errorMessage: ''
+      errorMessage: '',
+      showRecaptcha: false
     }
 
     this._handleSubmit = this._handleSubmit.bind(this)
@@ -116,13 +125,38 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this._executeCaptcha = this._executeCaptcha.bind(this)
     this._handleToggleVerification = this._handleToggleVerification.bind(this)
     this._handleSubmitVerification = this._handleSubmitVerification.bind(this)
+    this._handleSuccessVerificationCode = this._handleSuccessVerificationCode.bind(this)
+    this._toggleBodyClass = this._toggleBodyClass.bind(this)
   }
 
-  _handleSubmitVerification () {
+  _toggleBodyClass = () => {
+    const { showRecaptcha } = this.state
+
+    let elem = document.getElementsByTagName('body')[0]
+    if (showRecaptcha) {
+      elem.classList.add('custom__body')
+    } else {
+      elem.classList.remove('custom__body')
+    }
+  }
+
+  _handleSubmitVerification ({ value }) {
+    // this.setState({
+    //   verificationCode: value
+    // })
+    const { requestVerificationCode } = this.props
+
+    requestVerificationCode(value)
+
+    this.props.setToggle()
+  }
+
+  _handleSuccessVerificationCode = () => {
     const { product, setCurrentProduct, updateMobileNumbers } = this.props
     const { mobileNumber } = this.state
 
-    this.props.setToggle()
+    this.successSubmission = true
+
     setCurrentProduct(product)
     updateMobileNumbers(mobileNumber)
   }
@@ -131,6 +165,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.setState({
       showVerification: !this.state.showVerification
     })
+
+    this.mobileSuccessSubmission = false
   }
 
   _recaptchaRef (ref) {
@@ -139,13 +175,18 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   _executeCaptcha (token) {
     const { requestmobileRegistration } = this.props
-    const { mobileNumber } = this.state
+    const { mobileNumber, showRecaptcha } = this.state
 
     if (token) {
-      this.successSubmission = true
+      this.mobileSuccessSubmission = true
+
+      this.setState({
+        showRecaptcha: !showRecaptcha
+      })
+
+      this._toggleBodyClass()
 
       requestmobileRegistration(mobileNumber)
-      // this._handleToggleVerification()
     }
   }
 
@@ -241,7 +282,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   componentWillReceiveProps (nextProps) {
-    const { productSuccess, productError, mobileNumbers, mobileRegistrationError, mobileRegistrationSuccess } = nextProps
+    const { productSuccess, productError, mobileNumbers, mobileRegistrationError, mobileRegistrationSuccess, verificationCodeSuccess, verificationCodeError } = nextProps
 
     // handle if submission is success
     ifElse(equals(true), this._handleSuccess, noop)(productSuccess)
@@ -250,10 +291,16 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     ifElse(equals(true), this._handleError, noop)(productError)
 
     // handle if mobile registration is success
-    ifElse(equals(true), this._handleToggleVerification, noop)(mobileRegistrationSuccess)
+    ifElse(both(equals(true), () => this.mobileSuccessSubmission), this._handleToggleVerification, noop)(mobileRegistrationSuccess)
 
     // handle if mobile registration is error
     ifElse(complement(equals(null)), this._handleErrorMobileRegistration, noop)(mobileRegistrationError)
+
+    // handle if verification code is success
+    ifElse(equals(true), this._handleSuccessVerificationCode, noop)(verificationCodeSuccess)
+
+    // handle if verification code is error
+    ifElse(complement(equals(null)), this._handleErrorMobileRegistration, noop)(verificationCodeError)
 
     // handle if theree's mobile number we can use as default
     ifElse((mobile) => mobile.size > 0, this._handleMobileRegistered, noop)(mobileNumbers)
@@ -339,7 +386,9 @@ const mapStateToProps = createStructuredSelector({
   markdown: selectMarkdown(),
   loader: selectLoadingMarkdown(),
   mobileRegistrationSuccess: selectMobileRegistrationSuccess(),
-  mobileRegistrationError: selectMobileRegistrationError()
+  mobileRegistrationError: selectMobileRegistrationError(),
+  verificationCodeSuccess: selectVerificationCodeSuccess(),
+  verificationCodeError: selectVerificationCodeError()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -357,6 +406,7 @@ function mapDispatchToProps (dispatch) {
     getMarkDown: payload => dispatch(getMarkDownAction()),
     setVerificationCode: payload => dispatch(setVerificationCodeAction(payload)),
     requestmobileRegistration: payload => dispatch(requestMobileRegistrationAction(payload)),
+    requestVerificationCode: payload => dispatch(requestVerificationCodeAction(payload)),
     dispatch
   }
 }

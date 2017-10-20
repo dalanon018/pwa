@@ -20,7 +20,7 @@ import {
   UPDATE_MOBILE_NUMBERS,
   GET_MARKDOWN,
   REQUEST_MOBILE_REGISTRATION,
-  SET_VERIFICATION_CODE
+  REQUEST_VERIFICATION_CODE
 } from './constants'
 import {
   setProductAction,
@@ -29,7 +29,9 @@ import {
   setProductErrorAction,
   setMarkDownAction,
   successMobileRegistrationAction,
-  errorMobileRegistrationAction
+  errorMobileRegistrationAction,
+  successVerificationCodeAction,
+  errorVerificationCodeAction
 } from './actions'
 
 import {
@@ -150,11 +152,15 @@ export function * mobileRegistrationSaga () {
 }
 
 export function * verificationCode () {
-  // console.log('testing','verificationCodeSaga')
+  try {
+    yield put(successVerificationCodeAction())
+  } catch (e) {
+    yield put(errorVerificationCodeAction(e.message))
+  }
 }
 
 export function * verificationCodeSaga () {
-  yield * takeLatest(SET_VERIFICATION_CODE, verificationCode)
+  yield * takeLatest(REQUEST_VERIFICATION_CODE, verificationCode)
 }
 
 export function * getProductSaga () {

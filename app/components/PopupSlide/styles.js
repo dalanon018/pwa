@@ -139,7 +139,7 @@ const TermsConditionsHeader = styled.div`
   position: ${props => props.toggle ? 'fixed' : 'static'};
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 1000;
 
   .tc-header-label {
     width: 100%;
@@ -158,6 +158,14 @@ const TermsConditionsHeader = styled.div`
   }
 `
 
+const ModalContentWrapper = styled.div`
+  .ui.fullscreen.modal {
+    width: 100% !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+  }
+`
+
 export {
   PopupWrapper,
   TextWrapper,
@@ -167,5 +175,6 @@ export {
   PopupContent,
   TermsConditionsWrapper,
   ButtonWrapper,
-  TermsConditionsHeader
+  TermsConditionsHeader,
+  ModalContentWrapper
 }
