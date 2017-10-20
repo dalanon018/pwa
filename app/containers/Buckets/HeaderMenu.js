@@ -61,8 +61,8 @@ const RightWrapper = styled.div`
   justify-content: flex-end;
 
   .mini {
-    height: 20px !important;
-    width: 20px !important;
+    height: 25px !important;
+    width: 25px !important;
   }
 `
 
@@ -70,7 +70,7 @@ const ActiviesIcon = styled.div`
   margin-left: ${props => props.marginLeft ? 0 : 20}px;
 
   @media screen and (max-width: 767px) {
-    margin-left: 15px !important;
+    margin-left: 9px !important;
   }
   @media screen and (max-width: 320px) {
     margin-left: 4px !important;

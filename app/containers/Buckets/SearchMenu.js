@@ -82,7 +82,7 @@ const HamburgerSpan = styled.span`
   &::after {
     transform-origin: bottom right;
     transition: transform 0.3s, width 0.3s, bottom 0.3s;
-    bottom: ${({active}) => active ? '0' : '-8px'};;
+    bottom: ${({active}) => active ? '0' : '-8px'};
     transform: ${({active}) => active ? 'translateX(0) translateY(0) rotate(-45deg)' : 'none'};
   }
 
@@ -111,6 +111,18 @@ const CloseIcon = styled(Icon)`
   margin-right: 0 !important;
 `
 
+const InputContainer = styled.div`
+  position: relative;
+  width: 100%;
+
+  .magnifier {
+    position: absolute;
+    right: 0;
+    top: 8px;
+    margin: 0;
+  }
+`
+
 class SearchMenu extends PureComponent {
   static propTypes= {
     hideBackButton: PropTypes.bool.isRequired,
@@ -124,7 +136,8 @@ class SearchMenu extends PureComponent {
    * handler wether to show the close button or not.
    */
   state = {
-    dirty: false
+    dirty: false,
+    searchValue: ''
   }
 
   _searchInput
@@ -145,15 +158,17 @@ class SearchMenu extends PureComponent {
 
   _handleOnchange (evt) {
     this.setState({
-      dirty: !isEmpty(evt.target.value)
+      dirty: !isEmpty(evt.target.value),
+      searchValue: evt.target.value
     })
   }
 
   _handlePressSearch () {
     const { searchProduct } = this.props
-    if (this._searchInput.value) {
+    const { searchValue } = this.state
+    if (searchValue) {
       // we will update our search key here.
-      searchProduct({ id: this._searchInput.value })
+      searchProduct({ id: searchValue })
     }
   }
 
@@ -193,15 +208,16 @@ class SearchMenu extends PureComponent {
             </Grid.Column>
             <Grid.Column className='padding__none--horizontal' verticalAlign='middle' width={13}>
               <SearchContainer>
-                {/* <Icon name='search' color='black' size='large' onClick={this._handlePressSearch} /> */}
-                <SearchInput
-                  className='color__secondary border__none'
-                  icon='search'
-                  ref={this._inputReference}
-                  onChange={this._handleOnchange}
-                  onKeyPress={this._handleKeyPress}
-                  placeholder={intl.formatMessage(messages.searchPlaceHolder)}
-                />
+                <InputContainer>
+                  <SearchInput
+                    className='color__secondary border__none'
+                    ref={this._inputReference}
+                    onChange={this._handleOnchange}
+                    onKeyPress={this._handleKeyPress}
+                    placeholder={intl.formatMessage(messages.searchPlaceHolder)}
+                  />
+                  <Icon className='magnifier' name='search' onClick={this._handlePressSearch} />
+                </InputContainer>
                 {
                   dirty &&
                   <CloseIcon
