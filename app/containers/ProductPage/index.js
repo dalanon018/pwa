@@ -91,6 +91,11 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
    */
   successSubmission = false
 
+  /**
+   * this will handle if success is valid after submission
+   */
+  successVerificationSubmission = false
+
     /**
    * this will handle if success is valid after mobile Registration Submission
    */
@@ -146,7 +151,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     // })
     const { requestVerificationCode } = this.props
 
-    requestVerificationCode(value)
+    requestVerificationCode(true)
 
     this.props.setToggle()
   }
@@ -156,6 +161,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     const { mobileNumber } = this.state
 
     this.successSubmission = true
+    this.successVerificationSubmission = false
 
     setCurrentProduct(product)
     updateMobileNumbers(mobileNumber)
@@ -165,7 +171,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.setState({
       showVerification: !this.state.showVerification
     })
-
+    this.successVerificationSubmission = true
     this.mobileSuccessSubmission = false
   }
 
@@ -295,9 +301,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
     // handle if mobile registration is error
     ifElse(complement(equals(null)), this._handleErrorMobileRegistration, noop)(mobileRegistrationError)
-
     // handle if verification code is success
-    ifElse(equals(true), this._handleSuccessVerificationCode, noop)(verificationCodeSuccess)
+    ifElse(both(equals(true), () => this.successVerificationSubmission), this._handleSuccessVerificationCode, noop)(verificationCodeSuccess)
 
     // handle if verification code is error
     ifElse(complement(equals(null)), this._handleErrorMobileRegistration, noop)(verificationCodeError)

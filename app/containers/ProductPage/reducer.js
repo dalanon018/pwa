@@ -93,13 +93,13 @@ function productPageReducer (state = initialState, action) {
 
     case SUCCESS_VERIFICATION_CODE:
       return state
-        .set('verificationSuccess', true)
-        .set('verificationError', null)
+        .set('verificationCodeSuccess', true)
+        .set('verificationCodeError', null)
 
     case ERROR_VERIFICATION_CODE:
       return state
-        .set('verificationSuccess', false)
-        .set('verificationError', action.payload)
+        .set('verificationCodeSuccess', false)
+        .set('verificationCodeError', action.payload)
 
     case SET_VERIFICATION_CODE:
       return state
