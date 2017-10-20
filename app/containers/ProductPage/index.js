@@ -113,8 +113,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       showVerification: false,
       mobileNumber: '',
       errModalToggle: false,
-      errorMessage: '',
-      showRecaptcha: false
+      errorMessage: ''
     }
 
     this._handleSubmit = this._handleSubmit.bind(this)
@@ -131,18 +130,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this._handleToggleVerification = this._handleToggleVerification.bind(this)
     this._handleSubmitVerification = this._handleSubmitVerification.bind(this)
     this._handleSuccessVerificationCode = this._handleSuccessVerificationCode.bind(this)
-    this._toggleBodyClass = this._toggleBodyClass.bind(this)
-  }
-
-  _toggleBodyClass = () => {
-    const { showRecaptcha } = this.state
-
-    let elem = document.getElementsByTagName('body')[0]
-    if (showRecaptcha) {
-      elem.classList.add('custom__body')
-    } else {
-      elem.classList.remove('custom__body')
-    }
   }
 
   _handleSubmitVerification ({ value }) {
@@ -168,18 +155,11 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   _handleToggleVerification () {
-    const { showRecaptcha } = this.state
     this.setState({
       showVerification: !this.state.showVerification
     })
     this.successVerificationSubmission = true
     this.mobileSuccessSubmission = false
-
-    this.setState({
-      showRecaptcha: !showRecaptcha
-    })
-
-    this._toggleBodyClass()
   }
 
   _recaptchaRef (ref) {
