@@ -26,6 +26,10 @@ export default defineMessages({
     id: 'app.containers.Bucket.menuHelp',
     defaultMessage: 'Help'
   },
+  menuLogout: {
+    id: 'app.containers.Bucket.menuLogout',
+    defaultMessage: 'Sign Out'
+  },
   searchPlaceHolder: {
     id: 'app.containers.Bucket.searchPlaceHolder',
     defaultMessage: 'Search for Products, Brands and More'

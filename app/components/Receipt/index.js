@@ -396,10 +396,9 @@ class Receipt extends React.PureComponent {
               <InstructionsWrapper>
                 <WarningDescription className='color__secondary'>
                   <Image src={ScreenshotIcon} />
-                  <Label className='text__roboto--light' as='span' size='large'>
+                  <Label className='text__roboto--light screenshot-label' as='span' size='large'>
                     <FormattedMessage {...messages.instructionsLabel} />
                   </Label>
-
                 </WarningDescription>
               </InstructionsWrapper>
             </Grid.Column>
