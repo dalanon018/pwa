@@ -173,6 +173,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     })
     this.successVerificationSubmission = true
     this.mobileSuccessSubmission = false
+
+    this._toggleBodyClass()
   }
 
   _recaptchaRef (ref) {
@@ -189,8 +191,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       this.setState({
         showRecaptcha: !showRecaptcha
       })
-
-      this._toggleBodyClass()
 
       requestmobileRegistration(mobileNumber)
     }
