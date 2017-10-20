@@ -168,11 +168,16 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   _handleToggleVerification () {
+    const { showRecaptcha } = this.state
     this.setState({
       showVerification: !this.state.showVerification
     })
     this.successVerificationSubmission = true
     this.mobileSuccessSubmission = false
+
+    this.setState({
+      showRecaptcha: !showRecaptcha
+    })
 
     this._toggleBodyClass()
   }
@@ -183,15 +188,10 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   _executeCaptcha (token) {
     const { requestmobileRegistration } = this.props
-    const { mobileNumber, showRecaptcha } = this.state
+    const { mobileNumber } = this.state
 
     if (token) {
       this.mobileSuccessSubmission = true
-
-      this.setState({
-        showRecaptcha: !showRecaptcha
-      })
-
       requestmobileRegistration(mobileNumber)
     }
   }
