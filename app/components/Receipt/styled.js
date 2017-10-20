@@ -18,11 +18,16 @@ export const WrapperWarning = styled.div`
 export const WarningDescription = styled.div`
   font-family: 'Roboto';
   font-size: 14px;
-  line-height: 15px;
+  line-height: 17px;
   padding: 0 20px;
   position: relative;
   display: flex;
   align-items: center;
+
+  span.screenshot-label {
+    font-size: 14px
+    line-height: 17px;
+  }
 
   .image {
     width: 26px;

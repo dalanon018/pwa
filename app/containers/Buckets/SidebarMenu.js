@@ -17,6 +17,7 @@ import Barcode from 'images/icons/drawer/activity.svg'
 import Categories from 'images/icons/drawer/categories.svg'
 import Brands from 'images/icons/drawer/brands.svg'
 import Help from 'images/icons/drawer/help.svg'
+import Logout from 'images/icons/drawer/signout.svg'
 
 const SidebarContainer = styled.div`
   height: 100vh;
@@ -178,6 +179,14 @@ class SidebarMenu extends React.PureComponent {
               <List.Content>
                 <Label as='p' className='margin__none color__secondary' size='huge'>
                   <FormattedMessage {...messages.menuHelp} />
+                </Label>
+              </List.Content>
+            </ListWrapper>
+            <ListWrapper>
+              <Image alt='help' size='mini' src={Logout} />
+              <List.Content>
+                <Label as='p' className='margin__none color__secondary' size='huge'>
+                  <FormattedMessage {...messages.menuLogout} />
                 </Label>
               </List.Content>
             </ListWrapper>
