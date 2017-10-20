@@ -560,3 +560,9 @@ svg#barcode {
     width: 650px !important;
   }
 }
+
+.custom__body {
+  overflow: hidden !important;
+  height: 100vh !important;
+  position: fixed !important;
+}

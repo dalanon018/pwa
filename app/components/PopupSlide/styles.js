@@ -158,6 +158,14 @@ const TermsConditionsHeader = styled.div`
   }
 `
 
+const ModalContentWrapper = styled.div`
+  .ui.fullscreen.modal {
+    width: 100% !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+  }
+`
+
 export {
   PopupWrapper,
   TextWrapper,
@@ -167,5 +175,6 @@ export {
   PopupContent,
   TermsConditionsWrapper,
   ButtonWrapper,
-  TermsConditionsHeader
+  TermsConditionsHeader,
+  ModalContentWrapper
 }

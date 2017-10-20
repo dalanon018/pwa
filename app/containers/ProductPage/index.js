@@ -13,7 +13,7 @@ import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { noop } from 'lodash'
-import { ifElse, equals, complement } from 'ramda'
+import { ifElse, both, equals, complement } from 'ramda'
 
 import { imageStock } from 'utils/image-stock'
 
@@ -91,6 +91,11 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
    */
   successSubmission = false
 
+    /**
+   * this will handle if success is valid after mobile Registration Submission
+   */
+  mobileSuccessSubmission = false
+
   constructor () {
     super()
     this.state = {
@@ -103,7 +108,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       showVerification: false,
       mobileNumber: '',
       errModalToggle: false,
-      errorMessage: ''
+      errorMessage: '',
+      showRecaptcha: false
     }
 
     this._handleSubmit = this._handleSubmit.bind(this)
@@ -120,6 +126,18 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this._handleToggleVerification = this._handleToggleVerification.bind(this)
     this._handleSubmitVerification = this._handleSubmitVerification.bind(this)
     this._handleSuccessVerificationCode = this._handleSuccessVerificationCode.bind(this)
+    this._toggleBodyClass = this._toggleBodyClass.bind(this)
+  }
+
+  _toggleBodyClass = () => {
+    const { showRecaptcha } = this.state
+
+    let elem = document.getElementsByTagName('body')[0]
+    if (showRecaptcha) {
+      elem.classList.add('custom__body')
+    } else {
+      elem.classList.remove('custom__body')
+    }
   }
 
   _handleSubmitVerification ({ value }) {
@@ -137,6 +155,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     const { product, setCurrentProduct, updateMobileNumbers } = this.props
     const { mobileNumber } = this.state
 
+    this.successSubmission = true
+
     setCurrentProduct(product)
     updateMobileNumbers(mobileNumber)
   }
@@ -145,6 +165,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.setState({
       showVerification: !this.state.showVerification
     })
+
+    this.mobileSuccessSubmission = false
   }
 
   _recaptchaRef (ref) {
@@ -153,13 +175,18 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   _executeCaptcha (token) {
     const { requestmobileRegistration } = this.props
-    const { mobileNumber } = this.state
+    const { mobileNumber, showRecaptcha } = this.state
 
     if (token) {
-      this.successSubmission = true
+      this.mobileSuccessSubmission = true
+
+      this.setState({
+        showRecaptcha: !showRecaptcha
+      })
+
+      this._toggleBodyClass()
 
       requestmobileRegistration(mobileNumber)
-      // this._handleToggleVerification()
     }
   }
 
@@ -264,7 +291,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     ifElse(equals(true), this._handleError, noop)(productError)
 
     // handle if mobile registration is success
-    ifElse(equals(true), this._handleToggleVerification, noop)(mobileRegistrationSuccess)
+    ifElse(both(equals(true), () => this.mobileSuccessSubmission), this._handleToggleVerification, noop)(mobileRegistrationSuccess)
 
     // handle if mobile registration is error
     ifElse(complement(equals(null)), this._handleErrorMobileRegistration, noop)(mobileRegistrationError)

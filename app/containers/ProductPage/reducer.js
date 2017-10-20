@@ -23,6 +23,7 @@ import {
 
   SET_VERIFICATION_CODE,
 
+  REQUEST_MOBILE_REGISTRATION,
   SUCCESS_VERIFICATION_CODE,
   ERROR_VERIFICATION_CODE
 } from './constants'
@@ -75,6 +76,11 @@ function productPageReducer (state = initialState, action) {
       return state
         .set('requestProductSuccess', false)
         .set('requestProductError', false)
+
+    case REQUEST_MOBILE_REGISTRATION:
+      return state
+        .set('mobileRegistrationSuccess', false)
+        .set('mobileRegistrationError', null)
 
     case SUCCESS_MOBILE_REGISTRATION:
       return state
