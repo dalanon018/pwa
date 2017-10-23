@@ -170,7 +170,7 @@ export function * verificationCode (args) {
     yield call(setItem, LOYALTY_TOKEN_KEY, getLoyaltyToken(req))
     yield put(successVerificationCodeAction())
   } catch (e) {
-    yield put(errorVerificationCodeAction(e.message))
+    yield put(errorVerificationCodeAction('Please check if you input the verification code correctly.'))
   }
 }
 

@@ -8,6 +8,7 @@ import React, { PropTypes } from 'react'
 import Helmet from 'react-helmet'
 import Recaptcha from 'react-google-recaptcha'
 
+import { FormattedMessage } from 'react-intl'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -21,6 +22,8 @@ import PopupSlide from 'components/PopupSlide'
 import PopupVerification from 'components/PopupVerification'
 import WindowWidth from 'components/WindowWidth'
 import Modal from 'components/PromptModal'
+
+import messages from './messages'
 
 import {
   selectLoader,
@@ -96,6 +99,11 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
    */
   mobileSuccessSubmission = false
 
+  /**
+   * this will handle if resend code was sent since we want to show a successful message to the user.
+   */
+  resendCodeSuccessSubmission = false
+
   constructor () {
     super()
     this.state = {
@@ -159,6 +167,17 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.mobileSuccessSubmission = false
   }
 
+  /**
+   * once our resend code is successful we want to make sure that we show the success message to the user.
+   */
+  _handleSuccessResendVerificationCode = () => {
+    this.setState({
+      errModalToggle: true,
+      errorMessage: <FormattedMessage {...messages.successResendCode} />
+    })
+    this.resendCodeSuccessSubmission = false
+  }
+
   _recaptchaRef (ref) {
     this.recaptcha = ref
   }
@@ -167,6 +186,11 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     const { mobileNumber } = this.state
 
     this.props.requestmobileRegistration(mobileNumber)
+  }
+
+  _executeResendCode = () => {
+    this.resendCodeSuccessSubmission = true
+    this._executeSendCode()
   }
 
   _executeCaptcha (token) {
@@ -255,6 +279,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       errModalToggle: true,
       errorMessage: error
     })
+
+    // we need to reset our data from the store so it won't show always.
+    this.props.resetSubmission()
   }
 
   _handleMobileRegistered (mobileNumbers) {
@@ -299,8 +326,12 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     // handle if mobile registration is success
     ifElse(both(equals(true), () => this.mobileSuccessSubmission), this._handleToggleVerification, noop)(mobileRegistrationSuccess)
 
+    // handle if resend verification code is successful
+    ifElse(both(equals(true), () => this.resendCodeSuccessSubmission), this._handleSuccessResendVerificationCode, noop)(mobileRegistrationSuccess)
+
     // handle if mobile registration is error
     ifElse(complement(equals(null)), this._handleErrorMobileRegistration, noop)(mobileRegistrationError)
+
     // handle if verification code is success
     ifElse(both(equals(true), () => this.successVerificationSubmission), this._handleSuccessVerificationCode, noop)(verificationCodeSuccess)
 
@@ -367,7 +398,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             modalToggle={modalToggle}
             toggle={showVerification}
             onClose={this._closePopupSlide}
-            resendCode={this._executeSendCode}
+            resendCode={this._executeResendCode}
           />
         </div>
 
