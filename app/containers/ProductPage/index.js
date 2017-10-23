@@ -75,6 +75,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     getProduct: PropTypes.func.isRequired,
     setCurrentProduct: PropTypes.func.isRequired,
     changeRoute: PropTypes.func.isRequired,
+    setPageTitle: PropTypes.func.isRequired,
+    setShowSearchIcon: PropTypes.func.isRequired,
+    setShowActivityIcon: PropTypes.func.isRequired,
     setHandlersDefault: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
@@ -83,7 +86,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     productError: PropTypes.bool.isRequired,
     mobileNumbers: PropTypes.object.isRequired,
     mobileRegistrationSuccess: PropTypes.bool,
-    mobileRegistrationError: PropTypes.string
+    mobileRegistrationError: PropTypes.string,
+    loyaltyToken: PropTypes.string
   }
 
   /**

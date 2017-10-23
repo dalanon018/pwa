@@ -4,7 +4,8 @@ import { fromJS } from 'immutable'
 
 import {
   setProductAction,
-  setProductHandlersDefaultAction
+  setProductHandlersDefaultAction,
+  setLoyaltyTokenAction
 } from '../actions'
 
 describe('Products Reducer', () => {
@@ -19,6 +20,7 @@ describe('Products Reducer', () => {
       currentProduct: {},
       markdown: '',
       loadingMarkdown: false,
+      loyaltyToken: null,
       mobileRegistrationSuccess: false,
       mobileRegistrationError: null,
       verificationCode: false,
@@ -49,5 +51,13 @@ describe('Products Reducer', () => {
                             .set('requestProductError', false)
 
     expect(productsReducer(state, setProductHandlersDefaultAction())).toEqual(expectedResult)
+  })
+
+  it('should set the loyaltyToken', () => {
+    const payload = '123131312'
+    const expectedResult = state
+                            .set('loyaltyToken', payload)
+
+    expect(productsReducer(state, setLoyaltyTokenAction(payload))).toEqual(expectedResult)
   })
 })

@@ -22,6 +22,9 @@ describe('<Products />', () => {
     changeRoute: () => {},
     setCurrentProduct: () => {},
     setHandlersDefault: () => {},
+    setPageTitle: () => {},
+    setShowSearchIcon: () => {},
+    setShowActivityIcon: () => {},
     product: fromJS({
       'product_id': '0001',
       'image': null,
@@ -39,7 +42,8 @@ describe('<Products />', () => {
     toggle: false,
     productSuccess: false,
     productError: false,
-    mobileNumbers: fromJS([1, 2, 3])
+    mobileNumbers: fromJS([1, 2, 3]),
+    loyaltyToken: null
   }
 
   it('render without exploding', () => {
