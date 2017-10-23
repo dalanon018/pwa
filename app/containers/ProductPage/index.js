@@ -8,11 +8,12 @@ import React, { PropTypes } from 'react'
 import Helmet from 'react-helmet'
 import Recaptcha from 'react-google-recaptcha'
 
+import { FormattedMessage } from 'react-intl'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { noop } from 'lodash'
-import { ifElse, both, equals, complement } from 'ramda'
+import { ifElse, both, equals, complement, partial } from 'ramda'
 
 import { imageStock } from 'utils/image-stock'
 
@@ -21,6 +22,8 @@ import PopupSlide from 'components/PopupSlide'
 import PopupVerification from 'components/PopupVerification'
 import WindowWidth from 'components/WindowWidth'
 import Modal from 'components/PromptModal'
+
+import messages from './messages'
 
 import {
   selectLoader,
@@ -33,7 +36,8 @@ import {
   selectMobileRegistrationSuccess,
   selectMobileRegistrationError,
   selectVerificationCodeSuccess,
-  selectVerificationCodeError
+  selectVerificationCodeError,
+  selectLoyaltyToken
 } from './selectors'
 
 import {
@@ -46,7 +50,8 @@ import {
   setVerificationCodeAction,
   requestMobileRegistrationAction,
   requestVerificationCodeAction,
-  resetSubmissionAction
+  resetSubmissionAction,
+  getLoyaltyTokenAction
 } from './actions'
 
 import {
@@ -70,6 +75,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     getProduct: PropTypes.func.isRequired,
     setCurrentProduct: PropTypes.func.isRequired,
     changeRoute: PropTypes.func.isRequired,
+    setPageTitle: PropTypes.func.isRequired,
+    setShowSearchIcon: PropTypes.func.isRequired,
+    setShowActivityIcon: PropTypes.func.isRequired,
     setHandlersDefault: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
@@ -78,7 +86,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     productError: PropTypes.bool.isRequired,
     mobileNumbers: PropTypes.object.isRequired,
     mobileRegistrationSuccess: PropTypes.bool,
-    mobileRegistrationError: PropTypes.string
+    mobileRegistrationError: PropTypes.string,
+    loyaltyToken: PropTypes.string
   }
 
   /**
@@ -95,6 +104,11 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
    * this will handle if success is valid after mobile Registration Submission
    */
   mobileSuccessSubmission = false
+
+  /**
+   * this will handle if resend code was sent since we want to show a successful message to the user.
+   */
+  resendCodeSuccessSubmission = false
 
   constructor () {
     super()
@@ -122,17 +136,21 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this._handleTouch = this._handleTouch.bind(this)
     this._recaptchaRef = this._recaptchaRef.bind(this)
     this._executeCaptcha = this._executeCaptcha.bind(this)
+    this._handleFactoryToggleLoyaltyToken = this._handleFactoryToggleLoyaltyToken.bind(this)
     this._handleToggleVerification = this._handleToggleVerification.bind(this)
     this._handleSubmitVerification = this._handleSubmitVerification.bind(this)
     this._handleSuccessVerificationCode = this._handleSuccessVerificationCode.bind(this)
   }
 
   _handleSubmitVerification ({ value }) {
+    this.successVerificationSubmission = true
+    const { mobileNumber } = this.state
     const { requestVerificationCode } = this.props
 
-    this.successVerificationSubmission = true
-
-    requestVerificationCode(true)
+    requestVerificationCode({
+      mobileNumber,
+      code: value
+    })
 
     this.props.setToggle()
     this._handleCustomBody()
@@ -156,16 +174,36 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.mobileSuccessSubmission = false
   }
 
+  /**
+   * once our resend code is successful we want to make sure that we show the success message to the user.
+   */
+  _handleSuccessResendVerificationCode = () => {
+    this.setState({
+      errModalToggle: true,
+      errorMessage: <FormattedMessage {...messages.successResendCode} />
+    })
+    this.resendCodeSuccessSubmission = false
+  }
+
   _recaptchaRef (ref) {
     this.recaptcha = ref
   }
 
-  _executeCaptcha (token) {
-    const { requestmobileRegistration } = this.props
+  _executeSendCode = () => {
     const { mobileNumber } = this.state
+
+    this.props.requestmobileRegistration(mobileNumber)
+  }
+
+  _executeResendCode = () => {
+    this.resendCodeSuccessSubmission = true
+    this._executeSendCode()
+  }
+
+  _executeCaptcha (token) {
     if (token) {
       this.mobileSuccessSubmission = true
-      requestmobileRegistration(mobileNumber)
+      this._executeSendCode()
     }
   }
 
@@ -201,8 +239,27 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this._handleToggleVerification(e)
   }
 
-  _handleToggle = (e) => {
-    e.stopPropagation()
+  // on submission we check if we can proceed to product review since we already have loyaltyToken defined.
+  _handleFactoryToggleLoyaltyToken = (event) => {
+    const { product, loyaltyToken, setCurrentProduct, updateMobileNumbers, mobileNumbers, changeRoute } = this.props
+    const gotoReview = () => {
+      setCurrentProduct(product)
+      updateMobileNumbers(mobileNumbers.last())
+
+      changeRoute('/review')
+    }
+
+    const handleLoyaltyToken = ifElse(
+      equals(null),
+      partial(this._handleToggle, [event]),
+      gotoReview
+    )
+
+    return handleLoyaltyToken(loyaltyToken)
+  }
+
+  _handleToggle = (event) => {
+    event.stopPropagation()
     const { showSlide } = this.state
     this.props.setToggle()
 
@@ -215,8 +272,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   _handleCustomBody = () => {
     const { showSlide } = this.state
+    const elem = document.getElementsByTagName('body')[0]
 
-    let elem = document.getElementsByTagName('body')[0]
     if (!showSlide) {
       elem.classList.add('custom__body')
     } else {
@@ -248,6 +305,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       errModalToggle: true,
       errorMessage: error
     })
+
+    // we need to reset our data from the store so it won't show always.
+    this.props.resetSubmission()
   }
 
   _handleMobileRegistered (mobileNumbers) {
@@ -273,8 +333,16 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.props.resetSubmission()
   }
 
+  componentWillMount () {
+    this.props.setPageTitle('Product Details')
+    this.props.setShowSearchIcon(true)
+    this.props.setShowActivityIcon(true)
+  }
+
   componentDidMount () {
-    const { params: { id }, getProduct, getMobileNumbers, getMarkDown } = this.props
+    const { params: { id }, getProduct, getMobileNumbers, getMarkDown, getLoyaltyToken } = this.props
+
+    getLoyaltyToken()
     getProduct({ id })
     getMobileNumbers()
     getMarkDown()
@@ -292,8 +360,12 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     // handle if mobile registration is success
     ifElse(both(equals(true), () => this.mobileSuccessSubmission), this._handleToggleVerification, noop)(mobileRegistrationSuccess)
 
+    // handle if resend verification code is successful
+    ifElse(both(equals(true), () => this.resendCodeSuccessSubmission), this._handleSuccessResendVerificationCode, noop)(mobileRegistrationSuccess)
+
     // handle if mobile registration is error
     ifElse(complement(equals(null)), this._handleErrorMobileRegistration, noop)(mobileRegistrationError)
+
     // handle if verification code is success
     ifElse(both(equals(true), () => this.successVerificationSubmission), this._handleSuccessVerificationCode, noop)(verificationCodeSuccess)
 
@@ -302,16 +374,13 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
     // handle if theree's mobile number we can use as default
     ifElse((mobile) => mobile.size > 0, this._handleMobileRegistered, noop)(mobileNumbers)
-
-    this.props.setPageTitle('Product Details')
-    this.props.setShowSearchIcon(true)
-    this.props.setShowActivityIcon(true)
   }
 
   render () {
     const { loading, product, toggle, route, windowWidth, markdown, loader, changeRoute } = this.props
     const { modalToggle, prevMobileNumber, showVerification, errModalToggle, errorMessage } = this.state
     const productPageTrigger = route && route
+
     return (
       <div>
         <Helmet
@@ -322,7 +391,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             loading={loading}
             product={product}
             windowWidth={windowWidth}
-            popup={this._handleToggle}
+            popup={this._handleFactoryToggleLoyaltyToken}
             copied={this._handleCopy}
             defaultImage={imageStock('default-slider.jpg')}
             toggle={this.state.socialToggle}
@@ -359,8 +428,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             modalClose={this._handleClose}
             modalToggle={modalToggle}
             toggle={showVerification}
-            mobileNumber={prevMobileNumber}
-            onClose={this._closePopupSlide} />
+            onClose={this._closePopupSlide}
+            resendCode={this._executeResendCode}
+          />
         </div>
 
         <Modal
@@ -387,7 +457,8 @@ const mapStateToProps = createStructuredSelector({
   mobileRegistrationSuccess: selectMobileRegistrationSuccess(),
   mobileRegistrationError: selectMobileRegistrationError(),
   verificationCodeSuccess: selectVerificationCodeSuccess(),
-  verificationCodeError: selectVerificationCodeError()
+  verificationCodeError: selectVerificationCodeError(),
+  loyaltyToken: selectLoyaltyToken()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -396,6 +467,7 @@ function mapDispatchToProps (dispatch) {
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProduct: (payload) => dispatch(getProductAction(payload)),
+    getLoyaltyToken: () => dispatch(getLoyaltyTokenAction()),
     setCurrentProduct: (payload) => dispatch(setCurrentProductAction(payload)),
     getMobileNumbers: () => dispatch(getMobileNumbersAction()),
     updateMobileNumbers: (payload) => dispatch(updateMobileNumbersAction(payload)),

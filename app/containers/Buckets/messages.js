@@ -45,5 +45,9 @@ export default defineMessages({
   search: {
     id: 'app.containers.Bucket.search',
     defaultMessage: 'Search'
+  },
+  errOffline: {
+    id: 'app.containers.Bucket.errOffline',
+    defaultMessage: 'You\'re Offline'
   }
 })

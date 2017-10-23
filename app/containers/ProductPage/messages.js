@@ -17,5 +17,9 @@ export default defineMessages({
   buttonLabelAgree: {
     id: 'app.containers.ProductPage.buttonLabelAgree',
     defaultMessage: 'Yes, I Agree'
+  },
+  successResendCode: {
+    id: 'app.containers.ProductPage.successResendCode',
+    defaultMessage: 'Succesfully Resend Code!'
   }
 })

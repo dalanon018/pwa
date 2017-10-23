@@ -58,7 +58,7 @@ export default defineMessages({
   },
   errorSubmission: {
     id: `${idSuffix}.errorNoMobileProduct`,
-    defaultMessage: 'There\'s problem with submission please try again.'
+    defaultMessage: 'There\'s problem with submission. Please make sure you are online and You are login with your mobile number.'
   },
   storeEmpty: {
     id: `${idSuffix}.storeEmpty`,

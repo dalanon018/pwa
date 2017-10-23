@@ -3,7 +3,8 @@ import { fromJS } from 'immutable'
 import {
   selectProduct,
   selectProductSuccess,
-  selectProductError
+  selectProductError,
+  selectLoyaltyToken
 } from '../selectors'
 
 describe('Product Selectors', () => {
@@ -49,6 +50,20 @@ describe('Product Selectors', () => {
         }
       })
       expect(selectProductErrorSelectors(mockedState)).toEqual(requestProductError)
+    })
+  })
+
+  describe('selectLoyaltyToken', () => {
+    const selectLoyaltyTokenSelectors = selectLoyaltyToken()
+
+    it('should get error submission', () => {
+      const loyaltyToken = '12313-123123213-1231321-12321'
+      const mockedState = fromJS({
+        productPage: {
+          loyaltyToken
+        }
+      })
+      expect(selectLoyaltyTokenSelectors(mockedState)).toEqual(loyaltyToken)
     })
   })
 })

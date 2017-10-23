@@ -14,7 +14,7 @@ import { getRequestData } from 'utils/offline-request'
 
 import { transformCategory, transformBrand, transformOrder } from 'utils/transforms'
 import { getItem, setItem } from 'utils/localStorage'
-import { DateDifferece } from 'utils/date'
+import { DateDifferece, AddDate } from 'utils/date'
 import { getBrowserInfo } from 'utils/http'
 
 import {
@@ -159,8 +159,8 @@ export function * requestAccessToken () {
       body: fnSearchParams(params)
     })
 
-    // the normal expiration is 1 hour but we will only set it to 30 mins so we can be sure that we will not encounter token expiry
-    const expiry = moment().add(30, 'minutes').format('YYYY-MM-DD HH:mm:ss')
+    // the normal expiration is 2 hour but we will only set it to 60 mins so we can be sure that we will not encounter token expiry
+    const expiry = AddDate(60)
     const token = Object.assign({}, req, { expiry })
 
     yield call(setItem, ACCESS_TOKEN_KEY, token)

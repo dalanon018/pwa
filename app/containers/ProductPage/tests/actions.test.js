@@ -2,12 +2,17 @@
 import {
   getProductAction,
   setProductAction,
-  setProductHandlersDefaultAction
+  setProductHandlersDefaultAction,
+  getLoyaltyTokenAction,
+  setLoyaltyTokenAction
 } from '../actions'
 import {
   GET_PRODUCT,
   SET_PRODUCT,
-  SET_PRODUCT_HANDLER_DEFAULT
+  SET_PRODUCT_HANDLER_DEFAULT,
+
+  GET_LOYALTY_TOKEN,
+  SET_LOYALTY_TOKEN
 } from '../constants'
 
 describe('Products actions', () => {
@@ -45,6 +50,26 @@ describe('Products actions', () => {
       }
 
       expect(setProductHandlersDefaultAction()).toEqual(expectedResult)
+    })
+  })
+
+  describe('Loyalty Token', () => {
+    it('should get loyaltyToken', () => {
+      const expectedResult = {
+        type: GET_LOYALTY_TOKEN
+      }
+
+      expect(getLoyaltyTokenAction()).toEqual(expectedResult)
+    })
+
+    it('should set loyaltyToken', () => {
+      const payload = '123312323-12123213213'
+      const expectedResult = {
+        type: SET_LOYALTY_TOKEN,
+        payload
+      }
+
+      expect(setLoyaltyTokenAction(payload)).toEqual(expectedResult)
     })
   })
 })

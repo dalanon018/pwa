@@ -39,8 +39,8 @@ export class PopupVerification extends React.PureComponent {
     toggle: PropTypes.bool.isRequired,
     modalClose: PropTypes.func,
     modalToggle: PropTypes.bool,
-    mobileNumber: PropTypes.string,
-    changeRoute: PropTypes.func
+    changeRoute: PropTypes.func,
+    resendCode: PropTypes.func.isRequired
   }
 
   state = {
@@ -79,7 +79,7 @@ export class PopupVerification extends React.PureComponent {
   _handleInput (e) {
     let curValue = e.target.value
 
-    if (curValue.length <= 6 && this._validateData(curValue)) {
+    if (curValue.length <= 4 && this._validateData(curValue)) {
       e.preventDefault()
       this.setState({
         value: e.target.value,
@@ -89,7 +89,7 @@ export class PopupVerification extends React.PureComponent {
   }
 
   _handleDisable () {
-    if (this.state.value.length === 6) {
+    if (this.state.value.length === 4) {
       this.setState({
         toggle: false
       })
@@ -122,7 +122,7 @@ export class PopupVerification extends React.PureComponent {
   }
 
   render () {
-    const { toggle, onClose, modalToggle, modalClose } = this.props
+    const { toggle, onClose, modalToggle, modalClose, resendCode } = this.props
     const { value } = this.state
 
     return (
@@ -146,12 +146,12 @@ export class PopupVerification extends React.PureComponent {
                 type='text'
                 value={value}
                 onChange={this._handleInput}
-                placeholder='XXXXXX'
+                placeholder='XXXX'
                 onPaste={this._handlePaste} />
             </InputWrapper>
 
             <ResendWrapper>
-              <div className='resend-content'>
+              <div className='resend-content' onClick={resendCode}>
                 <Image src={ResendIcon} />
                 <Label as='span' basic size='large' className='color__secondary'><FormattedMessage {...messages.resend} /></Label>
               </div>

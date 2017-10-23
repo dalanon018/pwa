@@ -1,16 +1,30 @@
 
+import moment from 'moment'
 import { takeLatest } from 'redux-saga'
 import { isEmpty, compact } from 'lodash'
-import { compose, uniqBy, prop, slice, reverse } from 'ramda'
+import {
+  both,
+  equals,
+  complement,
+  compose,
+  gte,
+  ifElse,
+  partial,
+  prop,
+  propOr,
+  reverse,
+  slice,
+  uniqBy
+} from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import xhr from 'utils/xhr'
 
-// import request from 'utils/request'
+import request from 'utils/request'
 import { getRequestData } from 'utils/offline-request'
-
+import { AddDate, DateDifferece } from 'utils/date'
 import { transformProduct } from 'utils/transforms'
-import { setItem, getItem } from 'utils/localStorage'
+import { setItem, getItem, removeItem } from 'utils/localStorage'
 
 import {
   GET_PRODUCT,
@@ -20,7 +34,8 @@ import {
   UPDATE_MOBILE_NUMBERS,
   GET_MARKDOWN,
   REQUEST_MOBILE_REGISTRATION,
-  REQUEST_VERIFICATION_CODE
+  REQUEST_VERIFICATION_CODE,
+  GET_LOYALTY_TOKEN
 } from './constants'
 import {
   setProductAction,
@@ -31,11 +46,14 @@ import {
   successMobileRegistrationAction,
   errorMobileRegistrationAction,
   successVerificationCodeAction,
-  errorVerificationCodeAction
+  errorVerificationCodeAction,
+  setLoyaltyTokenAction
 } from './actions'
 
 import {
   API_BASE_URL,
+  MOBILE_REGISTRATION_URL,
+  LOYALTY_TOKEN_KEY,
   LAST_VIEWS_KEY,
   CURRENT_PRODUCT_KEY,
   MOBILE_NUMBERS_KEY
@@ -131,32 +149,84 @@ export function * updateMobileNumbers (args) {
   yield put(setMobileNumbersAction(mobileRegistrations))
 }
 
-export function * registerMobileNumber (args) {
-  // const { payload } = args
+export function * getMarkDown () {
+  const headers = new Headers()
+  headers.append('Content-Type', 'binary/octet-stream')
 
+  const url = 'https://s3-ap-southeast-1.amazonaws.com/cliqq.shop/docs/terms.md'
+  const req = yield call(xhr, url, {
+    method: 'GET',
+    headers
+  })
+  if (!req.err) {
+    yield put(setMarkDownAction(req))
+  }
+}
+
+function * getLoyaltyToken () {
+  const loyaltyToken = yield call(getItem, LOYALTY_TOKEN_KEY)
+  const isExpired = compose(
+    complement(gte(0)),
+    partial(DateDifferece, [moment()]),
+    propOr(-1, 'expiry')
+  )
+
+  const retreiveToken = ifElse(
+    both(complement(equals(null)), isExpired),
+    prop('token'),
+    () => {
+      removeItem(LOYALTY_TOKEN_KEY)
+      return null
+    }
+  )
+
+  yield put(setLoyaltyTokenAction(retreiveToken(loyaltyToken)))
+}
+
+export function * registerMobileNumber (args) {
+  const { payload } = args
+  const mobileNumber = `0${payload}`
   try {
-    // const token = yield getAccessToken()
-    // const req = yield call(request, `${API_BASE_URL}/registration`, {
-    //   method: 'GET',
-    //   token: token.access_token
-    // })
-    // throw new Error('Error Registration')
+    const token = yield getAccessToken()
+    yield call(request, `${MOBILE_REGISTRATION_URL}/loyalty/cliqqshop/activation`, {
+      method: 'POST',
+      token: token.access_token,
+      body: JSON.stringify({ mobileNumber })
+    })
     yield put(successMobileRegistrationAction())
   } catch (e) {
     yield put(errorMobileRegistrationAction(e.message))
   }
 }
 
-export function * mobileRegistrationSaga () {
-  yield * takeLatest(REQUEST_MOBILE_REGISTRATION, registerMobileNumber)
-}
+export function * verificationCode (args) {
+  const { payload: { mobileNumber, code } } = args
+  const base64 = btoa(`0${mobileNumber}:${code}`)
+  const verification = `Basic ${base64}`
 
-export function * verificationCode () {
   try {
+    const token = yield getAccessToken()
+    const req = yield call(request, `${MOBILE_REGISTRATION_URL}/loyalty/cliqqshop/authorization`, {
+      method: 'POST',
+      token: token.access_token,
+      body: JSON.stringify({ verification })
+    })
+    const getLoyaltyToken = prop('loyaltyToken')
+    const expiry = AddDate(1, 'years')
+    const loyaltyToken = Object.assign({}, {
+      token: getLoyaltyToken(req),
+      expiry
+    })
+
+    yield call(setItem, LOYALTY_TOKEN_KEY, loyaltyToken)
     yield put(successVerificationCodeAction())
   } catch (e) {
-    yield put(errorVerificationCodeAction(e.message))
+    yield put(errorVerificationCodeAction('Please check if you input the verification code correctly.'))
   }
+}
+
+export function * mobileRegistrationSaga () {
+  yield * takeLatest(REQUEST_MOBILE_REGISTRATION, registerMobileNumber)
 }
 
 export function * verificationCodeSaga () {
@@ -179,22 +249,12 @@ export function * updateMobileNumbersSaga () {
   yield * takeLatest(UPDATE_MOBILE_NUMBERS, updateMobileNumbers)
 }
 
-export function * getMarkDown () {
-  const headers = new Headers()
-  headers.append('Content-Type', 'binary/octet-stream')
-
-  const url = 'https://s3-ap-southeast-1.amazonaws.com/cliqq.shop/docs/terms.md'
-  const req = yield call(xhr, url, {
-    method: 'GET',
-    headers
-  })
-  if (!req.err) {
-    yield put(setMarkDownAction(req))
-  }
-}
-
 export function * getMarkDownSaga () {
   yield * takeLatest(GET_MARKDOWN, getMarkDown)
+}
+
+export function * getLoyaltyTokenSaga () {
+  yield * takeLatest(GET_LOYALTY_TOKEN, getLoyaltyToken)
 }
 
 // All sagas to be loaded
@@ -210,7 +270,9 @@ export function * productSagas () {
     fork(getMarkDownSaga),
 
     fork(mobileRegistrationSaga),
-    fork(verificationCodeSaga)
+    fork(verificationCodeSaga),
+    // get loyaltyToken
+    fork(getLoyaltyTokenSaga)
   ]
 
   // Suspend execution until location changes
