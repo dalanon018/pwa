@@ -12,9 +12,6 @@ import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import messages from './messages'
 import { push } from 'react-router-redux'
-import {
-  F
-} from 'ramda'
 
 import CloseButton from 'components/CloseButton'
 import Input from 'components/InputField'
@@ -110,6 +107,20 @@ export class PopupVerification extends React.PureComponent {
     })
   }
 
+  _handlePaste = (e, data) => {
+    const pastedValue = e.clipboardData.getData('Text')
+    const regexp = /^-?\d+?\d*$/
+
+    if (regexp.test(pastedValue) === false) {
+      e.preventDefault()
+      window.alert('You are not able to paste text with letters or special characters.')
+    }
+    if (pastedValue.length > 4) {
+      e.preventDefault()
+      window.alert('Larger than 4 digits is not allowed.')
+    }
+  }
+
   render () {
     const { toggle, onClose, modalToggle, modalClose } = this.props
     const { value } = this.state
@@ -136,7 +147,7 @@ export class PopupVerification extends React.PureComponent {
                 value={value}
                 onChange={this._handleInput}
                 placeholder='XXXXXX'
-                onPaste={F} />
+                onPaste={this._handlePaste} />
             </InputWrapper>
 
             <ResendWrapper>
