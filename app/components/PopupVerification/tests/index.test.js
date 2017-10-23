@@ -26,9 +26,9 @@ describe('<PopupVerification />', () => {
     onClose: () => {},
     modalClose: () => {},
     changeRoute: () => {},
+    resendCode: () => {},
     modalToggle: false,
-    toggle: false,
-    mobileNumber: '9123456780'
+    toggle: false
   }
 
   it('render without exploding', () => {
