@@ -25,7 +25,9 @@ import {
 
   REQUEST_MOBILE_REGISTRATION,
   SUCCESS_VERIFICATION_CODE,
-  ERROR_VERIFICATION_CODE
+  ERROR_VERIFICATION_CODE,
+
+  RESET_SUBMISSION
 } from './constants'
 
 const initialState = fromJS({
@@ -104,6 +106,14 @@ function productPageReducer (state = initialState, action) {
     case SET_VERIFICATION_CODE:
       return state
         .set('verificationCode', action.payload)
+
+    case RESET_SUBMISSION:
+      return state
+        .set('mobileRegistrationSuccess', false)
+        .set('mobileRegistrationError', null)
+        .set('verificationCode', false)
+        .set('verificationCodeSuccess', false)
+        .set('verificationCodeError', null)
 
     default:
       return state

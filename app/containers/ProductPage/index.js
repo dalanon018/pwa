@@ -45,7 +45,8 @@ import {
   getMarkDownAction,
   setVerificationCodeAction,
   requestMobileRegistrationAction,
-  requestVerificationCodeAction
+  requestVerificationCodeAction,
+  resetSubmissionAction
 } from './actions'
 
 import {
@@ -81,12 +82,12 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   /**
-   * this will handle if success is valid after submission
+   * this will handle if success is valid after verification code
    */
   successSubmission = false
 
   /**
-   * this will handle if success is valid after submission
+   * this will handle if success is valid on verification code.
    */
   successVerificationSubmission = false
 
@@ -127,14 +128,14 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   _handleSubmitVerification ({ value }) {
-    // this.setState({
-    //   verificationCode: value
-    // })
     const { requestVerificationCode } = this.props
+
+    this.successVerificationSubmission = true
 
     requestVerificationCode(true)
 
     this.props.setToggle()
+    this._handleCustomBody()
   }
 
   _handleSuccessVerificationCode = () => {
@@ -152,7 +153,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.setState({
       showVerification: !this.state.showVerification
     })
-    this.successVerificationSubmission = true
     this.mobileSuccessSubmission = false
   }
 
@@ -163,7 +163,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   _executeCaptcha (token) {
     const { requestmobileRegistration } = this.props
     const { mobileNumber } = this.state
-
     if (token) {
       this.mobileSuccessSubmission = true
       requestmobileRegistration(mobileNumber)
@@ -180,9 +179,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   _handleSubmit ({ value }) {
     this.setState({
       mobileNumber: value
-    }, () =>
+    }, () => {
       ENVIROMENT === 'production' ? this.recaptcha.execute() : this._executeCaptcha(true)
-    )
+    })
   }
 
   _handleClose () {
@@ -197,17 +196,36 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     })
   }
 
+  _closePopupSlide = (e) => {
+    this.recaptcha.reset()
+    this._handleToggleVerification(e)
+  }
+
   _handleToggle = (e) => {
     e.stopPropagation()
+    const { showSlide } = this.state
     this.props.setToggle()
+
     this.setState({
-      showSlide: !this.state.showSlide
+      showSlide: !showSlide
     })
+
+    this._handleCustomBody()
+  }
+
+  _handleCustomBody = () => {
+    const { showSlide } = this.state
+
+    let elem = document.getElementsByTagName('body')[0]
+    if (!showSlide) {
+      elem.classList.add('custom__body')
+    } else {
+      elem.classList.remove('custom__body')
+    }
   }
 
   _handleSuccess () {
     const { changeRoute } = this.props
-
     if (this.successSubmission) {
       this._handleClose()
       this.successSubmission = false
@@ -252,6 +270,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   componentWillUnmount () {
     this.props.setHandlersDefault()
+    this.props.resetSubmission()
   }
 
   componentDidMount () {
@@ -341,7 +360,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             modalToggle={modalToggle}
             toggle={showVerification}
             mobileNumber={prevMobileNumber}
-            onClose={this._handleToggleVerification} />
+            onClose={this._closePopupSlide} />
         </div>
 
         <Modal
@@ -387,6 +406,7 @@ function mapDispatchToProps (dispatch) {
     setVerificationCode: payload => dispatch(setVerificationCodeAction(payload)),
     requestmobileRegistration: payload => dispatch(requestMobileRegistrationAction(payload)),
     requestVerificationCode: payload => dispatch(requestVerificationCodeAction(payload)),
+    resetSubmission: () => dispatch(resetSubmissionAction()),
     dispatch
   }
 }
