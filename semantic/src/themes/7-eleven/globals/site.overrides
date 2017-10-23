@@ -46,7 +46,18 @@ body {
 }
 
 div[style^="visibility: visible; position: absolute;"] {
-  // top: 10px !important;
+  height: 100% !important;
+  top: 0 !important;
+  div:first-child {
+    background-color: @darkGrey !important;
+    opacity: 0.7 !important;
+  }
+}
+
+div[style^="margin: 0px auto; top: 0px; left: 0px; right: 0px; position: absolute;"] {
+  top: 50% !important;
+  transform: translate(-50%, -50%);
+  left: 50% !important;
 }
 
 #app,
