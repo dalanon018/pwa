@@ -8,7 +8,7 @@ import xhr from 'utils/xhr'
 
 import request from 'utils/request'
 import { getRequestData } from 'utils/offline-request'
-
+import { AddDate } from 'utils/date'
 import { transformProduct } from 'utils/transforms'
 import { setItem, getItem } from 'utils/localStorage'
 
@@ -166,8 +166,13 @@ export function * verificationCode (args) {
       body: JSON.stringify({ verification })
     })
     const getLoyaltyToken = prop('loyaltyToken')
+    const expiry = AddDate(1, 'years')
+    const loyaltyToken = Object.assign({}, {
+      token: getLoyaltyToken(req),
+      expiry
+    })
 
-    yield call(setItem, LOYALTY_TOKEN_KEY, getLoyaltyToken(req))
+    yield call(setItem, LOYALTY_TOKEN_KEY, loyaltyToken)
     yield put(successVerificationCodeAction())
   } catch (e) {
     yield put(errorVerificationCodeAction('Please check if you input the verification code correctly.'))

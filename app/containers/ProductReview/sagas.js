@@ -169,7 +169,7 @@ export function * requestOrderToken (mobile) {
     token: token.access_token,
     body: JSON.stringify({
       mobileNumber,
-      loyaltyToken
+      loyaltyToken: loyaltyToken.token
     })
   })
   const getPropAccessToken = prop('accessToken')

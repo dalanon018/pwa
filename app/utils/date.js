@@ -13,3 +13,6 @@ export const CountdownParser = (date) =>
 
 export const DateDifferece = (now = String, then = String) =>
    moment(then, 'YYYY-MM-DD HH:mm:ss').diff(moment(now, 'YYYY-MM-DD HH:mm:ss'))
+
+export const AddDate = (time, type = 'minutes', format = 'YYYY-MM-DD HH:mm:ss') =>
+  moment().add(time, type).format(format)
