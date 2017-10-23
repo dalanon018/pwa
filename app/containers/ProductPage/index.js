@@ -81,12 +81,12 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   /**
-   * this will handle if success is valid after submission
+   * this will handle if success is valid after verification code
    */
   successSubmission = false
 
   /**
-   * this will handle if success is valid after submission
+   * this will handle if success is valid on verification code.
    */
   successVerificationSubmission = false
 
@@ -127,14 +127,14 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   _handleSubmitVerification ({ value }) {
-    // this.setState({
-    //   verificationCode: value
-    // })
     const { requestVerificationCode } = this.props
+
+    this.successVerificationSubmission = true
 
     requestVerificationCode(true)
 
     this.props.setToggle()
+    this._handleCustomBody()
   }
 
   _handleSuccessVerificationCode = () => {
@@ -152,7 +152,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.setState({
       showVerification: !this.state.showVerification
     })
-    this.successVerificationSubmission = true
     this.mobileSuccessSubmission = false
   }
 
@@ -182,6 +181,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       mobileNumber: value
     }, () =>
       ENVIROMENT === 'production' ? this.recaptcha.execute() : this._executeCaptcha(true)
+      // this.recaptcha.execute()
     )
   }
 
@@ -198,16 +198,30 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   _handleToggle = (e) => {
+    const { showSlide } = this.state
+
     e.stopPropagation()
     this.props.setToggle()
     this.setState({
-      showSlide: !this.state.showSlide
+      showSlide: !showSlide
     })
+    this._handleCustomBody()
+  }
+
+  _handleCustomBody = () => {
+    const { showSlide } = this.state
+    console.log('testing', showSlide)
+    let elem = document.getElementsByTagName('body')[0]
+    if (!showSlide) {
+      elem.classList.add('custom__body')
+    } else {
+      elem.classList.remove('custom__body')
+    }
   }
 
   _handleSuccess () {
     const { changeRoute } = this.props
-
+    console.log(123213213, this.successSubmission)
     if (this.successSubmission) {
       this._handleClose()
       this.successSubmission = false
@@ -271,12 +285,12 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     ifElse(equals(true), this._handleError, noop)(productError)
 
     // handle if mobile registration is success
-    ifElse(both(equals(true), () => this.mobileSuccessSubmission), this._handleToggleVerification, noop)(mobileRegistrationSuccess)
+    ifElse(both(equals(true), () => this.mobileSuccessSubmission), this._handleToggleVerification, () => { this.mobileSuccessSubmission = false })(mobileRegistrationSuccess)
 
     // handle if mobile registration is error
     ifElse(complement(equals(null)), this._handleErrorMobileRegistration, noop)(mobileRegistrationError)
     // handle if verification code is success
-    ifElse(both(equals(true), () => this.successVerificationSubmission), this._handleSuccessVerificationCode, noop)(verificationCodeSuccess)
+    ifElse(both(equals(true), () => this.successVerificationSubmission), this._handleSuccessVerificationCode, () => { this.successVerificationSubmission = false })(verificationCodeSuccess)
 
     // handle if verification code is error
     ifElse(complement(equals(null)), this._handleErrorMobileRegistration, noop)(verificationCodeError)

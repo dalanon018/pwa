@@ -75,18 +75,18 @@ export class PopupSlide extends React.PureComponent {
     this._toggleCheck = this._toggleCheck.bind(this)
     this._setMarkDownContent = this._setMarkDownContent.bind(this)
     this._handleTouch = this._handleTouch.bind(this)
-    this._toggleBodyClass = this._toggleBodyClass.bind(this)
+    // this._toggleBodyClass = this._toggleBodyClass.bind(this)
   }
-  _toggleBodyClass = () => {
-    const { toggleTerms } = this.state
+  // _toggleBodyClass = () => {
+  //   const { toggleTerms } = this.state
 
-    let elem = document.getElementsByTagName('body')[0]
-    if (!toggleTerms) {
-      elem.classList.add('custom__body')
-    } else {
-      elem.classList.remove('custom__body')
-    }
-  }
+  //   let elem = document.getElementsByTagName('body')[0]
+  //   if (!toggleTerms) {
+  //     elem.classList.add('custom__body')
+  //   } else {
+  //     elem.classList.remove('custom__body')
+  //   }
+  // }
 
   _handleTouch (e) {
     e.preventDefault()
@@ -116,7 +116,7 @@ export class PopupSlide extends React.PureComponent {
       toggleTerms: !toggleTerms
     })
 
-    this._toggleBodyClass()
+    // this._toggleBodyClass()
   }
 
   _handleCheck (e, data) {
