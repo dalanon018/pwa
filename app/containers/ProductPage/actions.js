@@ -30,8 +30,16 @@ import {
 
   REQUEST_VERIFICATION_CODE,
   SUCCESS_VERIFICATION_CODE,
-  ERROR_VERIFICATION_CODE
+  ERROR_VERIFICATION_CODE,
+
+  RESET_SUBMISSION
 } from './constants'
+
+export function resetSubmissionAction () {
+  return {
+    type: RESET_SUBMISSION
+  }
+}
 
 export function getProductAction (payload) {
   return {

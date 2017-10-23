@@ -21,6 +21,7 @@ describe('<Receipt />', () => {
   const minProps = {
     goHomeFn: () => {},
     goReceiptPage: () => {},
+    goToProduct: () => {},
     repurchaseFn: () => {},
     registerPushNotification: () => {},
     isRegisteredPush: false,
