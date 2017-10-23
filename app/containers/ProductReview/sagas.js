@@ -1,7 +1,7 @@
 import moment from 'moment'
 // import Firebase from 'utils/firebase-realtime'
 
-import { compose, is, ifElse, identity, map, uniq, isEmpty, propOr } from 'ramda'
+import { compose, is, ifElse, identity, map, uniq, isEmpty, propOr, prop } from 'ramda'
 import { call, cancel, fork, put, take, select } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { takeLatest } from 'redux-saga'
@@ -36,6 +36,8 @@ import {
 import {
   API_BASE_URL,
   APP_BASE_URL,
+  MOBILE_REGISTRATION_URL,
+  LOYALTY_TOKEN_KEY,
   STORE_LOCATOR_URL,
   CURRENT_PRODUCT_KEY,
   MOBILE_NUMBERS_KEY,
@@ -44,8 +46,7 @@ import {
 } from 'containers/App/constants'
 
 import {
-  setMobileNumbersAction,
-  setNetworkErrorAction
+  setMobileNumbersAction
 } from 'containers/Buckets/actions'
 
 import {
@@ -158,10 +159,26 @@ export function * getMobileNumber () {
   yield put(setMobileNumberAction(mobile))
 }
 
+export function * requestOrderToken (mobile) {
+  const mobileNumber = `0${mobile}`
+  const loyaltyToken = yield call(getItem, LOYALTY_TOKEN_KEY)
+
+  const token = yield getAccessToken()
+  const getOrderToken = yield call(request, `${MOBILE_REGISTRATION_URL}/loyalty/cliqqshop/auth_kong`, {
+    method: 'POST',
+    token: token.access_token,
+    body: JSON.stringify({
+      mobileNumber,
+      loyaltyToken
+    })
+  })
+  const getPropAccessToken = prop('accessToken')
+  return getPropAccessToken(getOrderToken)
+}
+
 export function * submitOrder (args) {
   const { payload: { orderedProduct, mobileNumber, modePayment, store } } = args
   const completeMobile = `0${mobileNumber}`
-  const token = yield getAccessToken()
   const postPayload = transformSubmitOrderPayload({
     cliqqCode: orderedProduct.get('cliqqCode').first(),
     quantity: 1,
@@ -170,10 +187,11 @@ export function * submitOrder (args) {
   })
 
   try {
+    const token = yield requestOrderToken(mobileNumber)
     const order = yield call(request, `${API_BASE_URL}/orders`, {
       method: 'POST',
-      token: token.access_token,
-      body: JSON.stringify(postPayload(modePayment))
+      body: JSON.stringify(postPayload(modePayment)),
+      token
     })
 
     // right now e have to emulate the response data
@@ -197,8 +215,8 @@ export function * submitOrder (args) {
       yield put(errorOrderAction(order))
     }
   } catch (e) {
-    yield put(setNetworkErrorAction('Please make sure you have internet connection to order a product.'))
-    yield put(errorOrderAction({}))
+    // yield put(setNetworkErrorAction(e.message))
+    yield put(errorOrderAction(e.message))
   }
 }
 
