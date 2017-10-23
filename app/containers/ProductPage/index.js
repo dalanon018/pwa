@@ -128,11 +128,14 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   _handleSubmitVerification ({ value }) {
+    this.successVerificationSubmission = true
+    const { mobileNumber } = this.state
     const { requestVerificationCode } = this.props
 
-    this.successVerificationSubmission = true
-
-    requestVerificationCode(true)
+    requestVerificationCode({
+      mobileNumber,
+      code: value
+    })
 
     this.props.setToggle()
     this._handleCustomBody()
@@ -160,12 +163,16 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.recaptcha = ref
   }
 
-  _executeCaptcha (token) {
-    const { requestmobileRegistration } = this.props
+  _executeSendCode = () => {
     const { mobileNumber } = this.state
+
+    this.props.requestmobileRegistration(mobileNumber)
+  }
+
+  _executeCaptcha (token) {
     if (token) {
       this.mobileSuccessSubmission = true
-      requestmobileRegistration(mobileNumber)
+      this._executeSendCode()
     }
   }
 
@@ -215,8 +222,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   _handleCustomBody = () => {
     const { showSlide } = this.state
+    const elem = document.getElementsByTagName('body')[0]
 
-    let elem = document.getElementsByTagName('body')[0]
     if (!showSlide) {
       elem.classList.add('custom__body')
     } else {
@@ -359,8 +366,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             modalClose={this._handleClose}
             modalToggle={modalToggle}
             toggle={showVerification}
-            mobileNumber={prevMobileNumber}
-            onClose={this._closePopupSlide} />
+            onClose={this._closePopupSlide}
+            resendCode={this._executeSendCode}
+          />
         </div>
 
         <Modal

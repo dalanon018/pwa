@@ -362,7 +362,8 @@
       "XMLHttpRequest",
       "cy",
       "Cypress",
-      "FB"
+      "FB",
+      "btoa"
     ]
   }
 }

@@ -6,7 +6,7 @@ import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import xhr from 'utils/xhr'
 
-// import request from 'utils/request'
+import request from 'utils/request'
 import { getRequestData } from 'utils/offline-request'
 
 import { transformProduct } from 'utils/transforms'
@@ -36,6 +36,8 @@ import {
 
 import {
   API_BASE_URL,
+  MOBILE_REGISTRATION_URL,
+  LOYALTY_TOKEN_KEY,
   LAST_VIEWS_KEY,
   CURRENT_PRODUCT_KEY,
   MOBILE_NUMBERS_KEY
@@ -132,15 +134,15 @@ export function * updateMobileNumbers (args) {
 }
 
 export function * registerMobileNumber (args) {
-  // const { payload } = args
-
+  const { payload } = args
+  const mobileNumber = `0${payload}`
   try {
-    // const token = yield getAccessToken()
-    // const req = yield call(request, `${API_BASE_URL}/registration`, {
-    //   method: 'GET',
-    //   token: token.access_token
-    // })
-    // throw new Error('Error Registration')
+    const token = yield getAccessToken()
+    yield call(request, `${MOBILE_REGISTRATION_URL}/loyalty/cliqqshop/activation`, {
+      method: 'POST',
+      token: token.access_token,
+      body: JSON.stringify({ mobileNumber })
+    })
     yield put(successMobileRegistrationAction())
   } catch (e) {
     yield put(errorMobileRegistrationAction(e.message))
@@ -151,8 +153,21 @@ export function * mobileRegistrationSaga () {
   yield * takeLatest(REQUEST_MOBILE_REGISTRATION, registerMobileNumber)
 }
 
-export function * verificationCode () {
+export function * verificationCode (args) {
+  const { payload: { mobileNumber, code } } = args
+  const base64 = btoa(`0${mobileNumber}:${code}`)
+  const verification = `Basic ${base64}`
+
   try {
+    const token = yield getAccessToken()
+    const req = yield call(request, `${MOBILE_REGISTRATION_URL}/loyalty/cliqqshop/authorization`, {
+      method: 'POST',
+      token: token.access_token,
+      body: JSON.stringify({ verification })
+    })
+    const getLoyaltyToken = prop('loyaltyToken')
+
+    yield call(setItem, LOYALTY_TOKEN_KEY, getLoyaltyToken(req))
     yield put(successVerificationCodeAction())
   } catch (e) {
     yield put(errorVerificationCodeAction(e.message))
