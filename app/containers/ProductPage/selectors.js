@@ -69,6 +69,11 @@ const selectVerificationCodeError = () => createSelector(
   (substate) => substate.get('verificationCodeError')
 )
 
+const selectLoyaltyToken = () => createSelector(
+  selectProductPageDomain(),
+  (substate) => substate.get('loyaltyToken')
+)
+
 export {
   selectLoader,
   selectProduct,
@@ -80,5 +85,6 @@ export {
   selectMobileRegistrationSuccess,
   selectMobileRegistrationError,
   selectVerificationCodeSuccess,
-  selectVerificationCodeError
+  selectVerificationCodeError,
+  selectLoyaltyToken
 }

@@ -50,6 +50,7 @@ import {
 import Modal from 'components/PromptModal'
 import WindowWidth from 'components/WindowWidth'
 import ListCollapse from 'components/ListCollapse'
+import { LoadingStateImage } from 'components/LoadingBlock'
 
 import NextIcon from 'images/icons/greater-than-icon.svg'
 
@@ -279,7 +280,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   render () {
-    const { orderedProduct, orderRequesting, isBlackListed } = this.props
+    const { orderedProduct, orderRequesting, isBlackListed, productLoader } = this.props
     const { errorMessage, modePayment, modalToggle, visibility, store } = this.state
     const toggleDiscount = this._showDiscountPrice(
       <span className='strike color__grey'>
@@ -325,16 +326,18 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
     return (
       <ProductReviewWrapper>
-        {brandLogo}
-        <ProductItem>
-          <Image alt='Cliqq' src={orderedProduct.get('image') ? orderedProduct.get('image') : imageStock('default-slider.jpg')} />
-          {
-            orderedProduct.get('brand')
-            ? <Label as='span' basic size='big' className='color__secondary'>{orderedProduct.getIn(['brand', 'name'])}</Label>
-            : null
-          }
-          <Label as='p' basic size='big' className='color__secondary'>{orderedProduct.get('title')}</Label>
-        </ProductItem>
+        { productLoader || brandLogo }
+        <LoadingStateImage loading={productLoader} center>
+          <ProductItem>
+            <Image alt='Cliqq' src={orderedProduct.get('image') ? orderedProduct.get('image') : imageStock('default-slider.jpg')} />
+            {
+              orderedProduct.get('brand')
+              ? <Label as='span' basic size='big' className='color__secondary'>{orderedProduct.getIn(['brand', 'name'])}</Label>
+              : null
+            }
+            <Label as='p' basic size='big' className='color__secondary'>{orderedProduct.get('title')}</Label>
+          </ProductItem>
+        </LoadingStateImage>
         <ListCollapse title={
           <Label as='p' className='margin__none color__secondary' size='large'>
             <FormattedMessage {...messages.viewDetails} />

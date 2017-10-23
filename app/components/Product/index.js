@@ -90,7 +90,7 @@ const Product = ({
     <div>
       <ProductWrapper>
 
-        {brandLogo}
+        { loading || brandLogo }
         <ProductImageSlider className='border_bottom__one--light-grey'>
           <ProductSlider
             images={productImages}

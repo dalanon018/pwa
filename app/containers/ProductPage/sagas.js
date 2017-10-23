@@ -1,16 +1,30 @@
 
+import moment from 'moment'
 import { takeLatest } from 'redux-saga'
 import { isEmpty, compact } from 'lodash'
-import { compose, uniqBy, prop, slice, reverse } from 'ramda'
+import {
+  both,
+  equals,
+  complement,
+  compose,
+  gte,
+  ifElse,
+  partial,
+  prop,
+  propOr,
+  reverse,
+  slice,
+  uniqBy
+} from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import xhr from 'utils/xhr'
 
 import request from 'utils/request'
 import { getRequestData } from 'utils/offline-request'
-import { AddDate } from 'utils/date'
+import { AddDate, DateDifferece } from 'utils/date'
 import { transformProduct } from 'utils/transforms'
-import { setItem, getItem } from 'utils/localStorage'
+import { setItem, getItem, removeItem } from 'utils/localStorage'
 
 import {
   GET_PRODUCT,
@@ -20,7 +34,8 @@ import {
   UPDATE_MOBILE_NUMBERS,
   GET_MARKDOWN,
   REQUEST_MOBILE_REGISTRATION,
-  REQUEST_VERIFICATION_CODE
+  REQUEST_VERIFICATION_CODE,
+  GET_LOYALTY_TOKEN
 } from './constants'
 import {
   setProductAction,
@@ -31,7 +46,8 @@ import {
   successMobileRegistrationAction,
   errorMobileRegistrationAction,
   successVerificationCodeAction,
-  errorVerificationCodeAction
+  errorVerificationCodeAction,
+  setLoyaltyTokenAction
 } from './actions'
 
 import {
@@ -133,6 +149,40 @@ export function * updateMobileNumbers (args) {
   yield put(setMobileNumbersAction(mobileRegistrations))
 }
 
+export function * getMarkDown () {
+  const headers = new Headers()
+  headers.append('Content-Type', 'binary/octet-stream')
+
+  const url = 'https://s3-ap-southeast-1.amazonaws.com/cliqq.shop/docs/terms.md'
+  const req = yield call(xhr, url, {
+    method: 'GET',
+    headers
+  })
+  if (!req.err) {
+    yield put(setMarkDownAction(req))
+  }
+}
+
+function * getLoyaltyToken () {
+  const loyaltyToken = yield call(getItem, LOYALTY_TOKEN_KEY)
+  const isExpired = compose(
+    complement(gte(0)),
+    partial(DateDifferece, [moment()]),
+    propOr(-1, 'expiry')
+  )
+
+  const retreiveToken = ifElse(
+    both(complement(equals(null)), isExpired),
+    prop('token'),
+    () => {
+      removeItem(LOYALTY_TOKEN_KEY)
+      return null
+    }
+  )
+
+  yield put(setLoyaltyTokenAction(retreiveToken(loyaltyToken)))
+}
+
 export function * registerMobileNumber (args) {
   const { payload } = args
   const mobileNumber = `0${payload}`
@@ -147,10 +197,6 @@ export function * registerMobileNumber (args) {
   } catch (e) {
     yield put(errorMobileRegistrationAction(e.message))
   }
-}
-
-export function * mobileRegistrationSaga () {
-  yield * takeLatest(REQUEST_MOBILE_REGISTRATION, registerMobileNumber)
 }
 
 export function * verificationCode (args) {
@@ -179,6 +225,10 @@ export function * verificationCode (args) {
   }
 }
 
+export function * mobileRegistrationSaga () {
+  yield * takeLatest(REQUEST_MOBILE_REGISTRATION, registerMobileNumber)
+}
+
 export function * verificationCodeSaga () {
   yield * takeLatest(REQUEST_VERIFICATION_CODE, verificationCode)
 }
@@ -199,22 +249,12 @@ export function * updateMobileNumbersSaga () {
   yield * takeLatest(UPDATE_MOBILE_NUMBERS, updateMobileNumbers)
 }
 
-export function * getMarkDown () {
-  const headers = new Headers()
-  headers.append('Content-Type', 'binary/octet-stream')
-
-  const url = 'https://s3-ap-southeast-1.amazonaws.com/cliqq.shop/docs/terms.md'
-  const req = yield call(xhr, url, {
-    method: 'GET',
-    headers
-  })
-  if (!req.err) {
-    yield put(setMarkDownAction(req))
-  }
-}
-
 export function * getMarkDownSaga () {
   yield * takeLatest(GET_MARKDOWN, getMarkDown)
+}
+
+export function * getLoyaltyTokenSaga () {
+  yield * takeLatest(GET_LOYALTY_TOKEN, getLoyaltyToken)
 }
 
 // All sagas to be loaded
@@ -230,7 +270,9 @@ export function * productSagas () {
     fork(getMarkDownSaga),
 
     fork(mobileRegistrationSaga),
-    fork(verificationCodeSaga)
+    fork(verificationCodeSaga),
+    // get loyaltyToken
+    fork(getLoyaltyTokenSaga)
   ]
 
   // Suspend execution until location changes

@@ -32,7 +32,10 @@ import {
   SUCCESS_VERIFICATION_CODE,
   ERROR_VERIFICATION_CODE,
 
-  RESET_SUBMISSION
+  RESET_SUBMISSION,
+
+  GET_LOYALTY_TOKEN,
+  SET_LOYALTY_TOKEN
 } from './constants'
 
 export function resetSubmissionAction () {
@@ -159,6 +162,19 @@ export function successVerificationCodeAction (payload) {
 export function errorVerificationCodeAction (payload) {
   return {
     type: ERROR_VERIFICATION_CODE,
+    payload
+  }
+}
+
+export function getLoyaltyTokenAction () {
+  return {
+    type: GET_LOYALTY_TOKEN
+  }
+}
+
+export function setLoyaltyTokenAction (payload) {
+  return {
+    type: SET_LOYALTY_TOKEN,
     payload
   }
 }

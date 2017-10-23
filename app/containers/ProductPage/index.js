@@ -13,7 +13,7 @@ import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { noop } from 'lodash'
-import { ifElse, both, equals, complement } from 'ramda'
+import { ifElse, both, equals, complement, partial } from 'ramda'
 
 import { imageStock } from 'utils/image-stock'
 
@@ -36,7 +36,8 @@ import {
   selectMobileRegistrationSuccess,
   selectMobileRegistrationError,
   selectVerificationCodeSuccess,
-  selectVerificationCodeError
+  selectVerificationCodeError,
+  selectLoyaltyToken
 } from './selectors'
 
 import {
@@ -49,7 +50,8 @@ import {
   setVerificationCodeAction,
   requestMobileRegistrationAction,
   requestVerificationCodeAction,
-  resetSubmissionAction
+  resetSubmissionAction,
+  getLoyaltyTokenAction
 } from './actions'
 
 import {
@@ -130,6 +132,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this._handleTouch = this._handleTouch.bind(this)
     this._recaptchaRef = this._recaptchaRef.bind(this)
     this._executeCaptcha = this._executeCaptcha.bind(this)
+    this._handleFactoryToggleLoyaltyToken = this._handleFactoryToggleLoyaltyToken.bind(this)
     this._handleToggleVerification = this._handleToggleVerification.bind(this)
     this._handleSubmitVerification = this._handleSubmitVerification.bind(this)
     this._handleSuccessVerificationCode = this._handleSuccessVerificationCode.bind(this)
@@ -232,8 +235,27 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this._handleToggleVerification(e)
   }
 
-  _handleToggle = (e) => {
-    e.stopPropagation()
+  // on submission we check if we can proceed to product review since we already have loyaltyToken defined.
+  _handleFactoryToggleLoyaltyToken = (event) => {
+    const { product, loyaltyToken, setCurrentProduct, updateMobileNumbers, mobileNumbers, changeRoute } = this.props
+    const gotoReview = () => {
+      setCurrentProduct(product)
+      updateMobileNumbers(mobileNumbers.last())
+
+      changeRoute('/review')
+    }
+
+    const handleLoyaltyToken = ifElse(
+      equals(null),
+      partial(this._handleToggle, [event]),
+      gotoReview
+    )
+
+    return handleLoyaltyToken(loyaltyToken)
+  }
+
+  _handleToggle = (event) => {
+    event.stopPropagation()
     const { showSlide } = this.state
     this.props.setToggle()
 
@@ -307,8 +329,16 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.props.resetSubmission()
   }
 
+  componentWillMount () {
+    this.props.setPageTitle('Product Details')
+    this.props.setShowSearchIcon(true)
+    this.props.setShowActivityIcon(true)
+  }
+
   componentDidMount () {
-    const { params: { id }, getProduct, getMobileNumbers, getMarkDown } = this.props
+    const { params: { id }, getProduct, getMobileNumbers, getMarkDown, getLoyaltyToken } = this.props
+
+    getLoyaltyToken()
     getProduct({ id })
     getMobileNumbers()
     getMarkDown()
@@ -340,16 +370,13 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
     // handle if theree's mobile number we can use as default
     ifElse((mobile) => mobile.size > 0, this._handleMobileRegistered, noop)(mobileNumbers)
-
-    this.props.setPageTitle('Product Details')
-    this.props.setShowSearchIcon(true)
-    this.props.setShowActivityIcon(true)
   }
 
   render () {
     const { loading, product, toggle, route, windowWidth, markdown, loader, changeRoute } = this.props
     const { modalToggle, prevMobileNumber, showVerification, errModalToggle, errorMessage } = this.state
     const productPageTrigger = route && route
+
     return (
       <div>
         <Helmet
@@ -360,7 +387,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             loading={loading}
             product={product}
             windowWidth={windowWidth}
-            popup={this._handleToggle}
+            popup={this._handleFactoryToggleLoyaltyToken}
             copied={this._handleCopy}
             defaultImage={imageStock('default-slider.jpg')}
             toggle={this.state.socialToggle}
@@ -426,7 +453,8 @@ const mapStateToProps = createStructuredSelector({
   mobileRegistrationSuccess: selectMobileRegistrationSuccess(),
   mobileRegistrationError: selectMobileRegistrationError(),
   verificationCodeSuccess: selectVerificationCodeSuccess(),
-  verificationCodeError: selectVerificationCodeError()
+  verificationCodeError: selectVerificationCodeError(),
+  loyaltyToken: selectLoyaltyToken()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -435,6 +463,7 @@ function mapDispatchToProps (dispatch) {
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProduct: (payload) => dispatch(getProductAction(payload)),
+    getLoyaltyToken: () => dispatch(getLoyaltyTokenAction()),
     setCurrentProduct: (payload) => dispatch(setCurrentProductAction(payload)),
     getMobileNumbers: () => dispatch(getMobileNumbersAction()),
     updateMobileNumbers: (payload) => dispatch(updateMobileNumbersAction(payload)),
