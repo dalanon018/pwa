@@ -36,7 +36,8 @@ describe('<PopupSlide />', () => {
     modalToggle: false,
     toggle: false,
     mobileNumber: '9123456780',
-    markdown: ''
+    markdown: '',
+    recaptcha: null
   }
 
   it('render without exploding', () => {

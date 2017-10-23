@@ -50,7 +50,8 @@ export class PopupSlide extends React.PureComponent {
     toggle: PropTypes.bool.isRequired,
     modalClose: PropTypes.func,
     modalToggle: PropTypes.bool,
-    mobileNumber: PropTypes.string
+    mobileNumber: PropTypes.string,
+    recaptcha: PropTypes.node
   }
 
   state = {
@@ -190,7 +191,7 @@ export class PopupSlide extends React.PureComponent {
   }
 
   render () {
-    const { toggle, onClose, modalToggle, modalClose, loader } = this.props
+    const { toggle, onClose, modalToggle, modalClose, loader, recaptcha } = this.props
     const { value, check, toggleTerms, markdownContent } = this.state
 
     const checkboxList = [
@@ -262,6 +263,8 @@ export class PopupSlide extends React.PureComponent {
             close={modalClose}
             title='Server Error'
             content='System is under maintenance' />
+
+          { recaptcha && recaptcha }
         </PopupWrapper>
         <TermsConditionsWrapper toggle={toggleTerms} className='background__white'>
           <div className='document-helper terms-conditions'>
