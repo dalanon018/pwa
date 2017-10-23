@@ -140,6 +140,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this._handleToggleVerification = this._handleToggleVerification.bind(this)
     this._handleSubmitVerification = this._handleSubmitVerification.bind(this)
     this._handleSuccessVerificationCode = this._handleSuccessVerificationCode.bind(this)
+    this._handleWindowClose = this._handleWindowClose.bind(this)
   }
 
   _handleSubmitVerification ({ value }) {
@@ -328,9 +329,15 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     })
   }
 
-  componentWillUnmount () {
-    this.props.setHandlersDefault()
-    this.props.resetSubmission()
+  _handleWindowClose (e) {
+    // const { showSlide } = this.state
+
+    // console.log('testing', 'pumasok dito sa back handle', showSlide)
+    let elem = document.getElementsByTagName('body')[0]
+    if (elem.classList.length === 2) {
+      console.log('testing', elem.classList[1])
+      elem.classList.remove('custom__body')
+    }
   }
 
   componentWillMount () {
@@ -346,6 +353,20 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     getProduct({ id })
     getMobileNumbers()
     getMarkDown()
+  }
+
+  componentWillUnmount () {
+    const { toggle, setToggle } = this.props
+
+    const closePopupSlideToggle = ifElse(equals(true), setToggle, noop)
+    const elem = document.getElementsByTagName('body')[0]
+    const removeCustomBodyClass = ifElse(equals(2), () => elem.classList.remove('custom__body'), noop)
+
+    this.props.setHandlersDefault()
+    this.props.resetSubmission()
+
+    closePopupSlideToggle(toggle)
+    removeCustomBodyClass(elem.classList.length)
   }
 
   componentWillReceiveProps (nextProps) {

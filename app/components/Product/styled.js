@@ -24,6 +24,12 @@ export const ProductImageSlider = styled.div`
   img {
     width: 60%;
   }
+
+  @media screen and (min-width: 768px) {
+    img {
+      width: 30%;
+    }
+  }
 `
 
 export const ProductMainContent = styled(AnimateDiv)`
