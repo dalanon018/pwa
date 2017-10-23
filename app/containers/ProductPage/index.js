@@ -181,7 +181,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.setState({
       mobileNumber: value
     }, () =>
-      ENVIROMENT === 'development' ? this.recaptcha.execute() : this._executeCaptcha(true)
+      ENVIROMENT === 'production' ? this.recaptcha.execute() : this._executeCaptcha(true)
     )
   }
 
