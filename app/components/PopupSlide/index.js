@@ -18,6 +18,7 @@ import {
   F
 } from 'ramda'
 import showdown from 'showdown'
+import Recaptcha from 'react-google-recaptcha'
 
 import CloseButton from 'components/CloseButton'
 import Input from 'components/InputField'
@@ -193,6 +194,8 @@ export class PopupSlide extends React.PureComponent {
     const { toggle, onClose, modalToggle, modalClose, loader } = this.props
     const { value, check, toggleTerms, markdownContent } = this.state
 
+    const { recaptchaRef, sitekey, execCapthca } = this.props
+
     const checkboxList = [
       {
         name: 'checkbox',
@@ -262,6 +265,14 @@ export class PopupSlide extends React.PureComponent {
             close={modalClose}
             title='Server Error'
             content='System is under maintenance' />
+
+          <Recaptcha
+            ref={recaptchaRef}
+            size='invisible'
+            sitekey={sitekey}
+            onChange={execCapthca}
+            badge='inline'
+          />
         </PopupWrapper>
         <TermsConditionsWrapper toggle={toggleTerms} className='background__white'>
           <div className='document-helper terms-conditions'>

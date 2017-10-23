@@ -6,8 +6,6 @@
 
 import React, { PropTypes } from 'react'
 import Helmet from 'react-helmet'
-import Recaptcha from 'react-google-recaptcha'
-import styled from 'styled-components'
 
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
@@ -64,11 +62,6 @@ import {
   ENVIROMENT,
   RECAPTCHA_SITE_KEY
 } from 'containers/App/constants'
-
-const RecaptchaWrapper = styled.div`
-  visibility: hidden;
-  
-`
 
 export class ProductPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
@@ -187,7 +180,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.setState({
       mobileNumber: value
     }, () =>
-      ENVIROMENT === 'production' ? this.recaptcha.execute() : this._executeCaptcha(true)
+      ENVIROMENT === 'development' ? this.recaptcha.execute() : this._executeCaptcha(true)
     )
   }
 
@@ -320,6 +313,10 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
         </div>
         <div>
           <PopupSlide
+            recaptchaRef={this._recaptchaRef}
+            sitekey={RECAPTCHA_SITE_KEY}
+            execCapthca={this._executeCaptcha}
+
             handleCheckAw={this._handleCheck}
             handleDisableAw={this._handleDisable}
             submit={this._handleSubmit}
@@ -340,14 +337,16 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             mobileNumber={prevMobileNumber}
             onClose={this._handleToggleVerification} />
         </div>
-        <RecaptchaWrapper>
-          <Recaptcha
-            ref={this._recaptchaRef}
-            size='invisible'
-            sitekey={RECAPTCHA_SITE_KEY}
-            onChange={this._executeCaptcha}
-          />
-        </RecaptchaWrapper>
+        {/*
+          <RecaptchaWrapper>
+            <Recaptcha
+              ref={this._recaptchaRef}
+              size='invisible'
+              sitekey={RECAPTCHA_SITE_KEY}
+              onChange={this._executeCaptcha}
+            />
+          </RecaptchaWrapper>
+        */}
 
         <Modal
           open={errModalToggle}
