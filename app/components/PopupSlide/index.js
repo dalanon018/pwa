@@ -14,8 +14,7 @@ import {
   compose,
   isNil,
   prop,
-  ifElse,
-  F
+  ifElse
 } from 'ramda'
 import showdown from 'showdown'
 
@@ -155,6 +154,20 @@ export class PopupSlide extends React.PureComponent {
     })
   }
 
+  _handlePaste = (e, data) => {
+    const pastedValue = e.clipboardData.getData('Text')
+    const regexp = /^-?\d+?\d*$/
+
+    if (regexp.test(pastedValue) === false) {
+      e.preventDefault()
+      window.alert('You are not able to paste text with letters or special characters.')
+    }
+    if (pastedValue.length > 10) {
+      e.preventDefault()
+      window.alert('Larger than 10 digits is not allowed.')
+    }
+  }
+
   componentDidMount () {
     const setDefaultMobile = ifElse(
       compose(isNil, prop('mobileNumber')),
@@ -220,7 +233,7 @@ export class PopupSlide extends React.PureComponent {
                   value={value}
                   onChange={this._handleInput}
                   placeholder='9XXXXXXXXX'
-                  onPaste={F} />
+                  onPaste={this._handlePaste} />
               </InputWrapper>
               {
                 checkboxList.map((item, index) =>
