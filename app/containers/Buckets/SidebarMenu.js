@@ -49,7 +49,7 @@ const ListAccordionWrapper = styled(List.Item)`
   padding: 0 30px !important;
 
   & img {
-    margin-top: 20px !important;
+    margin-top: 27px !important;
     margin-right: 10px !important;
   }
 
