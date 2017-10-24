@@ -35,7 +35,8 @@ import {
   SET_REGISTED_PUSH,
 
   GET_LOYALTY_TOKEN,
-  SET_LOYALTY_TOKEN
+  SET_LOYALTY_TOKEN,
+  REMOVE_LOYALTY_TOKEN
 } from './constants'
 
 export function getPageTitleAction () {
@@ -174,5 +175,11 @@ export function setLoyaltyTokenAction (payload) {
   return {
     type: SET_LOYALTY_TOKEN,
     payload
+  }
+}
+
+export function removeLoyaltyTokenAction () {
+  return {
+    type: REMOVE_LOYALTY_TOKEN
   }
 }

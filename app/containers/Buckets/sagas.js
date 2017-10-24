@@ -49,7 +49,8 @@ import {
   STATUSES,
   REGISTER_PUSH,
   GET_REGISTED_PUSH,
-  GET_LOYALTY_TOKEN
+  GET_LOYALTY_TOKEN,
+  REMOVE_LOYALTY_TOKEN
 } from './constants'
 
 import {
@@ -374,6 +375,11 @@ function * getLoyaltyToken () {
   yield put(setLoyaltyTokenAction(retreiveToken(loyaltyToken)))
 }
 
+function * removeLoyaltyToken () {
+  yield call(removeItem, LOYALTY_TOKEN_KEY)
+  yield put(setLoyaltyTokenAction(null))
+}
+
 export function * getIsRegisteredPush () {
   const isRegistered = yield call(getItem, REGISTERED_PUSH)
 
@@ -408,6 +414,10 @@ export function * getLoyaltyTokenSaga () {
   yield * takeLatest(GET_LOYALTY_TOKEN, getLoyaltyToken)
 }
 
+export function * removeLoyaltyTokenSaga () {
+  yield * takeLatest(REMOVE_LOYALTY_TOKEN, removeLoyaltyToken)
+}
+
 // All sagas to be loaded
 export function * bucketsSagas () {
   const watcher = yield [
@@ -422,7 +432,9 @@ export function * bucketsSagas () {
     fork(getIsRegisteredPushSaga),
 
     // get loyaltyToken
-    fork(getLoyaltyTokenSaga)
+    fork(getLoyaltyTokenSaga),
+    // remove loyaltyToken / sign out
+    fork(removeLoyaltyTokenSaga)
   ]
 
   // Suspend execution until location changes

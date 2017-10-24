@@ -42,7 +42,8 @@ import {
   setNetworkErrorAction,
   registerPushAction,
   getRegisteredPushAction,
-  getLoyaltyTokenAction
+  getLoyaltyTokenAction,
+  removeLoyaltyTokenAction
 } from './actions'
 
 import {
@@ -102,7 +103,8 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     registerPush: PropTypes.func.isRequired,
     getRegisteredPush: PropTypes.func.isRequired,
     loyaltyToken: PropTypes.string,
-    getLoyaltyToken: PropTypes.func.isRequired
+    getLoyaltyToken: PropTypes.func.isRequired,
+    removeLoyaltyToken: PropTypes.func.isRequired
   }
 
   state = {
@@ -298,7 +300,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   render () {
-    const { children, productCategories, changeRoute, toggleError, toggleMessage, brands } = this.props
+    const { children, productCategories, changeRoute, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken } = this.props
     const { toggleSidebar } = this.state
     return (
       <Wrapper toggleSidebar={toggleSidebar}>
@@ -310,6 +312,8 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
         <div
           className='sidebar-wrapper' >
           <SidebarMenu
+            isSignIn={!!loyaltyToken}
+            signOut={removeLoyaltyToken}
             changeRoute={changeRoute}
             categories={productCategories}
             brands={brands}
@@ -350,6 +354,7 @@ function mapDispatchToProps (dispatch) {
     getBrands: () => dispatch(getBrandsAction()),
     getMobileNumbers: () => dispatch(getMobileNumbersAction()),
     getLoyaltyToken: () => dispatch(getLoyaltyTokenAction()),
+    removeLoyaltyToken: () => dispatch(removeLoyaltyTokenAction()),
     getUpdatedReceipts: (payload) => dispatch(getUpdatedReceiptsAction(payload)),
     setUpdatedReceipts: (payload) => dispatch(setUpdatedReceiptsAction(payload)),
     changeRoute: (url) => dispatch(push(url)),

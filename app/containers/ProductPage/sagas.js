@@ -50,7 +50,8 @@ import {
 } from 'containers/App/constants'
 
 import {
-  setNetworkErrorAction
+  setNetworkErrorAction,
+  setLoyaltyTokenAction
 } from 'containers/Buckets/actions'
 
 import {
@@ -190,6 +191,7 @@ export function * verificationCode (args) {
 
     yield call(setItem, LOYALTY_TOKEN_KEY, loyaltyToken)
     yield put(successVerificationCodeAction())
+    yield put(setLoyaltyTokenAction(getLoyaltyToken(req)))
   } catch (e) {
     yield put(errorVerificationCodeAction('Please check if you input the verification code correctly.'))
   }

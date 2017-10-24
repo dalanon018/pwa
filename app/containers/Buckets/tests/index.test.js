@@ -49,7 +49,8 @@ describe('<Buckets />', () => {
     changeRoute: () => {},
     getRegisteredPush: () => {},
     registerPush: () => {},
-    getLoyaltyToken: () => {}
+    getLoyaltyToken: () => {},
+    removeLoyaltyToken: () => {}
   }
 
   it('render without exploding', () => {
