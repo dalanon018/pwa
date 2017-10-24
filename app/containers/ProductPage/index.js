@@ -36,10 +36,12 @@ import {
   selectMobileRegistrationSuccess,
   selectMobileRegistrationError,
   selectVerificationCodeSuccess,
-  selectVerificationCodeError
+  selectVerificationCodeError,
+  selectToggle
 } from './selectors'
 
 import {
+  setToggleAction,
   getProductAction,
   setCurrentProductAction,
   getMobileNumbersAction,
@@ -53,14 +55,12 @@ import {
 } from './actions'
 
 import {
-  setToggleAction,
   setPageTitleAction,
   setShowSearchIconAction,
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
 
 import {
-  selectToggle,
   selectLoyaltyToken
 } from 'containers/Buckets/selectors'
 

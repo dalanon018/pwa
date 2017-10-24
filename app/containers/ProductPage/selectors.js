@@ -69,6 +69,10 @@ const selectVerificationCodeError = () => createSelector(
   (substate) => substate.get('verificationCodeError')
 )
 
+const selectToggle = () => createSelector(
+  selectProductPageDomain(),
+  (substate) => substate.get('toggle')
+)
 export {
   selectLoader,
   selectProduct,
@@ -80,5 +84,6 @@ export {
   selectMobileRegistrationSuccess,
   selectMobileRegistrationError,
   selectVerificationCodeSuccess,
-  selectVerificationCodeError
+  selectVerificationCodeError,
+  selectToggle
 }

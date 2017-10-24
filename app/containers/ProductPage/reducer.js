@@ -27,7 +27,9 @@ import {
   SUCCESS_VERIFICATION_CODE,
   ERROR_VERIFICATION_CODE,
 
-  RESET_SUBMISSION
+  RESET_SUBMISSION,
+
+  SET_TOGGLE
 } from './constants'
 
 const initialState = fromJS({
@@ -43,7 +45,8 @@ const initialState = fromJS({
   mobileRegistrationError: null,
   verificationCode: false,
   verificationCodeSuccess: false,
-  verificationCodeError: null
+  verificationCodeError: null,
+  toggle: false
 })
 
 function productPageReducer (state = initialState, action) {
@@ -114,6 +117,10 @@ function productPageReducer (state = initialState, action) {
         .set('verificationCode', false)
         .set('verificationCodeSuccess', false)
         .set('verificationCodeError', null)
+
+    case SET_TOGGLE:
+      return state
+        .set('toggle', !state.get('toggle'))
 
     default:
       return state
