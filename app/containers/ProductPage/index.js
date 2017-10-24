@@ -124,24 +124,24 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       errorMessage: ''
     }
 
-    this._handleSubmit = this._handleSubmit.bind(this)
-    this._handleClose = this._handleClose.bind(this)
-    this._handleToggle = this._handleToggle.bind(this)
-    this._handleSuccess = this._handleSuccess.bind(this)
-    this._handleError = this._handleError.bind(this)
-    this._handleMobileRegistered = this._handleMobileRegistered.bind(this)
-    this._handleSocialToggle = this._handleSocialToggle.bind(this)
-    this._handleCopy = this._handleCopy.bind(this)
-    this._handleTouch = this._handleTouch.bind(this)
-    this._recaptchaRef = this._recaptchaRef.bind(this)
-    this._executeCaptcha = this._executeCaptcha.bind(this)
+    // this._handleSubmit = this._handleSubmit.bind(this)
+    // this._handleClose = this._handleClose.bind(this)
+    // this._handleToggle = this._handleToggle.bind(this)
+    // this._handleSuccess = this._handleSuccess.bind(this)
+    // this._handleError = this._handleError.bind(this)
+    // this._handleMobileRegistered = this._handleMobileRegistered.bind(this)
+    // this._handleSocialToggle = this._handleSocialToggle.bind(this)
+    // this._handleCopy = this._handleCopy.bind(this)
+    // this._handleTouch = this._handleTouch.bind(this)
+    // this._recaptchaRef = this._recaptchaRef.bind(this)
+    // this._executeCaptcha = this._executeCaptcha.bind(this)
     this._handleFactoryToggleLoyaltyToken = this._handleFactoryToggleLoyaltyToken.bind(this)
-    this._handleToggleVerification = this._handleToggleVerification.bind(this)
-    this._handleSubmitVerification = this._handleSubmitVerification.bind(this)
-    this._handleSuccessVerificationCode = this._handleSuccessVerificationCode.bind(this)
+    // this._handleToggleVerification = this._handleToggleVerification.bind(this)
+    // this._handleSubmitVerification = this._handleSubmitVerification.bind(this)
+    // this._handleSuccessVerificationCode = this._handleSuccessVerificationCode.bind(this)
   }
 
-  _handleSubmitVerification ({ value }) {
+  _handleSubmitVerification = ({ value }) => {
     this.successVerificationSubmission = true
     const { mobileNumber } = this.state
     const { requestVerificationCode } = this.props
@@ -166,7 +166,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     updateMobileNumbers(mobileNumber)
   }
 
-  _handleToggleVerification () {
+  _handleToggleVerification = () => {
     this.setState({
       showVerification: !this.state.showVerification
     })
@@ -184,7 +184,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.resendCodeSuccessSubmission = false
   }
 
-  _recaptchaRef (ref) {
+  _recaptchaRef = (ref) => {
     this.recaptcha = ref
   }
 
@@ -199,21 +199,21 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this._executeSendCode()
   }
 
-  _executeCaptcha (token) {
+  _executeCaptcha = (token) => {
     if (token) {
       this.mobileSuccessSubmission = true
       this._executeSendCode()
     }
   }
 
-  _handleTouch (e) {
+  _handleTouch = (e) => {
     const { showSlide } = this.state
     if (showSlide) {
       e.preventDefault()
     }
   }
 
-  _handleSubmit ({ value }) {
+  _handleSubmit = ({ value }) => {
     this.setState({
       mobileNumber: value
     }, () => {
@@ -221,7 +221,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     })
   }
 
-  _handleClose () {
+  _handleClose = () => {
     this.setState({
       modalToggle: false
     })
@@ -271,16 +271,19 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   _handleCustomBody = () => {
     const { showSlide } = this.state
-    const elem = document.getElementsByTagName('body')[0]
+    const elem = document.getElementsByTagName('body')[0].classList
 
-    if (!showSlide) {
-      elem.classList.add('custom__body')
-    } else {
-      elem.classList.remove('custom__body')
-    }
+    // if (!showSlide) {
+    //   elem.classList.add('custom__body')
+    // } else {
+    //   elem.classList.remove('custom__body')
+    // }
+
+    const toggleCustomBody = ifElse(equals(false), () => elem.add('custom__body'), () => elem.remove('custom__body'))
+    toggleCustomBody(showSlide)
   }
 
-  _handleSuccess () {
+  _handleSuccess = () => {
     const { changeRoute } = this.props
     if (this.successSubmission) {
       this._handleClose()
@@ -290,7 +293,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     }
   }
 
-  _handleError () {
+  _handleError = () => {
     if (this.successSubmission) {
       this.setState({
         modalToggle: true
@@ -309,19 +312,19 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.props.resetSubmission()
   }
 
-  _handleMobileRegistered (mobileNumbers) {
+  _handleMobileRegistered = (mobileNumbers) => {
     this.setState({
       prevMobileNumber: mobileNumbers.last()
     })
   }
 
-  _handleSocialToggle () {
+  _handleSocialToggle = () => {
     this.setState({
       socialToggle: !this.state.socialToggle
     })
   }
 
-  _handleCopy () {
+  _handleCopy = () => {
     this.setState({
       copied: true
     })
