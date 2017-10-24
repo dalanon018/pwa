@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Grid } from 'semantic-ui-react'
+import styled from 'styled-components'
 
 import Purchase from 'components/Purchase'
 import { imageStock } from 'utils/image-stock'
@@ -10,8 +11,14 @@ import {
   PURCHASE_USECASE
 } from 'containers/Buckets/constants'
 
+const CustomGrid = styled(Grid)`
+  @media (min-width: 1024px) {
+    padding: 0 250px !important;
+  }
+`
+
 const EntityPurchases = ({ entity, changeRoute, windowWidth }) => (
-  <Grid padded>
+  <CustomGrid padded>
     {
       entity.map((receipt, index) =>
         <Purchase
@@ -26,7 +33,7 @@ const EntityPurchases = ({ entity, changeRoute, windowWidth }) => (
           changeRoute={changeRoute}
         />)
     }
-  </Grid>
+  </CustomGrid>
 )
 
 EntityPurchases.propTypes = {

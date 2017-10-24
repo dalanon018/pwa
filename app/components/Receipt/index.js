@@ -36,7 +36,9 @@ import {
   ReceiptContainer,
   ReceiptHeader,
   ReceiptContent,
+  InfoContainer,
   Scanner,
+  CustomContainer,
   ReceiptWrapper,
   ScannerWrapper,
   PushNotificationWrapper,
@@ -69,7 +71,7 @@ const ReturnInfo = () => (
   <WarningDescription>
     <Image src={ReturnIcon} />
     <section>
-      <Label as='p' size='large'>
+      <Label className='text__roboto--light' as='span' basic size='large'>
         <FormattedMessage {...messages.returnPolicyTitle} />
       </Label>
       <Label className='text__roboto--light' as='p' size='large'>
@@ -82,7 +84,9 @@ const ReturnInfo = () => (
 const WarningCTAReserved = ({ timer }) => {
   if (timer === '00:00:00') {
     return (
-      <FormattedMessage {...messages.receiptInfoMessageReserveExpired} />
+      <Label className='text__roboto--light' as='span' basic size='large'>
+        <FormattedMessage {...messages.receiptInfoMessageReserveExpired} />
+      </Label>
     )
   }
 
@@ -99,30 +103,40 @@ const WarningStatus = ({ status, timer, storeName, modePayment }) => {
     ),
     UNPAID: (
       <GeneralInfo>
-        <FormattedMessage {...messages.receiptInfoMessageUnpaid} />
+        <Label className='text__roboto--light' as='span' basic size='large'>
+          <FormattedMessage {...messages.receiptInfoMessageUnpaid} />
+        </Label>
       </GeneralInfo>
     ),
     PROCESSING: (
       <GeneralInfo>
-        <FormattedMessage {...messages.receiptInfoMessagePaid} />
+        <Label className='text__roboto--light' as='span' basic size='large'>
+          <FormattedMessage {...messages.receiptInfoMessagePaid} />
+        </Label>
       </GeneralInfo>
     ),
     CONFIRMED: (
       <GeneralInfo>
-        <FormattedMessage {...messages.receiptInfoMessagePaid} />
+        <Label className='text__roboto--light' as='span' basic size='large'>
+          <FormattedMessage {...messages.receiptInfoMessagePaid} />
+        </Label>
       </GeneralInfo>
     ),
     INTRANSIT: (
       <GeneralInfo>
-        <FormattedMessage {...messages.receiptInfoMessagePaid} />
+        <Label className='text__roboto--light' as='span' basic size='large'>
+          <FormattedMessage {...messages.receiptInfoMessagePaid} />
+        </Label>
       </GeneralInfo>
     ),
     DELIVERED: (
       <GeneralInfo>
-        <FormattedMessage
-          {...messages[keyMessage]}
-          values={{ storeName }}
-        />
+        <Label className='text__roboto--light' as='span' basic size='large'>
+          <FormattedMessage
+            {...messages[keyMessage]}
+            values={{ storeName }}
+          />
+        </Label>
       </GeneralInfo>
     ),
     CLAIMED: (
@@ -130,7 +144,9 @@ const WarningStatus = ({ status, timer, storeName, modePayment }) => {
     ),
     UNCLAIMED: (
       <GeneralInfo>
-        <FormattedMessage {...messages.receiptInfoMessagePaid} />
+        <Label className='text__roboto--light' as='span' basic size='large'>
+          <FormattedMessage {...messages.receiptInfoMessagePaid} />
+        </Label>
       </GeneralInfo>
     )
   })(null)(status)
@@ -310,39 +326,41 @@ class Receipt extends React.PureComponent {
         <ReceiptWrapper>
           <ReceiptContainer className='background__white'>
             <ReceiptHeader className='background__light-grey'>
-              <Grid>
-                <Grid.Row columns={2}>
-                  <Grid.Column floated='left' width={9} className='product-status'>
-                    <Label className='weight-400 color__secondary' as='span' basic size='small'>
-                      <FormattedMessage {...messages.statusLabel} />
-                    </Label>
-                    <Label as='p' basic size='huge' color={this._handleColorStatus(statuses[receipt.get('status')])}>
-                      { this._handleStatusTitle() }
-                    </Label>
-                  </Grid.Column>
-                  <Grid.Column floated='right' textAlign='right' width={7}>
-                    <Label className='weight-400 color__secondary' as='span' basic size='small'>
-                      <FormattedMessage {...messages.paymentMethod} />
-                    </Label>
-                    <Label as='p' basic size='large' className='color__secondary'>
-                      <FormattedMessage {...messages[`${this._handleModePayment()}methodType`]} />
-                    </Label>
-                  </Grid.Column>
+              <CustomContainer>
+                <Grid>
+                  <Grid.Row columns={2}>
+                    <Grid.Column floated='left' width={9} className='product-status'>
+                      <Label className='weight-400 color__secondary' as='span' basic size='small'>
+                        <FormattedMessage {...messages.statusLabel} />
+                      </Label>
+                      <Label as='p' basic size='huge' color={this._handleColorStatus(statuses[receipt.get('status')])}>
+                        { this._handleStatusTitle() }
+                      </Label>
+                    </Grid.Column>
+                    <Grid.Column floated='right' textAlign='right' width={7}>
+                      <Label className='weight-400 color__secondary' as='span' basic size='small'>
+                        <FormattedMessage {...messages.paymentMethod} />
+                      </Label>
+                      <Label as='p' basic size='large' className='color__secondary'>
+                        <FormattedMessage {...messages[`${this._handleModePayment()}methodType`]} />
+                      </Label>
+                    </Grid.Column>
 
-                  <Grid.Column floated='left' className='order-number' width={9}>
-                    <Label className='weight-400 color__secondary' as='span' basic size='small'>
-                      <FormattedMessage {...messages.orderNumber} />
-                    </Label>
-                    <Label as='p' basic size='big' className='color__secondary'>{receipt.get('payCode')}</Label>
-                  </Grid.Column>
-                  <Grid.Column floated='right' textAlign='right' width={7}>
-                    <Label className='weight-400 color__secondary' as='span' basic size='small'>
-                      { this._handleDateString() }
-                    </Label>
-                    <Label as='p' basic size='large' className='color__secondary'>{ this._handleDateValue()}</Label>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
+                    <Grid.Column floated='left' className='order-number' width={9}>
+                      <Label className='weight-400 color__secondary' as='span' basic size='small'>
+                        <FormattedMessage {...messages.orderNumber} />
+                      </Label>
+                      <Label as='p' basic size='big' className='color__secondary'>{receipt.get('payCode')}</Label>
+                    </Grid.Column>
+                    <Grid.Column floated='right' textAlign='right' width={7}>
+                      <Label className='weight-400 color__secondary' as='span' basic size='small'>
+                        { this._handleDateString() }
+                      </Label>
+                      <Label as='p' basic size='large' className='color__secondary'>{ this._handleDateValue()}</Label>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </CustomContainer>
             </ReceiptHeader>
             <ReceiptContent id='fadeMe' show={show}>
               <Grid padded className='scan padding__14' centered textAlign='center'>
@@ -376,34 +394,38 @@ class Receipt extends React.PureComponent {
 
         { this._handlePushRegistrationUI() }
 
-        <Grid padded centered textAlign='left'>
-          <Grid.Row>
-            <Grid.Column>
-              <WrapperWarning>
-                <WarningStatus {
-                  ...{
-                    status: statuses[receipt.get('status')],
-                    storeName: receipt.get('storeName'),
-                    modePayment: receipt.get('modePayment'),
-                    timer }} />
-              </WrapperWarning>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-        <Grid padded centered textAlign='left'>
-          <Grid.Row>
-            <Grid.Column>
-              <InstructionsWrapper>
-                <WarningDescription className='color__secondary'>
-                  <Image src={ScreenshotIcon} />
-                  <Label className='text__roboto--light screenshot-label' as='span' size='large'>
-                    <FormattedMessage {...messages.instructionsLabel} />
-                  </Label>
-                </WarningDescription>
-              </InstructionsWrapper>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+        <InfoContainer>
+          <Grid padded centered textAlign='left'>
+            <Grid.Row>
+              <Grid.Column>
+                <WrapperWarning>
+                  <WarningStatus {
+                    ...{
+                      status: statuses[receipt.get('status')],
+                      storeName: receipt.get('storeName'),
+                      modePayment: receipt.get('modePayment'),
+                      timer }} />
+                </WrapperWarning>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </InfoContainer>
+        <InfoContainer>
+          <Grid padded centered textAlign='left'>
+            <Grid.Row>
+              <Grid.Column>
+                <InstructionsWrapper>
+                  <WarningDescription className='color__secondary'>
+                    <Image src={ScreenshotIcon} />
+                    <Label className='text__roboto--light screenshot-label' as='span' size='large'>
+                      <FormattedMessage {...messages.instructionsLabel} />
+                    </Label>
+                  </WarningDescription>
+                </InstructionsWrapper>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </InfoContainer>
         <ButtonContainer>
           { this._handleButtonFunctionality() }
         </ButtonContainer>

@@ -112,9 +112,15 @@ const TermsConditionsWrapper = styled.div`
   }
 
   .tc-content {
-    padding-top: 80px;
+    padding-top: 120px;
     overflow-y: auto;
     height: 100vh;
+  }
+
+  @media (min-width: 1024px) {
+    .tc-content {
+      padding-top: 80px;
+    }
   }
 `
 
