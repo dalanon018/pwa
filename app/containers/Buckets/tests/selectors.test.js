@@ -13,7 +13,8 @@ import {
   selectPageTitle,
   selectShowSearchIcon,
   selectShowActivityIcon,
-  selectIsRegisteredPush
+  selectIsRegisteredPush,
+  selectLoyaltyToken
 } from '../selectors'
 
 describe('Buckets Selectors', () => {
@@ -199,6 +200,20 @@ describe('Buckets Selectors', () => {
         }
       })
       expect(selectIsRegisteredPushSelectors(mockedState)).toEqual(isRegisteredPush)
+    })
+  })
+
+  describe('selectLoyaltyToken', () => {
+    const selectLoyaltyTokenSelectors = selectLoyaltyToken()
+
+    it('should get error submission', () => {
+      const loyaltyToken = '12313-123123213-1231321-12321'
+      const mockedState = fromJS({
+        buckets: {
+          loyaltyToken
+        }
+      })
+      expect(selectLoyaltyTokenSelectors(mockedState)).toEqual(loyaltyToken)
     })
   })
 })

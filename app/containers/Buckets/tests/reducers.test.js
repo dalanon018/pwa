@@ -5,7 +5,8 @@ import { fromJS } from 'immutable'
 import {
   setProductCategoriesAction,
   setMobileNumbersAction,
-  setNetworkErrorAction
+  setNetworkErrorAction,
+  setLoyaltyTokenAction
 } from '../actions'
 
 describe('Buckets Reducer', () => {
@@ -23,7 +24,8 @@ describe('Buckets Reducer', () => {
       pageTitle: null,
       searchIconShow: false,
       activityIconShow: false,
-      isRegisteredPush: false
+      isRegisteredPush: false,
+      loyaltyToken: null
     })
   })
 
@@ -54,5 +56,13 @@ describe('Buckets Reducer', () => {
     const expectedResult = state.set('toggleMessage', payload).set('toggleError', true)
 
     expect(bucketsReducer(state, setNetworkErrorAction(payload))).toEqual(expectedResult)
+  })
+
+  it('should set the loyaltyToken', () => {
+    const payload = '123131312'
+    const expectedResult = state
+                            .set('loyaltyToken', payload)
+
+    expect(bucketsReducer(state, setLoyaltyTokenAction(payload))).toEqual(expectedResult)
   })
 })

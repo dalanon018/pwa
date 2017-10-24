@@ -33,6 +33,9 @@ export const REGISTER_PUSH = 'app/Container/REGISTER_PUSH'
 export const GET_REGISTED_PUSH = 'app/Container/GET_REGISTED_PUSH'
 export const SET_REGISTED_PUSH = 'app/Container/SET_REGISTED_PUSH'
 
+export const GET_LOYALTY_TOKEN = 'app/ProductPage/GET_LOYALTY_TOKEN'
+export const SET_LOYALTY_TOKEN = 'app/ProductPage/SET_LOYALTY_TOKEN'
+
 export const HIDE_BACK_BUTTON = [
   '',
   'home',

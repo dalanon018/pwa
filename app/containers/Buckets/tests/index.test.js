@@ -24,6 +24,7 @@ describe('<Buckets />', () => {
     showSearchIcon: false,
     showActivityIcon: false,
     isRegisteredPush: false,
+    loyaltyToken: null,
     intl: {
       formatDate: () => {},
       formatTime: () => {},
@@ -47,8 +48,8 @@ describe('<Buckets />', () => {
     dispatch: () => {},
     changeRoute: () => {},
     getRegisteredPush: () => {},
-    registerPush: () => {}
-
+    registerPush: () => {},
+    getLoyaltyToken: () => {}
   }
 
   it('render without exploding', () => {

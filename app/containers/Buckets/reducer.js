@@ -26,7 +26,9 @@ import {
 
   GET_PRODUCT_CATEGORIES,
 
-  SET_REGISTED_PUSH
+  SET_REGISTED_PUSH,
+
+  SET_LOYALTY_TOKEN
 } from './constants'
 
 const initialState = fromJS({
@@ -41,7 +43,8 @@ const initialState = fromJS({
   pageTitle: null,
   searchIconShow: false,
   activityIconShow: false,
-  isRegisteredPush: false
+  isRegisteredPush: false,
+  loyaltyToken: null
 })
 
 function bucketsReducer (state = initialState, action) {
@@ -87,6 +90,10 @@ function bucketsReducer (state = initialState, action) {
     case SET_REGISTED_PUSH:
       return state
         .set('isRegisteredPush', action.payload)
+
+    case SET_LOYALTY_TOKEN:
+      return state
+        .set('loyaltyToken', action.payload)
 
     default:
       return state

@@ -25,7 +25,10 @@ import {
 
   registerPushAction,
   getRegisteredPushAction,
-  setRegisteredPushAction
+  setRegisteredPushAction,
+
+  getLoyaltyTokenAction,
+  setLoyaltyTokenAction
 } from '../actions'
 
 import {
@@ -54,7 +57,10 @@ import {
 
   REGISTER_PUSH,
   GET_REGISTED_PUSH,
-  SET_REGISTED_PUSH
+  SET_REGISTED_PUSH,
+
+  GET_LOYALTY_TOKEN,
+  SET_LOYALTY_TOKEN
 } from '../constants'
 
 describe('Buckets actions', () => {
@@ -261,6 +267,26 @@ describe('Buckets actions', () => {
       }
 
       expect(setRegisteredPushAction(payload)).toEqual(expectedResult)
+    })
+  })
+
+  describe('Loyalty Token', () => {
+    it('should get loyaltyToken', () => {
+      const expectedResult = {
+        type: GET_LOYALTY_TOKEN
+      }
+
+      expect(getLoyaltyTokenAction()).toEqual(expectedResult)
+    })
+
+    it('should set loyaltyToken', () => {
+      const payload = '123312323-12123213213'
+      const expectedResult = {
+        type: SET_LOYALTY_TOKEN,
+        payload
+      }
+
+      expect(setLoyaltyTokenAction(payload)).toEqual(expectedResult)
     })
   })
 })
