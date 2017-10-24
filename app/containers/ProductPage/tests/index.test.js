@@ -43,7 +43,10 @@ describe('<Products />', () => {
     productSuccess: false,
     productError: false,
     mobileNumbers: fromJS([1, 2, 3]),
-    loyaltyToken: null
+    loyaltyToken: null,
+    requestRecaptchaValidation: () => {},
+    recaptchaValidationSuccess: null,
+    recaptchaValidationError: null
   }
 
   it('render without exploding', () => {

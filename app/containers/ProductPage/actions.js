@@ -32,6 +32,10 @@ import {
   SUCCESS_VERIFICATION_CODE,
   ERROR_VERIFICATION_CODE,
 
+  REQUEST_RECAPTCHA_VALIDATION,
+  SUCCESS_RECAPTCHA_VALIDATION,
+  ERROR_RECAPTCHA_VALIDATION,
+
   RESET_SUBMISSION,
 
   SET_TOGGLE
@@ -161,6 +165,27 @@ export function successVerificationCodeAction (payload) {
 export function errorVerificationCodeAction (payload) {
   return {
     type: ERROR_VERIFICATION_CODE,
+    payload
+  }
+}
+
+export function requestRecaptchaValidationAction (payload) {
+  return {
+    type: REQUEST_RECAPTCHA_VALIDATION,
+    payload
+  }
+}
+
+export function successRecaptchaValidationAction (payload) {
+  return {
+    type: SUCCESS_RECAPTCHA_VALIDATION,
+    payload
+  }
+}
+
+export function errorRecaptchaValidationAction (payload) {
+  return {
+    type: ERROR_RECAPTCHA_VALIDATION,
     payload
   }
 }
