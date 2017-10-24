@@ -28,7 +28,8 @@ import {
   setRegisteredPushAction,
 
   getLoyaltyTokenAction,
-  setLoyaltyTokenAction
+  setLoyaltyTokenAction,
+  removeLoyaltyTokenAction
 } from '../actions'
 
 import {
@@ -60,7 +61,8 @@ import {
   SET_REGISTED_PUSH,
 
   GET_LOYALTY_TOKEN,
-  SET_LOYALTY_TOKEN
+  SET_LOYALTY_TOKEN,
+  REMOVE_LOYALTY_TOKEN
 } from '../constants'
 
 describe('Buckets actions', () => {
@@ -287,6 +289,14 @@ describe('Buckets actions', () => {
       }
 
       expect(setLoyaltyTokenAction(payload)).toEqual(expectedResult)
+    })
+
+    it('should set loyaltyToken to null', () => {
+      const expectedResult = {
+        type: REMOVE_LOYALTY_TOKEN
+      }
+
+      expect(removeLoyaltyTokenAction()).toEqual(expectedResult)
     })
   })
 })
