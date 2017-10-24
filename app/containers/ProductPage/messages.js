@@ -21,5 +21,13 @@ export default defineMessages({
   successResendCode: {
     id: 'app.containers.ProductPage.successResendCode',
     defaultMessage: 'Succesfully Resend Code!'
+  },
+  successSendCodeTitle: {
+    id: 'app.containers.ProductPage.successSendCodeTitle',
+    defaultMessage: 'Code Sent!'
+  },
+  successSendCode: {
+    id: 'app.containers.ProductPage.successSendCode',
+    defaultMessage: 'A verification code has been sent to your mobile number. Please enter the code to proceed.'
   }
 })

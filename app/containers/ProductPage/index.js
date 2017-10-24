@@ -64,7 +64,6 @@ import {
 } from 'containers/Buckets/selectors'
 
 import {
-  ENVIROMENT,
   RECAPTCHA_SITE_KEY
 } from 'containers/App/constants'
 
@@ -108,6 +107,11 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
    */
   resendCodeSuccessSubmission = false
 
+  /**
+   * this will handle to let our app know that we submit the recaptcha
+   */
+  recaptchaSuccessSubmission = false
+
   constructor () {
     super()
     this.state = {
@@ -120,6 +124,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       showVerification: false,
       mobileNumber: '',
       errModalToggle: false,
+      errModalName: 'warning',
+      errorTitle: '',
       errorMessage: ''
     }
   }
@@ -149,6 +155,16 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     updateMobileNumbers(mobileNumber)
   }
 
+  _handleSuccessMobileRegistration = () => {
+    this.setState({
+      errModalToggle: true,
+      errorTitle: <FormattedMessage {...messages.successSendCodeTitle} />,
+      errModalName: 'checkmark',
+      errorMessage: <FormattedMessage {...messages.successSendCode} />
+    })
+
+    this._handleToggleVerification()
+  }
   _handleToggleVerification = () => {
     this.setState({
       showVerification: !this.state.showVerification
@@ -162,7 +178,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   _handleSuccessResendVerificationCode = () => {
     this.setState({
       errModalToggle: true,
-      errorMessage: <FormattedMessage {...messages.successResendCode} />
+      errorTitle: <FormattedMessage {...messages.successResendCode} />,
+      errModalName: 'warning',
+      errorMessage: ''
     })
     this.resendCodeSuccessSubmission = false
   }
@@ -201,9 +219,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   _handleSubmit = ({ value }) => {
     this.setState({
       mobileNumber: value
-    }, () => {
-      ENVIROMENT === 'production' ? this.recaptcha.execute() : this._executeCaptcha(true)
     })
+
+    this.recaptcha.execute()
   }
 
   _handleClose = () => {
@@ -287,7 +305,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   _handleErrorMobileRegistration = (error) => {
     this.setState({
       errModalToggle: true,
-      errorMessage: error
+      errorTitle: error,
+      errModalName: 'warning',
+      errorMessage: ''
     })
 
     // we need to reset our data from the store so it won't show always.
@@ -350,7 +370,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     ifElse(equals(true), this._handleError, noop)(productError)
 
     // handle if mobile registration is success
-    ifElse(both(equals(true), () => this.mobileSuccessSubmission), this._handleToggleVerification, noop)(mobileRegistrationSuccess)
+    ifElse(both(equals(true), () => this.mobileSuccessSubmission),
+    this._handleSuccessMobileRegistration, noop)(mobileRegistrationSuccess)
 
     // handle if resend verification code is successful
     ifElse(both(equals(true), () => this.resendCodeSuccessSubmission), this._handleSuccessResendVerificationCode, noop)(mobileRegistrationSuccess)
@@ -370,7 +391,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   render () {
     const { loading, product, toggle, route, windowWidth, markdown, loader, changeRoute } = this.props
-    const { modalToggle, prevMobileNumber, showVerification, errModalToggle, errorMessage } = this.state
+    const { modalToggle, prevMobileNumber, showVerification, errModalToggle, errModalName, errorTitle, errorMessage } = this.state
     const productPageTrigger = route && route
 
     return (
@@ -427,9 +448,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
         <Modal
           open={errModalToggle}
-          name='warning'
-          title={errorMessage}
-          content=''
+          name={errModalName}
+          title={errorTitle}
+          content={errorMessage}
           close={this._handleErrModalClose}
         />
       </div>
