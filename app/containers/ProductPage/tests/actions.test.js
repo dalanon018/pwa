@@ -2,12 +2,19 @@
 import {
   getProductAction,
   setProductAction,
-  setProductHandlersDefaultAction
+  setProductHandlersDefaultAction,
+  requestRecaptchaValidationAction,
+  successRecaptchaValidationAction,
+  errorRecaptchaValidationAction
 } from '../actions'
 import {
   GET_PRODUCT,
   SET_PRODUCT,
-  SET_PRODUCT_HANDLER_DEFAULT
+  SET_PRODUCT_HANDLER_DEFAULT,
+
+  REQUEST_RECAPTCHA_VALIDATION,
+  SUCCESS_RECAPTCHA_VALIDATION,
+  ERROR_RECAPTCHA_VALIDATION
 } from '../constants'
 
 describe('Products actions', () => {
@@ -45,6 +52,36 @@ describe('Products actions', () => {
       }
 
       expect(setProductHandlersDefaultAction()).toEqual(expectedResult)
+    })
+  })
+
+  describe('Recaptcha Validation Actions', () => {
+    it('should Request Validation', () => {
+      const expectedResult = {
+        type: REQUEST_RECAPTCHA_VALIDATION
+      }
+
+      expect(requestRecaptchaValidationAction()).toEqual(expectedResult)
+    })
+
+    it('should Set Success for Recaptcha Validation', () => {
+      const payload = true
+      const expectedResult = {
+        type: SUCCESS_RECAPTCHA_VALIDATION,
+        payload
+      }
+
+      expect(successRecaptchaValidationAction(payload)).toEqual(expectedResult)
+    })
+
+    it('should Set Error for Recaptcha Validation', () => {
+      const payload = 'Error on Validation'
+      const expectedResult = {
+        type: ERROR_RECAPTCHA_VALIDATION,
+        payload
+      }
+
+      expect(errorRecaptchaValidationAction(payload)).toEqual(expectedResult)
     })
   })
 })

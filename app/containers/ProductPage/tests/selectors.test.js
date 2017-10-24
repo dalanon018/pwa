@@ -3,7 +3,9 @@ import { fromJS } from 'immutable'
 import {
   selectProduct,
   selectProductSuccess,
-  selectProductError
+  selectProductError,
+  selectRecaptchaValidationSuccess,
+  selectRecaptchaValidationError
 } from '../selectors'
 
 describe('Product Selectors', () => {
@@ -49,6 +51,34 @@ describe('Product Selectors', () => {
         }
       })
       expect(selectProductErrorSelectors(mockedState)).toEqual(requestProductError)
+    })
+  })
+
+  describe('selectRecaptchaValidationSuccess', () => {
+    const selectRecaptchaValidationSuccessSelectors = selectRecaptchaValidationSuccess()
+
+    it('should get error submission', () => {
+      const recaptchaValidationSuccess = true
+      const mockedState = fromJS({
+        productPage: {
+          recaptchaValidationSuccess
+        }
+      })
+      expect(selectRecaptchaValidationSuccessSelectors(mockedState)).toEqual(recaptchaValidationSuccess)
+    })
+  })
+
+  describe('selectRecaptchaValidationError', () => {
+    const selectRecaptchaValidationErrorSelectors = selectRecaptchaValidationError()
+
+    it('should get error submission', () => {
+      const recaptchaValidationError = 'Error on validation'
+      const mockedState = fromJS({
+        productPage: {
+          recaptchaValidationError
+        }
+      })
+      expect(selectRecaptchaValidationErrorSelectors(mockedState)).toEqual(recaptchaValidationError)
     })
   })
 })
