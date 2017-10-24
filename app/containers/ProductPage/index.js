@@ -140,7 +140,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this._handleToggleVerification = this._handleToggleVerification.bind(this)
     this._handleSubmitVerification = this._handleSubmitVerification.bind(this)
     this._handleSuccessVerificationCode = this._handleSuccessVerificationCode.bind(this)
-    this._handleWindowClose = this._handleWindowClose.bind(this)
   }
 
   _handleSubmitVerification ({ value }) {
