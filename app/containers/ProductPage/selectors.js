@@ -69,6 +69,16 @@ const selectVerificationCodeError = () => createSelector(
   (substate) => substate.get('verificationCodeError')
 )
 
+const selectRecaptchaValidationSuccess = () => createSelector(
+  selectProductPageDomain(),
+  (substate) => substate.get('recaptchaValidationSuccess')
+)
+
+const selectRecaptchaValidationError = () => createSelector(
+  selectProductPageDomain(),
+  (substate) => substate.get('recaptchaValidationError')
+)
+
 const selectToggle = () => createSelector(
   selectProductPageDomain(),
   (substate) => substate.get('toggle')
@@ -85,5 +95,7 @@ export {
   selectMobileRegistrationError,
   selectVerificationCodeSuccess,
   selectVerificationCodeError,
+  selectRecaptchaValidationSuccess,
+  selectRecaptchaValidationError,
   selectToggle
 }

@@ -3,6 +3,8 @@ import { takeLatest } from 'redux-saga'
 import { isEmpty, compact } from 'lodash'
 import {
   compose,
+  ifElse,
+  partial,
   prop,
   reverse,
   slice,
@@ -26,7 +28,8 @@ import {
   UPDATE_MOBILE_NUMBERS,
   GET_MARKDOWN,
   REQUEST_MOBILE_REGISTRATION,
-  REQUEST_VERIFICATION_CODE
+  REQUEST_VERIFICATION_CODE,
+  REQUEST_RECAPTCHA_VALIDATION
 } from './constants'
 import {
   setProductAction,
@@ -37,7 +40,9 @@ import {
   successMobileRegistrationAction,
   errorMobileRegistrationAction,
   successVerificationCodeAction,
-  errorVerificationCodeAction
+  errorVerificationCodeAction,
+  successRecaptchaValidationAction,
+  errorRecaptchaValidationAction
 } from './actions'
 
 import {
@@ -197,6 +202,31 @@ export function * verificationCode (args) {
   }
 }
 
+export function * recaptchaValidation (args) {
+  const { payload } = args
+  try {
+    const token = yield getAccessToken()
+    const req = yield call(request, `${API_BASE_URL}/validateRecaptcha/${payload}`, {
+      method: 'POST',
+      token: token.access_token
+    })
+    const isValidated = prop('validated')
+    const successOrError = ifElse(
+      isValidated,
+      partial(successRecaptchaValidationAction, [true]),
+      partial(errorRecaptchaValidationAction, ['Error on validation. Please try again.'])
+    )
+
+    yield put(successOrError(req))
+  } catch (e) {
+    yield put(errorRecaptchaValidationAction(e.message))
+  }
+}
+
+export function * recaptchaValidationSaga () {
+  yield * takeLatest(REQUEST_RECAPTCHA_VALIDATION, recaptchaValidation)
+}
+
 export function * mobileRegistrationSaga () {
   yield * takeLatest(REQUEST_MOBILE_REGISTRATION, registerMobileNumber)
 }
@@ -237,6 +267,7 @@ export function * productSagas () {
     fork(updateMobileNumbersSaga),
     fork(getMarkDownSaga),
 
+    fork(recaptchaValidationSaga),
     fork(mobileRegistrationSaga),
     fork(verificationCodeSaga)
   ]

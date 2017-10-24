@@ -27,6 +27,9 @@ import {
   SUCCESS_VERIFICATION_CODE,
   ERROR_VERIFICATION_CODE,
 
+  SUCCESS_RECAPTCHA_VALIDATION,
+  ERROR_RECAPTCHA_VALIDATION,
+
   RESET_SUBMISSION,
 
   SET_TOGGLE
@@ -46,6 +49,8 @@ const initialState = fromJS({
   verificationCode: false,
   verificationCodeSuccess: false,
   verificationCodeError: null,
+  recaptchaValidationSuccess: null,
+  recaptchaValidationError: null,
   toggle: false
 })
 
@@ -117,6 +122,18 @@ function productPageReducer (state = initialState, action) {
         .set('verificationCode', false)
         .set('verificationCodeSuccess', false)
         .set('verificationCodeError', null)
+        .set('recaptchaValidationSuccess', null)
+        .set('recaptchaValidationError', null)
+
+    case SUCCESS_RECAPTCHA_VALIDATION:
+      return state
+      .set('recaptchaValidationSuccess', true)
+      .set('recaptchaValidationError', null)
+
+    case ERROR_RECAPTCHA_VALIDATION:
+      return state
+        .set('recaptchaValidationSuccess', null)
+        .set('recaptchaValidationError', action.payload)
 
     case SET_TOGGLE:
       return state

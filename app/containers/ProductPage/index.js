@@ -37,6 +37,8 @@ import {
   selectMobileRegistrationError,
   selectVerificationCodeSuccess,
   selectVerificationCodeError,
+  selectRecaptchaValidationSuccess,
+  selectRecaptchaValidationError,
   selectToggle
 } from './selectors'
 
@@ -50,6 +52,7 @@ import {
   getMarkDownAction,
   requestMobileRegistrationAction,
   requestVerificationCodeAction,
+  requestRecaptchaValidationAction,
   resetSubmissionAction
 } from './actions'
 
@@ -84,7 +87,13 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     mobileNumbers: PropTypes.object.isRequired,
     mobileRegistrationSuccess: PropTypes.bool,
     mobileRegistrationError: PropTypes.string,
-    loyaltyToken: PropTypes.string
+    loyaltyToken: PropTypes.string,
+    requestRecaptchaValidation: PropTypes.func.isRequired,
+    recaptchaValidationSuccess: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool
+    ]),
+    recaptchaValidationError: PropTypes.string
   }
 
   /**
@@ -165,6 +174,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
     this._handleToggleVerification()
   }
+
   _handleToggleVerification = () => {
     this.setState({
       showVerification: !this.state.showVerification
@@ -201,12 +211,20 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   _executeCaptcha = (token) => {
-    const tokenEmptyChecker = ifElse(isEmpty, noop, () => {
-      this.mobileSuccessSubmission = true
-      this._executeSendCode()
+    const { requestRecaptchaValidation } = this.props
+    const tokenEmptyChecker = ifElse(isEmpty, noop, (token) => {
+      this.recaptchaSuccessSubmission = true
+      requestRecaptchaValidation(token)
     })
 
     tokenEmptyChecker(token)
+  }
+
+  _handleRecaptchaValidationSuccess = () => {
+    // we need to set this back to false
+    this.recaptchaSuccessSubmission = false
+    this.mobileSuccessSubmission = true
+    this._executeSendCode()
   }
 
   _handleTouch = (e) => {
@@ -302,16 +320,32 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     successSubmissionChecker(this.successSubmission)
   }
 
-  _handleErrorMobileRegistration = (error) => {
+  _handleSetStateErrorMessages = (error) => {
     this.setState({
       errModalToggle: true,
       errorTitle: error,
       errModalName: 'warning',
       errorMessage: ''
     })
-
-    // we need to reset our data from the store so it won't show always.
     this.props.resetSubmission()
+  }
+
+  _handleErrorRecaptchaValidation = (error) => {
+    this.recaptchaSuccessSubmission = false
+
+    // we need to reset our recaptcha
+    this.recaptcha.reset()
+    return this._handleSetStateErrorMessages(error)
+  }
+
+  _handleErrorMobileRegistration = (error) => {
+    this.mobileSuccessSubmission = false
+    return this._handleSetStateErrorMessages(error)
+  }
+
+  _handleErrorVerificationCode = (error) => {
+    this.successVerificationSubmission = false
+    return this._handleSetStateErrorMessages(error)
   }
 
   _handleMobileRegistered = (mobileNumbers) => {
@@ -361,7 +395,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   componentWillReceiveProps (nextProps) {
-    const { productSuccess, productError, mobileNumbers, mobileRegistrationError, mobileRegistrationSuccess, verificationCodeSuccess, verificationCodeError } = nextProps
+    const { productSuccess, productError, mobileNumbers, mobileRegistrationError, mobileRegistrationSuccess, verificationCodeSuccess, verificationCodeError, recaptchaValidationSuccess, recaptchaValidationError } = nextProps
 
     // handle if submission is success
     ifElse(equals(true), this._handleSuccess, noop)(productSuccess)
@@ -369,21 +403,29 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     // handle if submission is error
     ifElse(equals(true), this._handleError, noop)(productError)
 
+    // handle recaptcha validation  is success
+    ifElse(both(equals(true), () => this.recaptchaSuccessSubmission),
+    this._handleRecaptchaValidationSuccess, noop)(recaptchaValidationSuccess)
+
+    // handle Recaptcha validation is error
+    ifElse(both(complement(equals(null)), () => this.recaptchaSuccessSubmission),
+    this._handleErrorRecaptchaValidation, noop)(recaptchaValidationError)
+
     // handle if mobile registration is success
     ifElse(both(equals(true), () => this.mobileSuccessSubmission),
     this._handleSuccessMobileRegistration, noop)(mobileRegistrationSuccess)
 
+    // handle if mobile registration is error
+    ifElse(both(complement(equals(null)), () => this.mobileSuccessSubmission), this._handleErrorMobileRegistration, noop)(mobileRegistrationError)
+
     // handle if resend verification code is successful
     ifElse(both(equals(true), () => this.resendCodeSuccessSubmission), this._handleSuccessResendVerificationCode, noop)(mobileRegistrationSuccess)
-
-    // handle if mobile registration is error
-    ifElse(complement(equals(null)), this._handleErrorMobileRegistration, noop)(mobileRegistrationError)
 
     // handle if verification code is success
     ifElse(both(equals(true), () => this.successVerificationSubmission), this._handleSuccessVerificationCode, noop)(verificationCodeSuccess)
 
     // handle if verification code is error
-    ifElse(complement(equals(null)), this._handleErrorMobileRegistration, noop)(verificationCodeError)
+    ifElse(both(complement(equals(null)), () => this.successVerificationSubmission), this._handleErrorVerificationCode, noop)(verificationCodeError)
 
     // handle if theree's mobile number we can use as default
     ifElse((mobile) => mobile.size > 0, this._handleMobileRegistered, noop)(mobileNumbers)
@@ -471,7 +513,9 @@ const mapStateToProps = createStructuredSelector({
   mobileRegistrationError: selectMobileRegistrationError(),
   verificationCodeSuccess: selectVerificationCodeSuccess(),
   verificationCodeError: selectVerificationCodeError(),
-  loyaltyToken: selectLoyaltyToken()
+  loyaltyToken: selectLoyaltyToken(),
+  recaptchaValidationSuccess: selectRecaptchaValidationSuccess(),
+  recaptchaValidationError: selectRecaptchaValidationError()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -488,6 +532,7 @@ function mapDispatchToProps (dispatch) {
     changeRoute: (url) => dispatch(push(url)),
     getMarkDown: payload => dispatch(getMarkDownAction()),
     requestmobileRegistration: payload => dispatch(requestMobileRegistrationAction(payload)),
+    requestRecaptchaValidation: payload => dispatch(requestRecaptchaValidationAction(payload)),
     requestVerificationCode: payload => dispatch(requestVerificationCodeAction(payload)),
     resetSubmission: () => dispatch(resetSubmissionAction()),
     dispatch
