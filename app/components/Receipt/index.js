@@ -16,6 +16,7 @@ import { FormattedMessage } from 'react-intl'
 import { Grid, Label, Button, Image, Checkbox } from 'semantic-ui-react'
 
 import Countdown from 'components/Countdown'
+import LoadingIndicator from 'components/LoadingIndicator'
 
 import WarningIcon from 'images/icons/instructions-icon.svg'
 import ScreenshotIcon from 'images/icons/screenshot-icon.svg'
@@ -160,7 +161,8 @@ class Receipt extends React.PureComponent {
     goToProduct: PropTypes.func.isRequired,
     goReceiptPage: PropTypes.func.isRequired,
     isRegisteredPush: PropTypes.bool.isRequired,
-    registerPushNotification: PropTypes.func.isRequired
+    registerPushNotification: PropTypes.func.isRequired,
+    loadingPushToggle: PropTypes.bool.isRequired
   }
 
   _defaultModePayment = 'CASH'
@@ -243,13 +245,14 @@ class Receipt extends React.PureComponent {
   }
 
   _handlePushRegistrationUI = () => {
-    const { isRegisteredPush, registerPushNotification } = this.props
+    const { isRegisteredPush, registerPushNotification, loadingPushToggle } = this.props
     const displayUI = ifElse(
       equals(false),
       () => (
         <PushNotificationWrapper>
           <Grid padded>
             <Grid.Row columns={2}>
+              { loadingPushToggle && <LoadingIndicator /> }
               <Grid.Column width={11}>
                 <Label as='p' basic size='large'>
                   <FormattedMessage {...messages.pushNotifLabel} />
