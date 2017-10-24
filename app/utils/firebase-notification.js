@@ -20,12 +20,19 @@ class Notification {
     .then((token) => {
       return currentToken !== token ? cb(null, token) : cb(new Error('Same Token'))
     })
-    .catch(cb)
+    .catch((e) => {
+      console.log('error refresh token', e)
+      return cb(e)
+    })
   }
 
   requestPermission (cb) {
     this._Firebase.messaging().requestPermission()
     .then(() => this.refreshToken(cb))
+    .catch((e) => {
+      console.log('error permission', e)
+      return cb(e)
+    })
   }
 
   install (cb) {
