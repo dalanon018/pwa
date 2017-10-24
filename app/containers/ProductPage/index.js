@@ -328,11 +328,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     })
   }
 
-  componentWillUnmount () {
-    this.props.setHandlersDefault()
-    this.props.resetSubmission()
-  }
-
   componentWillMount () {
     this.props.setPageTitle('Product Details')
     this.props.setShowSearchIcon(true)
@@ -346,6 +341,20 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     getProduct({ id })
     getMobileNumbers()
     getMarkDown()
+  }
+
+  componentWillUnmount () {
+    const { toggle, setToggle } = this.props
+
+    const closePopupSlideToggle = ifElse(equals(true), setToggle, noop)
+    const elem = document.getElementsByTagName('body')[0]
+    const removeCustomBodyClass = ifElse(equals(2), () => elem.classList.remove('custom__body'), noop)
+
+    this.props.setHandlersDefault()
+    this.props.resetSubmission()
+
+    closePopupSlideToggle(toggle)
+    removeCustomBodyClass(elem.classList.length)
   }
 
   componentWillReceiveProps (nextProps) {

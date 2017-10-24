@@ -55,9 +55,11 @@ div[style^="visibility: visible; position: absolute;"] {
 }
 
 div[style^="margin: 0px auto; top: 0px; left: 0px; right: 0px; position: absolute;"] {
-  top: 50% !important;
-  transform: translate(-50%, -50%);
-  left: 50% !important;
+  @media screen and (min-width: 768px) {
+    top: 50% !important;
+    transform: translate(-50%, -50%);
+    left: 50% !important;
+  }
 }
 
 #app,
@@ -573,7 +575,7 @@ svg#barcode {
 }
 
 .custom__body {
-  overflow: hidden !important;
   height: 100vh !important;
-  position: fixed !important;
+  overflow: hidden !important;
+  position:fixed;
 }
