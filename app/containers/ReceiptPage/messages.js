@@ -20,6 +20,10 @@ export default defineMessages({
   },
   pushErrorMessage: {
     id: 'app.containers.PurchaseEntity.pushErrorMessage',
-    defaultMessage: 'Please make sure you allow Push Notification on your browser.'
+    defaultMessage: 'Please make sure you allow Push Notification on your browser. Or your browser don\'t support Push Notifications'
+  },
+  pushErrorUnsupportedMessage: {
+    id: 'app.containers.PurchaseEntity.pushErrorUnsupportedMessage',
+    defaultMessage: 'IOS is NOT supported for Push Notification'
   }
 })

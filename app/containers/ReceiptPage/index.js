@@ -9,7 +9,7 @@ import Helmet from 'react-helmet'
 import styled from 'styled-components'
 
 import { noop } from 'lodash'
-import { ifElse, equals, both, compose, prop, partial } from 'ramda'
+import { allPass, ifElse, equals, both, compose, prop, partial } from 'ramda'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -101,6 +101,7 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
 
   state = {
     modalToggle: false,
+    loadingPushToggle: false,
     title: null,
     content: null
   }
@@ -176,17 +177,33 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
       })
     )
 
+    this.setState({
+      loadingPushToggle: false
+    })
+
     return processPushNotification(err)
   }
 
   _handleRegistrationPushNotification = (evt, { checked }) => {
     const isProduction = () => equals('production', ENVIROMENT)
-    const registerPush = ifElse(
-      both(equals(true), isProduction),
-      partial(Notification.requestPermission, [this._processRegistrationNotification]),
-      noop
-    )
+    const isNotIOS = () => !(!!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform))
 
+    this.setState({
+      loadingPushToggle: true
+    })
+
+    const registerPush = ifElse(
+      allPass([equals(true), isProduction, isNotIOS]),
+      partial(Notification.requestPermission, [this._processRegistrationNotification]),
+      () => {
+        this.setState({
+          loadingPushToggle: false,
+          modalToggle: true,
+          title: <FormattedMessage {...messages.pushErrorMessageTitle} />,
+          content: <FormattedMessage {...messages.pushErrorUnsupportedMessage} />
+        })
+      }
+    )
     registerPush(checked)
   }
 
@@ -213,7 +230,7 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
 
   render () {
     const { receipt, isRegisteredPush, windowWidth, loading, route } = this.props
-    const { modalToggle, title, content } = this.state
+    const { modalToggle, title, content, loadingPushToggle } = this.state
     const receiptPageName = route && route.name
     // const widthResponsive = windowWidth >= 768
     return (
@@ -225,6 +242,7 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
           ]}
         />
         <Receipt
+          loadingPushToggle={loadingPushToggle}
           receiptPageName={receiptPageName}
           loading={loading}
           statuses={STATUSES}
