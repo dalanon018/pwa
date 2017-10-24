@@ -18,6 +18,31 @@ export const ProductWrapper = styled(AnimateDiv)`
     height: auto;
     margin: 0 auto;
   }
+  
+  @media (min-width: 1024px) and (max-width: 1365px) {
+    .brand-logo {
+      width: 300px;
+    }
+    .accordion.ui .title {
+      padding: 25px 200px !important;
+    }
+    .collapse-content {
+      padding: 5px 200px !important;
+    }
+  }
+  @media (min-width: 1366px) {
+    .brand-logo {
+      width: 300px;
+    }
+    .accordion.ui .title {
+      margin: 0 auto;
+      width: 700px;
+    }
+    .collapse-content {
+      margin: 0 auto;
+      width: 700px;
+    }
+  }
 `
 export const ProductImageSlider = styled.div`
 
@@ -27,7 +52,7 @@ export const ProductImageSlider = styled.div`
 
   @media screen and (min-width: 768px) {
     img {
-      width: 30%;
+      width: 350px;
     }
   }
 `
@@ -73,24 +98,32 @@ export const DetailsWrapper = styled(AnimateDiv)`
   align-self: stretch;
 
   .accordion.ui .title {
-    padding: 25px !important;
+    padding: 25px;
   }
 `
 
 export const ProductDetailsContainer = styled(AnimateDiv)`
   padding: 35px 25px;
   font-weight: 100;
+  
+  @media (min-width: 1024px) and (max-width: 1365px) {
+    padding: 35px 200px;
+  }
+  @media (min-width: 1366px) {
+    margin: 0 auto;
+    width: 700px;
+  }
 `
 
 export const ProductDetails = styled(ProductDetailsContainer)`
-  @media (min-width: 768px) {
-    border-bottom: 0;
-  }
-
   .product-details {
     p {
       line-height: 1.4285em !important;
     }
+  }
+
+  @media (min-width: 768px) {
+    border-bottom: 0;
   }
 `
 

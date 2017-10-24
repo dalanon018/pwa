@@ -37,14 +37,6 @@ export const WarningDescription = styled.div`
   section > p {
     margin: 0 !important;
   }
-
-  @media (min-width: 768px) {
-    padding: 0 50px;
-    &:before {
-      height: 40px;
-      width: 40px;
-    }
-  }
 `
 
 export const ButtonContainer = styled.div`
@@ -84,6 +76,10 @@ export const ReceiptHeader = styled.div`
         font-size: 15px !important;
       }
     }
+  }
+
+  @media (min-width: 1024px) {
+
   }
 `
 
@@ -133,6 +129,15 @@ export const PushNotificationWrapper = styled.div`
   border-bottom: 2px solid #F0F0F0;
   margin-top: 40px;
   padding: 14px;
+
+  @media (min-width: 1024px) and (max-width: 1365px) {
+    padding: 5px 200px !important;
+  }
+  @media (min-width: 1366px) {
+    margin-left: auto;
+    margin-right: auto;
+    width: 700px;
+  }
 `
 
 export const InstructionsWrapper = styled.div`
@@ -140,4 +145,21 @@ export const InstructionsWrapper = styled.div`
   position: relative;
   margin-bottom: 30px;
   width: 100%;
+`
+
+export const CustomContainer = styled.div`
+  @media (min-width: 1024px) {
+    margin: 0 auto;
+    width: 500px;
+  }
+`
+
+export const InfoContainer = styled.div`
+  @media (min-width: 1024px) and (max-width: 1365px) {
+    padding: 5px 200px !important;
+  }
+  @media (min-width: 1366px) {
+    margin: 0 auto;
+    width: 700px;
+  }
 `

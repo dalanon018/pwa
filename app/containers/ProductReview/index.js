@@ -65,7 +65,8 @@ import {
   MethodTitle,
   StepWrapper,
   StepHead,
-  LocationButton
+  LocationButton,
+  CustomGrid
 } from './styles'
 
 // Helper
@@ -354,42 +355,44 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             <div className='text__roboto--light color__dark-grey' dangerouslySetInnerHTML={{__html: orderedProduct.get('deliveryPromiseMessage')}} />
           </DetailsWrapper>
         </ListCollapse>
-        <Grid padded>
-          <Grid.Row>
-            <MethodTitle>
-              <Label as='span' basic size='huge' className='color__secondary'>
-                <FormattedMessage {...messages.methodPayment} />
-              </Label>
-            </MethodTitle>
-          </Grid.Row>
-          <Grid.Row>
-            <SelectMethodWrapper checkHeight={orderedProduct.get('discountPrice') !== 0}>
-              <Form>
-                <Form.Field>
-                  <Checkbox
+        <CustomGrid>
+          <Grid padded>
+            <Grid.Row>
+              <MethodTitle>
+                <Label as='span' basic size='huge' className='color__secondary'>
+                  <FormattedMessage {...messages.methodPayment} />
+                </Label>
+              </MethodTitle>
+            </Grid.Row>
+            <Grid.Row>
+              <SelectMethodWrapper checkHeight={orderedProduct.get('discountPrice') !== 0}>
+                <Form>
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      className='margin__bottom-positive--20'
+                      name='cash-prepaid'
+                      value='CASH'
+                      label={labelOne}
+                      checked={modePayment === 'CASH'}
+                      onChange={this._handleChange}
+                      />
+                  </Form.Field>
+                  <ShowCodComponent
                     radio
-                    className='margin__bottom-positive--20'
-                    name='cash-prepaid'
-                    value='CASH'
-                    label={labelOne}
-                    checked={modePayment === 'CASH'}
+                    isBlackListed={isBlackListed}
+                    name='cod'
+                    value='COD'
+                    label={labelTwo}
+                    checked={modePayment === 'COD'}
                     onChange={this._handleChange}
-                    />
-                </Form.Field>
-                <ShowCodComponent
-                  radio
-                  isBlackListed={isBlackListed}
-                  name='cod'
-                  value='COD'
-                  label={labelTwo}
-                  checked={modePayment === 'COD'}
-                  onChange={this._handleChange}
-                  onClick={this._handleToBottom}
-                />
-              </Form>
-            </SelectMethodWrapper>
-          </Grid.Row>
-        </Grid>
+                    onClick={this._handleToBottom}
+                  />
+                </Form>
+              </SelectMethodWrapper>
+            </Grid.Row>
+          </Grid>
+        </CustomGrid>
         <StepWrapper className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={visibility}>
           <Label as='p' basic size='big' className='color__secondary'>
             <FormattedMessage {...messages.chooseStore} />

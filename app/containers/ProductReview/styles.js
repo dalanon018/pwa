@@ -16,6 +16,25 @@ const ProductReviewWrapper = styled.div`
       width: 300px;
     }
   }
+
+  @media (min-width: 1024px) and (max-width: 1365px) {
+    .accordion.ui .title {
+      padding: 25px 200px !important;
+    }
+    .collapse-content {
+      padding: 5px 200px !important;
+    }
+  }
+  @media (min-width: 1366px) {
+    .accordion.ui .title {
+      margin: 0 auto;
+      width: 700px;
+    }
+    .collapse-content {
+      margin: 0 auto;
+      width: 700px;
+    }
+  }
 `
 
 const StepHead = styled.div`
@@ -41,26 +60,6 @@ const StepHead = styled.div`
 
   span {
     margin: 0 auto;
-  }
-
-  @media (min-width: 768px) {
-    margin-top: 20px;
-
-    span {
-      font-family: 'Cabin';
-      font-size: 16px;
-      letter-spacing: 4px;
-      margin: 0;
-    }
-
-    &:before {
-      font-family: 'Cabin';
-      font-size: 16px;
-      height: 33px;
-      justify-content: center;
-      padding-top: 0'
-      width: 33px;
-    }
   }
 `
 
@@ -97,6 +96,14 @@ const StepWrapper = styled.div`
     span {
       align-self: flex-start;
       flex: none;
+    }
+
+    @media (min-width: 1024px) and (max-width: 1365px) {
+      padding: 15px 200px;
+    }
+    @media (min-width: 1366px) {
+      margin: 0 auto;
+      width: 700px;
     }
   }
 
@@ -260,28 +267,6 @@ const LabelPrice = styled.div`
     line-height: initial;
     text-decoration: line-through;
   }
-
-  @media (min-width: 768px) {
-    margin-top: 0;
-
-    .total {
-      font-size: 41px;
-      font-weight: bolder;
-      letter-spacing: 3px;
-    }
-    .strike {
-      margin-left: 10px;
-      font-family: 'helveticalight';
-      font-size: 14px;
-    }
-  }
-
-  @media (min-width: 900px) {
-    .strike {
-      margin-left: 20px;
-      font-size: 16px;
-    }
-  }
 `
 
 const LocationButton = styled(({iconBg, ...props}) => <Button {...props} />)`
@@ -317,10 +302,6 @@ const ButtonContainer = styled.div`
   }
 
   @media (min-width: 768px) {
-    padding: 0;
-    position: static;
-    
-
     button {
       padding: 20px 70px!important;
     }
@@ -336,6 +317,16 @@ const MethodTitle = styled.div`
   padding: 0 14px;
 `
 
+const CustomGrid = styled.div`
+  @media (min-width: 1024px) and (max-width: 1365px) {
+    padding: 0 200px !important;
+  }
+  @media (min-width: 1366px) {
+    margin: 0 auto !important;
+    width: 700px;
+  }
+`
+
 export {
   StepHead,
   SelectMethodWrapper,
@@ -348,5 +339,6 @@ export {
   MethodTitle,
   LabelPrice,
   StepWrapper,
-  LabelTitle
+  LabelTitle,
+  CustomGrid
 }

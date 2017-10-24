@@ -41,6 +41,14 @@ const Content = styled.div`
   font-size: 12px;
 `
 
+const ModalWrapper = styled.div`
+  padding: 10px 50px !important;
+`
+
+const CustomLabel = styled(Label)`
+  padding-bottom: 20px;
+`
+
 function PromptModal ({
   title,
   name,
@@ -66,20 +74,24 @@ function PromptModal ({
   return (
     <Modal size='small' open={open} onClose={close}>
       <Modal.Content>
-        <IconWrapper background={color}>
-          <Icon name={name} className='custom-icon' />
-        </IconWrapper>
-        <TitleHead>
-          <Label as='span' basic size='large'>
-            {title}
-          </Label>
-        </TitleHead>
-        <Content>
-          {content}
-          <Button primary fluid onClick={close}>
-            <FormattedMessage {...messages.promptOk} />
-          </Button>
-        </Content>
+        <ModalWrapper>
+          <IconWrapper background={color}>
+            <Icon name={name} className='custom-icon' />
+          </IconWrapper>
+          <TitleHead>
+            <Label as='span' basic size='large'>
+              {title}
+            </Label>
+          </TitleHead>
+          <Content>
+            <CustomLabel className='text__roboto--light' as='p' basic size='medium'>
+              {content}
+            </CustomLabel>
+            <Button primary fluid onClick={close}>
+              <FormattedMessage {...messages.promptOk} />
+            </Button>
+          </Content>
+        </ModalWrapper>
       </Modal.Content>
     </Modal>
   )
