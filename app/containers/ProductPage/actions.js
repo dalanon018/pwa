@@ -32,7 +32,9 @@ import {
   SUCCESS_VERIFICATION_CODE,
   ERROR_VERIFICATION_CODE,
 
-  RESET_SUBMISSION
+  RESET_SUBMISSION,
+
+  SET_TOGGLE
 } from './constants'
 
 export function resetSubmissionAction () {
@@ -160,5 +162,11 @@ export function errorVerificationCodeAction (payload) {
   return {
     type: ERROR_VERIFICATION_CODE,
     payload
+  }
+}
+
+export function setToggleAction () {
+  return {
+    type: SET_TOGGLE
   }
 }
