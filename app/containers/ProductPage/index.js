@@ -329,17 +329,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     })
   }
 
-  _handleWindowClose (e) {
-    // const { showSlide } = this.state
-
-    // console.log('testing', 'pumasok dito sa back handle', showSlide)
-    let elem = document.getElementsByTagName('body')[0]
-    if (elem.classList.length === 2) {
-      console.log('testing', elem.classList[1])
-      elem.classList.remove('custom__body')
-    }
-  }
-
   componentWillMount () {
     this.props.setPageTitle('Product Details')
     this.props.setShowSearchIcon(true)
