@@ -27,9 +27,7 @@ import {
   SUCCESS_VERIFICATION_CODE,
   ERROR_VERIFICATION_CODE,
 
-  RESET_SUBMISSION,
-
-  SET_LOYALTY_TOKEN
+  RESET_SUBMISSION
 } from './constants'
 
 const initialState = fromJS({
@@ -41,7 +39,6 @@ const initialState = fromJS({
   currentProduct: {},
   markdown: '',
   loadingMarkdown: false,
-  loyaltyToken: null,
   mobileRegistrationSuccess: false,
   mobileRegistrationError: null,
   verificationCode: false,
@@ -117,10 +114,6 @@ function productPageReducer (state = initialState, action) {
         .set('verificationCode', false)
         .set('verificationCodeSuccess', false)
         .set('verificationCodeError', null)
-
-    case SET_LOYALTY_TOKEN:
-      return state
-      .set('loyaltyToken', action.payload)
 
     default:
       return state

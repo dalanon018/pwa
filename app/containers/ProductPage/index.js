@@ -36,8 +36,7 @@ import {
   selectMobileRegistrationSuccess,
   selectMobileRegistrationError,
   selectVerificationCodeSuccess,
-  selectVerificationCodeError,
-  selectLoyaltyToken
+  selectVerificationCodeError
 } from './selectors'
 
 import {
@@ -50,8 +49,7 @@ import {
   setVerificationCodeAction,
   requestMobileRegistrationAction,
   requestVerificationCodeAction,
-  resetSubmissionAction,
-  getLoyaltyTokenAction
+  resetSubmissionAction
 } from './actions'
 
 import {
@@ -62,7 +60,8 @@ import {
 } from 'containers/Buckets/actions'
 
 import {
-  selectToggle
+  selectToggle,
+  selectLoyaltyToken
 } from 'containers/Buckets/selectors'
 
 import {
@@ -335,9 +334,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   componentDidMount () {
-    const { params: { id }, getProduct, getMobileNumbers, getMarkDown, getLoyaltyToken } = this.props
+    const { params: { id }, getProduct, getMobileNumbers, getMarkDown } = this.props
 
-    getLoyaltyToken()
     getProduct({ id })
     getMobileNumbers()
     getMarkDown()
@@ -476,7 +474,6 @@ function mapDispatchToProps (dispatch) {
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProduct: (payload) => dispatch(getProductAction(payload)),
-    getLoyaltyToken: () => dispatch(getLoyaltyTokenAction()),
     setCurrentProduct: (payload) => dispatch(setCurrentProductAction(payload)),
     getMobileNumbers: () => dispatch(getMobileNumbersAction()),
     updateMobileNumbers: (payload) => dispatch(updateMobileNumbersAction(payload)),

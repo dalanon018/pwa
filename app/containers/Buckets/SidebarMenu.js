@@ -6,7 +6,7 @@ import {
   Label,
   List
 } from 'semantic-ui-react'
-
+import { identity, ifElse } from 'ramda'
 import ListCollapse from 'components/ListCollapse'
 
 import messages from './messages'
@@ -97,7 +97,9 @@ class SidebarMenu extends React.PureComponent {
     categories: PropTypes.object.isRequired,
     toggleSidebar: PropTypes.bool.isRequired,
     changeRoute: PropTypes.func.isRequired,
-    toggleAction: PropTypes.func.isRequired
+    toggleAction: PropTypes.func.isRequired,
+    isSignIn: PropTypes.bool.isRequired,
+    signOut: PropTypes.func.isRequired
   }
 
   _handletoHome = () => {
@@ -112,10 +114,36 @@ class SidebarMenu extends React.PureComponent {
     changeRoute('/purchases')
   }
 
+  _handleSignOut = () => {
+    const { signOut, toggleAction } = this.props
+    signOut()
+    toggleAction()
+  }
+
+  _handleShowLogoutButton = () => {
+    const { isSignIn } = this.props
+
+    const toggleComponent = ifElse(
+      identity,
+      () => (
+        <ListWrapper onClick={this._handleSignOut}>
+          <Image alt='help' size='mini' src={Logout} />
+          <List.Content>
+            <Label as='p' className='margin__none color__secondary' size='huge'>
+              <FormattedMessage {...messages.menuLogout} />
+            </Label>
+          </List.Content>
+        </ListWrapper>
+      ),
+      () => null
+    )
+
+    return toggleComponent(isSignIn)
+  }
+
   render () {
     const {
       categories, brands, changeRoute, toggleSidebar
-    //  toggleAction
     } = this.props
 
     return (
@@ -182,14 +210,7 @@ class SidebarMenu extends React.PureComponent {
                 </Label>
               </List.Content>
             </ListWrapper>
-            <ListWrapper>
-              <Image alt='help' size='mini' src={Logout} />
-              <List.Content>
-                <Label as='p' className='margin__none color__secondary' size='huge'>
-                  <FormattedMessage {...messages.menuLogout} />
-                </Label>
-              </List.Content>
-            </ListWrapper>
+            { this._handleShowLogoutButton() }
           </List>
         </SidebarWrapper>
       </SidebarContainer>

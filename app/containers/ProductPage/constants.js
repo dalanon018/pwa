@@ -33,6 +33,3 @@ export const SUCCESS_VERIFICATION_CODE = 'app/ProductPage/SUCCESS_VERIFICATION_C
 export const ERROR_VERIFICATION_CODE = 'app/ProductPage/ERROR_VERIFICATION_CODE'
 
 export const RESET_SUBMISSION = 'app/ProductPage/RESET_SUBMISSION'
-
-export const GET_LOYALTY_TOKEN = 'app/ProductPage/GET_LOYALTY_TOKEN'
-export const SET_LOYALTY_TOKEN = 'app/ProductPage/SET_LOYALTY_TOKEN'

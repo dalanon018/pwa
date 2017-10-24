@@ -83,6 +83,11 @@ const selectIsRegisteredPush = () => createSelector(
   (substate) => substate.get('isRegisteredPush')
 )
 
+const selectLoyaltyToken = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('loyaltyToken')
+)
+
 export {
   selectBucketDomain,
   selectToggle,
@@ -98,5 +103,6 @@ export {
   selectPageTitle,
   selectShowSearchIcon,
   selectShowActivityIcon,
-  selectIsRegisteredPush
+  selectIsRegisteredPush,
+  selectLoyaltyToken
 }

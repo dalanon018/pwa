@@ -1,17 +1,9 @@
 
-import moment from 'moment'
 import { takeLatest } from 'redux-saga'
 import { isEmpty, compact } from 'lodash'
 import {
-  both,
-  equals,
-  complement,
   compose,
-  gte,
-  ifElse,
-  partial,
   prop,
-  propOr,
   reverse,
   slice,
   uniqBy
@@ -22,9 +14,9 @@ import xhr from 'utils/xhr'
 
 import request from 'utils/request'
 import { getRequestData } from 'utils/offline-request'
-import { AddDate, DateDifferece } from 'utils/date'
+import { AddDate } from 'utils/date'
 import { transformProduct } from 'utils/transforms'
-import { setItem, getItem, removeItem } from 'utils/localStorage'
+import { setItem, getItem } from 'utils/localStorage'
 
 import {
   GET_PRODUCT,
@@ -34,8 +26,7 @@ import {
   UPDATE_MOBILE_NUMBERS,
   GET_MARKDOWN,
   REQUEST_MOBILE_REGISTRATION,
-  REQUEST_VERIFICATION_CODE,
-  GET_LOYALTY_TOKEN
+  REQUEST_VERIFICATION_CODE
 } from './constants'
 import {
   setProductAction,
@@ -46,8 +37,7 @@ import {
   successMobileRegistrationAction,
   errorMobileRegistrationAction,
   successVerificationCodeAction,
-  errorVerificationCodeAction,
-  setLoyaltyTokenAction
+  errorVerificationCodeAction
 } from './actions'
 
 import {
@@ -60,7 +50,8 @@ import {
 } from 'containers/App/constants'
 
 import {
-  setNetworkErrorAction
+  setNetworkErrorAction,
+  setLoyaltyTokenAction
 } from 'containers/Buckets/actions'
 
 import {
@@ -163,26 +154,6 @@ export function * getMarkDown () {
   }
 }
 
-function * getLoyaltyToken () {
-  const loyaltyToken = yield call(getItem, LOYALTY_TOKEN_KEY)
-  const isExpired = compose(
-    complement(gte(0)),
-    partial(DateDifferece, [moment()]),
-    propOr(-1, 'expiry')
-  )
-
-  const retreiveToken = ifElse(
-    both(complement(equals(null)), isExpired),
-    prop('token'),
-    () => {
-      removeItem(LOYALTY_TOKEN_KEY)
-      return null
-    }
-  )
-
-  yield put(setLoyaltyTokenAction(retreiveToken(loyaltyToken)))
-}
-
 export function * registerMobileNumber (args) {
   const { payload } = args
   const mobileNumber = `0${payload}`
@@ -220,6 +191,7 @@ export function * verificationCode (args) {
 
     yield call(setItem, LOYALTY_TOKEN_KEY, loyaltyToken)
     yield put(successVerificationCodeAction())
+    yield put(setLoyaltyTokenAction(getLoyaltyToken(req)))
   } catch (e) {
     yield put(errorVerificationCodeAction('Please check if you input the verification code correctly.'))
   }
@@ -253,10 +225,6 @@ export function * getMarkDownSaga () {
   yield * takeLatest(GET_MARKDOWN, getMarkDown)
 }
 
-export function * getLoyaltyTokenSaga () {
-  yield * takeLatest(GET_LOYALTY_TOKEN, getLoyaltyToken)
-}
-
 // All sagas to be loaded
 export function * productSagas () {
   const watcher = yield [
@@ -270,9 +238,7 @@ export function * productSagas () {
     fork(getMarkDownSaga),
 
     fork(mobileRegistrationSaga),
-    fork(verificationCodeSaga),
-    // get loyaltyToken
-    fork(getLoyaltyTokenSaga)
+    fork(verificationCodeSaga)
   ]
 
   // Suspend execution until location changes

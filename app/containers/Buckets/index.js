@@ -29,7 +29,8 @@ import {
   selectPageTitle,
   selectShowSearchIcon,
   selectShowActivityIcon,
-  selectIsRegisteredPush
+  selectIsRegisteredPush,
+  selectLoyaltyToken
 } from './selectors'
 
 import {
@@ -40,7 +41,9 @@ import {
   setUpdatedReceiptsAction,
   setNetworkErrorAction,
   registerPushAction,
-  getRegisteredPushAction
+  getRegisteredPushAction,
+  getLoyaltyTokenAction,
+  removeLoyaltyTokenAction
 } from './actions'
 
 import {
@@ -98,7 +101,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     showActivityIcon: PropTypes.bool.isRequired,
     isRegisteredPush: PropTypes.bool.isRequired,
     registerPush: PropTypes.func.isRequired,
-    getRegisteredPush: PropTypes.func.isRequired
+    getRegisteredPush: PropTypes.func.isRequired,
+    loyaltyToken: PropTypes.string,
+    getLoyaltyToken: PropTypes.func.isRequired,
+    removeLoyaltyToken: PropTypes.func.isRequired
   }
 
   state = {
@@ -271,12 +277,13 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   componentDidMount () {
-    const { getMobileNumbers, getCategories, getBrands, getRegisteredPush } = this.props
+    const { getMobileNumbers, getCategories, getBrands, getRegisteredPush, getLoyaltyToken } = this.props
 
     getMobileNumbers()
     getRegisteredPush()
     getCategories()
     getBrands()
+    getLoyaltyToken()
 
     browserHistory.listen(this._handleBackButton)
   }
@@ -293,7 +300,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   render () {
-    const { children, productCategories, changeRoute, toggleError, toggleMessage, brands } = this.props
+    const { children, productCategories, changeRoute, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken } = this.props
     const { toggleSidebar } = this.state
     return (
       <Wrapper toggleSidebar={toggleSidebar}>
@@ -305,6 +312,8 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
         <div
           className='sidebar-wrapper' >
           <SidebarMenu
+            isSignIn={!!loyaltyToken}
+            signOut={removeLoyaltyToken}
             changeRoute={changeRoute}
             categories={productCategories}
             brands={brands}
@@ -335,7 +344,8 @@ const mapStateToProps = createStructuredSelector({
   pageTitle: selectPageTitle(),
   showSearchIcon: selectShowSearchIcon(),
   showActivityIcon: selectShowActivityIcon(),
-  isRegisteredPush: selectIsRegisteredPush()
+  isRegisteredPush: selectIsRegisteredPush(),
+  loyaltyToken: selectLoyaltyToken()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -343,6 +353,8 @@ function mapDispatchToProps (dispatch) {
     getCategories: () => dispatch(getProductCategoriesAction()),
     getBrands: () => dispatch(getBrandsAction()),
     getMobileNumbers: () => dispatch(getMobileNumbersAction()),
+    getLoyaltyToken: () => dispatch(getLoyaltyTokenAction()),
+    removeLoyaltyToken: () => dispatch(removeLoyaltyTokenAction()),
     getUpdatedReceipts: (payload) => dispatch(getUpdatedReceiptsAction(payload)),
     setUpdatedReceipts: (payload) => dispatch(setUpdatedReceiptsAction(payload)),
     changeRoute: (url) => dispatch(push(url)),

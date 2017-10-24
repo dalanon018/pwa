@@ -1,7 +1,31 @@
 import moment from 'moment'
 import { takeLatest } from 'redux-saga'
 import { find, isEmpty, isEqual, noop } from 'lodash'
-import { compose, flatten, filter, fromPairs, contains, join, toPairs, lensProp, map, partial, prop, propOr, head, ifElse, is, isNil, sortBy, uniq, view } from 'ramda'
+import {
+  both,
+  complement,
+  compose,
+  contains,
+  equals,
+  filter,
+  flatten,
+  fromPairs,
+  gte,
+  head,
+  ifElse,
+  is,
+  isNil,
+  join,
+  lensProp,
+  map,
+  partial,
+  prop,
+  propOr,
+  sortBy,
+  toPairs,
+  uniq,
+  view
+} from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 
@@ -13,7 +37,7 @@ import { getRequestData } from 'utils/offline-request'
 // import Brands from 'fixtures/brands.json'
 
 import { transformCategory, transformBrand, transformOrder } from 'utils/transforms'
-import { getItem, setItem } from 'utils/localStorage'
+import { getItem, setItem, removeItem } from 'utils/localStorage'
 import { DateDifferece, AddDate } from 'utils/date'
 import { getBrowserInfo } from 'utils/http'
 
@@ -24,7 +48,9 @@ import {
   GET_RECEIPT_UPDATED,
   STATUSES,
   REGISTER_PUSH,
-  GET_REGISTED_PUSH
+  GET_REGISTED_PUSH,
+  GET_LOYALTY_TOKEN,
+  REMOVE_LOYALTY_TOKEN
 } from './constants'
 
 import {
@@ -33,7 +59,8 @@ import {
   setMobileNumbersAction,
   setUpdatedReceiptsAction,
   setNetworkErrorAction,
-  setRegisteredPushAction
+  setRegisteredPushAction,
+  setLoyaltyTokenAction
 } from './actions'
 
 import {
@@ -50,7 +77,8 @@ import {
   MOBILE_NUMBERS_KEY,
   ORDERED_LIST_KEY,
   CATEGORIES_KEY,
-  BRANDS_KEY
+  BRANDS_KEY,
+  LOYALTY_TOKEN_KEY
 } from 'containers/App/constants'
 
 import {
@@ -327,6 +355,31 @@ export function * registerPushNotification (payload) {
   }
 }
 
+function * getLoyaltyToken () {
+  const loyaltyToken = yield call(getItem, LOYALTY_TOKEN_KEY)
+  const isExpired = compose(
+    complement(gte(0)),
+    partial(DateDifferece, [moment()]),
+    propOr(-1, 'expiry')
+  )
+
+  const retreiveToken = ifElse(
+    both(complement(equals(null)), isExpired),
+    prop('token'),
+    () => {
+      removeItem(LOYALTY_TOKEN_KEY)
+      return null
+    }
+  )
+
+  yield put(setLoyaltyTokenAction(retreiveToken(loyaltyToken)))
+}
+
+function * removeLoyaltyToken () {
+  yield call(removeItem, LOYALTY_TOKEN_KEY)
+  yield put(setLoyaltyTokenAction(null))
+}
+
 export function * getIsRegisteredPush () {
   const isRegistered = yield call(getItem, REGISTERED_PUSH)
 
@@ -357,6 +410,14 @@ export function * getIsRegisteredPushSaga () {
   yield * takeLatest(GET_REGISTED_PUSH, getIsRegisteredPush)
 }
 
+export function * getLoyaltyTokenSaga () {
+  yield * takeLatest(GET_LOYALTY_TOKEN, getLoyaltyToken)
+}
+
+export function * removeLoyaltyTokenSaga () {
+  yield * takeLatest(REMOVE_LOYALTY_TOKEN, removeLoyaltyToken)
+}
+
 // All sagas to be loaded
 export function * bucketsSagas () {
   const watcher = yield [
@@ -368,7 +429,12 @@ export function * bucketsSagas () {
 
     fork(registerPushNotificationSaga),
 
-    fork(getIsRegisteredPushSaga)
+    fork(getIsRegisteredPushSaga),
+
+    // get loyaltyToken
+    fork(getLoyaltyTokenSaga),
+    // remove loyaltyToken / sign out
+    fork(removeLoyaltyTokenSaga)
   ]
 
   // Suspend execution until location changes
