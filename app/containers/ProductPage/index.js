@@ -13,7 +13,7 @@ import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { noop } from 'lodash'
-import { ifElse, both, equals, complement, partial } from 'ramda'
+import { ifElse, both, equals, complement, partial, isEmpty } from 'ramda'
 
 import { imageStock } from 'utils/image-stock'
 
@@ -48,7 +48,6 @@ import {
   updateMobileNumbersAction,
   setProductHandlersDefaultAction,
   getMarkDownAction,
-  setVerificationCodeAction,
   requestMobileRegistrationAction,
   requestVerificationCodeAction,
   resetSubmissionAction
@@ -123,22 +122,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       errModalToggle: false,
       errorMessage: ''
     }
-
-    // this._handleSubmit = this._handleSubmit.bind(this)
-    // this._handleClose = this._handleClose.bind(this)
-    // this._handleToggle = this._handleToggle.bind(this)
-    // this._handleSuccess = this._handleSuccess.bind(this)
-    // this._handleError = this._handleError.bind(this)
-    // this._handleMobileRegistered = this._handleMobileRegistered.bind(this)
-    // this._handleSocialToggle = this._handleSocialToggle.bind(this)
-    // this._handleCopy = this._handleCopy.bind(this)
-    // this._handleTouch = this._handleTouch.bind(this)
-    // this._recaptchaRef = this._recaptchaRef.bind(this)
-    // this._executeCaptcha = this._executeCaptcha.bind(this)
-    this._handleFactoryToggleLoyaltyToken = this._handleFactoryToggleLoyaltyToken.bind(this)
-    // this._handleToggleVerification = this._handleToggleVerification.bind(this)
-    // this._handleSubmitVerification = this._handleSubmitVerification.bind(this)
-    // this._handleSuccessVerificationCode = this._handleSuccessVerificationCode.bind(this)
   }
 
   _handleSubmitVerification = ({ value }) => {
@@ -200,17 +183,19 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   _executeCaptcha = (token) => {
-    if (token) {
+    const tokenEmptyChecker = ifElse(isEmpty, noop, () => {
       this.mobileSuccessSubmission = true
       this._executeSendCode()
-    }
+    })
+
+    tokenEmptyChecker(token)
   }
 
   _handleTouch = (e) => {
     const { showSlide } = this.state
-    if (showSlide) {
-      e.preventDefault()
-    }
+    const showSlideEmptyChecker = ifElse(isEmpty, noop, () => e.preventDefault())
+
+    showSlideEmptyChecker(showSlide)
   }
 
   _handleSubmit = ({ value }) => {
@@ -229,7 +214,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   _handleErrModalClose = () => {
     this.setState({
-      errModalToggle: false
+      errModalToggle: false,
+      showSlide: false
     })
   }
 
@@ -244,7 +230,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     const gotoReview = () => {
       setCurrentProduct(product)
       updateMobileNumbers(mobileNumbers.last())
-
       changeRoute('/review')
     }
 
@@ -272,34 +257,31 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   _handleCustomBody = () => {
     const { showSlide } = this.state
     const elem = document.getElementsByTagName('body')[0].classList
-
-    // if (!showSlide) {
-    //   elem.classList.add('custom__body')
-    // } else {
-    //   elem.classList.remove('custom__body')
-    // }
-
     const toggleCustomBody = ifElse(equals(false), () => elem.add('custom__body'), () => elem.remove('custom__body'))
+
     toggleCustomBody(showSlide)
   }
 
   _handleSuccess = () => {
     const { changeRoute } = this.props
-    if (this.successSubmission) {
+    const successSubmissionChecker = ifElse(equals(true), () => {
       this._handleClose()
       this.successSubmission = false
-
       changeRoute('/review')
-    }
+    }, noop)
+
+    successSubmissionChecker(this.successSubmission)
   }
 
   _handleError = () => {
-    if (this.successSubmission) {
+    const successSubmissionChecker = ifElse(equals(true), () => {
       this.setState({
         modalToggle: true
       })
       this.successSubmission = false
-    }
+    })
+
+    successSubmissionChecker(this.successSubmission)
   }
 
   _handleErrorMobileRegistration = (error) => {
@@ -348,14 +330,14 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     const { toggle, setToggle } = this.props
 
     const closePopupSlideToggle = ifElse(equals(true), setToggle, noop)
-    const elem = document.getElementsByTagName('body')[0]
-    const removeCustomBodyClass = ifElse(equals(2), () => elem.classList.remove('custom__body'), noop)
+    const elem = document.getElementsByTagName('body')[0].classList
+    const removeCustomBodyClass = ifElse(equals(2), () => elem.remove('custom__body'), noop)
 
     this.props.setHandlersDefault()
     this.props.resetSubmission()
 
     closePopupSlideToggle(toggle)
-    removeCustomBodyClass(elem.classList.length)
+    removeCustomBodyClass(elem.length)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -484,7 +466,6 @@ function mapDispatchToProps (dispatch) {
     setHandlersDefault: () => dispatch(setProductHandlersDefaultAction()),
     changeRoute: (url) => dispatch(push(url)),
     getMarkDown: payload => dispatch(getMarkDownAction()),
-    setVerificationCode: payload => dispatch(setVerificationCodeAction(payload)),
     requestmobileRegistration: payload => dispatch(requestMobileRegistrationAction(payload)),
     requestVerificationCode: payload => dispatch(requestVerificationCodeAction(payload)),
     resetSubmission: () => dispatch(resetSubmissionAction()),

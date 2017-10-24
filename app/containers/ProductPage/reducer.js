@@ -21,9 +21,9 @@ import {
   SUCCESS_MOBILE_REGISTRATION,
   ERROR_MOBILE_REGISTRATION,
 
-  SET_VERIFICATION_CODE,
-
   REQUEST_MOBILE_REGISTRATION,
+  REQUEST_VERIFICATION_CODE,
+
   SUCCESS_VERIFICATION_CODE,
   ERROR_VERIFICATION_CODE,
 
@@ -106,7 +106,7 @@ function productPageReducer (state = initialState, action) {
         .set('verificationCodeSuccess', false)
         .set('verificationCodeError', action.payload)
 
-    case SET_VERIFICATION_CODE:
+    case REQUEST_VERIFICATION_CODE:
       return state
         .set('verificationCode', action.payload)
 
