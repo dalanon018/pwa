@@ -53,20 +53,12 @@ const BannerSliderWrapper = styled.div`
       }
     }
   }
-
-  @media (min-width: 768px) {
-    margin-bottom: 0;
-  }
 `
 
 const ImageWrapper = styled.div`
   background: url(${props => props.image}) no-repeat center center / cover;
   height: 200px;
   width: 100%;
-
-  @media (min-width: 768px) {
-    height: 350px;
-  }
 `
 
 // const BrandLogo = styled.div`

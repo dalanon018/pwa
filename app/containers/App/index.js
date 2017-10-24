@@ -23,6 +23,10 @@ const BodyWrapper = styled.div`
   display: flex;
   height: 100%;
   flex-direction: column;
+
+  @media (min-width: 1024px) {
+    max-width: none;
+  }
 `
 
 export function App (props) {

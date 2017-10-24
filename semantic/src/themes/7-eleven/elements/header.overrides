@@ -28,3 +28,21 @@ h4.ui.header {
   font-family: Roboto;
   font-size: 16px;
 }
+
+@media (min-width: 1024px) {
+  h1.ui.header {
+    font-size: 40px;
+  }
+
+  h2.ui.header {
+    font-size: 34px;
+  }
+
+  h3.ui.header {
+    font-size: 30px;
+  }
+
+  h4.ui.header {
+    font-size: 28px;
+  }
+}

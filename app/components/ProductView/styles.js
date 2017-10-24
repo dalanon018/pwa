@@ -17,6 +17,13 @@ const ImageWrapper = styled.div`
   .image {
     width: 100%;
   }
+
+  @media (min-width: 1024px) {
+    .image {
+      width: 420px;
+      margin: 0 auto;
+    }
+  }
 `
 
 const ProductInfo = styled.div`
