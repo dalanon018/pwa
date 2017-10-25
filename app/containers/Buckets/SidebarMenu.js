@@ -44,9 +44,19 @@ const ListWrapper = styled(List.Item)`
   }
 `
 
-const ListAccordionWrapper = styled(List.Item)`
+const ListAccordionWrapper = styled(({ itemIcon, ...rest }) => <List.Item {...rest} />)`
   display: flex !important;
   padding: 0 30px !important;
+  position: relative;
+
+  &:before {
+    background: url(${props => props.itemIcon});
+    content: '';
+    height: 27px;
+    position: absolute;
+    top: 27px;
+    width: 27px;
+  }
 
   & img {
     margin-top: 27px !important;
@@ -90,6 +100,10 @@ const ListAccordionWrapper = styled(List.Item)`
       padding: 0;
     }
   }
+`
+
+const CustomContent = styled(List.Content)`
+  padding-left: 46px;
 `
 
 class SidebarMenu extends React.PureComponent {
@@ -145,7 +159,6 @@ class SidebarMenu extends React.PureComponent {
     const {
       categories, brands, changeRoute, toggleSidebar
     } = this.props
-
     return (
       <SidebarContainer className='background__black-transparent' toggle={toggleSidebar}>
         <SidebarWrapper className='background__white'>
@@ -166,9 +179,9 @@ class SidebarMenu extends React.PureComponent {
                 </Label>
               </List.Content>
             </ListWrapper>
-            <ListAccordionWrapper>
-              <Image alt='categories' size='mini' src={Categories} />
-              <List.Content>
+            <ListAccordionWrapper itemIcon={Categories}>
+              {/* <Image alt='categories' size='mini' src={Categories} /> */}
+              <CustomContent>
                 <ListCollapse
                   heightTransition
                   title={
@@ -182,11 +195,11 @@ class SidebarMenu extends React.PureComponent {
                     location='products-category'
                   />
                 </ListCollapse>
-              </List.Content>
+              </CustomContent>
             </ListAccordionWrapper>
-            <ListAccordionWrapper>
-              <Image alt='brands' size='mini' src={Brands} />
-              <List.Content>
+            <ListAccordionWrapper itemIcon={Brands}>
+              {/* <Image alt='brands' size='mini' src={Brands} /> */}
+              <CustomContent>
                 <ListCollapse
                   heightTransition
                   title={
@@ -200,7 +213,7 @@ class SidebarMenu extends React.PureComponent {
                     location='brands'
                   />
                 </ListCollapse>
-              </List.Content>
+              </CustomContent>
             </ListAccordionWrapper>
             <ListWrapper>
               <Image alt='help' size='mini' src={Help} />
