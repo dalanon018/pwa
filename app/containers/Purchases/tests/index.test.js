@@ -15,6 +15,7 @@ describe('<Purchases />', () => {
   const minProps = {
     loading: false,
     modalToggle: false,
+    markdownLoader: false,
     purchases: fromJS([]),
     activePurchases: fromJS([]),
     completedPurchases: fromJS([]),

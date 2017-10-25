@@ -5,7 +5,8 @@ import {
   selectProductSuccess,
   selectProductError,
   selectRecaptchaValidationSuccess,
-  selectRecaptchaValidationError
+  selectRecaptchaValidationError,
+  selectSubmissionLoader
 } from '../selectors'
 
 describe('Product Selectors', () => {
@@ -79,6 +80,20 @@ describe('Product Selectors', () => {
         }
       })
       expect(selectRecaptchaValidationErrorSelectors(mockedState)).toEqual(recaptchaValidationError)
+    })
+  })
+
+  describe('selectSubmissionLoader', () => {
+    const selectSubmissionLoaderSelectors = selectSubmissionLoader()
+
+    it('should get error submission', () => {
+      const submissionLoader = false
+      const mockedState = fromJS({
+        productPage: {
+          submissionLoader
+        }
+      })
+      expect(selectSubmissionLoaderSelectors(mockedState)).toEqual(submissionLoader)
     })
   })
 })

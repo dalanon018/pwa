@@ -99,7 +99,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     pageTitle: PropTypes.string,
     showSearchIcon: PropTypes.bool.isRequired,
     showActivityIcon: PropTypes.bool.isRequired,
-    isRegisteredPush: PropTypes.bool.isRequired,
+    isRegisteredPush: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.string
+    ]).isRequired,
     registerPush: PropTypes.func.isRequired,
     getRegisteredPush: PropTypes.func.isRequired,
     loyaltyToken: PropTypes.string,
