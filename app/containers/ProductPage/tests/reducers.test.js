@@ -26,7 +26,8 @@ describe('Products Reducer', () => {
       verificationCodeError: null,
       recaptchaValidationSuccess: null,
       recaptchaValidationError: null,
-      toggle: false
+      toggle: false,
+      submissionLoader: false
     })
   })
 

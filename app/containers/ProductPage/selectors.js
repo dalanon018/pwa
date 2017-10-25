@@ -79,6 +79,11 @@ const selectRecaptchaValidationError = () => createSelector(
   (substate) => substate.get('recaptchaValidationError')
 )
 
+const selectSubmissionLoader = () => createSelector(
+  selectProductPageDomain(),
+  (substate) => substate.get('submissionLoader')
+)
+
 const selectToggle = () => createSelector(
   selectProductPageDomain(),
   (substate) => substate.get('toggle')
@@ -97,5 +102,6 @@ export {
   selectVerificationCodeError,
   selectRecaptchaValidationSuccess,
   selectRecaptchaValidationError,
-  selectToggle
+  selectToggle,
+  selectSubmissionLoader
 }

@@ -39,6 +39,7 @@ describe('<Products />', () => {
       'barcode': '718037806839'
     }),
     loading: false,
+    markdownLoader: false,
     toggle: false,
     productSuccess: false,
     productError: false,

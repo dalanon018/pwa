@@ -39,7 +39,8 @@ import {
   selectVerificationCodeError,
   selectRecaptchaValidationSuccess,
   selectRecaptchaValidationError,
-  selectToggle
+  selectToggle,
+  selectSubmissionLoader
 } from './selectors'
 
 import {
@@ -81,6 +82,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     setHandlersDefault: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
+    markdownLoader: PropTypes.bool.isRequired,
     toggle: PropTypes.bool.isRequired,
     productSuccess: PropTypes.bool.isRequired,
     productError: PropTypes.bool.isRequired,
@@ -432,14 +434,14 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   render () {
-    const { loading, product, toggle, route, windowWidth, markdown, loader, changeRoute } = this.props
+    const { loading, product, toggle, route, windowWidth, markdown, markdownLoader, changeRoute, submissionLoader } = this.props
     const { modalToggle, prevMobileNumber, showVerification, errModalToggle, errModalName, errorTitle, errorMessage } = this.state
     const productPageTrigger = route && route
 
     return (
       <div>
         <Helmet
-          title={`ProductPage - ${product.get('title')}`}
+          title={`ProductPage - ${product.get('title') || ''}`}
         />
         <div>
           <Product
@@ -474,7 +476,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             toggle={toggle}
             mobileNumber={prevMobileNumber}
             onClose={this._handleToggle}
-            loader={loader}
+            markdownLoader={markdownLoader}
+            submissionLoader={submissionLoader}
             markdown={markdown} />
         </div>
         <div onTouchMove={this._handleTouch}>
@@ -484,6 +487,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             modalToggle={modalToggle}
             toggle={showVerification}
             onClose={this._closePopupSlide}
+            submissionLoader={submissionLoader}
             resendCode={this._executeResendCode}
           />
         </div>
@@ -508,14 +512,15 @@ const mapStateToProps = createStructuredSelector({
   productSuccess: selectProductSuccess(),
   productError: selectProductError(),
   markdown: selectMarkdown(),
-  loader: selectLoadingMarkdown(),
+  markdownLoader: selectLoadingMarkdown(),
   mobileRegistrationSuccess: selectMobileRegistrationSuccess(),
   mobileRegistrationError: selectMobileRegistrationError(),
   verificationCodeSuccess: selectVerificationCodeSuccess(),
   verificationCodeError: selectVerificationCodeError(),
   loyaltyToken: selectLoyaltyToken(),
   recaptchaValidationSuccess: selectRecaptchaValidationSuccess(),
-  recaptchaValidationError: selectRecaptchaValidationError()
+  recaptchaValidationError: selectRecaptchaValidationError(),
+  submissionLoader: selectSubmissionLoader()
 })
 
 function mapDispatchToProps (dispatch) {

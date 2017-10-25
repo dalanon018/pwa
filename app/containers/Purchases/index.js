@@ -61,6 +61,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
       PropTypes.array.isRequired,
       PropTypes.object.isRequired
     ]),
+    markdownLoader: PropTypes.bool.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
@@ -115,7 +116,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
   }
 
   render () {
-    const { modalToggle, setMobileNumber, activePurchases, completedPurchases, expiredPurchases, markdown, loader } = this.props
+    const { modalToggle, setMobileNumber, activePurchases, completedPurchases, expiredPurchases, markdown, markdownLoader } = this.props
 
     const panes = [
       { menuItem: 'Active', render: () => <Tab.Pane>{this._handleShow(activePurchases)}</Tab.Pane> },
@@ -138,7 +139,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
           submit={setMobileNumber}
           toggle={modalToggle}
           onClose={this._goToHome}
-          loader={loader}
+          markdownLoader={markdownLoader}
           markdown={markdown}
         />
       </div>
@@ -153,7 +154,7 @@ const mapStateToProps = createStructuredSelector({
   loading: selectLoader(),
   modalToggle: selectModalToggle(),
   markdown: selectMarkdown(),
-  loader: selectLoadingMarkdown()
+  markdownLoader: selectLoadingMarkdown()
 })
 
 function mapDispatchToProps (dispatch) {

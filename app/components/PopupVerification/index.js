@@ -122,7 +122,7 @@ export class PopupVerification extends React.PureComponent {
   }
 
   render () {
-    const { toggle, onClose, modalToggle, modalClose, resendCode } = this.props
+    const { toggle, onClose, modalToggle, modalClose, resendCode, submissionLoader } = this.props
     const { value } = this.state
 
     return (
@@ -159,6 +159,7 @@ export class PopupVerification extends React.PureComponent {
 
             <Button
               disabled={this.state.toggle}
+              loading={submissionLoader}
               fluid
               primary
               onClick={this._handleSubmit}>
