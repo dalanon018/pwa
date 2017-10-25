@@ -33,6 +33,7 @@ describe('<PopupSlide />', () => {
     onClose: () => {},
     modalClose: () => {},
     changeRoute: () => {},
+    markdownLoader: false,
     modalToggle: false,
     toggle: false,
     mobileNumber: '9123456780',

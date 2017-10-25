@@ -27,6 +27,7 @@ import {
   SUCCESS_VERIFICATION_CODE,
   ERROR_VERIFICATION_CODE,
 
+  REQUEST_RECAPTCHA_VALIDATION,
   SUCCESS_RECAPTCHA_VALIDATION,
   ERROR_RECAPTCHA_VALIDATION,
 
@@ -51,7 +52,8 @@ const initialState = fromJS({
   verificationCodeError: null,
   recaptchaValidationSuccess: null,
   recaptchaValidationError: null,
-  toggle: false
+  toggle: false,
+  submissionLoader: false // this will simply check if we are submitting through api
 })
 
 function productPageReducer (state = initialState, action) {
@@ -91,29 +93,36 @@ function productPageReducer (state = initialState, action) {
       return state
         .set('mobileRegistrationSuccess', false)
         .set('mobileRegistrationError', null)
+        .set('submissionLoader', true)
 
     case SUCCESS_MOBILE_REGISTRATION:
       return state
         .set('mobileRegistrationSuccess', true)
         .set('mobileRegistrationError', null)
+        .set('submissionLoader', false)
+
     case ERROR_MOBILE_REGISTRATION:
       return state
         .set('mobileRegistrationError', action.payload)
         .set('mobileRegistrationSuccess', false)
+        .set('submissionLoader', false)
 
     case SUCCESS_VERIFICATION_CODE:
       return state
         .set('verificationCodeSuccess', true)
         .set('verificationCodeError', null)
+        .set('submissionLoader', false)
 
     case ERROR_VERIFICATION_CODE:
       return state
         .set('verificationCodeSuccess', false)
         .set('verificationCodeError', action.payload)
+        .set('submissionLoader', false)
 
     case REQUEST_VERIFICATION_CODE:
       return state
         .set('verificationCode', action.payload)
+        .set('submissionLoader', true)
 
     case RESET_SUBMISSION:
       return state
@@ -124,16 +133,23 @@ function productPageReducer (state = initialState, action) {
         .set('verificationCodeError', null)
         .set('recaptchaValidationSuccess', null)
         .set('recaptchaValidationError', null)
+        .set('submissionLoader', false)
+
+    case REQUEST_RECAPTCHA_VALIDATION:
+      return state
+        .set('submissionLoader', true)
 
     case SUCCESS_RECAPTCHA_VALIDATION:
       return state
-      .set('recaptchaValidationSuccess', true)
-      .set('recaptchaValidationError', null)
+        .set('recaptchaValidationSuccess', true)
+        .set('recaptchaValidationError', null)
+        .set('submissionLoader', false)
 
     case ERROR_RECAPTCHA_VALIDATION:
       return state
         .set('recaptchaValidationSuccess', null)
         .set('recaptchaValidationError', action.payload)
+        .set('submissionLoader', false)
 
     case SET_TOGGLE:
       return state

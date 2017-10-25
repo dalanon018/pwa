@@ -47,6 +47,7 @@ export class PopupSlide extends React.PureComponent {
     submit: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     toggle: PropTypes.bool.isRequired,
+    markdownLoader: PropTypes.bool.isRequired,
     modalClose: PropTypes.func,
     modalToggle: PropTypes.bool,
     mobileNumber: PropTypes.string,
@@ -191,7 +192,7 @@ export class PopupSlide extends React.PureComponent {
   }
 
   render () {
-    const { toggle, onClose, modalToggle, modalClose, loader, recaptcha } = this.props
+    const { toggle, onClose, modalToggle, modalClose, markdownLoader, recaptcha, submissionLoader } = this.props
     const { value, check, toggleTerms, markdownContent } = this.state
 
     const checkboxList = [
@@ -248,6 +249,7 @@ export class PopupSlide extends React.PureComponent {
               }
               <Button
                 disabled={this.state.toggle}
+                loading={submissionLoader}
                 primary
                 fluid
                 onClick={this._handleSubmit}>
@@ -286,7 +288,7 @@ export class PopupSlide extends React.PureComponent {
                   </Grid.Row>
                 </Grid>
               </TermsConditionsHeader>
-              <LoadingStateInfo loading={loader} count='4'>
+              <LoadingStateInfo loading={markdownLoader} count='4'>
                 <div className='animation-fade tc-content color__grey' dangerouslySetInnerHTML={{__html: markdownContent}} />
               </LoadingStateInfo>
               <ButtonWrapper toggle={toggleTerms}>
