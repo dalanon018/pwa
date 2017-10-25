@@ -109,9 +109,14 @@ const transformProduct = (data) => {
       propOr({}, 'images')
     )
 
+    const applyImageBrandLogo = compose(
+      applyImageUrl('BRAND_LOGO'),
+      propOr({}, 'brand')
+    )
+
     return Object.assign({}, data, {
       image: applyImageUrl('PRIMARY')(data),
-      brandLogo: applyImageUrl('BRAND_LOGO')(data),
+      brandLogo: applyImageBrandLogo(data),
       sliders: applyImageSliders('SLIDER')(data)
     })
   }
