@@ -8,6 +8,6 @@ import { defineMessages } from 'react-intl'
 export default defineMessages({
   promptOk: {
     id: 'app.components.PromptModal.promptOk',
-    defaultMessage: 'Ok'
+    defaultMessage: 'Got it!'
   }
 })
