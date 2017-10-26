@@ -11,10 +11,14 @@ import { FormattedMessage } from 'react-intl'
 import messages from './messages'
 import { noop } from 'lodash'
 import {
+  both,
+  complement,
   compose,
+  equals,
+  ifElse,
   isNil,
-  prop,
-  ifElse
+  partial,
+  prop
 } from 'ramda'
 import showdown from 'showdown'
 
@@ -180,15 +184,26 @@ export class PopupSlide extends React.PureComponent {
   }
 
   componentWillReceiveProps (nextProps) {
-    const { mobileNumber, markdown } = nextProps
+    const { markdown } = nextProps
+    const { value } = this.state
 
-    if (mobileNumber) {
-      this._setDefaultMobileNumber(nextProps)
-    }
+    const setDefaultMobile = ifElse(
+      compose(
+        both(complement(equals(null)), partial(equals(''), [value])),
+        prop('mobileNumber')
+      ),
+      this._setDefaultMobileNumber,
+      noop
+    )
 
-    if (markdown) {
-      this._setMarkDownContent(markdown)
-    }
+    const setMarkdownContent = ifElse(
+      complement(equals('')),
+      this._setMarkDownContent,
+      noop
+    )
+
+    setDefaultMobile(nextProps)
+    setMarkdownContent(markdown)
   }
 
   render () {
