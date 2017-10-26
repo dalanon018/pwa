@@ -80,7 +80,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
-    setHeaderFullScreen: PropTypes.func,
+    setHeaderMenuFullScreen: PropTypes.func.isRequired,
     setHandlersDefault: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,

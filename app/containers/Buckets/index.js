@@ -98,7 +98,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     toggleMessage: PropTypes.string,
     intl: intlShape.isRequired,
     pageTitle: PropTypes.string,
-    headerMenuFullScreen: PropTypes.bool,
+    headerMenuFullScreen: PropTypes.bool.isRequired,
     showSearchIcon: PropTypes.bool.isRequired,
     showActivityIcon: PropTypes.bool.isRequired,
     isRegisteredPush: PropTypes.oneOfType([

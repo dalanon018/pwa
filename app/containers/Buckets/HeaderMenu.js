@@ -166,7 +166,7 @@ const toggleComponent = (componentA, componentB) => (condition) => {
 export default class MainMenu extends PureComponent {
   static propTypes= {
     pageTitle: PropTypes.string,
-    headerMenuFullScreen: PropTypes.bool,
+    headerMenuFullScreen: PropTypes.bool.isRequired,
     showSearchIcon: PropTypes.bool.isRequired,
     showActivityIcon: PropTypes.bool.isRequired,
     hideBackButton: PropTypes.bool.isRequired,
