@@ -68,6 +68,11 @@ const selectPageTitle = () => createSelector(
   (substate) => substate.get('pageTitle')
 )
 
+const selectFullScreenHeader = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('headerMenuFullScreen')
+)
+
 const selectShowSearchIcon = () => createSelector(
   selectBucketDomain(),
   (substate) => substate.get('searchIconShow')
@@ -101,6 +106,7 @@ export {
   selectToggleMessage,
   selectLoader,
   selectPageTitle,
+  selectFullScreenHeader,
   selectShowSearchIcon,
   selectShowActivityIcon,
   selectIsRegisteredPush,

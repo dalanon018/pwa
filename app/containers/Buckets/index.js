@@ -27,6 +27,7 @@ import {
   selectToggleError,
   selectToggleMessage,
   selectPageTitle,
+  selectFullScreenHeader,
   selectShowSearchIcon,
   selectShowActivityIcon,
   selectIsRegisteredPush,
@@ -97,6 +98,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     toggleMessage: PropTypes.string,
     intl: intlShape.isRequired,
     pageTitle: PropTypes.string,
+    headerMenuFullScreen: PropTypes.bool,
     showSearchIcon: PropTypes.bool.isRequired,
     showActivityIcon: PropTypes.bool.isRequired,
     isRegisteredPush: PropTypes.oneOfType([
@@ -195,7 +197,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   _displayHeader = () => {
-    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, routes, searchProduct, setProductSearchList, intl } = this.props
+    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, routes, searchProduct, setProductSearchList, intl, headerMenuFullScreen } = this.props
     const { path } = routes.slice().pop()
     const currentRoute = routes.slice().pop().name
 
@@ -217,6 +219,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
     return (
       <HeaderMenu
+        headerMenuFullScreen={headerMenuFullScreen}
         pageTitle={pageTitle}
         showSearchIcon={showSearchIcon}
         showActivityIcon={showActivityIcon}
@@ -345,6 +348,7 @@ const mapStateToProps = createStructuredSelector({
   toggleError: selectToggleError(),
   toggleMessage: selectToggleMessage(),
   pageTitle: selectPageTitle(),
+  headerMenuFullScreen: selectFullScreenHeader(),
   showSearchIcon: selectShowSearchIcon(),
   showActivityIcon: selectShowActivityIcon(),
   isRegisteredPush: selectIsRegisteredPush(),

@@ -23,6 +23,8 @@ export const SET_TOGGLE = 'app/Buckets/SET_TOGGLE'
 export const GET_PAGE_TITLE = 'app/Container/GET_PAGE_TITLE'
 export const SET_PAGE_TITLE = 'app/Container/SET_PAGE_TITLE'
 
+export const SET_HEADER_FULL_SCREEN = 'app/Container/SET_HEADER_FULL_SCREEN'
+
 export const GET_SHOW_SEARCH_ICON = 'app/Container/GET_SHOW_SEARCH_ICON'
 export const SET_SHOW_SEARCH_ICON = 'app/Container/SET_SHOW_SEARCH_ICON'
 

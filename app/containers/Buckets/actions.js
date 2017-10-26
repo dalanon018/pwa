@@ -36,7 +36,9 @@ import {
 
   GET_LOYALTY_TOKEN,
   SET_LOYALTY_TOKEN,
-  REMOVE_LOYALTY_TOKEN
+  REMOVE_LOYALTY_TOKEN,
+
+  SET_HEADER_FULL_SCREEN
 } from './constants'
 
 export function getPageTitleAction () {
@@ -48,6 +50,13 @@ export function getPageTitleAction () {
 export function setPageTitleAction (payload) {
   return {
     type: SET_PAGE_TITLE,
+    payload
+  }
+}
+
+export function setHeaderFullScreenAction (payload) {
+  return {
+    type: SET_HEADER_FULL_SCREEN,
     payload
   }
 }

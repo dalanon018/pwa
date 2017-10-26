@@ -209,7 +209,7 @@ export class PopupSlide extends React.PureComponent {
 
     return (
       <div>
-        <PopupWrapper onTouchMove={this._handleTouch} toggle={toggle} className='background__white'>
+        <PopupWrapper toggle={toggle} className='background__white'>
           <BannerHeader background={BannerBg}>
             <span className='background__smoke-grey border__three-white'>
               <Image alt='Cliqq' src={MobileIcon} />
