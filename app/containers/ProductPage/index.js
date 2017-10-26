@@ -129,7 +129,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     super()
     this.state = {
       modalToggle: false,
-      prevMobileNumber: null,
+      prevMobileNumber: '',
       verificationCode: '',
       socialToggle: false,
       copied: false,

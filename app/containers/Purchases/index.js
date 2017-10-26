@@ -141,6 +141,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
           onClose={this._goToHome}
           markdownLoader={markdownLoader}
           markdown={markdown}
+          mobileNumber=''
         />
       </div>
     )

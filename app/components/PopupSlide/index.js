@@ -54,7 +54,7 @@ export class PopupSlide extends React.PureComponent {
     markdownLoader: PropTypes.bool.isRequired,
     modalClose: PropTypes.func,
     modalToggle: PropTypes.bool,
-    mobileNumber: PropTypes.string,
+    mobileNumber: PropTypes.string.isRequired,
     recaptcha: PropTypes.node
   }
 
@@ -189,7 +189,7 @@ export class PopupSlide extends React.PureComponent {
 
     const setDefaultMobile = ifElse(
       compose(
-        both(complement(equals(null)), partial(equals(''), [value])),
+        both(complement(equals('')), partial(equals(''), [value])),
         prop('mobileNumber')
       ),
       this._setDefaultMobileNumber,
