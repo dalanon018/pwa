@@ -16,7 +16,7 @@ export default defineMessages({
   },
   confirmedTitle: {
     id: 'app.components.ModalWithHeader.confirmedTitle',
-    defaultMessage: 'Item Has Been Paid!'
+    defaultMessage: 'Item Has Been Paid'
   },
   intransitTitle: {
     id: 'app.components.ModalWithHeader.intransitTitle',
@@ -72,19 +72,19 @@ export default defineMessages({
   },
   buttonConfirmed: {
     id: 'app.components.ModalWithHeader.buttonConfirmed',
-    defaultMessage: 'Awesome Thanks!'
+    defaultMessage: 'Awesome! Thanks'
   },
   buttonIntransit: {
     id: 'app.components.ModalWithHeader.buttonIntransit',
-    defaultMessage: 'Cool! I\'m Excited!'
+    defaultMessage: 'Cool! I\'m Excited'
   },
   buttonDelivered: {
     id: 'app.components.ModalWithHeader.buttonDelivered',
-    defaultMessage: 'Awesome Thanks!'
+    defaultMessage: 'Awesome! Thanks'
   },
   buttonClaimed: {
     id: 'app.components.ModalWithHeader.buttonClaimed',
-    defaultMessage: 'Awesome Thanks!'
+    defaultMessage: 'Awesome! Thanks'
   },
   buttonUnclaimed: {
     id: 'app.components.ModalWithHeader.buttonUnclaimed',
