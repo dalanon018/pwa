@@ -33,7 +33,7 @@ export default defineMessages({
   },
   titleStatusCONFIRMED: {
     id: 'app.components.Purchases.titleStatusCONFIRMED',
-    defaultMessage: 'Confirmed'
+    defaultMessage: 'Paid'
   },
   titleStatusINTRANSIT: {
     id: 'app.components.Purchases.titleStatusINTRANSIT',
