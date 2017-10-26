@@ -48,7 +48,7 @@ export default defineMessages({
   },
   intransitDescription: {
     id: 'app.components.ModalWithHeader.intransitDescription',
-    defaultMessage: 'Your item is in-transit to the store! We will notify you when it is ready for pick-up. For now you can keep on Shopping!'
+    defaultMessage: 'Your item is in-transit to the store! We will notify you when it is ready for pick-up. For now you can keep on shopping!'
   },
   deliveredDescription: {
     id: 'app.components.ModalWithHeader.deliveredDescription',
