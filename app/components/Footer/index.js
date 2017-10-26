@@ -76,9 +76,9 @@ export class Footer extends React.PureComponent {
               <AppInfo className='float__right'>
                 <Image src={DeliveryIcon} />
                 <section>
-                  <Label as='span' size='tiny' className='color__secondary'>1 Dat In-Store Delivery</Label>
+                  <Label as='span' size='tiny' className='color__secondary'> <FormattedMessage {...messages.storeDelivery} /></Label>
                   <br />
-                  <Label as='span' size='tiny' basic color='grey'>Free Shipping to Store</Label>
+                  <Label as='span' size='tiny' basic color='grey'><FormattedMessage {...messages.freeShippingDelivery} /></Label>
                 </section>
               </AppInfo>
             </Grid.Column>
@@ -86,9 +86,9 @@ export class Footer extends React.PureComponent {
               <AppInfo>
                 <Image src={ReturnIcon} />
                 <section>
-                  <Label as='span' size='tiny' className='color__secondary'>Cliqq Return Policy</Label>
+                  <Label as='span' size='tiny' className='color__secondary'><FormattedMessage {...messages.returnPolicy} /></Label>
                   <br />
-                  <Label as='span' size='tiny' basic color='grey'>Change of Mind is Applicable</Label>
+                  <Label as='span' size='tiny' basic color='grey'><FormattedMessage {...messages.changeMind} /></Label>
                 </section>
               </AppInfo>
             </Grid.Column>
