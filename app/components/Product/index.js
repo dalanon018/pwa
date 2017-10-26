@@ -169,7 +169,6 @@ const Product = ({
                   )
                 : null
               }
-
           </ListCollapse>
           {
             product.get('additionalDetails')
@@ -179,7 +178,9 @@ const Product = ({
               </Label>
             }>
               <CollapseContent>
-                <Label as='p' color='grey' basic size='medium'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam eos repudiandae inventore debitis iusto ea esse eligendi voluptatum distinctio assumenda quam aliquid, unde ullam odit tenetur cum, explicabo quisquam a!</Label>
+                <Label as='p' color='grey' basic size='medium'>
+                  <span dangerouslySetInnerHTML={{__html: product.get('additionalDetails')}} />
+                </Label>
               </CollapseContent>
             </ListCollapse>
             : ''
