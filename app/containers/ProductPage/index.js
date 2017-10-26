@@ -60,7 +60,8 @@ import {
 import {
   setPageTitleAction,
   setShowSearchIconAction,
-  setShowActivityIconAction
+  setShowActivityIconAction,
+  setHeaderFullScreenAction
 } from 'containers/Buckets/actions'
 
 import {
@@ -79,6 +80,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
+    setHeaderMenuFullScreen: PropTypes.func.isRequired,
     setHandlersDefault: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
@@ -152,7 +154,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     })
 
     this.props.setToggle()
-    this._handleCustomBody()
   }
 
   _handleSuccessVerificationCode = () => {
@@ -229,13 +230,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this._executeSendCode()
   }
 
-  _handleTouch = (e) => {
-    const { showSlide } = this.state
-    const showSlideEmptyChecker = ifElse(isEmpty, noop, () => e.preventDefault())
-
-    showSlideEmptyChecker(showSlide)
-  }
-
   _handleSubmit = ({ value }) => {
     this.setState({
       mobileNumber: value
@@ -288,16 +282,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.setState({
       showSlide: !showSlide
     })
-
-    this._handleCustomBody()
-  }
-
-  _handleCustomBody = () => {
-    const { showSlide } = this.state
-    const elem = document.getElementsByTagName('body')[0].classList
-    const toggleCustomBody = ifElse(equals(false), () => elem.add('custom__body'), () => elem.remove('custom__body'))
-
-    toggleCustomBody(showSlide)
   }
 
   _handleSuccess = () => {
@@ -320,6 +304,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     })
 
     successSubmissionChecker(this.successSubmission)
+    this.props.setHeaderMenuFullScreen(false)
   }
 
   _handleSetStateErrorMessages = (error) => {
@@ -394,6 +379,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
     closePopupSlideToggle(toggle)
     removeCustomBodyClass(elem.length)
+    this.props.setHeaderMenuFullScreen(false)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -431,6 +417,14 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
     // handle if theree's mobile number we can use as default
     ifElse((mobile) => mobile.size > 0, this._handleMobileRegistered, noop)(mobileNumbers)
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+    const { showSlide } = nextState
+    const showSlideToggle = ifElse(equals(true), this.props.setHeaderMenuFullScreen, this.props.setHeaderMenuFullScreen)
+
+    showSlideToggle(showSlide)
+    return true
   }
 
   render () {
@@ -480,7 +474,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             submissionLoader={submissionLoader}
             markdown={markdown} />
         </div>
-        <div onTouchMove={this._handleTouch}>
+        <div>
           <PopupVerification
             submit={this._handleSubmitVerification}
             modalClose={this._handleClose}
@@ -526,6 +520,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps (dispatch) {
   return {
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
+    setHeaderMenuFullScreen: (payload) => dispatch(setHeaderFullScreenAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProduct: (payload) => dispatch(getProductAction(payload)),

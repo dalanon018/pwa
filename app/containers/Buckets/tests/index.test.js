@@ -50,7 +50,8 @@ describe('<Buckets />', () => {
     getRegisteredPush: () => {},
     registerPush: () => {},
     getLoyaltyToken: () => {},
-    removeLoyaltyToken: () => {}
+    removeLoyaltyToken: () => {},
+    headerMenuFullScreen: false
   }
 
   it('render without exploding', () => {

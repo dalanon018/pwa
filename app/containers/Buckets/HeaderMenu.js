@@ -139,7 +139,7 @@ const MobileMenu = styled.div`
   box-shadow: 1px 1px 5px rgba(174,174,174, 0.8);
   padding-right: 10px;
   padding-left: 10px;
-  height: 49px;
+  height: ${({headerMenuFullScreen}) => headerMenuFullScreen ? '100vh' : '49px'};
   left: 0;
   position: fixed;
   top: 0;
@@ -166,6 +166,7 @@ const toggleComponent = (componentA, componentB) => (condition) => {
 export default class MainMenu extends PureComponent {
   static propTypes= {
     pageTitle: PropTypes.string,
+    headerMenuFullScreen: PropTypes.bool.isRequired,
     showSearchIcon: PropTypes.bool.isRequired,
     showActivityIcon: PropTypes.bool.isRequired,
     hideBackButton: PropTypes.bool.isRequired,
@@ -241,7 +242,7 @@ export default class MainMenu extends PureComponent {
   }
 
   render () {
-    const { leftButtonAction, hideBackButton, changeRoute, showSearchIcon, showActivityIcon, currentRoute } = this.props
+    const { leftButtonAction, hideBackButton, changeRoute, showSearchIcon, showActivityIcon, currentRoute, headerMenuFullScreen } = this.props
 
     const homeRoute = currentRoute === 'home'
 
@@ -259,7 +260,7 @@ export default class MainMenu extends PureComponent {
 
     return (
       <Wrapper>
-        <MobileMenu className='header-wrapper background__white'>
+        <MobileMenu className='header-wrapper background__white' headerMenuFullScreen={headerMenuFullScreen}>
           <Grid padded className='header-menu-grid'>
             <Grid.Row>
               <Grid.Column

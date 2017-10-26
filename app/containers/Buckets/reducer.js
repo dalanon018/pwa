@@ -28,7 +28,8 @@ import {
 
   SET_REGISTED_PUSH,
 
-  SET_LOYALTY_TOKEN
+  SET_LOYALTY_TOKEN,
+  SET_HEADER_FULL_SCREEN
 } from './constants'
 
 const initialState = fromJS({
@@ -41,6 +42,7 @@ const initialState = fromJS({
   toggleMessage: null,
   loader: false,
   pageTitle: null,
+  headerMenuFullScreen: false,
   searchIconShow: false,
   activityIconShow: false,
   isRegisteredPush: false,
@@ -51,6 +53,9 @@ function bucketsReducer (state = initialState, action) {
   switch (action.type) {
     case SET_PAGE_TITLE:
       return state.set('pageTitle', action.payload)
+
+    case SET_HEADER_FULL_SCREEN:
+      return state.set('headerMenuFullScreen', action.payload)
 
     case SET_SHOW_SEARCH_ICON:
       return state.set('searchIconShow', action.payload)

@@ -25,6 +25,7 @@ describe('<Products />', () => {
     setPageTitle: () => {},
     setShowSearchIcon: () => {},
     setShowActivityIcon: () => {},
+    setHeaderMenuFullScreen: () => {},
     product: fromJS({
       'product_id': '0001',
       'image': null,
