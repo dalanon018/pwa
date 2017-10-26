@@ -31,7 +31,8 @@
       text-align: center;
       text-decoration: inherit;
       vertical-align: baseline;
-      width: 1.5em;
+      // width: 1.5em;
+      margin-left: 10px;
     }
   }
 }
