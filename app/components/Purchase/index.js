@@ -6,7 +6,7 @@ import {
   Image,
   Label
 } from 'semantic-ui-react'
-import { ifElse, equals, both, partial } from 'ramda'
+import { identity, ifElse, contains, equals, both, partial, partialRight } from 'ramda'
 import { FormattedMessage } from 'react-intl'
 
 import Countdown from 'components/Countdown'
@@ -16,6 +16,7 @@ import { DateFormater } from 'utils/date' // DateFormater
 
 import purchasesMessages from 'containers/Purchases/messages'
 import {
+  COD_STATUS_NAME_AFFECTED,
   COD_DATE_ORDERED_STATUS
 } from 'containers/Buckets/constants'
 
@@ -92,6 +93,8 @@ class Purchase extends React.PureComponent {
     changeRoute: PropTypes.func.isRequired
   }
 
+  _defaultModePayment = 'CASH'
+
   constructor () {
     super()
 
@@ -156,12 +159,24 @@ class Purchase extends React.PureComponent {
     )(currentStatus)
   }
 
+  _handleModePayment = () => {
+    const { receipt } = this.props
+    return receipt.get('modePayment') || this._defaultModePayment
+  }
+
   _handleStatusTitle = () => {
     const { receipt, statuses } = this.props
+    const PROCESSING = 'PROCESSING'
     const currentStatus = statuses[receipt.get('status')] || 'UNKNOWN'
+    const isCod = () => this._handleModePayment() !== this._defaultModePayment
+    const normalStatus = ifElse(
+      both(isCod, partialRight(contains, [COD_STATUS_NAME_AFFECTED])),
+      () => PROCESSING,
+      identity
+    )
 
     return (
-      <FormattedMessage {...purchasesMessages[`titleStatus${currentStatus}`]} />
+      <FormattedMessage {...purchasesMessages[`titleStatus${normalStatus(currentStatus)}`]} />
     )
   }
 
