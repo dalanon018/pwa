@@ -74,7 +74,7 @@ const ReturnInfo = () => (
   <WarningDescription>
     <Image src={ReturnIcon} />
     <section>
-      <Label className='text__roboto--light' as='span' basic size='large'>
+      <Label className='text__roboto' as='span' basic size='large'>
         <FormattedMessage {...messages.returnPolicyTitle} />
       </Label>
       <Label className='text__roboto--light' as='p' size='large'>

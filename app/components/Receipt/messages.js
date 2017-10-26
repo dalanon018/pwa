@@ -8,7 +8,7 @@ import { defineMessages } from 'react-intl'
 export default defineMessages({
   RESERVED: {
     id: 'app.components.Receipt.RESERVED',
-    defaultMessage: 'You have this time to show this receipt to the store:'
+    defaultMessage: 'You have this time to show this slip at the store:'
   },
   RESERVEDEXPIRED: {
     id: 'app.components.Receipt.RESERVEDEXPIRED',
