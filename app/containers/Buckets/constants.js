@@ -101,6 +101,10 @@ export const EXPIRED = [
   'UNCLAIMED'
 ]
 
+export const COD_STATUS_NAME_AFFECTED = [
+  'CONFIRMED'
+]
+
 export const COD_DATE_ORDERED_STATUS = [
   'CONFIRMED',
   'INTRANSIT'

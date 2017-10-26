@@ -88,7 +88,10 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
   static propTypes = {
     loading: PropTypes.bool.isRequired,
     receipt: PropTypes.object.isRequired,
-    isRegisteredPush: PropTypes.bool.isRequired,
+    isRegisteredPush: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.string
+    ]).isRequired,
     getReceipt: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
     changeRoute: PropTypes.func.isRequired,

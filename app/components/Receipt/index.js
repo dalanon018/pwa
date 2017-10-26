@@ -8,6 +8,7 @@ import {
   cond,
   contains,
   equals,
+  identity,
   ifElse,
   partial,
   partialRight
@@ -55,6 +56,7 @@ import purchasesMessages from 'containers/Purchases/messages'
 import {
   COMPLETED,
   EXPIRED,
+  COD_STATUS_NAME_AFFECTED,
   COD_DATE_ORDERED_STATUS
 } from 'containers/Buckets/constants'
 
@@ -160,7 +162,10 @@ class Receipt extends React.PureComponent {
     goHomeFn: PropTypes.func.isRequired,
     goToProduct: PropTypes.func.isRequired,
     goReceiptPage: PropTypes.func.isRequired,
-    isRegisteredPush: PropTypes.bool.isRequired,
+    isRegisteredPush: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.string
+    ]).isRequired,
     registerPushNotification: PropTypes.func.isRequired,
     loadingPushToggle: PropTypes.bool.isRequired
   }
@@ -201,10 +206,17 @@ class Receipt extends React.PureComponent {
 
   _handleStatusTitle = () => {
     const { receipt, statuses } = this.props
+    const PROCESSING = 'PROCESSING'
     const currentStatus = statuses[receipt.get('status')] || 'UNKNOWN'
+    const isCod = () => this._handleModePayment() !== this._defaultModePayment
+    const normalStatus = ifElse(
+      both(isCod, partialRight(contains, [COD_STATUS_NAME_AFFECTED])),
+      () => PROCESSING,
+      identity
+    )
 
     return (
-      <FormattedMessage {...purchasesMessages[`titleStatus${currentStatus}`]} />
+      <FormattedMessage {...purchasesMessages[`titleStatus${normalStatus(currentStatus)}`]} />
     )
   }
 

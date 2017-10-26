@@ -152,8 +152,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       mobileNumber,
       code: value
     })
-
-    this.props.setToggle()
   }
 
   _handleSuccessVerificationCode = () => {
@@ -246,8 +244,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   _handleErrModalClose = () => {
     this.setState({
-      errModalToggle: false,
-      showSlide: false
+      errModalToggle: false
     })
   }
 
@@ -304,7 +301,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     })
 
     successSubmissionChecker(this.successSubmission)
-    this.props.setHeaderMenuFullScreen(false)
   }
 
   _handleSetStateErrorMessages = (error) => {
@@ -419,12 +415,16 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     ifElse((mobile) => mobile.size > 0, this._handleMobileRegistered, noop)(mobileNumbers)
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    const { showSlide } = nextState
-    const showSlideToggle = ifElse(equals(true), this.props.setHeaderMenuFullScreen, this.props.setHeaderMenuFullScreen)
+  componentDidUpdate (prevProps, prevState) {
+    const { showSlide } = this.state
+
+    const showSlideToggle = ifElse(
+      equals(true),
+      this.props.setHeaderMenuFullScreen,
+      this.props.setHeaderMenuFullScreen
+    )
 
     showSlideToggle(showSlide)
-    return true
   }
 
   render () {
@@ -462,8 +462,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
                 onChange={this._executeCaptcha}
               />
             }
-            handleCheckAw={this._handleCheck}
-            handleDisableAw={this._handleDisable}
             submit={this._handleSubmit}
             modalClose={this._handleClose}
             modalToggle={modalToggle}
