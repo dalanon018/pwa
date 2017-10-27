@@ -391,7 +391,7 @@ class Receipt extends React.PureComponent {
                 <Label as='p' basic size='large' className='color__secondary margin__none'>{receipt.getIn(['products', 'name'])}</Label>
                 <Label className='product-current-price text__roboto--bold' basic color='orange'>
                   <FormattedMessage {...messages.peso} />
-                  { receipt.get('amount') }
+                  { parseFloat(receipt.get('amount')).toLocaleString() }
                 </Label>
                 <Label className='text__roboto--light color__secondary' as='p' basic size='medium' >
                   <FormattedMessage {...messages.mobileNumberLabel} />

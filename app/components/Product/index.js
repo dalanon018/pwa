@@ -70,7 +70,8 @@ const Product = ({
       src={product.get('brandLogo')}
       onClick={changeRoute.bind(this, `/brands/${product.getIn(['brand', 'code'])}`)} />) : ''
   const toggleOrigDiscountPrice = (product) => {
-    return product.get('discountPrice') || product.get('price')
+    return (product.get('discountPrice') && parseFloat(product.get('discountPrice')).toLocaleString()) ||
+    parseFloat(product.get('price')).toLocaleString()
   }
   const showDiscountPrice = (component1, component2) => (condition) => ifElse(
     identity,

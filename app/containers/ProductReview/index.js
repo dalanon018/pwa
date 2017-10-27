@@ -203,7 +203,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   _toggleOrigDiscountPrice = (product) => {
-    return product.get('discountPrice') || product.get('price')
+    return (product.get('discountPrice') && parseFloat(product.get('discountPrice')).toLocaleString()) ||
+    parseFloat(product.get('price')).toLocaleString()
   }
 
   _showDiscountPrice = (component1, component2) => (condition) => ifElse(
