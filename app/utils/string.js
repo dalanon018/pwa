@@ -33,7 +33,13 @@ const PhoneFormatter = (str) => ifElse(
   identity
 )(str)
 
+const Pad = (str = '', max = 4) => {
+  str = str ? str.toString() : ''
+  return str.length < max ? Pad('0' + str, max) : str
+}
+
 export {
   Uppercase,
-  PhoneFormatter
+  PhoneFormatter,
+  Pad
 }

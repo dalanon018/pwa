@@ -9,6 +9,7 @@ import { takeLatest } from 'redux-saga'
 import request from 'utils/request'
 import { getItem, setItem, removeItem } from 'utils/localStorage'
 import { fnSearchParams } from 'utils/http'
+import { Pad } from 'utils/string'
 import { transformSubmitOrderPayload } from 'utils/transforms'
 
 import {
@@ -67,6 +68,7 @@ function * transformResponse ({ order: { sevenConnectRefNum, transactionId, expi
     amount: totalPrice,
     quantity: 1,
     imageUrl: orderedProduct.get('image'),
+    brand: orderedProduct.get('brand').toJS(),
     brandLogo: orderedProduct.get('brandLogo'),
     name: orderedProduct.get('title'),
     mobileNumber,
@@ -184,7 +186,7 @@ export function * submitOrder (args) {
     quantity: 1,
     deviceOrigin: 'PWA',
     mobileNumber: completeMobile,
-    deliveryLocationId: store.id
+    deliveryLocationId: Pad(store.id)
   })
 
   try {
