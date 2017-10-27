@@ -97,7 +97,7 @@ function * findAndUpdateReceiptDetails (apiOrders) {
     const findReceipt = find(propEq('trackingNumber', trackingNumber))
     const updateOldReceipt = (data) => compose(
       assoc('status', prop('status', data)),
-      assoc('brand', prop('brand', data)),
+      assoc('brand', propOr({}, 'brand', data)),
       assoc('sevenConnectRefNum', prop('sevenConnectRefNum', data)),
       assoc('facilityName', prop('facilityName', data))
     )(oldReceipt)

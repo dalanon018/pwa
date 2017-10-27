@@ -12,6 +12,10 @@ const ProductWrapper = styled.div`
 `
 
 const ImageWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 175px;
   width: 100%;
 
   .image {

@@ -40,16 +40,21 @@ const PurchaseInfo = styled.div`
 `
 
 const PurchaseImage = styled.div`
-  min-width: 90px;
+  max-width: 110px;
   position: relative;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
 `
 
 const StatusWrapper = styled.div`
   background-color: ${({status}) => status};
-  bottom: 0;
-  left: 0;
-  padding: 2px;
-  position: absolute;
+  // bottom: 0;
+  // left: 0;
+  // padding: 2px;
+  // position: absolute;
   text-align: center;
   width: 100%;
 `
@@ -61,7 +66,7 @@ const OtherInfo = styled.div`
   width: 100%;
 
   .product-price {
-    font-size: 35px;
+    font-size: 30px;
     font-weight: 700;
     letter-spacing: -2px;
     line-height: 30px;
@@ -73,6 +78,12 @@ const OtherInfo = styled.div`
 
     p {
       margin-bottom: 0;
+    }
+  }
+
+  @media (min-width: 375px) {
+    .product-price {
+      font-size: 35px;
     }
   }
 `
@@ -229,7 +240,7 @@ class Purchase extends React.PureComponent {
               <OtherInfo>
                 <Label className='product-price text__roboto' as='span' basic color='orange'>
                   <FormattedMessage {...messages.peso} />
-                  {receipt.get('amount')}
+                  {parseFloat(receipt.get('amount')).toLocaleString()}
                 </Label>
                 <div className='status-info'>
                   <Label as='p' basic size='mini' className='color__secondary'>
@@ -242,10 +253,12 @@ class Purchase extends React.PureComponent {
               </OtherInfo>
             </PurchaseInfo>
             <PurchaseImage className='background__light-grey'>
-              <Image
-                src={(receipt.getIn(['products', 'image']) &&
-                `${paramsImgix(receipt.getIn(['products', 'image']), imgixOptions)}`) ||
-                paramsImgix(defaultImage, imgixOptions)} />
+              <div>
+                <Image
+                  src={(receipt.getIn(['products', 'image']) &&
+              `${paramsImgix(receipt.getIn(['products', 'image']), imgixOptions)}`) ||
+              paramsImgix(defaultImage, imgixOptions)} />
+              </div>
               <StatusWrapper status={this._getColorStatus(currentStatus)}>
                 <Label as='span' basic size='medium' className='color__white'>
                   { this._handleStatusTitle() }
