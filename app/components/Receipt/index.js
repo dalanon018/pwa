@@ -339,7 +339,7 @@ class Receipt extends React.PureComponent {
   render () {
     const { show } = this.state
     const { timer, receipt, statuses } = this.props
-    console.log('receipt', receipt.toJS())
+    
     return (
       <div>
         <ReceiptWrapper>
