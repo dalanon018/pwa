@@ -86,7 +86,11 @@ export default defineMessages({
   },
   returnPolicyDescription: {
     id: 'app.components.Receipt.returnPolicyDescription',
-    defaultMessage: 'Change of Mind is Applicable. Return Policy is Valid for 7 Days upon claiming'
+    defaultMessage: 'Change of Mind is Applicable'
+  },
+  returnPolicyDescriptionWarning: {
+    id: 'app.components.Receipt.returnPolicyDescriptionWarning',
+    defaultMessage: 'Return Policy is valid for 7 Days upon claiming'
   },
   viewActivity: {
     id: 'app.components.Receipt.viewActivity',
