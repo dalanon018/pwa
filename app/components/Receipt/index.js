@@ -80,6 +80,9 @@ const ReturnInfo = () => (
       <Label className='text__roboto--light' as='p' size='large'>
         <FormattedMessage {...messages.returnPolicyDescription} />
       </Label>
+      <Label className='text__roboto--light' as='p' size='small'>
+        <FormattedMessage {...messages.returnPolicyDescriptionWarning} />
+      </Label>
     </section>
   </WarningDescription>
 )
@@ -336,6 +339,7 @@ class Receipt extends React.PureComponent {
   render () {
     const { show } = this.state
     const { timer, receipt, statuses } = this.props
+
     return (
       <div>
         <ReceiptWrapper>
