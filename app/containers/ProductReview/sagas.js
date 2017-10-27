@@ -183,7 +183,8 @@ export function * submitOrder (args) {
     cliqqCode: orderedProduct.get('cliqqCode').first(),
     quantity: 1,
     deviceOrigin: 'PWA',
-    mobileNumber: completeMobile
+    mobileNumber: completeMobile,
+    deliveryLocationId: store.id
   })
 
   try {
