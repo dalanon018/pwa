@@ -24,10 +24,8 @@ describe('<PopupVerification />', () => {
   const minProps = {
     submit: () => {},
     onClose: () => {},
-    modalClose: () => {},
     changeRoute: () => {},
     resendCode: () => {},
-    modalToggle: false,
     toggle: false
   }
 

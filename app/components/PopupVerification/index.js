@@ -15,7 +15,6 @@ import { push } from 'react-router-redux'
 
 import CloseButton from 'components/CloseButton'
 import Input from 'components/InputField'
-import Modal from 'components/PromptModal'
 
 import BannerBg from 'images/modal-bg-lightgrey.png'
 import MobileIcon from 'images/icons/mobile-icon.svg'
@@ -37,8 +36,6 @@ export class PopupVerification extends React.PureComponent {
     submit: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     toggle: PropTypes.bool.isRequired,
-    modalClose: PropTypes.func,
-    modalToggle: PropTypes.bool,
     changeRoute: PropTypes.func,
     resendCode: PropTypes.func.isRequired
   }
@@ -122,7 +119,7 @@ export class PopupVerification extends React.PureComponent {
   }
 
   render () {
-    const { toggle, onClose, modalToggle, modalClose, resendCode, submissionLoader } = this.props
+    const { toggle, onClose, resendCode, submissionLoader } = this.props
     const { value } = this.state
 
     return (
@@ -169,12 +166,6 @@ export class PopupVerification extends React.PureComponent {
             <CloseButton close={onClose} text='Close' />
           </PopupContent>
         </PopupContainer>
-        <Modal
-          open={modalToggle}
-          name='remove'
-          close={modalClose}
-          title='Server Error'
-          content='System is under maintenance' />
       </PopupWrapper>
     )
   }
