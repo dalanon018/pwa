@@ -1,7 +1,9 @@
 
 import { takeLatest } from 'redux-saga'
-import { compact } from 'lodash'
+import { noop, compact } from 'lodash'
 import {
+  compose,
+  equals,
   ifElse,
   partial,
   prop
@@ -15,6 +17,7 @@ import { AddDate } from 'utils/date'
 import { setItem, getItem } from 'utils/localStorage'
 
 import {
+  IS_LOGIN,
   GET_MOBILE_NUMBERS,
   UPDATE_MOBILE_NUMBERS,
   GET_MARKDOWN,
@@ -41,12 +44,27 @@ import {
 } from 'containers/App/constants'
 
 import {
+  setCurrentSessionAction
+} from 'containers/App/actions'
+
+import {
   setLoyaltyTokenAction
 } from 'containers/Buckets/actions'
 
 import {
   getAccessToken
 } from 'containers/Buckets/sagas'
+
+export function * isLogin () {
+  const token = yield call(getItem, LOYALTY_TOKEN_KEY)
+
+  const shouldSetSession = ifElse(
+    equals(null), noop,
+    compose(put, setCurrentSessionAction)
+  )
+
+  yield shouldSetSession(token)
+}
 
 export function * getMobileNumbers () {
   const mobiles = yield call(getItem, MOBILE_NUMBERS_KEY)
@@ -138,9 +156,15 @@ export function * verificationCode (args) {
     yield call(setItem, LOYALTY_TOKEN_KEY, loyaltyToken)
     yield put(successVerificationCodeAction())
     yield put(setLoyaltyTokenAction(getLoyaltyToken(req)))
+    // set up a login
+    yield put(setCurrentSessionAction(getLoyaltyToken(req)))
   } catch (e) {
     yield put(errorVerificationCodeAction('Please check if you input the verification code correctly.'))
   }
+}
+
+export function * isLoginSaga () {
+  yield takeLatest(IS_LOGIN, isLogin)
 }
 
 export function * getMobileNumbersSaga () {
@@ -170,6 +194,7 @@ export function * verificationCodeSaga () {
 // All sagas to be loaded
 export function * loginPageSagas () {
   const watcher = yield [
+    fork(isLoginSaga),
 
     // Getter and Setter for mobile numbers
     fork(getMobileNumbersSaga),

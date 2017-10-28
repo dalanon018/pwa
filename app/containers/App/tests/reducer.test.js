@@ -4,7 +4,8 @@ import appReducer from '../reducer'
 import {
   loadRepos,
   reposLoaded,
-  repoLoadingError
+  repoLoadingError,
+  setCurrentSessionAction
 } from '../actions'
 
 describe('appReducer', () => {
@@ -16,7 +17,8 @@ describe('appReducer', () => {
       currentUser: false,
       userData: fromJS({
         repositories: false
-      })
+      }),
+      session: null
     })
   })
 
@@ -56,5 +58,14 @@ describe('appReducer', () => {
       .set('loading', false)
 
     expect(appReducer(state, repoLoadingError(fixture))).toEqual(expectedResult)
+  })
+
+  it('should update the session', () => {
+    const payload = '123456789'
+    const expectedResult = state.set('session', payload)
+
+    expect(
+      appReducer(state, setCurrentSessionAction(payload))
+    ).toEqual(expectedResult)
   })
 })

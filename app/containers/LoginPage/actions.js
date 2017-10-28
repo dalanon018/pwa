@@ -5,6 +5,8 @@
  */
 
 import {
+  IS_LOGIN,
+
   GET_MOBILE_NUMBERS,
   UPDATE_MOBILE_NUMBERS,
   SET_MOBILE_NUMBERS,
@@ -28,6 +30,12 @@ import {
 
   RESET_SUBMISSION
 } from './constants'
+
+export function isLoginAction () {
+  return {
+    type: IS_LOGIN
+  }
+}
 
 export function resetSubmissionAction () {
   return {

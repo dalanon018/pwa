@@ -3,6 +3,7 @@
  *  constants
  *
  */
+export const IS_LOGIN = 'app/LoginPage/IS_LOGIN'
 
 export const SET_CURRENT_PRODUCT = 'app/LoginPage/SET_CURRENT_PRODUCT'
 export const GET_MOBILE_NUMBERS = 'app/LoginPage/GET_MOBILE_NUMBERS'

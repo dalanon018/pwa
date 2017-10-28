@@ -16,6 +16,10 @@ import PopupSlide from 'components/PopupSlide'
 import WindowWidth from 'components/WindowWidth'
 
 import {
+  userIsAuthenticated
+} from 'containers/App/auth'
+
+import {
   setPageTitleAction,
   setShowSearchIconAction,
   setShowActivityIconAction
@@ -174,4 +178,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(Purchases))
+export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(userIsAuthenticated(Purchases)))

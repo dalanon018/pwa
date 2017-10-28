@@ -28,6 +28,9 @@ export const RECAPTCHA_SITE_KEY = process.env.RECAPTCHA_SITE_KEY
 // so we can disable functions that for production only
 export const ENVIROMENT = process.env.NODE_ENV
 
+// to let us know if we have the current session
+export const SET_CURRENT_SESSION = 'app/App/SET_CURRENT_SESSION'
+
 export const LAST_VIEWS_KEY = 'boilerplate/App/LAST_VIEWS'
 export const CURRENT_PRODUCT_KEY = 'boilerplate/App/CURRENT_PRODUCT'
 export const MOBILE_NUMBERS_KEY = 'boilerplate/App/MOBILE_NUMBERS'

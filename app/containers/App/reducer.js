@@ -15,7 +15,8 @@ import { fromJS } from 'immutable'
 import {
   LOAD_REPOS_SUCCESS,
   LOAD_REPOS,
-  LOAD_REPOS_ERROR
+  LOAD_REPOS_ERROR,
+  SET_CURRENT_SESSION
 } from './constants'
 
 // The initial state of the App
@@ -25,11 +26,15 @@ const initialState = fromJS({
   currentUser: false,
   userData: {
     repositories: false
-  }
+  },
+  session: null
 })
 
 function appReducer (state = initialState, action) {
   switch (action.type) {
+    case SET_CURRENT_SESSION:
+      return state.set('session', action.payload)
+
     case LOAD_REPOS:
       return state
         .set('loading', true)

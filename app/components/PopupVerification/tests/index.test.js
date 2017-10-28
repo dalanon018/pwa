@@ -5,7 +5,6 @@ import { PopupVerification } from '../index'
 
 import CloseButton from 'components/CloseButton'
 import Input from 'components/InputField'
-import Modal from 'components/PromptModal'
 
 import {
   PopupWrapper,
@@ -79,10 +78,5 @@ describe('<PopupVerification />', () => {
   it('renders one <Input/> component', () => {
     const renderComponent = wrapper(minProps)
     expect(renderComponent.find(Input)).toHaveLength(1)
-  })
-
-  it('renders one <Modal/> component', () => {
-    const renderComponent = wrapper(minProps)
-    expect(renderComponent.find(Modal)).toHaveLength(1)
   })
 })

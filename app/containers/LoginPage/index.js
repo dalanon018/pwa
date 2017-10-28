@@ -39,6 +39,10 @@ import BackIcon from 'images/icons/back.svg'
 import { Image, Label, Button, Grid } from 'semantic-ui-react'
 
 import {
+  userIsNotAuthenticated
+} from 'containers/App/auth'
+
+import {
   RECAPTCHA_SITE_KEY
 } from 'containers/App/constants'
 
@@ -70,6 +74,7 @@ import {
 } from './selectors'
 
 import {
+  isLoginAction,
   getMobileNumbersAction,
   updateMobileNumbersAction,
   getMarkDownAction,
@@ -81,6 +86,7 @@ import {
 
 export class LoginPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
+    isLogin: PropTypes.func.isRequired,
     getMarkDown: PropTypes.func.isRequired,
     getMobileNumbers: PropTypes.func.isRequired,
     mobileNumbers: PropTypes.object.isRequired,
@@ -341,7 +347,13 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   componentDidMount () {
-    const { getMobileNumbers, getMarkDown } = this.props
+    const { isLogin, getMobileNumbers, getMarkDown } = this.props
+
+    /**
+     * we will check if the user is login
+     * and if login we need to redirect them.
+     */
+    isLogin()
 
     getMobileNumbers()
     getMarkDown()
@@ -530,6 +542,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
+    isLogin: () => dispatch(isLoginAction()),
     getMobileNumbers: () => dispatch(getMobileNumbersAction()),
     updateMobileNumbers: (payload) => dispatch(updateMobileNumbersAction(payload)),
     getMarkDown: payload => dispatch(getMarkDownAction()),
@@ -541,4 +554,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)
+export default connect(mapStateToProps, mapDispatchToProps)(userIsNotAuthenticated(LoginPage))
