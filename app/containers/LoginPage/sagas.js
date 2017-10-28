@@ -44,7 +44,8 @@ import {
 } from 'containers/App/constants'
 
 import {
-  setCurrentSessionAction
+  setCurrentSessionAction,
+  setAuthenticatingAction
 } from 'containers/App/actions'
 
 import {
@@ -60,10 +61,14 @@ export function * isLogin () {
 
   const shouldSetSession = ifElse(
     equals(null), noop,
-    compose(put, setCurrentSessionAction)
+    compose(
+      put,
+      setCurrentSessionAction
+    )
   )
 
   yield shouldSetSession(token)
+  yield put(setAuthenticatingAction(false))
 }
 
 export function * getMobileNumbers () {

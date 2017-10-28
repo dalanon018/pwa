@@ -16,7 +16,8 @@ import {
   LOAD_REPOS_SUCCESS,
   LOAD_REPOS,
   LOAD_REPOS_ERROR,
-  SET_CURRENT_SESSION
+  SET_CURRENT_SESSION,
+  SET_AUTHENTICATING
 } from './constants'
 
 // The initial state of the App
@@ -27,11 +28,16 @@ const initialState = fromJS({
   userData: {
     repositories: false
   },
-  session: null
+  session: null,
+  // on load default on  ture
+  authenticating: false
 })
 
 function appReducer (state = initialState, action) {
   switch (action.type) {
+    case SET_AUTHENTICATING:
+      return state.set('authenticating', action.payload)
+
     case SET_CURRENT_SESSION:
       return state.set('session', action.payload)
 

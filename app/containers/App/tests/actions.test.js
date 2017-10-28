@@ -2,14 +2,16 @@ import {
   LOAD_REPOS,
   LOAD_REPOS_SUCCESS,
   LOAD_REPOS_ERROR,
-  SET_CURRENT_SESSION
+  SET_CURRENT_SESSION,
+  SET_AUTHENTICATING
 } from '../constants'
 
 import {
   loadRepos,
   reposLoaded,
   repoLoadingError,
-  setCurrentSessionAction
+  setCurrentSessionAction,
+  setAuthenticatingAction
 } from '../actions'
 
 describe('App Actions', () => {
@@ -60,6 +62,16 @@ describe('App Actions', () => {
       }
 
       expect(setCurrentSessionAction(payload)).toEqual(expectedResult)
+    })
+
+    it('should set authenticating true', () => {
+      const payload = 'true'
+      const expectedResult = {
+        type: SET_AUTHENTICATING,
+        payload
+      }
+
+      expect(setAuthenticatingAction(payload)).toEqual(expectedResult)
     })
   })
 })

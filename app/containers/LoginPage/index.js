@@ -46,6 +46,10 @@ import {
   RECAPTCHA_SITE_KEY
 } from 'containers/App/constants'
 
+import {
+  setAuthenticatingAction
+} from 'containers/App/actions'
+
 import messages from './messages'
 
 import {
@@ -346,15 +350,20 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
     })
   }
 
-  componentDidMount () {
-    const { isLogin, getMobileNumbers, getMarkDown } = this.props
-
+  // before we render entering we need to make sure that we already check if its login
+  componentWillMount () {
+    const { isLogin, setAuthenticating } = this.props
+    // we need to let them know that we are authenticating
+    setAuthenticating(true)
     /**
      * we will check if the user is login
      * and if login we need to redirect them.
      */
     isLogin()
+  }
 
+  componentDidMount () {
+    const { getMobileNumbers, getMarkDown } = this.props
     getMobileNumbers()
     getMarkDown()
   }
@@ -542,6 +551,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
+    setAuthenticating: (payload) => dispatch(setAuthenticatingAction(payload)),
     isLogin: () => dispatch(isLoginAction()),
     getMobileNumbers: () => dispatch(getMobileNumbersAction()),
     updateMobileNumbers: (payload) => dispatch(updateMobileNumbersAction(payload)),

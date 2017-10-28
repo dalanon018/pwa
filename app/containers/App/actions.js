@@ -20,7 +20,8 @@ import {
   LOAD_REPOS_SUCCESS,
   LOAD_REPOS_ERROR,
 
-  SET_CURRENT_SESSION
+  SET_CURRENT_SESSION,
+  SET_AUTHENTICATING
 } from './constants'
 
 /**
@@ -66,11 +67,22 @@ export function repoLoadingError (error) {
 
 /**
  * Sett if we have current session
- * @param {loyaltyToken} payload
+ * @param {object} payload
  */
 export function setCurrentSessionAction (payload) {
   return {
     type: SET_CURRENT_SESSION,
+    payload
+  }
+}
+
+/**
+ * Sett if we are currently authenticating
+ * @param {object} payload
+ */
+export function setAuthenticatingAction (payload) {
+  return {
+    type: SET_AUTHENTICATING,
     payload
   }
 }

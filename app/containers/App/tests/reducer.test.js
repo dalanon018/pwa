@@ -5,7 +5,8 @@ import {
   loadRepos,
   reposLoaded,
   repoLoadingError,
-  setCurrentSessionAction
+  setCurrentSessionAction,
+  setAuthenticatingAction
 } from '../actions'
 
 describe('appReducer', () => {
@@ -18,7 +19,8 @@ describe('appReducer', () => {
       userData: fromJS({
         repositories: false
       }),
-      session: null
+      session: null,
+      authenticating: false
     })
   })
 
@@ -66,6 +68,15 @@ describe('appReducer', () => {
 
     expect(
       appReducer(state, setCurrentSessionAction(payload))
+    ).toEqual(expectedResult)
+  })
+
+  it('should update authenticating', () => {
+    const payload = 'true'
+    const expectedResult = state.set('authenticating', payload)
+
+    expect(
+      appReducer(state, setAuthenticatingAction(payload))
     ).toEqual(expectedResult)
   })
 })

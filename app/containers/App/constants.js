@@ -30,6 +30,8 @@ export const ENVIROMENT = process.env.NODE_ENV
 
 // to let us know if we have the current session
 export const SET_CURRENT_SESSION = 'app/App/SET_CURRENT_SESSION'
+// Loader if we are authenticating
+export const SET_AUTHENTICATING = 'app/App/SET_AUTHENTICATING'
 
 export const LAST_VIEWS_KEY = 'boilerplate/App/LAST_VIEWS'
 export const CURRENT_PRODUCT_KEY = 'boilerplate/App/CURRENT_PRODUCT'
