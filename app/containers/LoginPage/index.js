@@ -80,7 +80,6 @@ import {
 import {
   isLoginAction,
   getMobileNumbersAction,
-  updateMobileNumbersAction,
   getMarkDownAction,
   requestMobileRegistrationAction,
   requestVerificationCodeAction,
@@ -265,15 +264,6 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
     })
   }
 
-  _handleSuccessVerificationCode = () => {
-    const { updateMobileNumbers } = this.props
-    const { value } = this.state
-
-    this.successVerificationSubmission = false
-
-    updateMobileNumbers(value)
-  }
-
   /**
    * once our resend code is successful we want to make sure that we show the success message to the user.
    */
@@ -373,7 +363,7 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
       mobileNumbers, markdown,
       recaptchaValidationSuccess, recaptchaValidationError,
       mobileRegistrationError, mobileRegistrationSuccess,
-      verificationCodeSuccess, verificationCodeError
+      verificationCodeError
     } = nextProps
     const { value } = this.state
 
@@ -399,9 +389,6 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
     // handle if resend verification code is successful note that we use the same  functionality for mobileRegistration where it send the code to the number entered.
     const handleSuccessResendVerificationCode = ifElse(both(equals(true), () => this.resendCodeSuccessSubmission), this._handleSuccessResendVerificationCode, noop)
 
-         // handle if verification code is success
-    const handleSuccessVerificationCode = ifElse(both(equals(true), () => this.successVerificationSubmission), this._handleSuccessVerificationCode, noop)
-
         // handle if verification code is error
     const handleErrorVerificationCode = ifElse(both(complement(equals(null)), () => this.successVerificationSubmission), this._handleErrorVerificationCode, noop)
 
@@ -415,7 +402,6 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
     handleErrorMobileRegistration(mobileRegistrationError)
     handleSuccessResendVerificationCode(mobileRegistrationSuccess)
 
-    handleSuccessVerificationCode(verificationCodeSuccess)
     handleErrorVerificationCode(verificationCodeError)
   }
 
@@ -554,7 +540,6 @@ function mapDispatchToProps (dispatch) {
     setAuthenticating: (payload) => dispatch(setAuthenticatingAction(payload)),
     isLogin: () => dispatch(isLoginAction()),
     getMobileNumbers: () => dispatch(getMobileNumbersAction()),
-    updateMobileNumbers: (payload) => dispatch(updateMobileNumbersAction(payload)),
     getMarkDown: payload => dispatch(getMarkDownAction()),
     requestmobileRegistration: payload => dispatch(requestMobileRegistrationAction(payload)),
     requestRecaptchaValidation: payload => dispatch(requestRecaptchaValidationAction(payload)),

@@ -52,28 +52,10 @@ const selectExpiredPurchases = () => createSelector(
   })
 )
 
-const selectModalToggle = () => createSelector(
-  selectBarcodeListsDomain(),
-  (substate) => substate.get('modalToggle')
-)
-
-const selectMarkdown = () => createSelector(
-  selectBarcodeListsDomain(),
-  (substate) => substate.get('markdown')
-)
-
-const selectLoadingMarkdown = () => createSelector(
-  selectBarcodeListsDomain(),
-  (substate) => substate.get('loading')
-)
-
 export {
   selectPurchases,
   selectLoader,
-  selectModalToggle,
   selectActivePurchases,
   selectCompletedPurchases,
-  selectExpiredPurchases,
-  selectMarkdown,
-  selectLoadingMarkdown
+  selectExpiredPurchases
 }

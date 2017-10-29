@@ -19,7 +19,6 @@ import { setItem, getItem } from 'utils/localStorage'
 import {
   IS_LOGIN,
   GET_MOBILE_NUMBERS,
-  UPDATE_MOBILE_NUMBERS,
   GET_MARKDOWN,
   REQUEST_MOBILE_REGISTRATION,
   REQUEST_VERIFICATION_CODE,
@@ -77,8 +76,7 @@ export function * getMobileNumbers () {
   yield put(setMobileNumbersAction(mobiles || []))
 }
 
-export function * updateMobileNumbers (args) {
-  const { payload } = args
+export function * updateMobileNumbers (payload) {
   const mobiles = yield call(getItem, MOBILE_NUMBERS_KEY)
   let mobileRegistrations = compact(mobiles) || []
 
@@ -158,6 +156,7 @@ export function * verificationCode (args) {
       expiry
     })
 
+    yield * updateMobileNumbers(mobileNumber)
     yield call(setItem, LOYALTY_TOKEN_KEY, loyaltyToken)
     yield put(successVerificationCodeAction())
     yield put(setLoyaltyTokenAction(getLoyaltyToken(req)))
@@ -174,10 +173,6 @@ export function * isLoginSaga () {
 
 export function * getMobileNumbersSaga () {
   yield * takeLatest(GET_MOBILE_NUMBERS, getMobileNumbers)
-}
-
-export function * updateMobileNumbersSaga () {
-  yield * takeLatest(UPDATE_MOBILE_NUMBERS, updateMobileNumbers)
 }
 
 export function * getMarkDownSaga () {
@@ -203,7 +198,6 @@ export function * loginPageSagas () {
 
     // Getter and Setter for mobile numbers
     fork(getMobileNumbersSaga),
-    fork(updateMobileNumbersSaga),
 
     fork(getMarkDownSaga),
 

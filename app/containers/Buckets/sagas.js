@@ -82,6 +82,10 @@ import {
 } from 'containers/App/constants'
 
 import {
+  setCurrentSessionAction
+} from 'containers/App/Actions'
+
+import {
   setPurchasesAction
 } from 'containers/Purchases/actions'
 
@@ -376,9 +380,18 @@ function * getLoyaltyToken () {
   yield put(setLoyaltyTokenAction(retreiveToken(loyaltyToken)))
 }
 
+function * removeMobileNumbers () {
+  yield call(removeItem, MOBILE_NUMBERS_KEY)
+  yield put(setMobileNumbersAction([]))
+}
+
+// this will serves as our logout and we need to remove also the moble
 function * removeLoyaltyToken () {
   yield call(removeItem, LOYALTY_TOKEN_KEY)
   yield put(setLoyaltyTokenAction(null))
+  yield put(setCurrentSessionAction(null))
+
+  yield * removeMobileNumbers()
 }
 
 export function * getIsRegisteredPush () {
