@@ -13,21 +13,8 @@ describe('Products Reducer', () => {
     state = fromJS({
       product: {},
       loading: false,
-      mobileNumbers: [],
       requestProductSuccess: false,
-      requestProductError: false,
-      currentProduct: {},
-      markdown: '',
-      loadingMarkdown: false,
-      mobileRegistrationSuccess: false,
-      mobileRegistrationError: null,
-      verificationCode: false,
-      verificationCodeSuccess: false,
-      verificationCodeError: null,
-      recaptchaValidationSuccess: null,
-      recaptchaValidationError: null,
-      toggle: false,
-      submissionLoader: false
+      requestProductError: false
     })
   })
 

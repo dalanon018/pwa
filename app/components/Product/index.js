@@ -47,7 +47,7 @@ import {
 const Product = ({
   product,
   loading,
-  popup,
+  onSubmit,
   toggle,
   changeRoute,
   toggleClick,
@@ -189,7 +189,7 @@ const Product = ({
 
           <ButtonContainer className='background__white'>
             <Button
-              onClick={popup}
+              onClick={onSubmit}
               loading={loading}
               primary
               fluid > <FormattedMessage {...messages.orderNow} /> </Button>
@@ -202,7 +202,8 @@ const Product = ({
 
 Product.propTypes = {
   product: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  onSubmit: PropTypes.func.isRequired
 }
 
 export default Product

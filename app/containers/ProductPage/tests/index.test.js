@@ -5,8 +5,6 @@ import { shallow } from 'enzyme'
 import { ProductPage } from '../index'
 
 import Product from 'components/Product'
-import PopupSlide from 'components/PopupSlide'
-import PopupVerification from 'components/PopupVerification'
 
 const children = (<h1>Test</h1>)
 const wrapper = (props = {}, enzyme = shallow) => enzyme(
@@ -40,15 +38,8 @@ describe('<Products />', () => {
       'barcode': '718037806839'
     }),
     loading: false,
-    markdownLoader: false,
-    toggle: false,
     productSuccess: false,
-    productError: false,
-    mobileNumbers: fromJS([1, 2, 3]),
-    loyaltyToken: null,
-    requestRecaptchaValidation: () => {},
-    recaptchaValidationSuccess: null,
-    recaptchaValidationError: null
+    productError: false
   }
 
   it('render without exploding', () => {
@@ -61,15 +52,5 @@ describe('<Products />', () => {
   it('renders one <Product/> custom component', () => {
     const renderComponent = wrapper(minProps)
     expect(renderComponent.find(Product)).toHaveLength(1)
-  })
-
-  it('renders one <PopupSlide/> custom component', () => {
-    const renderComponent = wrapper(minProps)
-    expect(renderComponent.find(PopupSlide)).toHaveLength(1)
-  })
-
-  it('renders one <PopupVerification/> custom component', () => {
-    const renderComponent = wrapper(minProps)
-    expect(renderComponent.find(PopupVerification)).toHaveLength(1)
   })
 })
