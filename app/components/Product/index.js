@@ -44,6 +44,18 @@ import {
   CollapseContent
 } from './styled'
 
+const toggleOrigDiscountPrice = (product) => {
+  const showPrice = product.get('discountPrice') || product.get('price')
+
+  return showPrice ? showPrice.toLocaleString() : 0
+}
+
+const showDiscountPrice = (component1, component2) => (condition) => ifElse(
+  identity,
+  () => component1,
+  () => component2
+)(condition)
+
 const Product = ({
   product,
   loading,
@@ -69,15 +81,7 @@ const Product = ({
       alt='Cliqq'
       src={product.get('brandLogo')}
       onClick={changeRoute.bind(this, `/brands/${product.getIn(['brand', 'code'])}`)} />) : ''
-  const toggleOrigDiscountPrice = (product) => {
-    return (product.get('discountPrice') && parseFloat(product.get('discountPrice')).toLocaleString()) ||
-    parseFloat(product.get('price')).toLocaleString()
-  }
-  const showDiscountPrice = (component1, component2) => (condition) => ifElse(
-    identity,
-    () => component1,
-    () => component2
-  )(condition)
+
   const toggleDiscount = showDiscountPrice(
     <Label className='product-discount' as='span' basic size='huge' color='grey'>
       <FormattedMessage {...messages.peso} />
@@ -111,7 +115,7 @@ const Product = ({
                 <FormattedMessage {...messages.peso} />
                 { toggleOrigDiscountPrice(product) }
               </Label>
-              { toggleDiscount(product.get('discountPrice') !== 0) }
+              { toggleDiscount(product.get('discountPrice')) }
             </ProductPriceWrapper>
           </LoadingStateInfo>
         </ProductMainContent>

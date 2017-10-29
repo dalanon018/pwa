@@ -59,8 +59,9 @@ function ProductView ({
   }
 
   const toggleOrigDiscountPrice = (product) => {
-    return (product.get('discountPrice') && parseFloat(product.get('discountPrice')).toLocaleString()) ||
-    parseFloat(product.get('price')).toLocaleString()
+    const showPrice = product.get('discountPrice') || product.get('price')
+
+    return showPrice ? showPrice.toLocaleString() : 0
   }
 
   const showDiscountPrice = (component1, component2) => (condition) => ifElse(

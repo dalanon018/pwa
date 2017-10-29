@@ -209,8 +209,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   _toggleOrigDiscountPrice = (product) => {
-    return (product.get('discountPrice') && parseFloat(product.get('discountPrice')).toLocaleString()) ||
-    parseFloat(product.get('price')).toLocaleString()
+    const showPrice = product.get('discountPrice') || product.get('price')
+
+    return showPrice ? showPrice.toLocaleString() : 0
   }
 
   _showDiscountPrice = (component1, component2) => (condition) => ifElse(
@@ -309,7 +310,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
           <FormattedMessage {...messages.peso} />
           { this._toggleOrigDiscountPrice(orderedProduct) }
         </span>
-        { toggleDiscount(orderedProduct.get('discountPrice') !== 0) }
+        { toggleDiscount(orderedProduct.get('discountPrice')) }
       </LabelPrice>
     </label>
     const labelTwo = <label className='label-custom'>
@@ -323,7 +324,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
           <FormattedMessage {...messages.peso} />
           { this._toggleOrigDiscountPrice(orderedProduct) }
         </span>
-        { toggleDiscount(orderedProduct.get('discountPrice') !== 0) }
+        { toggleDiscount(orderedProduct.get('discountPrice')) }
       </LabelPrice>
     </label>
     const brandLogo = orderedProduct.get('brandLogo') ? (
