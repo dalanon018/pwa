@@ -50,6 +50,11 @@ import {
   setAuthenticatingAction
 } from 'containers/App/actions'
 
+import {
+  selectIsAuthenticating
+} from 'containers/App/selectors'
+
+import AuthLoader from './AuthLoader'
 import messages from './messages'
 
 import {
@@ -89,6 +94,7 @@ import {
 
 export class LoginPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
+    authenticating: PropTypes.bool.isRequired,
     isLogin: PropTypes.func.isRequired,
     getMarkDown: PropTypes.func.isRequired,
     getMobileNumbers: PropTypes.func.isRequired,
@@ -340,20 +346,9 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
     })
   }
 
-  // before we render entering we need to make sure that we already check if its login
-  componentWillMount () {
-    const { isLogin, setAuthenticating } = this.props
-    // we need to let them know that we are authenticating
-    setAuthenticating(true)
-    /**
-     * we will check if the user is login
-     * and if login we need to redirect them.
-     */
-    isLogin()
-  }
-
   componentDidMount () {
     const { getMobileNumbers, getMarkDown } = this.props
+
     getMobileNumbers()
     getMarkDown()
   }
@@ -527,6 +522,7 @@ const mapStateToProps = createStructuredSelector({
   markdown: selectMarkdown(),
   loadingMarkdown: selectLoadingMarkdown(),
   submissionLoader: selectSubmissionLoader(),
+  authenticating: selectIsAuthenticating(),
   mobileRegistrationSuccess: selectMobileRegistrationSuccess(),
   mobileRegistrationError: selectMobileRegistrationError(),
   verificationCodeSuccess: selectVerificationCodeSuccess(),
@@ -549,4 +545,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(userIsNotAuthenticated(LoginPage))
+export default connect(mapStateToProps, mapDispatchToProps)(AuthLoader(userIsNotAuthenticated(LoginPage)))
