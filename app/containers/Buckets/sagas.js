@@ -83,7 +83,7 @@ import {
 
 import {
   setCurrentSessionAction
-} from 'containers/App/Actions'
+} from 'containers/App/actions'
 
 import {
   setPurchasesAction

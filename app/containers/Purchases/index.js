@@ -19,10 +19,6 @@ import {
 } from 'containers/App/auth'
 
 import {
-  selectLoyaltyToken
-} from 'containers/Buckets/selectors'
-
-import {
   setPageTitleAction,
   setShowSearchIconAction,
   setShowActivityIconAction
@@ -105,11 +101,6 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
     getApiPurchases()
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { loyaltyToken } = nextProps
-    console.log(loyaltyToken)
-  }
-
   render () {
     const { activePurchases, completedPurchases, expiredPurchases } = this.props
 
@@ -138,8 +129,7 @@ const mapStateToProps = createStructuredSelector({
   activePurchases: selectActivePurchases(),
   completedPurchases: selectCompletedPurchases(),
   expiredPurchases: selectExpiredPurchases(),
-  loading: selectLoader(),
-  loyaltyToken: selectLoyaltyToken()
+  loading: selectLoader()
 })
 
 function mapDispatchToProps (dispatch) {
