@@ -161,8 +161,8 @@ export function * getApiPurchases () {
 
 export function * getLocalPurchases () {
   const response = yield * getOrderList()
-
-  yield put(setPurchasesAction(response))
+  const transform = yield response.map(transformEachEntity)
+  yield put(setPurchasesAction(transform))
 }
 
 export function * getModalToggle () {
