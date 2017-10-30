@@ -24,7 +24,7 @@ export default defineMessages({
   },
   dateCASHUNPAID: {
     id: 'app.components.Purchase.dateCASHUNPAID',
-    defaultMessage: 'Valid Until'
+    defaultMessage: 'Date Expired'
   },
   dateCASHCONFIRMED: {
     id: 'app.components.Purchase.dateCASHCONFIRMED',
@@ -56,7 +56,7 @@ export default defineMessages({
   },
   dateCODUNPAID: {
     id: 'app.components.Purchase.dateCODUNPAID',
-    defaultMessage: 'Valid Until'
+    defaultMessage: 'Date Expired'
   },
   dateCODPROCESSING: {
     id: 'app.components.Purchase.dateCODPROCESSING',

@@ -146,7 +146,7 @@ export default defineMessages({
   },
   dateCASHUNPAID: {
     id: 'app.components.Receipt.dateCASHUNPAID',
-    defaultMessage: 'Valid Until'
+    defaultMessage: 'Date Expired'
   },
   dateCASHCONFIRMED: {
     id: 'app.components.Receipt.dateCASHCONFIRMED',
@@ -178,7 +178,7 @@ export default defineMessages({
   },
   dateCODUNPAID: {
     id: 'app.components.Receipt.dateCODUNPAID',
-    defaultMessage: 'Valid Until'
+    defaultMessage: 'Date Expired'
   },
   dateCODPROCESSING: {
     id: 'app.components.Receipt.dateCODPROCESSING',
