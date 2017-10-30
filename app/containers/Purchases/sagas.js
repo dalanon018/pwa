@@ -5,9 +5,7 @@ import {
   assoc,
   compose,
   either,
-  identity,
   ifElse,
-  is,
   find,
   isNil,
   map,
@@ -16,13 +14,11 @@ import {
   propOr,
   propEq,
   sort,
-  uniq,
   uniqBy
 } from 'ramda'
 
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
-import xhr from 'utils/xhr'
 
 // import request from 'utils/request'
 import { getRequestData } from 'utils/offline-request'
@@ -32,19 +28,11 @@ import { transformOrder } from 'utils/transforms'
 
 import {
   GET_API_PURCHASES,
-  GET_LOCAL_PURCHASES,
-
-  GET_MODAL_TOGGLE,
-
-  SET_MOBILE_NUMBER,
-  GET_MARKDOWN
+  GET_LOCAL_PURCHASES
 } from './constants'
 
 import {
-  setPurchasesAction,
-
-  setModalToggleAction,
-  setMarkDownAction
+  setPurchasesAction
 } from './actions'
 
 import {
@@ -55,7 +43,6 @@ import {
 } from 'containers/App/constants'
 
 import {
-  setMobileNumbersAction,
   setNetworkErrorAction
 } from 'containers/Buckets/actions'
 
@@ -165,50 +152,6 @@ export function * getLocalPurchases () {
   yield put(setPurchasesAction(transform))
 }
 
-export function * getModalToggle () {
-  const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
-  const modalToggle = !mobileNumbers
-  // if we have mobile numbers then we dont have to show our modal else we have to show it.
-  yield put(setModalToggleAction(modalToggle))
-}
-
-export function * setMobileNumber (payload) {
-  const { payload: { value } } = payload
-  const convertToArray = ifElse(is(Object), identity, (entity) => [entity])
-  const updateBucket = compose(uniq, convertToArray)
-  const mobiles = yield call(getItem, MOBILE_NUMBERS_KEY)
-
-  let mobileRegistrations = compact(mobiles) || []
-
-  mobileRegistrations = mobileRegistrations.concat(value)
-
-  yield call(setItem, MOBILE_NUMBERS_KEY, mobileRegistrations)
-  // update the buckets to listen
-  yield put(setMobileNumbersAction(updateBucket(mobileRegistrations)))
-  // update the modal
-  yield getModalToggle()
-  // update the receipts
-  yield getApiPurchases()
-}
-
-export function * getMarkDown () {
-  const headers = new Headers()
-  headers.append('Content-Type', 'binary/octet-stream')
-
-  const url = 'https://s3-ap-southeast-1.amazonaws.com/cliqq.shop/docs/terms.md'
-  const req = yield call(xhr, url, {
-    method: 'GET',
-    headers
-  })
-  if (!req.err) {
-    yield put(setMarkDownAction(req))
-  }
-}
-
-export function * getMarkDownSaga () {
-  yield * takeLatest(GET_MARKDOWN, getMarkDown)
-}
-
 export function * getApiPurchasesSaga () {
   yield * takeLatest(GET_API_PURCHASES, getApiPurchases)
 }
@@ -217,24 +160,11 @@ export function * getLocalPurchasesSaga () {
   yield * takeLatest(GET_LOCAL_PURCHASES, getLocalPurchases)
 }
 
-export function * getModalToggleSaga () {
-  yield * takeLatest(GET_MODAL_TOGGLE, getModalToggle)
-}
-
-export function * setMobileNumberSaga () {
-  yield * takeLatest(SET_MOBILE_NUMBER, setMobileNumber)
-}
-
 // All sagas to be loaded
 export function * purchasesSagas () {
   const watcher = yield [
     fork(getApiPurchasesSaga),
-    fork(getLocalPurchasesSaga),
-
-    fork(getModalToggleSaga),
-
-    fork(setMobileNumberSaga),
-    fork(getMarkDownSaga)
+    fork(getLocalPurchasesSaga)
   ]
 
   // Suspend execution until location changes

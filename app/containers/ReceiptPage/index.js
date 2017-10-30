@@ -30,6 +30,10 @@ import CLAIMED from 'images/ticket-backgrounds/claimed.png'
 import UNCLAIMED from 'images/ticket-backgrounds/not-claimed.png'
 
 import {
+  userIsAuthenticated
+} from 'containers/App/auth'
+
+import {
   STATUSES,
   PURCHASE_ORDER,
   PURCHASE_USECASE
@@ -292,4 +296,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(ReceiptPage))
+export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(userIsAuthenticated(ReceiptPage)))

@@ -46,7 +46,8 @@ describe('<Product />', () => {
       'deliveryPromiseMessage': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla.',
       'barcode': '718037806839'
     }),
-    loading: false
+    loading: false,
+    onSubmit: () => {}
   }
 
   it('render without exploding', () => {

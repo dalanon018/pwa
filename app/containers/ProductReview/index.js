@@ -12,12 +12,31 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
-import messages from './messages'
 
 import { Grid, Label, Form, Checkbox, Image, Button } from 'semantic-ui-react'
 
+import NextIcon from 'images/icons/greater-than-icon.svg'
+
 import { imageStock } from 'utils/image-stock'
 import { transformStore } from 'utils/transforms'
+
+import Modal from 'components/PromptModal'
+import WindowWidth from 'components/WindowWidth'
+import ListCollapse from 'components/ListCollapse'
+
+import { LoadingStateImage } from 'components/LoadingBlock'
+
+import {
+  userIsAuthenticated
+} from 'containers/App/auth'
+
+import {
+  setPageTitleAction,
+  setShowSearchIconAction,
+  setShowActivityIconAction
+} from 'containers/Buckets/actions'
+
+import messages from './messages'
 
 import {
   getOrderProductAction,
@@ -40,19 +59,6 @@ import {
   selectStoreLocation,
   selectBlackListed
 } from './selectors'
-
-import {
-  setPageTitleAction,
-  setShowSearchIconAction,
-  setShowActivityIconAction
-} from 'containers/Buckets/actions'
-
-import Modal from 'components/PromptModal'
-import WindowWidth from 'components/WindowWidth'
-import ListCollapse from 'components/ListCollapse'
-import { LoadingStateImage } from 'components/LoadingBlock'
-
-import NextIcon from 'images/icons/greater-than-icon.svg'
 
 import {
   LabelTitle,
@@ -203,8 +209,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   _toggleOrigDiscountPrice = (product) => {
-    return (product.get('discountPrice') && parseFloat(product.get('discountPrice')).toLocaleString()) ||
-    parseFloat(product.get('price')).toLocaleString()
+    const showPrice = product.get('discountPrice') || product.get('price')
+
+    return showPrice ? showPrice.toLocaleString() : 0
   }
 
   _showDiscountPrice = (component1, component2) => (condition) => ifElse(
@@ -303,7 +310,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
           <FormattedMessage {...messages.peso} />
           { this._toggleOrigDiscountPrice(orderedProduct) }
         </span>
-        { toggleDiscount(orderedProduct.get('discountPrice') !== 0) }
+        { toggleDiscount(orderedProduct.get('discountPrice')) }
       </LabelPrice>
     </label>
     const labelTwo = <label className='label-custom'>
@@ -317,7 +324,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
           <FormattedMessage {...messages.peso} />
           { this._toggleOrigDiscountPrice(orderedProduct) }
         </span>
-        { toggleDiscount(orderedProduct.get('discountPrice') !== 0) }
+        { toggleDiscount(orderedProduct.get('discountPrice')) }
       </LabelPrice>
     </label>
     const brandLogo = orderedProduct.get('brandLogo') ? (
@@ -457,4 +464,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(injectIntl(ProductReview)))
+export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(injectIntl(userIsAuthenticated(ProductReview))))

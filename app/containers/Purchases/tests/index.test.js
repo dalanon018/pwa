@@ -14,15 +14,11 @@ const wrapper = (props = {}, enzyme = shallow) => enzyme(
 describe('<Purchases />', () => {
   const minProps = {
     loading: false,
-    modalToggle: false,
-    markdownLoader: false,
     purchases: fromJS([]),
     activePurchases: fromJS([]),
     completedPurchases: fromJS([]),
     expiredPurchases: fromJS([]),
     getApiPurchases: () => {},
-    getModalToggle: () => {},
-    setModalToggle: () => {},
     setMobileNumber: () => {},
     dispatch: () => {},
     changeRoute: () => {},
