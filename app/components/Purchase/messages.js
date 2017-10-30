@@ -44,7 +44,7 @@ export default defineMessages({
   },
   dateCASHUNCLAIMED: {
     id: 'app.components.Purchase.dateCASHUNCLAIMED',
-    defaultMessage: 'Date Delivered'
+    defaultMessage: 'Date Expired'
   },
   dateCODRESERVED: {
     id: 'app.components.Purchase.dateCODRESERVED',
@@ -80,7 +80,7 @@ export default defineMessages({
   },
   dateCODUNCLAIMED: {
     id: 'app.components.Purchase.dateCODUNCLAIMED',
-    defaultMessage: 'Date Delivered'
+    defaultMessage: 'Date Expired'
   },
   dateCASHFieldDefault: {
     id: 'app.components.Purchase.dateCASHFieldDefault',

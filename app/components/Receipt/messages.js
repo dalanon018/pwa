@@ -166,7 +166,7 @@ export default defineMessages({
   },
   dateCASHUNCLAIMED: {
     id: 'app.components.Receipt.dateCASHUNCLAIMED',
-    defaultMessage: 'Date Delivered'
+    defaultMessage: 'Date Expired'
   },
   dateCODRESERVED: {
     id: 'app.components.Receipt.dateCODRESERVED',
@@ -202,7 +202,7 @@ export default defineMessages({
   },
   dateCODUNCLAIMED: {
     id: 'app.components.Receipt.dateCODUNCLAIMED',
-    defaultMessage: 'Date Delivered'
+    defaultMessage: 'Date Expired'
   },
   dateCASHFieldDefault: {
     id: 'app.components.Receipt.dateCASHFieldDefault',
