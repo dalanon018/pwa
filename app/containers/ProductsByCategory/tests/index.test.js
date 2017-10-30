@@ -20,6 +20,7 @@ describe('<ProductsByCategory />', () => {
     params: {
       id: 'CAT1'
     },
+    productsByTags: fromJS([]),
     productsByCategory: fromJS([]),
     productsFeatured: fromJS([]),
     productsViewed: fromJS([]),

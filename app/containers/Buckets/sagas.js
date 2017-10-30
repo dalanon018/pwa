@@ -301,7 +301,8 @@ function * updateReceiptSnapShot (orders, receiptId) {
     yield put(setReceiptAction(receiptTransform))
 
     // we have to update the purchase list
-    yield put(setPurchasesAction(orders))
+    const transform = yield orders.map((data) => transformEachEntity(transformOrder, data))
+    yield put(setPurchasesAction(transform))
   }
 
   return updatedReceipts

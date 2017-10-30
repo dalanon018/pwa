@@ -11,16 +11,19 @@ import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
 import { noop } from 'lodash'
 import {
+  __,
   F,
   T,
   compose,
   contains,
   curry,
   equals,
+  identity,
   ifElse,
   lt,
   partial,
-  path
+  path,
+  subtract
 } from 'ramda'
 import styled from 'styled-components'
 import { Container } from 'semantic-ui-react'
@@ -60,6 +63,7 @@ import {
 import {
   selectLazyload,
   selectLoading,
+  selectProductsByCategory,
   selectProductsByCategoryItems,
   selectProductsByCategoryFeatured,
   selectProductsViewed,
@@ -118,6 +122,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     totalCount: PropTypes.number.isRequired,
     loader: PropTypes.bool.isRequired,
     lazyload: PropTypes.bool.isRequired,
+    productsByTags: PropTypes.object.isRequired,
     productsByCategory: PropTypes.object.isRequired,
     productsViewed: PropTypes.object.isRequired,
     productsFeatured: PropTypes.object.isRequired,
@@ -202,12 +207,16 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _displayNumberProducts () {
-    const { productsByCategory, productsFeatured, totalCount } = this.props
+    const { params: { id }, productsByCategory, productsFeatured, totalCount } = this.props
+    const displayTotalCount = ifElse(partial(isTag(this._tags), [id]),
+      identity,
+      subtract(__, productsFeatured.size)
+    )
 
     if (productsByCategory.size) {
       return (
         <H4 className='color__grey'>
-          { totalCount - productsFeatured.size}
+          { displayTotalCount(totalCount) }
           <FormattedMessage {...messages.items} />
         </H4>
       )
@@ -242,6 +251,25 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     }
 
     return null
+  }
+
+  /**
+   * What does this solve?
+   * Well if your page is for featured item
+   * technically you have to show the featured items along with the ordinary items.
+   *
+   * else where if you're on a category then you have certain distinction
+   * weather the item is featured or ordinary
+   */
+  _displayProductData = () => {
+    const { params: { id }, productsByTags, productsByCategory } = this.props
+    const shouldDiplayTagItems = ifElse(
+      isTag(this._tags),
+      () => productsByTags,
+      () => productsByCategory
+    )
+
+    return shouldDiplayTagItems(id)
   }
 
   _handleFeaturedProductsPerCategory () {
@@ -330,14 +358,15 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   render () {
-    const { productsByCategory, productsViewed, loader, changeRoute, lazyload, windowWidth } = this.props
+    const { productsViewed, loader, changeRoute, lazyload, windowWidth } = this.props
     const { limit } = this.state
+
     return (
       <div>
         <ContentWrapper>
           <LazyLoading
             lazyload={lazyload}
-            results={productsByCategory}
+            results={this._displayProductData()}
             onScroll={this._displayMoreProducts}
             limit={limit}
           >
@@ -347,7 +376,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
             <H3 className='margin__none'> {this._handlePageTitle()} </H3>
             {this._displayNumberProducts()}
             { this._displayEmpty() }
-            <ProductView changeRoute={changeRoute} loader={loader} products={productsByCategory} windowWidth={windowWidth} />
+            <ProductView changeRoute={changeRoute} loader={loader} products={this._displayProductData()} windowWidth={windowWidth} />
 
             { this._displayRecentlyViewedHeader() }
           </LazyLoading>
@@ -361,6 +390,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 }
 
 const mapStateToProps = createStructuredSelector({
+  productsByTags: selectProductsByCategory(),
   productsByCategory: selectProductsByCategoryItems(),
   productsViewed: selectProductsViewed(),
   productsFeatured: selectProductsByCategoryFeatured(),
