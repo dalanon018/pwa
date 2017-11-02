@@ -114,6 +114,6 @@ describe('<Product />', () => {
 
   it('renders three <CollapseContent/> styled component', () => {
     const ShallowedWrapper = shallow(<Product {...minProps} />)
-    expect(ShallowedWrapper.find(CollapseContent)).toHaveLength(1)
+    expect(ShallowedWrapper.find(CollapseContent)).toHaveLength(2)
   })
 })
