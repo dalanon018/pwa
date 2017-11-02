@@ -18,6 +18,7 @@ import Categories from 'images/icons/drawer/categories.svg'
 import Brands from 'images/icons/drawer/brands.svg'
 import Help from 'images/icons/drawer/help.svg'
 import Logout from 'images/icons/drawer/signout.svg'
+import Close from 'images/icons/drawer/close.svg'
 
 const SidebarContainer = styled.div`
   height: 100vh;
@@ -30,6 +31,7 @@ const SidebarContainer = styled.div`
   z-index: 99;
 `
 const SidebarWrapper = styled.div`
+  position: relative;
   overflow: auto;
   width: 100%;
   min-height: 100%;
@@ -106,6 +108,14 @@ const CustomContent = styled(List.Content)`
   padding-left: 46px;
 `
 
+const CloseButton = styled(Image)`
+  position: absolute !important;
+  right: 20px;
+  top: 20px;
+  height: 21px !important;
+  width: 21px !important;
+`
+
 class SidebarMenu extends React.PureComponent {
   static propTypes = {
     categories: PropTypes.object.isRequired,
@@ -157,11 +167,12 @@ class SidebarMenu extends React.PureComponent {
 
   render () {
     const {
-      categories, brands, changeRoute, toggleSidebar
+      categories, brands, changeRoute, toggleSidebar, toggleAction
     } = this.props
     return (
       <SidebarContainer className='background__black-transparent' toggle={toggleSidebar}>
         <SidebarWrapper className='background__white'>
+          <CloseButton onClick={toggleAction} alt='close' size='mini' src={Close} />
           <List divided verticalAlign='middle' selection>
             <ListWrapper onClick={this._handletoHome}>
               <Image alt='home' size='mini' src={Home} />
