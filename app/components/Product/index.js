@@ -159,21 +159,15 @@ const Product = ({
                 </Label>
               </div>
             </CollapseContent>
-            {
-                product && product.get('returnable')
-                ? (
-                  <CollapseContent>
-                    <Image src={ReturnIcon} alt='Cliqq' />
-                    <div className='collapse-description'>
-                      <Label className='description-title primary__secondary' as='p' basic size='large'><FormattedMessage {...messages.returnPolicy} /></Label>
-                      <Label className='text__roboto--light color__dark-grey' as='p' basic size='medium'>
-                        <span dangerouslySetInnerHTML={{__html: product.get('returnPolicy')}} />
-                      </Label>
-                    </div>
-                  </CollapseContent>
-                  )
-                : null
-              }
+            <CollapseContent>
+              <Image src={ReturnIcon} alt='Cliqq' />
+              <div className='collapse-description'>
+                <Label className='description-title primary__secondary' as='p' basic size='large'><FormattedMessage {...messages.returnPolicy} /></Label>
+                <Label className='text__roboto--light color__dark-grey' as='p' basic size='medium'>
+                  <span dangerouslySetInnerHTML={{__html: product.get('returnPolicy')}} />
+                </Label>
+              </div>
+            </CollapseContent>
           </ListCollapse>
           {
             product.get('additionalDetails')
