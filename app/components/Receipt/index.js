@@ -367,9 +367,9 @@ class Receipt extends React.PureComponent {
 
                     <Grid.Column floated='left' className='order-number' width={9}>
                       <Label className='weight-400 color__secondary' as='span' basic size='small'>
-                        <FormattedMessage {...messages.orderNumber} />
+                        <FormattedMessage {...messages.trackingNumber} />
                       </Label>
-                      <Label as='p' basic size='big' className='color__secondary'>{receipt.get('payCode')}</Label>
+                      <Label as='p' basic size='big' className='color__secondary'>{receipt.get('trackingNumber')}</Label>
                     </Grid.Column>
                     <Grid.Column floated='right' textAlign='right' width={7}>
                       <Label className='weight-400 color__secondary' as='span' basic size='small'>
