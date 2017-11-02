@@ -59,6 +59,9 @@ import {
  * @param {*} body
  */
 function * transformResponse ({ order: { sevenConnectRefNum, transactionId, expiryDate, totalPrice, mobileNumber, paymentType, status }, orderedProduct }) {
+  // some of the item doesnt have brand
+  const brand = orderedProduct.get('brand') ? orderedProduct.get('brand').toJS() : {}
+
   return {
     trackingNumber: transactionId,
     claimExpiry: expiryDate,
@@ -68,9 +71,9 @@ function * transformResponse ({ order: { sevenConnectRefNum, transactionId, expi
     amount: totalPrice,
     quantity: 1,
     imageUrl: orderedProduct.get('image'),
-    brand: orderedProduct.get('brand').toJS(),
     brandLogo: orderedProduct.get('brandLogo'),
     name: orderedProduct.get('title'),
+    brand,
     mobileNumber,
     sevenConnectRefNum,
     paymentType,
@@ -215,7 +218,7 @@ export function * submitOrder (args) {
 
       yield put(successOrderAction(orderResponse))
     } else {
-      yield put(errorOrderAction(order))
+      yield put(errorOrderAction('Error on submission'))
     }
   } catch (e) {
     // yield put(setNetworkErrorAction(e.message))

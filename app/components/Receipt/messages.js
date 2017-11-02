@@ -108,6 +108,10 @@ export default defineMessages({
     id: 'app.components.Receipt.orderNumber',
     defaultMessage: 'Your Order Number:'
   },
+  trackingNumber: {
+    id: 'app.components.Receipt.orderNumber',
+    defaultMessage: 'Your Tracking Number:'
+  },
   paymentMethod: {
     id: 'app.components.Receipt.paymentMethod',
     defaultMessage: 'Method of Payment:'
