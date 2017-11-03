@@ -42,7 +42,7 @@ const InputWrapper = styled.div`
     width: 100%%;
     text-align: center;
   }
-  
+
   span {
     font-size: 2.514286rem;
   }
@@ -55,7 +55,7 @@ const TextWrapper = styled.div`
 
 const BannerHeader = styled.div`
   background: url(${props => props.background}) no-repeat top right / cover;
-  height: 85px;
+  height: 140px;
   margin-bottom: 40px;
   position: relative;
   width: 100%;
