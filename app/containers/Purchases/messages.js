@@ -25,7 +25,7 @@ export default defineMessages({
   },
   titleStatusUNPAID: {
     id: 'app.components.Purchases.titleStatusUNPAID',
-    defaultMessage: 'Expired'
+    defaultMessage: 'Unpaid'
   },
   titleStatusPROCESSING: {
     id: 'app.components.Purchases.titleStatusPROCESSING',
