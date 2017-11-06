@@ -55,6 +55,10 @@ import {
   selectProductsByBrandsFeatured
 } from './selectors'
 
+import {
+  LIMIT_ITEMS
+} from './constants'
+
 const ContentWrapper = styled(Container)`
   padding-top: 20px;
   padding-bottom: 20px;
@@ -80,7 +84,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     brandImages: [],
     pageOffset: 0,
     offset: 0,
-    limit: 12
+    limit: LIMIT_ITEMS
   }
 
   _handlePageTitle = (nextProps) => {

@@ -14,7 +14,9 @@ import {
   SET_PRODUCTS_COUNT,
 
   GET_PRODUCTS_VIEWED,
-  SET_PRODUCTS_VIEWED
+  SET_PRODUCTS_VIEWED,
+
+  LIMIT_ITEMS
 } from './constants'
 
 const initialState = fromJS({
@@ -39,7 +41,8 @@ function productsByCategoryReducer (state = initialState, action) {
       return state
         .set('productsByCategory', fromJS(compact(mergeState)))
         .set('loading', false)
-        .set('lazyload', !isEmpty(action.payload))
+         // we will toggle to true lazyload if only items are not empty and payload is greater that the limit
+         .set('lazyload', (!isEmpty(action.payload) && LIMIT_ITEMS <= action.payload.length))
     }
     case RESET_PRODUCTS_CATEGORY:
       return state

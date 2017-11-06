@@ -9,7 +9,9 @@ import { compact, isEmpty } from 'lodash'
 import {
   GET_PRODUCTS_BRANDS,
   SET_PRODUCTS_BRANDS,
-  RESET_PRODUCTS_BRANDS
+  RESET_PRODUCTS_BRANDS,
+
+  LIMIT_ITEMS
 } from './constants'
 
 const initialState = fromJS({
@@ -32,7 +34,8 @@ function brandPageReducer (state = initialState, action) {
       return state
         .set('productsByBrands', fromJS(compact(mergeState)))
         .set('loading', false)
-        .set('lazyload', !isEmpty(action.payload))
+        // we will toggle to true lazyload if only items are not empty and payload is greater that the limit
+        .set('lazyload', (!isEmpty(action.payload) && LIMIT_ITEMS <= action.payload.length))
     }
     case RESET_PRODUCTS_BRANDS:
       return state
