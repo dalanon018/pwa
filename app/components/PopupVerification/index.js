@@ -140,7 +140,7 @@ export class PopupVerification extends React.PureComponent {
 
             <InputWrapper>
               <Input
-                type='text'
+                type='tel'
                 value={value}
                 onChange={this._handleInput}
                 placeholder='XXXX'
