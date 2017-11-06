@@ -70,6 +70,10 @@ import {
   selectTotalCount
 } from './selectors'
 
+import {
+  LIMIT_ITEMS
+} from './constants'
+
 const ContentWrapper = styled(Container)`
   padding-top: 20px !important;
   padding-bottom: 20px !important;
@@ -133,7 +137,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   state = {
     pageOffset: 0,
     offset: 0,
-    limit: 16 // we need this since we are including the feature items.
+    limit: LIMIT_ITEMS // we need this since we are including the feature items.
   }
 
   _tags = ['featured', 'sale']

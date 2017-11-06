@@ -9,11 +9,11 @@ import styled from 'styled-components'
 import { debounce, noop } from 'lodash'
 import {
   allPass,
-  both,
+  // both,
   equals,
   identity,
   ifElse,
-  gte,
+  // gte,
   lt
 } from 'ramda'
 
@@ -61,10 +61,11 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
    * items are more than equal to the limit and lazyload === true
    */
   _displayLazyLoadIndicator = () => {
-    const { lazyload, results, limit } = this.props
-    const itemsGreaterEqLimit = () => gte(results.size, limit)
+    const { lazyload } = this.props
+    // const itemsGreaterEqLimit = () => true//gte(results.size, limit)
     const showLoadingIndicator = ifElse(
-      both(identity, itemsGreaterEqLimit),
+      // both(identity, itemsGreaterEqLimit),
+      identity,
       () => (
         <WrapperLoadingIndicator>
           <LoadingIndicator />
