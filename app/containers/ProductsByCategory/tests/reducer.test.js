@@ -29,7 +29,7 @@ describe('productsByCategoryReducer', () => {
     const mergeState = currentState.concat(payload)
     const expectedResult = state
                             .set('productsByCategory', fromJS(mergeState))
-                            .set('lazyload', true)
+                            .set('lazyload', false)
 
     expect(productsByCategoryReducer(state, setProductsByCategoryAction(payload))).toEqual(expectedResult)
   })
