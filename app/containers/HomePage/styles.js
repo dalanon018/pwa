@@ -12,8 +12,15 @@ const SearchContainer = styled.div`
   display: block;
 `
 
+const CategoryWrapper = styled.div`
+  @media screen and (min-width: 1024px) {
+    padding: 0 250px;
+  }
+`
+
 export {
   BannerWrapper,
   SearchWrapper,
-  SearchContainer
+  SearchContainer,
+  CategoryWrapper
 }

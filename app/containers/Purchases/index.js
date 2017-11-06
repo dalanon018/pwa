@@ -6,6 +6,7 @@
 
 import React, { PropTypes } from 'react'
 import Helmet from 'react-helmet'
+import styled from 'styled-components'
 
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
@@ -38,6 +39,14 @@ import {
   getApiPurchasesAction,
   getStoragePurchasesAction
 } from './actions'
+
+const PurchaseWrapper = styled.div`
+  .ui.tabular{
+    .item {
+      margin: 0 auto;
+    }
+  }
+`
 
 export class Purchases extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
@@ -111,7 +120,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
     ]
 
     return (
-      <div>
+      <PurchaseWrapper>
         <Helmet
           title='Receipts'
           meta={[
@@ -120,7 +129,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
         />
 
         <Tab panes={panes} />
-      </div>
+      </PurchaseWrapper>
     )
   }
 }

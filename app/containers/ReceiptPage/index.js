@@ -68,9 +68,6 @@ import {
 } from './actions'
 
 const ReceiptWrapper = styled.div`
-  ${''}
-  // min-height: 100vh;
-  // padding: 50px 14px;
   margin-bottom: 60px;
 
   @media (min-width: 768px) {

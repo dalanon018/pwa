@@ -306,6 +306,14 @@ const ButtonContainer = styled.div`
       padding: 20px 70px!important;
     }
   }
+
+  @media (min-width: 1024px) {
+    button {
+      span {
+        font-size: 21px;
+      }
+    }
+  }
 `
 
 const ReviewContainer = styled.div`

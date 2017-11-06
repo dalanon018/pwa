@@ -45,7 +45,8 @@ import {
 import {
   BannerWrapper,
   SearchWrapper,
-  SearchContainer
+  SearchContainer,
+  CategoryWrapper
 } from './styles'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -133,6 +134,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   render () {
     const { loader, featuredCategories, featuredBrands, changeRoute, windowWidth, intl } = this.props
     const { products } = this.state
+    const numSlide = windowWidth > 767 ? 2 : 1
     const bannerImages = [
       paramsImgix(imageStock('sample_banner.jpg'), {
         auto: 'compress',
@@ -177,7 +179,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         </SearchContainer>
 
         <BannerWrapper>
-          <BannerSlider loader={loader} images={bannerImages} />
+          <BannerSlider loader={loader} images={bannerImages} slidesToShow={numSlide} />
         </BannerWrapper>
 
         <Container>
@@ -203,17 +205,18 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               </H3>
             )(featuredCategories.size > 0)
           }
-          <Category
-            loader={loader}
-            windowWidth={windowWidth}
-            margin='2'
-            changeRoute={changeRoute}
-            route='/products-category'
-            iconWidth='25'
-            fontSize='9'
-            height='80'
-            categories={featuredCategories} />
-
+          <CategoryWrapper>
+            <Category
+              loader={loader}
+              windowWidth={windowWidth}
+              margin='2'
+              changeRoute={changeRoute}
+              route='/products-category'
+              iconWidth='25'
+              fontSize='9'
+              height='80'
+              categories={featuredCategories} />
+          </CategoryWrapper>
           {
             this._shouldDisplayHeader(
               <H3>

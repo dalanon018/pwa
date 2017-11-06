@@ -11,28 +11,38 @@ import {
   PURCHASE_USECASE
 } from 'containers/Buckets/constants'
 
-const CustomGrid = styled(Grid)`
-  @media (min-width: 1024px) {
-    padding: 0 250px !important;
+const CustomGrid = styled.div`
+  padding: 10px !important;
+
+  @media (max-width: 375px) {
+    padding: 0 !important;
+  }
+
+  @media (min-width: 1441px) {
+    padding: 10px 250px !important;
   }
 `
 
 const EntityPurchases = ({ entity, changeRoute, windowWidth }) => (
-  <CustomGrid padded>
-    {
-      entity.map((receipt, index) =>
-        <Purchase
-          className='padding__bottom--15'
-          defaultImage={imageStock('default-slider.jpg')}
-          key={receipt.get('trackingNumber')}
-          receipt={receipt}
-          windowWidth={windowWidth}
-          statuses={STATUSES}
-          purchaseUsecases={PURCHASE_USECASE}
-          purchaseOrders={PURCHASE_ORDER}
-          changeRoute={changeRoute}
-        />)
-    }
+  <CustomGrid>
+    <Grid padded columns={windowWidth > 1023 ? 2 : 1}>
+      {
+        entity.map((receipt, index) =>
+          <Grid.Column>
+            <Purchase
+              className='padding__bottom--15'
+              defaultImage={imageStock('default-slider.jpg')}
+              key={receipt.get('trackingNumber')}
+              receipt={receipt}
+              windowWidth={windowWidth}
+              statuses={STATUSES}
+              purchaseUsecases={PURCHASE_USECASE}
+              purchaseOrders={PURCHASE_ORDER}
+              changeRoute={changeRoute}
+            />
+          </Grid.Column>
+        )}
+    </Grid>
   </CustomGrid>
 )
 

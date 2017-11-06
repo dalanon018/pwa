@@ -44,6 +44,8 @@ function ProductView ({
     lossless: 0
   }
 
+  const columnCount = windowWidth > 767 ? 4 : 2
+
   const productName = (data) => {
     let maxChar = 33
     switch (true) {
@@ -71,7 +73,7 @@ function ProductView ({
   )(condition)
 
   return (
-    <Grid padded stretched columns={2}>
+    <Grid padded stretched columns={columnCount}>
       {
         loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
         : products.valueSeq().map((product, index) => {
