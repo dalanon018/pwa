@@ -427,7 +427,7 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
                 </Label>
 
                 <Input
-                  type='text'
+                  type='tel'
                   value={value}
                   onChange={this._handleInput}
                   placeholder='9XXXXXXXXX'
