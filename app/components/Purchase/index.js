@@ -163,8 +163,7 @@ class Purchase extends React.PureComponent {
     const Timer = timer || '00:00:00'
 
     return switchFn({
-      RESERVED: <p> { Timer } </p>,
-      UNPAID: <p> { Timer } </p>
+      RESERVED: <p> { Timer } </p>
     })(
       this._handleDateVisible()
     )(currentStatus)
