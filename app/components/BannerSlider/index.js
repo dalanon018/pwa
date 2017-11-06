@@ -42,7 +42,6 @@ export const HandleBlock = ({
   images,
   slidesToShow }) => {
   let block
-  console.log('testing', slidesToShow)
   const settings = {
     autoplay: isAutoPlay && images.length > 1,
     swipe: images.length > 1,
