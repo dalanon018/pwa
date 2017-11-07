@@ -125,42 +125,49 @@ const ModalDescription = ({ status, receipt }) => {
   })(null)(status)
 }
 
-const ModalButtons = ({ status, goToReceipts, goToProducts }) => {
+const ModalButtons = ({ status, goToReceipts, goToProducts, onClose }) => {
   return ComponentDetail({
     RESERVED: {
       primary: <FormattedMessage {...messages.buttonReserved} />,
       secondary: <FormattedMessage {...messages.secondaryButton} />,
-      onClick: goToReceipts
+      onClick: goToReceipts,
+      onClose
     },
     UNPAID: {
-      primary: <FormattedMessage {...messages.buttonUnpaid} />,
-      secondary: <FormattedMessage {...messages.secondaryRepurchaseButton} />,
-      onClick: goToProducts
+      primary: <FormattedMessage {...messages.secondaryRepurchaseButton} />,
+      secondary: <FormattedMessage {...messages.buttonUnpaid} />,
+      onClick: onClose,
+      onClose: goToProducts
     },
     CONFIRMED: {
       primary: <FormattedMessage {...messages.buttonConfirmed} />,
       secondary: <FormattedMessage {...messages.secondaryButton} />,
-      onClick: goToReceipts
+      onClick: goToReceipts,
+      onClose
     },
     INTRANSIT: {
       primary: <FormattedMessage {...messages.buttonIntransit} />,
       secondary: <FormattedMessage {...messages.secondaryButton} />,
-      onClick: goToReceipts
+      onClick: goToReceipts,
+      onClose
     },
     DELIVERED: {
       primary: <FormattedMessage {...messages.buttonDelivered} />,
       secondary: <FormattedMessage {...messages.secondaryButton} />,
-      onClick: goToReceipts
+      onClick: goToReceipts,
+      onClose
     },
     CLAIMED: {
       primary: <FormattedMessage {...messages.buttonClaimed} />,
       secondary: <FormattedMessage {...messages.secondaryButton} />,
-      onClick: goToReceipts
+      onClick: goToReceipts,
+      onClose
     },
     UNCLAIMED: {
       primary: <FormattedMessage {...messages.buttonUnclaimed} />,
       secondary: <FormattedMessage {...messages.secondaryButton} />,
-      onClick: goToReceipts
+      onClick: goToReceipts,
+      onClose
     }
   })(null)(status)
 }
@@ -189,15 +196,30 @@ class ModalWithHeader extends React.PureComponent {
     setUpdatedReceipts(receiptsUpdated)
   }
 
+  _goToProducts = (code) => {
+    const { goToProducts } = this.props
+
+    return () => {
+      // closing the modal
+      this._closeModal()
+      goToProducts(code)
+    }
+  }
+
   _fnFactory (cbFn) {
     this._closeModal()
     cbFn()
   }
 
   render () {
-    const { receipt, goToReceipts, goToProducts } = this.props
+    const { receipt, goToReceipts } = this.props
     const currentStatus = STATUSES[toUpper(receipt.get('status'))] || ''
-    const { primary, secondary, onClick } = ModalButtons({ status: currentStatus, goToReceipts, goToProducts: goToProducts.bind(null, receipt.get('cliqqCode')) }) || {}
+    const { primary, secondary, onClick, onClose } = ModalButtons({
+      status: currentStatus,
+      goToProducts: this._goToProducts(receipt.get('cliqqCode')),
+      closeModal: this._closeModal,
+      goToReceipts
+    }) || {}
     // const modalSize = windowWidth >= 768 ? 'small' : 'mini'
 
     return (
@@ -225,7 +247,7 @@ class ModalWithHeader extends React.PureComponent {
             </DetailsWrapper>
             <ButtonWrapper>
               <Button
-                onClick={this._closeModal}
+                onClick={onClose}
                 primary
               >
                 { primary }

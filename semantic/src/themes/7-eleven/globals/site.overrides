@@ -96,7 +96,7 @@ div [data-reactroot],
 }
 
 p {
-  line-height: 1em;
+  line-height: 1.5em !important;
 }
 
 .search.icon {
@@ -137,6 +137,7 @@ input.input-field {
 
 .ui.modal {
   height: auto;
+  margin-top: -200px !important;
 }
 
 .text {

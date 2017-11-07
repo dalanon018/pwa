@@ -20,7 +20,7 @@ import Countdown from 'components/Countdown'
 import LoadingIndicator from 'components/LoadingIndicator'
 
 import WarningIcon from 'images/icons/instructions-icon.svg'
-import ScreenshotIcon from 'images/icons/screenshot-icon.svg'
+// import ScreenshotIcon from 'images/icons/screenshot-icon.svg'
 import ReturnIcon from 'images/icons/receipts/return-icon-receipt.svg'
 
 import { DateFormater } from 'utils/date' // DateFormater
@@ -43,8 +43,8 @@ import {
   CustomContainer,
   ReceiptWrapper,
   ScannerWrapper,
-  PushNotificationWrapper,
-  InstructionsWrapper
+  PushNotificationWrapper
+  // InstructionsWrapper
 } from './styled'
 
 import {
@@ -411,8 +411,6 @@ class Receipt extends React.PureComponent {
           </ReceiptContainer>
         </ReceiptWrapper>
 
-        { this._handlePushRegistrationUI() }
-
         <InfoContainer>
           <Grid padded centered textAlign='left'>
             <Grid.Row>
@@ -429,6 +427,7 @@ class Receipt extends React.PureComponent {
             </Grid.Row>
           </Grid>
         </InfoContainer>
+        { /*
         <InfoContainer>
           <Grid padded centered textAlign='left'>
             <Grid.Row>
@@ -445,6 +444,9 @@ class Receipt extends React.PureComponent {
             </Grid.Row>
           </Grid>
         </InfoContainer>
+        */ }
+        { this._handlePushRegistrationUI() }
+
         <ButtonContainer>
           { this._handleButtonFunctionality() }
         </ButtonContainer>

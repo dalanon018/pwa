@@ -50,7 +50,7 @@ export default defineMessages({
     id: 'app.components.Receipt.receiptInfoMessageReserve',
     // defaultMessage: 'Pay Item Before the time Expires'
     defaultMessage: `Show this barcode at any 7 Eleven
-    store within 1 Hour and pay for your item.`
+    store and pay for your item.`
   },
   receiptInfoMessageReserveExpired: {
     id: 'app.components.Receipt.receiptInfoMessageReserveExpired',
