@@ -15,7 +15,6 @@ describe('<BannerSlider />', () => {
   const minProps = {
     loader: false,
     isInfinite: false,
-    isAutoPlay: false,
     images: []
   }
 

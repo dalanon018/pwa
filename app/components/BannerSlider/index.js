@@ -20,7 +20,6 @@ import {
 function BannerSlider ({
   loader,
   isInfinite,
-  isAutoPlay,
   isLowerdots,
   images,
   slidesToShow }) {
@@ -28,7 +27,6 @@ function BannerSlider ({
     loader={loader}
     images={images}
     isInfinite={isInfinite || false}
-    isAutoPlay={isAutoPlay || false}
     isLowerdots={isLowerdots || false}
     slidesToShow={slidesToShow || 1}
     />
@@ -37,13 +35,12 @@ function BannerSlider ({
 export const HandleBlock = ({
   loader,
   isInfinite,
-  isAutoPlay,
   isLowerdots,
   images,
   slidesToShow }) => {
   let block
   const settings = {
-    autoplay: isAutoPlay && images.length > 1,
+    autoplay: images.length > 1,
     swipe: images.length > 1,
     autoplaySpeed: 3500,
     dots: images.length > 1,
@@ -92,7 +89,6 @@ export const DefaultState = ({
 BannerSlider.propTypes = {
   loader: PropTypes.bool.isRequired,
   isInfinite: PropTypes.bool,
-  isAutoPlay: PropTypes.bool,
   images: PropTypes.array.isRequired,
   slidesToShow: PropTypes.number
 }
