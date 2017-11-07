@@ -29,7 +29,6 @@ export const BrandWrapper = styled.div`
 
   @media (min-width: 1024px) {
     .image {
-      max-width: 420px;
       margin: 0 auto;
     }
   }

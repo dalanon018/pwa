@@ -54,6 +54,11 @@ export const ButtonContainer = styled.div`
 // ====================
 export const ReceiptWrapper = styled.div`
   position: relative;
+
+  @media screen and (min-width: 1440px) {
+    width: 700px;
+    margin: auto;
+  }
 `
 
 export const ReceiptContainer = styled.div`
