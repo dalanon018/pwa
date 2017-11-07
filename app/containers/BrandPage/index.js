@@ -218,7 +218,11 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
 
     return (
       <div>
-        <BannerSlider isInfinite loader={loader} images={brandImages} />
+        <BannerSlider
+          isInfinite
+          loader={loader}
+          images={brandImages}
+        />
         <ContentWrapper className='padding__horizontal--10'>
           <LazyLoading
             lazyload={lazyload}
