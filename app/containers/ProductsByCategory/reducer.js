@@ -13,7 +13,6 @@ import {
 
   SET_PRODUCTS_COUNT,
 
-  GET_PRODUCTS_VIEWED,
   SET_PRODUCTS_VIEWED,
 
   LIMIT_ITEMS
@@ -23,7 +22,7 @@ const initialState = fromJS({
   productsByCategory: [],
   productsViewed: [],
   totalCount: 0,
-  loading: false,
+  loading: true,
   lazyload: false
 })
 
@@ -53,12 +52,9 @@ function productsByCategoryReducer (state = initialState, action) {
     case SET_PRODUCTS_COUNT:
       return state.set('totalCount', fromJS(action.payload))
 
-    case GET_PRODUCTS_VIEWED:
-      return state.set('loading', true)
     case SET_PRODUCTS_VIEWED:
       return state
         .set('productsViewed', fromJS(action.payload))
-        .set('loading', false)
 
     default:
       return state

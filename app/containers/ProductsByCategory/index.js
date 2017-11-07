@@ -16,8 +16,10 @@ import {
   T,
   compose,
   contains,
+  cond,
   curry,
   equals,
+  both,
   identity,
   ifElse,
   lt,
@@ -36,6 +38,7 @@ import LazyLoading from 'components/LazyLoading'
 import H3 from 'components/H3'
 import H4 from 'components/H4'
 import EmptyProducts from 'components/EmptyProductsBlock'
+import LoadingIndicator from 'components/LoadingIndicator'
 
 import { Uppercase } from 'utils/string'
 
@@ -211,13 +214,14 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _displayNumberProducts () {
-    const { params: { id }, productsByCategory, productsFeatured, totalCount } = this.props
+    const { params: { id }, productsFeatured, totalCount } = this.props
     const displayTotalCount = ifElse(partial(isTag(this._tags), [id]),
       identity,
       subtract(__, productsFeatured.size)
     )
+    const product = this._displayProductData()
 
-    if (productsByCategory.size) {
+    if (product.size) {
       return (
         <H4 className='color__grey'>
           { displayTotalCount(totalCount) }
@@ -243,18 +247,30 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     return null
   }
 
+  _displayEmptyLoadingIndicator = () => {
+    const { loader } = this.props
+    const product = this._displayProductData()
+    const display = cond([
+      [both(equals(false), partial(equals(0), [product.size])), this._displayEmpty],
+      [equals(true), this._displayLoader],
+      [equals(false), () => null]
+    ])
+
+    return display(loader)
+  }
+
   _displayEmpty () {
-    const { productsByCategory, loader } = this.props
+    return (
+      <EmptyProducts>
+        <FormattedMessage {...messages.emptyMessage} />
+      </EmptyProducts>
+    )
+  }
 
-    if (loader === false && !(productsByCategory.size > 0)) {
-      return (
-        <EmptyProducts>
-          <FormattedMessage {...messages.emptyMessage} />
-        </EmptyProducts>
-      )
-    }
-
-    return null
+  _displayLoader = () => {
+    return (
+      <LoadingIndicator />
+    )
   }
 
   /**
@@ -379,7 +395,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
             <H3 className='margin__none'> {this._handlePageTitle()} </H3>
             {this._displayNumberProducts()}
-            { this._displayEmpty() }
+            { this._displayEmptyLoadingIndicator() }
             <ProductView changeRoute={changeRoute} loader={loader} products={this._displayProductData()} windowWidth={windowWidth} />
 
             { this._displayRecentlyViewedHeader() }
