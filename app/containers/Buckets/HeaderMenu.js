@@ -219,26 +219,15 @@ export default class MainMenu extends PureComponent {
     return ShowSearchInputLogo((currentRoute === 'home' && windowHeightOffset >= 53))
   }
 
-  componentWillUnmount () {
-    const { currentRoute } = this.props
-    const removeEventListener = ifElse(
-      equals('home'),
-      () => window.removeEventListener('scroll', this._updateScrollPosition),
-      () => {}
-    )
-
-    removeEventListener(currentRoute)
-  }
-
-  componentDidMount = () => {
-    const { currentRoute } = this.props
-    const addEventListener = ifElse(
+  componentWillReceiveProps (nextProps) {
+    const { currentRoute } = nextProps
+    const willAddOrRemoveEvent = ifElse(
       equals('home'),
       () => window.addEventListener('scroll', this._updateScrollPosition),
-      () => {}
+      () => window.removeEventListener('scroll', this._updateScrollPosition)
     )
 
-    addEventListener(currentRoute)
+    willAddOrRemoveEvent(currentRoute)
   }
 
   render () {

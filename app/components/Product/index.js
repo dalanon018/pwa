@@ -100,7 +100,9 @@ const Product = ({
           <ProductSlider
             images={productImages}
             loader={loading}
-            isLowerdots />
+            isInfinite
+            isLowerdots
+          />
         </ProductImageSlider>
         <ProductMainContent>
           <LoadingStateInfo loading={loading} center>

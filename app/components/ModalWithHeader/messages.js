@@ -12,7 +12,7 @@ export default defineMessages({
   },
   unpaidTitle: {
     id: 'app.components.ModalWithHeader.unpaidTitle',
-    defaultMessage: 'Item Has Been Expired'
+    defaultMessage: 'Order Has Expired'
   },
   confirmedTitle: {
     id: 'app.components.ModalWithHeader.confirmedTitle',
@@ -40,7 +40,7 @@ export default defineMessages({
   },
   unpaidDescription: {
     id: 'app.components.ModalWithHeader.unpaidDescription',
-    defaultMessage: '`Oh no! You were not able to pay. Would you like to reorder {name}?`'
+    defaultMessage: '`Oh no! You were not able to pay on time! Would you like to reorder {name}?`'
   },
   confirmedDescription: {
     id: 'app.components.ModalWithHeader.confirmedDescription',
@@ -68,7 +68,7 @@ export default defineMessages({
   },
   buttonUnpaid: {
     id: 'app.components.ModalWithHeader.buttonUnpaid',
-    defaultMessage: 'Got It!'
+    defaultMessage: 'Got It !'
   },
   buttonConfirmed: {
     id: 'app.components.ModalWithHeader.buttonConfirmed',
@@ -88,7 +88,7 @@ export default defineMessages({
   },
   buttonUnclaimed: {
     id: 'app.components.ModalWithHeader.buttonUnclaimed',
-    defaultMessage: 'Got It!'
+    defaultMessage: 'Got It !'
   },
   secondaryRepurchaseButton: {
     id: 'app.components.ModalWithHeader.secondaryRepurchaseButton',

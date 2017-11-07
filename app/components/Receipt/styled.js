@@ -11,7 +11,7 @@ export const BarcodeSVG = styled.svg`
 export const WrapperWarning = styled.div`
   padding: 0 10px;
   position: relative;
-  margin: 30px 0 10px;
+  margin: 30px 0;
   width: 100%;
 `
 
@@ -132,7 +132,6 @@ export const ScannerWrapper = styled.div`
 export const PushNotificationWrapper = styled.div`
   border-top: 2px solid #F0F0F0;
   border-bottom: 2px solid #F0F0F0;
-  margin-top: 40px;
   padding: 14px;
 
   @media (min-width: 1024px) and (max-width: 1365px) {

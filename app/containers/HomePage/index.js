@@ -179,7 +179,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         </SearchContainer>
 
         <BannerWrapper>
-          <BannerSlider loader={loader} images={bannerImages} slidesToShow={numSlide} />
+          <BannerSlider
+            loader={loader}
+            images={bannerImages}
+            slidesToShow={numSlide}
+            isInfinite
+          />
         </BannerWrapper>
 
         <Container>

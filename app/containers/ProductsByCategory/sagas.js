@@ -13,8 +13,7 @@ import {
   map,
   filter,
   prop,
-  propOr,
-  toUpper
+  propOr
 } from 'ramda'
 
 // import request from 'utils/request'
@@ -96,12 +95,12 @@ export function * getProductByCategory (args) {
 }
 
 export function * getProductByTags (args) {
-  const { payload: { offset, limit, id } } = args
+  const { payload: { offset, limit } } = args
   let products = []
   let count = 0
 
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/tags/${toUpper(id)}?deviceOrigin=PWA&offset=${offset}&limit=${limit}`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/productList/featured?offset=${offset}&limit=${limit}`, {
     method: 'GET',
     token: token.access_token
   })

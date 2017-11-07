@@ -48,7 +48,6 @@ const StepHead = styled.div`
   text-transform: uppercase;
 
   p {
-    width: 60%;
     align-self: flex-start;
     flex: none;
     font-family: 'Roboto';
@@ -75,7 +74,7 @@ const ProductItem = styled.div`
     width: 200px;
     z-index: 2;
   }
-  
+
   @media (min-width: 768px) {
     .image {
       width: 350px;
@@ -121,7 +120,7 @@ const DetailsWrapper = styled.div`
     span {
       font-size: 14px;
       text-transform: capitalize;
-    }  
+    }
   }
 
   p {

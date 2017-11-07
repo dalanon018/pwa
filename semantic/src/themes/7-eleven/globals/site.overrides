@@ -96,7 +96,7 @@ div [data-reactroot],
 }
 
 p {
-  line-height: 1em;
+  line-height: 1.5em !important;
 }
 
 .search.icon {
@@ -137,6 +137,7 @@ input.input-field {
 
 .ui.modal {
   height: auto;
+  margin-top: -200px !important;
 }
 
 .text {
@@ -341,6 +342,16 @@ input.input-field {
   p:first-of-type {
     display: none;
   }
+
+  p {
+    color: #5B5B5B !important;
+    line-height: 1.5em;
+  }
+
+  ul > li {
+    color: #5B5B5B !important;
+  }
+
 }
 
 .animation-fade {
