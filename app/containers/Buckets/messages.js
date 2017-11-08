@@ -49,5 +49,13 @@ export default defineMessages({
   errOffline: {
     id: 'app.containers.Bucket.errOffline',
     defaultMessage: 'You\'re Offline'
+  },
+  bestViewedTitle: {
+    id: 'app.containers.Bucket.bestViewedTitle',
+    defaultMessage: 'This site is best viewed on mobile'
+  },
+  bestViewedContent: {
+    id: 'app.containers.Bucket.bestViewedContent',
+    defaultMessage: 'For best shopping experience, switch to your mobile phone now!'
   }
 })

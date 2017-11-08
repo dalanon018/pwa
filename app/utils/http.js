@@ -29,3 +29,23 @@ export const getBrowserInfo = () => {
     version: M[1]
   }
 }
+
+export const isMobileDevice = () => {
+  const useragent = navigator.userAgent
+
+  if (
+    useragent.match(/Android/i) ||
+    useragent.match(/webOS/i) ||
+    useragent.match(/iPhone/i) ||
+    useragent.match(/iPod/i) ||
+    useragent.match(/iPad/i) ||
+    useragent.match(/Windows Phone/i) ||
+    useragent.match(/SymbianOS/i) ||
+    useragent.match(/RIM/i) ||
+    useragent.match(/BB/i)
+  ) {
+    return true
+  } else {
+    return false
+  }
+}
