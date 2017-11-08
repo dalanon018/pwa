@@ -52,7 +52,7 @@ class ListCollapse extends React.PureComponent {
         block: 'start',
         inline: 'nearest'
       })
-    }, 250)
+    }, 200)
 
     this.setState({
       activeIndex: newIndex,
