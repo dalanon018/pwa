@@ -48,8 +48,6 @@ const StepHead = styled.div`
   text-transform: uppercase;
 
   p {
-    align-self: flex-start;
-    flex: none;
     font-family: 'Roboto';
     font-size: 14px;
     letter-spacing: initial;
