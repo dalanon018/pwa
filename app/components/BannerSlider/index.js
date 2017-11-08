@@ -5,12 +5,11 @@
 */
 
 import React, { PropTypes } from 'react'
-import Slider from 'react-slick'
-import { Image } from 'semantic-ui-react'
 
 import { imageStock } from 'utils/image-stock'
 
 import EmptyDataBlock from 'components/EmptyDataBlock'
+import SlideShow from './SlideShow'
 
 import {
   BannerSliderWrapper,
@@ -55,20 +54,7 @@ export const HandleBlock = ({
     block = <DefaultState loader={loader} />
   } else {
     block = <BannerSliderWrapper isLowerdots={isLowerdots}>
-      <Slider {...settings}>
-        {
-          images &&
-          images.map((item, index) => {
-            return (
-              <div key={index}>
-                {
-                  (typeof item === 'string' ? <Image alt='Cliqq' src={item} /> : '')
-                }
-              </div>
-            )
-          })
-        }
-      </Slider>
+      <SlideShow settings={settings} images={images} />
     </BannerSliderWrapper>
   }
   return block
