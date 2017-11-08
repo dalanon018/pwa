@@ -56,6 +56,6 @@ export default defineMessages({
   },
   bestViewedContent: {
     id: 'app.containers.Bucket.bestViewedContent',
-    defaultMessage: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry'
+    defaultMessage: 'For best shopping experience, switch to your mobile phone now!'
   }
 })
