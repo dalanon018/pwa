@@ -5,11 +5,14 @@
 */
 
 import React, { PropTypes } from 'react'
+
 import { Grid, Accordion } from 'semantic-ui-react'
 
 import {
   ListCollapseWrapper
 } from './styles'
+
+import scrollPolyfill from 'utils/scrollPolyfill'
 
 class ListCollapse extends React.PureComponent {
   static propTypes = {
@@ -30,6 +33,8 @@ class ListCollapse extends React.PureComponent {
       activeIndex: null
     }
     this._handleClick = this._handleClick.bind(this)
+
+    scrollPolyfill.polyfill()
   }
 
   _handleClick (e, data) {
@@ -39,6 +44,15 @@ class ListCollapse extends React.PureComponent {
 
     const element = e.target.closest('.ui.accordion')
     const block = element.getElementsByClassName('content')
+
+    setTimeout(() => {
+      // parentScrollTo.scrollTo(0, ChildTop)
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest'
+      })
+    }, 200)
 
     this.setState({
       activeIndex: newIndex,

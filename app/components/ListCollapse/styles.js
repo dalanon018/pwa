@@ -7,7 +7,7 @@ const ListCollapseWrapper = styled.div`
     &.accordion .active.content, .ui.accordion .active.content {
       height: ${props => props.heightTransition ? props.height + 'px !important' : 'auto'};
       margin-bottom: 15px;
-      transition: all .3s ease;
+      transition: all .1s ease-in;
     }
   }
 
@@ -16,7 +16,7 @@ const ListCollapseWrapper = styled.div`
     overflow: hidden;
     height: 0;
     padding: 0 !important;
-    transition: all .3s ease;
+    transition: all .1s ease-in;
 
     .collapse-content {
       padding: 5px 10px;

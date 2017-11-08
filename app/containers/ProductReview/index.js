@@ -16,6 +16,7 @@ import { createStructuredSelector } from 'reselect'
 import { Grid, Label, Form, Checkbox, Image, Button } from 'semantic-ui-react'
 
 import NextIcon from 'images/icons/greater-than-icon.svg'
+import scrollPolyfill from 'utils/scrollPolyfill'
 
 import { imageStock } from 'utils/image-stock'
 import { transformStore } from 'utils/transforms'
@@ -131,6 +132,12 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     this._handleDoneFetchOrderNoProductNorMobile = this._handleDoneFetchOrderNoProductNorMobile.bind(this)
     this._handleSubmissionSuccess = this._handleSubmissionSuccess.bind(this)
     this._handleSubmissionError = this._handleSubmissionError.bind(this)
+
+    scrollPolyfill.polyfill()
+  }
+
+  _stepWrapperRef = (ref) => {
+    this._innerStepRef = ref
   }
 
   _handleModalClose () {
@@ -155,8 +162,13 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
   _handleToBottom = () => {
     setTimeout(() => {
-      window.scrollTo(0, document.body.scrollHeight)
-    }, 50)
+      // parentScrollTo.scrollTo(0, ChildTop)
+      this._innerStepRef.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest'
+      })
+    }, 100)
   }
 
   _handleProceed () {
@@ -401,14 +413,14 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             </Grid.Row>
           </Grid>
         </CustomGrid>
-        <StepWrapper className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={visibility}>
+        <StepWrapper innerRef={this._stepWrapperRef} className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={visibility}>
           <Label as='p' basic size='big' className='color__secondary'>
             <FormattedMessage {...messages.chooseStore} />
           </Label>
           <StepHead step='2'>
             <p><FormattedMessage {...messages.defaultStore} /></p>
           </StepHead>
-          <LocationButton className='color__secondary border__two--light-grey' onClick={this._handleStoreLocator} fluid iconBg={NextIcon}>
+          <LocationButton id='scrollToAnimate' className='color__secondary border__two--light-grey' onClick={this._handleStoreLocator} fluid iconBg={NextIcon}>
             {
               store && isEmpty(store)
               ? <FormattedMessage {...messages.findStore} />
