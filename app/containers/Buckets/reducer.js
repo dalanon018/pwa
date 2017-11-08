@@ -16,6 +16,8 @@ import {
 
   SET_PRODUCT_CATEGORIES,
 
+  GET_BRANDS,
+
   SET_BRANDS,
 
   SET_RECEIPT_UPDATED,
@@ -78,9 +80,13 @@ function bucketsReducer (state = initialState, action) {
         .set('toggle', false)
         .set('loader', false)
 
+    case GET_BRANDS:
+      return state.set('loader', true)
+
     case SET_BRANDS:
       return state
         .set('brands', fromJS(action.payload))
+        .set('loader', false)
 
     case SET_RECEIPT_UPDATED:
       return state.set('receiptsUpdated', fromJS(action.payload))

@@ -9,8 +9,12 @@ import styled from 'styled-components'
 
 import { Grid, Image } from 'semantic-ui-react'
 import { Link } from 'react-router'
+import { range } from 'lodash'
 
 import defaultCategoryBackground from 'images/default-categories.jpg'
+import EmptyDataBlock from 'components/EmptyDataBlock'
+
+import { paramsImgix } from 'utils/image-stock'
 
 const BrandContainer = styled.div`
   @media (min-width: 1024px) {
@@ -34,12 +38,13 @@ export const BrandWrapper = styled.div`
   }
 `
 
-function Brand ({ brands }) {
+function Brand ({ brands, loader }) {
   return (
     <BrandContainer>
       <Grid padded columns='2'>
         {
-          brands.map((brand) => (
+          loader ? range(4).map((_, index) => <DefaultState key={index} />)
+          : brands.valueSeq().map((brand) => (
             <Grid.Column key={brand.get('id')} >
               <BrandWrapper>
                 <Link to={`/brands/${brand.get('id')}`}>
@@ -51,6 +56,24 @@ function Brand ({ brands }) {
         }
       </Grid>
     </BrandContainer>
+  )
+}
+
+const DefaultState = () => {
+  const imgixOptions = {
+    auto: 'compress',
+    q: 75,
+    lossless: 0
+  }
+
+  return (
+    <Grid.Column>
+      <EmptyDataBlock>
+        <BrandWrapper>
+          <Image alt='Cliqq' src={paramsImgix(defaultCategoryBackground, imgixOptions)} className='empty-image' />
+        </BrandWrapper>
+      </EmptyDataBlock>
+    </Grid.Column>
   )
 }
 

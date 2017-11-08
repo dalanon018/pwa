@@ -17,7 +17,7 @@ import {
 } from 'ramda'
 
 import { FormattedMessage } from 'react-intl'
-import { Image, Label, Button } from 'semantic-ui-react'
+import { Image, Label, Button, Icon } from 'semantic-ui-react'
 
 import ProductSlider from 'components/BannerSlider'
 import ListCollapse from 'components/ListCollapse'
@@ -90,6 +90,7 @@ const Product = ({
     </Label>,
     null
   )
+  const mailTo = () => (window.location.href = `mailto:?subject=₱${toggleOrigDiscountPrice(product)} ${product.get('title')}&body=Click this link to see the product: ${window.location.href}`)
 
   return (
     <div>
@@ -137,6 +138,10 @@ const Product = ({
               url={window.location.href} >
               <TwitterIcon size={30} round />
             </TwitterShareButton>
+
+            <button onClick={mailTo} className='unstyle-button share-button'>
+              <Icon circular inverted name='mail' color='orange' />
+            </button>
           </ShareWrapper>
         </SocialContainer>
 

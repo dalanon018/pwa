@@ -160,6 +160,11 @@ export const ShareWrapper = styled.div`
   .share-button {
     margin: 0 5px;
   }
+
+  .mail.icon {
+    font-size: 15px;
+    line-height: 13px !important;    
+  }
 `
 
 export const CollapseContent = styled.div`

@@ -39,7 +39,8 @@ import {
 
 import {
   selectFeaturedCategories,
-  selectFeaturedBrands
+  selectFeaturedBrands,
+  selectLoader
 } from 'containers/Buckets/selectors'
 
 import {
@@ -132,7 +133,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render () {
-    const { loader, featuredCategories, featuredBrands, changeRoute, windowWidth, intl } = this.props
+    const { loader, featuredCategories, featuredBrands, changeRoute, windowWidth, intl, brandLoader } = this.props
     const { products } = this.state
     const numSlide = windowWidth > 767 ? 2 : 1
     const bannerImages = [
@@ -229,7 +230,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               </H3>
             )(featuredBrands.size > 0)
           }
-          <Brand brands={featuredBrands} />
+          <Brand brands={featuredBrands} loader={brandLoader} />
         </Container>
         <Footer />
       </div>
@@ -239,6 +240,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
 const mapStateToProps = createStructuredSelector({
   loader: selectLoading(),
+  brandLoader: selectLoader(),
   featuredProducts: selectFeaturedProducts(),
   featuredCategories: selectFeaturedCategories(),
   featuredBrands: selectFeaturedBrands()
