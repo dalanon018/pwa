@@ -103,10 +103,10 @@ export const ReceiptContent = styled.div`
   width: 100%;
   z-index: 1;
   overflow: hidden;
-  -webkit-transition: all 2s ease;
-  -moz-transition: all 2s ease;
-  -o-transition: all 2s ease;
-  transition: all 2s ease;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
 
   .product-current-price {
     font-size: 40px;
