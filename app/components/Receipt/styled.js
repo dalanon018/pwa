@@ -70,10 +70,19 @@ export const ReceiptContainer = styled.div`
 export const ReceiptHeader = styled.div`
   padding: 14px;
 
+  .order-number {
+    p {
+      font-weight: 100;
+    }
+  }
+
   @media (min-width: 320px) and (max-width:374px) {
     .order-number {
       p {
         font-size: 15px !important;
+        span {
+          font-size: 17px;
+        }
       }
     }
     .product-status {
@@ -166,4 +175,11 @@ export const InfoContainer = styled.div`
     margin: 0 auto;
     width: 700px;
   }
+`
+
+export const MatchCode = styled.span`
+  font-size: 19px;
+  font-weight: 700;
+  position: relative;
+  text-decoration-line: underline;
 `

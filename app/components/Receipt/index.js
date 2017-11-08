@@ -43,7 +43,8 @@ import {
   CustomContainer,
   ReceiptWrapper,
   ScannerWrapper,
-  PushNotificationWrapper
+  PushNotificationWrapper,
+  MatchCode
   // InstructionsWrapper
 } from './styled'
 
@@ -311,6 +312,15 @@ class Receipt extends React.PureComponent {
     )(currentStatus)
   }
 
+  _handleParseTrackNumber = (str) => {
+    return (
+      <Label as='p' basic size='big' className='color__secondary'>
+        {str && str.slice(0, -3)}
+        <MatchCode>{str && str.slice(-3)}</MatchCode>
+      </Label>
+    )
+  }
+
   componentDidMount () {
     this._handleScanAnimate()
     setTimeout(() => {
@@ -369,7 +379,7 @@ class Receipt extends React.PureComponent {
                       <Label className='weight-400 color__secondary' as='span' basic size='small'>
                         <FormattedMessage {...messages.trackingNumber} />
                       </Label>
-                      <Label as='p' basic size='big' className='color__secondary'>{receipt.get('trackingNumber')}</Label>
+                      {this._handleParseTrackNumber(receipt.get('trackingNumber'))}
                     </Grid.Column>
                     <Grid.Column floated='right' textAlign='right' width={7}>
                       <Label className='weight-400 color__secondary' as='span' basic size='small'>
