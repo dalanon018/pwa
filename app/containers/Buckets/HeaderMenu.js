@@ -230,6 +230,14 @@ export default class MainMenu extends PureComponent {
     willAddOrRemoveEvent(currentRoute)
   }
 
+  componentDidMount () {
+    window.addEventListener('scroll', this._updateScrollPosition)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('scroll', this._updateScrollPosition)
+  }
+
   render () {
     const { leftButtonAction, hideBackButton, changeRoute, showSearchIcon, showActivityIcon, currentRoute, headerMenuFullScreen } = this.props
 
