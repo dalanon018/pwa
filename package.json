@@ -345,6 +345,7 @@
       "/internals/templates",
       "/semantic/",
       "/app/utils/firebase-messaging-sw.js",
+      "/app/utils/scrollPolyfill.js",
       "/app/sw-handler.js",
       "/cypress"
     ],
