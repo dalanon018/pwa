@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import styled from 'styled-components'
+import ReactNotification from 'react-notification-system'
 
 import {
   identity,
@@ -18,6 +19,8 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 
 import Firebase from 'utils/firebase-realtime'
 import Notification from 'utils/firebase-notification'
+
+import { isMobileDevice } from 'utils/http'
 
 import {
   selectProductCategories,
@@ -82,6 +85,7 @@ const MainContent = styled.div`
 
 export class Buckets extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
+    isMobile: PropTypes.bool.isRequired,
     children: PropTypes.object.isRequired,
     getCategories: PropTypes.func.isRequired,
     getBrands: PropTypes.func.isRequired,
@@ -118,6 +122,20 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
   _lastY
   _parentElement
+
+  _reactNotificationRef = (ref) => {
+    this._notificationRef = ref
+  }
+
+  _displayBestViewedMobileNotification = () =>
+    setTimeout(() =>
+      this._notificationRef.addNotification({
+        title: <FormattedMessage {...messages.bestViewedTitle} />,
+        message: <FormattedMessage {...messages.bestViewedContent} />,
+        autoDismiss: 0,
+        level: 'success'
+      })
+    , 2000)
 
   _goToHome = () => {
     const { changeRoute } = this.props
@@ -283,13 +301,20 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   componentDidMount () {
-    const { getMobileNumbers, getCategories, getBrands, getRegisteredPush, getLoyaltyToken } = this.props
+    const { getMobileNumbers, getCategories, getBrands, getRegisteredPush, getLoyaltyToken, isMobile } = this.props
+    const shouldDisplayNotification = ifElse(
+      identity,
+      noop, // if true then we dont need to do anything
+      this._displayBestViewedMobileNotification
+    )
 
     getMobileNumbers()
     getRegisteredPush()
     getCategories()
     getBrands()
     getLoyaltyToken()
+
+    shouldDisplayNotification(isMobile)
 
     browserHistory.listen(this._handleBackButton)
   }
@@ -335,12 +360,15 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
           content={toggleMessage}
           close={this._handleNetworkErrorMessage}
         />
+        <ReactNotification ref={this._reactNotificationRef} />
       </Wrapper>
     )
   }
 }
 
 const mapStateToProps = createStructuredSelector({
+  // make sure we have a single entry point to our application
+  isMobile: () => isMobileDevice(),
   productCategories: selectProductCategories(),
   brands: selectBrands(),
   mobileNumbers: selectMobileNumbers(),
