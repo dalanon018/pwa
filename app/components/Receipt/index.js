@@ -313,12 +313,18 @@ class Receipt extends React.PureComponent {
   }
 
   _handleParseTrackNumber = (str) => {
-    return (
-      <Label as='p' basic size='big' className='color__secondary'>
-        {str && str.slice(0, -3)}
-        <MatchCode>{str && str.slice(-3)}</MatchCode>
-      </Label>
-    )
+    const { receipt } = this.props
+
+    if (receipt.get('modePayment') !== this._defaultModePayment) {
+      return (
+        <Label as='p' basic size='big' className='color__secondary'>
+          {str && str.slice(0, -3)}
+          <MatchCode>{str && str.slice(-3)}</MatchCode>
+        </Label>
+      )
+    }
+
+    return <Label as='p' basic size='big' className='color__secondary'>{str}</Label>
   }
 
   componentDidMount () {
