@@ -6,41 +6,77 @@
 import { defineMessages } from 'react-intl'
 
 export default defineMessages({
-  RESERVED: {
-    id: 'app.components.Receipt.RESERVED',
-    defaultMessage: 'You have this time to show this slip at the store:'
+  CASHRESERVED: {
+    id: 'app.components.Receipt.CASHRESERVED',
+    defaultMessage: 'Show this barcode at any 7 Eleven store and pay for your item within:'
   },
-  RESERVEDEXPIRED: {
-    id: 'app.components.Receipt.RESERVEDEXPIRED',
+  CASHRESERVEDEXPIRED: {
+    id: 'app.components.Receipt.CASHRESERVEDEXPIRED',
     defaultMessage: 'Oops! You seem to be offline at the moment!'
   },
-  UNPAID: {
-    id: 'app.components.Receipt.UNPAID',
+  CASHUNPAID: {
+    id: 'app.components.Receipt.CASHUNPAID',
     defaultMessage: 'This item has expired. Would you like to repurchase it?'
   },
-  PROCESSING: {
-    id: 'app.components.Receipt.PROCESSING',
-    defaultMessage: 'This now serves as your official receipt for your item. Thank you for shopping with Cliqq!'
+  CASHPROCESSING: {
+    id: 'app.components.Receipt.CASHPROCESSING',
+    defaultMessage: 'Please wait for an SMS telling you that your order is in the store'
   },
-  CONFIRMED: {
-    id: 'app.components.Receipt.CONFIRMED',
-    defaultMessage: 'This now serves as your official receipt for your item. Thank you for shopping with Cliqq!'
+  CASHCONFIRMED: {
+    id: 'app.components.Receipt.CASHCONFIRMED',
+    defaultMessage: 'Please wait for an SMS telling you that your order is in the store'
   },
-  INTRANSIT: {
-    id: 'app.components.Receipt.INTRANSIT',
-    defaultMessage: 'This now serves as your official receipt for your item. Thank you for shopping with Cliqq!'
+  CASHINTRANSIT: {
+    id: 'app.components.Receipt.CASHINTRANSIT',
+    defaultMessage: 'Please wait for an SMS telling you that your order is in the store'
   },
-  DELIVERED: {
-    id: 'app.components.Receipt.DELIVERED',
-    defaultMessage: 'This now serves as your official receipt for your item. Thank you for shopping with Cliqq!'
+  CASHDELIVERED: {
+    id: 'app.components.Receipt.CASHDELIVERED',
+    defaultMessage: 'Your item is now ready for pick up at {storeName}'
   },
-  CLAIMED: {
-    id: 'app.components.Receipt.CLAIMED',
-    defaultMessage: 'This now serves as your official receipt for your item. Thank you for shopping with Cliqq!'
+  CASHCLAIMED: {
+    id: 'app.components.Receipt.CASHCLAIMED',
+    defaultMessage: ' '
   },
-  UNCLAIMED: {
-    id: 'app.components.Receipt.UNCLAIMED',
-    defaultMessage: 'This now serves as your official receipt for your item. Thank you for shopping with Cliqq!'
+  CASHUNCLAIMED: {
+    id: 'app.components.Receipt.CASHUNCLAIMED',
+    defaultMessage: 'Follow us on Social Media for all the latest updates!'
+  },
+  CODRESERVED: {
+    id: 'app.components.Receipt.CODRESERVED',
+    defaultMessage: 'Show this barcode at any 7 Eleven store and pay for your item within:'
+  },
+  CODRESERVEDEXPIRED: {
+    id: 'app.components.Receipt.CODRESERVEDEXPIRED',
+    defaultMessage: 'Oops! You seem to be offline at the moment!'
+  },
+  CODUNPAID: {
+    id: 'app.components.Receipt.CODUNPAID',
+    defaultMessage: 'This item has expired. Would you like to repurchase it?'
+  },
+  CODPROCESSING: {
+    id: 'app.components.Receipt.CODPROCESSING',
+    defaultMessage: 'Please wait for an SMS telling you that your order is in the store'
+  },
+  CODCONFIRMED: {
+    id: 'app.components.Receipt.CODCONFIRMED',
+    defaultMessage: 'Please wait for an SMS telling you that your order is in the store'
+  },
+  CODINTRANSIT: {
+    id: 'app.components.Receipt.CODINTRANSIT',
+    defaultMessage: 'Please wait for an SMS telling you that your order is in the store'
+  },
+  CODDELIVERED: {
+    id: 'app.components.Receipt.CODDELIVERED',
+    defaultMessage: 'Please go to {storeName} and pay for your item at the cashier.'
+  },
+  CODCLAIMED: {
+    id: 'app.components.Receipt.CODCLAIMED',
+    defaultMessage: ' '
+  },
+  CODUNCLAIMED: {
+    id: 'app.components.Receipt.CODUNCLAIMED',
+    defaultMessage: 'Follow us on Social Media for all the latest updates!'
   },
   unknownStatus: {
     id: 'app.components.Receipt.unknownStatus',
@@ -84,13 +120,21 @@ export default defineMessages({
     id: 'app.components.Receipt.returnToHome',
     defaultMessage: 'Cliqq Return Policy'
   },
-  returnPolicyDescription: {
+  returnPolicyDescriptionValid: {
     id: 'app.components.Receipt.returnPolicyDescription',
     defaultMessage: 'Change of Mind is Applicable'
   },
-  returnPolicyDescriptionWarning: {
+  returnPolicyDescriptionWarningValid: {
     id: 'app.components.Receipt.returnPolicyDescriptionWarning',
-    defaultMessage: 'Return Policy is valid for 7 Days upon claiming'
+    defaultMessage: 'Not satisfied with your purchase? Depending on your CliQQ Care Policy, you can return your item anytime of the day within 7 days from claim date. Just go to you nearest 711 Store where the item was purchased and get your Return Slip from the CliQQ Kiosk and bring it to the cashier'
+  },
+  returnPolicyDescriptionInvalid: {
+    id: 'app.components.Receipt.returnPolicyDescription',
+    defaultMessage: 'Change of Mind is NOT Applicable'
+  },
+  returnPolicyDescriptionWarningInvalid: {
+    id: 'app.components.Receipt.returnPolicyDescriptionWarning',
+    defaultMessage: 'Due to final clearance and hygienic purposes, returns, exchanges and refunds may not be provided for Health & Beauty Products, Jewelries, Home Care Products and Lingerie. For any concerns, kindly send an email to our Customer Service Team at {actionButton}.'
   },
   viewActivity: {
     id: 'app.components.Receipt.viewActivity',

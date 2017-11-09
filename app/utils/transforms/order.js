@@ -14,6 +14,7 @@ import {
 } from 'ramda'
 
 import {
+  BOOLEAN,
   OBJECT,
   NUMBER,
   STRING,
@@ -77,6 +78,10 @@ const Schema = {
   paymentType: {
     name: 'modePayment',
     type: STRING
+  },
+  returnable: {
+    name: 'returnable',
+    type: BOOLEAN
   }
 }
 

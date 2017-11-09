@@ -22,23 +22,26 @@ const TimerWrapper = styled.div`
   padding: 0 45px;
 `
 
-const ShowHeaderStatus = ({currentStatus, timer}) => {
-  if (timer === '00:00:00' && (currentStatus === 'RESERVED')) {
+const ShowHeaderStatus = ({currentStatus, status, storeName, timer}) => {
+  if (timer === '00:00:00' && (status === 'RESERVED')) {
     return (
-      <FormattedMessage {...messages.RESERVEDEXPIRED} />
+      <FormattedMessage {...messages.CASHRESERVEDEXPIRED} />
     )
   }
 
   return (
-    <FormattedMessage {...messages[currentStatus]} />
+    <FormattedMessage
+      {...messages[currentStatus]}
+      values={{ storeName }}
+    />
   )
 }
-const PurchaseOrder = ({ status, receipt, timer }) => {
-  const currentStatus = status || 'unknownStatus'
+const PurchaseOrder = ({ status, modePayment, storeName, receipt, timer }) => {
+  const currentStatus = status ? `${modePayment}${status}` : 'unknownStatus'
   return (
     <TimerWrapper>
       <Label className='text__roboto--light color__secondary' as='p' basic size='medium'>
-        <ShowHeaderStatus {...{ currentStatus, timer }} />
+        <ShowHeaderStatus {...{ currentStatus, status, storeName, timer }} />
       </Label>
       <HeaderOrder {...{ status }} >
         {
@@ -54,7 +57,9 @@ const PurchaseOrder = ({ status, receipt, timer }) => {
 }
 
 PurchaseOrder.propTypes = {
+  modePayment: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
+  storeName: PropTypes.string,
   receipt: PropTypes.object.isRequired
 }
 
