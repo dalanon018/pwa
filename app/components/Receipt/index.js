@@ -5,12 +5,12 @@ import {
   T,
   always,
   both,
+  compose,
   cond,
   contains,
   equals,
   identity,
   ifElse,
-  partial,
   partialRight
 } from 'ramda'
 import { FormattedMessage } from 'react-intl'
@@ -55,8 +55,7 @@ import purchasesMessages from 'containers/Purchases/messages'
 import {
   COMPLETED,
   EXPIRED,
-  COD_STATUS_NAME_AFFECTED,
-  COD_DATE_ORDERED_STATUS
+  COD_STATUS_NAME_AFFECTED
 } from 'containers/Buckets/constants'
 
 const ComponentDetail = components => component => key =>
@@ -194,18 +193,31 @@ class Receipt extends React.PureComponent {
     )
   }
 
+  _handlingStatus = (currentStatus) => {
+    const PROCESSING = 'PROCESSING'
+    const isCod = () => this._handleModePayment() !== this._defaultModePayment
+    const normalStatus = ifElse(
+      both(isCod, partialRight(contains, [COD_STATUS_NAME_AFFECTED])),
+      () => PROCESSING,
+      identity
+    )
+
+    return normalStatus(currentStatus)
+  }
+
   _handleDateValue = () => {
     const { receipt, statuses } = this.props
     const currentStatus = statuses[receipt.get('status')] || ''
-    const statusCASHNotAffected = (status) => !COD_DATE_ORDERED_STATUS.includes(status)
-
-    const showDate = ifElse(
-      both(equals(this._defaultModePayment), partial(statusCASHNotAffected, [currentStatus])),
-      () => receipt.get('claimExpiry'),
-      () => receipt.get('dateCreated')
+    const handleDate = compose(
+      partialRight(DateFormater, ['MM-DD-YYYY']),
+      ComponentDetail({
+        PROCESSING: receipt.get('dateCreated'),
+        CLAIMED: receipt.get('claimDate')
+      })(receipt.get('claimExpiry')),
+      this._handlingStatus
     )
 
-    return DateFormater(showDate(receipt.get('modePayment')), 'MM-DD-YYYY')
+    return handleDate(currentStatus)
   }
 
   _handlePushRegistrationUI = () => {
