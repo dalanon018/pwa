@@ -14,6 +14,7 @@ import {
 } from 'ramda'
 
 import {
+  BOOLEAN,
   OBJECT,
   NUMBER,
   STRING,
@@ -62,6 +63,10 @@ const Schema = {
     name: 'claimExpiry',
     type: STRING
   },
+  claimDate: {
+    name: 'claimDate',
+    type: STRING
+  },
   facilityName: {
     name: 'storeName',
     type: STRING
@@ -77,6 +82,10 @@ const Schema = {
   paymentType: {
     name: 'modePayment',
     type: STRING
+  },
+  returnable: {
+    name: 'returnable',
+    type: BOOLEAN
   }
 }
 

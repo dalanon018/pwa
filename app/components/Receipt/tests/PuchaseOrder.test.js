@@ -14,6 +14,8 @@ const wrapper = (props = {}, enzyme = shallow) => enzyme(
 describe('<Receipt PurchaseOrder/>', () => {
   const minProps = {
     status: 'RESERVED',
+    modePayment: 'CASH',
+    storeName: 'Kamias',
     receipt: fromJS({
       'trackingNumber': '344760497230963792',
       'claimExpiry': '2017-08-13 00:17:08',

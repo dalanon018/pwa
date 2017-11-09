@@ -6,7 +6,14 @@ import {
   Image,
   Label
 } from 'semantic-ui-react'
-import { identity, ifElse, contains, equals, both, partial, partialRight } from 'ramda'
+import {
+  both,
+  compose,
+  contains,
+  identity,
+  ifElse,
+  partialRight
+} from 'ramda'
 import { FormattedMessage } from 'react-intl'
 
 import Countdown from 'components/Countdown'
@@ -16,8 +23,7 @@ import { DateFormater } from 'utils/date' // DateFormater
 
 import purchasesMessages from 'containers/Purchases/messages'
 import {
-  COD_STATUS_NAME_AFFECTED,
-  COD_DATE_ORDERED_STATUS
+  COD_STATUS_NAME_AFFECTED
 } from 'containers/Buckets/constants'
 
 import messages from './messages'
@@ -146,15 +152,16 @@ class Purchase extends React.PureComponent {
   _handleDateVisible = () => {
     const { receipt, statuses } = this.props
     const currentStatus = statuses[receipt.get('status')] || ''
-    const statusCASHNotAffected = (status) => !COD_DATE_ORDERED_STATUS.includes(status)
-
-    const showDate = ifElse(
-      both(equals(this._defaultModePayment), partial(statusCASHNotAffected, [currentStatus])),
-      () => receipt.get('claimExpiry'),
-      () => receipt.get('dateCreated')
+    const handleDate = compose(
+      partialRight(DateFormater, ['MM-DD-YYYY']),
+      switchFn({
+        PROCESSING: receipt.get('dateCreated'),
+        CLAIMED: receipt.get('claimDate')
+      })(receipt.get('claimExpiry')),
+      this._handlingStatus
     )
 
-    return DateFormater(showDate(receipt.get('modePayment')), 'MM-DD-YYYY')
+    return handleDate(currentStatus)
   }
 
   _handleDateValue = () => {
@@ -174,10 +181,8 @@ class Purchase extends React.PureComponent {
     return receipt.get('modePayment') || this._defaultModePayment
   }
 
-  _handleStatusTitle = () => {
-    const { receipt, statuses } = this.props
+  _handlingStatus = (currentStatus) => {
     const PROCESSING = 'PROCESSING'
-    const currentStatus = statuses[receipt.get('status')] || 'UNKNOWN'
     const isCod = () => this._handleModePayment() !== this._defaultModePayment
     const normalStatus = ifElse(
       both(isCod, partialRight(contains, [COD_STATUS_NAME_AFFECTED])),
@@ -185,8 +190,15 @@ class Purchase extends React.PureComponent {
       identity
     )
 
+    return normalStatus(currentStatus)
+  }
+
+  _handleStatusTitle = () => {
+    const { receipt, statuses } = this.props
+    const currentStatus = statuses[receipt.get('status')] || 'UNKNOWN'
+
     return (
-      <FormattedMessage {...purchasesMessages[`titleStatus${normalStatus(currentStatus)}`]} />
+      <FormattedMessage {...purchasesMessages[`titleStatus${this._handlingStatus(currentStatus)}`]} />
     )
   }
 

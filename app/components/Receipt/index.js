@@ -5,12 +5,12 @@ import {
   T,
   always,
   both,
+  compose,
   cond,
   contains,
   equals,
   identity,
   ifElse,
-  partial,
   partialRight
 } from 'ramda'
 import { FormattedMessage } from 'react-intl'
@@ -19,8 +19,6 @@ import { Grid, Label, Button, Image, Checkbox } from 'semantic-ui-react'
 import Countdown from 'components/Countdown'
 import LoadingIndicator from 'components/LoadingIndicator'
 
-import WarningIcon from 'images/icons/instructions-icon.svg'
-// import ScreenshotIcon from 'images/icons/screenshot-icon.svg'
 import ReturnIcon from 'images/icons/receipts/return-icon-receipt.svg'
 
 import { DateFormater } from 'utils/date' // DateFormater
@@ -57,21 +55,13 @@ import purchasesMessages from 'containers/Purchases/messages'
 import {
   COMPLETED,
   EXPIRED,
-  COD_STATUS_NAME_AFFECTED,
-  COD_DATE_ORDERED_STATUS
+  COD_STATUS_NAME_AFFECTED
 } from 'containers/Buckets/constants'
 
 const ComponentDetail = components => component => key =>
  key in components ? components[key] : component
 
-const GeneralInfo = ({ children }) => (
-  <WarningDescription className='color__secondary'>
-    <Image src={WarningIcon} />
-    { children }
-  </WarningDescription>
-)
-
-const ReturnInfo = () => (
+const ReturnInfo = ({ returnable, actionButton }) => (
   <WarningDescription>
     <Image src={ReturnIcon} />
     <section>
@@ -79,82 +69,30 @@ const ReturnInfo = () => (
         <FormattedMessage {...messages.returnPolicyTitle} />
       </Label>
       <Label className='text__roboto--light' as='p' size='large'>
-        <FormattedMessage {...messages.returnPolicyDescription} />
+        <FormattedMessage {...messages[`returnPolicyDescription${returnable}`]} />
       </Label>
       <Label className='text__roboto--light' as='p' size='small'>
-        <FormattedMessage {...messages.returnPolicyDescriptionWarning} />
+        <FormattedMessage
+          {...messages[`returnPolicyDescriptionWarning${returnable}`]}
+          values={{ actionButton }}
+          />
       </Label>
     </section>
   </WarningDescription>
 )
 
-const WarningCTAReserved = ({ timer }) => {
-  if (timer === '00:00:00') {
-    return (
-      <Label className='text__roboto--light' as='span' basic size='large'>
-        <FormattedMessage {...messages.receiptInfoMessageReserveExpired} />
-      </Label>
-    )
-  }
-
-  return <FormattedMessage {...messages.receiptInfoMessageReserve} />
-}
-
-const WarningStatus = ({ status, timer, storeName, modePayment }) => {
-  const keyMessage = modePayment === 'CASH' ? 'receiptInfoMessageCASHDelivered' : 'receiptInfoMessageCODDelivered'
+const WarningStatus = ({ status, returnable }) => {
+  const isReturnabled = returnable ? 'Valid' : 'Invalid'
   return ComponentDetail({
-    RESERVED: (
-      <GeneralInfo>
-        <WarningCTAReserved timer={timer} />
-      </GeneralInfo>
-    ),
-    UNPAID: (
-      <GeneralInfo>
-        <Label className='text__roboto--light' as='span' basic size='large'>
-          <FormattedMessage {...messages.receiptInfoMessageUnpaid} />
-        </Label>
-      </GeneralInfo>
-    ),
-    PROCESSING: (
-      <GeneralInfo>
-        <Label className='text__roboto--light' as='span' basic size='large'>
-          <FormattedMessage {...messages.receiptInfoMessagePaid} />
-        </Label>
-      </GeneralInfo>
-    ),
-    CONFIRMED: (
-      <GeneralInfo>
-        <Label className='text__roboto--light' as='span' basic size='large'>
-          <FormattedMessage {...messages.receiptInfoMessagePaid} />
-        </Label>
-      </GeneralInfo>
-    ),
-    INTRANSIT: (
-      <GeneralInfo>
-        <Label className='text__roboto--light' as='span' basic size='large'>
-          <FormattedMessage {...messages.receiptInfoMessagePaid} />
-        </Label>
-      </GeneralInfo>
-    ),
-    DELIVERED: (
-      <GeneralInfo>
-        <Label className='text__roboto--light' as='span' basic size='large'>
-          <FormattedMessage
-            {...messages[keyMessage]}
-            values={{ storeName }}
-          />
-        </Label>
-      </GeneralInfo>
-    ),
     CLAIMED: (
-      <ReturnInfo />
-    ),
-    UNCLAIMED: (
-      <GeneralInfo>
-        <Label className='text__roboto--light' as='span' basic size='large'>
-          <FormattedMessage {...messages.receiptInfoMessagePaid} />
-        </Label>
-      </GeneralInfo>
+      <ReturnInfo
+        returnable={isReturnabled}
+        actionButton={(
+          <a href='mailto:cliqqsupport@7-eleven.com.ph?Subject=Returns' target='_top'>
+            cliqqsupport@7-eleven.com.ph
+          </a>
+        )}
+      />
     )
   })(null)(status)
 }
@@ -187,15 +125,24 @@ class Receipt extends React.PureComponent {
 
   _renderPurchaseBanner () {
     const { timer, statuses, receipt, purchaseOrder } = this.props
-    const currentStatus = statuses[receipt.get('status')] || ''
+    const status = statuses[receipt.get('status')] || ''
+    const defaultProps = {
+      status,
+      modePayment: receipt.get('modePayment') || this._defaultModePayment,
+      storeName: receipt.get('storeName')
+    }
 
-    if (purchaseOrder.includes(currentStatus)) {
+    if (purchaseOrder.includes(status)) {
       return (
-        <PurchaseOrder status={currentStatus} receipt={receipt} timer={timer} />
+        <PurchaseOrder
+          {...defaultProps}
+          receipt={receipt}
+          timer={timer}
+        />
       )
     }
 
-    return <PurchaseUsecase status={currentStatus} />
+    return <PurchaseUsecase {...defaultProps} />
   }
 
   _handleScanAnimate = (e, data) => {
@@ -246,18 +193,31 @@ class Receipt extends React.PureComponent {
     )
   }
 
+  _handlingStatus = (currentStatus) => {
+    const PROCESSING = 'PROCESSING'
+    const isCod = () => this._handleModePayment() !== this._defaultModePayment
+    const normalStatus = ifElse(
+      both(isCod, partialRight(contains, [COD_STATUS_NAME_AFFECTED])),
+      () => PROCESSING,
+      identity
+    )
+
+    return normalStatus(currentStatus)
+  }
+
   _handleDateValue = () => {
     const { receipt, statuses } = this.props
     const currentStatus = statuses[receipt.get('status')] || ''
-    const statusCASHNotAffected = (status) => !COD_DATE_ORDERED_STATUS.includes(status)
-
-    const showDate = ifElse(
-      both(equals(this._defaultModePayment), partial(statusCASHNotAffected, [currentStatus])),
-      () => receipt.get('claimExpiry'),
-      () => receipt.get('dateCreated')
+    const handleDate = compose(
+      partialRight(DateFormater, ['MM-DD-YYYY']),
+      ComponentDetail({
+        PROCESSING: receipt.get('dateCreated'),
+        CLAIMED: receipt.get('claimDate')
+      })(receipt.get('claimExpiry')),
+      this._handlingStatus
     )
 
-    return DateFormater(showDate(receipt.get('modePayment')), 'MM-DD-YYYY')
+    return handleDate(currentStatus)
   }
 
   _handlePushRegistrationUI = () => {
@@ -354,7 +314,7 @@ class Receipt extends React.PureComponent {
 
   render () {
     const { show } = this.state
-    const { timer, receipt, statuses } = this.props
+    const { receipt, statuses } = this.props
 
     return (
       <div>
@@ -435,9 +395,8 @@ class Receipt extends React.PureComponent {
                   <WarningStatus {
                     ...{
                       status: statuses[receipt.get('status')],
-                      storeName: receipt.get('storeName'),
-                      modePayment: receipt.get('modePayment'),
-                      timer }} />
+                      returnable: receipt.get('returnable')
+                    }} />
                 </WrapperWarning>
               </Grid.Column>
             </Grid.Row>

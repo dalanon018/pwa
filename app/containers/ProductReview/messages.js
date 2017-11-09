@@ -46,7 +46,7 @@ export default defineMessages({
   },
   proceedNext: {
     id: `${idSuffix}.proceedNext`,
-    defaultMessage: 'Next'
+    defaultMessage: 'Purchase your Product Now!'
   },
   errorHeader: {
     id: `${idSuffix}.errorHeader`,

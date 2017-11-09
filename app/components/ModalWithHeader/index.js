@@ -217,7 +217,7 @@ class ModalWithHeader extends React.PureComponent {
     const { primary, secondary, onClick, onClose } = ModalButtons({
       status: currentStatus,
       goToProducts: this._goToProducts(receipt.get('cliqqCode')),
-      closeModal: this._closeModal,
+      onClose: this._closeModal,
       goToReceipts
     }) || {}
     // const modalSize = windowWidth >= 768 ? 'small' : 'mini'

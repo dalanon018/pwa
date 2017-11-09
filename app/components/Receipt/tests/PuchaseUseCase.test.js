@@ -12,7 +12,9 @@ const wrapper = (props = {}, enzyme = shallow) => enzyme(
 
 describe('<Receipt PurchaseUsecase/>', () => {
   const minProps = {
-    status: 'CLAIMED'
+    status: 'CLAIMED',
+    modePayment: 'CASH',
+    storeName: 'Kamias'
   }
 
   it('render without exploding', () => {
