@@ -101,6 +101,8 @@ export const EXPIRED = [
   'UNCLAIMED'
 ]
 
+export const DEFAULT_METHOD_PAYMENT = 'CASH'
+
 export const COD_STATUS_NAME_AFFECTED = [
   'CONFIRMED'
 ]

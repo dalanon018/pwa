@@ -7,11 +7,7 @@ import {
   Label
 } from 'semantic-ui-react'
 import {
-  both,
   compose,
-  contains,
-  identity,
-  ifElse,
   partialRight
 } from 'ramda'
 import { FormattedMessage } from 'react-intl'
@@ -20,10 +16,11 @@ import Countdown from 'components/Countdown'
 
 import { paramsImgix } from 'utils/image-stock'
 import { DateFormater } from 'utils/date' // DateFormater
+import { handlingStatus } from 'utils/ordersHelper'
 
 import purchasesMessages from 'containers/Purchases/messages'
 import {
-  COD_STATUS_NAME_AFFECTED
+  DEFAULT_METHOD_PAYMENT
 } from 'containers/Buckets/constants'
 
 import messages from './messages'
@@ -110,7 +107,7 @@ class Purchase extends React.PureComponent {
     changeRoute: PropTypes.func.isRequired
   }
 
-  _defaultModePayment = 'CASH'
+  _defaultModePayment = DEFAULT_METHOD_PAYMENT
 
   constructor () {
     super()
@@ -152,13 +149,15 @@ class Purchase extends React.PureComponent {
   _handleDateVisible = () => {
     const { receipt, statuses } = this.props
     const currentStatus = statuses[receipt.get('status')] || ''
+    const handleStatus = handlingStatus(this._handleModePayment())
+
     const handleDate = compose(
       partialRight(DateFormater, ['MM-DD-YYYY']),
       switchFn({
         PROCESSING: receipt.get('dateCreated'),
         CLAIMED: receipt.get('claimDate')
       })(receipt.get('claimExpiry')),
-      this._handlingStatus
+      handleStatus
     )
 
     return handleDate(currentStatus)
@@ -181,24 +180,13 @@ class Purchase extends React.PureComponent {
     return receipt.get('modePayment') || this._defaultModePayment
   }
 
-  _handlingStatus = (currentStatus) => {
-    const PROCESSING = 'PROCESSING'
-    const isCod = () => this._handleModePayment() !== this._defaultModePayment
-    const normalStatus = ifElse(
-      both(isCod, partialRight(contains, [COD_STATUS_NAME_AFFECTED])),
-      () => PROCESSING,
-      identity
-    )
-
-    return normalStatus(currentStatus)
-  }
-
   _handleStatusTitle = () => {
     const { receipt, statuses } = this.props
     const currentStatus = statuses[receipt.get('status')] || 'UNKNOWN'
+    const handleStatus = handlingStatus(this._handleModePayment())
 
     return (
-      <FormattedMessage {...purchasesMessages[`titleStatus${this._handlingStatus(currentStatus)}`]} />
+      <FormattedMessage {...purchasesMessages[`titleStatus${handleStatus(currentStatus)}`]} />
     )
   }
 
