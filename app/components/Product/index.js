@@ -18,15 +18,14 @@ import {
 
 import { FormattedMessage } from 'react-intl'
 import { Image, Label, Button, Icon } from 'semantic-ui-react'
-import { noop } from 'lodash'
 
 import ProductSlider from 'components/BannerSlider'
 import ListCollapse from 'components/ListCollapse'
+import PromptModal from 'components/PromptModal'
 
 import { fbShare } from 'utils/fb-share'
 
 import {LoadingStateInfo} from 'components/LoadingBlock'
-import ReactNotification from 'react-notification-system'
 
 import messages from './messages'
 
@@ -40,7 +39,6 @@ import {
   ProductMainContent,
   ProductPriceWrapper,
   ProductWrapper,
-  EmailDesktopWarning,
   SocialContainer,
   ShareWrapper,
   ProductImageSlider,
@@ -66,12 +64,14 @@ const Product = ({
   toggle,
   changeRoute,
   toggleClick,
+  openEmailPrompt,
+  closeEmailPrompt,
   defaultImage,
-  notificationRef,
+  intl,
   isMobile,
   copied,
   productSlider,
-  emailWarning,
+  togglePrompt,
   productPageTrigger,
   windowWidth }) => {
   const FacebookIcon = generateShareIcon('facebook')
@@ -97,14 +97,10 @@ const Product = ({
     null
   )
 
-  const handleMailTo = () => {
-    const shouldDisplayNotification = ifElse(
-      identity,
-      noop, // if true then we dont need to do anything
-      emailWarning
-    )
-
-    return shouldDisplayNotification(isMobile)
+  const _handleMailTo = () => {
+    if (!isMobile) {
+      openEmailPrompt()
+    }
   }
 
   return (
@@ -154,7 +150,7 @@ const Product = ({
               <TwitterIcon size={30} round />
             </TwitterShareButton>
 
-            <a href={`mailto:?subject=₱${toggleOrigDiscountPrice(product)} ${product.get('title')}&body=Click this link to see the product: ${window.location.href}`} onClick={handleMailTo} className='share-button'>
+            <a onClick={_handleMailTo} href={`mailto:?subject=₱${toggleOrigDiscountPrice(product)} ${product.get('title')}&body=Click this link to see the product: ${window.location.href}`} className='share-button'>
               <Icon circular inverted name='mail' color='orange' />
             </a>
           </ShareWrapper>
@@ -216,10 +212,13 @@ const Product = ({
           </ButtonContainer>
         </DetailsWrapper>
       </ProductWrapper>
-
-      <EmailDesktopWarning>
-        <ReactNotification ref={notificationRef} style={false} />
-      </EmailDesktopWarning>
+      <PromptModal
+        title={intl.formatMessage(messages.emailWarningTitle)}
+        name='warning'
+        content={intl.formatMessage(messages.emailWarningDescription)}
+        open={togglePrompt}
+        close={closeEmailPrompt}
+      />
     </div>
   )
 }

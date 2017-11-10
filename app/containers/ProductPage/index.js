@@ -7,20 +7,19 @@
 import React, { PropTypes } from 'react'
 import Helmet from 'react-helmet'
 
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { noop } from 'lodash'
 import { ifElse, both, equals } from 'ramda'
+import { isMobileDevice } from 'utils/http'
 
 import { imageStock } from 'utils/image-stock'
 
 import Product from 'components/Product'
 import WindowWidth from 'components/WindowWidth'
 import Modal from 'components/PromptModal'
-
-import { isMobileDevice } from 'utils/http'
 
 import messages from './messages'
 
@@ -56,7 +55,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     product: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
     productSuccess: PropTypes.bool.isRequired,
-    productError: PropTypes.bool.isRequired
+    productError: PropTypes.bool.isRequired,
+    intl: intlShape.isRequired
   }
 
   /**
@@ -72,29 +72,27 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       errModalToggle: false,
       errModalName: 'warning',
       errorTitle: '',
-      errorMessage: ''
+      errorMessage: '',
+      togglePrompt: false
     }
   }
-
-  _reactNotificationRef = (ref) => {
-    this._notificationRef = ref
-  }
-
-  _eMailShareNotification = () =>
-  setTimeout(() =>
-    this._notificationRef.addNotification({
-      title: <FormattedMessage {...messages.emailWarningInfo} />,
-      message: <FormattedMessage {...messages.emailWarningDescription} />,
-      position: 'tr',
-      autoDismiss: 0,
-      level: 'info'
-    })
-  , 2000)
 
   _setCurrentProduct = () => {
     const { product, setCurrentProduct } = this.props
     this.successSubmission = true
     setCurrentProduct(product)
+  }
+
+  _handleOpenEmailWarning = () => {
+    this.setState({
+      togglePrompt: true
+    })
+  }
+
+  _handleCloseEmailWarning = () => {
+    this.setState({
+      togglePrompt: false
+    })
   }
 
   _handleSuccess = () => {
@@ -165,8 +163,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   render () {
-    const { loading, product, route, windowWidth, changeRoute, isMobile } = this.props
-    const { errModalToggle, errModalName, errorTitle, errorMessage } = this.state
+    const { loading, product, route, windowWidth, changeRoute, isMobile, intl } = this.props
+    const { errModalToggle, errModalName, errorTitle, errorMessage, togglePrompt } = this.state
     const productPageTrigger = route && route
 
     return (
@@ -186,9 +184,11 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             toggleClick={this._handleSocialToggle}
             productPageTrigger={productPageTrigger}
             changeRoute={changeRoute}
-            notificationRef={this._reactNotificationRef}
-            emailWarning={this._eMailShareNotification}
+            openEmailPrompt={this._handleOpenEmailWarning}
+            closeEmailPrompt={this._handleCloseEmailWarning}
             isMobile={isMobile}
+            togglePrompt={togglePrompt}
+            intl={intl}
           />
         </div>
 
@@ -226,4 +226,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(ProductPage))
+export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(injectIntl(ProductPage)))

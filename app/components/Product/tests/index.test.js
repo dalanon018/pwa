@@ -47,7 +47,10 @@ describe('<Product />', () => {
       'barcode': '718037806839'
     }),
     loading: false,
-    onSubmit: () => {}
+    onSubmit: () => {},
+    intl: {
+      formatMessage: () => {}
+    }
   }
 
   it('render without exploding', () => {
