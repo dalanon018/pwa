@@ -38,6 +38,12 @@ module.exports = require('./webpack.base.babel')({
     //   launch: true
     // }),
     // new LodashModuleReplacementPlugin(),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'vendor',
+    //   children: true,
+    //   minChunks: 2,
+    //   async: true
+    // }),
     new webpack.optimize.CommonsChunkPlugin({
       names: ['common', 'vendor'],
       minChunks: 2
