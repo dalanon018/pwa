@@ -74,7 +74,7 @@ export class Footer extends React.PureComponent {
           <Grid.Row columns='equal' verticalAlign='middle' centered divided>
             <Grid.Column>
               <AppInfo className='float__right'>
-                <Image src={DeliveryIcon} />
+                <Image alt='cliqq' src={DeliveryIcon} />
                 <section>
                   <Label as='span' size='tiny' className='color__secondary'> <FormattedMessage {...messages.storeDelivery} /></Label>
                   <br />
@@ -84,7 +84,7 @@ export class Footer extends React.PureComponent {
             </Grid.Column>
             <Grid.Column>
               <AppInfo>
-                <Image src={ReturnIcon} />
+                <Image alt='cliqq' src={ReturnIcon} />
                 <section>
                   <Label as='span' size='tiny' className='color__secondary'><FormattedMessage {...messages.returnPolicy} /></Label>
                   <br />

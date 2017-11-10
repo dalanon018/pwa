@@ -155,7 +155,10 @@ class Purchase extends React.PureComponent {
       partialRight(DateFormater, ['MM-DD-YYYY']),
       switchFn({
         PROCESSING: receipt.get('dateCreated'),
-        CLAIMED: receipt.get('claimDate')
+        PROCESSINGINTRANSIT: receipt.get('dateCreated'),
+        CONFIRMED: receipt.get('lastUpdated'),
+        CLAIMED: receipt.get('claimDate'),
+        DELIVERED: receipt.get('lastUpdated')
       })(receipt.get('claimExpiry')),
       handleStatus
     )

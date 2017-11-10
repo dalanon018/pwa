@@ -4,6 +4,8 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 const OfflinePlugin = require('offline-plugin')
+// const WebpackMonitor = require('webpack-monitor')
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 // const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
 // dll caching
@@ -15,9 +17,10 @@ const OfflinePlugin = require('offline-plugin')
 
 module.exports = require('./webpack.base.babel')({
   // In production, we skip all hot-reloading stuff
-  entry: [
-    path.join(process.cwd(), 'app/app.js')
-  ],
+  entry: {
+    vendor: ['react-dom', 'react', 'moment', 'styled-components'],
+    app: path.join(process.cwd(), 'app/app.js')
+  },
 
   // Utilize long-term caching by adding content hashes (not compilation hashes) to compiled assets
   output: {
@@ -30,12 +33,20 @@ module.exports = require('./webpack.base.babel')({
   },
 
   plugins: [
+    // new BundleAnalyzerPlugin(),
+    // new WebpackMonitor({
+    //   launch: true
+    // }),
     // new LodashModuleReplacementPlugin(),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'vendor',
+    //   children: true,
+    //   minChunks: 2,
+    //   async: true
+    // }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      children: true,
-      minChunks: 2,
-      async: true
+      names: ['common', 'vendor'],
+      minChunks: 2
     }),
 
     // Minify and optimize the index.html

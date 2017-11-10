@@ -63,6 +63,10 @@ const Schema = {
     name: 'claimExpiry',
     type: STRING
   },
+  lastUpdated: {
+    name: 'lastUpdated',
+    type: STRING
+  },
   claimDate: {
     name: 'claimDate',
     type: STRING

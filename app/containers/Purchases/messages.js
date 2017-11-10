@@ -31,6 +31,10 @@ export default defineMessages({
     id: 'app.components.Purchases.titleStatusPROCESSING',
     defaultMessage: 'Processing'
   },
+  titleStatusPROCESSINGINTRANSIT: {
+    id: 'app.components.Purchases.titleStatusPROCESSINGINTRANSIT',
+    defaultMessage: 'In-Transit'
+  },
   titleStatusCONFIRMED: {
     id: 'app.components.Purchases.titleStatusCONFIRMED',
     defaultMessage: 'Paid'
