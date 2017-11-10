@@ -4,12 +4,10 @@ import JsBarcode from 'jsbarcode'
 import {
   T,
   always,
-  both,
   compose,
   cond,
   contains,
   equals,
-  identity,
   ifElse,
   partialRight
 } from 'ramda'
@@ -23,6 +21,7 @@ import ReturnIcon from 'images/icons/receipts/return-icon-receipt.svg'
 
 import { DateFormater } from 'utils/date' // DateFormater
 import { PhoneFormatter } from 'utils/string'
+import { handlingStatus } from 'utils/ordersHelper'
 
 import PurchaseOrder from './PurchaseOrder'
 import PurchaseUsecase from './PurchaseUsecase'
@@ -55,7 +54,7 @@ import purchasesMessages from 'containers/Purchases/messages'
 import {
   COMPLETED,
   EXPIRED,
-  COD_STATUS_NAME_AFFECTED
+  DEFAULT_METHOD_PAYMENT
 } from 'containers/Buckets/constants'
 
 const ComponentDetail = components => component => key =>
@@ -112,7 +111,7 @@ class Receipt extends React.PureComponent {
     loadingPushToggle: PropTypes.bool.isRequired
   }
 
-  _defaultModePayment = 'CASH'
+  _defaultModePayment = DEFAULT_METHOD_PAYMENT
 
   constructor () {
     super()
@@ -157,17 +156,11 @@ class Receipt extends React.PureComponent {
 
   _handleStatusTitle = () => {
     const { receipt, statuses } = this.props
-    const PROCESSING = 'PROCESSING'
     const currentStatus = statuses[receipt.get('status')] || 'UNKNOWN'
-    const isCod = () => this._handleModePayment() !== this._defaultModePayment
-    const normalStatus = ifElse(
-      both(isCod, partialRight(contains, [COD_STATUS_NAME_AFFECTED])),
-      () => PROCESSING,
-      identity
-    )
+    const handleStatus = handlingStatus(this._handleModePayment())
 
     return (
-      <FormattedMessage {...purchasesMessages[`titleStatus${normalStatus(currentStatus)}`]} />
+      <FormattedMessage {...purchasesMessages[`titleStatus${handleStatus(currentStatus)}`]} />
     )
   }
 
@@ -193,28 +186,18 @@ class Receipt extends React.PureComponent {
     )
   }
 
-  _handlingStatus = (currentStatus) => {
-    const PROCESSING = 'PROCESSING'
-    const isCod = () => this._handleModePayment() !== this._defaultModePayment
-    const normalStatus = ifElse(
-      both(isCod, partialRight(contains, [COD_STATUS_NAME_AFFECTED])),
-      () => PROCESSING,
-      identity
-    )
-
-    return normalStatus(currentStatus)
-  }
-
   _handleDateValue = () => {
     const { receipt, statuses } = this.props
     const currentStatus = statuses[receipt.get('status')] || ''
+    const handleStatus = handlingStatus(this._handleModePayment())
+
     const handleDate = compose(
       partialRight(DateFormater, ['MM-DD-YYYY']),
       ComponentDetail({
         PROCESSING: receipt.get('dateCreated'),
         CLAIMED: receipt.get('claimDate')
       })(receipt.get('claimExpiry')),
-      this._handlingStatus
+      handleStatus
     )
 
     return handleDate(currentStatus)
