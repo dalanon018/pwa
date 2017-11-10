@@ -18,6 +18,7 @@ import {
 
 import { FormattedMessage } from 'react-intl'
 import { Image, Label, Button, Icon } from 'semantic-ui-react'
+import { noop } from 'lodash'
 
 import ProductSlider from 'components/BannerSlider'
 import ListCollapse from 'components/ListCollapse'
@@ -25,6 +26,7 @@ import ListCollapse from 'components/ListCollapse'
 import { fbShare } from 'utils/fb-share'
 
 import {LoadingStateInfo} from 'components/LoadingBlock'
+import ReactNotification from 'react-notification-system'
 
 import messages from './messages'
 
@@ -38,6 +40,7 @@ import {
   ProductMainContent,
   ProductPriceWrapper,
   ProductWrapper,
+  EmailDesktopWarning,
   SocialContainer,
   ShareWrapper,
   ProductImageSlider,
@@ -64,8 +67,11 @@ const Product = ({
   changeRoute,
   toggleClick,
   defaultImage,
+  notificationRef,
+  isMobile,
   copied,
   productSlider,
+  emailWarning,
   productPageTrigger,
   windowWidth }) => {
   const FacebookIcon = generateShareIcon('facebook')
@@ -90,7 +96,16 @@ const Product = ({
     </Label>,
     null
   )
-  const mailTo = () => (window.location.href = `mailto:?subject=₱${toggleOrigDiscountPrice(product)} ${product.get('title')}&body=Click this link to see the product: ${window.location.href}`)
+
+  const handleMailTo = () => {
+    const shouldDisplayNotification = ifElse(
+      identity,
+      noop, // if true then we dont need to do anything
+      emailWarning
+    )
+
+    return shouldDisplayNotification(isMobile)
+  }
 
   return (
     <div>
@@ -139,9 +154,9 @@ const Product = ({
               <TwitterIcon size={30} round />
             </TwitterShareButton>
 
-            <button onClick={mailTo} className='unstyle-button share-button'>
+            <a href={`mailto:?subject=₱${toggleOrigDiscountPrice(product)} ${product.get('title')}&body=Click this link to see the product: ${window.location.href}`} onClick={handleMailTo} className='share-button'>
               <Icon circular inverted name='mail' color='orange' />
-            </button>
+            </a>
           </ShareWrapper>
         </SocialContainer>
 
@@ -201,6 +216,10 @@ const Product = ({
           </ButtonContainer>
         </DetailsWrapper>
       </ProductWrapper>
+
+      <EmailDesktopWarning>
+        <ReactNotification ref={notificationRef} style={false} />
+      </EmailDesktopWarning>
     </div>
   )
 }

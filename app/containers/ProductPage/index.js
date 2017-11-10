@@ -20,6 +20,8 @@ import Product from 'components/Product'
 import WindowWidth from 'components/WindowWidth'
 import Modal from 'components/PromptModal'
 
+import { isMobileDevice } from 'utils/http'
+
 import messages from './messages'
 
 import {
@@ -73,6 +75,21 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       errorMessage: ''
     }
   }
+
+  _reactNotificationRef = (ref) => {
+    this._notificationRef = ref
+  }
+
+  _eMailShareNotification = () =>
+  setTimeout(() =>
+    this._notificationRef.addNotification({
+      title: <FormattedMessage {...messages.emailWarningInfo} />,
+      message: <FormattedMessage {...messages.emailWarningDescription} />,
+      position: 'tr',
+      autoDismiss: 0,
+      level: 'info'
+    })
+  , 2000)
 
   _setCurrentProduct = () => {
     const { product, setCurrentProduct } = this.props
@@ -148,7 +165,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   render () {
-    const { loading, product, route, windowWidth, changeRoute } = this.props
+    const { loading, product, route, windowWidth, changeRoute, isMobile } = this.props
     const { errModalToggle, errModalName, errorTitle, errorMessage } = this.state
     const productPageTrigger = route && route
 
@@ -169,6 +186,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             toggleClick={this._handleSocialToggle}
             productPageTrigger={productPageTrigger}
             changeRoute={changeRoute}
+            notificationRef={this._reactNotificationRef}
+            emailWarning={this._eMailShareNotification}
+            isMobile={isMobile}
           />
         </div>
 
@@ -185,6 +205,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 }
 
 const mapStateToProps = createStructuredSelector({
+  isMobile: () => isMobileDevice(),
   loading: selectLoader(),
   product: selectProduct(),
   productSuccess: selectProductSuccess(),

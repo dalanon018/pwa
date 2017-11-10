@@ -22,7 +22,7 @@ export const WarningDescription = styled.div`
   padding: 0 20px;
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 
   span.screenshot-label {
     font-size: 14px
