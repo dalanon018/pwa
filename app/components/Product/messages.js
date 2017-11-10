@@ -69,5 +69,13 @@ export default defineMessages({
   returnPolicyContent3: {
     id: 'app.components.Product.returnPolicyContent3',
     defaultMessage: 'from claim date. Just go to your nearest 7/11 store where the item was purchased and get your Return Slip from the CLIQQ Kiosk and bring it to the cashier.'
+  },
+  emailWarningTitle: {
+    id: 'app.components.Product.emailWarningTitle',
+    defaultMessage: 'E-mail Share'
+  },
+  emailWarningDescription: {
+    id: 'app.components.Product.emailWarningDescription',
+    defaultMessage: 'An e-mail program must be installed to share this product'
   }
 })

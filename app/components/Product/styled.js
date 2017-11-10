@@ -187,3 +187,8 @@ export const CollapseContent = styled.div`
     margin-bottom: 5px !important;
   }
 `
+export const EmailDesktopWarning = styled.div`
+  .notification {
+    margin: 100px 0px 0px !important;
+  }
+`

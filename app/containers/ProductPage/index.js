@@ -7,12 +7,13 @@
 import React, { PropTypes } from 'react'
 import Helmet from 'react-helmet'
 
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { noop } from 'lodash'
 import { ifElse, both, equals } from 'ramda'
+import { isMobileDevice } from 'utils/http'
 
 import { imageStock } from 'utils/image-stock'
 
@@ -54,7 +55,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     product: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
     productSuccess: PropTypes.bool.isRequired,
-    productError: PropTypes.bool.isRequired
+    productError: PropTypes.bool.isRequired,
+    intl: intlShape.isRequired
   }
 
   /**
@@ -70,7 +72,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       errModalToggle: false,
       errModalName: 'warning',
       errorTitle: '',
-      errorMessage: ''
+      errorMessage: '',
+      togglePrompt: false
     }
   }
 
@@ -78,6 +81,18 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     const { product, setCurrentProduct } = this.props
     this.successSubmission = true
     setCurrentProduct(product)
+  }
+
+  _handleOpenEmailWarning = () => {
+    this.setState({
+      togglePrompt: true
+    })
+  }
+
+  _handleCloseEmailWarning = () => {
+    this.setState({
+      togglePrompt: false
+    })
   }
 
   _handleSuccess = () => {
@@ -148,8 +163,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   render () {
-    const { loading, product, route, windowWidth, changeRoute } = this.props
-    const { errModalToggle, errModalName, errorTitle, errorMessage } = this.state
+    const { loading, product, route, windowWidth, changeRoute, isMobile, intl } = this.props
+    const { errModalToggle, errModalName, errorTitle, errorMessage, togglePrompt } = this.state
     const productPageTrigger = route && route
 
     return (
@@ -169,6 +184,11 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             toggleClick={this._handleSocialToggle}
             productPageTrigger={productPageTrigger}
             changeRoute={changeRoute}
+            openEmailPrompt={this._handleOpenEmailWarning}
+            closeEmailPrompt={this._handleCloseEmailWarning}
+            isMobile={isMobile}
+            togglePrompt={togglePrompt}
+            intl={intl}
           />
         </div>
 
@@ -185,6 +205,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 }
 
 const mapStateToProps = createStructuredSelector({
+  isMobile: () => isMobileDevice(),
   loading: selectLoader(),
   product: selectProduct(),
   productSuccess: selectProductSuccess(),
@@ -205,4 +226,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(ProductPage))
+export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(injectIntl(ProductPage)))

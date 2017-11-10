@@ -21,6 +21,7 @@ import { Image, Label, Button, Icon } from 'semantic-ui-react'
 
 import ProductSlider from 'components/BannerSlider'
 import ListCollapse from 'components/ListCollapse'
+import PromptModal from 'components/PromptModal'
 
 import { fbShare } from 'utils/fb-share'
 
@@ -63,9 +64,14 @@ const Product = ({
   toggle,
   changeRoute,
   toggleClick,
+  openEmailPrompt,
+  closeEmailPrompt,
   defaultImage,
+  intl,
+  isMobile,
   copied,
   productSlider,
+  togglePrompt,
   productPageTrigger,
   windowWidth }) => {
   const FacebookIcon = generateShareIcon('facebook')
@@ -90,7 +96,12 @@ const Product = ({
     </Label>,
     null
   )
-  const mailTo = () => (window.location.href = `mailto:?subject=₱${toggleOrigDiscountPrice(product)} ${product.get('title')}&body=Click this link to see the product: ${window.location.href}`)
+
+  const _handleMailTo = () => {
+    if (!isMobile) {
+      openEmailPrompt()
+    }
+  }
 
   return (
     <div>
@@ -139,9 +150,9 @@ const Product = ({
               <TwitterIcon size={30} round />
             </TwitterShareButton>
 
-            <button onClick={mailTo} className='unstyle-button share-button'>
+            <a onClick={_handleMailTo} href={`mailto:?subject=₱${toggleOrigDiscountPrice(product)} ${product.get('title')}&body=Click this link to see the product: ${window.location.href}`} className='share-button'>
               <Icon circular inverted name='mail' color='orange' />
-            </button>
+            </a>
           </ShareWrapper>
         </SocialContainer>
 
@@ -201,6 +212,13 @@ const Product = ({
           </ButtonContainer>
         </DetailsWrapper>
       </ProductWrapper>
+      <PromptModal
+        title={intl.formatMessage(messages.emailWarningTitle)}
+        name='warning'
+        content={intl.formatMessage(messages.emailWarningDescription)}
+        open={togglePrompt}
+        close={closeEmailPrompt}
+      />
     </div>
   )
 }

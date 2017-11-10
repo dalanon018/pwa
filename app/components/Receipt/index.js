@@ -362,6 +362,7 @@ class Receipt extends React.PureComponent {
                   { PhoneFormatter(receipt.get('mobileNumber')) }
                 </Label>
                 <BarcodeSVG id='barcode' {...{ status: statuses[receipt.get('status')] }} />
+                {receipt.get('payCode')}
                 <Grid.Row>
                   { this._renderPurchaseBanner() }
                 </Grid.Row>
