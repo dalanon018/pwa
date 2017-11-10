@@ -4,6 +4,7 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 const OfflinePlugin = require('offline-plugin')
+const WebpackMonitor = require('webpack-monitor')
 // const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
 // dll caching
@@ -30,6 +31,9 @@ module.exports = require('./webpack.base.babel')({
   },
 
   plugins: [
+    new WebpackMonitor({
+      launch: true
+    }),
     // new LodashModuleReplacementPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
