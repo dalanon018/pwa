@@ -20,6 +20,9 @@ import {
 } from './styles'
 
 const imgixOptions = {
+  w: 374,
+  h: 100,
+  fit: 'clamp',
   auto: 'compress',
   q: 35,
   lossless: 0
