@@ -1,4 +1,4 @@
-import { __, assoc, compose, ifElse, prop, is, partialRight, omit } from 'ramda'
+import { __, assoc, compose, ifElse, prop, propOr, is, partialRight, omit } from 'ramda'
 import 'whatwg-fetch'
 
 /**
@@ -43,6 +43,7 @@ function checkStatus (response) {
 export default function request (url, options = {}) {
   const headers = new Headers()
   const omitProps = ['contentType', 'token']
+  const getTokenType = propOr('Bearer', 'tokenType', options)
   const getToken = prop('token', options)
   const getContent = prop('contentType', options)
 
@@ -51,9 +52,9 @@ export default function request (url, options = {}) {
     return data
   }
 
-  const appendAuthorization = (data, token = null) => {
+  const appendAuthorization = (data, token = null, tokenType = null) => {
     return ifElse(is(String), () => {
-      data.append('Authorization', `Bearer ${token}`)
+      data.append('Authorization', `${tokenType} ${token}`)
       return data
     }, () => data)(token)
   }
@@ -61,7 +62,7 @@ export default function request (url, options = {}) {
   const appendHeader = (options, headers) => compose(
     omit(omitProps),
     assoc('headers', __, options),
-    partialRight(appendAuthorization, [getToken]),
+    partialRight(appendAuthorization, [getToken, getTokenType]),
     partialRight(appendContentType, [getContent])
   )(headers)
 

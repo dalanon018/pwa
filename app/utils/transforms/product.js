@@ -6,6 +6,7 @@ import {
   adjust,
   curry,
   compose,
+  filter,
   fromPairs,
   map,
   omit,
@@ -17,6 +18,7 @@ import {
 
 import {
   ARRAY,
+  BOOLEAN,
   OBJECT,
   STRING,
   ValidateSchema
@@ -36,9 +38,9 @@ const Schema = {
     name: 'images',
     type: ARRAY
   },
-  brandName: {
+  brand: {
     name: 'brand',
-    type: STRING
+    type: OBJECT
   },
   brandLogo: {
     name: 'brandLogo',
@@ -49,7 +51,7 @@ const Schema = {
     type: STRING
   },
   priceList: {
-    name: 'price',
+    name: 'priceList',
     type: ARRAY
   },
   discountList: {
@@ -60,12 +62,28 @@ const Schema = {
     name: 'details',
     type: STRING
   },
-  deliveryPromiseMessage: {
-    name: 'shipping',
-    type: STRING
-  },
   gtin: {
     name: 'barcode',
+    type: STRING
+  },
+  returnable: {
+    name: 'returnable',
+    type: BOOLEAN
+  },
+  deliveryPromiseMessage: {
+    name: 'deliveryPromiseMessage',
+    type: STRING
+  },
+  returnPolicy: {
+    name: 'returnPolicy',
+    type: STRING
+  },
+  isFeatured: {
+    name: 'isFeatured',
+    type: BOOLEAN
+  },
+  additionalDetails: {
+    name: 'additionalDetails',
     type: STRING
   }
 }
@@ -85,9 +103,21 @@ const transformProduct = (data) => {
       propOr({}, 'images')
     )
 
+    const applyImageSliders = (key) => compose(
+      map(prop('imageUrl')),
+      filter(propEq('imageType', key)),
+      propOr({}, 'images')
+    )
+
+    const applyImageBrandLogo = compose(
+      applyImageUrl('BRAND_LOGO'),
+      propOr({}, 'brand')
+    )
+
     return Object.assign({}, data, {
       image: applyImageUrl('PRIMARY')(data),
-      brandLogo: applyImageUrl('BRAND_LOGO')(data)
+      brandLogo: applyImageBrandLogo(data),
+      sliders: applyImageSliders('SLIDER')(data)
     })
   }
 
@@ -120,11 +150,18 @@ const transformProduct = (data) => {
   //   })
   // }
 
+  const applyChangeDiscountPrice = (data) => compose(
+    assoc('discountPrice', __, data),
+    propOr(0, 'amount'),
+    find(propEq('currency', 'DPHP')),
+    prop('priceList')
+  )(data)
+
   const applyChangePrice = (data) => compose(
     assoc('price', __, data),
     propOr(0, 'amount'),
     find(propEq('currency', 'PHP')),
-    prop('price')
+    prop('priceList')
   )(data)
 
   const removeKeys = ['images', 'discount']
@@ -132,6 +169,7 @@ const transformProduct = (data) => {
     omit(removeKeys),
     applyImage,
     applyChangeProductId,
+    applyChangeDiscountPrice,
     applyChangePrice
   )
 
