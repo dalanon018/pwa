@@ -350,7 +350,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         { productLoader || brandLogo }
         <LoadingStateImage loading={productLoader} center>
           <ProductItem>
-            <Image alt='Cliqq' src={orderedProduct.get('image') ? orderedProduct.get('image') : imageStock('default-slider.jpg')} />
+            <Image alt='Cliqq' src={orderedProduct.get('image') ? orderedProduct.get('image') : imageStock('Slider-Default.jpg')} />
             {
               orderedProduct.get('brand')
               ? <Label as='span' basic size='big' className='color__secondary'>{orderedProduct.getIn(['brand', 'name'])}</Label>

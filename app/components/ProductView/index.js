@@ -124,7 +124,7 @@ const DefaultState = () => {
       <EmptyDataBlock>
         <ProductWrapper>
           <ImageWrapper>
-            <Image alt='Cliqq' src={imageStock('default-product-loader.jpg', imgixOptions)} className='empty-image' />
+            <Image alt='Cliqq' src={imageStock('Brands-Default.jpg', imgixOptions)} className='empty-image' />
           </ImageWrapper>
           <Image alt='Cliqq' src={ParagraphImage} height={50} />
         </ProductWrapper>

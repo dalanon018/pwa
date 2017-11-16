@@ -23,4 +23,4 @@ export const paramsImgix = (url, options) => compose(
 )(url)
 
 export const imageStock = (imageFileName, options = {}) =>
-  `https://cliqq.imgix.net/${imageFileName}${fnSearchParams(options)}`
+  `https://cliqqshop.imgix.net/${imageFileName}${fnSearchParams(options)}`

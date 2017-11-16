@@ -13,7 +13,7 @@ import { push } from 'react-router-redux'
 import { fromJS } from 'immutable'
 import { ifElse, identity } from 'ramda'
 
-import { imageStock, paramsImgix } from 'utils/image-stock'
+import { paramsImgix } from 'utils/image-stock'
 
 import Helmet from 'react-helmet'
 import messages from './messages'
@@ -146,9 +146,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     }
 
     const bannerImages = [
-      paramsImgix(imageStock('sample_banner.jpg'), imgixOptions),
-      paramsImgix(imageStock('sample_banner.jpg'), imgixOptions),
-      paramsImgix(imageStock('sample_banner.jpg'), imgixOptions)
+      paramsImgix('https://cliqq.imgix.net/sample_banner.jpg', imgixOptions),
+      paramsImgix('https://cliqq.imgix.net/sample_banner.jpg', imgixOptions),
+      paramsImgix('https://cliqq.imgix.net/sample_banner.jpg', imgixOptions)
     ]
 
     return (
