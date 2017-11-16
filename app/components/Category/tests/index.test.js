@@ -24,7 +24,7 @@ describe('<Category />', () => {
   it('should render a Background Image of category', () => {
     const renderedComponent = wrapper(Category, minProps)
     expect(
-      renderedComponent.find('[background="image1.png"]').length
+      renderedComponent.find('[background]').length
     ).toEqual(1)
   })
 
