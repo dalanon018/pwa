@@ -38,6 +38,12 @@ export const BrandWrapper = styled.div`
   }
 `
 
+const imgixOptions = {
+  auto: 'compress',
+  q: 35,
+  lossless: 0
+}
+
 function Brand ({ brands, loader }) {
   return (
     <BrandContainer>
@@ -60,12 +66,6 @@ function Brand ({ brands, loader }) {
 }
 
 const DefaultState = () => {
-  const imgixOptions = {
-    auto: 'compress',
-    q: 75,
-    lossless: 0
-  }
-
   return (
     <Grid.Column>
       <EmptyDataBlock>
