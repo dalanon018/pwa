@@ -18,7 +18,7 @@ import { Grid, Label, Form, Checkbox, Image, Button } from 'semantic-ui-react'
 import NextIcon from 'images/icons/greater-than-icon.svg'
 import scrollPolyfill from 'utils/scrollPolyfill'
 
-import { imageStock } from 'utils/image-stock'
+import { paramsImgix } from 'utils/image-stock'
 import { transformStore } from 'utils/transforms'
 
 import Modal from 'components/PromptModal'
@@ -232,6 +232,20 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     () => component2
   )(condition)
 
+  _updateParamsImages = (images, opt = {}) => {
+    const options = {
+      w: 414,
+      h: 246,
+      fit: 'fill',
+      auto: 'compress',
+      q: 35,
+      lossless: 0,
+      ...opt
+    }
+
+    return images ? paramsImgix(images, options) : ''
+  }
+
   componentWillUnmount () {
     this.props.setHandlersDefault()
   }
@@ -343,14 +357,14 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       <Image
         className='brand-logo'
         alt='Cliqq'
-        src={orderedProduct.get('brandLogo')} />) : ''
+        src={this._updateParamsImages(orderedProduct.get('brandLogo'), { w: 200, h: 30 })} />) : ''
 
     return (
       <ProductReviewWrapper>
         { productLoader || brandLogo }
         <LoadingStateImage loading={productLoader} center>
           <ProductItem>
-            <Image alt='Cliqq' src={orderedProduct.get('image') ? orderedProduct.get('image') : imageStock('Slider-Default.jpg')} />
+            <Image alt='Cliqq' src={this._updateParamsImages(orderedProduct.get('image'))} />
             {
               orderedProduct.get('brand')
               ? <Label as='span' basic size='big' className='color__secondary'>{orderedProduct.getIn(['brand', 'name'])}</Label>

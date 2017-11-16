@@ -23,11 +23,20 @@ const LoadingParagraph = styled.div`
   align-items: center;
   margin: 20px 0;
 `
+const imgixOptions = {
+  w: 414,
+  h: 246,
+  fit: 'fill',
+  auto: 'compress',
+  q: 35,
+  lossless: 0
+}
+
 export const LoadingStateImage = ({ children, loading }) => {
   if (loading) {
     return (
       <EmptyDataBlock>
-        <Image src={imageStock('Slider-Default.jpg')} width='100%' />
+        <Image src={imageStock('Slider-Default.jpg', imgixOptions)} width='100%' />
       </EmptyDataBlock>
     )
   }

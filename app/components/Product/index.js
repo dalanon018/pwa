@@ -58,14 +58,15 @@ const showDiscountPrice = (component1, component2) => (condition) => ifElse(
   () => component2
 )(condition)
 
-const updateParamsImages = (images) => {
+const updateParamsImages = (images, opt = {}) => {
   const options = {
     w: 414,
     h: 246,
     fit: 'fill',
     auto: 'compress',
     q: 35,
-    lossless: 0
+    lossless: 0,
+    ...opt
   }
 
   return images ? paramsImgix(images, options) : ''
@@ -100,7 +101,7 @@ const Product = ({
     <Image
       className='brand-logo'
       alt='Cliqq'
-      src={product.get('brandLogo')}
+      src={updateParamsImages(product.get('brandLogo'), { w: 200, h: 30 })}
       onClick={changeRoute.bind(this, `/brands/${product.getIn(['brand', 'code'])}`)} />) : ''
 
   const toggleDiscount = showDiscountPrice(
