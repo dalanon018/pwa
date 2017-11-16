@@ -136,22 +136,19 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     const { loader, featuredCategories, featuredBrands, changeRoute, windowWidth, intl, brandLoader } = this.props
     const { products } = this.state
     const numSlide = windowWidth > 767 ? 2 : 1
+    const imgixOptions = {
+      w: 414,
+      h: 246,
+      fit: 'clamp',
+      auto: 'compress',
+      q: 35,
+      lossless: 0
+    }
+
     const bannerImages = [
-      paramsImgix(imageStock('sample_banner.jpg'), {
-        auto: 'compress',
-        q: 35,
-        lossless: 0
-      }),
-      paramsImgix(imageStock('sample_banner.jpg'), {
-        auto: 'compress',
-        q: 35,
-        lossless: 0
-      }),
-      paramsImgix(imageStock('sample_banner.jpg'), {
-        auto: 'compress',
-        q: 35,
-        lossless: 0
-      })
+      paramsImgix(imageStock('sample_banner.jpg'), imgixOptions),
+      paramsImgix(imageStock('sample_banner.jpg'), imgixOptions),
+      paramsImgix(imageStock('sample_banner.jpg'), imgixOptions)
     ]
 
     return (

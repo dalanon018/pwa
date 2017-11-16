@@ -29,21 +29,21 @@ import ParagraphImage from 'images/test-images/short-paragraph.png'
 
 import { imageStock, paramsImgix } from 'utils/image-stock'
 
+const imgixOptions = {
+  w: 175,
+  h: 175,
+  fit: 'clamp',
+  auto: 'compress',
+  q: 35,
+  lossless: 0
+}
+
 function ProductView ({
   loader,
   products,
   changeRoute,
   windowWidth
 }) {
-  const imgixOptions = {
-    w: 175,
-    h: 175,
-    fit: 'clamp',
-    auto: 'compress',
-    q: 35,
-    lossless: 0
-  }
-
   const columnCount = windowWidth > 767 ? 4 : 2
 
   const productName = (data) => {
@@ -119,18 +119,12 @@ function ProductView ({
 }
 
 const DefaultState = () => {
-  const imgixOptions = {
-    auto: 'compress',
-    q: 75,
-    lossless: 0
-  }
-
   return (
     <Grid.Column width={8}>
       <EmptyDataBlock>
         <ProductWrapper>
           <ImageWrapper>
-            <Image alt='Cliqq' src={paramsImgix(imageStock('default-product-loader.jpg'), imgixOptions)} className='empty-image' />
+            <Image alt='Cliqq' src={imageStock('default-product-loader.jpg', imgixOptions)} className='empty-image' />
           </ImageWrapper>
           <Image alt='Cliqq' src={ParagraphImage} height={50} />
         </ProductWrapper>

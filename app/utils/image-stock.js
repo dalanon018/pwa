@@ -22,5 +22,5 @@ export const paramsImgix = (url, options) => compose(
   partialRight(concat, [fnSearchParams(options)])
 )(url)
 
-export const imageStock = (imageFileName) =>
-  `https://cliqq.imgix.net/${imageFileName}`
+export const imageStock = (imageFileName, options = {}) =>
+  `https://cliqq.imgix.net/${imageFileName}${fnSearchParams(options)}`

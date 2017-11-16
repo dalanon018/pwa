@@ -30,6 +30,8 @@ import EmptyProducts from 'components/EmptyProductsBlock'
 // import Promo from 'components/Promo'
 import LazyLoading from 'components/LazyLoading'
 
+import { paramsImgix } from 'utils/image-stock'
+
 import {
   setPageTitleAction,
   setShowSearchIconAction,
@@ -87,12 +89,25 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     limit: LIMIT_ITEMS
   }
 
+  _updateParamsImages = (images) => {
+    const options = {
+      w: 414,
+      h: 246,
+      fit: 'clamp',
+      auto: 'compress',
+      q: 35,
+      lossless: 0
+    }
+
+    return images ? paramsImgix(images, options) : ''
+  }
+
   _handlePageTitle = (nextProps) => {
     const { brands, params: { id } } = nextProps
 
     if (brands.size) {
       const brand = brands.find((entity) => entity.get('id') === id)
-      const brandImages = brand.size ? brand.get('sliders').toArray() : []
+      const brandImages = brand.size ? brand.get('sliders').toArray().map(this._updateParamsImages) : []
 
       this.setState({
         brandImages
