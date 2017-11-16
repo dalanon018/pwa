@@ -7,6 +7,7 @@
 import React, { PropTypes } from 'react'
 import EmptyDataBlock from 'components/EmptyDataBlock'
 import { Grid, Label } from 'semantic-ui-react'
+import defaultCategoryBackground from 'images/default-categories.jpg'
 import { imageStock, paramsImgix } from 'utils/image-stock'
 
 import {
@@ -14,8 +15,8 @@ import {
 } from 'lodash'
 
 import {
-  BackgroundLay,
-  CategoryBlock
+  CategoryBlock,
+  BackgroundLay
 } from './styles'
 
 const imgixOptions = {
@@ -37,7 +38,7 @@ function Category ({
   route,
   fontSize
 }) {
-  const imageShow = (image) => image || paramsImgix(imageStock('Categories-Default.jpg'), imgixOptions)
+  const imageShow = (image) => image || defaultCategoryBackground
 
   return (
     <Grid padded columns='1'>

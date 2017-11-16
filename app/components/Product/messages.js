@@ -56,11 +56,11 @@ export default defineMessages({
   },
   returnPolicy: {
     id: 'app.components.Product.returnPolicy',
-    defaultMessage: 'CLiQQ Return Policy'
+    defaultMessage: 'Cliqq Return Policy'
   },
   returnPolicyContent1: {
     id: 'app.components.Product.returnPolicyContent1',
-    defaultMessage: 'Not satisfied with your purchase? Depending on CLiQQ Care Policy, you can return your item anytime of the day '
+    defaultMessage: 'Not satisfied with your purchase? Depending on CLIQQ Care Policy, you can return your item anytime of the day '
   },
   returnPolicyContent2: {
     id: 'app.components.Product.returnPolicyContent2',
@@ -68,7 +68,7 @@ export default defineMessages({
   },
   returnPolicyContent3: {
     id: 'app.components.Product.returnPolicyContent3',
-    defaultMessage: 'from claim date. Just go to your nearest 7/11 store where the item was purchased and get your Return Slip from the CLiQQ Kiosk and bring it to the cashier.'
+    defaultMessage: 'from claim date. Just go to your nearest 7/11 store where the item was purchased and get your Return Slip from the CLIQQ Kiosk and bring it to the cashier.'
   },
   emailWarningTitle: {
     id: 'app.components.Product.emailWarningTitle',
@@ -77,13 +77,5 @@ export default defineMessages({
   emailWarningDescription: {
     id: 'app.components.Product.emailWarningDescription',
     defaultMessage: 'An e-mail program must be installed to share this product'
-  },
-  selectSize: {
-    id: 'app.components.Product.selectSize',
-    defaultMessage: 'Select Size'
-  },
-  noStock: {
-    id: 'app.components.Product.noStock',
-    defaultMessage: 'OUT OF STOCK'
   }
 })

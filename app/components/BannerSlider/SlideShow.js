@@ -22,10 +22,6 @@ class SlideShow extends React.PureComponent {
 
   assignTimeOut
 
-  _innerSliderRef = (c) => {
-    this.slider = c
-  }
-
   _initNextSlide = () => {
     const { innerSlider } = this.slider
 
@@ -50,7 +46,7 @@ class SlideShow extends React.PureComponent {
 
     return (
       <Slider
-        ref={this._innerSliderRef}
+        ref={c => { this.slider = c }}
         {...settings}
         afterChange={this._clearTimeOut}>
         {
@@ -59,7 +55,7 @@ class SlideShow extends React.PureComponent {
             return (
               <div key={index}>
                 {
-                  (typeof item === 'string' ? <Image alt='CLiQQ' src={item} /> : '')
+                  (typeof item === 'string' ? <Image alt='Cliqq' src={item} /> : '')
                 }
               </div>
             )

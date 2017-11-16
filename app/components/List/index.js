@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import Ul from './Ul'
 import Wrapper from './Wrapper'
@@ -10,8 +9,8 @@ function List (props) {
 
   // If we have items, render them
   if (props.items) {
-    content = props.items.map((item) => (
-      <ComponentToRender key={`item-${item.id}`} item={item} />
+    content = props.items.map((item, index) => (
+      <ComponentToRender key={`item-${index}`} item={item} />
     ))
   } else {
     // Otherwise render a single component
@@ -28,8 +27,8 @@ function List (props) {
 }
 
 List.propTypes = {
-  component: PropTypes.func.isRequired,
-  items: PropTypes.array
+  component: React.PropTypes.func.isRequired,
+  items: React.PropTypes.array
 }
 
 export default List

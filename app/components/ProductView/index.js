@@ -5,61 +5,136 @@
 */
 
 import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import { range } from 'lodash'
 
-import { Grid, Image, Label } from 'semantic-ui-react'
+import {
+  identity,
+  ifElse
+} from 'ramda'
 import { FormattedMessage } from 'react-intl'
-
-// test image
-import TestImage from 'images/test-images/v2/Backpack.png'
+import { Grid, Image, Label } from 'semantic-ui-react'
 
 import messages from './messages'
+import {
+  ImageWrapper,
+  ProductInfo,
+  ProductPriceWrapper,
+  ProductWrapper
+} from './styles'
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`
-const LabelBorderNone = styled(Label)`
-  border: none !important
-`
+import EmptyDataBlock from 'components/EmptyDataBlock'
+import defaultImage from 'images/default-product.jpg'
 
-const View = ({ product }) => {
-  return (
-    <Grid.Column>
-      <Wrapper>
-        <Image alt={product.get('title')} src={TestImage} size='small' />
-        <LabelBorderNone basic size='medium'>
-          { product.get('brand') }
-        </LabelBorderNone>
-        <LabelBorderNone basic size='mini'>
-          { product.get('title') }
-        </LabelBorderNone>
-        <LabelBorderNone basic size='massive' color='orange'>
-          <FormattedMessage {...messages.peso} />
-          { product.get('price') }
-        </LabelBorderNone>
-      </Wrapper>
-    </Grid.Column>
-  )
+import ParagraphImage from 'images/test-images/short-paragraph.png'
+
+import { imageStock, paramsImgix } from 'utils/image-stock'
+
+const imgixOptions = {
+  w: 175,
+  h: 175,
+  fit: 'clamp',
+  auto: 'compress',
+  q: 35,
+  lossless: 0
 }
 
-function ProductView ({ products }) {
+function ProductView ({
+  loader,
+  products,
+  changeRoute,
+  windowWidth
+}) {
+  const columnCount = windowWidth > 767 ? 4 : 2
+
+  const productName = (data) => {
+    let maxChar = 33
+    switch (true) {
+      case (windowWidth >= 767):
+        maxChar = 100
+        break
+    }
+
+    if (data.length > maxChar) {
+      return `${data.slice(0, maxChar)}...`
+    }
+    return data
+  }
+
+  const toggleOrigDiscountPrice = (product) => {
+    const showPrice = product.get('discountPrice') || product.get('price')
+
+    return showPrice ? showPrice.toLocaleString() : 0
+  }
+
+  const showDiscountPrice = (component1, component2) => (condition) => ifElse(
+    identity,
+    () => component1,
+    () => component2
+  )(condition)
+
   return (
-    <Grid container padded columns='2'>
+    <Grid padded stretched columns={columnCount}>
       {
-        products.map((product, idx) =>
-          <View product={product} key={idx} />
-        )
+        loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
+        : products.valueSeq().map((product, index) => {
+          const goToProduct = () => changeRoute(`/product/${product.get('cliqqCode').first()}`)
+          const toggleDiscountLabel = showDiscountPrice(
+            <FormattedMessage {...messages.peso} />,
+            null
+          )
+          const toggleDiscountValue = showDiscountPrice(
+            parseFloat(product.get('price')).toLocaleString(),
+            null
+          )
+
+          return (
+            <Grid.Column
+              key={`${product.get('cliqqCode')}-${index}`}
+              onClick={goToProduct}>
+              <ProductWrapper>
+                <ImageWrapper>
+                  <Image alt={productName(product.get('title'))} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || defaultImage} />
+                </ImageWrapper>
+                <ProductInfo brandName={product.get('brand')}>
+                  <Label as='span' className='brand-name color__secondary' basic size='medium'>{product.getIn(['brand', 'name'])}</Label>
+                  <Label className='no-bottom-margin product-name color__secondary' as='p' basic size='tiny'>{productName(product.get('title'))}</Label>
+                  <ProductPriceWrapper>
+                    <Label className='product-price' as='b' color='orange' basic size='massive'>
+                      <FormattedMessage {...messages.peso} />
+                      { toggleOrigDiscountPrice(product) }
+                    </Label>
+                    <Label className='product-discount' as='span' color='grey' basic size='large'>
+                      { toggleDiscountLabel(product.get('discountPrice') !== 0) }
+                      { toggleDiscountValue(product.get('discountPrice') !== 0) }
+                    </Label>
+                  </ProductPriceWrapper>
+                </ProductInfo>
+              </ProductWrapper>
+            </Grid.Column>
+          )
+        })
       }
     </Grid>
   )
 }
 
+const DefaultState = () => {
+  return (
+    <Grid.Column>
+      <EmptyDataBlock>
+        <ProductWrapper>
+          <ImageWrapper>
+            <Image alt='Cliqq' src={imageStock('Brands-Default.jpg', imgixOptions)} className='empty-image' />
+          </ImageWrapper>
+          <Image alt='Cliqq' src={ParagraphImage} height={50} />
+        </ProductWrapper>
+      </EmptyDataBlock>
+    </Grid.Column>
+  )
+}
+
 ProductView.propTypes = {
-  products: PropTypes.object.isRequired
+
 }
 
 export default ProductView

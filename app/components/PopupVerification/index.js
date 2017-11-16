@@ -126,7 +126,7 @@ export class PopupVerification extends React.PureComponent {
       <PopupWrapper toggle={toggle} className='background__white'>
         <BannerHeader background={BannerBg}>
           <span className='background__smoke-grey border__three-white'>
-            <Image alt='CLiQQ' src={MobileIcon} />
+            <Image alt='Cliqq' src={MobileIcon} />
           </span>
         </BannerHeader>
         <PopupContainer>

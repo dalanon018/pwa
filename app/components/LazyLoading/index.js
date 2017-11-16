@@ -6,7 +6,7 @@
 
 import React, {PropTypes } from 'react'
 import styled from 'styled-components'
-import { throttle, noop } from 'lodash'
+import { debounce, noop } from 'lodash'
 import {
   allPass,
   // both,
@@ -19,23 +19,8 @@ import {
 
 import LoadingIndicator from 'components/LoadingIndicator'
 
-import { FormattedMessage } from 'react-intl'
-import messages from './messages'
-
 const WrapperLoadingIndicator = styled.div`
   position: relative;
-`
-
-const LoadMoreText = styled.p`
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`
-
-const ScrollContent = styled.div`
-  -webkit-overflow-scrolling: touch;
 `
 
 class LazyLoading extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -52,27 +37,22 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
     this._cancellableDebounce = false
   }
 
-  _debounceScrolling = throttle(this._onScrollElement, 100)
+  _debounceScrolling = debounce(this._onScrollElement, 200)
 
   _onScrollElement () {
-    const { isLoading, lazyload, onScroll } = this.props
-    const body = document.body
-    const html = document.documentElement
+    const { lazyload, onScroll } = this.props
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop
+    const offset = 200
 
-    const scrollY = window.pageYOffset
-    const offset = 1600
-    const height = Math.max(body.scrollHeight, body.offsetHeight,
-      html.clientHeight, html.scrollHeight, html.offsetHeight)
-
-    const onBottom = () => lt(height, (scrollY + offset))
+    const onBottom = () => lt(window.innerHeight, (scrollY + offset))
     const notCancellable = () => equals(false, this._cancellableDebounce)
-    const isNotLoading = () => equals(false, isLoading)
 
     const displayMore = ifElse(
-      allPass([onBottom, identity, notCancellable, isNotLoading]),
+      allPass([onBottom, identity, notCancellable]),
       onScroll,
       noop
     )
+
     return displayMore(lazyload)
   }
 
@@ -82,15 +62,13 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
    */
   _displayLazyLoadIndicator = () => {
     const { lazyload } = this.props
+    // const itemsGreaterEqLimit = () => true//gte(results.size, limit)
     const showLoadingIndicator = ifElse(
       // both(identity, itemsGreaterEqLimit),
       identity,
       () => (
         <WrapperLoadingIndicator>
           <LoadingIndicator />
-          <LoadMoreText>
-            <FormattedMessage {...messages.loadingText} />
-          </LoadMoreText>
         </WrapperLoadingIndicator>
       ),
       () => null
@@ -98,16 +76,7 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
     return showLoadingIndicator(lazyload)
   }
 
-  /**
-   * we need to make sure that before we reload the page we scroll top the page due to issues that scroll is always triggered if it was refereshed on the bottom of the page
-   */
-  _srollTopBeforeUnload = () => {
-    window.scrollTo(0, 0)
-  }
-
   componentDidMount () {
-    // make sure to put it last on call stack
-    setTimeout(this._srollTopBeforeUnload, 0)
     window.addEventListener('scroll', this._debounceScrolling)
   }
 
@@ -117,22 +86,21 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
      * that they shoud'nt run anymore
      */
     this._cancellableDebounce = true
+
     window.removeEventListener('scroll', this._debounceScrolling)
   }
 
   render () {
     return (
-      <ScrollContent>
+      <div>
         { this.props.children }
         { this._displayLazyLoadIndicator() }
-      </ScrollContent>
+      </div>
     )
   }
 }
 
 LazyLoading.propTypes = {
-  // to check if we are currently loading
-  isLoading: PropTypes.bool.isRequired,
   // to check if we still need to scroll
   lazyload: PropTypes.bool.isRequired,
   // callback on scroll

@@ -26,8 +26,6 @@ import WarningIcon from 'images/icons/warning-icon.svg'
 import IntransitIcon from 'images/icons/intransit-icon.svg'
 import UnclaimedIcon from 'images/icons/unclaimed-icon.svg'
 
-import { switchFn } from 'utils/logicHelper'
-
 import {
   STATUSES
 } from 'containers/Buckets/constants'
@@ -39,8 +37,11 @@ import {
   ButtonWrapper
 } from './styles'
 
+const ComponentDetail = components => component => key =>
+ key in components ? components[key] : component
+
 const ModalImages = ({ status }) => {
-  return switchFn({
+  return ComponentDetail({
     RESERVED: null,
     UNPAID: {
       banner: RedBackground,
@@ -54,11 +55,6 @@ const ModalImages = ({ status }) => {
     INTRANSIT: {
       banner: LightgreyBackground,
       icon: IntransitIcon
-    },
-    LOSTINTRANSIT: {
-      banner: RedBackground,
-      icon: IntransitIcon,
-      iconBg: '#EB1E25'
     },
     DELIVERED: {
       banner: LightgreyBackground,
@@ -78,7 +74,7 @@ const ModalImages = ({ status }) => {
 }
 
 const ModalTitle = ({ status, receipt }) => {
-  return switchFn({
+  return ComponentDetail({
     RESERVED: null,
     UNPAID: (
       <FormattedMessage {...messages.unpaidTitle} />
@@ -88,9 +84,6 @@ const ModalTitle = ({ status, receipt }) => {
     ),
     INTRANSIT: (
       <FormattedMessage {...messages.intransitTitle} />
-    ),
-    LOSTINTRANSIT: (
-      <FormattedMessage {...messages.lostintransitTitle} />
     ),
     DELIVERED: (
       <FormattedMessage {...messages.deliveredTitle} />
@@ -105,7 +98,7 @@ const ModalTitle = ({ status, receipt }) => {
 }
 
 const ModalDescription = ({ status, receipt }) => {
-  return switchFn({
+  return ComponentDetail({
     RESERVED: null,
     UNPAID: (
       <FormattedMessage
@@ -120,9 +113,6 @@ const ModalDescription = ({ status, receipt }) => {
     INTRANSIT: (
       <FormattedMessage {...messages.intransitDescription} />
     ),
-    LOSTINTRANSIT: (
-      <FormattedMessage {...messages.lostintransitDescription} />
-    ),
     DELIVERED: (
       <FormattedMessage {...messages.deliveredDescription} />
     ),
@@ -135,8 +125,8 @@ const ModalDescription = ({ status, receipt }) => {
   })(null)(status)
 }
 
-const ModalButtons = ({ status, goToHome, goToReceipts, goToProducts, onClose }) => {
-  return switchFn({
+const ModalButtons = ({ status, goToReceipts, goToProducts, onClose }) => {
+  return ComponentDetail({
     RESERVED: {
       primary: <FormattedMessage {...messages.buttonReserved} />,
       secondary: <FormattedMessage {...messages.secondaryButton} />,
@@ -160,12 +150,6 @@ const ModalButtons = ({ status, goToHome, goToReceipts, goToProducts, onClose })
       secondary: <FormattedMessage {...messages.secondaryButton} />,
       onClick: goToReceipts,
       onClose
-    },
-    LOSTINTRANSIT: {
-      primary: <FormattedMessage {...messages.secondaryBrowseCatalog} />,
-      secondary: <FormattedMessage {...messages.buttonLostIntransit} />,
-      onClick: onClose,
-      onClose: goToHome
     },
     DELIVERED: {
       primary: <FormattedMessage {...messages.buttonDelivered} />,
@@ -212,20 +196,29 @@ class ModalWithHeader extends React.PureComponent {
     setUpdatedReceipts(receiptsUpdated)
   }
 
+  _goToProducts = (code) => {
+    const { goToProducts } = this.props
+
+    return () => {
+      // closing the modal
+      this._closeModal()
+      goToProducts(code)
+    }
+  }
+
   _fnFactory (cbFn) {
     this._closeModal()
-    cbFn && cbFn()
+    cbFn()
   }
 
   render () {
-    const { receipt, goToReceipts, goToProducts, goToHome } = this.props
+    const { receipt, goToReceipts } = this.props
     const currentStatus = STATUSES[toUpper(receipt.get('status'))] || ''
     const { primary, secondary, onClick, onClose } = ModalButtons({
       status: currentStatus,
-      goToProducts: () => this._fnFactory(goToProducts(receipt.get('parentCliqqCode'))),
+      goToProducts: this._goToProducts(receipt.get('cliqqCode')),
       onClose: this._closeModal,
-      goToReceipts,
-      goToHome: () => this._fnFactory(goToHome)
+      goToReceipts
     }) || {}
     // const modalSize = windowWidth >= 768 ? 'small' : 'mini'
 
@@ -240,7 +233,7 @@ class ModalWithHeader extends React.PureComponent {
             background={ModalImages({ status: currentStatus }).banner}
             iconBg={ModalImages({ status: currentStatus }).iconBg} >
             <span className='border__three-white'>
-              <Image alt='CLiQQ' src={ModalImages({ status: currentStatus }).icon} />
+              <Image alt='Cliqq' src={ModalImages({ status: currentStatus }).icon} />
             </span>
           </BannerHeader>
           <Modal.Content>

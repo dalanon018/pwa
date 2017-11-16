@@ -56,8 +56,7 @@ export const HandleBlock = ({
     speed: 1000,
     arrows: false,
     slidesToShow: slidesToShow,
-    slidesToScroll: slidesToShow,
-    lazyLoad: true
+    slidesToScroll: slidesToShow
   }
 
   if (loader || images.length === 0) {

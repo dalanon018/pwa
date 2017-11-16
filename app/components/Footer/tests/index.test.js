@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Footer from '../index'
+import { Footer } from '../index'
 
 const wrapper = (props = {}, enzyme = shallow) => shallow(
   <Footer {...props} />
@@ -9,7 +9,10 @@ const wrapper = (props = {}, enzyme = shallow) => shallow(
 
 describe('<Footer />', () => {
   const minProps = {
-    changeRoute: () => {}
+    changeRoute: () => {},
+    intl: {
+      formatMessage: () => {}
+    }
   }
   it('render without exploding', () => {
     const renderComponent = wrapper(minProps)

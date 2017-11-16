@@ -121,9 +121,6 @@ export const ReceiptContent = styled.div`
     line-height: initial;
     text-decoration: line-through;
   }
-  .mobile-number {
-    margin-bottom: 0 !important;
-  }
 `
 
 export const Scanner = styled.div`
@@ -180,30 +177,9 @@ export const InfoContainer = styled.div`
   }
 `
 
-export const MatchCode = styled.div`
+export const MatchCode = styled.span`
+  font-size: 19px;
+  font-weight: 700;
   position: relative;
-  width: 100%;
-  text-align: center;
-  
-  .border-divider {
-    border-top: 2px dashed #8E8E8E;
-    border-bottom: 2px dashed #8E8E8E;
-    width: 100%;
-    height: 5px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  span {
-    color: #5B5B5B !important;
-    font-weight: 700 !important;
-    padding: 0 5px !important;
-    position: relative;
-    z-index: 1;
-  }
-`
-export const PayCode = styled.div`
-  width: 100%;
+  text-decoration-line: underline;
 `

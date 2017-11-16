@@ -11,9 +11,10 @@ import { Grid, Image } from 'semantic-ui-react'
 import { Link } from 'react-router'
 import { range } from 'lodash'
 
+import defaultCategoryBackground from 'images/default-categories.jpg'
 import EmptyDataBlock from 'components/EmptyDataBlock'
 
-import { imageStock, paramsImgix } from 'utils/image-stock'
+import { paramsImgix } from 'utils/image-stock'
 
 const BrandContainer = styled.div`
   @media (min-width: 1024px) {
@@ -38,15 +39,15 @@ export const BrandWrapper = styled.div`
 `
 
 const imgixOptions = {
-  w: 300,
-  h: 300,
+  w: 175,
+  h: 175,
   auto: 'compress',
   q: 35,
   lossless: 0
 }
 
 function Brand ({ brands, loader }) {
-  const imageShow = (image) => image || imageStock('Brands-Default.jpg', imgixOptions)
+  const imageShow = (image) => image || defaultCategoryBackground
 
   return (
     <BrandContainer>
@@ -73,7 +74,7 @@ const DefaultState = () => {
     <Grid.Column>
       <EmptyDataBlock>
         <BrandWrapper>
-          <Image alt='CliQQ' src={paramsImgix(imageStock('Brands-Default.jpg', imgixOptions))} className='empty-image' />
+          <Image alt='Cliqq' src={paramsImgix(defaultCategoryBackground, imgixOptions)} className='empty-image' />
         </BrandWrapper>
       </EmptyDataBlock>
     </Grid.Column>
