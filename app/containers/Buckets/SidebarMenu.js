@@ -29,6 +29,7 @@ const SidebarContainer = styled.div`
   transition: width 0.3s;
   width: ${({toggle}) => toggle ? '100%' : '0'};
   z-index: 99;
+  -webkit-overflow-scrolling: touch;
 `
 const SidebarWrapper = styled.div`
   position: relative;
