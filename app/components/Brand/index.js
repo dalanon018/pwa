@@ -45,6 +45,8 @@ const imgixOptions = {
 }
 
 function Brand ({ brands, loader }) {
+  const imageShow = (image) => image || defaultCategoryBackground
+
   return (
     <BrandContainer>
       <Grid padded columns='2'>
@@ -54,7 +56,7 @@ function Brand ({ brands, loader }) {
             <Grid.Column key={brand.get('id')} >
               <BrandWrapper>
                 <Link to={`/brands/${brand.get('id')}`}>
-                  <Image alt={brand.get('name')} src={brand.get('background') || defaultCategoryBackground} />
+                  <Image alt={brand.get('name')} src={paramsImgix(imageShow(brand.get('background')), imgixOptions)} />
                 </Link>
               </BrandWrapper>
             </Grid.Column>
