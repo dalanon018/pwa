@@ -5,6 +5,7 @@
  */
 
 import React, { PropTypes } from 'react'
+import LazyLoad from 'react-lazyload'
 
 import { connect } from 'react-redux'
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -204,33 +205,39 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             windowWidth={windowWidth} />
           { this._displayViewAll() }
 
-          {
-            this._shouldDisplayHeader(
-              <H3>
-                <FormattedMessage {...messages.browseCategory} />
-              </H3>
-            )(featuredCategories.size > 0)
-          }
-          <CategoryWrapper>
-            <Category
-              loader={loader}
-              windowWidth={windowWidth}
-              margin='2'
-              changeRoute={changeRoute}
-              route='/products-category'
-              iconWidth='25'
-              fontSize='9'
-              height='80'
-              categories={featuredCategories} />
-          </CategoryWrapper>
-          {
-            this._shouldDisplayHeader(
-              <H3>
-                <FormattedMessage {...messages.browseBrands} />
-              </H3>
-            )(featuredBrands.size > 0)
-          }
-          <Brand brands={featuredBrands} loader={brandLoader} />
+          <LazyLoad offset={-200} once>
+            <div>
+              {
+                this._shouldDisplayHeader(
+                  <H3>
+                    <FormattedMessage {...messages.browseCategory} />
+                  </H3>
+                )(featuredCategories.size > 0)
+              }
+
+              <CategoryWrapper>
+                <Category
+                  loader={loader}
+                  windowWidth={windowWidth}
+                  margin='2'
+                  changeRoute={changeRoute}
+                  route='/products-category'
+                  iconWidth='25'
+                  fontSize='9'
+                  height='80'
+                  categories={featuredCategories} />
+              </CategoryWrapper>
+
+              {
+                this._shouldDisplayHeader(
+                  <H3>
+                    <FormattedMessage {...messages.browseBrands} />
+                  </H3>
+                )(featuredBrands.size > 0)
+              }
+              <Brand brands={featuredBrands} loader={brandLoader} />
+            </div>
+          </LazyLoad>
         </Container>
         <Footer />
       </div>
