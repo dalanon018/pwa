@@ -31,6 +31,15 @@ function BannerSlider ({
     />
 }
 
+const imgixOptions = {
+  w: 414,
+  h: 246,
+  fit: 'clamp', // we need to make sure that this is clamp so it will base on the container.
+  auto: 'compress',
+  q: 35,
+  lossless: 0
+}
+
 export const HandleBlock = ({
   loader,
   isInfinite,
@@ -66,7 +75,7 @@ export const DefaultState = ({
   return (
     <BannerSliderWrapper>
       <EmptyDataBlock productPageTrigger={productPageTrigger}>
-        <ImageWrapper image={imageStock('broken-image.jpg')} />
+        <ImageWrapper image={imageStock('broken-image.jpg', imgixOptions)} />
       </EmptyDataBlock>
     </BannerSliderWrapper>
   )

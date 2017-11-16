@@ -19,18 +19,19 @@ import {
 import { FormattedMessage } from 'react-intl'
 import { Image, Label, Button, Icon } from 'semantic-ui-react'
 
+import DeliveryIcon from 'images/test-images/v2/delivery-icon.svg'
+import ReturnIcon from 'images/test-images/v2/return-icon.svg'
+
+import { fbShare } from 'utils/fb-share'
+import { paramsImgix } from 'utils/image-stock'
+
 import ProductSlider from 'components/BannerSlider'
 import ListCollapse from 'components/ListCollapse'
 import PromptModal from 'components/PromptModal'
 
-import { fbShare } from 'utils/fb-share'
-
-import {LoadingStateInfo} from 'components/LoadingBlock'
+import { LoadingStateInfo } from 'components/LoadingBlock'
 
 import messages from './messages'
-
-import DeliveryIcon from 'images/test-images/v2/delivery-icon.svg'
-import ReturnIcon from 'images/test-images/v2/return-icon.svg'
 
 import {
   ButtonContainer,
@@ -57,6 +58,19 @@ const showDiscountPrice = (component1, component2) => (condition) => ifElse(
   () => component2
 )(condition)
 
+const updateParamsImages = (images) => {
+  const options = {
+    w: 414,
+    h: 246,
+    fit: 'fill',
+    auto: 'compress',
+    q: 35,
+    lossless: 0
+  }
+
+  return images ? paramsImgix(images, options) : ''
+}
+
 const Product = ({
   product,
   loading,
@@ -79,8 +93,9 @@ const Product = ({
   const {
     TwitterShareButton
   } = ShareButtons
-  const productSliders = product.get('sliders') ? product.get('sliders').toArray() : []
-  const productImages = [product.get('image')].concat(productSliders)
+  const productSliders = product.get('sliders') ? product.get('sliders').toArray().map(updateParamsImages) : []
+  // we need to add our main image to sliders
+  const productImages = [updateParamsImages(product.get('image'))].concat(productSliders)
   const brandLogo = product.get('brandLogo') ? (
     <Image
       className='brand-logo'

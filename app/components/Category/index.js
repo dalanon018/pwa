@@ -20,6 +20,9 @@ import {
 } from './styles'
 
 const imgixOptions = {
+  w: 374,
+  h: 100,
+  fit: 'clamp',
   auto: 'compress',
   q: 35,
   lossless: 0
@@ -35,6 +38,8 @@ function Category ({
   route,
   fontSize
 }) {
+  const imageShow = (image) => image || defaultCategoryBackground
+
   return (
     <Grid padded columns='1'>
       {
@@ -47,7 +52,7 @@ function Category ({
             <Grid.Column key={index}>
               <CategoryBlock
                 onClick={handleRedirect}
-                background={category.get('background') ? category.get('background') : defaultCategoryBackground}>
+                background={paramsImgix(imageShow(category.get('background')), imgixOptions)}>
                 <BackgroundLay className='background__black-transparent' />
                 <Label as='span' basic size='massive' className='color__white'>{category.get('name')}</Label>
               </CategoryBlock>

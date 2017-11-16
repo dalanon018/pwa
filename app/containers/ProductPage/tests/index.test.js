@@ -39,7 +39,17 @@ describe('<Products />', () => {
     }),
     loading: false,
     productSuccess: false,
-    productError: false
+    productError: false,
+    intl: {
+      formatDate: () => {},
+      formatTime: () => {},
+      formatRelative: () => {},
+      formatNumber: () => {},
+      formatPlural: () => {},
+      formatMessage: () => {},
+      formatHTMLMessage: () => {},
+      now: () => {}
+    }
   }
 
   it('render without exploding', () => {

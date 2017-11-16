@@ -38,7 +38,17 @@ export const BrandWrapper = styled.div`
   }
 `
 
+const imgixOptions = {
+  w: 175,
+  h: 175,
+  auto: 'compress',
+  q: 35,
+  lossless: 0
+}
+
 function Brand ({ brands, loader }) {
+  const imageShow = (image) => image || defaultCategoryBackground
+
   return (
     <BrandContainer>
       <Grid padded columns='2'>
@@ -48,7 +58,7 @@ function Brand ({ brands, loader }) {
             <Grid.Column key={brand.get('id')} >
               <BrandWrapper>
                 <Link to={`/brands/${brand.get('id')}`}>
-                  <Image alt={brand.get('name')} src={brand.get('background') || defaultCategoryBackground} />
+                  <Image alt={brand.get('name')} src={paramsImgix(imageShow(brand.get('background')), imgixOptions)} />
                 </Link>
               </BrandWrapper>
             </Grid.Column>
@@ -60,12 +70,6 @@ function Brand ({ brands, loader }) {
 }
 
 const DefaultState = () => {
-  const imgixOptions = {
-    auto: 'compress',
-    q: 75,
-    lossless: 0
-  }
-
   return (
     <Grid.Column>
       <EmptyDataBlock>
