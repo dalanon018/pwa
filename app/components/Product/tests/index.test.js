@@ -48,6 +48,7 @@ describe('<Product />', () => {
     }),
     loading: false,
     onSubmit: () => {},
+    origPrice: () => {},
     intl: {
       formatMessage: () => {}
     }
