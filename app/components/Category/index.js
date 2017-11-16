@@ -68,7 +68,7 @@ export const DefaultState = () => {
   return (
     <Grid.Column>
       <EmptyDataBlock>
-        <CategoryBlock background={paramsImgix(imageStock('broken-image.jpg'), imgixOptions)} />
+        <CategoryBlock background={paramsImgix(imageStock('Categories-Default.jpg'), imgixOptions)} />
       </EmptyDataBlock>
     </Grid.Column>
   )

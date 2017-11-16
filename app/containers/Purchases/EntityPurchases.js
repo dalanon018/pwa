@@ -31,7 +31,7 @@ const EntityPurchases = ({ entity, changeRoute, windowWidth }) => (
           <Grid.Column>
             <Purchase
               className='padding__bottom--15'
-              defaultImage={imageStock('default-slider.jpg')}
+              defaultImage={imageStock('Slider-Default.jpg')}
               key={receipt.get('trackingNumber')}
               receipt={receipt}
               windowWidth={windowWidth}

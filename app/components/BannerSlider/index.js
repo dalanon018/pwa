@@ -75,7 +75,7 @@ export const DefaultState = ({
   return (
     <BannerSliderWrapper>
       <EmptyDataBlock productPageTrigger={productPageTrigger}>
-        <ImageWrapper image={imageStock('broken-image.jpg', imgixOptions)} />
+        <ImageWrapper image={imageStock('Slider-Default.jpg', imgixOptions)} />
       </EmptyDataBlock>
     </BannerSliderWrapper>
   )

@@ -27,7 +27,7 @@ export const LoadingStateImage = ({ children, loading }) => {
   if (loading) {
     return (
       <EmptyDataBlock>
-        <Image src={imageStock('broken-image.jpg')} width='100%' />
+        <Image src={imageStock('Slider-Default.jpg')} width='100%' />
       </EmptyDataBlock>
     )
   }
