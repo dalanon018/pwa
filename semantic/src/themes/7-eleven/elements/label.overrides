@@ -1,3 +1,98 @@
 /*******************************
          Theme Overrides
 *******************************/
+
+.ui.label {
+  background: transparent;
+  color: @darkGrey;
+  margin-left: 0;
+  margin-right: 0;
+  line-height: 1.5;
+
+  &.basic {
+    background: transparent;
+    border-radius: 0;
+    border: 0;
+    color: @darkGrey;
+
+    &.orange, &.green, &.red {
+      background-color: transparent !important;
+    }
+  }
+
+  &.color-grey {
+    color: @grey;
+  }
+
+  &.color-light-grey {
+    color: @lightGrey;
+  }
+
+  &.font-roboto {
+    font-family: 'Roboto', san-serif;
+  }
+
+  &.weight-300 {
+    font-weight: 300;
+  }
+
+  &.weight-400 {
+    font-weight: 400;
+  }
+
+  &.weight-600 {
+    font-weight: 600;
+  }
+
+  &.weight-700 {
+    font-weight: 700;
+  }
+
+  &.italic {
+    font-style: italic;
+  }
+
+  &.center {
+    text-align: center;
+  }
+}
+
+p.ui.label {
+  padding: 0;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+span.ui.label {
+  padding: 0;
+}
+
+
+@media (min-width: 1024px) {
+  .ui.label {
+    &.mini {
+      font-size: 12px;
+    }
+    &.tiny {
+      font-size: 13px;
+    }
+    &.small {
+      font-size: 14px;
+    }
+    &.medium{
+      font-size: 16px;
+    }
+    &.large {
+      font-size: 18px;
+    }
+    &.big {
+      font-size: 21px;
+    }
+    &.huge {
+      font-size: 23px;
+    }
+    &.massive {
+      font-size: 27px;
+    }
+  }
+}

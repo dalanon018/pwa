@@ -247,8 +247,8 @@
 @mini    : @9px;
 @tiny    : @10px;
 @small   : @11px;
-@medium  : @12px;
-@large   : @absoluteMedium;
+@medium  : @13px;
+@large   : @15px;
 @big     : @absoluteBig;
 @huge    : @absoluteHuge;
 @massive : @absoluteMassive;

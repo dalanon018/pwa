@@ -1,3 +1,8 @@
 /*******************************
          Theme Overrides
 *******************************/
+
+.ui.mini.image, .ui.mini.images .image, .ui.mini.images img, .ui.mini.images svg {
+  width: 27px;
+  height: 27px;
+}
