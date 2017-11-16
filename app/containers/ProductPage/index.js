@@ -83,18 +83,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     setCurrentProduct(product)
   }
 
-  _handleOpenEmailWarning = () => {
-    this.setState({
-      togglePrompt: true
-    })
-  }
-
-  _handleCloseEmailWarning = () => {
-    this.setState({
-      togglePrompt: false
-    })
-  }
-
   _handleSuccess = () => {
     const { changeRoute } = this.props
     this.successSubmission = false
@@ -133,6 +121,27 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   _handleCopy = () => {
     this.setState({
       copied: true
+    })
+  }
+
+  _handletoggleOrigDiscountPrice = (product) => {
+    const showPrice = product.get('discountPrice') || product.get('price')
+
+    return showPrice ? showPrice.toLocaleString() : 0
+  }
+
+  _handleOpenEmailWarning = () => {
+    this.setState({
+      togglePrompt: true
+    })
+  }
+
+  _handleCloseEmailWarning = () => {
+    const { product } = this.props
+    this.setState({
+      togglePrompt: false
+    }, () => {
+      window.location.href = `mailto:?subject=₱${this._handletoggleOrigDiscountPrice(product)} ${product.get('title')}&body=Click this link to see the product: ${window.location.href}`
     })
   }
 
@@ -189,6 +198,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             isMobile={isMobile}
             togglePrompt={togglePrompt}
             intl={intl}
+            origPrice={this._handletoggleOrigDiscountPrice}
           />
         </div>
 

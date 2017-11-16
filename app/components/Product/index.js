@@ -46,12 +46,6 @@ import {
   CollapseContent
 } from './styled'
 
-const toggleOrigDiscountPrice = (product) => {
-  const showPrice = product.get('discountPrice') || product.get('price')
-
-  return showPrice ? showPrice.toLocaleString() : 0
-}
-
 const showDiscountPrice = (component1, component2) => (condition) => ifElse(
   identity,
   () => component1,
@@ -83,6 +77,7 @@ const Product = ({
   closeEmailPrompt,
   defaultImage,
   intl,
+  origPrice,
   isMobile,
   copied,
   productSlider,
@@ -116,6 +111,8 @@ const Product = ({
   const _handleMailTo = () => {
     if (!isMobile) {
       openEmailPrompt()
+    } else {
+      window.location.href = `mailto:?subject=₱${origPrice(product)} ${product.get('title')}&body=Click this link to see the product: ${window.location.href}`
     }
   }
 
@@ -143,7 +140,7 @@ const Product = ({
             <ProductPriceWrapper>
               <Label className='product-price' as='b' basic size='massive' color='orange'>
                 <FormattedMessage {...messages.peso} />
-                { toggleOrigDiscountPrice(product) }
+                { origPrice(product) }
               </Label>
               { toggleDiscount(product.get('discountPrice')) }
             </ProductPriceWrapper>
@@ -166,7 +163,7 @@ const Product = ({
               <TwitterIcon size={30} round />
             </TwitterShareButton>
 
-            <a onClick={_handleMailTo} href={`mailto:?subject=₱${toggleOrigDiscountPrice(product)} ${product.get('title')}&body=Click this link to see the product: ${window.location.href}`} className='share-button'>
+            <a onClick={_handleMailTo} className='share-button'>
               <Icon circular inverted name='mail' color='orange' />
             </a>
           </ShareWrapper>
@@ -242,7 +239,8 @@ const Product = ({
 Product.propTypes = {
   product: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  origPrice: PropTypes.func.isRequired
 }
 
 export default Product

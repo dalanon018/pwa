@@ -158,6 +158,7 @@ export const ShareWrapper = styled.div`
   }
 
   .share-button {
+    cursor: pointer;
     margin: 0 5px;
   }
 
