@@ -120,7 +120,7 @@ function ProductView ({
 
 const DefaultState = () => {
   return (
-    <Grid.Column width={8}>
+    <Grid.Column>
       <EmptyDataBlock>
         <ProductWrapper>
           <ImageWrapper>
