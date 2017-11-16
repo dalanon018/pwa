@@ -16,7 +16,8 @@ import FontFaceObserver from 'fontfaceobserver'
 import createHistory from 'history/createBrowserHistory'
 
 import '../semantic/dist/semantic.min.css'
-// import 'sanitize.css/sanitize.css'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 // Import root app
 import App from 'containers/App'
@@ -34,6 +35,7 @@ import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-144.png'
 import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-192.png'
 import '!file-loader?name=[name].[ext]!./manifest.json'
 import 'file-loader?name=[name]!./.htaccess' // eslint-disable-line import/extensions
+import 'file-loader?name=[name]!./_redirects.sample' // eslint-disable-line import/extensions
 /* eslint-enable import/no-webpack-loader-syntax */
 
 import configureStore from './configureStore'
@@ -106,5 +108,8 @@ if (!window.Intl) {
 // it's not most important operation and if main code fails,
 // we do not want it installed
 if (process.env.NODE_ENV === 'production') {
+  const Notification = require('utils/firebase-notification').default
+  Notification.install()
+
   require('offline-plugin/runtime').install() // eslint-disable-line global-require
 }
