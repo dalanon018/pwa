@@ -170,6 +170,12 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
   _handleToggleSideBar = () => {
     const { toggleSidebar } = this.state
+    if (!toggleSidebar) {
+      document.body.classList.add('custom__body')
+    } else {
+      document.body.classList.remove('custom__body')
+    }
+
     this.setState({
       toggleSidebar: !toggleSidebar
     })
@@ -191,7 +197,6 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
    */
   _handleCloseSidebarClickPusher = () => {
     const { toggleSidebar } = this.state
-
     if (toggleSidebar) {
       return this._handleToggleSideBar()
     }
