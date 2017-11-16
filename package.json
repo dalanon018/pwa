@@ -1,7 +1,7 @@
 {
   "name": "react-boilerplate-pwa",
   "version": "3.5.0",
-  "description": "a boilerplate focus on PWA lighthouse integration",
+  "description": "7-eleven cliqq Application",
   "repository": {
     "type": "git",
     "url": "git@github.com:joshuaalpuerto/react-boilerplate-pwa.git"
@@ -11,7 +11,7 @@
     "node": "7.10.1",
     "yarn": "0.27.5"
   },
-  "author": "Joshua C Alpuerto <joshuacalpuerto@gmail.com>",
+  "author": "Offshorly Devs",
   "license": "MIT",
   "scripts": {
     "set:env": "node setenv.js > .env",
@@ -24,14 +24,15 @@
     "postinstall": "npm run build:dll && npm run build:semantic",
     "heroku-postbuild": "npm run build && npm run build:semantic",
     "prebuild": "npm run build:clean",
-    "build": "npm run set:env && cross-env NODE_ENV=production webpack --config internals/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
+    "build": "npm run set:env && cross-env NODE_ENV=production env-cmd .env webpack --config internals/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
+    "deploy:netlify": "npm run build && cd ./build && netlify deploy",
     "build:clean": "node_modules/.bin/rimraf ./build",
     "build:dll": "node ./internals/scripts/dependencies.js",
     "build:semantic": "cd semantic && gulp build",
-    "start": "cross-env NODE_ENV=development node server",
+    "start": "cross-env NODE_ENV=development env-cmd .env node server",
     "start:tunnel": "cross-env NODE_ENV=development ENABLE_TUNNEL=true node server",
     "start:production": "npm run test && npm run build && npm run start:prod",
-    "start:prod": "npm run set:env && cross-env NODE_ENV=production node server",
+    "start:prod": "npm run set:env && cross-env NODE_ENV=production env-cmd .env node server",
     "presetup": "npm i chalk shelljs",
     "setup": "node ./internals/scripts/setup.js",
     "postsetup": "npm run build:dll",
@@ -190,18 +191,26 @@
   "jest": {
     "collectCoverageFrom": [
       "app/**/*.{js,jsx}",
+      "!app/integration/*.{js,jsx}",
       "!app/**/*.test.{js,jsx}",
       "!app/*/RbGenerated*/*.{js,jsx}",
+      "!app/**/messages.{js,jsx}",
+      "!app/**/sagas.{js,jsx}",
       "!app/app.js",
+      "!app/routes.js",
+      "!app/**/styles.js",
       "!app/global-styles.js",
-      "!app/*/*/Loadable.{js,jsx}"
+      "!app/utils/firebase-*.js",
+      "!app/utils/xhr.js",
+      "!app/utils/transforms/*.js",
+      "!app/sw-handler.js"
     ],
     "coverageThreshold": {
       "global": {
-        "statements": 98,
-        "branches": 91,
-        "functions": 98,
-        "lines": 98
+        "statements": 60,
+        "branches": 50,
+        "functions": 60,
+        "lines": 50
       }
     },
     "moduleDirectories": [
@@ -277,6 +286,7 @@
     "compression-webpack-plugin": "1.0.0",
     "coveralls": "2.13.1",
     "css-loader": "0.28.4",
+    "env-cmd": "4.0.0",
     "enzyme": "2.8.2",
     "eslint": "3.19.0",
     "eslint-config-airbnb": "15.0.1",
@@ -322,6 +332,7 @@
       "/internals/templates",
       "/semantic/",
       "/app/utils/firebase-messaging-sw.js",
+      "/app/utils/scrollPolyfill.js",
       "/app/sw-handler.js",
       "/cypress"
     ],
@@ -342,7 +353,8 @@
       "XMLHttpRequest",
       "cy",
       "Cypress",
-      "FB"
+      "FB",
+      "btoa"
     ]
   }
 }
