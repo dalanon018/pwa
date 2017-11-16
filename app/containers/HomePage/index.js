@@ -205,7 +205,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             windowWidth={windowWidth} />
           { this._displayViewAll() }
 
-          <LazyLoad offset={-200} once>
+          <LazyLoad height='100%' offset={-200} once>
             <div>
               {
                 this._shouldDisplayHeader(
