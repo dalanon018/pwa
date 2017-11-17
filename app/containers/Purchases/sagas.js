@@ -72,7 +72,7 @@ function * getOrderList () {
  * TODO:
  * REFACTOR OUT PLEASE MAKE USE RAMDA BETTER
  * things to update :
- * sevenConnectRefNum, facilityName, status, brand
+ * sevenConnectRefNum, facilityName, status, brand, lastUpdated
  * @param {*} apiOrders
  */
 function * findAndUpdateReceiptDetails (apiOrders) {
@@ -83,6 +83,7 @@ function * findAndUpdateReceiptDetails (apiOrders) {
     const trackingNumber = prop('trackingNumber', oldReceipt)
     const findReceipt = find(propEq('trackingNumber', trackingNumber))
     const updateOldReceipt = (data) => compose(
+      assoc('lastUpdated', prop('lastUpdated', data)),
       assoc('status', prop('status', data)),
       assoc('brand', propOr({}, 'brand', data)),
       assoc('sevenConnectRefNum', prop('sevenConnectRefNum', data)),
