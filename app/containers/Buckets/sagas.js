@@ -294,7 +294,8 @@ function * updateReceiptSnapShot (orders, receiptId) {
     toPairs
   )(STATUSES)
 
-  if ((!isEmpty(order) && order.status !== status) && !isReservedStatus(status)) {
+  // we need to be very careful that status should not be empty
+  if (status && (!isEmpty(order) && order.status !== status) && !isReservedStatus(status)) {
     order.status = status || order.status
     order.lastUpdated = lastUpdated || order.lastUpdated || ''
     updatedReceipts = updatedReceipts.concat(order)
