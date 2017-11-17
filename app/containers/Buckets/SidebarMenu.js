@@ -16,7 +16,7 @@ import Home from 'images/icons/drawer/home.svg'
 import Barcode from 'images/icons/drawer/activity.svg'
 import Categories from 'images/icons/drawer/categories.svg'
 import Brands from 'images/icons/drawer/brands.svg'
-import Help from 'images/icons/drawer/help.svg'
+// import Help from 'images/icons/drawer/help.svg'
 import Logout from 'images/icons/drawer/signout.svg'
 import Close from 'images/icons/drawer/close.svg'
 
@@ -227,14 +227,16 @@ class SidebarMenu extends React.PureComponent {
                 </ListCollapse>
               </CustomContent>
             </ListAccordionWrapper>
-            <ListWrapper>
-              <Image alt='help' size='mini' src={Help} />
-              <List.Content>
-                <Label as='p' className='margin__none color__secondary' size='huge'>
-                  <FormattedMessage {...messages.menuHelp} />
-                </Label>
-              </List.Content>
-            </ListWrapper>
+            {/*
+              <ListWrapper>
+                <Image alt='help' size='mini' src={Help} />
+                <List.Content>
+                  <Label as='p' className='margin__none color__secondary' size='huge'>
+                    <FormattedMessage {...messages.menuHelp} />
+                  </Label>
+                </List.Content>
+              </ListWrapper>
+            */}
             { this._handleShowLogoutButton() }
           </List>
         </SidebarWrapper>
