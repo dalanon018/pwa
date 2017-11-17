@@ -18,7 +18,7 @@ const OfflinePlugin = require('offline-plugin')
 module.exports = require('./webpack.base.babel')({
   // In production, we skip all hot-reloading stuff
   entry: {
-    vendor: ['react-dom', 'react', 'moment', 'styled-components'],
+    vendor: ['react-dom', 'react', 'moment', 'styled-components', 'core-js', 'immutable', 'react-router'],
     app: path.join(process.cwd(), 'app/app.js')
   },
 
