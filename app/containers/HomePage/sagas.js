@@ -90,6 +90,4 @@ export function * homePageSagas () {
 }
 
 // All sagas to be loaded
-export default [
-  homePageSagas
-]
+export default homePageSagas
