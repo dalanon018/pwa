@@ -31,7 +31,7 @@ export default function App () {
         <meta name='description' content='7-11 CliQQ e-commerce website' />
       </Helmet>
       <Switch>
-        <Route exact path='/' component={Buckets} />
+        <Route path='/' component={Buckets} />
         <Route path='' component={NotFoundPage} />
       </Switch>
     </AppWrapper>

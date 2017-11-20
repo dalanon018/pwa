@@ -12,12 +12,12 @@ import {
   partial
 } from 'ramda'
 import { noop } from 'lodash'
-import { browserHistory } from 'react-router'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
+import { Switch, Route } from 'react-router-dom'
 
 import Firebase from 'utils/firebase-realtime'
 import Notification from 'utils/firebase-notification'
@@ -67,12 +67,13 @@ import {
   setSearchProductAction
 } from 'containers/SearchPage/actions'
 
+import HomePage from 'containers/HomePage/Loadable'
 import ModalWithHeader from 'components/ModalWithHeader'
 import Modal from 'components/PromptModal'
 import WindowWidth from 'components/WindowWidth'
 
 import reducer from './reducer'
-import saga from './saga'
+import sagas from './sagas'
 import messages from './messages'
 import HeaderMenu from './HeaderMenu'
 import SearchMenu from './SearchMenu'
@@ -92,7 +93,6 @@ const MainContent = styled.div`
 export class Buckets extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     isMobile: PropTypes.bool.isRequired,
-    children: PropTypes.object.isRequired,
     getCategories: PropTypes.func.isRequired,
     getBrands: PropTypes.func.isRequired,
     getUpdatedReceipts: PropTypes.func.isRequired,
@@ -191,11 +191,13 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
    * this is a factory fn since we button is dynamic base on the url of the user.
    */
   _handleLeftButtonAction = () => {
+    const { history } = this.props
+
     if (this._hideBackButton()) {
       return this._handleToggleSideBar()
     }
 
-    return browserHistory.goBack()
+    return history.goBack()
   }
 
   /**
@@ -326,8 +328,6 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     getLoyaltyToken()
 
     shouldDisplayNotification(isMobile)
-
-    browserHistory.listen(this._handleBackButton)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -342,14 +342,16 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   render () {
-    const { children, productCategories, changeRoute, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken } = this.props
+    const { productCategories, changeRoute, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken } = this.props
     const { toggleSidebar } = this.state
     return (
       <Wrapper toggleSidebar={toggleSidebar}>
         { this._displayHeader() }
         <MainContent
           toggleSidebar={toggleSidebar} >
-          { children }
+          <Switch>
+            <Route exact path='/' component={HomePage} />
+          </Switch>
         </MainContent>
         <div
           className='sidebar-wrapper' >
@@ -415,7 +417,7 @@ function mapDispatchToProps (dispatch) {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps)
 const withReducer = injectReducer({ key: 'buckets', reducer })
-const withSaga = injectSaga({ key: 'buckets', saga })
+const withSaga = injectSaga({ key: 'buckets', sagas })
 
 export default compose(
   withReducer,

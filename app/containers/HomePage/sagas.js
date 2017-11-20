@@ -16,13 +16,11 @@ import { getRequestData } from 'utils/offline-request'
 import { transformProduct } from 'utils/transforms'
 
 import {
-  GET_FEATURED_PRODUCTS,
-  LIMIT_ITEMS
+  GET_FEATURED_PRODUCTS
 } from './constants'
 
 import {
-  setFeaturedProductsAction,
-  setProductsCountsAction
+  setFeaturedProductsAction
 } from './actions'
 
 import {
@@ -52,7 +50,7 @@ export function * initializeAppGlobals () {
 
 export function * getProduct (data) {
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/productList/featured?offset=0&limit=${LIMIT_ITEMS}`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/productList/featured?offset=0&limit=5`, {
     method: 'GET',
     token: token.access_token
   })
@@ -64,11 +62,9 @@ export function * getProduct (data) {
       propOr([], 'productList')
     )
     const products = yield transform(req)
-    const count = propOr(0, 'totalCount', req)
     yield put(setFeaturedProductsAction(products))
-    yield put(setProductsCountsAction(count))
   } else {
-    yield put(setNetworkErrorAction(500))
+    yield put(setNetworkErrorAction('No cache data'))
   }
 }
 
