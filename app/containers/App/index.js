@@ -11,11 +11,8 @@ import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
 import { Switch, Route } from 'react-router-dom'
 
-import Container from 'containers/Container/Loadable'
+import Buckets from 'containers/Buckets/Loadable'
 import NotFoundPage from 'containers/NotFoundPage/Loadable'
-
-import HeaderMenu from 'components/HeaderMenu'
-import Footer from 'components/Footer'
 
 const AppWrapper = styled.div`
   margin: 0 auto;
@@ -33,13 +30,10 @@ export default function App () {
       >
         <meta name='description' content='7-11 CliQQ e-commerce website' />
       </Helmet>
-      <HeaderMenu showBack hideSearch hideBarcode={false} />
-
       <Switch>
-        <Route exact path='/' component={Container} />
+        <Route exact path='/' component={Buckets} />
         <Route path='' component={NotFoundPage} />
       </Switch>
-      <Footer />
     </AppWrapper>
   )
 }
