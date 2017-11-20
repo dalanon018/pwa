@@ -128,7 +128,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
     if (featuredProducts.size) {
       this.setState({
-        products: featuredProducts.slice(0, 4)
+        products: featuredProducts.slice(0, 6)
       })
     }
   }
