@@ -151,7 +151,7 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
   _repurchaseFn () {
     const { receipt } = this.props
     if (receipt.size) {
-      this.props.changeRoute(`/product/${receipt.get('parentCliqqCode')}`)
+      this.props.changeRoute(`/product/${receipt.getIn(['products', 'cliqqCode'])}`)
     }
   }
 

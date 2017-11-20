@@ -10,17 +10,9 @@ export default defineMessages({
     id: 'app.containers.Purchases.receiptsTitle',
     defaultMessage: 'RECEIPTS'
   },
-  emptyActivePurchases: {
-    id: 'app.containers.Purchases.emptyActivePurchases',
+  emptyPurchases: {
+    id: 'app.containers.Purchases.emptyPurchases',
     defaultMessage: 'Woops! It seems like you haven\'t bought anything yet. Let\'s fix that!'
-  },
-  emptyCompletedPurchases: {
-    id: 'app.containers.Purchases.emptyCompletedPurchases',
-    defaultMessage: 'Woops! It seems like you haven\'t bought anything yet. Let\'s fix that!'
-  },
-  emptyExpiredPurchases: {
-    id: 'app.containers.Purchases.emptyExpiredPurchases',
-    defaultMessage: 'There are no expired receipts.'
   },
   // Here we will define the status titles
   titleStatusRESERVED: {
@@ -33,7 +25,7 @@ export default defineMessages({
   },
   titleStatusUNPAID: {
     id: 'app.components.Purchases.titleStatusUNPAID',
-    defaultMessage: 'Expired'
+    defaultMessage: 'Unpaid'
   },
   titleStatusPROCESSING: {
     id: 'app.components.Purchases.titleStatusPROCESSING',
@@ -51,10 +43,6 @@ export default defineMessages({
     id: 'app.components.Purchases.titleStatusINTRANSIT',
     defaultMessage: 'In-Transit'
   },
-  titleStatusLOSTINTRANSIT: {
-    id: 'app.components.Purchases.titleStatusLOSTINTRANSIT',
-    defaultMessage: 'Unserved'
-  },
   titleStatusDELIVERED: {
     id: 'app.components.Purchases.titleStatusDELIVERED',
     defaultMessage: 'For Pick-Up'
@@ -65,7 +53,7 @@ export default defineMessages({
   },
   titleStatusUNCLAIMED: {
     id: 'app.components.Purchases.titleStatusUNCLAIMED',
-    defaultMessage: 'Expired'
+    defaultMessage: 'Unclaimed'
   },
   titleStatusUNKNOWN: {
     id: 'app.components.Purchases.unkntitleStatusUnknownownStatus',

@@ -59,7 +59,7 @@ export function * getProductSearch (payload) {
 
     yield put(setSearchProductAction(products))
   } else {
-    yield put(setNetworkErrorAction(500))
+    yield put(setNetworkErrorAction('No cache data'))
   }
 }
 

@@ -87,7 +87,6 @@ function * findAndUpdateReceiptDetails (apiOrders) {
       assoc('lastUpdated', prop('lastUpdated', data)),
       assoc('status', prop('status', data)),
       assoc('brand', propOr({}, 'brand', data)),
-      assoc('claimCode', prop('claimCode', data)),
       assoc('sevenConnectRefNum', prop('sevenConnectRefNum', data)),
       assoc('facilityName', prop('facilityName', data))
     )(oldReceipt)
@@ -145,7 +144,7 @@ export function * getApiPurchases () {
 
     yield put(setPurchasesAction(transform))
   } else {
-    yield put(setNetworkErrorAction(500))
+    yield put(setNetworkErrorAction('No cache data'))
   }
 }
 

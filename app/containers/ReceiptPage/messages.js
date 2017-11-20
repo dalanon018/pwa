@@ -12,7 +12,7 @@ export default defineMessages({
   },
   invalidTrackingNumber: {
     id: 'app.containers.PurchaseEntity.invalidTrackingNumber',
-    defaultMessage: 'This order has not been processed please try again.'
+    defaultMessage: 'This Receipt is invalid. Please make sure that you got the correcty tracking number.'
   },
   pushErrorMessageTitle: {
     id: 'app.containers.PurchaseEntity.pushErrorMessageTitle',
@@ -20,10 +20,10 @@ export default defineMessages({
   },
   pushErrorMessage: {
     id: 'app.containers.PurchaseEntity.pushErrorMessage',
-    defaultMessage: 'Please make sure you have allowed Push Notifications on your browser or alternatively your browser doesn\'t support Push Notifications'
+    defaultMessage: 'Please make sure you allow Push Notification on your browser. Or your browser don\'t support Push Notifications'
   },
   pushErrorUnsupportedMessage: {
     id: 'app.containers.PurchaseEntity.pushErrorUnsupportedMessage',
-    defaultMessage: 'IOS devices currently do NOT support browser push notifications'
+    defaultMessage: 'IOS is NOT supported for Push Notification'
   }
 })
