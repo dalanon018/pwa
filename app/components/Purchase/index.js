@@ -130,8 +130,8 @@ class Purchase extends React.PureComponent {
       RESERVED: '#F58322',
       UNPAID: '#F23640',
       CONFIRMED: '#F58322',
-      INTRANSIT: '#EFBA03',
-      DELIVERED: '#8DC640',
+      INTRANSIT: '#F58322',
+      DELIVERED: '#F58322',
       CLAIMED: '#8DC640',
       UNCLAIMED: '#F23640'
     })('#F58322')(status)
