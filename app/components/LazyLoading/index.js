@@ -42,7 +42,7 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
   _onScrollElement () {
     const { lazyload, onScroll } = this.props
     const scrollY = window.pageYOffset || document.documentElement.scrollTop
-    const offset = 200
+    const offset = 300
 
     const onBottom = () => lt(window.innerHeight, (scrollY + offset))
     const notCancellable = () => equals(false, this._cancellableDebounce)
