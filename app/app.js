@@ -35,8 +35,7 @@ import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-144.png'
 import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-192.png'
 import '!file-loader?name=[name].[ext]!./manifest.json'
 import 'file-loader?name=[name]!./.htaccess' // eslint-disable-line import/extensions
-// uncomments once ready
-// import 'file-loader?name=[name]!./_redirects.sample' // eslint-disable-line import/extensions
+import 'file-loader?name=[name]!./_redirects.sample' // eslint-disable-line import/extensions
 /* eslint-enable import/no-webpack-loader-syntax */
 
 import configureStore from './configureStore'
