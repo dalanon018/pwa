@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import ReactNotification from 'react-notification-system'
 
@@ -14,12 +15,14 @@ import { noop } from 'lodash'
 import { browserHistory } from 'react-router'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
+import { compose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 
 import Firebase from 'utils/firebase-realtime'
 import Notification from 'utils/firebase-notification'
-import { switchFn } from 'utils/logicHelper'
+import injectSaga from 'utils/injectSaga'
+import injectReducer from 'utils/injectReducer'
 
 import { isMobileDevice } from 'utils/http'
 
@@ -68,6 +71,8 @@ import ModalWithHeader from 'components/ModalWithHeader'
 import Modal from 'components/PromptModal'
 import WindowWidth from 'components/WindowWidth'
 
+import reducer from './reducer'
+import saga from './saga'
 import messages from './messages'
 import HeaderMenu from './HeaderMenu'
 import SearchMenu from './SearchMenu'
@@ -100,10 +105,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     mobileNumbers: PropTypes.object,
     routes: PropTypes.array.isRequired,
     toggleError: PropTypes.bool.isRequired,
-    toggleMessage: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number
-    ]),
+    toggleMessage: PropTypes.string,
     intl: intlShape.isRequired,
     pageTitle: PropTypes.string,
     headerMenuFullScreen: PropTypes.bool.isRequired,
@@ -133,13 +135,12 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
   _displayBestViewedMobileNotification = () =>
     setTimeout(() =>
-    // we need to make sure that notification ref is defined before we show it.
-    this._notificationRef && this._notificationRef.addNotification({
-      title: <FormattedMessage {...messages.bestViewedTitle} />,
-      message: <FormattedMessage {...messages.bestViewedContent} />,
-      autoDismiss: 0,
-      level: 'success'
-    })
+      this._notificationRef.addNotification({
+        title: <FormattedMessage {...messages.bestViewedTitle} />,
+        message: <FormattedMessage {...messages.bestViewedContent} />,
+        autoDismiss: 0,
+        level: 'success'
+      })
     , 2000)
 
   _goToHome = () => {
@@ -310,10 +311,6 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     registerPush(currentToken)
   }
 
-  _toggleErrorMessage = (statusCode) => switchFn({
-    500: <FormattedMessage {...messages.failedFetch} />
-  })(statusCode)(statusCode)
-
   componentDidMount () {
     const { getMobileNumbers, getCategories, getBrands, getRegisteredPush, getLoyaltyToken, isMobile } = this.props
     const shouldDisplayNotification = ifElse(
@@ -371,7 +368,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
           open={toggleError}
           name='warning'
           title={<FormattedMessage {...messages.errorHeader} />}
-          content={this._toggleErrorMessage(toggleMessage)}
+          content={toggleMessage}
           close={this._handleNetworkErrorMessage}
         />
         <ReactNotification ref={this._reactNotificationRef} />
@@ -416,4 +413,12 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(injectIntl(Buckets)))
+const withConnect = connect(mapStateToProps, mapDispatchToProps)
+const withReducer = injectReducer({ key: 'buckets', reducer })
+const withSaga = injectSaga({ key: 'buckets', saga })
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect
+)(WindowWidth(injectIntl(Buckets)))

@@ -42,10 +42,6 @@ export default defineMessages({
     id: 'app.containers.Bucket.errorHeader',
     defaultMessage: 'PAGE OFFLINE'
   },
-  failedFetch: {
-    id: 'app.containers.Bucket.failedFetch',
-    defaultMessage: 'Failed to process request, Please check your internet connection.'
-  },
   search: {
     id: 'app.containers.Bucket.search',
     defaultMessage: 'Search'

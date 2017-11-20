@@ -50,9 +50,7 @@ import {
   REGISTER_PUSH,
   GET_REGISTED_PUSH,
   GET_LOYALTY_TOKEN,
-  REMOVE_LOYALTY_TOKEN,
-
-  COD_PAYMENT
+  REMOVE_LOYALTY_TOKEN
 } from './constants'
 
 import {
@@ -124,7 +122,7 @@ function * requestCategories () {
       getResults
     )(req)
   } else {
-    yield put(setNetworkErrorAction(500))
+    yield put(setNetworkErrorAction('No cache data'))
   }
 }
 
@@ -152,7 +150,7 @@ function * requestBrands () {
       getResults
     )(req)
   } else {
-    yield put(setNetworkErrorAction(500))
+    yield put(setNetworkErrorAction('No cache data'))
   }
 }
 
@@ -201,7 +199,7 @@ export function * requestAccessToken () {
 
     return token
   } catch (e) {
-    yield put(setNetworkErrorAction('Please make sure you have internet connection.'))
+    yield put(setNetworkErrorAction('Please make sure you have internet connection to automatically refresh your token.'))
   }
 
   return {}
@@ -284,7 +282,7 @@ function * updateReceiptSnapShot (orders, receiptId) {
   const trackingNumber = head(receiptId)
   const receiptKey = lensProp(trackingNumber)
   const receipt = fromPairs([receiptId])
-  const { status, lastUpdated, claimCode } = view(receiptKey, receipt)
+  const { status, lastUpdated } = view(receiptKey, receipt)
   const order = find(orders, { trackingNumber }) || {}
   let updatedReceipts = []
 
@@ -296,19 +294,11 @@ function * updateReceiptSnapShot (orders, receiptId) {
     toPairs
   )(STATUSES)
 
-  const isConfirmedCOD = (status) => compose(
-    both(contains(status), partial(equals(COD_PAYMENT), [order.paymentType])),
-    map(head),
-    filter(contains('CONFIRMED')),
-    toPairs
-  )(STATUSES)
-
   // we need to be very careful that status should not be empty
-  if (status && (!isEmpty(order) && order.status !== status) && !isReservedStatus(status) && !isConfirmedCOD(status)) {
+  if (status && (!isEmpty(order) && order.status !== status) && !isReservedStatus(status)) {
     order.status = status || order.status
     order.lastUpdated = lastUpdated || order.lastUpdated || ''
-    order.claimCode = claimCode || order.claimCode || ''
-
+    updatedReceipts = updatedReceipts.concat(order)
     setItem(ORDERED_LIST_KEY, orders)
     // yield put(setUpdatedReceiptsAction(updatedReceipts))
 
@@ -319,8 +309,6 @@ function * updateReceiptSnapShot (orders, receiptId) {
     // we have to update the purchase list
     const transform = yield orders.map((data) => transformEachEntity(transformOrder, data))
     yield put(setPurchasesAction(transform))
-
-    updatedReceipts = updatedReceipts.concat(receiptTransform)
   }
 
   return updatedReceipts
@@ -360,7 +348,7 @@ export function * registerPushNotification (payload) {
       token: authToken.access_token,
       body: JSON.stringify({
         browser: name,
-        mobileNumber: `0${mobileNumber}`,
+        mobileNumber,
         token
       })
     })
@@ -471,6 +459,4 @@ export function * bucketsSagas () {
 }
 
 // All sagas to be loaded
-export default [
-  bucketsSagas
-]
+export default bucketsSagas
