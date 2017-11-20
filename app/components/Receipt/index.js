@@ -198,7 +198,7 @@ class Receipt extends React.PureComponent {
         PROCESSINGINTRANSIT: receipt.get('dateCreated'),
         CONFIRMED: receipt.get('lastUpdated'),
         INTRANSIT: receipt.get('lastUpdated'),
-        CLAIMED: receipt.get('claimDate'),
+        CLAIMED: receipt.get('lastUpdated'),
         DELIVERED: receipt.get('lastUpdated')
       })(receipt.get('claimExpiry')),
       handleStatus

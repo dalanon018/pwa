@@ -202,7 +202,7 @@ export default defineMessages({
   },
   dateCASHINTRANSIT: {
     id: 'app.components.Receipt.dateCASHINTRANSIT',
-    defaultMessage: 'Date Paid'
+    defaultMessage: 'Date In-transit'
   },
   dateCASHDELIVERED: {
     id: 'app.components.Receipt.dateDELIVERED',
