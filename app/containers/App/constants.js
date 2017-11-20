@@ -46,3 +46,22 @@ export const LOYALTY_TOKEN_KEY = 'boilerplate/App/LOYALTY_TOKEN_KEY'
 
 // ONCE REGISTERED THIS IS THE KEY NAME
 export const REGISTERED_PUSH = 'boilerplate/App/REGISTERED_PUSH'
+
+// WE NAME OUR ROUTES
+export const BUCKETS_NAME = 'bucket'
+export const HOME_NAME = 'home'
+export const PURCHASES_NAME = 'purchases'
+export const RECEIPTPAGE_NAME = 'receiptPage'
+export const PRODUCT_NAME = 'productPage'
+export const PRODUCTREVIEW_NAME = 'productReview'
+export const CATEGORIES_NAME = 'browseCategories'
+export const PRODUCTSCATEGORY_NAME = 'productsByCategory'
+export const FAQ_NAME = 'faqPage'
+export const PRIVACY_NAME = 'privacyPolicy'
+export const TERMS_NAME = 'termsConditions'
+export const SEARCH_NAME = 'searchPage'
+export const BRAND_NAME = 'brandPage'
+export const FEATURES_NAME = 'features'
+export const OFFLINE_NAME = 'pageoffline'
+export const LOGIN_NAME = 'loginPage'
+export const NOTFOUND_NAME = 'pagenotfound'

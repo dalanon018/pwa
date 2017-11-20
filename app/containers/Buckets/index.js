@@ -73,7 +73,7 @@ import Modal from 'components/PromptModal'
 import WindowWidth from 'components/WindowWidth'
 
 import reducer from './reducer'
-import sagas from './sagas'
+import saga from './saga'
 import messages from './messages'
 import HeaderMenu from './HeaderMenu'
 import SearchMenu from './SearchMenu'
@@ -103,7 +103,6 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     productCategories: PropTypes.object.isRequired,
     brands: PropTypes.object.isRequired,
     mobileNumbers: PropTypes.object,
-    routes: PropTypes.array.isRequired,
     toggleError: PropTypes.bool.isRequired,
     toggleMessage: PropTypes.string,
     intl: intlShape.isRequired,
@@ -221,16 +220,13 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
    * then we will show the backbutton
    */
   _hideBackButton = () => {
-    const { routes } = this.props
-    const { path } = routes.slice().pop()
+    const { match: { path } } = this.props
 
     return HIDE_BACK_BUTTON.includes(path.split('/')[1])
   }
 
   _displayHeader = () => {
-    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, routes, searchProduct, setProductSearchList, intl, headerMenuFullScreen } = this.props
-    const { path } = routes.slice().pop()
-    const currentRoute = routes.slice().pop().name
+    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, match: { path }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen } = this.props
 
     /**
      * we have to identify if we should display backbutton
@@ -257,7 +253,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
         hideBackButton={hideBackButton}
         leftButtonAction={this._handleLeftButtonAction}
         changeRoute={changeRoute}
-        currentRoute={currentRoute}
+        currentRoute={routeName}
         searchProduct={searchProduct}
         intl={intl}
       />
@@ -417,7 +413,7 @@ function mapDispatchToProps (dispatch) {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps)
 const withReducer = injectReducer({ key: 'buckets', reducer })
-const withSaga = injectSaga({ key: 'buckets', sagas })
+const withSaga = injectSaga({ key: 'buckets', saga })
 
 export default compose(
   withReducer,

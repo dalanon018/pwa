@@ -26,8 +26,7 @@ import {
   uniq,
   view
 } from 'ramda'
-import { call, take, put, fork, cancel } from 'redux-saga/effects'
-import { LOCATION_CHANGE } from 'react-router-redux'
+import { call, put, fork } from 'redux-saga/effects'
 
 import request from 'utils/request'
 import { getRequestData } from 'utils/offline-request'
@@ -436,7 +435,7 @@ export function * removeLoyaltyTokenSaga () {
 
 // All sagas to be loaded
 export function * bucketsSagas () {
-  const watcher = yield [
+  yield [
     fork(getCategoriesSaga),
     fork(getBrandsSaga),
     fork(getMobileNumbersSaga),
@@ -452,10 +451,6 @@ export function * bucketsSagas () {
     // remove loyaltyToken / sign out
     fork(removeLoyaltyTokenSaga)
   ]
-
-  // Suspend execution until location changes
-  yield take(LOCATION_CHANGE)
-  yield watcher.map((task) => cancel(task))
 }
 
 // All sagas to be loaded

@@ -12,7 +12,7 @@ import styled from 'styled-components'
 import { Switch, Route } from 'react-router-dom'
 
 import Buckets from 'containers/Buckets/Loadable'
-import NotFoundPage from 'containers/NotFoundPage/Loadable'
+import NotFound from 'containers/NotFoundPage/Loadable'
 
 const AppWrapper = styled.div`
   margin: 0 auto;
@@ -20,7 +20,6 @@ const AppWrapper = styled.div`
   min-height: 100%;
   flex-direction: column;
 `
-
 export default function App () {
   return (
     <AppWrapper>
@@ -32,7 +31,7 @@ export default function App () {
       </Helmet>
       <Switch>
         <Route path='/' component={Buckets} />
-        <Route path='' component={NotFoundPage} />
+        <Route path='' component={NotFound} />
       </Switch>
     </AppWrapper>
   )

@@ -45,7 +45,7 @@ import {
 
 import messages from './messages'
 import reducer from './reducer'
-import sagas from './sagas'
+import saga from './saga'
 
 import { getFeaturedProductsAction } from './actions'
 import { selectLoading, selectFeaturedProducts } from './selectors'
@@ -270,7 +270,7 @@ function mapDispatchToProps (dispatch) {
 }
 const withConnect = connect(mapStateToProps, mapDispatchToProps)
 const withReducer = injectReducer({ key: 'home', reducer })
-const withSaga = injectSaga({ key: 'home', sagas })
+const withSaga = injectSaga({ key: 'home', saga })
 
 export default compose(
   withReducer,

@@ -1,13 +1,10 @@
 import { isEmpty } from 'lodash'
 import {
   call,
-  cancel,
   fork,
-  put,
-  take
+  put
 } from 'redux-saga/effects'
 import { compose, map, filter, prop, propOr } from 'ramda'
-import { LOCATION_CHANGE } from 'react-router-redux'
 import { takeLatest } from 'redux-saga'
 
 // import request from 'utils/request'
@@ -33,7 +30,7 @@ import {
 
 import {
   getAccessToken
-} from 'containers/Buckets/sagas'
+} from 'containers/Buckets/saga'
 
 // function * sleep (ms) {
 //   yield new Promise(resolve => setTimeout(resolve, ms))
@@ -42,10 +39,6 @@ import {
 function * transformEachEntity (entity) {
   const response = yield call(transformProduct, entity)
   return response
-}
-
-export function * initializeAppGlobals () {
-  // code block
 }
 
 export function * getProduct (data) {
@@ -68,25 +61,15 @@ export function * getProduct (data) {
   }
 }
 
-/**
- * Watches for Every change of locations from router
- * once this triggers we need to check all the items under `initializeAppGlobals`
- */
-export function * getLocationChangeWatcher () {
-  yield takeLatest(LOCATION_CHANGE, initializeAppGlobals)
-}
-
 export function * getProductSaga () {
   yield * takeLatest(GET_FEATURED_PRODUCTS, getProduct)
 }
 
 // Individual exports for testing
 export function * homePageSagas () {
-  const watcher = yield [
+  yield [
     fork(getProductSaga)
   ]
-  yield take(LOCATION_CHANGE)
-  yield watcher.map(task => cancel(task))
 }
 
 // All sagas to be loaded
