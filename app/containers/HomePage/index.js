@@ -240,6 +240,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                   </H3>
                 )(featuredBrands.size > 0)
               }
+
               <Brand brands={featuredBrands} loader={brandLoader} />
             </div>
           </LazyLoad>

@@ -4,11 +4,12 @@
 *
 */
 
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { Grid, Image } from 'semantic-ui-react'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import { range } from 'lodash'
 
 import defaultCategoryBackground from 'images/default-categories.jpg'
@@ -48,7 +49,6 @@ const imgixOptions = {
 
 function Brand ({ brands, loader }) {
   const imageShow = (image) => image || defaultCategoryBackground
-
   return (
     <BrandContainer>
       <Grid padded columns='2'>
