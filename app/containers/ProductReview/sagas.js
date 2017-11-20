@@ -75,6 +75,8 @@ function * transformResponse ({ order: { sevenConnectRefNum, transactionId, expi
     imageUrl: orderedProduct.get('image'),
     brandLogo: orderedProduct.get('brandLogo'),
     name: orderedProduct.get('title'),
+    returnPolicy: orderedProduct.get('returnPolicy'),
+    returnable: orderedProduct.get('returnable'),
     brand,
     mobileNumber,
     sevenConnectRefNum,
