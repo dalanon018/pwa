@@ -66,6 +66,8 @@ function * transformResponse ({ order: { sevenConnectRefNum, transactionId, expi
     trackingNumber: transactionId,
     claimExpiry: expiryDate,
     dateCreated: moment().format('YYYY-MM-DD HH:mm:ss'),
+    lastUpdated: moment().format('YYYY-MM-DD HH:mm:ss'),
+    claimDate: '',
     cliqqCode: orderedProduct.get('cliqqCode').first(),
     currency: paymentType,
     amount: totalPrice,

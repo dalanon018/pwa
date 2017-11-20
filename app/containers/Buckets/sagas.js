@@ -282,7 +282,7 @@ function * updateReceiptSnapShot (orders, receiptId) {
   const trackingNumber = head(receiptId)
   const receiptKey = lensProp(trackingNumber)
   const receipt = fromPairs([receiptId])
-  const snapStatus = view(receiptKey, receipt)
+  const { status, lastUpdated } = view(receiptKey, receipt)
   const order = find(orders, { trackingNumber }) || {}
   let updatedReceipts = []
 
@@ -294,8 +294,10 @@ function * updateReceiptSnapShot (orders, receiptId) {
     toPairs
   )(STATUSES)
 
-  if ((!isEmpty(order) && order.status !== snapStatus) && !isReservedStatus(snapStatus)) {
-    order.status = snapStatus
+  // we need to be very careful that status should not be empty
+  if (status && (!isEmpty(order) && order.status !== status) && !isReservedStatus(status)) {
+    order.status = status || order.status
+    order.lastUpdated = lastUpdated || order.lastUpdated || ''
     updatedReceipts = updatedReceipts.concat(order)
     setItem(ORDERED_LIST_KEY, orders)
     // yield put(setUpdatedReceiptsAction(updatedReceipts))
