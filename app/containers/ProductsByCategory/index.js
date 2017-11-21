@@ -11,15 +11,16 @@ import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
 import { noop } from 'lodash'
 import {
-  __,
   F,
   T,
+  __,
+  allPass,
+  both,
   compose,
-  contains,
   cond,
+  contains,
   curry,
   equals,
-  both,
   identity,
   ifElse,
   lt,
@@ -247,11 +248,29 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     return null
   }
 
+  /**
+   * this will simply display items that we are loading
+   */
+  _displayEmptyProductViewLoading = () => {
+    const { changeRoute, windowWidth } = this.props
+    return (
+      <ProductView changeRoute={changeRoute} loader products={this._displayProductData()} windowWidth={windowWidth} />
+    )
+  }
+
   _displayEmptyLoadingIndicator = () => {
-    const { loader } = this.props
+    const { loader, lazyload } = this.props
     const product = this._displayProductData()
     const display = cond([
-      [both(equals(false), partial(equals(0), [product.size])), this._displayEmpty],
+      [allPass([
+        equals(false),
+        partial(equals(0), [product.size]),
+        partial(equals(false), [lazyload])
+      ]), this._displayEmpty],
+      [both(
+        partial(equals(0), [product.size]),
+        partial(equals(true), [lazyload])
+      ), this._displayEmptyProductViewLoading],
       [equals(true), this._displayLoader],
       [equals(false), () => null]
     ])
