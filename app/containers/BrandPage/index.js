@@ -11,7 +11,10 @@ import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
 import { noop } from 'lodash'
 import {
+  allPass,
+  both,
   compose,
+  cond,
   equals,
   ifElse,
   lt,
@@ -27,7 +30,7 @@ import WindowWidth from 'components/WindowWidth'
 import BannerSlider from 'components/BannerSlider'
 import H3 from 'components/H3'
 import EmptyProducts from 'components/EmptyProductsBlock'
-// import Promo from 'components/Promo'
+import LoadingIndicator from 'components/LoadingIndicator'
 import LazyLoading from 'components/LazyLoading'
 
 import { paramsImgix } from 'utils/image-stock'
@@ -128,18 +131,47 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     }, () => this._fetchProductByBrands(this.props))
   }
 
+  _displayLoader = () => {
+    return (
+      <LoadingIndicator />
+    )
+  }
+
   _displayEmpty = () => {
-    const { productsByBrands, loader } = this.props
+    return (
+      <EmptyProducts>
+        <FormattedMessage {...messages.emptyMessage} />
+      </EmptyProducts>
+    )
+  }
 
-    if (loader === false && !(productsByBrands.size > 0)) {
-      return (
-        <EmptyProducts>
-          <FormattedMessage {...messages.emptyMessage} />
-        </EmptyProducts>
-      )
-    }
+  /**
+   * this will simply display items that we are loading
+   */
+  _displayEmptyProductViewLoading = () => {
+    const { changeRoute, windowWidth, productsByBrands } = this.props
+    return (
+      <ProductView changeRoute={changeRoute} loader products={productsByBrands} windowWidth={windowWidth} />
+    )
+  }
 
-    return null
+  _displayEmptyLoadingIndicator = () => {
+    const { loader, lazyload, productsByBrands } = this.props
+    const display = cond([
+      [allPass([
+        equals(false),
+        partial(equals(0), [productsByBrands.size]),
+        partial(equals(false), [lazyload])
+      ]), this._displayEmpty],
+      [both(
+        partial(equals(0), [productsByBrands.size]),
+        partial(equals(true), [lazyload])
+      ), this._displayEmptyProductViewLoading],
+      [equals(true), this._displayLoader],
+      [equals(false), () => null]
+    ])
+
+    return display(loader)
   }
 
   _resetValuesAndFetch = (props) => {
@@ -249,7 +281,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
             <H3>
               <FormattedMessage {...messages.brandsTitle} />
             </H3>
-            { this._displayEmpty() }
+            { this._displayEmptyLoadingIndicator() }
             <ProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
           </LazyLoading>
         </ContentWrapper>
