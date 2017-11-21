@@ -111,7 +111,8 @@ module.exports = (options) => ({
         OATH_CLIENT_SECRET: JSON.stringify(process.env.OATH_CLIENT_SECRET),
         OATH_RESPONSE_TYPE: JSON.stringify(process.env.OATH_RESPONSE_TYPE),
         OATH_GRANT_TYPE: JSON.stringify(process.env.OATH_GRANT_TYPE),
-        RECAPTCHA_SITE_KEY: JSON.stringify(process.env.RECAPTCHA_SITE_KEY)
+        RECAPTCHA_SITE_KEY: JSON.stringify(process.env.RECAPTCHA_SITE_KEY),
+        FB_SHARE_ID: JSON.stringify(process.env.FB_SHARE_ID)
       }
     }),
     new webpack.NamedModulesPlugin()

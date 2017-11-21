@@ -116,6 +116,10 @@ const Product = ({
     }
   }
 
+  const fbShareAction = () => {
+    return fbShare(product)
+  }
+
   return (
     <div>
       <ProductWrapper>
@@ -151,7 +155,7 @@ const Product = ({
           <ShareWrapper>
             <p className='share-item ui big basic label color__secondary'><FormattedMessage {...messages.shareItem} /></p>
 
-            <button className='unstyle-button share-button' onClick={() => fbShare(product)}>
+            <button className='unstyle-button share-button' onClick={fbShareAction}>
               <FacebookIcon round size={30} />
             </button>
 
