@@ -1,6 +1,10 @@
+import {
+  FB_SHARE_ID
+} from 'containers/App/constants'
+
 export const fbShare = (product) => {
   const options = {
-    appId: '1998676580363463', // facebook developer ID
+    appId: FB_SHARE_ID, // facebook developer ID
     status: true,
     xfbml: true, // parse social plugins on this page
     version: 'v2.10' // use version 2.1
