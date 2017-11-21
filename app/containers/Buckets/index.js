@@ -129,12 +129,13 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
   _displayBestViewedMobileNotification = () =>
     setTimeout(() =>
-      this._notificationRef.addNotification({
-        title: <FormattedMessage {...messages.bestViewedTitle} />,
-        message: <FormattedMessage {...messages.bestViewedContent} />,
-        autoDismiss: 0,
-        level: 'success'
-      })
+    // we need to make sure that notification ref is defined before we show it.
+    this._notificationRef && this._notificationRef.addNotification({
+      title: <FormattedMessage {...messages.bestViewedTitle} />,
+      message: <FormattedMessage {...messages.bestViewedContent} />,
+      autoDismiss: 0,
+      level: 'success'
+    })
     , 2000)
 
   _goToHome = () => {
