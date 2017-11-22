@@ -46,21 +46,6 @@ function ProductView ({
 }) {
   const columnCount = windowWidth > 767 ? 4 : 2
 
-  const productName = (data) => {
-    // let maxChar = 33
-    let maxChar = 100
-    switch (true) {
-      case (windowWidth >= 767):
-        maxChar = 100
-        break
-    }
-
-    if (data.length > maxChar) {
-      return `${data.slice(0, maxChar)}...`
-    }
-    return data
-  }
-
   const toggleOrigDiscountPrice = (product) => {
     const showPrice = product.get('discountPrice') || product.get('price')
 
@@ -94,11 +79,11 @@ function ProductView ({
               onClick={goToProduct}>
               <ProductWrapper>
                 <ImageWrapper>
-                  <Image alt={productName(product.get('title'))} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || defaultImage} />
+                  <Image alt={product.get('title')} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || defaultImage} />
                 </ImageWrapper>
                 <ProductInfo brandName={product.get('brand')}>
                   <Label as='span' className='brand-name color__secondary' basic size='medium'>{product.getIn(['brand', 'name'])}</Label>
-                  <Label className='no-bottom-margin product-name color__secondary' as='p' basic size='tiny'>{productName(product.get('title'))}</Label>
+                  <Label className='no-bottom-margin product-name color__secondary' as='p' basic size='tiny'>{product.get('title')}</Label>
                   <ProductPriceWrapper>
                     <Label className='product-price' as='b' color='orange' basic size='massive'>
                       <FormattedMessage {...messages.peso} />
