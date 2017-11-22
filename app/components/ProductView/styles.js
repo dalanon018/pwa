@@ -44,7 +44,7 @@ const ProductInfo = styled.div`
     min-height: 30px;
     max-height: 30px;
     overflow: hidden;
-    padding: 0 25px !important;
+    padding: 0 15px !important;
   }
 
   @media (min-width: 767px) {
