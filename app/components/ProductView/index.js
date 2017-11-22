@@ -47,7 +47,8 @@ function ProductView ({
   const columnCount = windowWidth > 767 ? 4 : 2
 
   const productName = (data) => {
-    let maxChar = 33
+    // let maxChar = 33
+    let maxChar = 100
     switch (true) {
       case (windowWidth >= 767):
         maxChar = 100
