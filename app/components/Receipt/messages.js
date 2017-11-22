@@ -238,7 +238,7 @@ export default defineMessages({
   },
   dateCODINTRANSIT: {
     id: 'app.components.Receipt.dateCODINTRANSIT',
-    defaultMessage: 'Date Ordered'
+    defaultMessage: 'Date In-transit'
   },
   dateCODDELIVERED: {
     id: 'app.components.Receipt.dateDELIVERED',

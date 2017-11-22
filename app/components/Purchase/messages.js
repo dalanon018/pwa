@@ -68,7 +68,7 @@ export default defineMessages({
   },
   dateCODINTRANSIT: {
     id: 'app.components.Purchase.dateCODINTRANSIT',
-    defaultMessage: 'Date Ordered'
+    defaultMessage: 'Date In-transit'
   },
   dateCODDELIVERED: {
     id: 'app.components.Purchase.dateDELIVERED',

@@ -195,7 +195,6 @@ class Receipt extends React.PureComponent {
       partialRight(DateFormater, ['MM-DD-YYYY']),
       ComponentDetail({
         PROCESSING: receipt.get('dateCreated'),
-        PROCESSINGINTRANSIT: receipt.get('dateCreated'),
         CONFIRMED: receipt.get('lastUpdated'),
         INTRANSIT: receipt.get('lastUpdated'),
         CLAIMED: receipt.get('lastUpdated'),
