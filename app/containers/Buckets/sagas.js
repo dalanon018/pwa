@@ -348,7 +348,7 @@ export function * registerPushNotification (payload) {
       token: authToken.access_token,
       body: JSON.stringify({
         browser: name,
-        mobileNumber,
+        mobileNumber: `0${mobileNumber}`,
         token
       })
     })
