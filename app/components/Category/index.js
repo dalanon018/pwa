@@ -39,7 +39,6 @@ function Category ({
   fontSize
 }) {
   const imageShow = (image) => image || paramsImgix(imageStock('Categories-Default.jpg'), imgixOptions)
-  console.log(paramsImgix(imageStock('Categories-Default.jpg'), imgixOptions))
 
   return (
     <Grid padded columns='1'>
