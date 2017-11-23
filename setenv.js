@@ -27,18 +27,18 @@ if (env === 'production') {
   console.log(`FB_SHARE_ID=${process.env.FB_SHARE_ID}`)
 
 } else {
-  console.log(`TOKEN_URL=https://gw.cliqq.net:8443/accounts/oauth2/token`)
-  console.log(`API_BASE_URL=https://gw.cliqq.net:8443/ecms/api/v1`)
-  console.log(`APP_BASE_URL=https://cliqqshop.com`)
-  console.log(`MOBILE_REGISTRATION_URL=https://gw.cliqq.net:8443`)
+  console.log(`TOKEN_URL=https://apidemo.cliqq.net:8443/accounts/oauth2/token`)
+  console.log(`API_BASE_URL=https://apidemo.cliqq.net:8443/ecms/api/v1`)
+  console.log(`APP_BASE_URL=http://localhost:3000`)
+  console.log(`MOBILE_REGISTRATION_URL=https://apidemo.cliqq.net:8443`)
   console.log(`STORE_LOCATOR_URL=https://mapservice.cliqq.net/ajax/`)
 
-  console.log(`FIREBASE_API_KEY=AIzaSyDYGxDAGSC8Tf6KY7bgyOx-ZFWQy3s1cn4`)
-  console.log(`FIREBASE_AUTH_DOMAIN=cliqqshop.firebaseapp.com`)
-  console.log(`FIREBASE_DATABASE_URL=https://cliqqshop.firebaseio.com`)
-  console.log(`FIREBASE_PROJECT_ID=cliqqshop`)
-  console.log(`FIREBASE_STORAGE_BUCKET=cliqqshop.appspot.com`)
-  console.log(`FIREBASE_MESSAGING_SENDER_ID=656457472840`)
+  console.log(`FIREBASE_API_KEY=AIzaSyBaKhRjF4feFUsPyezk8Hmu0u_PCbNb2oI`)
+  console.log(`FIREBASE_AUTH_DOMAIN=realtimedb-a1d19.firebaseapp.com`)
+  console.log(`FIREBASE_DATABASE_URL=https://realtimedb-a1d19.firebaseio.com`)
+  console.log(`FIREBASE_PROJECT_ID=realtimedb-a1d19`)
+  console.log(`FIREBASE_STORAGE_BUCKET=realtimedb-a1d19.appspot.com`)
+  console.log(`FIREBASE_MESSAGING_SENDER_ID=771793449038`)
   console.log(`FIREBASE_MAIN_OBJECT=transactions`)
 
   console.log(`FIREBASE_USERNAME=joshuacalpuerto@gmail.com`)
@@ -49,6 +49,6 @@ if (env === 'production') {
   console.log(`OATH_RESPONSE_TYPE=token`)
   console.log(`OATH_GRANT_TYPE=client_credentials`)
 
-  console.log(`RECAPTCHA_SITE_KEY=6Lfk5jkUAAAAAEAlugSVRXieKv3B9H3vFs4M8ZGd`)
-  console.log(`FB_SHARE_ID=157843328155932`)
+  console.log(`RECAPTCHA_SITE_KEY=6Le2aDEUAAAAAC_B5o0Xy4_DAAb7Cmvsdrd4ury0`)
+  console.log(`FB_SHARE_ID=1998676580363463`)
 }
