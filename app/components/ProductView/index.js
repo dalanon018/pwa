@@ -23,7 +23,6 @@ import {
 } from './styles'
 
 import EmptyDataBlock from 'components/EmptyDataBlock'
-import defaultImage from 'images/default-product.jpg'
 
 import ParagraphImage from 'images/test-images/short-paragraph.png'
 
@@ -79,7 +78,7 @@ function ProductView ({
               onClick={goToProduct}>
               <ProductWrapper>
                 <ImageWrapper>
-                  <Image alt={product.get('title')} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || defaultImage} />
+                  <Image alt={product.get('title')} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
                 </ImageWrapper>
                 <ProductInfo brandName={product.get('brand')}>
                   <Label as='span' className='brand-name color__secondary' basic size='medium'>{product.getIn(['brand', 'name'])}</Label>
