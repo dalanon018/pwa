@@ -138,8 +138,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     const { products } = this.state
     const numSlide = windowWidth > 767 ? 2 : 1
     const imgixOptions = {
-      w: 414,
-      h: 246,
+      w: 800,
+      h: 400,
       fit: 'clamp',
       auto: 'compress',
       q: 35,

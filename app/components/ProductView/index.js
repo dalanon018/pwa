@@ -29,8 +29,8 @@ import ParagraphImage from 'images/test-images/short-paragraph.png'
 import { imageStock, paramsImgix } from 'utils/image-stock'
 
 const imgixOptions = {
-  w: 175,
-  h: 175,
+  w: 300,
+  h: 300,
   fit: 'clamp',
   auto: 'compress',
   q: 35,

@@ -94,8 +94,8 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
 
   _updateParamsImages = (images) => {
     const options = {
-      w: 414,
-      h: 246,
+      w: 800,
+      h: 400,
       fit: 'clamp',
       auto: 'compress',
       q: 35,
