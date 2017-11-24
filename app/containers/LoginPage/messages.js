@@ -46,7 +46,7 @@ export default defineMessages({
   },
   successResendCode: {
     id: `${idSuffix}.successResendCode`,
-    defaultMessage: 'Succesfully Resend Code!'
+    defaultMessage: 'Succesfully Resent Code!'
   },
   successSendCodeTitle: {
     id: `${idSuffix}.successSendCodeTitle`,
