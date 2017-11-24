@@ -4,9 +4,11 @@ import JsBarcode from 'jsbarcode'
 import {
   T,
   always,
+  both,
   compose,
   cond,
   contains,
+  complement,
   equals,
   ifElse,
   partialRight
@@ -22,6 +24,7 @@ import ReturnIcon from 'images/icons/receipts/return-icon-receipt.svg'
 import { DateFormater } from 'utils/date' // DateFormater
 import { PhoneFormatter } from 'utils/string'
 import { handlingStatus } from 'utils/ordersHelper'
+import { isIphone } from 'utils/http'
 
 import PurchaseOrder from './PurchaseOrder'
 import PurchaseUsecase from './PurchaseUsecase'
@@ -209,7 +212,7 @@ class Receipt extends React.PureComponent {
   _handlePushRegistrationUI = () => {
     const { isRegisteredPush, registerPushNotification, loadingPushToggle } = this.props
     const displayUI = ifElse(
-      equals(false),
+      both(equals(false), complement(isIphone)),
       () => (
         <PushNotificationWrapper>
           <Grid padded>
