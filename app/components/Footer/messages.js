@@ -26,7 +26,7 @@ export default defineMessages({
   },
   copyRight: {
     id: `${idSuffix}.copyRight.message`,
-    defaultMessage: `© 2017 Cliqq. All Rights Reserved`
+    defaultMessage: `Cliqq All Rights Reserved`
   },
   storeDelivery: {
     id: `${idSuffix}.storeDelivery`,
