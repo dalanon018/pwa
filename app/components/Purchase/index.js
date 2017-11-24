@@ -169,15 +169,17 @@ class Purchase extends React.PureComponent {
   }
 
   _handleDateValue = () => {
-    const { timer } = this.props
+    const { timer, statuses, receipt } = this.props
+    const currentStatus = statuses[receipt.get('status')] || ''
     const handleStatus = handlingStatus(this._handleModePayment())
     const Timer = timer || '00:00:00'
 
+    console.log(handleStatus(currentStatus))
     return switchFn({
       RESERVED: <p> { Timer } </p>
     })(
       this._handleDateVisible()
-    )(handleStatus)
+    )(handleStatus(currentStatus))
   }
 
   _handleModePayment = () => {
