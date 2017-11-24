@@ -163,6 +163,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   _handleToBottom = () => {
     setTimeout(() => {
       // parentScrollTo.scrollTo(0, ChildTop)
+      this._innerStepRef &&
       this._innerStepRef.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
