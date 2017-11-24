@@ -135,7 +135,7 @@ class Receipt extends React.PureComponent {
       storeName: receipt.get('storeName')
     }
 
-    if (purchaseOrder.includes(status)) {
+    if (purchaseOrder.includes(status) && receipt.get('modePayment') === this._defaultModePayment) {
       return (
         <PurchaseOrder
           {...defaultProps}
