@@ -61,7 +61,7 @@ export default defineMessages({
   },
   titleStatusUNCLAIMED: {
     id: 'app.components.Purchases.titleStatusUNCLAIMED',
-    defaultMessage: 'Unclaimed'
+    defaultMessage: 'Expired'
   },
   titleStatusUNKNOWN: {
     id: 'app.components.Purchases.unkntitleStatusUnknownownStatus',
