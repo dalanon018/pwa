@@ -1,5 +1,11 @@
 {
-  "name": "7-Eleven",
+  "name": "CLiQQ Shop by 7-Eleven",
+  "start_url": "/",
+  "short_name": "CLiQQ Shop",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFFFF",
+  "theme_color": "#8DC640",
   "icons": [
     {
       "src": "icon-48.png",
@@ -36,11 +42,5 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "start_url": "/",
-  "short_name": "7-11",
-  "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#FFFFFF",
-  "theme_color": "#8DC640"
+  ]
 }

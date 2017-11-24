@@ -47,6 +47,9 @@ import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-48.png'
 import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-96.png'
 import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-144.png'
 import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-192.png'
+import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-256.png'
+import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-384.png'
+import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-512.png'
 
 /* eslint-enable import/no-webpack-loader-syntax */
 
