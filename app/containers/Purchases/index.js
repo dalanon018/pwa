@@ -72,18 +72,29 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
   }
 
   state = {
-    current: null
+    current: null,
+    activePane: 'Active'
   }
 
   _goToHome = () => {
     this.props.changeRoute('/')
   }
 
+  _onTabChange = (e, { panes, activeIndex }) => {
+    const { activePane } = this.state
+    const { menuItem } = panes[activeIndex]
+
+    this.setState({
+      activePane: menuItem || activePane
+    })
+  }
+
   _handleShow = (entity) => {
+    const { activePane } = this.state
     const { loading, changeRoute, windowWidth } = this.props
 
     if (loading === false && entity.size === 0) {
-      return <EmptyPurchase />
+      return <EmptyPurchase active={activePane} />
     }
 
     return (
@@ -115,7 +126,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
 
     const panes = [
       { menuItem: 'Active', render: () => <Tab.Pane>{this._handleShow(activePurchases)}</Tab.Pane> },
-      { menuItem: 'Compeleted', render: () => <Tab.Pane>{this._handleShow(completedPurchases)}</Tab.Pane> },
+      { menuItem: 'Completed', render: () => <Tab.Pane>{this._handleShow(completedPurchases)}</Tab.Pane> },
       { menuItem: 'Expired', render: () => <Tab.Pane>{this._handleShow(expiredPurchases)}</Tab.Pane> }
     ]
 
@@ -128,7 +139,10 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
           ]}
         />
 
-        <Tab panes={panes} />
+        <Tab
+          onTabChange={this._onTabChange}
+          panes={panes}
+        />
       </PurchaseWrapper>
     )
   }

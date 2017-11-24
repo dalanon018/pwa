@@ -10,6 +10,7 @@ const wrapper = (props = {}, enzyme = shallow) => enzyme(
 
 describe('<EmptyPurchases />', () => {
   const minProps = {
+    active: 'Active'
   }
 
   it('render without exploding', () => {
