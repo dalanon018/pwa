@@ -201,7 +201,7 @@ export function * requestAccessToken () {
 
     return token
   } catch (e) {
-    yield put(setNetworkErrorAction('Please make sure you have internet connection to automatically refresh your token.'))
+    yield put(setNetworkErrorAction('Please make sure you have internet connection.'))
   }
 
   return {}
