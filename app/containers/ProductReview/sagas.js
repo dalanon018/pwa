@@ -51,6 +51,11 @@ import {
 } from 'containers/Buckets/actions'
 
 import {
+  DEFAULT_METHOD_PAYMENT,
+  DEFAULT_STATUS_COD_PAYMENT
+} from 'containers/Buckets/constants'
+
+import {
   getAccessToken
 } from 'containers/Buckets/sagas'
 
@@ -77,11 +82,11 @@ function * transformResponse ({ order: { sevenConnectRefNum, transactionId, expi
     name: orderedProduct.get('title'),
     returnPolicy: orderedProduct.get('returnPolicy'),
     returnable: orderedProduct.get('returnable'),
+    status: (paymentType === DEFAULT_METHOD_PAYMENT) ? status : DEFAULT_STATUS_COD_PAYMENT,
     brand,
     mobileNumber,
     sevenConnectRefNum,
-    paymentType,
-    status
+    paymentType
   }
 }
 

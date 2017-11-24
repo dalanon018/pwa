@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import styled from 'styled-components'
 
 import { Grid, Label, Image } from 'semantic-ui-react'
@@ -21,19 +21,25 @@ const EmptyPurchaseWrapper = styled.div`
   }
 `
 
-const EmptyPurchases = () => (
-  <Grid padded>
-    <Grid.Row centered>
-      <Grid.Column textAlign='center'>
-        <EmptyPurchaseWrapper>
-          <Image src={EmptyPurchase} />
-          <Label className='text__roboto--light color__secondary' as='p' basic size='large'>
-            <FormattedMessage {...messages.emptyPurchases} />
-          </Label>
-        </EmptyPurchaseWrapper>
-      </Grid.Column>
-    </Grid.Row>
-  </Grid>
-)
+const EmptyPurchases = ({ active }) => {
+  return (
+    <Grid padded>
+      <Grid.Row centered>
+        <Grid.Column textAlign='center'>
+          <EmptyPurchaseWrapper>
+            <Image src={EmptyPurchase} />
+            <Label className='text__roboto--light color__secondary' as='p' basic size='large'>
+              <FormattedMessage {...messages[`empty${active}Purchases`]} />
+            </Label>
+          </EmptyPurchaseWrapper>
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
+  )
+}
+
+EmptyPurchases.PropTypes = {
+  active: PropTypes.string.isRequired
+}
 
 export default EmptyPurchases
