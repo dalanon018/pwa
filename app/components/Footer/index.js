@@ -63,7 +63,7 @@ export class Footer extends React.PureComponent {
                   </A>
                 </List.Item>
                 <List.Item>
-                  <A href='mailto:psc-corp@7-eleven.com.ph'>
+                  <A href='mailto:cliqqsupport@7-eleven.com.ph'>
                     <Image alt='Cliqq' src={EmailIcon} />
                   </A>
                 </List.Item>

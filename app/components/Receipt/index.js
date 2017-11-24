@@ -44,7 +44,8 @@ import {
   ReceiptWrapper,
   ScannerWrapper,
   PushNotificationWrapper,
-  MatchCode
+  MatchCode,
+  PayCode
   // InstructionsWrapper
 } from './styled'
 
@@ -261,19 +262,19 @@ class Receipt extends React.PureComponent {
     )(currentStatus)
   }
 
-  _handleParseTrackNumber = (str) => {
+  _handleMatchCode = (str) => {
     const { receipt } = this.props
 
     if (receipt.get('modePayment') !== this._defaultModePayment) {
       return (
-        <Label as='p' basic size='big' className='color__secondary'>
-          {str && str.slice(0, -3)}
-          <MatchCode>{str && str.slice(-3)}</MatchCode>
-        </Label>
+        <MatchCode>
+          <div className='border-divider' />
+          <Label as='span' basic size='huge' className='color__secondary color__secondary background__light-grey'>
+            {str && str.slice(-3)}
+          </Label>
+        </MatchCode>
       )
     }
-
-    return <Label as='p' basic size='big' className='color__secondary'>{str}</Label>
   }
 
   componentDidMount () {
@@ -334,13 +335,16 @@ class Receipt extends React.PureComponent {
                       <Label className='weight-400 color__secondary' as='span' basic size='small'>
                         <FormattedMessage {...messages.trackingNumber} />
                       </Label>
-                      {this._handleParseTrackNumber(receipt.get('trackingNumber'))}
+                      <Label as='p' basic size='big' className='color__secondary'>{receipt.get('trackingNumber')}</Label>
                     </Grid.Column>
                     <Grid.Column floated='right' textAlign='right' width={7}>
                       <Label className='weight-400 color__secondary' as='span' basic size='small'>
                         { this._handleDateString() }
                       </Label>
                       <Label as='p' basic size='large' className='color__secondary'>{ this._handleDateValue()}</Label>
+                    </Grid.Column>
+                    <Grid.Column width={16}>
+                      {this._handleMatchCode(receipt.get('trackingNumber'))}
                     </Grid.Column>
                   </Grid.Row>
                 </Grid>
@@ -358,14 +362,16 @@ class Receipt extends React.PureComponent {
                   <FormattedMessage {...messages.peso} />
                   { parseFloat(receipt.get('amount')).toLocaleString() }
                 </Label>
-                <Label className='text__roboto--light color__secondary' as='p' basic size='medium' >
+                <Label className='text__roboto--light color__secondary mobile-number' as='p' basic size='medium' >
                   <FormattedMessage {...messages.mobileNumberLabel} />
 
                   <FormattedMessage {...messages.mobileNumberCode} />
                   { PhoneFormatter(receipt.get('mobileNumber')) }
                 </Label>
                 <BarcodeSVG id='barcode' {...{ status: statuses[receipt.get('status')] }} />
-                {receipt.get('payCode')}
+                <PayCode>
+                  {receipt.get('payCode')}
+                </PayCode>
                 <Grid.Row>
                   { this._renderPurchaseBanner() }
                 </Grid.Row>
