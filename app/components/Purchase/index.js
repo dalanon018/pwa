@@ -174,7 +174,6 @@ class Purchase extends React.PureComponent {
     const handleStatus = handlingStatus(this._handleModePayment())
     const Timer = timer || '00:00:00'
 
-    console.log(handleStatus(currentStatus))
     return switchFn({
       RESERVED: <p> { Timer } </p>
     })(

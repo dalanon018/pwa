@@ -12,7 +12,6 @@ import { push } from 'react-router-redux'
 import { noop } from 'lodash'
 import {
   allPass,
-  both,
   compose,
   cond,
   equals,
@@ -163,10 +162,6 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
         partial(equals(0), [productsByBrands.size]),
         partial(equals(false), [lazyload])
       ]), this._displayEmpty],
-      [both(
-        partial(equals(0), [productsByBrands.size]),
-        partial(equals(true), [lazyload])
-      ), this._displayEmptyProductViewLoading],
       [equals(true), this._displayLoader],
       [equals(false), () => null]
     ])
@@ -278,9 +273,12 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
             limit={limit}
           >
             { this._displayFeaturedProducts() }
-            <H3>
-              <FormattedMessage {...messages.brandsTitle} />
-            </H3>
+            {
+              lazyload &&
+              <H3>
+                <FormattedMessage {...messages.brandsTitle} />
+              </H3>
+            }
             { this._displayEmptyLoadingIndicator() }
             <ProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
           </LazyLoading>

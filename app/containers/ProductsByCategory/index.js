@@ -15,7 +15,6 @@ import {
   T,
   __,
   allPass,
-  both,
   compose,
   cond,
   contains,
@@ -172,12 +171,12 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _handlePageTitle () {
-    const { params: { id } } = this.props
+    const { params: { id }, lazyload } = this.props
     const IstagText = (tag) => `${Uppercase(tag)} Items`
 
     const titleCondition = ifElse(isTag(this._tags), IstagText, this._isCategoryExist)
     const titleComposition = compose(titleCondition)
-    return titleComposition(id)
+    return lazyload ? null : titleComposition(id)
   }
 
   _displayMoreProducts () {
@@ -267,10 +266,6 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
         partial(equals(0), [product.size]),
         partial(equals(false), [lazyload])
       ]), this._displayEmpty],
-      [both(
-        partial(equals(0), [product.size]),
-        partial(equals(true), [lazyload])
-      ), this._displayEmptyProductViewLoading],
       [equals(true), this._displayLoader],
       [equals(false), () => null]
     ])

@@ -6,7 +6,7 @@
 
 import React, {PropTypes } from 'react'
 import styled from 'styled-components'
-import { throttle, noop } from 'lodash'
+import { debounce, noop } from 'lodash'
 import {
   allPass,
   // both,
@@ -37,14 +37,14 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
     this._cancellableDebounce = false
   }
 
-  _debounceScrolling = throttle(this._onScrollElement, 1000)
+  _debounceScrolling = debounce(this._onScrollElement, 1000)
 
   _onScrollElement () {
     const { lazyload, onScroll } = this.props
     const scroll = document.documentElement
     const scrollY = scroll.scrollTop
     const offset = window.innerHeight
-
+    console.log('im scrolling')
     const onBottom = () => lt(scroll.offsetHeight, (scrollY + offset))
     const notCancellable = () => equals(false, this._cancellableDebounce)
     const displayMore = ifElse(
