@@ -11,15 +11,15 @@ export default defineMessages({
     defaultMessage: 'RECEIPTS'
   },
   emptyActivePurchases: {
-    id: 'app.containers.Purchases.emptyPurchases',
+    id: 'app.containers.Purchases.emptyActivePurchases',
     defaultMessage: 'Woops! It seems like you haven\'t bought anything yet. Let\'s fix that!'
   },
   emptyCompletedPurchases: {
-    id: 'app.containers.Purchases.emptyPurchases',
+    id: 'app.containers.Purchases.emptyCompletedPurchases',
     defaultMessage: 'Woops! It seems like you haven\'t bought anything yet. Let\'s fix that!'
   },
   emptyExpiredPurchases: {
-    id: 'app.containers.Purchases.emptyPurchases',
+    id: 'app.containers.Purchases.emptyExpiredPurchases',
     defaultMessage: 'There are no expired receipts.'
   },
   // Here we will define the status titles
