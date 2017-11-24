@@ -1,0 +1,29 @@
+{
+  "hosting": {
+    "public": "build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "headers": [{
+      "source" : "**/*.@(jpg|jpeg|gif|png|svg|ico|woff)",
+      "headers" : [{
+        "key" : "Cache-Control",
+        "value" : "max-age=30672000"
+      }]
+    }, {
+      "source" : "**/*.chunk.js",
+      "headers" : [{
+        "key" : "Cache-Control",
+        "value" : "max-age=30672000"
+      }]
+    }],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

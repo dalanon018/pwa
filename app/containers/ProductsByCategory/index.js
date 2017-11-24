@@ -207,7 +207,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     const { productsFeatured, changeRoute, loader, windowWidth } = this.props
     if (this._handleFeaturedProductsPerCategory() && productsFeatured.size) {
       return (
-        <ProductView changeRoute={changeRoute} loader={loader} products={productsFeatured.slice(0, 4)} windowWidth={windowWidth} />
+        <ProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} />
       )
     }
 

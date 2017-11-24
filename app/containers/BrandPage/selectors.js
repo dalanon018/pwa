@@ -25,7 +25,7 @@ const selectProductsByBrandsItems = () => createSelector(
 
 const selectProductsByBrandsFeatured = () => createSelector(
   selectProductsByBrands(),
-  (substate) => substate.filter((state) => state.get('isFeatured')).slice(0, 4)
+  (substate) => substate.filter((state) => state.get('isFeatured'))
 )
 
 const selectLoading = () => createSelector(

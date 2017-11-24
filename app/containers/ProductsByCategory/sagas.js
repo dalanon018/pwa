@@ -62,7 +62,7 @@ function * getLastViewedItems () {
   return products || []
 }
 
-function getProductsCategory (response) {
+function * getProductsCategory (response) {
   const count = propOr(0, 'totalCount')
   return count(response)
 }
@@ -77,7 +77,6 @@ export function * getProductByCategory (args) {
     method: 'GET',
     token: token.access_token
   })
-
   if (!isEmpty(req)) {
     const transform = compose(
       map(transformEachEntity),

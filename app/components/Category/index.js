@@ -6,8 +6,7 @@
 
 import React, { PropTypes } from 'react'
 import EmptyDataBlock from 'components/EmptyDataBlock'
-// import { Grid, Label } from 'semantic-ui-react'
-import { Grid } from 'semantic-ui-react'
+import { Grid, Label } from 'semantic-ui-react'
 import { imageStock, paramsImgix } from 'utils/image-stock'
 
 import {
@@ -15,7 +14,7 @@ import {
 } from 'lodash'
 
 import {
-  // BackgroundLay,
+  BackgroundLay,
   CategoryBlock
 } from './styles'
 
@@ -53,10 +52,8 @@ function Category ({
               <CategoryBlock
                 onClick={handleRedirect}
                 background={paramsImgix(imageShow(category.get('background')), imgixOptions)}>
-                {/*
-                  <BackgroundLay className='background__black-transparent' />
-                  <Label as='span' basic size='massive' className='color__white'>{category.get('name')}</Label>
-                */}
+                <BackgroundLay className='background__black-transparent' />
+                <Label as='span' basic size='massive' className='color__white'>{category.get('name')}</Label>
               </CategoryBlock>
             </Grid.Column>
           )

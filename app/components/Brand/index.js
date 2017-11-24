@@ -38,8 +38,8 @@ export const BrandWrapper = styled.div`
 `
 
 const imgixOptions = {
-  w: 175,
-  h: 175,
+  w: 300,
+  h: 300,
   auto: 'compress',
   q: 35,
   lossless: 0
