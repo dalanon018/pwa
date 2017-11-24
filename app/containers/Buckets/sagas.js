@@ -50,7 +50,9 @@ import {
   REGISTER_PUSH,
   GET_REGISTED_PUSH,
   GET_LOYALTY_TOKEN,
-  REMOVE_LOYALTY_TOKEN
+  REMOVE_LOYALTY_TOKEN,
+
+  COD_PAYMENT
 } from './constants'
 
 import {
@@ -294,8 +296,15 @@ function * updateReceiptSnapShot (orders, receiptId) {
     toPairs
   )(STATUSES)
 
+  const isConfirmedCOD = (status) => compose(
+    both(contains(status), partial(equals(COD_PAYMENT), [order.paymentType])),
+    map(head),
+    filter(contains('CONFIRMED')),
+    toPairs
+  )(STATUSES)
+
   // we need to be very careful that status should not be empty
-  if (status && (!isEmpty(order) && order.status !== status) && !isReservedStatus(status)) {
+  if (status && (!isEmpty(order) && order.status !== status) && !isReservedStatus(status) && !isConfirmedCOD(status)) {
     order.status = status || order.status
     order.lastUpdated = lastUpdated || order.lastUpdated || ''
     updatedReceipts = updatedReceipts.concat(order)
