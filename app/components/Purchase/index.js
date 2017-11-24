@@ -158,7 +158,8 @@ class Purchase extends React.PureComponent {
         CONFIRMED: receipt.get('lastUpdated'),
         INTRANSIT: receipt.get('lastUpdated'),
         CLAIMED: receipt.get('lastUpdated'),
-        DELIVERED: receipt.get('lastUpdated')
+        DELIVERED: receipt.get('lastUpdated'),
+        UNCLAIMED: receipt.get('lastUpdated')
       })(receipt.get('claimExpiry')),
       handleStatus
     )
