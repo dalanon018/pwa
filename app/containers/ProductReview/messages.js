@@ -22,7 +22,7 @@ export default defineMessages({
   },
   chooseStore: {
     id: `${idSuffix}.chooseStore`,
-    defaultMessage: 'Choose a 7-11 store!'
+    defaultMessage: 'Choose a 7-Eleven store!'
   },
   viewDetails: {
     id: `${idSuffix}.viewDetails`,
