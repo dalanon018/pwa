@@ -155,6 +155,15 @@ const SearchInput = styled(Input)`
   width: 100%;
 `
 
+const PageTitle = styled.div`
+  h1 {
+    &.long-title {
+      font-size: 18px;
+      line-height: 18px;
+    }
+  }
+`
+
 const toggleComponent = (componentA, componentB) => (condition) => {
   return ifElse(
     identity,
@@ -200,10 +209,21 @@ export default class MainMenu extends PureComponent {
   _handleUniqueHeader = () => {
     const { pageTitle, changeRoute, intl, currentRoute } = this.props
     const { windowHeightOffset } = this.state
+    console.log('pageTitle', pageTitle && pageTitle.length)
+
+    const pageTitleParsed = () => {
+      if (pageTitle && pageTitle.length > 17) {
+        return <Header className='color__secondary long-title' as='h1'> { pageTitle } </Header>
+      }
+
+      return <Header className='color__secondary' as='h1'> { pageTitle } </Header>
+    }
 
     const TitleToggle = toggleComponent(
       <ImageLogo alt='logo' src={MainLogo} onClick={changeRoute.bind(this, '/')} />,
-      <Header className='color__secondary' as='h1'> { pageTitle } </Header>
+      <PageTitle>
+        {pageTitleParsed()}
+      </PageTitle>
     )
 
     const ShowSearchInputLogo = toggleComponent(
