@@ -51,10 +51,6 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
       onScroll,
       noop
     )
-    console.log(document.body.scrollHeight, document.body.scrollTop + document.body.clientHeight)
-    if (document.body.scrollHeight <= document.body.scrollTop + document.body.clientHeight) {
-      console.log('scrolled to bottom')
-    }
 
     return displayMore(lazyload)
   }
