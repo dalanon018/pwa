@@ -33,7 +33,7 @@ export default defineMessages({
   },
   titleStatusUNPAID: {
     id: 'app.components.Purchases.titleStatusUNPAID',
-    defaultMessage: 'Unpaid'
+    defaultMessage: 'Expired'
   },
   titleStatusPROCESSING: {
     id: 'app.components.Purchases.titleStatusPROCESSING',
@@ -61,7 +61,7 @@ export default defineMessages({
   },
   titleStatusUNCLAIMED: {
     id: 'app.components.Purchases.titleStatusUNCLAIMED',
-    defaultMessage: 'Unclaimed'
+    defaultMessage: 'Expired'
   },
   titleStatusUNKNOWN: {
     id: 'app.components.Purchases.unkntitleStatusUnknownownStatus',

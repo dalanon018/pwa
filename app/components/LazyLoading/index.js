@@ -6,7 +6,7 @@
 
 import React, {PropTypes } from 'react'
 import styled from 'styled-components'
-import { throttle, noop } from 'lodash'
+import { debounce, noop } from 'lodash'
 import {
   allPass,
   // both,
@@ -37,14 +37,13 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
     this._cancellableDebounce = false
   }
 
-  _debounceScrolling = throttle(this._onScrollElement, 1000)
+  _debounceScrolling = debounce(this._onScrollElement, 1000)
 
   _onScrollElement () {
     const { lazyload, onScroll } = this.props
     const scroll = document.documentElement
     const scrollY = scroll.scrollTop
     const offset = window.innerHeight
-
     const onBottom = () => lt(scroll.offsetHeight, (scrollY + offset))
     const notCancellable = () => equals(false, this._cancellableDebounce)
     const displayMore = ifElse(
@@ -76,7 +75,16 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
     return showLoadingIndicator(lazyload)
   }
 
+  /**
+   * we need to make sure that before we reload the page we scroll top the page due to issues that scroll is always triggered if it was refereshed on the bottom of the page
+   */
+  _srollTopBeforeUnload = () => {
+    window.scrollTo(0, 0)
+  }
+
   componentDidMount () {
+    // make sure to put it last on call stack
+    setTimeout(this._srollTopBeforeUnload, 0)
     window.addEventListener('scroll', this._debounceScrolling)
   }
 
@@ -86,7 +94,6 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
      * that they shoud'nt run anymore
      */
     this._cancellableDebounce = true
-
     window.removeEventListener('scroll', this._debounceScrolling)
   }
 

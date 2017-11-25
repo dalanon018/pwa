@@ -135,7 +135,7 @@ class Receipt extends React.PureComponent {
       storeName: receipt.get('storeName')
     }
 
-    if (purchaseOrder.includes(status)) {
+    if (purchaseOrder.includes(status) && receipt.get('modePayment') === this._defaultModePayment) {
       return (
         <PurchaseOrder
           {...defaultProps}
@@ -202,7 +202,9 @@ class Receipt extends React.PureComponent {
         CONFIRMED: receipt.get('lastUpdated'),
         INTRANSIT: receipt.get('lastUpdated'),
         CLAIMED: receipt.get('lastUpdated'),
-        DELIVERED: receipt.get('lastUpdated')
+        DELIVERED: receipt.get('lastUpdated'),
+        UNPAID: receipt.get('lastUpdated'),
+        UNCLAIMED: receipt.get('lastUpdated')
       })(receipt.get('claimExpiry')),
       handleStatus
     )

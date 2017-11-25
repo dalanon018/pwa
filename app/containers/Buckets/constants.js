@@ -102,9 +102,11 @@ export const EXPIRED = [
 ]
 
 export const DEFAULT_METHOD_PAYMENT = 'CASH'
+export const COD_PAYMENT = 'COD'
 export const DEFAULT_STATUS_COD_PAYMENT = 'CONFIRMED'
 
 export const COD_STATUS_NAME_AFFECTED = {
+  'RESERVED': 'PROCESSING',
   'CONFIRMED': 'PROCESSING'
 }
 

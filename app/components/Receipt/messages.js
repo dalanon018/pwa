@@ -44,7 +44,7 @@ export default defineMessages({
   },
   CODRESERVED: {
     id: 'app.components.Receipt.CODRESERVED',
-    defaultMessage: 'Show this barcode at any 7 Eleven store and pay for your item within:'
+    defaultMessage: 'Please wait for an SMS telling you that your order is in the store'
   },
   CODRESERVEDEXPIRED: {
     id: 'app.components.Receipt.CODRESERVEDEXPIRED',
@@ -218,7 +218,7 @@ export default defineMessages({
   },
   dateCODRESERVED: {
     id: 'app.components.Receipt.dateCODRESERVED',
-    defaultMessage: 'Valid Until'
+    defaultMessage: 'Date Ordered'
   },
   dateCODRESERVEDEXPIRED: {
     id: 'app.components.Receipt.dateCODRESERVEDEXPIRED',

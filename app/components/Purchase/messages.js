@@ -48,7 +48,7 @@ export default defineMessages({
   },
   dateCODRESERVED: {
     id: 'app.components.Purchase.dateCODRESERVED',
-    defaultMessage: 'Time Remaining'
+    defaultMessage: 'Date Ordered'
   },
   dateCODRESERVEDEXPIRED: {
     id: 'app.components.Purchase.dateCODRESERVEDEXPIRED',
