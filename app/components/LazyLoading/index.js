@@ -6,7 +6,7 @@
 
 import React, {PropTypes } from 'react'
 import styled from 'styled-components'
-import { debounce, noop } from 'lodash'
+import { throttle, noop } from 'lodash'
 import {
   allPass,
   // both,
@@ -23,6 +23,10 @@ const WrapperLoadingIndicator = styled.div`
   position: relative;
 `
 
+const ScrollContent = styled.div`
+  -webkit-overflow-scrolling: touch;
+`
+
 class LazyLoading extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor () {
     super()
@@ -37,21 +41,26 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
     this._cancellableDebounce = false
   }
 
-  _debounceScrolling = debounce(this._onScrollElement, 1000)
+  _debounceScrolling = throttle(this._onScrollElement, 1000)
 
   _onScrollElement () {
     const { lazyload, onScroll } = this.props
-    const scroll = document.documentElement
-    const scrollY = scroll.scrollTop
-    const offset = window.innerHeight
-    const onBottom = () => lt(scroll.offsetHeight, (scrollY + offset))
+    const body = document.body
+    const html = document.documentElement
+
+    const scrollY = window.pageYOffset
+    const offset = 900
+    const height = Math.max(body.scrollHeight, body.offsetHeight,
+      html.clientHeight, html.scrollHeight, html.offsetHeight)
+
+    const onBottom = () => lt(height, (scrollY + offset))
     const notCancellable = () => equals(false, this._cancellableDebounce)
+
     const displayMore = ifElse(
       allPass([onBottom, identity, notCancellable]),
       onScroll,
       noop
     )
-
     return displayMore(lazyload)
   }
 
@@ -99,10 +108,10 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
 
   render () {
     return (
-      <div>
+      <ScrollContent>
         { this.props.children }
         { this._displayLazyLoadIndicator() }
-      </div>
+      </ScrollContent>
     )
   }
 }

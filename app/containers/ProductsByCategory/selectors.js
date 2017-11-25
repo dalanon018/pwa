@@ -20,12 +20,12 @@ const selectProductsByCategory = () => createSelector(
 
 const selectProductsByCategoryItems = () => createSelector(
   selectProductsByCategory(),
-  (substate) => substate.filter((state) => !state.get('isFeatured'))
+  (substate) => substate.filter((sub) => !sub.get('isFeatured'))
 )
 
 const selectProductsByCategoryFeatured = () => createSelector(
   selectProductsByCategory(),
-  (substate) => substate.filter((state) => state.get('isFeatured'))
+  (substate) => substate.filter((sub) => sub.get('isFeatured'))
 )
 
 const selectProductsViewed = () => createSelector(

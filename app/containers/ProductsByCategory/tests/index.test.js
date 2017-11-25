@@ -20,6 +20,7 @@ describe('<ProductsByCategory />', () => {
     params: {
       id: 'CAT1'
     },
+    allCategoryProducts: fromJS([]),
     productsByTags: fromJS([]),
     productsByCategory: fromJS([]),
     productsFeatured: fromJS([]),
@@ -38,6 +39,6 @@ describe('<ProductsByCategory />', () => {
     const renderedComponent = shallow(
       <ProductsByCategory {...minProps} />
     )
-    expect(renderedComponent.find('ProductView').length).toEqual(2)
+    expect(renderedComponent.find('ProductView').length).toEqual(1)
   })
 })
