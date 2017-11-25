@@ -28,11 +28,12 @@ const EntityPurchases = ({ entity, changeRoute, windowWidth }) => (
     <Grid padded columns={windowWidth > 1023 ? 2 : 1}>
       {
         entity.map((receipt, index) =>
-          <Grid.Column>
+          <Grid.Column
+            key={receipt.get('trackingNumber')}
+          >
             <Purchase
               className='padding__bottom--15'
               defaultImage={imageStock('Slider-Default.jpg')}
-              key={receipt.get('trackingNumber')}
               receipt={receipt}
               windowWidth={windowWidth}
               statuses={STATUSES}
