@@ -51,7 +51,8 @@ import {
 } from 'containers/Buckets/actions'
 
 import {
-  DEFAULT_STATUS_COD_PAYMENT
+  DEFAULT_STATUS_COD_PAYMENT,
+  COD_PAYMENT
 } from 'containers/Buckets/constants'
 
 import {
@@ -65,7 +66,6 @@ import {
 function * transformResponse ({ order: { sevenConnectRefNum, transactionId, expiryDate, totalPrice, mobileNumber, paymentType, status }, orderedProduct }) {
   // some of the item doesnt have brand
   const brand = orderedProduct.get('brand') ? orderedProduct.get('brand').toJS() : {}
-
   // we have to recode the 'PREPAID' static status
   return {
     trackingNumber: transactionId,
@@ -82,7 +82,7 @@ function * transformResponse ({ order: { sevenConnectRefNum, transactionId, expi
     name: orderedProduct.get('title'),
     returnPolicy: orderedProduct.get('returnPolicy'),
     returnable: orderedProduct.get('returnable'),
-    status: (paymentType === 'PREPAID') ? status : DEFAULT_STATUS_COD_PAYMENT,
+    status: (paymentType === COD_PAYMENT) ? DEFAULT_STATUS_COD_PAYMENT : status,
     brand,
     mobileNumber,
     sevenConnectRefNum,

@@ -2,17 +2,17 @@ import React from 'react'
 import { fromJS } from 'immutable'
 import { Grid } from 'semantic-ui-react'
 import { shallow } from 'enzyme'
-import EmptyPurchases from '../EmptyPurchases'
+import EntityPurchases from '../EntityPurchases'
 
 const wrapper = (props = {}, enzyme = shallow) => enzyme(
-  <EmptyPurchases {...props} />
+  <EntityPurchases {...props} />
 )
 
-describe('<EmptyPurchases />', () => {
+describe('<EntityPurchases />', () => {
   const minProps = {
     changeRoute: () => {},
     windowWidth: 0,
-    entity: fromJS({
+    entity: fromJS([{
       'amount': 590,
       'claimExpiry': '2017-09-27 16:09:20',
       'dateCreated': '2017-09-07 16:09:21',
@@ -25,7 +25,7 @@ describe('<EmptyPurchases />', () => {
       'status': 'RESERVED',
       'storeName': 'Kamias',
       'trackingNumber': '337508604184442831'
-    })
+    }])
   }
 
   it('render without exploding', () => {
