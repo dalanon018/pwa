@@ -5,7 +5,7 @@
  */
 
 import { fromJS } from 'immutable'
-import { compact, isEmpty } from 'lodash'
+import { isEmpty } from 'lodash'
 import {
   GET_PRODUCTS_CATEGORY,
   SET_PRODUCTS_CATEGORY,
@@ -33,12 +33,9 @@ function productsByCategoryReducer (state = initialState, action) {
       return productsByCategory.size === 0 ? state.set('loading', true) : state
     }
     case SET_PRODUCTS_CATEGORY: {
-      // TODO:
-      // we have find a way to concat 2 immutable object since converting is expensive
-      const currentState = state.get('productsByCategory').toJS()
-      const mergeState = currentState.concat(action.payload)
+      const concatState = state.get('productsByCategory').concat(fromJS(action.payload))
       return state
-        .set('productsByCategory', fromJS(compact(mergeState)))
+        .set('productsByCategory', concatState)
         .set('loading', false)
          // we will toggle to true lazyload if only items are not empty and payload is greater that the limit
          .set('lazyload', (!isEmpty(action.payload) && LIMIT_ITEMS <= action.payload.length))

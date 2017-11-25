@@ -262,6 +262,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
       <div>
         <BannerSlider
           isInfinite
+          results={productsByBrands}
           loader={loader}
           images={brandImages}
         />

@@ -209,7 +209,6 @@ export default class MainMenu extends PureComponent {
   _handleUniqueHeader = () => {
     const { pageTitle, changeRoute, intl, currentRoute } = this.props
     const { windowHeightOffset } = this.state
-    console.log('pageTitle', pageTitle && pageTitle.length)
 
     const pageTitleParsed = () => {
       if (pageTitle && pageTitle.length > 17) {

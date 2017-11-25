@@ -129,6 +129,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     totalCount: PropTypes.number.isRequired,
     loader: PropTypes.bool.isRequired,
     lazyload: PropTypes.bool.isRequired,
+    allCategoryProducts: PropTypes.object.isRequired,
     productsByTags: PropTypes.object.isRequired,
     productsByCategory: PropTypes.object.isRequired,
     productsViewed: PropTypes.object.isRequired,
@@ -234,13 +235,27 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _displayRecentlyViewedHeader () {
-    const { productsViewed } = this.props
+    const { productsViewed, lazyload } = this.props
 
-    if (productsViewed.size) {
+    // we only show if items are not empty and not lazyloading
+    if (productsViewed.size && !lazyload) {
       return (
         <H3>
           <FormattedMessage {...messages.viewed} />
         </H3>
+      )
+    }
+
+    return null
+  }
+
+  _displayRecentlyViewedItems () {
+    const { productsViewed, lazyload, changeRoute, loader, windowWidth } = this.props
+
+    // we only show if items are not empty and not lazyloading
+    if (productsViewed.size && !lazyload) {
+      return (
+        <ProductView changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
       )
     }
 
@@ -301,6 +316,21 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
       isTag(this._tags),
       () => productsByTags,
       () => productsByCategory
+    )
+
+    return shouldDiplayTagItems(id)
+  }
+
+  /**
+   * Since we have different selector due to featured items and regular
+   * now this solves is to return ALL data regardless it is a featured or not.
+   */
+  _displayAllProductData = () => {
+    const { params: { id }, productsByTags, allCategoryProducts } = this.props
+    const shouldDiplayTagItems = ifElse(
+      isTag(this._tags),
+      () => productsByTags,
+      () => allCategoryProducts
     )
 
     return shouldDiplayTagItems(id)
@@ -392,7 +422,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   render () {
-    const { productsViewed, loader, changeRoute, lazyload, windowWidth } = this.props
+    const { loader, changeRoute, lazyload, windowWidth } = this.props
     const { limit } = this.state
 
     return (
@@ -400,7 +430,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
         <ContentWrapper>
           <LazyLoading
             lazyload={lazyload}
-            results={this._displayProductData()}
+            results={this._displayAllProductData()}
             onScroll={this._displayMoreProducts}
             limit={limit}
           >
@@ -411,10 +441,9 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
             {this._displayNumberProducts()}
             { this._displayEmptyLoadingIndicator() }
             <ProductView changeRoute={changeRoute} loader={loader} products={this._displayProductData()} windowWidth={windowWidth} />
-
-            { this._displayRecentlyViewedHeader() }
           </LazyLoading>
-          <ProductView changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
+          {this._displayRecentlyViewedHeader() }
+          { this._displayRecentlyViewedItems() }
 
         </ContentWrapper>
         <Footer />
@@ -424,6 +453,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 }
 
 const mapStateToProps = createStructuredSelector({
+  allCategoryProducts: selectProductsByCategory(),
   productsByTags: selectProductsByCategory(),
   productsByCategory: selectProductsByCategoryItems(),
   productsViewed: selectProductsViewed(),
