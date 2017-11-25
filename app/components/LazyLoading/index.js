@@ -44,7 +44,6 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
     const scroll = document.documentElement
     const scrollY = scroll.scrollTop
     const offset = window.innerHeight
-    console.log('im scrolling')
     const onBottom = () => lt(scroll.offsetHeight, (scrollY + offset))
     const notCancellable = () => equals(false, this._cancellableDebounce)
     const displayMore = ifElse(
@@ -52,7 +51,8 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
       onScroll,
       noop
     )
-
+    this._srollTopBeforeUnload()
+    console.log('imscrolling')
     return displayMore(lazyload)
   }
 
@@ -76,6 +76,13 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
     return showLoadingIndicator(lazyload)
   }
 
+  /**
+   * we need to make sure that before we reload the page we scroll top the page due to issues that scroll is always triggered if it was refereshed on the bottom of the page
+   */
+  _srollTopBeforeUnload = () => {
+    window.scrollTo(0, 0)
+  }
+
   componentDidMount () {
     window.addEventListener('scroll', this._debounceScrolling)
   }
@@ -87,6 +94,7 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
      */
     this._cancellableDebounce = true
 
+    this._srollTopBeforeUnload()
     window.removeEventListener('scroll', this._debounceScrolling)
   }
 
