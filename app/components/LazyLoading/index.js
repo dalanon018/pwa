@@ -51,8 +51,11 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
       onScroll,
       noop
     )
-    this._srollTopBeforeUnload()
-    console.log('imscrolling')
+    console.log(document.body.scrollHeight, document.body.scrollTop + document.body.clientHeight)
+    if (document.body.scrollHeight <= document.body.scrollTop + document.body.clientHeight) {
+      console.log('scrolled to bottom')
+    }
+
     return displayMore(lazyload)
   }
 
@@ -84,6 +87,8 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
   }
 
   componentDidMount () {
+    // make sure to put it last on call stack
+    setTimeout(this._srollTopBeforeUnload, 0)
     window.addEventListener('scroll', this._debounceScrolling)
   }
 
@@ -93,8 +98,6 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
      * that they shoud'nt run anymore
      */
     this._cancellableDebounce = true
-
-    this._srollTopBeforeUnload()
     window.removeEventListener('scroll', this._debounceScrolling)
   }
 
