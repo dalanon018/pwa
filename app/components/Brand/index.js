@@ -73,7 +73,7 @@ const DefaultState = () => {
     <Grid.Column>
       <EmptyDataBlock>
         <BrandWrapper>
-          <Image alt='Cliqq' src={paramsImgix(imageStock('Brands-Default.jpg', imgixOptions))} className='empty-image' />
+          <Image alt='CliQQ' src={paramsImgix(imageStock('Brands-Default.jpg', imgixOptions))} className='empty-image' />
         </BrandWrapper>
       </EmptyDataBlock>
     </Grid.Column>

@@ -118,7 +118,7 @@ export default defineMessages({
   },
   returnPolicyTitle: {
     id: 'app.components.Receipt.returnToHome',
-    defaultMessage: 'Cliqq Return Policy'
+    defaultMessage: 'CLiQQ Return Policy'
   },
   returnPolicyDescriptionValid: {
     id: 'app.components.Receipt.returnPolicyDescription',
@@ -126,7 +126,7 @@ export default defineMessages({
   },
   returnPolicyDescriptionWarningValid: {
     id: 'app.components.Receipt.returnPolicyDescriptionWarning',
-    defaultMessage: 'Not satisfied with your purchase? Depending on your CliQQ Care Policy, you can return your item anytime of the day within 7 days from claim date. Just go to you nearest 711 Store where the item was purchased and get your Return Slip from the CliQQ Kiosk and bring it to the cashier'
+    defaultMessage: 'Not satisfied with your purchase? Depending on your CLiQQ Care Policy, you can return your item anytime of the day within 7 days from claim date. Just go to you nearest 711 Store where the item was purchased and get your Return Slip from the CLiQQ Kiosk and bring it to the cashier'
   },
   returnPolicyDescriptionInvalid: {
     id: 'app.components.Receipt.returnPolicyDescription',
@@ -266,7 +266,7 @@ export default defineMessages({
   },
   pushNotifDescription: {
     id: 'app.components.Receipt.pushNotifDescription',
-    defaultMessage: 'Would you like to receive notifications on your phone for the latest updates on Cliqq?'
+    defaultMessage: 'Would you like to receive notifications on your phone for the latest updates on CLiQQ?'
   },
   instructionsLabel: {
     id: 'app.components.Receipt.instructionsLabel',

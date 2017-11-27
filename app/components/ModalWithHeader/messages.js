@@ -56,7 +56,7 @@ export default defineMessages({
   },
   claimedDescription: {
     id: 'app.components.ModalWithHeader.claimedDescription',
-    defaultMessage: 'Thank you for shopping with us! Follow us on social media for all the latest updates and promos only here on Cliqq!'
+    defaultMessage: 'Thank you for shopping with us! Follow us on social media for all the latest updates and promos only here on CLiQQ!'
   },
   unclaimedDescription: {
     id: 'app.components.ModalWithHeader.unclaimedDescription',

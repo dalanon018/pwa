@@ -34,8 +34,8 @@ export function App (props) {
     <AppWrapper>
       <BodyWrapper>
         <Helmet
-          titleTemplate='%s - 7-Eleven CliQQ'
-          defaultTitle='7-Eleven CliQQ'
+          titleTemplate='%s - 7-Eleven CLiQQ'
+          defaultTitle='7-Eleven CLiQQ'
         />
         {React.Children.toArray(props.children)}
       </BodyWrapper>
