@@ -174,10 +174,13 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   _handlePageTitle () {
     const { params: { id }, lazyload } = this.props
     const IstagText = (tag) => `${Uppercase(tag)} Items`
+    const product = this._displayProductData()
 
     const titleCondition = ifElse(isTag(this._tags), IstagText, this._isCategoryExist)
     const titleComposition = compose(titleCondition)
-    return lazyload ? null : titleComposition(id)
+
+    // we will not show this if product size is 0 and lazy loading since we know we are only displaying the featured items
+    return (lazyload && product.size === 0) ? null : titleComposition(id)
   }
 
   _displayMoreProducts () {
