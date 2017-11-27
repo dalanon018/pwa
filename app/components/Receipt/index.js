@@ -13,6 +13,7 @@ import {
   ifElse,
   partialRight
 } from 'ramda'
+import { noop } from 'lodash'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Label, Button, Image, Checkbox } from 'semantic-ui-react'
 
@@ -287,6 +288,63 @@ class Receipt extends React.PureComponent {
     return handleMatchCodeComponent(currentStatus)
   }
 
+  _displayReferenceNumber = () => {
+    const { receipt, statuses } = this.props
+    const currentStatus = statuses[receipt.get('status')] || ''
+    const handleStatus = handlingStatus(this._handleModePayment())
+
+    const _handleReferenceNumber = compose(
+      ComponentDetail({
+        PROCESSING: receipt.get('payCode'),
+        RESERVED: receipt.get('payCode'),
+        UNPAID: receipt.get('payCode')
+      })(
+        receipt.get('claimCode')
+      ),
+      handleStatus
+    )
+
+    return _handleReferenceNumber(currentStatus)
+  }
+
+  _displayBarcode = (code) => {
+    const barcode = code.split('-').join('')
+
+    return JsBarcode('#barcode', barcode, {
+      format: 'CODE128',
+      lineColor: '#5B5B5B',
+      width: 3,
+      height: 60,
+      displayValue: false
+    })
+  }
+
+  _handeDisplayBarcode = (props) => {
+    const { receipt, statuses } = props
+    const currentStatus = statuses[receipt.get('status')] || ''
+    const handleStatus = handlingStatus(this._handleModePayment())
+
+    /**
+     * we have to make sure that we will initialize JsBarcode only if it is on the dom
+     */
+    const _handleDisplayBarCode = ifElse(
+      compose(
+        both(() => receipt.get('payCode'), complement(partialRight(contains, [HIDE_BARCODE]))),
+        handleStatus
+      ),
+      compose(
+        this._displayBarcode,
+        ComponentDetail({
+          PROCESSING: receipt.get('payCode'),
+          RESERVED: receipt.get('payCode'),
+          UNPAID: receipt.get('payCode')
+        })(receipt.get('claimCode'))
+      ),
+      noop
+    )
+    return _handleDisplayBarCode(currentStatus)
+  }
+
   componentDidMount () {
     this._handleScanAnimate()
     setTimeout(() => {
@@ -295,21 +353,7 @@ class Receipt extends React.PureComponent {
   }
 
   componentWillReceiveProps (nextProps) {
-    const { receipt, statuses } = nextProps
-
-    /**
-     * we have to make sure that we will initialize JsBarcode only if it is on the dom
-     */
-    if (receipt.get('payCode') && !HIDE_BARCODE.includes(statuses[receipt.get('status')])) {
-      const payCode = receipt.get('payCode').split('-').join('')
-      JsBarcode('#barcode', payCode, {
-        format: 'CODE128',
-        lineColor: '#5B5B5B',
-        width: 3,
-        height: 60,
-        displayValue: false
-      })
-    }
+    this._handeDisplayBarcode(nextProps)
   }
 
   render () {
@@ -380,7 +424,7 @@ class Receipt extends React.PureComponent {
                 </Label>
                 <BarcodeSVG id='barcode' {...{ status: statuses[receipt.get('status')] }} />
                 <PayCode>
-                  {receipt.get('payCode')}
+                  { this._displayReferenceNumber() }
                 </PayCode>
                 <Grid.Row>
                   { this._renderPurchaseBanner() }
