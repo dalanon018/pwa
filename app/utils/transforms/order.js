@@ -83,6 +83,10 @@ const Schema = {
     name: 'payCode',
     type: STRING
   },
+  claimCode: {
+    name: 'claimCode',
+    type: STRING
+  },
   paymentType: {
     name: 'modePayment',
     type: STRING
