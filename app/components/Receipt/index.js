@@ -297,7 +297,7 @@ class Receipt extends React.PureComponent {
       ComponentDetail({
         PROCESSING: receipt.get('payCode'),
         RESERVED: receipt.get('payCode'),
-        UNPAID: receipt.get('payCode')
+        UNPAID: null
       })(
         receipt.get('claimCode')
       ),
