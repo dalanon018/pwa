@@ -193,3 +193,31 @@ export const EmailDesktopWarning = styled.div`
     margin: 100px 0px 0px !important;
   }
 `
+
+export const SizesWrapper = styled.div`
+  text-align: center
+  padding: 10px 0;
+
+  .no-margin {
+    margin: 0 !important;
+  }
+`
+
+export const SizesButton = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .button-size-styled {
+    background: transparent;
+    border-radius: 5px;
+    border: 2px solid #F0F0F0;
+    height: 50px;
+    margin: 5px;
+    width: 50px;
+
+    &:focus, &:active, &:visited {
+      border: 2px solid #8DC640;
+    }
+  }
+`

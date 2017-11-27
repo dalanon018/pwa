@@ -44,6 +44,8 @@ import {
   ShareWrapper,
   ProductImageSlider,
   CollapseContent
+  // SizesWrapper,
+  // SizesButton
 } from './styled'
 
 const showDiscountPrice = (component1, component2) => (condition) => ifElse(
@@ -150,6 +152,47 @@ const Product = ({
             </ProductPriceWrapper>
           </LoadingStateInfo>
         </ProductMainContent>
+
+        {/*
+          <SizesWrapper className='border_top__one--light-grey'>
+            <div>
+              <Label className='color__secondary' as='p' basic size='big'>
+                <FormattedMessage {...messages.selectSize} />
+              </Label>
+            </div>
+            <SizesButton>
+              <button className='button-size-styled'>
+                <Label className='no-margin color__secondary' as='p' basic size='big'>
+                  S
+                </Label>
+              </button>
+
+              <button className='button-size-styled'>
+                <Label className='no-margin color__secondary' as='p' basic size='big'>
+                  M
+                </Label>
+              </button>
+
+              <button className='button-size-styled'>
+                <Label className='no-margin color__secondary' as='p' basic size='big'>
+                  L
+                </Label>
+              </button>
+
+              <button className='button-size-styled'>
+                <Label className='no-margin color__secondary' as='p' basic size='big'>
+                  XL
+                </Label>
+              </button>
+
+              <button className='button-size-styled'>
+                <Label className='no-margin color__secondary' as='p' basic size='big'>
+                  XXL
+                </Label>
+              </button>
+            </SizesButton>
+          </SizesWrapper>
+        */}
 
         <SocialContainer className='border_bottom__one--light-grey border_top__one--light-grey'>
           <ShareWrapper>
