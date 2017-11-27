@@ -269,7 +269,7 @@ class Receipt extends React.PureComponent {
     const currentStatus = statuses[receipt.get('status')] || ''
     const handleStatus = handlingStatus(this._handleModePayment())
 
-    const handeMatchCodeComponent = compose(
+    const handleMatchCodeComponent = compose(
       ComponentDetail({
         RESERVED: null
       })(
@@ -283,7 +283,7 @@ class Receipt extends React.PureComponent {
       handleStatus
     )
 
-    return handeMatchCodeComponent(currentStatus)
+    return handleMatchCodeComponent(currentStatus)
   }
 
   componentDidMount () {
