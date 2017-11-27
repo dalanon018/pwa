@@ -19,8 +19,19 @@ import {
 
 import LoadingIndicator from 'components/LoadingIndicator'
 
+import { FormattedMessage } from 'react-intl'
+import messages from './messages'
+
 const WrapperLoadingIndicator = styled.div`
   position: relative;
+`
+
+const LoadMoreText = styled.p`
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `
 
 const ScrollContent = styled.div`
@@ -77,6 +88,9 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
       () => (
         <WrapperLoadingIndicator>
           <LoadingIndicator />
+          <LoadMoreText>
+            <FormattedMessage {...messages.loadingText} />
+          </LoadMoreText>
         </WrapperLoadingIndicator>
       ),
       () => null
