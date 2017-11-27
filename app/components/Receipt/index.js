@@ -271,7 +271,8 @@ class Receipt extends React.PureComponent {
 
     const handleMatchCodeComponent = compose(
       ComponentDetail({
-        RESERVED: null
+        RESERVED: null,
+        UNPAID: null
       })(
         <MatchCode>
           <div className='border-divider' />
