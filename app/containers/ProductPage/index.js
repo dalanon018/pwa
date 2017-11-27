@@ -80,6 +80,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   _setCurrentProduct = () => {
     const { product, setCurrentProduct } = this.props
     this.successSubmission = true
+    // before we can submit we need to make sure that the product is not empty
+
+    console.log(product.get('quantity'))
     setCurrentProduct(product)
   }
 

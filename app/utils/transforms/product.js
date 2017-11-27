@@ -85,6 +85,10 @@ const Schema = {
   additionalDetails: {
     name: 'additionalDetails',
     type: STRING
+  },
+  availableQuantity: {
+    name: 'quantity',
+    type: STRING
   }
 }
 
