@@ -307,7 +307,7 @@ function * updateReceiptSnapShot (orders, receiptId) {
   if (status && (!isEmpty(order) && order.status !== status) && !isReservedStatus(status) && !isConfirmedCOD(status)) {
     order.status = status || order.status
     order.lastUpdated = lastUpdated || order.lastUpdated || ''
-    order.sevenConnectRefNum = claimCode || order.sevenConnectRefNum || ''
+    order.claimCode = claimCode || order.claimCode || ''
 
     updatedReceipts = updatedReceipts.concat(order)
     setItem(ORDERED_LIST_KEY, orders)
