@@ -263,7 +263,7 @@ export default class MainMenu extends PureComponent {
     const homeRoute = currentRoute === 'home'
 
     const SearchToggle = toggleComponent(
-      <Image alt='Cliqq' src={SearchImage} size='mini' onClick={changeRoute.bind(this, '/search')} />,
+      <Image alt='CLiQQ' src={SearchImage} size='mini' onClick={changeRoute.bind(this, '/search')} />,
       null
     )
 

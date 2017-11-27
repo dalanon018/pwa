@@ -97,7 +97,7 @@ const Product = ({
   const brandLogo = product.get('brandLogo') ? (
     <Image
       className='brand-logo'
-      alt='Cliqq'
+      alt='CLiQQ'
       src={updateParamsImages(product.get('brandLogo'), { w: 200, h: 30 })}
       onClick={changeRoute.bind(this, `/brands/${product.getIn(['brand', 'code'])}`)} />) : ''
 
@@ -229,7 +229,7 @@ const Product = ({
             </Label>
           }>
             <CollapseContent>
-              <Image src={DeliveryIcon} alt='Cliqq' />
+              <Image src={DeliveryIcon} alt='CLiQQ' />
               <div className='collapse-description'>
                 <Label className='description-title color__secondary' as='p' basic size='large'><FormattedMessage {...messages.deliveryTitle} /></Label>
                 <Label className='text__roboto--light color__dark-grey' as='p' basic size='medium'>
@@ -238,7 +238,7 @@ const Product = ({
               </div>
             </CollapseContent>
             <CollapseContent>
-              <Image src={ReturnIcon} alt='Cliqq' />
+              <Image src={ReturnIcon} alt='CLiQQ' />
               <div className='collapse-description'>
                 <Label className='description-title primary__secondary' as='p' basic size='large'><FormattedMessage {...messages.returnPolicy} /></Label>
                 <Label className='text__roboto--light color__dark-grey' as='p' basic size='medium'>

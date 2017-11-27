@@ -56,11 +56,11 @@ export default defineMessages({
   },
   returnPolicy: {
     id: 'app.components.Product.returnPolicy',
-    defaultMessage: 'Cliqq Return Policy'
+    defaultMessage: 'CLiQQ Return Policy'
   },
   returnPolicyContent1: {
     id: 'app.components.Product.returnPolicyContent1',
-    defaultMessage: 'Not satisfied with your purchase? Depending on CLIQQ Care Policy, you can return your item anytime of the day '
+    defaultMessage: 'Not satisfied with your purchase? Depending on CLiQQ Care Policy, you can return your item anytime of the day '
   },
   returnPolicyContent2: {
     id: 'app.components.Product.returnPolicyContent2',
@@ -68,7 +68,7 @@ export default defineMessages({
   },
   returnPolicyContent3: {
     id: 'app.components.Product.returnPolicyContent3',
-    defaultMessage: 'from claim date. Just go to your nearest 7/11 store where the item was purchased and get your Return Slip from the CLIQQ Kiosk and bring it to the cashier.'
+    defaultMessage: 'from claim date. Just go to your nearest 7/11 store where the item was purchased and get your Return Slip from the CLiQQ Kiosk and bring it to the cashier.'
   },
   emailWarningTitle: {
     id: 'app.components.Product.emailWarningTitle',

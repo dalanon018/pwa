@@ -357,7 +357,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     const brandLogo = orderedProduct.get('brandLogo') ? (
       <Image
         className='brand-logo'
-        alt='Cliqq'
+        alt='CLiQQ'
         src={this._updateParamsImages(orderedProduct.get('brandLogo'), { w: 200, h: 30 })} />) : ''
 
     return (
@@ -365,7 +365,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         { productLoader || brandLogo }
         <LoadingStateImage loading={productLoader} center>
           <ProductItem>
-            <Image alt='Cliqq' src={this._updateParamsImages(orderedProduct.get('image'))} />
+            <Image alt='CLiQQ' src={this._updateParamsImages(orderedProduct.get('image'))} />
             {
               orderedProduct.get('brand')
               ? <Label as='span' basic size='big' className='color__secondary'>{orderedProduct.getIn(['brand', 'name'])}</Label>

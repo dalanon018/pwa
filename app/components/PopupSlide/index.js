@@ -227,7 +227,7 @@ export class PopupSlide extends React.PureComponent {
         <PopupWrapper toggle={toggle} className='background__white'>
           <BannerHeader background={BannerBg}>
             <span className='background__smoke-grey border__three-white'>
-              <Image alt='Cliqq' src={MobileIcon} />
+              <Image alt='CLiQQ' src={MobileIcon} />
             </span>
           </BannerHeader>
           <PopupContainer>
@@ -291,7 +291,7 @@ export class PopupSlide extends React.PureComponent {
                   <Grid.Row>
                     <Grid.Column width={3}>
                       <div className='back-icon-container'>
-                        <Image alt='Cliqq' src={BackIcon} onClick={this._toggleTerms} />
+                        <Image alt='CLiQQ' src={BackIcon} onClick={this._toggleTerms} />
                       </div>
                     </Grid.Column>
                     <Grid.Column width={10}>

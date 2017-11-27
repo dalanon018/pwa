@@ -55,7 +55,7 @@ class SlideShow extends React.PureComponent {
             return (
               <div key={index}>
                 {
-                  (typeof item === 'string' ? <Image alt='Cliqq' src={item} /> : '')
+                  (typeof item === 'string' ? <Image alt='CLiQQ' src={item} /> : '')
                 }
               </div>
             )
