@@ -265,15 +265,25 @@ class Receipt extends React.PureComponent {
   }
 
   _handleMatchCode = (str) => {
-    return (
-      <MatchCode>
-        <div className='border-divider' />
-        <Label as='span' basic size='huge' className='color__secondary color__secondary background__light-grey'>
-          {str && str.slice(-3)}
-        </Label>
-      </MatchCode>
+    const { receipt, statuses } = this.props
+    const currentStatus = statuses[receipt.get('status')] || ''
+    const handleStatus = handlingStatus(this._handleModePayment())
+
+    const handleMatchCodeComponent = compose(
+      ComponentDetail({
+        RESERVED: null
+      })(
+        <MatchCode>
+          <div className='border-divider' />
+          <Label as='span' basic size='huge' className='color__secondary color__secondary background__light-grey'>
+            {str && str.slice(-3)}
+          </Label>
+        </MatchCode>
+      ),
+      handleStatus
     )
-    // if (receipt.get('modePayment') !== this._defaultModePayment) {}
+
+    return handleMatchCodeComponent(currentStatus)
   }
 
   componentDidMount () {

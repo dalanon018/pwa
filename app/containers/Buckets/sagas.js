@@ -284,7 +284,7 @@ function * updateReceiptSnapShot (orders, receiptId) {
   const trackingNumber = head(receiptId)
   const receiptKey = lensProp(trackingNumber)
   const receipt = fromPairs([receiptId])
-  const { status, lastUpdated } = view(receiptKey, receipt)
+  const { status, lastUpdated, claimCode } = view(receiptKey, receipt)
   const order = find(orders, { trackingNumber }) || {}
   let updatedReceipts = []
 
@@ -307,6 +307,8 @@ function * updateReceiptSnapShot (orders, receiptId) {
   if (status && (!isEmpty(order) && order.status !== status) && !isReservedStatus(status) && !isConfirmedCOD(status)) {
     order.status = status || order.status
     order.lastUpdated = lastUpdated || order.lastUpdated || ''
+    order.sevenConnectRefNum = claimCode || order.sevenConnectRefNum || ''
+
     updatedReceipts = updatedReceipts.concat(order)
     setItem(ORDERED_LIST_KEY, orders)
     // yield put(setUpdatedReceiptsAction(updatedReceipts))
