@@ -15,4 +15,4 @@ export const SET_PRODUCTS_COUNT = 'app/ProductsByCategory/SET_PRODUCTS_COUNT'
 export const GET_PRODUCTS_VIEWED = 'app/ProductsByCategory/GET_PRODUCTS_VIEWED'
 export const SET_PRODUCTS_VIEWED = 'app/ProductsByCategory/SET_PRODUCTS_VIEWED'
 
-export const LIMIT_ITEMS = 16
+export const LIMIT_ITEMS = 6

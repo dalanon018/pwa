@@ -120,6 +120,20 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     return ''
   }
 
+  _displayHeaderTitle = () => {
+    const { lazyload, productsByBrands } = this.props
+
+    if (!lazyload && productsByBrands.size) {
+      return (
+        <EmptyProducts>
+          <FormattedMessage {...messages.emptyMessage} />
+        </EmptyProducts>
+      )
+    }
+
+    return null
+  }
+
   _displayMoreProducts = () => {
     const { pageOffset, limit } = this.state
     const incrementOffset = pageOffset + 1
@@ -274,12 +288,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
             limit={limit}
           >
             { this._displayFeaturedProducts() }
-            {
-              lazyload &&
-              <H3>
-                <FormattedMessage {...messages.brandsTitle} />
-              </H3>
-            }
+            { this._displayHeaderTitle() }
             { this._displayEmptyLoadingIndicator() }
             <ProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
           </LazyLoading>
