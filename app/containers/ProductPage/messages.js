@@ -17,5 +17,9 @@ export default defineMessages({
   emailWarningDescription: {
     id: 'app.containers.ProductPage.emailWarningInfo',
     defaultMessage: 'An e-mail client must be installed to share this product.'
+  },
+  errorProductQuantity: {
+    id: 'app.containers.ProductPage.errorProductQuantity',
+    defaultMessage: 'Product is NOT Available at the moment. Please check back again later.'
   }
 })
