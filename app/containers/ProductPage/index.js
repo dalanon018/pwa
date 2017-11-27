@@ -12,7 +12,7 @@ import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { noop } from 'lodash'
-import { ifElse, both, equals } from 'ramda'
+import { ifElse, both, equals, partial } from 'ramda'
 import { isMobileDevice } from 'utils/http'
 
 import { imageStock } from 'utils/image-stock'
@@ -80,7 +80,20 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   _setCurrentProduct = () => {
     const { product, setCurrentProduct } = this.props
     this.successSubmission = true
-    setCurrentProduct(product)
+    // before we can submit we need to make sure that the product is not empty
+
+    const submitProductOrder = ifElse(
+      equals(0),
+      () => this.setState({
+        errModalToggle: true,
+        errorTitle: <FormattedMessage {...messages.errorProductQuantity} />,
+        errModalName: 'warning',
+        errorMessage: ''
+      }),
+      partial(setCurrentProduct, [product])
+    )
+
+    return submitProductOrder(product.get('quantity'))
   }
 
   _handleSuccess = () => {
