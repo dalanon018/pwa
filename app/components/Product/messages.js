@@ -77,5 +77,9 @@ export default defineMessages({
   emailWarningDescription: {
     id: 'app.components.Product.emailWarningDescription',
     defaultMessage: 'An e-mail program must be installed to share this product'
+  },
+  selectSize: {
+    id: 'app.components.Product.selectSize',
+    defaultMessage: 'Select Size'
   }
 })
