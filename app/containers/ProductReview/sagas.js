@@ -209,9 +209,11 @@ export function * submitOrder (args) {
       token
     })
 
+    const isError = propOr(null, 'statusCode')
+
     // right now e have to emulate the response data
     // once response is success we have to pass it back so we can eventually redirect the user to the barcode page.
-    if (order) {
+    if (isError(order) === null) {
       // make our transformer here that should be the same as getting purchase list.
       const orderResponse = yield transformResponse({ order, orderedProduct })
       // here we have to save it first to our storage.
@@ -227,11 +229,11 @@ export function * submitOrder (args) {
 
       yield put(successOrderAction(orderResponse))
     } else {
-      yield put(errorOrderAction('Error on submission'))
+      yield put(errorOrderAction(400))
     }
   } catch (e) {
     // yield put(setNetworkErrorAction(e.message))
-    yield put(errorOrderAction(e.message))
+    yield put(errorOrderAction(500))
   }
 }
 

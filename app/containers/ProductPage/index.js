@@ -93,7 +93,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       partial(setCurrentProduct, [product])
     )
 
-    return submitProductOrder(product.get('quantity'))
+    return submitProductOrder(parseInt(product.get('quantity')))
   }
 
   _handleSuccess = () => {
