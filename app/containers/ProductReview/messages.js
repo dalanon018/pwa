@@ -60,6 +60,10 @@ export default defineMessages({
     id: `${idSuffix}.errorNoMobileProduct`,
     defaultMessage: 'There is a problem with submission. Please make sure you are online and that you are logged in using your mobile number.'
   },
+  emptyQuantity: {
+    id: `${idSuffix}.errorSubmission`,
+    defaultMessage: 'Sorry the item is currently OUT OF STOCK.'
+  },
   storeEmpty: {
     id: `${idSuffix}.storeEmpty`,
     defaultMessage: 'Please select a store location.'

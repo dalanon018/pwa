@@ -86,6 +86,9 @@ export const ShowCodComponent = ({ isBlackListed, ...rest }) => (
   </Form.Field>
 )
 
+const switchFn = cases => defaultCase => key =>
+key in cases ? cases[key] : defaultCase
+
 export class ProductReview extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     getOrderProduct: PropTypes.func.isRequired,
@@ -102,7 +105,10 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     orderRequesting: PropTypes.bool.isRequired,
     getBlackList: PropTypes.func.isRequired,
     orderSuccess: PropTypes.object.isRequired,
-    orderFail: PropTypes.object.isRequired,
+    orderFail: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object
+    ]).isRequired,
     storeLocation: PropTypes.object
   }
 
@@ -132,6 +138,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     this._handleDoneFetchOrderNoProductNorMobile = this._handleDoneFetchOrderNoProductNorMobile.bind(this)
     this._handleSubmissionSuccess = this._handleSubmissionSuccess.bind(this)
     this._handleSubmissionError = this._handleSubmissionError.bind(this)
+    this._handleErrorMessage = this._handleErrorMessage.bind(this)
 
     scrollPolyfill.polyfill()
   }
@@ -211,11 +218,16 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     }
   }
 
-  _handleSubmissionError () {
+  _handleErrorMessage = switchFn({
+    400: <FormattedMessage {...messages.emptyQuantity} />,
+    500: <FormattedMessage {...messages.errorSubmission} />
+  })(<FormattedMessage {...messages.errorSubmission} />)
+
+  _handleSubmissionError (code) {
     if (this.submitting) {
       this.setState({
         modalToggle: true,
-        errorMessage: <FormattedMessage {...messages.errorSubmission} />
+        errorMessage: this._handleErrorMessage(code)
       })
       this.submitting = false
     }
