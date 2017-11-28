@@ -123,15 +123,15 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   _displayHeaderTitle = () => {
     const { lazyload, productsByBrands } = this.props
 
-    if (!lazyload && productsByBrands.size) {
-      return (
-        <EmptyProducts>
-          <FormattedMessage {...messages.emptyMessage} />
-        </EmptyProducts>
-      )
+    if (lazyload && productsByBrands.size === 0) {
+      return null
     }
 
-    return null
+    return (
+      <H3>
+        <FormattedMessage {...messages.brandsTitle} />
+      </H3>
+    )
   }
 
   _displayMoreProducts = () => {
@@ -170,6 +170,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
 
   _displayEmptyLoadingIndicator = () => {
     const { loader, lazyload, productsByBrands } = this.props
+
     const display = cond([
       [allPass([
         equals(false),
