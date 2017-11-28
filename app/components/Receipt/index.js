@@ -308,39 +308,41 @@ class Receipt extends React.PureComponent {
   }
 
   _displayBarcode = (code) => {
-    const barcode = code.split('-').join('')
+    // we need to make sure we have code.
+    if (code) {
+      return JsBarcode('#barcode', code.split('-').join(''), {
+        format: 'CODE128',
+        lineColor: '#5B5B5B',
+        width: 3,
+        height: 60,
+        displayValue: false
+      })
+    }
 
-    return JsBarcode('#barcode', barcode, {
-      format: 'CODE128',
-      lineColor: '#5B5B5B',
-      width: 3,
-      height: 60,
-      displayValue: false
-    })
+    return null
   }
 
   _handeDisplayBarcode = (props) => {
     const { receipt, statuses } = props
     const currentStatus = statuses[receipt.get('status')] || ''
-    const handleStatus = handlingStatus(this._handleModePayment())
-
+    const handleStatus = handlingStatus(receipt.get('modePayment') || this._defaultModePayment)
     /**
      * we have to make sure that we will initialize JsBarcode only if it is on the dom
      */
-    const _handleDisplayBarCode = ifElse(
-      compose(
+    const _handleDisplayBarCode = compose(
+      ifElse(
         both(() => receipt.get('payCode'), complement(partialRight(contains, [HIDE_BARCODE]))),
-        handleStatus
+        compose(
+          this._displayBarcode,
+          ComponentDetail({
+            PROCESSING: receipt.get('payCode'),
+            RESERVED: receipt.get('payCode'),
+            UNPAID: receipt.get('payCode')
+          })(receipt.get('claimCode'))
+        ),
+        noop
       ),
-      compose(
-        this._displayBarcode,
-        ComponentDetail({
-          PROCESSING: receipt.get('payCode'),
-          RESERVED: receipt.get('payCode'),
-          UNPAID: receipt.get('payCode')
-        })(receipt.get('claimCode'))
-      ),
-      noop
+      handleStatus
     )
     return _handleDisplayBarCode(currentStatus)
   }
