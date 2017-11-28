@@ -134,6 +134,12 @@ const Product = ({
             isInfinite
             isLowerdots
           />
+          {
+            +product.get('quantity') === 0 &&
+            <Label className='text__align--center' as='p' basic size='huge' color='red'>
+              <FormattedMessage {...messages.noStock} />
+            </Label>
+          }
         </ProductImageSlider>
         <ProductMainContent>
           <LoadingStateInfo loading={loading} center>
@@ -268,6 +274,7 @@ const Product = ({
               onClick={onSubmit}
               loading={loading}
               primary
+              disabled={+product.get('quantity') === 0}
               fluid > <FormattedMessage {...messages.orderNow} /> </Button>
           </ButtonContainer>
         </DetailsWrapper>

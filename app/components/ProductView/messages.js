@@ -19,5 +19,9 @@ export default defineMessages({
   peso: {
     id: `${idSuffix}.peso`,
     defaultMessage: '₱ '
+  },
+  noStock: {
+    id: 'app.components.Product.noStock',
+    defaultMessage: 'OUT OF STOCK'
   }
 })
