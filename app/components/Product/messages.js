@@ -81,5 +81,9 @@ export default defineMessages({
   selectSize: {
     id: 'app.components.Product.selectSize',
     defaultMessage: 'Select Size'
+  },
+  noStock: {
+    id: 'app.components.Product.noStock',
+    defaultMessage: 'OUT OF STOCK'
   }
 })
