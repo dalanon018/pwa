@@ -2,7 +2,8 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CompressionPlugin = require('compression-webpack-plugin')
+// const CompressionPlugin = require('compression-webpack-plugin')
+const BrotliPlugin = require('brotli-webpack-plugin')
 const OfflinePlugin = require('offline-plugin')
 // const WebpackMonitor = require('webpack-monitor')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -18,7 +19,7 @@ const OfflinePlugin = require('offline-plugin')
 module.exports = require('./webpack.base.babel')({
   // In production, we skip all hot-reloading stuff
   entry: {
-    vendor: ['react-dom', 'react', 'moment', 'styled-components', 'core-js', 'immutable', 'react-router'],
+    vendor: ['react-dom', 'react', 'moment', 'styled-components', 'core-js', 'immutable', 'react-router', 'redux'],
     app: path.join(process.cwd(), 'app/app.js')
   },
 
@@ -37,6 +38,10 @@ module.exports = require('./webpack.base.babel')({
     // new WebpackMonitor({
     //   launch: true
     // }),
+
+    new webpack.optimize.UglifyJsPlugin(), // minify everything
+    new webpack.optimize.AggressiveMergingPlugin(), // Merge chunks
+
     // new LodashModuleReplacementPlugin(),
     // new webpack.optimize.CommonsChunkPlugin({
     //   name: 'vendor',
@@ -101,10 +106,16 @@ module.exports = require('./webpack.base.babel')({
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, [/moment$/]),
 
-    new CompressionPlugin({
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: /\.js$|\.css$|\.html$/,
+    // new CompressionPlugin({
+    //   asset: '[path].gz[query]',
+    //   algorithm: 'gzip',
+    //   test: /\.js$|\.css$|\.html$|\.png$|\.jpg$|\.jpeg$|\.svg$|\.ico$|\.gif$|\.ttf$|\.woff$|\.woff2$|\.eot$/,
+    //   threshold: 10240,
+    //   minRatio: 0.8
+    // }),
+    new BrotliPlugin({
+      asset: '[path].br[query]',
+      test: /\.js$|\.css$|\.html$|\.png$|\.jpg$|\.jpeg$|\.svg$|\.ico$|\.gif$|\.ttf$|\.woff$|\.woff2$|\.eot$/,
       threshold: 10240,
       minRatio: 0.8
     })
