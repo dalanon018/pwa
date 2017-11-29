@@ -141,7 +141,9 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     this.setState({
       pageOffset: incrementOffset,
       offset: (incrementOffset * limit)
-    }, () => this._fetchProductByBrands(this.props))
+    })
+
+    this._fetchProductByBrands(this.props)
   }
 
   _displayLoader = () => {
