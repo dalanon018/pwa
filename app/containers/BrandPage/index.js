@@ -141,7 +141,9 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     this.setState({
       pageOffset: incrementOffset,
       offset: (incrementOffset * limit)
-    }, () => this._fetchProductByBrands(this.props))
+    })
+
+    this._fetchProductByBrands(this.props)
   }
 
   _displayLoader = () => {
@@ -177,7 +179,10 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
         partial(equals(0), [productsByBrands.size]),
         partial(equals(false), [lazyload])
       ]), this._displayEmpty],
-      [equals(true), this._displayLoader],
+      [allPass([
+        equals(true),
+        partial(equals(false), [lazyload])
+      ]), this._displayLoader],
       [equals(false), () => null]
     ])
 
@@ -283,6 +288,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
         />
         <ContentWrapper className='padding__horizontal--10'>
           <LazyLoading
+            isLoading={loader}
             lazyload={lazyload}
             results={productsByBrands}
             onScroll={this._displayMoreProducts}

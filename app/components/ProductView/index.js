@@ -58,11 +58,11 @@ function ProductView ({
     () => component1,
     () => component2
   )(condition)
-
   return (
     <Grid padded stretched columns={columnCount}>
       {
-        loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
+        // we need to make sure to show this only if only if not items yet and we are loading
+        (loader && products.size === 0) ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
         : products.valueSeq().map((product, index) => {
           const goToProduct = () => changeRoute(`/product/${product.get('cliqqCode').first()}`)
           const toggleDiscountLabel = showDiscountPrice(
