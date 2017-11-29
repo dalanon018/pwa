@@ -190,7 +190,9 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this.setState({
       pageOffset: incrementOffset,
       offset: (incrementOffset * limit)
-    }, () => this._fetchProductByTagCategory(this.props))
+    })
+
+    this._fetchProductByTagCategory(this.props)
   }
 
   _displayHeaderFeaturesProduct () {
@@ -254,7 +256,6 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
   _displayRecentlyViewedItems () {
     const { productsViewed, lazyload, changeRoute, loader, windowWidth } = this.props
-
     // we only show if items are not empty and not lazyloading
     if (productsViewed.size && !lazyload) {
       return (
@@ -270,20 +271,25 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
    */
   _displayEmptyProductViewLoading = () => {
     const { changeRoute, windowWidth } = this.props
+
     return (
-      <ProductView changeRoute={changeRoute} loader products={this._displayProductData()} windowWidth={windowWidth} />
+      <ProductView changeRoute={changeRoute} loader products={this._displayAllProductData()} windowWidth={windowWidth} />
     )
   }
 
   _displayEmptyLoadingIndicator = () => {
     const { loader, lazyload } = this.props
-    const product = this._displayProductData()
+    const product = this._displayAllProductData()
     const display = cond([
       [allPass([
         equals(false),
         partial(equals(0), [product.size]),
         partial(equals(false), [lazyload])
       ]), this._displayEmpty],
+      [allPass([
+        equals(true),
+        partial(equals(0), [product.size])
+      ]), this._displayEmptyProductViewLoading],
       [equals(true), this._displayLoader],
       [equals(false), () => null]
     ])
@@ -339,6 +345,24 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     return shouldDiplayTagItems(id)
   }
 
+  _displayRegularItems = () => {
+    const { loader, changeRoute, windowWidth } = this.props
+    const products = this._displayProductData()
+
+    if (products.size !== 0) {
+      return (
+        <ProductView
+          changeRoute={changeRoute}
+          loader={loader}
+          products={products}
+          windowWidth={windowWidth}
+        />
+      )
+    }
+
+    return null
+  }
+
   _handleFeaturedProductsPerCategory () {
     const { params: { id } } = this.props
     const shouldNotDisplay = (id) => (isTag(this._tags)(id))
@@ -356,7 +380,6 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     const { getProductsByTags, getProductsByCategory, params: { id } } = props
     const { offset, limit } = this.state
     const requestData = curry((fn, id) => fn({ offset, limit, id }))
-
     const executeFetchData = ifElse(
       isTag(this._tags),
       requestData(getProductsByTags),
@@ -425,13 +448,14 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   render () {
-    const { loader, changeRoute, lazyload, windowWidth } = this.props
+    const { loader, lazyload } = this.props
     const { limit } = this.state
 
     return (
       <div>
         <ContentWrapper>
           <LazyLoading
+            isLoading={loader}
             lazyload={lazyload}
             results={this._displayAllProductData()}
             onScroll={this._displayMoreProducts}
@@ -441,11 +465,11 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
             { this._displayFeaturesProduct() }
 
             <H3 className='margin__none'> {this._handlePageTitle()} </H3>
-            {this._displayNumberProducts()}
+            { this._displayNumberProducts() }
             { this._displayEmptyLoadingIndicator() }
-            <ProductView changeRoute={changeRoute} loader={loader} products={this._displayProductData()} windowWidth={windowWidth} />
+            { this._displayRegularItems() }
           </LazyLoading>
-          {this._displayRecentlyViewedHeader() }
+          { this._displayRecentlyViewedHeader() }
           { this._displayRecentlyViewedItems() }
 
         </ContentWrapper>

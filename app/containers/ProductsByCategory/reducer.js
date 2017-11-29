@@ -29,8 +29,7 @@ const initialState = fromJS({
 function productsByCategoryReducer (state = initialState, action) {
   switch (action.type) {
     case GET_PRODUCTS_CATEGORY: {
-      const productsByCategory = state.get('productsByCategory')
-      return productsByCategory.size === 0 ? state.set('loading', true) : state
+      return state.set('loading', true)
     }
     case SET_PRODUCTS_CATEGORY: {
       const concatState = state.get('productsByCategory').concat(fromJS(action.payload))

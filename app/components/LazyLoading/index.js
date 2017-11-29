@@ -52,23 +52,24 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
     this._cancellableDebounce = false
   }
 
-  _debounceScrolling = throttle(this._onScrollElement, 1000)
+  _debounceScrolling = throttle(this._onScrollElement, 100)
 
   _onScrollElement () {
-    const { lazyload, onScroll } = this.props
+    const { isLoading, lazyload, onScroll } = this.props
     const body = document.body
     const html = document.documentElement
 
     const scrollY = window.pageYOffset
-    const offset = 900
+    const offset = 1600
     const height = Math.max(body.scrollHeight, body.offsetHeight,
       html.clientHeight, html.scrollHeight, html.offsetHeight)
 
     const onBottom = () => lt(height, (scrollY + offset))
     const notCancellable = () => equals(false, this._cancellableDebounce)
+    const isNotLoading = () => equals(false, isLoading)
 
     const displayMore = ifElse(
-      allPass([onBottom, identity, notCancellable]),
+      allPass([onBottom, identity, notCancellable, isNotLoading]),
       onScroll,
       noop
     )
@@ -81,7 +82,6 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
    */
   _displayLazyLoadIndicator = () => {
     const { lazyload } = this.props
-    // const itemsGreaterEqLimit = () => true//gte(results.size, limit)
     const showLoadingIndicator = ifElse(
       // both(identity, itemsGreaterEqLimit),
       identity,
@@ -131,6 +131,8 @@ class LazyLoading extends React.Component { // eslint-disable-line react/prefer-
 }
 
 LazyLoading.propTypes = {
+  // to check if we are currently loading
+  isLoading: PropTypes.bool.isRequired,
   // to check if we still need to scroll
   lazyload: PropTypes.bool.isRequired,
   // callback on scroll
