@@ -290,7 +290,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
         equals(true),
         partial(equals(0), [product.size])
       ]), this._displayEmptyProductViewLoading],
-      [equals(true), this._displayLoader],
+      [allPass([
+        equals(true),
+        partial(equals(false), [lazyload])
+      ]), this._displayLoader],
       [equals(false), () => null]
     ])
 
