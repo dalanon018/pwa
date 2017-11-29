@@ -35,10 +35,10 @@ describe('<ProductsByCategory />', () => {
     expect(renderedComponent.find('div').length).toEqual(1)
   })
 
-  it('should render a ProductView', () => {
+  it('should render not render ProductView if not Items yet', () => {
     const renderedComponent = shallow(
       <ProductsByCategory {...minProps} />
     )
-    expect(renderedComponent.find('ProductView').length).toEqual(1)
+    expect(renderedComponent.find('ProductView').length).toEqual(0)
   })
 })
