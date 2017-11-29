@@ -30,6 +30,11 @@ const ImageWrapper = styled.div`
   }
 `
 
+const ImageContent = styled.div`
+  position: relative;
+  min-height: 175px;
+`
+
 const ProductInfo = styled.div`
   display: block;
 
@@ -130,5 +135,6 @@ export {
   ImageWrapper,
   ProductInfo,
   ProductPriceWrapper,
-  ProductWrapper
+  ProductWrapper,
+  ImageContent
 }
