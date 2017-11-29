@@ -23,8 +23,7 @@ const initialState = fromJS({
 function brandPageReducer (state = initialState, action) {
   switch (action.type) {
     case GET_PRODUCTS_BRANDS: {
-      const productsByBrands = state.get('productsByBrands')
-      return productsByBrands.size === 0 ? state.set('loading', true) : state
+      return state.set('loading', true)
     }
     case SET_PRODUCTS_BRANDS: {
       const concatState = state.get('productsByBrands').concat(fromJS(action.payload))
