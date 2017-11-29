@@ -14,6 +14,7 @@ const wrapper = (props = {}, enzyme = shallow) => shallow(
 
 describe('<LazyLoading />', () => {
   const minProps = {
+    isLazyloading: false,
     lazyload: false,
     results: fromJS([]),
     onScroll: () => {},
