@@ -9,6 +9,8 @@ import {
   Input
 } from 'semantic-ui-react'
 
+import { FbEventTracking } from 'utils/seo'
+
 import messages from './messages'
 
 const Wrapper = styled.div`
@@ -163,22 +165,29 @@ class SearchMenu extends PureComponent {
     })
   }
 
-  _handlePressSearch () {
+  _handleSearchProcess = (keyword) => {
     const { searchProduct } = this.props
+    FbEventTracking('Search', {
+      search_string: keyword
+    })
+
+    return searchProduct({ id: keyword })
+  }
+
+  _handlePressSearch () {
     const { searchValue } = this.state
     if (searchValue) {
       // we will update our search key here.
-      searchProduct({ id: searchValue })
+      this._handleSearchProcess(searchValue)
     }
   }
 
   _handleKeyPress (e) {
-    const { searchProduct } = this.props
     const code = e.keyCode || e.which
 
     if (code === 13 && e.target.value) {
       // we will update our search key here.
-      searchProduct({ id: e.target.value })
+      this._handleSearchProcess(e.target.value)
     }
     return true
   }

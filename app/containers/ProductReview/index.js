@@ -20,6 +20,7 @@ import scrollPolyfill from 'utils/scrollPolyfill'
 
 import { paramsImgix } from 'utils/image-stock'
 import { transformStore } from 'utils/transforms'
+import { FbEventTracking } from 'utils/seo'
 
 import Modal from 'components/PromptModal'
 import WindowWidth from 'components/WindowWidth'
@@ -36,6 +37,10 @@ import {
   setShowSearchIconAction,
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
+
+import {
+  RAW_PAYMENT_METHODS
+} from 'containers/Buckets/constants'
 
 import messages from './messages'
 
@@ -185,10 +190,27 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     const CODPayment = (mode) => equals(this.showStoreLocator)(mode) &&
     !isEmpty(store)
     const CashPayment = equals('CASH')
+    const submissionOrder = () => {
+      FbEventTracking('Purchase', {
+        currency: 'PHP',
+        pay_method: RAW_PAYMENT_METHODS[modePayment],
+        value: orderedProduct.get('price'),
+        content_name: orderedProduct.get('title'),
+        content_ids: orderedProduct.get('cliqqCode').first(),
+        content_type: 'product'
+      })
+
+      return submitOrder({
+        modePayment,
+        orderedProduct,
+        mobileNumber,
+        store
+      })
+    }
 
     const proceedOrder = ifElse(
       either(CODPayment, CashPayment),
-      () => submitOrder({ modePayment, orderedProduct, mobileNumber, store }),
+      submissionOrder,
       () => this.setState({
         modalToggle: true,
         errorMessage: <FormattedMessage {...messages.storeEmpty} />

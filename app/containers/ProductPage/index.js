@@ -12,9 +12,17 @@ import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { noop } from 'lodash'
-import { ifElse, both, equals, partial } from 'ramda'
+import {
+  both,
+  complement,
+  compose,
+  equals,
+  ifElse,
+  prop,
+  when
+} from 'ramda'
 import { isMobileDevice } from 'utils/http'
-
+import { FbEventTracking } from 'utils/seo'
 import { imageStock } from 'utils/image-stock'
 
 import Product from 'components/Product'
@@ -81,6 +89,17 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     const { product, setCurrentProduct } = this.props
     this.successSubmission = true
     // before we can submit we need to make sure that the product is not empty
+    const submissionOrder = () => {
+      FbEventTracking('InitiateCheckout', {
+        currency: 'PHP',
+        value: product.get('price'),
+        content_name: product.get('title'),
+        content_ids: product.get('cliqqCode').first(),
+        content_type: 'product'
+      })
+
+      return setCurrentProduct(product)
+    }
 
     const submitProductOrder = ifElse(
       equals(0),
@@ -90,7 +109,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
         errModalName: 'warning',
         errorMessage: ''
       }),
-      partial(setCurrentProduct, [product])
+      submissionOrder
     )
 
     return submitProductOrder(parseInt(product.get('quantity')))
@@ -175,13 +194,24 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   componentWillReceiveProps (nextProps) {
-    const { productSuccess, productError } = nextProps
+    const { product, productSuccess, productError } = nextProps
+
+    const triggerFBEventProduct = when(
+      compose(complement(equals(0)), prop('size')),
+      (data) => FbEventTracking('ViewContent', {
+        content_name: data.get('title'),
+        content_ids: data.get('cliqqCode').first(),
+        content_type: 'product'
+      })
+    )
 
     // handle if submission is success
     ifElse(both(equals(true), () => this.successSubmission), this._handleSuccess, noop)(productSuccess)
 
     // handle if submission is error
     ifElse(both(equals(true), () => this.successSubmission), this._handleError, noop)(productError)
+
+    triggerFBEventProduct(product)
   }
 
   render () {
