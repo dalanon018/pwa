@@ -75,3 +75,8 @@ staging:
       user: $HEROKU_USER
       app-name: $HEROKU_APP_NAME
 
+    - script:
+      name: deploy netlify
+      code: |
+        curl --version
+        curl -X POST -d '{}' https://api.netlify.com/build_hooks/$NETLIFY_APP_ID
