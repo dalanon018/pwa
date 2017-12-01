@@ -6,6 +6,7 @@ const path = require('path')
 const webpack = require('webpack')
 const HappyPack = require('happypack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const StyleExtHtmlWebpackPlugin = require('style-ext-html-webpack-plugin')
 
 module.exports = (options) => ({
   entry: options.entry,
@@ -81,6 +82,8 @@ module.exports = (options) => ({
     }),
 
     new ExtractTextPlugin('styles.css'),
+    // make our style inline
+    new StyleExtHtmlWebpackPlugin(),
 
     new webpack.ProvidePlugin({
       // make fetch available
