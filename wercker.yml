@@ -1,0 +1,52 @@
+box:
+ id: node:7.10.1
+ ports:
+   - "8080"
+
+# Build definition
+build:
+  # The steps that will be executed on build
+  steps:
+    - script:
+      name: install yarn
+      code: |
+        npm install -g yarn@0.27.5
+
+    - script:
+      name: set yarn cache
+      code: yarn config set cache-folder $WERCKER_CACHE_DIR/yarn
+
+    - script:
+      name: set standard
+      code: |
+        npm install -g standard
+
+    - script:
+      name: set babel-eslint
+      code: |
+        npm install -g babel-eslint
+
+    - script:
+      name: set snazzy
+      code: |
+        npm install -g snazzy
+
+    - script:
+      name: set gulp
+      code: |
+        npm install -g gulp
+
+    - script:
+      name: install rimraf
+      code: |
+        npm install -g rimraf
+
+    - script:
+      name: install dependencies
+      code: |
+        yarn
+
+    - script:
+      name: test
+      code: |
+        yarn test -- -u
