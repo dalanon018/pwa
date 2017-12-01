@@ -50,3 +50,28 @@ build:
       name: test
       code: |
         yarn test -- -u
+
+staging:
+  steps:
+    - script:
+      name: clean dependencies
+      code: |
+        rm -rf node_modules
+        npm cache clean --force
+
+    - script:
+      name: install dependencies
+      code: |
+        yarn
+
+    - script:
+      name: build-staging
+      code: |
+        yarn build
+
+    - heroku-deploy:
+      key: $HEROKU_KEY
+      key-name: DEPLOY_KEY
+      user: $HEROKU_USER
+      app-name: $HEROKU_APP_NAME
+
