@@ -68,7 +68,7 @@ export function * getProductByBrands (args) {
 
     products = yield transform(req)
   } else {
-    yield put(setNetworkErrorAction('No cache data'))
+    yield put(setNetworkErrorAction(500))
   }
 
   yield put(setProductsByBrandsAction(products))

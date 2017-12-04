@@ -19,6 +19,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 
 import Firebase from 'utils/firebase-realtime'
 import Notification from 'utils/firebase-notification'
+import { switchFn } from 'utils/logicHelper'
 
 import { isMobileDevice } from 'utils/http'
 
@@ -99,7 +100,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     mobileNumbers: PropTypes.object,
     routes: PropTypes.array.isRequired,
     toggleError: PropTypes.bool.isRequired,
-    toggleMessage: PropTypes.string,
+    toggleMessage: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
     intl: intlShape.isRequired,
     pageTitle: PropTypes.string,
     headerMenuFullScreen: PropTypes.bool.isRequired,
@@ -306,6 +310,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     registerPush(currentToken)
   }
 
+  _toggleErrorMessage = (statusCode) => switchFn({
+    500: <FormattedMessage {...messages.failedFetch} />
+  })(statusCode)(statusCode)
+
   componentDidMount () {
     const { getMobileNumbers, getCategories, getBrands, getRegisteredPush, getLoyaltyToken, isMobile } = this.props
     const shouldDisplayNotification = ifElse(
@@ -363,7 +371,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
           open={toggleError}
           name='warning'
           title={<FormattedMessage {...messages.errorHeader} />}
-          content={toggleMessage}
+          content={this._toggleErrorMessage(toggleMessage)}
           close={this._handleNetworkErrorMessage}
         />
         <ReactNotification ref={this._reactNotificationRef} />

@@ -12,7 +12,6 @@ import 'babel-polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import FontFaceObserver from 'fontfaceobserver'
-import Raven from 'raven-js'
 
 import { Provider } from 'react-redux'
 import { applyRouterMiddleware, Router, browserHistory } from 'react-router'
@@ -26,6 +25,9 @@ import 'slick-carousel/slick/slick-theme.css'
 
 // Import root app
 import App from 'containers/App'
+
+// Error Tracking
+import ErrorTracking from 'utils/errorTracking'
 
 // Import selector for `syncHistoryWithStore`
 import { makeSelectLocationState } from 'containers/App/selectors'
@@ -68,9 +70,7 @@ import './global-styles'
 import createRoutes from './routes'
 
 // We need to install our sentryJS
-Raven
-.config('https://73c5abbb04fe44de96353aa51e8bb6ee@sentry.io/248260')
-.install()
+ErrorTracking.install()
 
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)

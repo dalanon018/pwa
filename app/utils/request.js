@@ -1,4 +1,6 @@
 import { __, assoc, compose, ifElse, prop, propOr, is, partialRight, omit } from 'ramda'
+// if theres error we want to send here.
+import ErrorTracking from 'utils/errorTracking'
 import 'whatwg-fetch'
 
 /**
@@ -26,6 +28,8 @@ function checkStatus (response) {
 
   const error = new Error(response.statusText)
   error.response = response
+  // we need to throw to our sentry
+  ErrorTracking.exception(error)
   throw error
 }
 

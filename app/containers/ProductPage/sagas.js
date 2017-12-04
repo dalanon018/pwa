@@ -91,7 +91,7 @@ export function * getProduct (payload) {
 
     yield put(setProductAction(transform))
   } else {
-    yield put(setNetworkErrorAction('No cache data'))
+    yield put(setNetworkErrorAction(500))
   }
 }
 

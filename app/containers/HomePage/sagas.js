@@ -64,7 +64,7 @@ export function * getProduct (data) {
     const products = yield transform(req)
     yield put(setFeaturedProductsAction(products))
   } else {
-    yield put(setNetworkErrorAction('No cache data'))
+    yield put(setNetworkErrorAction(500))
   }
 }
 

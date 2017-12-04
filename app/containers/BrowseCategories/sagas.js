@@ -61,7 +61,7 @@ function * requestCategories () {
       getResults
     )(req)
   } else {
-    yield put(setNetworkErrorAction('No cache data'))
+    yield put(setNetworkErrorAction(500))
   }
 }
 
