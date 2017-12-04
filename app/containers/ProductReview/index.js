@@ -21,6 +21,7 @@ import scrollPolyfill from 'utils/scrollPolyfill'
 import { paramsImgix } from 'utils/image-stock'
 import { transformStore } from 'utils/transforms'
 import { FbEventTracking } from 'utils/seo'
+import { switchFn } from 'utils/logicHelper'
 
 import Modal from 'components/PromptModal'
 import WindowWidth from 'components/WindowWidth'
@@ -90,10 +91,6 @@ export const ShowCodComponent = ({ isBlackListed, ...rest }) => (
     <Checkbox disabled={isBlackListed} {...rest} />
   </Form.Field>
 )
-
-const switchFn = cases => defaultCase => key =>
-key in cases ? cases[key] : defaultCase
-
 export class ProductReview extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     getOrderProduct: PropTypes.func.isRequired,

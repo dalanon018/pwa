@@ -26,6 +26,7 @@ import { DateFormater } from 'utils/date' // DateFormater
 import { PhoneFormatter } from 'utils/string'
 import { handlingStatus } from 'utils/ordersHelper'
 import { isIphone } from 'utils/http'
+import { switchFn } from 'utils/logicHelper'
 
 import PurchaseOrder from './PurchaseOrder'
 import PurchaseUsecase from './PurchaseUsecase'
@@ -62,9 +63,6 @@ import {
   DEFAULT_METHOD_PAYMENT
 } from 'containers/Buckets/constants'
 
-const ComponentDetail = components => component => key =>
- key in components ? components[key] : component
-
 const ReturnInfo = ({ returnable, actionButton }) => (
   <WarningDescription>
     <Image src={ReturnIcon} />
@@ -87,7 +85,7 @@ const ReturnInfo = ({ returnable, actionButton }) => (
 
 const WarningStatus = ({ status, returnable }) => {
   const isReturnabled = returnable ? 'Valid' : 'Invalid'
-  return ComponentDetail({
+  return switchFn({
     CLAIMED: (
       <ReturnInfo
         returnable={isReturnabled}
@@ -198,7 +196,7 @@ class Receipt extends React.PureComponent {
 
     const handleDate = compose(
       partialRight(DateFormater, ['MM-DD-YYYY']),
-      ComponentDetail({
+      switchFn({
         PROCESSING: receipt.get('dateCreated'),
         CONFIRMED: receipt.get('lastUpdated'),
         INTRANSIT: receipt.get('lastUpdated'),
@@ -252,7 +250,7 @@ class Receipt extends React.PureComponent {
     const { receipt, statuses, goReceiptPage, goToProduct } = this.props
     const currentStatus = statuses[receipt.get('status')] || ''
 
-    return ComponentDetail({
+    return switchFn({
       UNPAID: (
         <Button fluid onClick={goToProduct} primary>
           <FormattedMessage {...messages.rePurchase} />
@@ -271,7 +269,7 @@ class Receipt extends React.PureComponent {
     const handleStatus = handlingStatus(this._handleModePayment())
 
     const handleMatchCodeComponent = compose(
-      ComponentDetail({
+      switchFn({
         RESERVED: null,
         UNPAID: null
       })(
@@ -294,7 +292,7 @@ class Receipt extends React.PureComponent {
     const handleStatus = handlingStatus(this._handleModePayment())
 
     const _handleReferenceNumber = compose(
-      ComponentDetail({
+      switchFn({
         PROCESSING: receipt.get('payCode'),
         RESERVED: receipt.get('payCode'),
         UNPAID: null
@@ -334,7 +332,7 @@ class Receipt extends React.PureComponent {
         both(() => receipt.get('payCode'), complement(partialRight(contains, [HIDE_BARCODE]))),
         compose(
           this._displayBarcode,
-          ComponentDetail({
+          switchFn({
             PROCESSING: receipt.get('payCode'),
             RESERVED: receipt.get('payCode'),
             UNPAID: receipt.get('payCode')
