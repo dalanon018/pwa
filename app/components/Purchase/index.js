@@ -17,6 +17,7 @@ import Countdown from 'components/Countdown'
 import { paramsImgix } from 'utils/image-stock'
 import { DateFormater } from 'utils/date' // DateFormater
 import { handlingStatus } from 'utils/ordersHelper'
+import { switchFn } from 'utils/logicHelper'
 
 import purchasesMessages from 'containers/Purchases/messages'
 import {
@@ -90,14 +91,6 @@ const OtherInfo = styled.div`
     }
   }
 `
-
-/**
- * Currying for instead of using *ugly SWITCH statement
- * @param {*} cases
- */
-const switchFn = cases => defaultCase => key =>
- key in cases ? cases[key] : defaultCase
-
 class Purchase extends React.PureComponent {
   static propTypes = {
     receipt: PropTypes.object.isRequired,
