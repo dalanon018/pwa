@@ -124,7 +124,7 @@ function * requestCategories () {
       getResults
     )(req)
   } else {
-    yield put(setNetworkErrorAction('No cache data'))
+    yield put(setNetworkErrorAction(500))
   }
 }
 
@@ -152,7 +152,7 @@ function * requestBrands () {
       getResults
     )(req)
   } else {
-    yield put(setNetworkErrorAction('No cache data'))
+    yield put(setNetworkErrorAction(500))
   }
 }
 

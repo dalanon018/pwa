@@ -145,7 +145,7 @@ export function * getApiPurchases () {
 
     yield put(setPurchasesAction(transform))
   } else {
-    yield put(setNetworkErrorAction('No cache data'))
+    yield put(setNetworkErrorAction(500))
   }
 }
 

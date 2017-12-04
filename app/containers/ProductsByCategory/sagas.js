@@ -86,7 +86,7 @@ export function * getProductByCategory (args) {
     products = yield transform(req)
     count = yield getProductsCategory(req)
   } else {
-    yield put(setNetworkErrorAction('No cache data'))
+    yield put(setNetworkErrorAction(500))
   }
 
   yield put(setProductsByCategoryAction(products))
@@ -113,7 +113,7 @@ export function * getProductByTags (args) {
     products = yield transform(req)
     count = yield getProductsCategory(req)
   } else {
-    yield put(setNetworkErrorAction('No cache data'))
+    yield put(setNetworkErrorAction(500))
   }
 
   yield put(setProductsByCategoryAction(products))
