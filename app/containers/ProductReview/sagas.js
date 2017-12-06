@@ -83,6 +83,14 @@ function * transformResponse ({ order: { sevenConnectRefNum, transactionId, expi
     name: orderedProduct.get('title'),
     returnPolicy: orderedProduct.get('returnPolicy'),
     returnable: orderedProduct.get('returnable'),
+    // we need to mock our purchase list api
+    association: [{
+      parentProduct: {
+        cliqqCodes: [{
+          cliqqCode: orderedProduct.get('parentCliqqCode')
+        }]
+      }
+    }],
     status: (paymentType === COD_PAYMENT) ? DEFAULT_STATUS_COD_PAYMENT : status,
     uom,
     brand,
