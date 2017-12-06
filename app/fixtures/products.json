@@ -1,198 +1,940 @@
-[
-  {
-    "cliqqCodes": [
+{
+  "productList": [
       {
-        "cliqqCode": "00001",
-        "agentCode": "ASMG73DW"
+          "name": "Leather Credit Card Wallet (Black)",
+          "shortDescription": "Durable and handy leather credit card holder",
+          "longDescription": "<p>Specifications:</p>\r\n<ul>\r\n<li>Main Material: Leather</li>\r\n<li>Card Slots: 12</li>\r\n<li>Dimensions: (L x W x H) 3 x 9 x 11 cm</li>\r\n<li>Product Weight: 0.03 kg</li>\r\n</ul>\r\n<p>Package includes:</p>\r\n<ul>\r\n<li>1 x RFID Leather Credit Card Wallet (Black)</li>",
+          "gtin": "20170005897",
+          "isFeatured": true,
+          "returnable": true,
+          "returnPolicy": "Not satisfied with your purchase? Depending on our CLiQQ Care Policy, you can return your item anytime of the day within 7 days from claim date. Just go to the 7-Eleven store where the item was purchased and get your Return Slip from the CLiQQ Kiosk and bring it to the cashier.",
+          "brand": {
+              "code": "01",
+              "name": "Penshoppe",
+              "isFeatured": true,
+              "images": [
+                  {
+                      "imageUrl": "https://cliqq.imgix.net/test/category/product-assets/brand-logo.png",
+                      "imageType": "BRAND_LOGO"
+                  },
+                  {
+                      "imageUrl": "http://i.dailymail.co.uk/i/pix/2015/05/07/16/286A073200000578-0-image-a-2_1431013568311.jpg",
+                      "imageType": "BACKGROUND"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-01.slatic.net/cms/category_banner/02152016/kendall.jpg",
+                      "imageType": "SLIDER"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-02.slatic.net/cms/category_banner/02152016/lucky.jpg",
+                      "imageType": "SLIDER"
+                  }
+              ]
+          },
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/0006B.png",
+                  "imageType": "PRIMARY"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "0006B",
+                  "agentCode": "006"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 500,
+                  "currency": "PHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
       },
       {
-        "cliqqCode": "11111",
-        "agentCode": "ASMG73DW"
+          "name": "Penshoppe All Day Sling Bag (Blue)",
+          "shortDescription": "All Day Sling Bag (Blue)",
+          "longDescription": "<p>Men&rsquo;s all day sling bag in 100% polyester coated polycanvas with color blocking pattern, and 2 compartments</p>",
+          "gtin": "31005231",
+          "additionalDetails": "This is a sample text for the additional details field for this product. Thank you",
+          "isFeatured": true,
+          "returnable": true,
+          "returnPolicy": "Not satisfied with your purchase? Depending on our CLiQQ Care Policy, you can return your item anytime of the day within 7 days from claim date. Just go to the 7-Eleven store where the item was purchased and get your Return Slip from the CLiQQ Kiosk and bring it to the cashier.",
+          "brand": {
+              "code": "01",
+              "name": "Penshoppe",
+              "isFeatured": true,
+              "images": [
+                  {
+                      "imageUrl": "https://cliqq.imgix.net/test/category/product-assets/brand-logo.png",
+                      "imageType": "BRAND_LOGO"
+                  },
+                  {
+                      "imageUrl": "http://i.dailymail.co.uk/i/pix/2015/05/07/16/286A073200000578-0-image-a-2_1431013568311.jpg",
+                      "imageType": "BACKGROUND"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-01.slatic.net/cms/category_banner/02152016/kendall.jpg",
+                      "imageType": "SLIDER"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-02.slatic.net/cms/category_banner/02152016/lucky.jpg",
+                      "imageType": "SLIDER"
+                  }
+              ]
+          },
+          "uom": {
+              "name": "M",
+              "type": "Size"
+          },
+          "association": [
+              {
+                  "product": {
+                      "productId": 158,
+                      "name": "Penshoppe All Day Sling Bag (Green)",
+                      "longDescription": "<p>Men&rsquo;s green all day sling bag in 100% polyester pu coated polycanvas with color blocking pattern, penshoppe logo, and 2 compartments</p>",
+                      "availableQuantity": "1",
+                      "cliqqCodes": [
+                          {
+                              "cliqqCode": "000CB",
+                              "agentCode": "00C"
+                          }
+                      ],
+                      "uom": {
+                          "name": "S",
+                          "type": "Size"
+                      }
+                  },
+                  "fromDate": "2017-11-29"
+              }
+          ],
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/000A4.png",
+                  "imageType": "PRIMARY"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000A4",
+                  "agentCode": "00C"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 139,
+                  "currency": "PHP"
+              },
+              {
+                  "amount": 99,
+                  "currency": "DPHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
       },
       {
-        "cliqqCode": "06525",
-        "agentCode": "ASMG73DW"
-      }
-    ],
-    "imageUrl": "http://ic1.maxabout.us/mobiles//G/2014/8/gionee-ctrl-v4s-front-rear-view.jpg",
-    "name": "All Day Backpack | (wine)",
-    "images": [
-      {
-        "imageUrl": "http://www.samsung.com/global/microsite/galaxynote4/images/design/detail/white_5.png",
-        "imageType": "PRIMARY"
+          "name": "Penshoppe Deep Blue 100ml (Blue Lagoon)",
+          "shortDescription": "Body spray for men",
+          "longDescription": "<p>Clean, casual and uncomplicated. Deep Blue Blue Lagoon is composed of clean blend of citrus, aromatic and woody scents.</p>\r\n<p>This crisp fragrance harmoniously balances masculinity and freshness, perfect for the classic man.</p>",
+          "gtin": "30923907",
+          "isFeatured": true,
+          "returnable": false,
+          "returnPolicy": "Due to final clearance and hygienic purposes, returns, exchange and refunds may not be provided for Health & Beauty Products, Jewelries, Home Care Products and Lingerie. For any concerns, kindly send an email to our Customer Service Team at cliqqsupport@7-eleven.com.ph.",
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/000A6.png",
+                  "imageType": "PRIMARY"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000A6",
+                  "agentCode": "00C"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 149,
+                  "currency": "PHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
       },
       {
-        "imageUrl": "http://www.samsung.com/global/microsite/galaxynote4/images/design/detail/white_5.png",
-        "imageType": "BRAND_LOGO"
-      }
-    ],
-    "priceList": [
-      {
-        "amount": 400,
-        "currency": "PHP"
+          "name": "Penshoppe Cuddle Me Cologne 100ml (Purple)",
+          "shortDescription": "Splash cologne for women.",
+          "longDescription": "<p>Feel young and stay fresh with Cuddle Me Splash Colognes! Purple Joy &ndash; Sweet fruity goodness of freshly-picked peach, apple and pineapple</p>",
+          "gtin": "31023597",
+          "isFeatured": true,
+          "returnable": false,
+          "returnPolicy": "Due to final clearance and hygienic purposes, returns, exchange and refunds may not be provided for Health & Beauty Products, Jewelries, Home Care Products and Lingerie. For any concerns, kindly send an email to our Customer Service Team at cliqqsupport@7-eleven.com.ph.",
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/000A8.png",
+                  "imageType": "PRIMARY"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000A8",
+                  "agentCode": "00C"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 59,
+                  "currency": "PHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
       },
       {
-        "amount": 150,
-        "currency": "LPTS"
-      }
-    ],
-    "discountList": [
-      {
-        "value": "25",
-        "discountType": "percentage",
-        "fromDate": "2017-01-01",
-        "cronSchedule": "0 0 * ? * *"
-      }
-    ],
-    "longDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla. Aenean congue libero sed nisl euismod tristique. Integer finibus est orci, nec hendrerit turpis mollis id. Phasellus rhoncus mollis mauris sit amet euismod.",
-    "deliveryPromiseMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla.",
-    "gtin": "718037806839"
-  },
-  {
-    "cliqqCodes": [
-      {
-        "cliqqCode": "00002",
-        "agentCode": "ASMG73DW"
+          "name": "Penshoppe Cuddle Me Cologne 100ml (Pink)",
+          "shortDescription": "Splash cologne for women.",
+          "longDescription": "<p>Feel young and stay fresh with Cuddle Me Splash Colognes! Pink Play &ndash; Summer fresh blend of strawberry and lemon, balanced with jasmine notes</p>",
+          "gtin": "31023596",
+          "isFeatured": true,
+          "returnable": false,
+          "returnPolicy": "Due to final clearance and hygienic purposes, returns, exchange and refunds may not be provided for Health & Beauty Products, Jewelries, Home Care Products and Lingerie. For any concerns, kindly send an email to our Customer Service Team at cliqqsupport@7-eleven.com.ph.",
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/000A9.png",
+                  "imageType": "PRIMARY"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000A9",
+                  "agentCode": "00C"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 59,
+                  "currency": "PHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
       },
       {
-        "cliqqCode": "22222",
-        "agentCode": "ASMG73DW"
+          "name": "Penshoppe Lovestory 150ml",
+          "shortDescription": "Body spray for women.",
+          "longDescription": "<p>Make the perfect first impression with Love Story.</p>",
+          "gtin": "30787278",
+          "isFeatured": true,
+          "returnable": false,
+          "returnPolicy": "Due to final clearance and hygienic purposes, returns, exchange and refunds may not be provided for Health & Beauty Products, Jewelries, Home Care Products and Lingerie. For any concerns, kindly send an email to our Customer Service Team at cliqqsupport@7-eleven.com.ph.",
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/000AA.png",
+                  "imageType": "PRIMARY"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000AA",
+                  "agentCode": "00C"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 189,
+                  "currency": "PHP"
+              },
+              {
+                  "amount": 150,
+                  "currency": "DPHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
       },
       {
-        "cliqqCode": "06526",
-        "agentCode": "ASMG73DW"
-      }
-    ],
-    "imageUrl": "http://ic1.maxabout.us/mobiles//G/2014/8/gionee-ctrl-v4s-front-rear-view.jpg",
-    "name": "All Day Backpack | (green)",
-    "images": [
-      {
-        "imageUrl": "http://www.samsung.com/global/microsite/galaxynote4/images/design/detail/white_5.png",
-        "imageType": "PRIMARY"
+          "name": "Penshoppe Hush Hush Kiss 100ml",
+          "shortDescription": "Body spray for women.",
+          "longDescription": "<p>Hush Hush Kiss blends strawberries and champagne to craft a distinct fruity scent, balanced by aloe vera and chamomile undertones.</p>",
+          "gtin": "30786331",
+          "isFeatured": true,
+          "returnable": false,
+          "returnPolicy": "Due to final clearance and hygienic purposes, returns, exchange and refunds may not be provided for Health & Beauty Products, Jewelries, Home Care Products and Lingerie. For any concerns, kindly send an email to our Customer Service Team at cliqqsupport@7-eleven.com.ph.",
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/000AB.png",
+                  "imageType": "PRIMARY"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000AB",
+                  "agentCode": "00C"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 149,
+                  "currency": "PHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
       },
       {
-        "imageUrl": "http://www.samsung.com/global/microsite/galaxynote4/images/design/detail/white_5.png",
-        "imageType": "BRAND_LOGO"
-      }
-    ],
-    "priceList": [
-      {
-        "amount": 300,
-        "currency": "PHP"
+          "name": "Penshoppe Hush Hush Charm 100ml",
+          "shortDescription": "Body spray for women.",
+          "longDescription": "<p>Fall in love with Hush Hush Charm and feel flirty with the sweet fruity scent of plum. Freesia and floral notes give a touch of subtle femininity. Balancing the scent is relaxing chamomile, perfect for this fun girly fragrance! <p>",
+          "gtin": "30981944",
+          "isFeatured": true,
+          "returnable": false,
+          "returnPolicy": "Due to final clearance and hygienic purposes, returns, exchange and refunds may not be provided for Health & Beauty Products, Jewelries, Home Care Products and Lingerie. For any concerns, kindly send an email to our Customer Service Team at cliqqsupport@7-eleven.com.ph.",
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/000AC.png",
+                  "imageType": "PRIMARY"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000AC",
+                  "agentCode": "00C"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 149,
+                  "currency": "PHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
       },
       {
-        "amount": 150,
-        "currency": "LPTS"
-      }
-    ],
-    "discountList": [
-      {
-        "value": "10",
-        "discountType": "percentage",
-        "fromDate": "2017-01-01",
-        "cronSchedule": "0 0 * ? * *"
-      }
-    ],
-    "longDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla. Aenean congue libero sed nisl euismod tristique. Integer finibus est orci, nec hendrerit turpis mollis id. Phasellus rhoncus mollis mauris sit amet euismod.",
-    "deliveryPromiseMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla.",
-    "gtin": "718037806838"
-  },
-  {
-    "cliqqCodes": [
-      {
-        "cliqqCode": "00003",
-        "agentCode": "ASMG73DW"
+          "name": "Penshoppe Fruit Fave 2015 100ml (Strawberry)",
+          "shortDescription": "Body spray for women.",
+          "longDescription": "<p>Bursting with ripe and fresh fruity strawberry note, this scent is perfect for playful and fun-loving girls.</p>",
+          "gtin": "30766001",
+          "isFeatured": true,
+          "returnable": false,
+          "returnPolicy": "Due to final clearance and hygienic purposes, returns, exchange and refunds may not be provided for Health & Beauty Products, Jewelries, Home Care Products and Lingerie. For any concerns, kindly send an email to our Customer Service Team at cliqqsupport@7-eleven.com.ph.",
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/000AD.png",
+                  "imageType": "PRIMARY"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000AD",
+                  "agentCode": "00C"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 139,
+                  "currency": "PHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
       },
       {
-        "cliqqCode": "33333",
-        "agentCode": "ASMG73DW"
+          "name": "Penshoppe Blown Away 150ml (So Into You)",
+          "shortDescription": "Body spray for women.",
+          "longDescription": "<p>Be mesmerizingly sweet with Blown Away Collection! Feel the obsession with the fruity fusion of strawberry, pineapple and passion fruit in So Into You. Adding touches of femininity and mystery are floral musky end notes of peony, orchid and oakmoss.</p>",
+          "gtin": "31031839",
+          "isFeatured": true,
+          "returnable": false,
+          "returnPolicy": "Due to final clearance and hygienic purposes, returns, exchange and refunds may not be provided for Health & Beauty Products, Jewelries, Home Care Products and Lingerie. For any concerns, kindly send an email to our Customer Service Team at cliqqsupport@7-eleven.com.ph.",
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/000AE.png",
+                  "imageType": "PRIMARY"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000AE",
+                  "agentCode": "00C"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 189,
+                  "currency": "PHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
       },
       {
-        "cliqqCode": "06527",
-        "agentCode": "ASMG73DW"
-      }
-    ],
-    "imageUrl": "http://ic1.maxabout.us/mobiles//G/2014/8/gionee-ctrl-v4s-front-rear-view.jpg",
-    "name": "All Day Backpack | (blue)",
-    "images": [
-      {
-        "imageUrl": "http://www.samsung.com/global/microsite/galaxynote4/images/design/detail/white_5.png",
-        "imageType": "PRIMARY"
+          "name": "Penshoppe Essential Varsity Cap (Black)",
+          "shortDescription": "Black Baseball Cap with curved visor",
+          "longDescription": "<p>Men&rsquo;s essential curved visor cap with structured front panel in 100% twill polyester with penshoppe clip label at the back and adjustable straps</p>",
+          "gtin": "31084532",
+          "isFeatured": true,
+          "returnable": true,
+          "returnPolicy": "Not satisfied with your purchase? Depending on our CLiQQ Care Policy, you can return your item anytime of the day within 7 days from claim date. Just go to the 7-Eleven store where the item was purchased and get your Return Slip from the CLiQQ Kiosk and bring it to the cashier.",
+          "association": [
+              {
+                  "product": {
+                      "productId": 172,
+                      "name": "Penshoppe Essential Varsity Cap (Navy Blue)",
+                      "longDescription": "<p>Men&rsquo;s essential navy blue curved visor cap with structured front panel in 100% twill polyester with penshoppe clip label at the back and adjustable straps</p>",
+                      "availableQuantity": "1",
+                      "cliqqCodes": [
+                          {
+                              "cliqqCode": "000C6",
+                              "agentCode": "00C"
+                          }
+                      ]
+                  },
+                  "fromDate": "2017-11-29"
+              },
+              {
+                  "product": {
+                      "productId": 172,
+                      "name": "Penshoppe Essential Varsity Cap (Navy Blue)",
+                      "longDescription": "<p>Men&rsquo;s essential navy blue curved visor cap with structured front panel in 100% twill polyester with penshoppe clip label at the back and adjustable straps</p>",
+                      "availableQuantity": "1",
+                      "cliqqCodes": [
+                          {
+                              "cliqqCode": "000C6",
+                              "agentCode": "00C"
+                          }
+                      ]
+                  },
+                  "fromDate": "2017-11-29"
+              }
+          ],
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/000C7.png",
+                  "imageType": "PRIMARY"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000C7",
+                  "agentCode": "00C"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 229,
+                  "currency": "PHP"
+              },
+              {
+                  "amount": 199,
+                  "currency": "DPHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
       },
       {
-        "imageUrl": "http://www.samsung.com/global/microsite/galaxynote4/images/design/detail/white_5.png",
-        "imageType": "BRAND_LOGO"
-      }
-    ],
-    "priceList": [
-      {
-        "amount": 800,
-        "currency": "PHP"
+          "name": "Penshoppe Essential Bifold Wallet (Black)",
+          "shortDescription": "Bifold wallet with 1 main bills slot and 4 card slots",
+          "longDescription": "<p>Men&rsquo;s essential bifold wallet in 100% pu with debossed penshoppe logo</p>",
+          "gtin": "31083320",
+          "isFeatured": true,
+          "returnable": true,
+          "returnPolicy": "Not satisfied with your purchase? Depending on our CLiQQ Care Policy, you can return your item anytime of the day within 7 days from claim date. Just go to the 7-Eleven store where the item was purchased and get your Return Slip from the CLiQQ Kiosk and bring it to the cashier.",
+          "brand": {
+              "code": "01",
+              "name": "Penshoppe",
+              "isFeatured": true,
+              "images": [
+                  {
+                      "imageUrl": "https://cliqq.imgix.net/test/category/product-assets/brand-logo.png",
+                      "imageType": "BRAND_LOGO"
+                  },
+                  {
+                      "imageUrl": "http://i.dailymail.co.uk/i/pix/2015/05/07/16/286A073200000578-0-image-a-2_1431013568311.jpg",
+                      "imageType": "BACKGROUND"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-01.slatic.net/cms/category_banner/02152016/kendall.jpg",
+                      "imageType": "SLIDER"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-02.slatic.net/cms/category_banner/02152016/lucky.jpg",
+                      "imageType": "SLIDER"
+                  }
+              ]
+          },
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/000C8.png",
+                  "imageType": "PRIMARY"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000C8",
+                  "agentCode": "00C"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 299,
+                  "currency": "PHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
       },
       {
-        "amount": 150,
-        "currency": "LPTS"
-      }
-    ],
-    "discountList": [
-      {
-        "value": "5",
-        "discountType": "percentage",
-        "fromDate": "2017-01-01",
-        "cronSchedule": "0 0 * ? * *"
-      }
-    ],
-    "longDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla. Aenean congue libero sed nisl euismod tristique. Integer finibus est orci, nec hendrerit turpis mollis id. Phasellus rhoncus mollis mauris sit amet euismod.",
-    "deliveryPromiseMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla.",
-    "gtin": "718037806837"
-  },
-  {
-    "cliqqCodes": [
-      {
-        "cliqqCode": "00004",
-        "agentCode": "ASMG73DW"
+          "name": "Penshoppe Sports Towel (Navy Blue)",
+          "shortDescription": "Navy Blue French Terry sports towel",
+          "longDescription": "<p>Navy blue sports towel in 65% cotton and 35% french terry fabric</p>",
+          "gtin": "31078633",
+          "isFeatured": true,
+          "returnable": true,
+          "returnPolicy": "Not satisfied with your purchase? Depending on our CLiQQ Care Policy, you can return your item anytime of the day within 7 days from claim date. Just go to the 7-Eleven store where the item was purchased and get your Return Slip from the CLiQQ Kiosk and bring it to the cashier.",
+          "brand": {
+              "code": "01",
+              "name": "Penshoppe",
+              "isFeatured": true,
+              "images": [
+                  {
+                      "imageUrl": "https://cliqq.imgix.net/test/category/product-assets/brand-logo.png",
+                      "imageType": "BRAND_LOGO"
+                  },
+                  {
+                      "imageUrl": "http://i.dailymail.co.uk/i/pix/2015/05/07/16/286A073200000578-0-image-a-2_1431013568311.jpg",
+                      "imageType": "BACKGROUND"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-01.slatic.net/cms/category_banner/02152016/kendall.jpg",
+                      "imageType": "SLIDER"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-02.slatic.net/cms/category_banner/02152016/lucky.jpg",
+                      "imageType": "SLIDER"
+                  }
+              ]
+          },
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/000C9.png",
+                  "imageType": "PRIMARY"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000C9",
+                  "agentCode": "00C"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 229,
+                  "currency": "PHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
       },
       {
-        "cliqqCode": "44444",
-        "agentCode": "ASMG73DW"
+          "name": "Penshoppe Sports Towel (Dark Green)",
+          "shortDescription": "Dark Green French Terry sports towel",
+          "longDescription": "<p>Dark Green sports towel in 65% cotton and 35% french terry fabric</p>",
+          "gtin": "31078631",
+          "isFeatured": true,
+          "returnable": true,
+          "returnPolicy": "Not satisfied with your purchase? Depending on our CLiQQ Care Policy, you can return your item anytime of the day within 7 days from claim date. Just go to the 7-Eleven store where the item was purchased and get your Return Slip from the CLiQQ Kiosk and bring it to the cashier.",
+          "brand": {
+              "code": "01",
+              "name": "Penshoppe",
+              "isFeatured": true,
+              "images": [
+                  {
+                      "imageUrl": "https://cliqq.imgix.net/test/category/product-assets/brand-logo.png",
+                      "imageType": "BRAND_LOGO"
+                  },
+                  {
+                      "imageUrl": "http://i.dailymail.co.uk/i/pix/2015/05/07/16/286A073200000578-0-image-a-2_1431013568311.jpg",
+                      "imageType": "BACKGROUND"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-01.slatic.net/cms/category_banner/02152016/kendall.jpg",
+                      "imageType": "SLIDER"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-02.slatic.net/cms/category_banner/02152016/lucky.jpg",
+                      "imageType": "SLIDER"
+                  }
+              ]
+          },
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/000CA.png",
+                  "imageType": "PRIMARY"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000CA",
+                  "agentCode": "00C"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 229,
+                  "currency": "PHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
       },
       {
-        "cliqqCode": "06528",
-        "agentCode": "ASMG73DW"
-      }
-    ],
-    "imageUrl": "http://ic1.maxabout.us/mobiles//G/2014/8/gionee-ctrl-v4s-front-rear-view.jpg",
-    "name": "All Day Backpack | (white)",
-    "images": [
-      {
-        "imageUrl": "http://www.samsung.com/global/microsite/galaxynote4/images/design/detail/white_5.png",
-        "imageType": "PRIMARY"
+          "name": "Penshoppe All Day Sling Bag (Green)",
+          "shortDescription": "Sling Bag with 2 compartments",
+          "longDescription": "<p>Men&rsquo;s green all day sling bag in 100% polyester pu coated polycanvas with color blocking pattern, penshoppe logo, and 2 compartments</p>",
+          "gtin": "31005233",
+          "additionalDetails": "This is a sample text for the additional details field for this product. Thank you",
+          "isFeatured": true,
+          "returnable": true,
+          "returnPolicy": "Not satisfied with your purchase? Depending on our CLiQQ Care Policy, you can return your item anytime of the day within 7 days from claim date. Just go to the 7-Eleven store where the item was purchased and get your Return Slip from the CLiQQ Kiosk and bring it to the cashier.",
+          "brand": {
+              "code": "01",
+              "name": "Penshoppe",
+              "isFeatured": true,
+              "images": [
+                  {
+                      "imageUrl": "https://cliqq.imgix.net/test/category/product-assets/brand-logo.png",
+                      "imageType": "BRAND_LOGO"
+                  },
+                  {
+                      "imageUrl": "http://i.dailymail.co.uk/i/pix/2015/05/07/16/286A073200000578-0-image-a-2_1431013568311.jpg",
+                      "imageType": "BACKGROUND"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-01.slatic.net/cms/category_banner/02152016/kendall.jpg",
+                      "imageType": "SLIDER"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-02.slatic.net/cms/category_banner/02152016/lucky.jpg",
+                      "imageType": "SLIDER"
+                  }
+              ]
+          },
+          "uom": {
+              "name": "S",
+              "type": "Size"
+          },
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/000CB.png",
+                  "imageType": "PRIMARY"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000CB",
+                  "agentCode": "00C"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 139,
+                  "currency": "PHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
       },
       {
-        "imageUrl": "http://www.samsung.com/global/microsite/galaxynote4/images/design/detail/white_5.png",
-        "imageType": "BRAND_LOGO"
-      }
-    ],
-    "priceList": [
-      {
-        "amount": 1000,
-        "currency": "PHP"
+          "name": "Penshoppe Lifepack (Blue)",
+          "shortDescription": "Sling Bag with 2 compartments",
+          "longDescription": "<p>Men&rsquo;s life pack in 100% polyester ripstop with contrasting zipper and 2 compartments</p>",
+          "gtin": "31005471",
+          "isFeatured": true,
+          "returnable": true,
+          "returnPolicy": "Not satisfied with your purchase? Depending on our CLiQQ Care Policy, you can return your item anytime of the day within 7 days from claim date. Just go to the 7-Eleven store where the item was purchased and get your Return Slip from the CLiQQ Kiosk and bring it to the cashier.",
+          "brand": {
+              "code": "01",
+              "name": "Penshoppe",
+              "isFeatured": true,
+              "images": [
+                  {
+                      "imageUrl": "https://cliqq.imgix.net/test/category/product-assets/brand-logo.png",
+                      "imageType": "BRAND_LOGO"
+                  },
+                  {
+                      "imageUrl": "http://i.dailymail.co.uk/i/pix/2015/05/07/16/286A073200000578-0-image-a-2_1431013568311.jpg",
+                      "imageType": "BACKGROUND"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-01.slatic.net/cms/category_banner/02152016/kendall.jpg",
+                      "imageType": "SLIDER"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-02.slatic.net/cms/category_banner/02152016/lucky.jpg",
+                      "imageType": "SLIDER"
+                  }
+              ]
+          },
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/000CC.png",
+                  "imageType": "PRIMARY"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000CC",
+                  "agentCode": "00C"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 89,
+                  "currency": "PHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
       },
       {
-        "amount": 150,
-        "currency": "LPTS"
-      }
-    ],
-    "discountList": [
+          "name": "Penshoppe All Day Backpack (Blue)",
+          "shortDescription": "Backpack with front pocket",
+          "longDescription": "<p>Men&rsquo;s blue all day backpack in 100% polyester pu coated polycanvas with front pocket stripes pattern, penshoppe logo, and 2 compartments</p>",
+          "gtin": "31024319",
+          "additionalDetails": "<p>This is a sample text for the additional details field for this product. Thank you</p>",
+          "isFeatured": true,
+          "returnable": true,
+          "returnPolicy": "Not satisfied with your purchase? Depending on our CLiQQ Care Policy, you can return your item anytime of the day within 7 days from claim date. Just go to the 7-Eleven store where the item was purchased and get your Return Slip from the CLiQQ Kiosk and bring it to the cashier.",
+          "brand": {
+              "code": "01",
+              "name": "Penshoppe",
+              "isFeatured": true,
+              "images": [
+                  {
+                      "imageUrl": "https://cliqq.imgix.net/test/category/product-assets/brand-logo.png",
+                      "imageType": "BRAND_LOGO"
+                  },
+                  {
+                      "imageUrl": "http://i.dailymail.co.uk/i/pix/2015/05/07/16/286A073200000578-0-image-a-2_1431013568311.jpg",
+                      "imageType": "BACKGROUND"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-01.slatic.net/cms/category_banner/02152016/kendall.jpg",
+                      "imageType": "SLIDER"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-02.slatic.net/cms/category_banner/02152016/lucky.jpg",
+                      "imageType": "SLIDER"
+                  }
+              ]
+          },
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/000CD.png",
+                  "imageType": "PRIMARY"
+              },
+              {
+                  "imageUrl": "https://cliqq.imgix.net/test/category/product-assets/brand-logo.png",
+                  "imageType": "BRAND_LOGO"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000CD",
+                  "agentCode": "00C"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 549,
+                  "currency": "PHP"
+              },
+              {
+                  "amount": 1,
+                  "currency": "LPTS"
+              },
+              {
+                  "amount": 499,
+                  "currency": "DPHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
+      },
       {
-        "value": "20",
-        "discountType": "percentage",
-        "fromDate": "2017-01-01",
-        "cronSchedule": "0 0 * ? * *"
+          "name": "Penshoppe All Day Backpack (Green)",
+          "shortDescription": "Backpack with front pocket",
+          "longDescription": "<p>Men&rsquo;s green all day backpack in 100% polyester pu coated polycanvas with front pocket stripes pattern, penshoppe logo, and 2 compartment</p>",
+          "gtin": "31024321",
+          "additionalDetails": "This is a sample text for the additional details field for this product. Thank you",
+          "isFeatured": true,
+          "returnable": true,
+          "returnPolicy": "Not satisfied with your purchase? Depending on our CLiQQ Care Policy, you can return your item anytime of the day within 7 days from claim date. Just go to the 7-Eleven store where the item was purchased and get your Return Slip from the CLiQQ Kiosk and bring it to the cashier.",
+          "brand": {
+              "code": "01",
+              "name": "Penshoppe",
+              "isFeatured": true,
+              "images": [
+                  {
+                      "imageUrl": "https://cliqq.imgix.net/test/category/product-assets/brand-logo.png",
+                      "imageType": "BRAND_LOGO"
+                  },
+                  {
+                      "imageUrl": "http://i.dailymail.co.uk/i/pix/2015/05/07/16/286A073200000578-0-image-a-2_1431013568311.jpg",
+                      "imageType": "BACKGROUND"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-01.slatic.net/cms/category_banner/02152016/kendall.jpg",
+                      "imageType": "SLIDER"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-02.slatic.net/cms/category_banner/02152016/lucky.jpg",
+                      "imageType": "SLIDER"
+                  }
+              ]
+          },
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/000CE.png",
+                  "imageType": "PRIMARY"
+              },
+              {
+                  "imageUrl": "https://cliqq.imgix.net/test/category/product-assets/brand-logo.png",
+                  "imageType": "BRAND_LOGO"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000CE",
+                  "agentCode": "00C"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 549,
+                  "currency": "PHP"
+              },
+              {
+                  "amount": 2,
+                  "currency": "LPTS"
+              },
+              {
+                  "amount": 499,
+                  "currency": "DPHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
+      },
+      {
+          "name": "Penshoppe Essential Long Wallet (Brown)",
+          "shortDescription": "Long Wallet with 4 card slots and 2 main bills slots",
+          "longDescription": "<p>Men&rsquo;s essential long wallet in 100% pu with debossed penshoppe logo</p>",
+          "gtin": "31044489",
+          "additionalDetails": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Duis tellus. Donec ante dolor, iaculis nec, gravida ac, cursus in, eros. Mauris vestibulum, felis et egestas ullamcorper, purus nibh vehicula sem, eu egestas ante nisl non justo. Fusce tincidunt, lorem nec dapibus consectetuer, leo orci mollis ipsum, eget suscipit eros purus in antiie.",
+          "isFeatured": true,
+          "returnable": true,
+          "returnPolicy": "Not satisfied with your purchase? Depending on our CLiQQ Care Policy, you can return your item anytime of the day within 7 days from claim date. Just go to the 7-Eleven store where the item was purchased and get your Return Slip from the CLiQQ Kiosk and bring it to the cashier.",
+          "brand": {
+              "code": "01",
+              "name": "Penshoppe",
+              "isFeatured": true,
+              "images": [
+                  {
+                      "imageUrl": "https://cliqq.imgix.net/test/category/product-assets/brand-logo.png",
+                      "imageType": "BRAND_LOGO"
+                  },
+                  {
+                      "imageUrl": "http://i.dailymail.co.uk/i/pix/2015/05/07/16/286A073200000578-0-image-a-2_1431013568311.jpg",
+                      "imageType": "BACKGROUND"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-01.slatic.net/cms/category_banner/02152016/kendall.jpg",
+                      "imageType": "SLIDER"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-02.slatic.net/cms/category_banner/02152016/lucky.jpg",
+                      "imageType": "SLIDER"
+                  }
+              ]
+          },
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/000CF.png",
+                  "imageType": "PRIMARY"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000CF",
+                  "agentCode": "00C"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 299,
+                  "currency": "PHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
+      },
+      {
+          "name": "Penshoppe All Day Backpack (Gray)",
+          "shortDescription": "Gray Backpack with front pocket",
+          "longDescription": "<p>Men&rsquo;s all day backpack in 100% polyester pu coated polycanvas with front pocket stripes pattern, penshoppe logo, and 2 compartments</p>",
+          "gtin": "31054106",
+          "isFeatured": true,
+          "returnable": true,
+          "returnPolicy": "Not satisfied with your purchase? Depending on our CLiQQ Care Policy, you can return your item anytime of the day within 7 days from claim date. Just go to the 7-Eleven store where the item was purchased and get your Return Slip from the CLiQQ Kiosk and bring it to the cashier.",
+          "brand": {
+              "code": "01",
+              "name": "Penshoppe",
+              "isFeatured": true,
+              "images": [
+                  {
+                      "imageUrl": "https://cliqq.imgix.net/test/category/product-assets/brand-logo.png",
+                      "imageType": "BRAND_LOGO"
+                  },
+                  {
+                      "imageUrl": "http://i.dailymail.co.uk/i/pix/2015/05/07/16/286A073200000578-0-image-a-2_1431013568311.jpg",
+                      "imageType": "BACKGROUND"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-01.slatic.net/cms/category_banner/02152016/kendall.jpg",
+                      "imageType": "SLIDER"
+                  },
+                  {
+                      "imageUrl": "http://ph-live-02.slatic.net/cms/category_banner/02152016/lucky.jpg",
+                      "imageType": "SLIDER"
+                  }
+              ]
+          },
+          "images": [
+              {
+                  "imageUrl": "https://cliqq.imgix.net/000D0.png",
+                  "imageType": "PRIMARY"
+              }
+          ],
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000D0",
+                  "agentCode": "00C"
+              }
+          ],
+          "priceList": [
+              {
+                  "amount": 549,
+                  "currency": "PHP"
+              }
+          ],
+          "availableQuantity": "1",
+          "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>"
       }
-    ],
-    "longDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla. Aenean congue libero sed nisl euismod tristique. Integer finibus est orci, nec hendrerit turpis mollis id. Phasellus rhoncus mollis mauris sit amet euismod.",
-    "deliveryPromiseMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla.",
-    "gtin": "718037806835"
-  }
-]
+  ],
+  "totalCount": 26
+}

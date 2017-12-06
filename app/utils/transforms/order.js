@@ -1,19 +1,26 @@
 import {
-  assoc,
+  __,
   adjust,
   apply,
+  assoc,
   compose,
   curry,
+  equals,
+  evolve,
   filter,
   fromPairs,
+  identity,
+  ifElse,
   map,
   omit,
-  toPairs,
+  partial,
+  path,
   prop,
-  partial
+  toPairs
 } from 'ramda'
 
 import {
+  ARRAY,
   BOOLEAN,
   OBJECT,
   NUMBER,
@@ -94,6 +101,14 @@ const Schema = {
   returnable: {
     name: 'returnable',
     type: BOOLEAN
+  },
+  uom: {
+    name: 'uom',
+    type: OBJECT
+  },
+  association: {
+    name: 'association',
+    type: ARRAY
   }
 }
 
@@ -101,34 +116,60 @@ const mapKeys = curry((fn, obj) =>
   fromPairs(map(adjust(fn, 0), toPairs(obj)))
 )
 
-const transformOrder = (data) => {
-  const changeKey = (key) => Schema[key].name
-  const applySchemaName = mapKeys(changeKey, data)
-  // what product object should have
-  const product = ['name', 'image', 'brandLogo', 'cliqqCode', 'brand']
+// what product object should have
+const product = ['name', 'image', 'brandLogo', 'cliqqCode', 'brand']
 
-  const addProductObject = (data) => {
-    const shouldBeIncluded = (key) => product.includes(key)
-    const filterWithKeys = (predicate, obj) => compose(
-      fromPairs,
-      filter(apply(predicate)),
-      toPairs
-    )(obj)
+const addProductObject = (data) => {
+  const shouldBeIncluded = (key) => product.includes(key)
+  const filterWithKeys = (predicate, obj) => compose(
+    fromPairs,
+    filter(apply(predicate)),
+    toPairs
+  )(obj)
 
-    return Object.assign({}, data, {
-      products: filterWithKeys(shouldBeIncluded, data)
-    })
-  }
+  return Object.assign({}, data, {
+    products: filterWithKeys(shouldBeIncluded, data)
+  })
+}
 
-  const updateModePayment = (data, property) => assoc('modePayment', modePayment(property), data)
+const adjustModePayment = (data) => {
+  const updateModePayment = (data, property) =>
+      assoc('modePayment', modePayment(property), data)
 
-  const adjustModePayment = (data) => compose(
+  return compose(
     partial(updateModePayment, [data]),
     prop('modePayment')
   )(data)
+}
+
+const getParentCliqqCode = (data) => {
+  // if cliqqcode is undefined then use its own cliqqcode
+  const shouldUseItsCliqqCode = ifElse(
+    equals(undefined),
+    partial(path(['products', 'cliqqCode']), [data]),
+    identity
+  )
+
+  return compose(
+    evolve({
+      parentCliqqCode: shouldUseItsCliqqCode
+    }),
+    assoc('parentCliqqCode', __, data),
+    path(['association', 0, 'parentProduct', 'cliqqCodes', 0, 'cliqqCode'])
+  )(data)
+}
+
+const transformOrder = (data) => {
+  const changeKey = (key) => Schema[key].name
+  const applySchemaName = mapKeys(changeKey, data)
+  const omitItems = [
+    ...product,
+    'association'
+  ]
 
   const adjustmentObject = compose(
-    omit(product),
+    omit(omitItems),
+    getParentCliqqCode,
     adjustModePayment,
     addProductObject
   )

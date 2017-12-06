@@ -82,8 +82,8 @@ export function * getProduct (payload) {
   })
 
   if (!isEmpty(req)) {
+    // we will use the txt file we got
     const transform = yield transformEachEntity(req)
-
     // since we have the cliqqcode of the item we can save this last viewed items.
     yield * updateLastViewedItems({
       payload: transform
