@@ -216,7 +216,7 @@ class ModalWithHeader extends React.PureComponent {
     const currentStatus = STATUSES[toUpper(receipt.get('status'))] || ''
     const { primary, secondary, onClick, onClose } = ModalButtons({
       status: currentStatus,
-      goToProducts: this._goToProducts(receipt.get('cliqqCode')),
+      goToProducts: this._goToProducts(receipt.get('parentCliqqCode')),
       onClose: this._closeModal,
       goToReceipts
     }) || {}
