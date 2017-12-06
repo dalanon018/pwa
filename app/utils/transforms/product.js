@@ -10,6 +10,7 @@ import {
   filter,
   find,
   fromPairs,
+  head,
   map,
   omit,
   path,
@@ -183,6 +184,22 @@ const applySize = (data) => {
   }
 }
 
+/**
+ * we need to implement parentCode since once the item goes
+ * invalid on purchaselist we need to find a way to link them back to its
+ * parent if they select the "child" item
+ */
+const applyParentCliqqCode = (data) => {
+  const getParentCliqqCode = compose(
+    head,
+    prop('cliqqCode')
+  )
+  return {
+    ...data,
+    parentCliqqCode: getParentCliqqCode(data)
+  }
+}
+
 const transformProduct = (data) => {
   const changeKey = (key) => Schema[key] ? Schema[key].name : null
   const applySchemaName = mapKeys(changeKey, data)
@@ -190,6 +207,7 @@ const transformProduct = (data) => {
   const removeKeys = ['images', 'discount']
   const adjustmentObject = compose(
     omit(removeKeys),
+    applyParentCliqqCode,
     associationProducts,
     applySize,
     applyImage,
