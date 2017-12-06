@@ -101,7 +101,7 @@ const Schema = {
   },
   association: {
     name: 'association',
-    type: OBJECT
+    type: ARRAY
   }
 }
 
