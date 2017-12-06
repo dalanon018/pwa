@@ -309,7 +309,6 @@ function * updateReceiptSnapShot (orders, receiptId) {
     order.lastUpdated = lastUpdated || order.lastUpdated || ''
     order.claimCode = claimCode || order.claimCode || ''
 
-    updatedReceipts = updatedReceipts.concat(order)
     setItem(ORDERED_LIST_KEY, orders)
     // yield put(setUpdatedReceiptsAction(updatedReceipts))
 
@@ -320,6 +319,8 @@ function * updateReceiptSnapShot (orders, receiptId) {
     // we have to update the purchase list
     const transform = yield orders.map((data) => transformEachEntity(transformOrder, data))
     yield put(setPurchasesAction(transform))
+
+    updatedReceipts = updatedReceipts.concat(receiptTransform)
   }
 
   return updatedReceipts
