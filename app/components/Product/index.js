@@ -263,7 +263,8 @@ Product.propTypes = {
   loading: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
   origPrice: PropTypes.func.isRequired,
-  onSizeChange: PropTypes.func.isRequired
+  onSizeChange: PropTypes.func.isRequired,
+  changeRoute: PropTypes.func.isRequired
 }
 
 export default Product
