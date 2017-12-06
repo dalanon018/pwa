@@ -94,6 +94,10 @@ const Schema = {
   returnable: {
     name: 'returnable',
     type: BOOLEAN
+  },
+  uom: {
+    name: 'uom',
+    type: OBJECT
   }
 }
 

@@ -66,6 +66,7 @@ import {
 function * transformResponse ({ order: { sevenConnectRefNum, transactionId, expiryDate, totalPrice, mobileNumber, paymentType, status }, orderedProduct }) {
   // some of the item doesnt have brand
   const brand = orderedProduct.get('brand') ? orderedProduct.get('brand').toJS() : {}
+  const uom = orderedProduct.get('uom') ? orderedProduct.get('uom').toObject() : {}
   // we have to recode the 'PREPAID' static status
   return {
     trackingNumber: transactionId,
@@ -83,6 +84,7 @@ function * transformResponse ({ order: { sevenConnectRefNum, transactionId, expi
     returnPolicy: orderedProduct.get('returnPolicy'),
     returnable: orderedProduct.get('returnable'),
     status: (paymentType === COD_PAYMENT) ? DEFAULT_STATUS_COD_PAYMENT : status,
+    uom,
     brand,
     mobileNumber,
     sevenConnectRefNum,
