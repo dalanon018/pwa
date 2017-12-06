@@ -32,6 +32,7 @@ import PromptModal from 'components/PromptModal'
 import { LoadingStateInfo } from 'components/LoadingBlock'
 
 import messages from './messages'
+import SizeSelector from './SizeSelector'
 
 import {
   ButtonContainer,
@@ -44,8 +45,6 @@ import {
   ShareWrapper,
   ProductImageSlider,
   CollapseContent
-  // SizesWrapper,
-  // SizesButton
 } from './styled'
 
 const showDiscountPrice = (component1, component2) => (condition) => ifElse(
@@ -85,7 +84,9 @@ const Product = ({
   productSlider,
   togglePrompt,
   productPageTrigger,
-  windowWidth }) => {
+  windowWidth,
+  onSizeChange
+}) => {
   const FacebookIcon = generateShareIcon('facebook')
   const TwitterIcon = generateShareIcon('twitter')
   const {
@@ -159,46 +160,13 @@ const Product = ({
           </LoadingStateInfo>
         </ProductMainContent>
 
-        {/*
-          <SizesWrapper className='border_top__one--light-grey'>
-            <div>
-              <Label className='color__secondary' as='p' basic size='big'>
-                <FormattedMessage {...messages.selectSize} />
-              </Label>
-            </div>
-            <SizesButton>
-              <button className='button-size-styled'>
-                <Label className='no-margin color__secondary' as='p' basic size='big'>
-                  S
-                </Label>
-              </button>
-
-              <button className='button-size-styled'>
-                <Label className='no-margin color__secondary' as='p' basic size='big'>
-                  M
-                </Label>
-              </button>
-
-              <button className='button-size-styled'>
-                <Label className='no-margin color__secondary' as='p' basic size='big'>
-                  L
-                </Label>
-              </button>
-
-              <button className='button-size-styled'>
-                <Label className='no-margin color__secondary' as='p' basic size='big'>
-                  XL
-                </Label>
-              </button>
-
-              <button className='button-size-styled'>
-                <Label className='no-margin color__secondary' as='p' basic size='big'>
-                  XXL
-                </Label>
-              </button>
-            </SizesButton>
-          </SizesWrapper>
-        */}
+        {
+          product.get('association') &&
+          <SizeSelector
+            product={product}
+            onSizeChange={onSizeChange}
+          />
+        }
 
         <SocialContainer className='border_bottom__one--light-grey border_top__one--light-grey'>
           <ShareWrapper>
@@ -294,7 +262,8 @@ Product.propTypes = {
   product: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  origPrice: PropTypes.func.isRequired
+  origPrice: PropTypes.func.isRequired,
+  onSizeChange: PropTypes.func.isRequired
 }
 
 export default Product

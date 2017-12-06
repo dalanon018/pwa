@@ -40,6 +40,7 @@ import {
 
 import {
   getProductAction,
+  setProductAction,
   setCurrentProductAction,
   setProductHandlersDefaultAction
 } from './actions'
@@ -54,6 +55,7 @@ import {
 export class ProductPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     getProduct: PropTypes.func.isRequired,
+    setProduct: PropTypes.func.isRequired,
     setCurrentProduct: PropTypes.func.isRequired,
     changeRoute: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
@@ -113,6 +115,14 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     )
 
     return submitProductOrder(parseInt(product.get('quantity')))
+  }
+
+  _handleSizeChange = (e, { value }) => {
+    const { setProduct, product } = this.props
+    const selectedProductSize = product.get('association').find((entity) => entity.get('size') === value)
+    setProduct(
+      product.merge(selectedProductSize)
+    )
   }
 
   _handleSuccess = () => {
@@ -242,6 +252,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
             togglePrompt={togglePrompt}
             intl={intl}
             origPrice={this._handletoggleOrigDiscountPrice}
+            onSizeChange={this._handleSizeChange}
           />
         </div>
 
@@ -272,6 +283,7 @@ function mapDispatchToProps (dispatch) {
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProduct: (payload) => dispatch(getProductAction(payload)),
+    setProduct: (payload) => dispatch(setProductAction(payload)),
     setCurrentProduct: (payload) => dispatch(setCurrentProductAction(payload)),
     setHandlersDefault: () => dispatch(setProductHandlersDefaultAction()),
     changeRoute: (url) => dispatch(push(url)),
