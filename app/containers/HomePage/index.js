@@ -12,7 +12,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
 import { fromJS } from 'immutable'
-import { ifElse, identity } from 'ramda'
+import { gt, ifElse, identity } from 'ramda'
 
 import { paramsImgix } from 'utils/image-stock'
 
@@ -29,9 +29,6 @@ import Brand from 'components/Brand'
 import Footer from 'components/Footer'
 import WindowWidth from 'components/WindowWidth'
 
-import { getFeaturedProductsAction } from './actions'
-import { selectLoading, selectFeaturedProducts } from './selectors'
-
 import {
   setPageTitleAction,
   setShowSearchIconAction,
@@ -45,6 +42,20 @@ import {
 } from 'containers/Buckets/selectors'
 
 import {
+  getFeaturedProductsAction
+} from './actions'
+
+import {
+  selectLoading,
+  selectFeaturedProducts,
+  selectTotalCount
+} from './selectors'
+
+import {
+  LIMIT_ITEMS
+} from './constants'
+
+import {
   BannerWrapper,
   SearchWrapper,
   SearchContainer,
@@ -56,6 +67,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     changeRoute: PropTypes.func.isRequired,
     getProduct: PropTypes.func.isRequired,
     loader: PropTypes.bool.isRequired,
+    totalFeaturedProductCount: PropTypes.number.isRequired,
     featuredProducts: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.object
@@ -89,10 +101,11 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   _displayViewAll () {
-    const { featuredProducts } = this.props
-
-    if (featuredProducts.size > 4) {
-      return (
+    const { totalFeaturedProductCount } = this.props
+    const componentRender = ifElse(
+      gt(LIMIT_ITEMS),
+      () => null,
+      () => (
         <Grid padded>
           <Grid.Row centered>
             <Button
@@ -102,9 +115,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           </Grid.Row>
         </Grid>
       )
-    }
+    )
 
-    return null
+    return componentRender(totalFeaturedProductCount)
   }
 
   _shouldDisplayHeader = (component) => ifElse(
@@ -251,7 +264,8 @@ const mapStateToProps = createStructuredSelector({
   brandLoader: selectLoader(),
   featuredProducts: selectFeaturedProducts(),
   featuredCategories: selectFeaturedCategories(),
-  featuredBrands: selectFeaturedBrands()
+  featuredBrands: selectFeaturedBrands(),
+  totalFeaturedProductCount: selectTotalCount()
 })
 
 function mapDispatchToProps (dispatch) {
