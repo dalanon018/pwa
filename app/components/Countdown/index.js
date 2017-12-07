@@ -37,38 +37,30 @@ export default function (WrapperComponent) {
       }
     }
 
-    _countdownTimer = (endDate) => {
-      let currentTime = moment().unix()
-      let diffTime = endDate - currentTime
-      let duration = moment.duration(diffTime * 1000, 'milliseconds')
-      let interval = 1000
+    _countdownTimer = (endTime) => {
+      const currentTime = moment().unix()
+      const distance = endTime - currentTime
+      let duration = moment.duration(distance * 1000, 'milliseconds')
+      const interval = 1000
 
       this.countdownInterval = setInterval(() => {
         duration = moment.duration(duration - interval, 'milliseconds')
-        const countHours = () => {
-          if (duration.hours().toString().length > 1) {
-            return duration.hours()
-          } else {
-            return '0' + duration.hours()
-          }
-        }
-        const countMinutes = () => {
-          if (duration.minutes().toString().length > 1) {
-            return duration.minutes()
-          } else {
-            return '0' + duration.minutes()
-          }
-        }
-        const countSeconds = () => {
-          if (duration.seconds().toString().length > 1) {
-            return duration.seconds()
-          } else {
-            return '0' + duration.seconds()
-          }
-        }
+        const countDays = () =>
+          duration.days().toString().length > 1 ? duration.days() : `0${duration.days()}`
+
+        const countHours = () =>
+          duration.hours().toString().length > 1 ? duration.hours() : `0${duration.hours()}`
+
+        const countMinutes = () =>
+          duration.minutes().toString().length > 1 ? duration.minutes() : `0${duration.minutes()}`
+
+        const countSeconds = () =>
+          duration.seconds().toString().length > 1 ? duration.seconds() : `0${duration.seconds()}`
+
+        const shouldIncludeDays = duration.days() ? `${countDays()}:` : ''
 
         this.setState({
-          timer: `${countHours()}:${countMinutes()}:${countSeconds()}`
+          timer: `${shouldIncludeDays}${countHours()}:${countMinutes()}:${countSeconds()}`
         })
       }, 1000)
     }
