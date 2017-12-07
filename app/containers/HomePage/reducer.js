@@ -7,12 +7,15 @@
 import { fromJS } from 'immutable'
 import {
   GET_FEATURED_PRODUCTS,
-  SET_FEATURED_PRODUCTS
+  SET_FEATURED_PRODUCTS,
+
+  SET_PRODUCTS_COUNT
 } from './constants'
 
 const initialState = fromJS({
   product: {},
-  loading: false
+  loading: false,
+  totalCount: 0
 })
 
 function homePageReducer (state = initialState, action) {
@@ -23,6 +26,9 @@ function homePageReducer (state = initialState, action) {
       return state
         .set('product', fromJS(action.payload))
         .set('loading', false)
+
+    case SET_PRODUCTS_COUNT:
+      return state.set('totalCount', fromJS(action.payload))
     default:
       return state
   }

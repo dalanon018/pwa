@@ -28,8 +28,14 @@ const selectLoading = () => createSelector(
   subState => subState.get('loading')
 )
 
+const selectTotalCount = () => createSelector(
+  selectHomePageDomain(),
+  subState => subState.get('totalCount')
+)
+
 export {
   selectHomePageDomain,
   selectFeaturedProducts,
-  selectLoading
+  selectLoading,
+  selectTotalCount
 }
