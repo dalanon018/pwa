@@ -13,6 +13,7 @@ describe('<HomePage />', () => {
     changeRoute: () => {},
     getProduct: () => {},
     getProductCategories: () => {},
+    totalFeaturedProductCount: 0,
     loader: false,
     featuredProducts: fromJS([]),
     featuredCategories: fromJS([]),
