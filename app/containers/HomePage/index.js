@@ -11,7 +11,6 @@ import { connect } from 'react-redux'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
-import { fromJS } from 'immutable'
 import { gt, ifElse, identity } from 'ramda'
 
 import { paramsImgix } from 'utils/image-stock'
@@ -85,10 +84,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     setShowActivityIcon: PropTypes.func.isRequired
   }
 
-  state = {
-    products: fromJS([])
-  }
-
   constructor () {
     super()
 
@@ -136,19 +131,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     this.props.getProduct()
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { featuredProducts } = nextProps
-
-    if (featuredProducts.size) {
-      this.setState({
-        products: featuredProducts.slice(0, 6)
-      })
-    }
-  }
-
   render () {
-    const { loader, featuredCategories, featuredBrands, changeRoute, windowWidth, intl, brandLoader } = this.props
-    const { products } = this.state
+    const { loader, featuredProducts, featuredCategories, featuredBrands, changeRoute, windowWidth, intl, brandLoader } = this.props
     const numSlide = windowWidth > 767 ? 2 : 1
     const imgixOptions = {
       w: 800,
@@ -215,7 +199,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           <ProductView
             changeRoute={changeRoute}
             loader={loader}
-            products={products}
+            products={featuredProducts}
             windowWidth={windowWidth} />
           { this._displayViewAll() }
 
