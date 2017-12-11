@@ -51,14 +51,6 @@ build:
       code: |
         yarn test -- -u
 
-    - script:
-      name: Sentry Release
-      code: |
-        curl https://sentry.io/api/hooks/release/builtin/248260/$SENTRY_RELEASE_KEY/ \
-        -X POST \
-        -H 'Content-Type: application/json' \
-        -d '{"version": "$VERSION"}'
-
 staging:
   steps:
     - heroku-deploy:
@@ -77,11 +69,9 @@ staging:
       name: Sentry Release
       code: |
         curl https://sentry.io/api/hooks/release/builtin/248260/$SENTRY_RELEASE_KEY/ \
-          -X POST \
-          -H 'Content-Type: application/json'  \
-          -D '{
-            "version": $VERSION
-          }'
+        -X POST \
+        -H 'Content-Type: application/json' \
+        -d '{"version": $VERSION}'
 
 production:
   steps:
