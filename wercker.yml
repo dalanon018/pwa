@@ -68,7 +68,7 @@ staging:
     - script:
       name: Sentry Release
       code: |
-        curl https://sentry.io/api/hooks/release/builtin/248260/$SENTRY_RELEASE_KEY/ \ -X POST \ -H 'Content-Type: application/json' \ -d '{"version": $VERSION}'
+        curl -X POST -D '{\"version\":$VERSION}' -H 'Content-Type:application/json' https://sentry.io/api/hooks/release/builtin/248260/$SENTRY_RELEASE_KEY/
 
 production:
   steps:
