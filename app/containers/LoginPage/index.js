@@ -296,14 +296,13 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
       errModalName: 'warning',
       errorMessage: ''
     })
+    // we need to reset our recaptcha
+    this.recaptcha.reset()
     this.props.resetSubmission()
   }
 
   _handleErrorRecaptchaValidation = (error) => {
     this.recaptchaSuccessSubmission = false
-
-    // we need to reset our recaptcha
-    this.recaptcha.reset()
     return this._handleSetStateErrorMessages(error)
   }
 
