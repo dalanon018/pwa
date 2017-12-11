@@ -148,11 +148,11 @@ class Receipt extends React.PureComponent {
   }
 
   _handleScanAnimate = (e, data) => {
-    const block = document.getElementsByClassName('scan')
+    const block = document.getElementsByClassName('scan')[0]
 
     setTimeout(() => {
       this.setState({
-        show: block[0].offsetHeight
+        show: block ? block.offsetHeight : 0
       })
     }, 500)
   }
@@ -347,9 +347,13 @@ class Receipt extends React.PureComponent {
 
   componentDidMount () {
     this._handleScanAnimate()
-    setTimeout(() => {
-      document.getElementById('fadeMe').style.opacity = '1'
-    }, 800)
+    const fadeMeElement = document.getElementById('fadeMe')
+
+    if (fadeMeElement) {
+      setTimeout(() => {
+        fadeMeElement.style.opacity = '1'
+      }, 800)
+    }
   }
 
   componentWillReceiveProps (nextProps) {

@@ -47,7 +47,8 @@ class ListCollapse extends React.PureComponent {
 
     setTimeout(() => {
       // parentScrollTo.scrollTo(0, ChildTop)
-      element.scrollIntoView({
+      // we need to make sure that it is not propagated and element exist
+      element && element.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
         inline: 'nearest'

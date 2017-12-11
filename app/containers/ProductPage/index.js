@@ -16,10 +16,12 @@ import {
   both,
   complement,
   compose,
+  cond,
   equals,
   ifElse,
   prop,
-  when
+  when,
+  T
 } from 'ramda'
 import { isMobileDevice } from 'utils/http'
 import { FbEventTracking } from 'utils/seo'
@@ -103,16 +105,16 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       return setCurrentProduct(product)
     }
 
-    const submitProductOrder = ifElse(
-      equals(0),
-      () => this.setState({
+    const submitProductOrder = cond([
+      [equals(0), () => this.setState({
         errModalToggle: true,
         errorTitle: <FormattedMessage {...messages.errorProductQuantity} />,
         errModalName: 'warning',
         errorMessage: ''
-      }),
-      submissionOrder
-    )
+      })],
+      [equals(NaN), noop],
+      [T, submissionOrder]
+    ])
 
     return submitProductOrder(parseInt(product.get('quantity')))
   }
