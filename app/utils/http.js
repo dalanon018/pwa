@@ -30,19 +30,30 @@ export const getBrowserInfo = () => {
   }
 }
 
+export const isIphone = () => {
+  const useragent = navigator.userAgent
+  if (
+    useragent.match(/iPhone/i) ||
+    useragent.match(/iPod/i) ||
+    useragent.match(/iPad/i)
+  ) {
+    return true
+  }
+
+  return false
+}
+
 export const isMobileDevice = () => {
   const useragent = navigator.userAgent
 
   if (
     useragent.match(/Android/i) ||
     useragent.match(/webOS/i) ||
-    useragent.match(/iPhone/i) ||
-    useragent.match(/iPod/i) ||
-    useragent.match(/iPad/i) ||
     useragent.match(/Windows Phone/i) ||
     useragent.match(/SymbianOS/i) ||
     useragent.match(/RIM/i) ||
-    useragent.match(/BB/i)
+    useragent.match(/BB/i) ||
+    isIphone
   ) {
     return true
   } else {

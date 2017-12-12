@@ -12,6 +12,8 @@ import {
   ifElse,
   isNil
 } from 'ramda'
+// if theres error we want to send here.
+import ErrorTracking from 'utils/errorTracking'
 
 const returnDataFromCache = async (url, cache) => {
   const response = await cache.match(url)
@@ -35,7 +37,9 @@ const getRequestData = async (url, options) => {
   let response
   try {
     response = await request(url, options)
-  } catch (e) {
+  } catch (error) {
+    // we need to throw to our sentry
+    ErrorTracking.exception(error)
     response = await getFromCache(url)
   }
 
