@@ -34,6 +34,10 @@ export default defineMessages({
     id: 'app.components.Purchase.dateCASHINTRANSIT',
     defaultMessage: 'Date In-transit'
   },
+  dateCASHLOSTINTRANSIT: {
+    id: 'app.components.Purchase.dateCASHLOSTINTRANSIT',
+    defaultMessage: 'Date Lost In-transit'
+  },
   dateCASHDELIVERED: {
     id: 'app.components.Purchase.dateDELIVERED',
     defaultMessage: 'Date Delivered'
@@ -69,6 +73,10 @@ export default defineMessages({
   dateCODINTRANSIT: {
     id: 'app.components.Purchase.dateCODINTRANSIT',
     defaultMessage: 'Date In-transit'
+  },
+  dateCODLOSTINTRANSIT: {
+    id: 'app.components.Purchase.dateCODLOSTINTRANSIT',
+    defaultMessage: 'Date Lost In-transit'
   },
   dateCODDELIVERED: {
     id: 'app.components.Purchase.dateDELIVERED',

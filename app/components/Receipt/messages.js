@@ -30,6 +30,10 @@ export default defineMessages({
     id: 'app.components.Receipt.CASHINTRANSIT',
     defaultMessage: 'Please wait for an SMS telling you that your order is in the store'
   },
+  CASHLOSTINTRANSIT: {
+    id: 'app.components.Receipt.CASHLOSTINTRANSIT',
+    defaultMessage: 'Item was lost in Transit'
+  },
   CASHDELIVERED: {
     id: 'app.components.Receipt.CASHDELIVERED',
     defaultMessage: 'Your item is now ready for pick up at {storeName}'
@@ -65,6 +69,10 @@ export default defineMessages({
   CODINTRANSIT: {
     id: 'app.components.Receipt.CODINTRANSIT',
     defaultMessage: 'Please wait for an SMS telling you that your order is in the store'
+  },
+  CODLOSTINTRANSIT: {
+    id: 'app.components.Receipt.CODLOSTINTRANSIT',
+    defaultMessage: 'Item was lost in Transit'
   },
   CODDELIVERED: {
     id: 'app.components.Receipt.CODDELIVERED',
@@ -204,6 +212,10 @@ export default defineMessages({
     id: 'app.components.Receipt.dateCASHINTRANSIT',
     defaultMessage: 'Date In-transit'
   },
+  dateCASHLOSTINTRANSIT: {
+    id: 'app.components.Receipt.dateCASHLOSTINTRANSIT',
+    defaultMessage: 'Date Lost In-transit'
+  },
   dateCASHDELIVERED: {
     id: 'app.components.Receipt.dateDELIVERED',
     defaultMessage: 'Date Delivered'
@@ -239,6 +251,10 @@ export default defineMessages({
   dateCODINTRANSIT: {
     id: 'app.components.Receipt.dateCODINTRANSIT',
     defaultMessage: 'Date In-transit'
+  },
+  dateCODLOSTINTRANSIT: {
+    id: 'app.components.Receipt.dateCODLOSTINTRANSIT',
+    defaultMessage: 'Date Lost In-transit'
   },
   dateCODDELIVERED: {
     id: 'app.components.Receipt.dateDELIVERED',

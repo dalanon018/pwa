@@ -124,6 +124,7 @@ class Purchase extends React.PureComponent {
       UNPAID: '#F23640',
       CONFIRMED: '#F58322',
       INTRANSIT: '#F58322',
+      LOSTINTRANSIT: '#F23640',
       DELIVERED: '#F58322',
       CLAIMED: '#8DC640',
       UNCLAIMED: '#F23640'

@@ -5,7 +5,7 @@ import messages from './messages'
 
 const PurchaseUsecase = ({ status, storeName, modePayment }) => {
   const currentStatus = status ? `${modePayment}${status}` : 'unknownStatus'
-
+  console.log(currentStatus)
   return (
     <Label className='text__roboto--light' as='p' basic size='large'>
       <FormattedMessage
