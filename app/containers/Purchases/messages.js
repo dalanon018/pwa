@@ -51,6 +51,10 @@ export default defineMessages({
     id: 'app.components.Purchases.titleStatusINTRANSIT',
     defaultMessage: 'In-Transit'
   },
+  titleStatusLOSTINTRANSIT: {
+    id: 'app.components.Purchases.titleStatusLOSTINTRANSIT',
+    defaultMessage: 'Expired'
+  },
   titleStatusDELIVERED: {
     id: 'app.components.Purchases.titleStatusDELIVERED',
     defaultMessage: 'For Pick-Up'

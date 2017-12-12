@@ -22,6 +22,10 @@ export default defineMessages({
     id: 'app.components.ModalWithHeader.intransitTitle',
     defaultMessage: 'Item Is On Its Way To The Store'
   },
+  lostintransitTitle: {
+    id: 'app.components.ModalWithHeader.lostintransitTitle',
+    defaultMessage: 'Order was Unserved'
+  },
   deliveredTitle: {
     id: 'app.components.ModalWithHeader.deliveredTitle',
     defaultMessage: 'Item Is Ready For Pick Up'
@@ -49,6 +53,10 @@ export default defineMessages({
   intransitDescription: {
     id: 'app.components.ModalWithHeader.intransitDescription',
     defaultMessage: 'Your item is in-transit to the store! We will notify you when it is ready for pick-up. For now you can keep on shopping!'
+  },
+  lostintransitDescription: {
+    id: 'app.components.ModalWithHeader.lostintransitDescription',
+    defaultMessage: 'Sorry, your order cannot be delivered.'
   },
   deliveredDescription: {
     id: 'app.components.ModalWithHeader.deliveredDescription',
@@ -78,6 +86,10 @@ export default defineMessages({
     id: 'app.components.ModalWithHeader.buttonIntransit',
     defaultMessage: 'Cool! I\'m Excited'
   },
+  buttonLostIntransit: {
+    id: 'app.components.ModalWithHeader.buttonLostIntransit',
+    defaultMessage: 'Got It !'
+  },
   buttonDelivered: {
     id: 'app.components.ModalWithHeader.buttonDelivered',
     defaultMessage: 'Awesome! Thanks'
@@ -97,5 +109,9 @@ export default defineMessages({
   secondaryButton: {
     id: 'app.components.ModalWithHeader.secondaryButton',
     defaultMessage: 'View My Activities'
+  },
+  secondaryBrowseCatalog: {
+    id: 'app.components.ModalWithHeader.secondaryBrowseCatalog',
+    defaultMessage: 'Browse the catalog'
   }
 })
