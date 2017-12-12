@@ -24,6 +24,7 @@ if (env === 'production') {
   console.log(`OATH_GRANT_TYPE=${process.env.OATH_GRANT_TYPE}`)
 
   console.log(`RECAPTCHA_SITE_KEY=${process.env.RECAPTCHA_SITE_KEY}`)
+  console.log(`FB_SHARE_ID=${process.env.FB_SHARE_ID}`)
 
 } else {
   console.log(`TOKEN_URL=https://apidemo.cliqq.net:8443/accounts/oauth2/token`)
@@ -49,4 +50,5 @@ if (env === 'production') {
   console.log(`OATH_GRANT_TYPE=client_credentials`)
 
   console.log(`RECAPTCHA_SITE_KEY=6Le2aDEUAAAAAC_B5o0Xy4_DAAb7Cmvsdrd4ury0`)
+  console.log(`FB_SHARE_ID=1998676580363463`)
 }

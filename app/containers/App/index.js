@@ -9,30 +9,49 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
-import { Switch, Route } from 'react-router-dom'
+import { Switch } from 'react-router-dom'
 
+import HocRoute from 'components/HocRoute'
 import Buckets from 'containers/Buckets/Loadable'
 import NotFound from 'containers/NotFoundPage/Loadable'
 
+import {
+  BUCKETS_NAME,
+  NOTFOUND_NAME
+} from './constants'
+
 const AppWrapper = styled.div`
-  margin: 0 auto;
-  display: flex;
-  min-height: 100%;
-  flex-direction: column;
+display: block;
+position: relative;
 `
+
+const BodyWrapper = styled.div`
+max-width: calc(767px + 16px * 2);
+margin: 0 auto;
+display: flex;
+height: 100%;
+flex-direction: column;
+
+@media (min-width: 1024px) {
+  max-width: none;
+}
+`
+
 export default function App () {
   return (
     <AppWrapper>
-      <Helmet
-        titleTemplate='%s - 7-Eleven CliQQ'
-        defaultTitle='7-Eleven CliQQ'
-      >
-        <meta name='description' content='7-11 CliQQ e-commerce website' />
-      </Helmet>
-      <Switch>
-        <Route path='/' component={Buckets} />
-        <Route path='' component={NotFound} />
-      </Switch>
+      <BodyWrapper>
+        <Helmet
+          titleTemplate='%s - 7-Eleven CLiQQ'
+          defaultTitle='7-Eleven CLiQQ'
+        >
+          <meta name='description' content='7-11 CLiQQ e-commerce website' />
+        </Helmet>
+        <Switch>
+          <HocRoute routeName={BUCKETS_NAME} path='/' component={Buckets} />
+          <HocRoute routeName={NOTFOUND_NAME} path='' component={NotFound} />
+        </Switch>
+      </BodyWrapper>
     </AppWrapper>
   )
 }
