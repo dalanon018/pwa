@@ -32,7 +32,7 @@ export default defineMessages({
   },
   CASHLOSTINTRANSIT: {
     id: 'app.components.Receipt.CASHLOSTINTRANSIT',
-    defaultMessage: 'Item was lost in Transit'
+    defaultMessage: 'Follow us on Social Media for all the latest updates!'
   },
   CASHDELIVERED: {
     id: 'app.components.Receipt.CASHDELIVERED',
@@ -72,7 +72,7 @@ export default defineMessages({
   },
   CODLOSTINTRANSIT: {
     id: 'app.components.Receipt.CODLOSTINTRANSIT',
-    defaultMessage: 'Item was lost in Transit'
+    defaultMessage: 'Follow us on Social Media for all the latest updates!'
   },
   CODDELIVERED: {
     id: 'app.components.Receipt.CODDELIVERED',
