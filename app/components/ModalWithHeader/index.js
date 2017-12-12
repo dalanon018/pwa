@@ -135,7 +135,7 @@ const ModalDescription = ({ status, receipt }) => {
   })(null)(status)
 }
 
-const ModalButtons = ({ status, goToReceipts, goToProducts, onClose }) => {
+const ModalButtons = ({ status, goToHome, goToReceipts, goToProducts, onClose }) => {
   return switchFn({
     RESERVED: {
       primary: <FormattedMessage {...messages.buttonReserved} />,
@@ -162,10 +162,10 @@ const ModalButtons = ({ status, goToReceipts, goToProducts, onClose }) => {
       onClose
     },
     LOSTINTRANSIT: {
-      primary: <FormattedMessage {...messages.buttonLostIntransit} />,
-      secondary: <FormattedMessage {...messages.secondaryButton} />,
-      onClick: goToReceipts,
-      onClose
+      primary: <FormattedMessage {...messages.secondaryBrowseCatalog} />,
+      secondary: <FormattedMessage {...messages.buttonLostIntransit} />,
+      onClick: onClose,
+      onClose: goToHome
     },
     DELIVERED: {
       primary: <FormattedMessage {...messages.buttonDelivered} />,
@@ -212,29 +212,20 @@ class ModalWithHeader extends React.PureComponent {
     setUpdatedReceipts(receiptsUpdated)
   }
 
-  _goToProducts = (code) => {
-    const { goToProducts } = this.props
-
-    return () => {
-      // closing the modal
-      this._closeModal()
-      goToProducts(code)
-    }
-  }
-
   _fnFactory (cbFn) {
     this._closeModal()
-    cbFn()
+    cbFn && cbFn()
   }
 
   render () {
-    const { receipt, goToReceipts } = this.props
+    const { receipt, goToReceipts, goToProducts, goToHome } = this.props
     const currentStatus = STATUSES[toUpper(receipt.get('status'))] || ''
     const { primary, secondary, onClick, onClose } = ModalButtons({
       status: currentStatus,
-      goToProducts: this._goToProducts(receipt.get('parentCliqqCode')),
+      goToProducts: () => this._fnFactory(goToProducts(receipt.get('parentCliqqCode'))),
       onClose: this._closeModal,
-      goToReceipts
+      goToReceipts,
+      goToHome: () => this._fnFactory(goToHome)
     }) || {}
     // const modalSize = windowWidth >= 768 ? 'small' : 'mini'
 

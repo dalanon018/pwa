@@ -109,5 +109,9 @@ export default defineMessages({
   secondaryButton: {
     id: 'app.components.ModalWithHeader.secondaryButton',
     defaultMessage: 'View My Activities'
+  },
+  secondaryBrowseCatalog: {
+    id: 'app.components.ModalWithHeader.secondaryBrowseCatalog',
+    defaultMessage: 'Browse the catalog'
   }
 })
