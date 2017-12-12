@@ -53,7 +53,7 @@ export const isMobileDevice = () => {
     useragent.match(/SymbianOS/i) ||
     useragent.match(/RIM/i) ||
     useragent.match(/BB/i) ||
-    isIphone
+    isIphone()
   ) {
     return true
   } else {

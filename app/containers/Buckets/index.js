@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import ReactNotification from 'react-notification-system'
+import { switchFn } from 'utils/logicHelper'
 
 import {
   identity,
@@ -104,7 +105,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     brands: PropTypes.object.isRequired,
     mobileNumbers: PropTypes.object,
     toggleError: PropTypes.bool.isRequired,
-    toggleMessage: PropTypes.string,
+    toggleMessage: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
     intl: intlShape.isRequired,
     pageTitle: PropTypes.string,
     headerMenuFullScreen: PropTypes.bool.isRequired,
@@ -134,7 +138,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
   _displayBestViewedMobileNotification = () =>
     setTimeout(() =>
-      this._notificationRef.addNotification({
+      this._notificationRef && this._notificationRef.addNotification({
         title: <FormattedMessage {...messages.bestViewedTitle} />,
         message: <FormattedMessage {...messages.bestViewedContent} />,
         autoDismiss: 0,
@@ -309,6 +313,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     registerPush(currentToken)
   }
 
+  _toggleErrorMessage = (statusCode) => switchFn({
+    500: <FormattedMessage {...messages.failedFetch} />
+  })(statusCode)(statusCode)
+
   componentDidMount () {
     const { getMobileNumbers, getCategories, getBrands, getRegisteredPush, getLoyaltyToken, isMobile } = this.props
     const shouldDisplayNotification = ifElse(
@@ -366,7 +374,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
           open={toggleError}
           name='warning'
           title={<FormattedMessage {...messages.errorHeader} />}
-          content={toggleMessage}
+          content={this._toggleErrorMessage(toggleMessage)}
           close={this._handleNetworkErrorMessage}
         />
         <ReactNotification ref={this._reactNotificationRef} />

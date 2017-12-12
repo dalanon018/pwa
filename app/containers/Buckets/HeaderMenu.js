@@ -1,4 +1,5 @@
-import React, { PureComponent, PropTypes } from 'react'
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import {
@@ -9,7 +10,6 @@ import {
 } from 'semantic-ui-react'
 
 import { ifElse, identity, equals } from 'ramda'
-
 import BarcodeImage from 'images/icons/barcode-header.svg'
 import messages from './messages'
 import SearchImage from 'images/icons/search-header.svg'
@@ -155,6 +155,15 @@ const SearchInput = styled(Input)`
   width: 100%;
 `
 
+const PageTitle = styled.div`
+  h1 {
+    &.long-title {
+      font-size: 18px;
+      line-height: 18px;
+    }
+  }
+`
+
 const toggleComponent = (componentA, componentB) => (condition) => {
   return ifElse(
     identity,
@@ -201,9 +210,19 @@ export default class MainMenu extends PureComponent {
     const { pageTitle, changeRoute, intl, currentRoute } = this.props
     const { windowHeightOffset } = this.state
 
+    const pageTitleParsed = () => {
+      if (pageTitle && pageTitle.length > 17) {
+        return <Header className='color__secondary long-title' as='h1'> { pageTitle } </Header>
+      }
+
+      return <Header className='color__secondary' as='h1'> { pageTitle } </Header>
+    }
+
     const TitleToggle = toggleComponent(
       <ImageLogo alt='logo' src={MainLogo} onClick={changeRoute.bind(this, '/')} />,
-      <Header className='color__secondary' as='h1'> { pageTitle } </Header>
+      <PageTitle>
+        {pageTitleParsed()}
+      </PageTitle>
     )
 
     const ShowSearchInputLogo = toggleComponent(
@@ -244,7 +263,7 @@ export default class MainMenu extends PureComponent {
     const homeRoute = currentRoute === 'home'
 
     const SearchToggle = toggleComponent(
-      <Image alt='Cliqq' src={SearchImage} size='mini' onClick={changeRoute.bind(this, '/search')} />,
+      <Image alt='CLiQQ' src={SearchImage} size='mini' onClick={changeRoute.bind(this, '/search')} />,
       null
     )
 

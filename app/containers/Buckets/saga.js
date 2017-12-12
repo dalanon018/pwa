@@ -26,7 +26,8 @@ import {
   uniq,
   view
 } from 'ramda'
-import { call, put, fork } from 'redux-saga/effects'
+import { call, take, put, fork, cancel } from 'redux-saga/effects'
+import { LOCATION_CHANGE } from 'react-router-redux'
 
 import request from 'utils/request'
 import { getRequestData } from 'utils/offline-request'
@@ -49,7 +50,9 @@ import {
   REGISTER_PUSH,
   GET_REGISTED_PUSH,
   GET_LOYALTY_TOKEN,
-  REMOVE_LOYALTY_TOKEN
+  REMOVE_LOYALTY_TOKEN,
+
+  COD_PAYMENT
 } from './constants'
 
 import {
@@ -121,7 +124,7 @@ function * requestCategories () {
       getResults
     )(req)
   } else {
-    yield put(setNetworkErrorAction('No cache data'))
+    yield put(setNetworkErrorAction(500))
   }
 }
 
@@ -149,7 +152,7 @@ function * requestBrands () {
       getResults
     )(req)
   } else {
-    yield put(setNetworkErrorAction('No cache data'))
+    yield put(setNetworkErrorAction(500))
   }
 }
 
@@ -198,7 +201,7 @@ export function * requestAccessToken () {
 
     return token
   } catch (e) {
-    yield put(setNetworkErrorAction('Please make sure you have internet connection to automatically refresh your token.'))
+    yield put(setNetworkErrorAction('Please make sure you have internet connection.'))
   }
 
   return {}
@@ -281,7 +284,7 @@ function * updateReceiptSnapShot (orders, receiptId) {
   const trackingNumber = head(receiptId)
   const receiptKey = lensProp(trackingNumber)
   const receipt = fromPairs([receiptId])
-  const { status, lastUpdated } = view(receiptKey, receipt)
+  const { status, lastUpdated, claimCode } = view(receiptKey, receipt)
   const order = find(orders, { trackingNumber }) || {}
   let updatedReceipts = []
 
@@ -293,11 +296,19 @@ function * updateReceiptSnapShot (orders, receiptId) {
     toPairs
   )(STATUSES)
 
+  const isConfirmedCOD = (status) => compose(
+    both(contains(status), partial(equals(COD_PAYMENT), [order.paymentType])),
+    map(head),
+    filter(contains('CONFIRMED')),
+    toPairs
+  )(STATUSES)
+
   // we need to be very careful that status should not be empty
-  if (status && (!isEmpty(order) && order.status !== status) && !isReservedStatus(status)) {
+  if (status && (!isEmpty(order) && order.status !== status) && !isReservedStatus(status) && !isConfirmedCOD(status)) {
     order.status = status || order.status
     order.lastUpdated = lastUpdated || order.lastUpdated || ''
-    updatedReceipts = updatedReceipts.concat(order)
+    order.claimCode = claimCode || order.claimCode || ''
+
     setItem(ORDERED_LIST_KEY, orders)
     // yield put(setUpdatedReceiptsAction(updatedReceipts))
 
@@ -308,6 +319,8 @@ function * updateReceiptSnapShot (orders, receiptId) {
     // we have to update the purchase list
     const transform = yield orders.map((data) => transformEachEntity(transformOrder, data))
     yield put(setPurchasesAction(transform))
+
+    updatedReceipts = updatedReceipts.concat(receiptTransform)
   }
 
   return updatedReceipts
@@ -347,7 +360,7 @@ export function * registerPushNotification (payload) {
       token: authToken.access_token,
       body: JSON.stringify({
         browser: name,
-        mobileNumber,
+        mobileNumber: `0${mobileNumber}`,
         token
       })
     })
@@ -435,7 +448,7 @@ export function * removeLoyaltyTokenSaga () {
 
 // All sagas to be loaded
 export function * bucketsSagas () {
-  yield [
+  const watcher = yield [
     fork(getCategoriesSaga),
     fork(getBrandsSaga),
     fork(getMobileNumbersSaga),
@@ -451,6 +464,10 @@ export function * bucketsSagas () {
     // remove loyaltyToken / sign out
     fork(removeLoyaltyTokenSaga)
   ]
+
+  // Suspend execution until location changes
+  yield take(LOCATION_CHANGE)
+  yield watcher.map((task) => cancel(task))
 }
 
 // All sagas to be loaded
