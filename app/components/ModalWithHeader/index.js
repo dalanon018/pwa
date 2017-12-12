@@ -26,6 +26,8 @@ import WarningIcon from 'images/icons/warning-icon.svg'
 import IntransitIcon from 'images/icons/intransit-icon.svg'
 import UnclaimedIcon from 'images/icons/unclaimed-icon.svg'
 
+import { switchFn } from 'utils/logicHelper'
+
 import {
   STATUSES
 } from 'containers/Buckets/constants'
@@ -37,11 +39,8 @@ import {
   ButtonWrapper
 } from './styles'
 
-const ComponentDetail = components => component => key =>
- key in components ? components[key] : component
-
 const ModalImages = ({ status }) => {
-  return ComponentDetail({
+  return switchFn({
     RESERVED: null,
     UNPAID: {
       banner: RedBackground,
@@ -55,6 +54,11 @@ const ModalImages = ({ status }) => {
     INTRANSIT: {
       banner: LightgreyBackground,
       icon: IntransitIcon
+    },
+    LOSTINTRANSIT: {
+      banner: RedBackground,
+      icon: IntransitIcon,
+      iconBg: '#EB1E25'
     },
     DELIVERED: {
       banner: LightgreyBackground,
@@ -74,7 +78,7 @@ const ModalImages = ({ status }) => {
 }
 
 const ModalTitle = ({ status, receipt }) => {
-  return ComponentDetail({
+  return switchFn({
     RESERVED: null,
     UNPAID: (
       <FormattedMessage {...messages.unpaidTitle} />
@@ -84,6 +88,9 @@ const ModalTitle = ({ status, receipt }) => {
     ),
     INTRANSIT: (
       <FormattedMessage {...messages.intransitTitle} />
+    ),
+    LOSTINTRANSIT: (
+      <FormattedMessage {...messages.lostintransitTitle} />
     ),
     DELIVERED: (
       <FormattedMessage {...messages.deliveredTitle} />
@@ -98,7 +105,7 @@ const ModalTitle = ({ status, receipt }) => {
 }
 
 const ModalDescription = ({ status, receipt }) => {
-  return ComponentDetail({
+  return switchFn({
     RESERVED: null,
     UNPAID: (
       <FormattedMessage
@@ -113,6 +120,9 @@ const ModalDescription = ({ status, receipt }) => {
     INTRANSIT: (
       <FormattedMessage {...messages.intransitDescription} />
     ),
+    LOSTINTRANSIT: (
+      <FormattedMessage {...messages.lostintransitDescription} />
+    ),
     DELIVERED: (
       <FormattedMessage {...messages.deliveredDescription} />
     ),
@@ -126,7 +136,7 @@ const ModalDescription = ({ status, receipt }) => {
 }
 
 const ModalButtons = ({ status, goToReceipts, goToProducts, onClose }) => {
-  return ComponentDetail({
+  return switchFn({
     RESERVED: {
       primary: <FormattedMessage {...messages.buttonReserved} />,
       secondary: <FormattedMessage {...messages.secondaryButton} />,
@@ -147,6 +157,12 @@ const ModalButtons = ({ status, goToReceipts, goToProducts, onClose }) => {
     },
     INTRANSIT: {
       primary: <FormattedMessage {...messages.buttonIntransit} />,
+      secondary: <FormattedMessage {...messages.secondaryButton} />,
+      onClick: goToReceipts,
+      onClose
+    },
+    LOSTINTRANSIT: {
+      primary: <FormattedMessage {...messages.buttonLostIntransit} />,
       secondary: <FormattedMessage {...messages.secondaryButton} />,
       onClick: goToReceipts,
       onClose

@@ -36,7 +36,7 @@ export default defineMessages({
   },
   dateCASHLOSTINTRANSIT: {
     id: 'app.components.Purchase.dateCASHLOSTINTRANSIT',
-    defaultMessage: 'Date Lost In-transit'
+    defaultMessage: 'Date Unserved'
   },
   dateCASHDELIVERED: {
     id: 'app.components.Purchase.dateDELIVERED',
@@ -76,7 +76,7 @@ export default defineMessages({
   },
   dateCODLOSTINTRANSIT: {
     id: 'app.components.Purchase.dateCODLOSTINTRANSIT',
-    defaultMessage: 'Date Lost In-transit'
+    defaultMessage: 'Date Unserved'
   },
   dateCODDELIVERED: {
     id: 'app.components.Purchase.dateDELIVERED',

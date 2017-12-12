@@ -214,7 +214,7 @@ export default defineMessages({
   },
   dateCASHLOSTINTRANSIT: {
     id: 'app.components.Receipt.dateCASHLOSTINTRANSIT',
-    defaultMessage: 'Date Lost In-transit'
+    defaultMessage: 'Date Unserved'
   },
   dateCASHDELIVERED: {
     id: 'app.components.Receipt.dateDELIVERED',
@@ -254,7 +254,7 @@ export default defineMessages({
   },
   dateCODLOSTINTRANSIT: {
     id: 'app.components.Receipt.dateCODLOSTINTRANSIT',
-    defaultMessage: 'Date Lost In-transit'
+    defaultMessage: 'Date Unserved'
   },
   dateCODDELIVERED: {
     id: 'app.components.Receipt.dateDELIVERED',
