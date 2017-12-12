@@ -22,6 +22,9 @@ import 'slick-carousel/slick/slick-theme.css'
 // Import root app
 import App from 'containers/App'
 
+// Error Tracking
+import ErrorTracking from 'utils/errorTracking'
+
 // Import Language Provider
 import LanguageProvider from 'containers/LanguageProvider'
 
@@ -29,13 +32,19 @@ import LanguageProvider from 'containers/LanguageProvider'
 /* eslint-disable import/no-webpack-loader-syntax */
 import '!file-loader?name=[name].[ext]!./images/favicon.ico'
 // we need to add also the icon for our manifest
+import '!file-loader?name=[name].[ext]!./manifest.json'
+import 'file-loader?name=[name]!./.htaccess' // eslint-disable-line import/extensions
+import 'file-loader?name=[name]!./_redirects.sample' // eslint-disable-line import/extensions
+
+// we need to add also the icon for our manifest
 import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-48.png'
 import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-96.png'
 import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-144.png'
 import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-192.png'
-import '!file-loader?name=[name].[ext]!./manifest.json'
-import 'file-loader?name=[name]!./.htaccess' // eslint-disable-line import/extensions
-import 'file-loader?name=[name]!./_redirects.sample' // eslint-disable-line import/extensions
+import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-256.png'
+import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-384.png'
+import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-512.png'
+
 /* eslint-enable import/no-webpack-loader-syntax */
 
 import configureStore from './configureStore'
@@ -45,6 +54,9 @@ import { translationMessages } from './i18n'
 
 // Import CSS reset and Global Styles
 import './global-styles'
+
+// We need to install our sentryJS
+ErrorTracking.install()
 
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
