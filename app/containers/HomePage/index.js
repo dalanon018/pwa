@@ -14,8 +14,7 @@ import { compose } from 'redux'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
-import { fromJS } from 'immutable'
-import { ifElse, identity } from 'ramda'
+import { gt, ifElse, identity } from 'ramda'
 import { Container, Grid, Button, Input } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
@@ -47,8 +46,18 @@ import messages from './messages'
 import reducer from './reducer'
 import saga from './saga'
 
-import { getFeaturedProductsAction } from './actions'
-import { selectLoading, selectFeaturedProducts } from './selectors'
+import {
+  getFeaturedProductsAction
+} from './actions'
+import {
+  selectLoading,
+  selectFeaturedProducts,
+  selectTotalCount
+} from './selectors'
+import {
+  LIMIT_ITEMS
+} from './constants'
+
 import {
   BannerWrapper,
   SearchWrapper,
@@ -61,6 +70,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     changeRoute: PropTypes.func.isRequired,
     getProduct: PropTypes.func.isRequired,
     loader: PropTypes.bool.isRequired,
+    totalFeaturedProductCount: PropTypes.number.isRequired,
     featuredProducts: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.object
@@ -78,10 +88,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     setShowActivityIcon: PropTypes.func.isRequired
   }
 
-  state = {
-    products: fromJS([])
-  }
-
   constructor () {
     super()
 
@@ -94,10 +100,11 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   _displayViewAll () {
-    const { featuredProducts } = this.props
-
-    if (featuredProducts.size > 4) {
-      return (
+    const { totalFeaturedProductCount } = this.props
+    const componentRender = ifElse(
+      gt(LIMIT_ITEMS),
+      () => null,
+      () => (
         <Grid padded>
           <Grid.Row centered>
             <Button
@@ -107,9 +114,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           </Grid.Row>
         </Grid>
       )
-    }
+    )
 
-    return null
+    return componentRender(totalFeaturedProductCount)
   }
 
   _shouldDisplayHeader = (component) => ifElse(
@@ -139,12 +146,11 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render () {
-    const { loader, featuredCategories, featuredBrands, changeRoute, windowWidth, intl, brandLoader } = this.props
-    const { products } = this.state
+    const { loader, featuredProducts, featuredCategories, featuredBrands, changeRoute, windowWidth, intl, brandLoader } = this.props
     const numSlide = windowWidth > 767 ? 2 : 1
     const imgixOptions = {
-      w: 414,
-      h: 246,
+      w: 800,
+      h: 400,
       fit: 'clamp',
       auto: 'compress',
       q: 35,
@@ -152,9 +158,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     }
 
     const bannerImages = [
-      paramsImgix('https://cliqq.imgix.net/sample_banner.jpg', imgixOptions),
-      paramsImgix('https://cliqq.imgix.net/sample_banner.jpg', imgixOptions),
-      paramsImgix('https://cliqq.imgix.net/sample_banner.jpg', imgixOptions)
+      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner1.png', imgixOptions),
+      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner2.png', imgixOptions),
+      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner3.png', imgixOptions),
+      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner4.png', imgixOptions)
     ]
 
     return (
@@ -162,9 +169,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         <Helmet
           title='Home Page'
           meta={[
-            { name: 'description', content: '7-eleven CliQQ home page' }
+          { name: 'description', content: '7-eleven CliQQ home page' }
           ]}
-        />
+      />
 
         <SearchContainer className='background__light-grey' data-attribute='search'>
           <Grid padded>
@@ -206,7 +213,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           <ProductView
             changeRoute={changeRoute}
             loader={loader}
-            products={products}
+            products={featuredProducts}
             windowWidth={windowWidth} />
           { this._displayViewAll() }
 
@@ -256,7 +263,8 @@ const mapStateToProps = createStructuredSelector({
   brandLoader: selectLoader(),
   featuredProducts: selectFeaturedProducts(),
   featuredCategories: selectFeaturedCategories(),
-  featuredBrands: selectFeaturedBrands()
+  featuredBrands: selectFeaturedBrands(),
+  totalFeaturedProductCount: selectTotalCount()
 })
 
 function mapDispatchToProps (dispatch) {

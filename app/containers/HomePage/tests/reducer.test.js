@@ -8,7 +8,8 @@ describe('homePageReducer', () => {
   beforeEach(() => {
     state = fromJS({
       product: {},
-      loading: true
+      loading: true,
+      totalCount: 0
     })
   })
 

@@ -7,7 +7,9 @@
 import {
   DEFAULT_ACTION,
   GET_FEATURED_PRODUCTS,
-  SET_FEATURED_PRODUCTS
+  SET_FEATURED_PRODUCTS,
+
+  SET_PRODUCTS_COUNT
 } from './constants'
 
 export function defaultAction () {
@@ -26,6 +28,13 @@ export function getFeaturedProductsAction (payload) {
 export function setFeaturedProductsAction (payload) {
   return {
     type: SET_FEATURED_PRODUCTS,
+    payload
+  }
+}
+
+export function setProductsCountsAction (payload) {
+  return {
+    type: SET_PRODUCTS_COUNT,
     payload
   }
 }

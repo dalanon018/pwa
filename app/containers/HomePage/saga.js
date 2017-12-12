@@ -1,10 +1,13 @@
 import { isEmpty } from 'lodash'
 import {
   call,
+  cancel,
   fork,
-  put
+  put,
+  take
 } from 'redux-saga/effects'
 import { compose, map, filter, prop, propOr } from 'ramda'
+import { LOCATION_CHANGE } from 'react-router-redux'
 import { takeLatest } from 'redux-saga'
 
 // import request from 'utils/request'
@@ -13,11 +16,13 @@ import { getRequestData } from 'utils/offline-request'
 import { transformProduct } from 'utils/transforms'
 
 import {
-  GET_FEATURED_PRODUCTS
+  GET_FEATURED_PRODUCTS,
+  LIMIT_ITEMS
 } from './constants'
 
 import {
-  setFeaturedProductsAction
+  setFeaturedProductsAction,
+  setProductsCountsAction
 } from './actions'
 
 import {
@@ -41,9 +46,13 @@ function * transformEachEntity (entity) {
   return response
 }
 
+export function * initializeAppGlobals () {
+  // code block
+}
+
 export function * getProduct (data) {
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/productList/featured?offset=0&limit=5`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/productList/featured?offset=0&limit=${LIMIT_ITEMS}`, {
     method: 'GET',
     token: token.access_token
   })
@@ -55,10 +64,20 @@ export function * getProduct (data) {
       propOr([], 'productList')
     )
     const products = yield transform(req)
+    const count = propOr(0, 'totalCount', req)
     yield put(setFeaturedProductsAction(products))
+    yield put(setProductsCountsAction(count))
   } else {
-    yield put(setNetworkErrorAction('No cache data'))
+    yield put(setNetworkErrorAction(500))
   }
+}
+
+/**
+ * Watches for Every change of locations from router
+ * once this triggers we need to check all the items under `initializeAppGlobals`
+ */
+export function * getLocationChangeWatcher () {
+  yield takeLatest(LOCATION_CHANGE, initializeAppGlobals)
 }
 
 export function * getProductSaga () {
@@ -67,9 +86,11 @@ export function * getProductSaga () {
 
 // Individual exports for testing
 export function * homePageSagas () {
-  yield [
+  const watcher = yield [
     fork(getProductSaga)
   ]
+  yield take(LOCATION_CHANGE)
+  yield watcher.map(task => cancel(task))
 }
 
 // All sagas to be loaded

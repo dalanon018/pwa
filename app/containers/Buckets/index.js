@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import ReactNotification from 'react-notification-system'
-import { switchFn } from 'utils/logicHelper'
 
 import {
   identity,
@@ -18,14 +17,33 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
-import { Switch, Route } from 'react-router-dom'
+import { Switch } from 'react-router-dom'
 
+import HocRoute from 'components/HocRoute'
 import Firebase from 'utils/firebase-realtime'
 import Notification from 'utils/firebase-notification'
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
 import { isMobileDevice } from 'utils/http'
+import { switchFn } from 'utils/logicHelper'
+import {
+  ENVIROMENT,
+  HOME_NAME
+  // PURCHASES_NAME,
+  // RECEIPTPAGE_NAME,
+  // PRODUCT_NAME,
+  // PRODUCTREVIEW_NAME,
+  // CATEGORIES_NAME,
+  // PRODUCTSCATEGORY_NAME,
+  // FAQ_NAME,
+  // PRIVACY_NAME,
+  // TERMS_NAME,
+  // SEARCH_NAME,
+  // BRAND_NAME,
+  // FEATURES_NAME,
+  // OFFLINE_NAME
+} from 'containers/App/constants'
 
 import {
   selectProductCategories,
@@ -58,10 +76,6 @@ import {
 import {
   HIDE_BACK_BUTTON
 } from './constants'
-
-import {
-  ENVIROMENT
-} from 'containers/App/constants'
 
 import {
   getSearchProductAction,
@@ -354,7 +368,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
         <MainContent
           toggleSidebar={toggleSidebar} >
           <Switch>
-            <Route exact path='/' component={HomePage} />
+            <HocRoute routeName={HOME_NAME} exact path='/' component={HomePage} />
           </Switch>
         </MainContent>
         <div
