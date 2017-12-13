@@ -86,6 +86,4 @@ export function * receiptSagas () {
 }
 
 // All sagas to be loaded
-export default [
-  receiptSagas
-]
+export default receiptSagas
