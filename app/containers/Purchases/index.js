@@ -10,23 +10,28 @@ import styled from 'styled-components'
 
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
+import { compose as ReduxCompose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 import { Tab } from 'semantic-ui-react'
 
+import injectSaga from 'utils/injectSaga'
+import injectReducer from 'utils/injectReducer'
+
 import WindowWidth from 'components/WindowWidth'
 
-import {
-  userIsAuthenticated
-} from 'containers/App/auth'
-
+import { userIsAuthenticated } from 'containers/App/auth'
 import {
   setPageTitleAction,
+  setRouteNameAction,
   setShowSearchIconAction,
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
+import { PURCHASES_NAME } from 'containers/Buckets/constants'
 
 import EmptyPurchase from './EmptyPurchases'
 import EntityPurchases from './EntityPurchases'
+import reducer from './reducer'
+import saga from './saga'
 
 import {
   selectLoader,
@@ -34,7 +39,6 @@ import {
   selectCompletedPurchases,
   selectExpiredPurchases
 } from './selectors'
-
 import {
   getApiPurchasesAction,
   getStoragePurchasesAction
@@ -72,18 +76,29 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
   }
 
   state = {
-    current: null
+    current: null,
+    activePane: 'Active'
   }
 
   _goToHome = () => {
     this.props.changeRoute('/')
   }
 
+  _onTabChange = (e, { panes, activeIndex }) => {
+    const { activePane } = this.state
+    const { menuItem } = panes[activeIndex]
+
+    this.setState({
+      activePane: menuItem || activePane
+    })
+  }
+
   _handleShow = (entity) => {
+    const { activePane } = this.state
     const { loading, changeRoute, windowWidth } = this.props
 
     if (loading === false && entity.size === 0) {
-      return <EmptyPurchase />
+      return <EmptyPurchase active={activePane} />
     }
 
     return (
@@ -102,8 +117,9 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
   }
 
   componentDidMount () {
-    const { getApiPurchases, getLocalPurchases } = this.props
+    const { getApiPurchases, getLocalPurchases, setRouteName } = this.props
 
+    setRouteName(PURCHASES_NAME)
     // first we have to fetch what we already have on our local storage
     getLocalPurchases()
     // then we will call from our API
@@ -115,7 +131,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
 
     const panes = [
       { menuItem: 'Active', render: () => <Tab.Pane>{this._handleShow(activePurchases)}</Tab.Pane> },
-      { menuItem: 'Compeleted', render: () => <Tab.Pane>{this._handleShow(completedPurchases)}</Tab.Pane> },
+      { menuItem: 'Completed', render: () => <Tab.Pane>{this._handleShow(completedPurchases)}</Tab.Pane> },
       { menuItem: 'Expired', render: () => <Tab.Pane>{this._handleShow(expiredPurchases)}</Tab.Pane> }
     ]
 
@@ -128,7 +144,10 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
           ]}
         />
 
-        <Tab panes={panes} />
+        <Tab
+          onTabChange={this._onTabChange}
+          panes={panes}
+        />
       </PurchaseWrapper>
     )
   }
@@ -143,6 +162,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
+    setRouteName: (payload) => dispatch(setRouteNameAction(payload)),
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
@@ -153,4 +173,12 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(userIsAuthenticated(Purchases)))
+const withConnect = connect(mapStateToProps, mapDispatchToProps)
+const withReducer = injectReducer({ key: 'purchases', reducer })
+const withSaga = injectSaga({ key: 'purchases', saga })
+
+export default ReduxCompose(
+  withReducer,
+  withSaga,
+  withConnect
+)(WindowWidth(userIsAuthenticated(Purchases)))

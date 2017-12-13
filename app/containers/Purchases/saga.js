@@ -48,7 +48,7 @@ import {
 
 import {
   getAccessToken
-} from 'containers/Buckets/sagas'
+} from 'containers/Buckets/saga'
 
 function * transformEachEntity (entity) {
   const response = yield call(transformOrder, entity)
@@ -87,6 +87,7 @@ function * findAndUpdateReceiptDetails (apiOrders) {
       assoc('lastUpdated', prop('lastUpdated', data)),
       assoc('status', prop('status', data)),
       assoc('brand', propOr({}, 'brand', data)),
+      assoc('claimCode', prop('claimCode', data)),
       assoc('sevenConnectRefNum', prop('sevenConnectRefNum', data)),
       assoc('facilityName', prop('facilityName', data))
     )(oldReceipt)
@@ -144,7 +145,7 @@ export function * getApiPurchases () {
 
     yield put(setPurchasesAction(transform))
   } else {
-    yield put(setNetworkErrorAction('No cache data'))
+    yield put(setNetworkErrorAction(500))
   }
 }
 
@@ -175,6 +176,4 @@ export function * purchasesSagas () {
 }
 
 // All sagas to be loaded
-export default [
-  purchasesSagas
-]
+export default purchasesSagas
