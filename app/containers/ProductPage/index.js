@@ -4,12 +4,14 @@
  *
  */
 
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
+import { compose as ReduxCompose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 import { noop } from 'lodash'
 import {
@@ -23,6 +25,10 @@ import {
   when,
   T
 } from 'ramda'
+
+import injectSaga from 'utils/injectSaga'
+import injectReducer from 'utils/injectReducer'
+
 import { isMobileDevice } from 'utils/http'
 import { FbEventTracking } from 'utils/seo'
 import { imageStock } from 'utils/image-stock'
@@ -31,7 +37,20 @@ import Product from 'components/Product'
 import WindowWidth from 'components/WindowWidth'
 import Modal from 'components/PromptModal'
 
+import {
+  setPageTitleAction,
+  setRouteNameAction,
+  setShowSearchIconAction,
+  setShowActivityIconAction,
+  setHeaderFullScreenAction
+} from 'containers/Buckets/actions'
+import {
+  PRODUCT_NAME
+} from 'containers/Buckets/constants'
+
 import messages from './messages'
+import reducer from './reducer'
+import saga from './saga'
 
 import {
   selectLoader,
@@ -46,13 +65,6 @@ import {
   setCurrentProductAction,
   setProductHandlersDefaultAction
 } from './actions'
-
-import {
-  setPageTitleAction,
-  setShowSearchIconAction,
-  setShowActivityIconAction,
-  setHeaderFullScreenAction
-} from 'containers/Buckets/actions'
 
 export class ProductPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
@@ -196,9 +208,10 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   componentDidMount () {
-    const { params: { id }, getProduct } = this.props
+    const { match: { params: { id } }, getProduct, setRouteName } = this.props
 
     getProduct({ id })
+    setRouteName(PRODUCT_NAME)
   }
 
   componentWillUnmount () {
@@ -280,6 +293,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
+    setRouteName: (payload) => dispatch(setRouteNameAction(payload)),
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setHeaderMenuFullScreen: (payload) => dispatch(setHeaderFullScreenAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
@@ -293,4 +307,12 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(injectIntl(ProductPage)))
+const withConnect = connect(mapStateToProps, mapDispatchToProps)
+const withReducer = injectReducer({ key: 'productPage', reducer })
+const withSaga = injectSaga({ key: 'productPage', saga })
+
+export default ReduxCompose(
+  withReducer,
+  withSaga,
+  withConnect
+)(WindowWidth(injectIntl(ProductPage)))

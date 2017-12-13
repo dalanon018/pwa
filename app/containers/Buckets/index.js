@@ -69,6 +69,8 @@ import {
 } from 'containers/SearchPage/actions'
 
 import HomePage from 'containers/HomePage/Loadable'
+import ProductPage from 'containers/ProductPage/Loadable'
+
 import ModalWithHeader from 'components/ModalWithHeader'
 import Modal from 'components/PromptModal'
 import WindowWidth from 'components/WindowWidth'
@@ -231,19 +233,19 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
    * then we will show the backbutton
    */
   _hideBackButton = () => {
-    const { match: { path } } = this.props
+    const { location: { pathname } } = this.props
 
-    return HIDE_BACK_BUTTON.includes(path.split('/')[1])
+    return HIDE_BACK_BUTTON.includes(pathname.split('/')[1])
   }
 
   _displayHeader = () => {
-    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, match: { path }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen } = this.props
+    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, location: { pathname }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen } = this.props
     /**
      * we have to identify if we should display backbutton
      */
     const hideBackButton = this._hideBackButton()
 
-    if (path === '/search') {
+    if (pathname === '/search') {
       return (
         <SearchMenu
           clearSearch={setProductSearchList}
@@ -361,6 +363,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
           toggleSidebar={toggleSidebar} >
           <Switch>
             <Route exact path='/' component={HomePage} />
+            <Route path='/product/:id' component={ProductPage} />
           </Switch>
         </MainContent>
         <div
