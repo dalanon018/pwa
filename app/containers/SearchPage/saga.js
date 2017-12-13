@@ -34,7 +34,7 @@ import {
 
 import {
   getAccessToken
-} from 'containers/Buckets/sagas'
+} from 'containers/Buckets/saga'
 
 function * transformEachEntity (entity) {
   const response = yield call(transformProduct, entity)
@@ -59,7 +59,7 @@ export function * getProductSearch (payload) {
 
     yield put(setSearchProductAction(products))
   } else {
-    yield put(setNetworkErrorAction('No cache data'))
+    yield put(setNetworkErrorAction(500))
   }
 }
 
@@ -113,6 +113,4 @@ export function * searchPageSagas () {
 }
 
 // All sagas to be loaded
-export default [
-  searchPageSagas
-]
+export default searchPageSagas
