@@ -56,7 +56,7 @@ export default defineMessages({
   },
   lostintransitDescription: {
     id: 'app.components.ModalWithHeader.lostintransitDescription',
-    defaultMessage: 'Sorry, your order cannot be delivered.'
+    defaultMessage: 'We are sorry your item cannot be delivered. Would you like to browse the catalog?'
   },
   deliveredDescription: {
     id: 'app.components.ModalWithHeader.deliveredDescription',
@@ -88,7 +88,7 @@ export default defineMessages({
   },
   buttonLostIntransit: {
     id: 'app.components.ModalWithHeader.buttonLostIntransit',
-    defaultMessage: 'Got It !'
+    defaultMessage: 'No, thanks!'
   },
   buttonDelivered: {
     id: 'app.components.ModalWithHeader.buttonDelivered',
@@ -112,6 +112,6 @@ export default defineMessages({
   },
   secondaryBrowseCatalog: {
     id: 'app.components.ModalWithHeader.secondaryBrowseCatalog',
-    defaultMessage: 'Browse the catalog'
+    defaultMessage: 'Yes, please!'
   }
 })
