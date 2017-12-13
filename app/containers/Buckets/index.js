@@ -70,7 +70,9 @@ import {
 
 import HomePage from 'containers/HomePage/Loadable'
 import ProductPage from 'containers/ProductPage/Loadable'
+
 import NotFound from 'containers/PageNotFound/Loadable'
+import OfflinePage from 'containers/PageOffline/Loadable'
 
 import ModalWithHeader from 'components/ModalWithHeader'
 import Modal from 'components/PromptModal'
@@ -366,6 +368,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
             <Route exact path='/' component={HomePage} />
             <Route path='/product/:id' component={ProductPage} />
 
+            <Route path='/offline' component={OfflinePage} />
             <Route path='' component={NotFound} />
           </Switch>
         </MainContent>
