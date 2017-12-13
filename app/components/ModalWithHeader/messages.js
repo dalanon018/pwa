@@ -88,7 +88,7 @@ export default defineMessages({
   },
   buttonLostIntransit: {
     id: 'app.components.ModalWithHeader.buttonLostIntransit',
-    defaultMessage: 'No, thanks !'
+    defaultMessage: 'No, thanks!'
   },
   buttonDelivered: {
     id: 'app.components.ModalWithHeader.buttonDelivered',
