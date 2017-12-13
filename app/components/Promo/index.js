@@ -36,10 +36,10 @@ function Promo ({
         loader ? <DefaultState loader={loader} />
         : <List>
           <List.Item>
-            <Image alt='Cliqq' src={SamplePromo} />
+            <Image alt='CLiQQ' src={SamplePromo} />
           </List.Item>
           <List.Item>
-            <Image alt='Cliqq' src={SamplePromo} />
+            <Image alt='CLiQQ' src={SamplePromo} />
           </List.Item>
         </List>
       }

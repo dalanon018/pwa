@@ -30,6 +30,10 @@ export default defineMessages({
     id: 'app.components.Receipt.CASHINTRANSIT',
     defaultMessage: 'Please wait for an SMS telling you that your order is in the store'
   },
+  CASHLOSTINTRANSIT: {
+    id: 'app.components.Receipt.CASHLOSTINTRANSIT',
+    defaultMessage: 'Follow us on Social Media for all the latest updates!'
+  },
   CASHDELIVERED: {
     id: 'app.components.Receipt.CASHDELIVERED',
     defaultMessage: 'Your item is now ready for pick up at {storeName}'
@@ -44,7 +48,7 @@ export default defineMessages({
   },
   CODRESERVED: {
     id: 'app.components.Receipt.CODRESERVED',
-    defaultMessage: 'Show this barcode at any 7 Eleven store and pay for your item within:'
+    defaultMessage: 'Please wait for an SMS telling you that your order is in the store'
   },
   CODRESERVEDEXPIRED: {
     id: 'app.components.Receipt.CODRESERVEDEXPIRED',
@@ -65,6 +69,10 @@ export default defineMessages({
   CODINTRANSIT: {
     id: 'app.components.Receipt.CODINTRANSIT',
     defaultMessage: 'Please wait for an SMS telling you that your order is in the store'
+  },
+  CODLOSTINTRANSIT: {
+    id: 'app.components.Receipt.CODLOSTINTRANSIT',
+    defaultMessage: 'Follow us on Social Media for all the latest updates!'
   },
   CODDELIVERED: {
     id: 'app.components.Receipt.CODDELIVERED',
@@ -118,7 +126,7 @@ export default defineMessages({
   },
   returnPolicyTitle: {
     id: 'app.components.Receipt.returnToHome',
-    defaultMessage: 'Cliqq Return Policy'
+    defaultMessage: 'CLiQQ Return Policy'
   },
   returnPolicyDescriptionValid: {
     id: 'app.components.Receipt.returnPolicyDescription',
@@ -126,7 +134,7 @@ export default defineMessages({
   },
   returnPolicyDescriptionWarningValid: {
     id: 'app.components.Receipt.returnPolicyDescriptionWarning',
-    defaultMessage: 'Not satisfied with your purchase? Depending on your CliQQ Care Policy, you can return your item anytime of the day within 7 days from claim date. Just go to you nearest 711 Store where the item was purchased and get your Return Slip from the CliQQ Kiosk and bring it to the cashier'
+    defaultMessage: 'Not satisfied with your purchase? Depending on your CLiQQ Care Policy, you can return your item anytime of the day within 7 days from claim date. Just go to you nearest 711 Store where the item was purchased and get your Return Slip from the CLiQQ Kiosk and bring it to the cashier'
   },
   returnPolicyDescriptionInvalid: {
     id: 'app.components.Receipt.returnPolicyDescription',
@@ -202,7 +210,11 @@ export default defineMessages({
   },
   dateCASHINTRANSIT: {
     id: 'app.components.Receipt.dateCASHINTRANSIT',
-    defaultMessage: 'Date Paid'
+    defaultMessage: 'Date In-transit'
+  },
+  dateCASHLOSTINTRANSIT: {
+    id: 'app.components.Receipt.dateCASHLOSTINTRANSIT',
+    defaultMessage: 'Date Unserved'
   },
   dateCASHDELIVERED: {
     id: 'app.components.Receipt.dateDELIVERED',
@@ -218,7 +230,7 @@ export default defineMessages({
   },
   dateCODRESERVED: {
     id: 'app.components.Receipt.dateCODRESERVED',
-    defaultMessage: 'Valid Until'
+    defaultMessage: 'Date Ordered'
   },
   dateCODRESERVEDEXPIRED: {
     id: 'app.components.Receipt.dateCODRESERVEDEXPIRED',
@@ -238,7 +250,11 @@ export default defineMessages({
   },
   dateCODINTRANSIT: {
     id: 'app.components.Receipt.dateCODINTRANSIT',
-    defaultMessage: 'Date Ordered'
+    defaultMessage: 'Date In-transit'
+  },
+  dateCODLOSTINTRANSIT: {
+    id: 'app.components.Receipt.dateCODLOSTINTRANSIT',
+    defaultMessage: 'Date Unserved'
   },
   dateCODDELIVERED: {
     id: 'app.components.Receipt.dateDELIVERED',
@@ -266,7 +282,7 @@ export default defineMessages({
   },
   pushNotifDescription: {
     id: 'app.components.Receipt.pushNotifDescription',
-    defaultMessage: 'Would you like to receive notifications on your phone for the latest updates on Cliqq?'
+    defaultMessage: 'Would you like to receive notifications on your phone for the latest updates on CLiQQ?'
   },
   instructionsLabel: {
     id: 'app.components.Receipt.instructionsLabel',

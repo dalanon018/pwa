@@ -19,19 +19,20 @@ import {
   ImageWrapper,
   ProductInfo,
   ProductPriceWrapper,
-  ProductWrapper
+  ProductWrapper,
+  RibbonWrapper,
+  ImageContent
 } from './styles'
 
 import EmptyDataBlock from 'components/EmptyDataBlock'
-import defaultImage from 'images/default-product.jpg'
 
 import ParagraphImage from 'images/test-images/short-paragraph.png'
 
 import { imageStock, paramsImgix } from 'utils/image-stock'
 
 const imgixOptions = {
-  w: 175,
-  h: 175,
+  w: 300,
+  h: 300,
   fit: 'clamp',
   auto: 'compress',
   q: 35,
@@ -46,20 +47,6 @@ function ProductView ({
 }) {
   const columnCount = windowWidth > 767 ? 4 : 2
 
-  const productName = (data) => {
-    let maxChar = 33
-    switch (true) {
-      case (windowWidth >= 767):
-        maxChar = 100
-        break
-    }
-
-    if (data.length > maxChar) {
-      return `${data.slice(0, maxChar)}...`
-    }
-    return data
-  }
-
   const toggleOrigDiscountPrice = (product) => {
     const showPrice = product.get('discountPrice') || product.get('price')
 
@@ -71,11 +58,11 @@ function ProductView ({
     () => component1,
     () => component2
   )(condition)
-
   return (
     <Grid padded stretched columns={columnCount}>
       {
-        loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
+        // we need to make sure to show this only if only if not items yet and we are loading
+        (loader && products.size === 0) ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
         : products.valueSeq().map((product, index) => {
           const goToProduct = () => changeRoute(`/product/${product.get('cliqqCode').first()}`)
           const toggleDiscountLabel = showDiscountPrice(
@@ -93,11 +80,21 @@ function ProductView ({
               onClick={goToProduct}>
               <ProductWrapper>
                 <ImageWrapper>
-                  <Image alt={productName(product.get('title'))} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || defaultImage} />
+                  <ImageContent>
+                    <Image alt={product.get('title')} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
+                    {
+                      +product.get('quantity') === 0 &&
+                      <RibbonWrapper>
+                        <div className='ribbon-tag'>
+                          <FormattedMessage className='ribbon-text' {...messages.noStock} />
+                        </div>
+                      </RibbonWrapper>
+                    }
+                  </ImageContent>
                 </ImageWrapper>
                 <ProductInfo brandName={product.get('brand')}>
                   <Label as='span' className='brand-name color__secondary' basic size='medium'>{product.getIn(['brand', 'name'])}</Label>
-                  <Label className='no-bottom-margin product-name color__secondary' as='p' basic size='tiny'>{productName(product.get('title'))}</Label>
+                  <Label className='no-bottom-margin product-name color__secondary' as='p' basic size='tiny'>{product.get('title')}</Label>
                   <ProductPriceWrapper>
                     <Label className='product-price' as='b' color='orange' basic size='massive'>
                       <FormattedMessage {...messages.peso} />
@@ -124,9 +121,9 @@ const DefaultState = () => {
       <EmptyDataBlock>
         <ProductWrapper>
           <ImageWrapper>
-            <Image alt='Cliqq' src={imageStock('Brands-Default.jpg', imgixOptions)} className='empty-image' />
+            <Image alt='CLiQQ' src={imageStock('Brands-Default.jpg', imgixOptions)} className='empty-image' />
           </ImageWrapper>
-          <Image alt='Cliqq' src={ParagraphImage} height={50} />
+          <Image alt='CLiQQ' src={ParagraphImage} height={50} />
         </ProductWrapper>
       </EmptyDataBlock>
     </Grid.Column>

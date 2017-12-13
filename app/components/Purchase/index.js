@@ -17,6 +17,7 @@ import Countdown from 'components/Countdown'
 import { paramsImgix } from 'utils/image-stock'
 import { DateFormater } from 'utils/date' // DateFormater
 import { handlingStatus } from 'utils/ordersHelper'
+import { switchFn } from 'utils/logicHelper'
 
 import purchasesMessages from 'containers/Purchases/messages'
 import {
@@ -90,14 +91,6 @@ const OtherInfo = styled.div`
     }
   }
 `
-
-/**
- * Currying for instead of using *ugly SWITCH statement
- * @param {*} cases
- */
-const switchFn = cases => defaultCase => key =>
- key in cases ? cases[key] : defaultCase
-
 class Purchase extends React.PureComponent {
   static propTypes = {
     receipt: PropTypes.object.isRequired,
@@ -130,8 +123,9 @@ class Purchase extends React.PureComponent {
       RESERVED: '#F58322',
       UNPAID: '#F23640',
       CONFIRMED: '#F58322',
-      INTRANSIT: '#EFBA03',
-      DELIVERED: '#8DC640',
+      INTRANSIT: '#F58322',
+      LOSTINTRANSIT: '#F23640',
+      DELIVERED: '#F58322',
       CLAIMED: '#8DC640',
       UNCLAIMED: '#F23640'
     })('#F58322')(status)
@@ -155,11 +149,12 @@ class Purchase extends React.PureComponent {
       partialRight(DateFormater, ['MM-DD-YYYY']),
       switchFn({
         PROCESSING: receipt.get('dateCreated'),
-        PROCESSINGINTRANSIT: receipt.get('dateCreated'),
         CONFIRMED: receipt.get('lastUpdated'),
         INTRANSIT: receipt.get('lastUpdated'),
-        CLAIMED: receipt.get('claimDate'),
-        DELIVERED: receipt.get('lastUpdated')
+        CLAIMED: receipt.get('lastUpdated'),
+        DELIVERED: receipt.get('lastUpdated'),
+        UNPAID: receipt.get('lastUpdated'),
+        UNCLAIMED: receipt.get('lastUpdated')
       })(receipt.get('claimExpiry')),
       handleStatus
     )
@@ -168,15 +163,16 @@ class Purchase extends React.PureComponent {
   }
 
   _handleDateValue = () => {
-    const { timer, receipt, statuses } = this.props
-    const currentStatus = statuses[receipt.get('status')]
+    const { timer, statuses, receipt } = this.props
+    const currentStatus = statuses[receipt.get('status')] || ''
+    const handleStatus = handlingStatus(this._handleModePayment())
     const Timer = timer || '00:00:00'
 
     return switchFn({
       RESERVED: <p> { Timer } </p>
     })(
       this._handleDateVisible()
-    )(currentStatus)
+    )(handleStatus(currentStatus))
   }
 
   _handleModePayment = () => {

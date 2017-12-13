@@ -26,11 +26,11 @@ export default defineMessages({
   },
   copyRight: {
     id: `${idSuffix}.copyRight.message`,
-    defaultMessage: `© 2017 Cliqq. All Rights Reserved`
+    defaultMessage: `CLiQQ All Rights Reserved`
   },
   storeDelivery: {
     id: `${idSuffix}.storeDelivery`,
-    defaultMessage: `1 Day In-Store Delivery`
+    defaultMessage: `In-Store Delivery`
   },
   freeShippingDelivery: {
     id: `${idSuffix}.freeShippingDelivery`,
@@ -38,7 +38,7 @@ export default defineMessages({
   },
   returnPolicy: {
     id: `${idSuffix}.returnPolicy`,
-    defaultMessage: `Cliqq Return Policy`
+    defaultMessage: `CLiQQ Return Policy`
   },
   changeMind: {
     id: `${idSuffix}.returnPolicy`,

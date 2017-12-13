@@ -4,13 +4,16 @@ import JsBarcode from 'jsbarcode'
 import {
   T,
   always,
+  both,
   compose,
   cond,
   contains,
+  complement,
   equals,
   ifElse,
   partialRight
 } from 'ramda'
+import { noop } from 'lodash'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Label, Button, Image, Checkbox } from 'semantic-ui-react'
 
@@ -22,6 +25,8 @@ import ReturnIcon from 'images/icons/receipts/return-icon-receipt.svg'
 import { DateFormater } from 'utils/date' // DateFormater
 import { PhoneFormatter } from 'utils/string'
 import { handlingStatus } from 'utils/ordersHelper'
+import { isIphone } from 'utils/http'
+import { switchFn } from 'utils/logicHelper'
 
 import PurchaseOrder from './PurchaseOrder'
 import PurchaseUsecase from './PurchaseUsecase'
@@ -41,7 +46,8 @@ import {
   ReceiptWrapper,
   ScannerWrapper,
   PushNotificationWrapper,
-  MatchCode
+  MatchCode,
+  PayCode
   // InstructionsWrapper
 } from './styled'
 
@@ -56,9 +62,6 @@ import {
   EXPIRED,
   DEFAULT_METHOD_PAYMENT
 } from 'containers/Buckets/constants'
-
-const ComponentDetail = components => component => key =>
- key in components ? components[key] : component
 
 const ReturnInfo = ({ returnable, actionButton }) => (
   <WarningDescription>
@@ -82,7 +85,7 @@ const ReturnInfo = ({ returnable, actionButton }) => (
 
 const WarningStatus = ({ status, returnable }) => {
   const isReturnabled = returnable ? 'Valid' : 'Invalid'
-  return ComponentDetail({
+  return switchFn({
     CLAIMED: (
       <ReturnInfo
         returnable={isReturnabled}
@@ -131,7 +134,7 @@ class Receipt extends React.PureComponent {
       storeName: receipt.get('storeName')
     }
 
-    if (purchaseOrder.includes(status)) {
+    if (purchaseOrder.includes(status) && receipt.get('modePayment') === this._defaultModePayment) {
       return (
         <PurchaseOrder
           {...defaultProps}
@@ -145,11 +148,11 @@ class Receipt extends React.PureComponent {
   }
 
   _handleScanAnimate = (e, data) => {
-    const block = document.getElementsByClassName('scan')
+    const block = document.getElementsByClassName('scan')[0]
 
     setTimeout(() => {
       this.setState({
-        show: block[0].offsetHeight
+        show: block ? block.offsetHeight : 0
       })
     }, 500)
   }
@@ -180,7 +183,7 @@ class Receipt extends React.PureComponent {
     const { receipt, statuses } = this.props
     const currentStatus = statuses[receipt.get('status')] || 'FieldDefault'
     const modePayment = this._handleModePayment()
-
+    console.log(`date${modePayment}${currentStatus}`)
     return (
       <FormattedMessage {...messages[`date${modePayment}${currentStatus}`]} />
     )
@@ -193,13 +196,15 @@ class Receipt extends React.PureComponent {
 
     const handleDate = compose(
       partialRight(DateFormater, ['MM-DD-YYYY']),
-      ComponentDetail({
+      switchFn({
         PROCESSING: receipt.get('dateCreated'),
-        PROCESSINGINTRANSIT: receipt.get('dateCreated'),
         CONFIRMED: receipt.get('lastUpdated'),
         INTRANSIT: receipt.get('lastUpdated'),
-        CLAIMED: receipt.get('claimDate'),
-        DELIVERED: receipt.get('lastUpdated')
+        LOSTINTRANSIT: receipt.get('lastUpdated'),
+        CLAIMED: receipt.get('lastUpdated'),
+        DELIVERED: receipt.get('lastUpdated'),
+        UNPAID: receipt.get('lastUpdated'),
+        UNCLAIMED: receipt.get('lastUpdated')
       })(receipt.get('claimExpiry')),
       handleStatus
     )
@@ -210,7 +215,7 @@ class Receipt extends React.PureComponent {
   _handlePushRegistrationUI = () => {
     const { isRegisteredPush, registerPushNotification, loadingPushToggle } = this.props
     const displayUI = ifElse(
-      equals(false),
+      both(equals(false), complement(isIphone)),
       () => (
         <PushNotificationWrapper>
           <Grid padded>
@@ -246,7 +251,7 @@ class Receipt extends React.PureComponent {
     const { receipt, statuses, goReceiptPage, goToProduct } = this.props
     const currentStatus = statuses[receipt.get('status')] || ''
 
-    return ComponentDetail({
+    return switchFn({
       UNPAID: (
         <Button fluid onClick={goToProduct} primary>
           <FormattedMessage {...messages.rePurchase} />
@@ -259,37 +264,52 @@ class Receipt extends React.PureComponent {
     )(currentStatus)
   }
 
-  _handleParseTrackNumber = (str) => {
-    const { receipt } = this.props
+  _handleMatchCode = (str) => {
+    const { receipt, statuses } = this.props
+    const currentStatus = statuses[receipt.get('status')] || ''
+    const handleStatus = handlingStatus(this._handleModePayment())
 
-    if (receipt.get('modePayment') !== this._defaultModePayment) {
-      return (
-        <Label as='p' basic size='big' className='color__secondary'>
-          {str && str.slice(0, -3)}
-          <MatchCode>{str && str.slice(-3)}</MatchCode>
-        </Label>
-      )
-    }
+    const handleMatchCodeComponent = compose(
+      switchFn({
+        RESERVED: null,
+        UNPAID: null
+      })(
+        <MatchCode>
+          <div className='border-divider' />
+          <Label as='span' basic size='huge' className='color__secondary color__secondary background__light-grey'>
+            {str && str.slice(-3)}
+          </Label>
+        </MatchCode>
+      ),
+      handleStatus
+    )
 
-    return <Label as='p' basic size='big' className='color__secondary'>{str}</Label>
+    return handleMatchCodeComponent(currentStatus)
   }
 
-  componentDidMount () {
-    this._handleScanAnimate()
-    setTimeout(() => {
-      document.getElementById('fadeMe').style.opacity = '1'
-    }, 800)
+  _displayReferenceNumber = () => {
+    const { receipt, statuses } = this.props
+    const currentStatus = statuses[receipt.get('status')] || ''
+    const handleStatus = handlingStatus(this._handleModePayment())
+
+    const _handleReferenceNumber = compose(
+      switchFn({
+        PROCESSING: receipt.get('payCode'),
+        RESERVED: receipt.get('payCode'),
+        UNPAID: null
+      })(
+        receipt.get('claimCode')
+      ),
+      handleStatus
+    )
+
+    return _handleReferenceNumber(currentStatus)
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { receipt, statuses } = nextProps
-
-    /**
-     * we have to make sure that we will initialize JsBarcode only if it is on the dom
-     */
-    if (receipt.get('payCode') && !HIDE_BARCODE.includes(statuses[receipt.get('status')])) {
-      const payCode = receipt.get('payCode').split('-').join('')
-      JsBarcode('#barcode', payCode, {
+  _displayBarcode = (code) => {
+    // we need to make sure we have code.
+    if (code) {
+      return JsBarcode('#barcode', code.split('-').join(''), {
         format: 'CODE128',
         lineColor: '#5B5B5B',
         width: 3,
@@ -297,6 +317,48 @@ class Receipt extends React.PureComponent {
         displayValue: false
       })
     }
+
+    return null
+  }
+
+  _handeDisplayBarcode = (props) => {
+    const { receipt, statuses } = props
+    const currentStatus = statuses[receipt.get('status')] || ''
+    const handleStatus = handlingStatus(receipt.get('modePayment') || this._defaultModePayment)
+    /**
+     * we have to make sure that we will initialize JsBarcode only if it is on the dom
+     */
+    const _handleDisplayBarCode = compose(
+      ifElse(
+        both(() => receipt.get('payCode'), complement(partialRight(contains, [HIDE_BARCODE]))),
+        compose(
+          this._displayBarcode,
+          switchFn({
+            PROCESSING: receipt.get('payCode'),
+            RESERVED: receipt.get('payCode'),
+            UNPAID: receipt.get('payCode')
+          })(receipt.get('claimCode'))
+        ),
+        noop
+      ),
+      handleStatus
+    )
+    return _handleDisplayBarCode(currentStatus)
+  }
+
+  componentDidMount () {
+    this._handleScanAnimate()
+    const fadeMeElement = document.getElementById('fadeMe')
+
+    if (fadeMeElement) {
+      setTimeout(() => {
+        fadeMeElement.style.opacity = '1'
+      }, 800)
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    this._handeDisplayBarcode(nextProps)
   }
 
   render () {
@@ -332,13 +394,16 @@ class Receipt extends React.PureComponent {
                       <Label className='weight-400 color__secondary' as='span' basic size='small'>
                         <FormattedMessage {...messages.trackingNumber} />
                       </Label>
-                      {this._handleParseTrackNumber(receipt.get('trackingNumber'))}
+                      <Label as='p' basic size='big' className='color__secondary'>{receipt.get('trackingNumber')}</Label>
                     </Grid.Column>
                     <Grid.Column floated='right' textAlign='right' width={7}>
                       <Label className='weight-400 color__secondary' as='span' basic size='small'>
                         { this._handleDateString() }
                       </Label>
                       <Label as='p' basic size='large' className='color__secondary'>{ this._handleDateValue()}</Label>
+                    </Grid.Column>
+                    <Grid.Column width={16}>
+                      {this._handleMatchCode(receipt.get('trackingNumber'))}
                     </Grid.Column>
                   </Grid.Row>
                 </Grid>
@@ -356,14 +421,16 @@ class Receipt extends React.PureComponent {
                   <FormattedMessage {...messages.peso} />
                   { parseFloat(receipt.get('amount')).toLocaleString() }
                 </Label>
-                <Label className='text__roboto--light color__secondary' as='p' basic size='medium' >
+                <Label className='text__roboto--light color__secondary mobile-number' as='p' basic size='medium' >
                   <FormattedMessage {...messages.mobileNumberLabel} />
 
                   <FormattedMessage {...messages.mobileNumberCode} />
                   { PhoneFormatter(receipt.get('mobileNumber')) }
                 </Label>
                 <BarcodeSVG id='barcode' {...{ status: statuses[receipt.get('status')] }} />
-                {receipt.get('payCode')}
+                <PayCode>
+                  { this._displayReferenceNumber() }
+                </PayCode>
                 <Grid.Row>
                   { this._renderPurchaseBanner() }
                 </Grid.Row>

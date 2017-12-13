@@ -32,7 +32,11 @@ export default defineMessages({
   },
   dateCASHINTRANSIT: {
     id: 'app.components.Purchase.dateCASHINTRANSIT',
-    defaultMessage: 'Date Paid'
+    defaultMessage: 'Date In-transit'
+  },
+  dateCASHLOSTINTRANSIT: {
+    id: 'app.components.Purchase.dateCASHLOSTINTRANSIT',
+    defaultMessage: 'Date Unserved'
   },
   dateCASHDELIVERED: {
     id: 'app.components.Purchase.dateDELIVERED',
@@ -48,7 +52,7 @@ export default defineMessages({
   },
   dateCODRESERVED: {
     id: 'app.components.Purchase.dateCODRESERVED',
-    defaultMessage: 'Time Remaining'
+    defaultMessage: 'Date Ordered'
   },
   dateCODRESERVEDEXPIRED: {
     id: 'app.components.Purchase.dateCODRESERVEDEXPIRED',
@@ -68,7 +72,11 @@ export default defineMessages({
   },
   dateCODINTRANSIT: {
     id: 'app.components.Purchase.dateCODINTRANSIT',
-    defaultMessage: 'Date Ordered'
+    defaultMessage: 'Date In-transit'
+  },
+  dateCODLOSTINTRANSIT: {
+    id: 'app.components.Purchase.dateCODLOSTINTRANSIT',
+    defaultMessage: 'Date Unserved'
   },
   dateCODDELIVERED: {
     id: 'app.components.Purchase.dateDELIVERED',

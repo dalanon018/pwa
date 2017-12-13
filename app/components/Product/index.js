@@ -32,6 +32,7 @@ import PromptModal from 'components/PromptModal'
 import { LoadingStateInfo } from 'components/LoadingBlock'
 
 import messages from './messages'
+import SizeSelector from './SizeSelector'
 
 import {
   ButtonContainer,
@@ -83,7 +84,9 @@ const Product = ({
   productSlider,
   togglePrompt,
   productPageTrigger,
-  windowWidth }) => {
+  windowWidth,
+  onSizeChange
+}) => {
   const FacebookIcon = generateShareIcon('facebook')
   const TwitterIcon = generateShareIcon('twitter')
   const {
@@ -95,7 +98,7 @@ const Product = ({
   const brandLogo = product.get('brandLogo') ? (
     <Image
       className='brand-logo'
-      alt='Cliqq'
+      alt='CLiQQ'
       src={updateParamsImages(product.get('brandLogo'), { w: 200, h: 30 })}
       onClick={changeRoute.bind(this, `/brands/${product.getIn(['brand', 'code'])}`)} />) : ''
 
@@ -116,6 +119,10 @@ const Product = ({
     }
   }
 
+  const fbShareAction = () => {
+    return fbShare(product)
+  }
+
   return (
     <div>
       <ProductWrapper>
@@ -128,6 +135,12 @@ const Product = ({
             isInfinite
             isLowerdots
           />
+          {
+            +product.get('quantity') === 0 &&
+            <Label className='text__align--center' as='p' basic size='huge' color='red'>
+              <FormattedMessage {...messages.noStock} />
+            </Label>
+          }
         </ProductImageSlider>
         <ProductMainContent>
           <LoadingStateInfo loading={loading} center>
@@ -147,11 +160,19 @@ const Product = ({
           </LoadingStateInfo>
         </ProductMainContent>
 
+        {
+          product.get('association') &&
+          <SizeSelector
+            product={product}
+            onSizeChange={onSizeChange}
+          />
+        }
+
         <SocialContainer className='border_bottom__one--light-grey border_top__one--light-grey'>
           <ShareWrapper>
             <p className='share-item ui big basic label color__secondary'><FormattedMessage {...messages.shareItem} /></p>
 
-            <button className='unstyle-button share-button' onClick={() => fbShare(product)}>
+            <button className='unstyle-button share-button' onClick={fbShareAction}>
               <FacebookIcon round size={30} />
             </button>
 
@@ -182,7 +203,7 @@ const Product = ({
             </Label>
           }>
             <CollapseContent>
-              <Image src={DeliveryIcon} alt='Cliqq' />
+              <Image src={DeliveryIcon} alt='CLiQQ' />
               <div className='collapse-description'>
                 <Label className='description-title color__secondary' as='p' basic size='large'><FormattedMessage {...messages.deliveryTitle} /></Label>
                 <Label className='text__roboto--light color__dark-grey' as='p' basic size='medium'>
@@ -191,7 +212,7 @@ const Product = ({
               </div>
             </CollapseContent>
             <CollapseContent>
-              <Image src={ReturnIcon} alt='Cliqq' />
+              <Image src={ReturnIcon} alt='CLiQQ' />
               <div className='collapse-description'>
                 <Label className='description-title primary__secondary' as='p' basic size='large'><FormattedMessage {...messages.returnPolicy} /></Label>
                 <Label className='text__roboto--light color__dark-grey' as='p' basic size='medium'>
@@ -221,6 +242,7 @@ const Product = ({
               onClick={onSubmit}
               loading={loading}
               primary
+              disabled={+product.get('quantity') === 0}
               fluid > <FormattedMessage {...messages.orderNow} /> </Button>
           </ButtonContainer>
         </DetailsWrapper>
@@ -240,7 +262,9 @@ Product.propTypes = {
   product: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  origPrice: PropTypes.func.isRequired
+  origPrice: PropTypes.func.isRequired,
+  onSizeChange: PropTypes.func.isRequired,
+  changeRoute: PropTypes.func.isRequired
 }
 
 export default Product

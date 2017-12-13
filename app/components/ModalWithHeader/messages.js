@@ -22,6 +22,10 @@ export default defineMessages({
     id: 'app.components.ModalWithHeader.intransitTitle',
     defaultMessage: 'Item Is On Its Way To The Store'
   },
+  lostintransitTitle: {
+    id: 'app.components.ModalWithHeader.lostintransitTitle',
+    defaultMessage: 'Order was Unserved'
+  },
   deliveredTitle: {
     id: 'app.components.ModalWithHeader.deliveredTitle',
     defaultMessage: 'Item Is Ready For Pick Up'
@@ -50,13 +54,17 @@ export default defineMessages({
     id: 'app.components.ModalWithHeader.intransitDescription',
     defaultMessage: 'Your item is in-transit to the store! We will notify you when it is ready for pick-up. For now you can keep on shopping!'
   },
+  lostintransitDescription: {
+    id: 'app.components.ModalWithHeader.lostintransitDescription',
+    defaultMessage: 'We are sorry your item cannot be delivered. Would you like to browse the catalog?'
+  },
   deliveredDescription: {
     id: 'app.components.ModalWithHeader.deliveredDescription',
     defaultMessage: 'Hooray! Your item is already at the store and is waiting for you! You have seven days to claim your item!'
   },
   claimedDescription: {
     id: 'app.components.ModalWithHeader.claimedDescription',
-    defaultMessage: 'Thank you for shopping with us! Follow us on social media for all the latest updates and promos only here on Cliqq!'
+    defaultMessage: 'Thank you for shopping with us! Follow us on social media for all the latest updates and promos only here on CLiQQ!'
   },
   unclaimedDescription: {
     id: 'app.components.ModalWithHeader.unclaimedDescription',
@@ -78,6 +86,10 @@ export default defineMessages({
     id: 'app.components.ModalWithHeader.buttonIntransit',
     defaultMessage: 'Cool! I\'m Excited'
   },
+  buttonLostIntransit: {
+    id: 'app.components.ModalWithHeader.buttonLostIntransit',
+    defaultMessage: 'No, thanks!'
+  },
   buttonDelivered: {
     id: 'app.components.ModalWithHeader.buttonDelivered',
     defaultMessage: 'Awesome! Thanks'
@@ -97,5 +109,9 @@ export default defineMessages({
   secondaryButton: {
     id: 'app.components.ModalWithHeader.secondaryButton',
     defaultMessage: 'View My Activities'
+  },
+  secondaryBrowseCatalog: {
+    id: 'app.components.ModalWithHeader.secondaryBrowseCatalog',
+    defaultMessage: 'Yes, please!'
   }
 })
