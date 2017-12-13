@@ -13,7 +13,6 @@ import { Switch, Route } from 'react-router-dom'
 
 import Buckets from 'containers/Buckets/Loadable'
 import LoginPage from 'containers/LoginPage/Loadable'
-import NotFound from 'containers/NotFoundPage/Loadable'
 
 const AppWrapper = styled.div`
 display: block;
@@ -46,7 +45,6 @@ export default function App () {
           <Route exact path='/login' component={LoginPage} />
 
           <Route path='/' component={Buckets} />
-          <Route path='' component={NotFound} />
         </Switch>
       </BodyWrapper>
     </AppWrapper>

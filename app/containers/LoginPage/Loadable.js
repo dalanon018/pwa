@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for HomePage
+ * Asynchronously loads the component for LoginPage
  *
  */
 import Loadable from 'react-loadable'
