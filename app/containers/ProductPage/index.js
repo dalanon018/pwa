@@ -44,9 +44,7 @@ import {
   setShowActivityIconAction,
   setHeaderFullScreenAction
 } from 'containers/Buckets/actions'
-import {
-  PRODUCT_NAME
-} from 'containers/Buckets/constants'
+import { PRODUCT_NAME } from 'containers/Buckets/constants'
 
 import messages from './messages'
 import reducer from './reducer'

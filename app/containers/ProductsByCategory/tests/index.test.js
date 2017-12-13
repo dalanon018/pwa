@@ -17,9 +17,6 @@ describe('<ProductsByCategory />', () => {
     totalCount: 0,
     loader: false,
     lazyload: false,
-    params: {
-      id: 'CAT1'
-    },
     allCategoryProducts: fromJS([]),
     productsByTags: fromJS([]),
     productsByCategory: fromJS([]),

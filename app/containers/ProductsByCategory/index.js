@@ -4,8 +4,12 @@
  *
  */
 
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
+
 import { connect } from 'react-redux'
+import { compose as ReduxCompose } from 'redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
@@ -27,34 +31,38 @@ import {
   path,
   subtract
 } from 'ramda'
-import styled from 'styled-components'
 import { Container } from 'semantic-ui-react'
+
+import injectSaga from 'utils/injectSaga'
+import injectReducer from 'utils/injectReducer'
+
+import { Uppercase } from 'utils/string'
 
 import ProductView from 'components/ProductView'
 import Footer from 'components/Footer'
 import WindowWidth from 'components/WindowWidth'
 import LazyLoading from 'components/LazyLoading'
-
 import H3 from 'components/H3'
 import H4 from 'components/H4'
 import EmptyProducts from 'components/EmptyProductsBlock'
 import LoadingIndicator from 'components/LoadingIndicator'
 
-import { Uppercase } from 'utils/string'
-
 import {
   getProductCategoriesAction,
   setPageTitleAction,
+  setRouteNameAction,
   setShowSearchIconAction,
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
-
 import {
   selectProductCategories,
   selectLoader
 } from 'containers/Buckets/selectors'
+import { PRODUCTSCATEGORY_NAME } from 'containers/Buckets/constants'
 
 import messages from './messages'
+import reducer from './reducer'
+import saga from './saga'
 
 import {
   getProductsByCategoryAction,
@@ -134,8 +142,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     productsByCategory: PropTypes.object.isRequired,
     productsViewed: PropTypes.object.isRequired,
     productsFeatured: PropTypes.object.isRequired,
-    categories: PropTypes.object.isRequired,
-    params: PropTypes.object.isRequired
+    categories: PropTypes.object.isRequired
   }
 
   state = {
@@ -163,7 +170,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _isCategoryExist () {
-    const { categories, params: { id } } = this.props
+    const { categories, match: { params: { id } } } = this.props
     if (categories.size) {
       const category = categories.find((cat) => cat.get('id') === id)
       return category ? category.get('name') : ''
@@ -172,7 +179,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _handlePageTitle () {
-    const { params: { id }, lazyload } = this.props
+    const { match: { params: { id } }, lazyload } = this.props
     const IstagText = (tag) => `${Uppercase(tag)} Items`
     const product = this._displayProductData()
 
@@ -220,7 +227,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _displayNumberProducts () {
-    const { params: { id }, productsFeatured, totalCount } = this.props
+    const { match: { params: { id } }, productsFeatured, totalCount } = this.props
     const displayTotalCount = ifElse(partial(isTag(this._tags), [id]),
       identity,
       subtract(__, productsFeatured.size)
@@ -323,7 +330,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
    * weather the item is featured or ordinary
    */
   _displayProductData = () => {
-    const { params: { id }, productsByTags, productsByCategory } = this.props
+    const { match: { params: { id } }, productsByTags, productsByCategory } = this.props
     const shouldDiplayTagItems = ifElse(
       isTag(this._tags),
       () => productsByTags,
@@ -338,7 +345,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
    * now this solves is to return ALL data regardless it is a featured or not.
    */
   _displayAllProductData = () => {
-    const { params: { id }, productsByTags, allCategoryProducts } = this.props
+    const { match: { params: { id } }, productsByTags, allCategoryProducts } = this.props
     const shouldDiplayTagItems = ifElse(
       isTag(this._tags),
       () => productsByTags,
@@ -367,7 +374,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _handleFeaturedProductsPerCategory () {
-    const { params: { id } } = this.props
+    const { match: { params: { id } } } = this.props
     const shouldNotDisplay = (id) => (isTag(this._tags)(id))
 
     const showFeaturedItem = ifElse(shouldNotDisplay, F, T)
@@ -380,7 +387,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
    * @param {*w} props
    */
   _fetchProductByTagCategory (props) {
-    const { getProductsByTags, getProductsByCategory, params: { id } } = props
+    const { getProductsByTags, getProductsByCategory, match: { params: { id } } } = props
     const { offset, limit } = this.state
     const requestData = curry((fn, id) => fn({ offset, limit, id }))
     const executeFetchData = ifElse(
@@ -411,8 +418,9 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   componentDidMount () {
-    const { getProductsViewed, getProductCategories } = this.props
+    const { getProductsViewed, getProductCategories, setRouteName } = this.props
 
+    setRouteName(PRODUCTSCATEGORY_NAME)
     getProductCategories()
     getProductsViewed()
 
@@ -424,11 +432,11 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   componentWillReceiveProps (nextProps) {
-    const { params } = this.props
+    const { match: { params } } = this.props
 
     const isParamsEqual = (id, props) => compose(
       equals(id),
-      path(['params', 'id'])
+      path(['match', 'params', 'id'])
     )(props)
 
     const updateFetchProduct = ifElse(
@@ -474,7 +482,6 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
           </LazyLoading>
           { this._displayRecentlyViewedHeader() }
           { this._displayRecentlyViewedItems() }
-
         </ContentWrapper>
         <Footer />
       </div>
@@ -497,6 +504,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
+    setRouteName: (payload) => dispatch(setRouteNameAction(payload)),
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
@@ -510,4 +518,12 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(ProductsByCategory))
+const withConnect = connect(mapStateToProps, mapDispatchToProps)
+const withReducer = injectReducer({ key: 'productsByCategory', reducer })
+const withSaga = injectSaga({ key: 'productsByCategory', saga })
+
+export default ReduxCompose(
+  withReducer,
+  withSaga,
+  withConnect
+)(WindowWidth(ProductsByCategory))
