@@ -4,11 +4,12 @@
 *
 */
 
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { Grid, Image } from 'semantic-ui-react'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import { range } from 'lodash'
 
 import EmptyDataBlock from 'components/EmptyDataBlock'
