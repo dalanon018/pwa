@@ -53,7 +53,7 @@ export default defineMessages({
   },
   titleStatusLOSTINTRANSIT: {
     id: 'app.components.Purchases.titleStatusLOSTINTRANSIT',
-    defaultMessage: 'Expired'
+    defaultMessage: 'Unserved'
   },
   titleStatusDELIVERED: {
     id: 'app.components.Purchases.titleStatusDELIVERED',
