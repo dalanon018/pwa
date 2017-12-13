@@ -57,7 +57,7 @@ build:
         curl https://sentry.io/api/hooks/release/builtin/248260/$SENTRY_RELEASE_KEY/ \
         -X POST \
         -H 'Content-Type: application/json' \
-        -d '{"version": "$VERSION"}'
+        -d '{"version": "'"$VERSION"'"}'
 
 staging:
   steps:
