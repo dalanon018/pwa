@@ -216,6 +216,12 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     return false
   }
 
+  _handleChangeRouteFromSideBar = (payload) => {
+    const { changeRoute } = this.props
+    this._handleCloseSidebarClickPusher()
+    return changeRoute(payload)
+  }
+
   /**
    * if route is not:[
    *  '/',
@@ -232,7 +238,6 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
   _displayHeader = () => {
     const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, match: { path }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen } = this.props
-    console.log(routeName)
     /**
      * we have to identify if we should display backbutton
      */
@@ -347,7 +352,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   render () {
-    const { productCategories, changeRoute, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken } = this.props
+    const { productCategories, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken } = this.props
     const { toggleSidebar } = this.state
     return (
       <Wrapper toggleSidebar={toggleSidebar}>
@@ -363,7 +368,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
           <SidebarMenu
             isSignIn={!!loyaltyToken}
             signOut={removeLoyaltyToken}
-            changeRoute={changeRoute}
+            changeRoute={this._handleChangeRouteFromSideBar}
             categories={productCategories}
             brands={brands}
             toggleSidebar={toggleSidebar}
