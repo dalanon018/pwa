@@ -1,4 +1,13 @@
-import { compose, concat, join, map, toPairs } from 'ramda'
+import {
+  compose,
+  concat,
+  fromPairs,
+  join,
+  map,
+  replace,
+  split,
+  toPairs
+} from 'ramda'
 /**
  * Query serialization
  * @param {*} params
@@ -9,6 +18,16 @@ export const fnSearchParams = (params) => compose(
   map(join('=')),
   toPairs
 )(params)
+
+/**
+ * from Query to Object
+ */
+export const fnQueryObject = compose(
+  fromPairs,
+  map(split('=')),
+  split('&'),
+  replace('?', '')
+)
 
 export const getBrowserInfo = () => {
   let ua = navigator.userAgent

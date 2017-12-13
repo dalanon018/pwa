@@ -9,41 +9,41 @@ import React, { PropTypes } from 'react'
 import { noop, isEmpty } from 'lodash'
 import { ifElse, equals, both, compose, prop, propOr, either, identity } from 'ramda'
 import { connect } from 'react-redux'
+import { compose as ReduxCompose } from 'redux'
 import { push } from 'react-router-redux'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 
 import { Grid, Label, Form, Checkbox, Image, Button } from 'semantic-ui-react'
 
-import NextIcon from 'images/icons/greater-than-icon.svg'
 import scrollPolyfill from 'utils/scrollPolyfill'
+import injectSaga from 'utils/injectSaga'
+import injectReducer from 'utils/injectReducer'
+import NextIcon from 'images/icons/greater-than-icon.svg'
 
 import { paramsImgix } from 'utils/image-stock'
 import { transformStore } from 'utils/transforms'
 import { FbEventTracking } from 'utils/seo'
 import { switchFn } from 'utils/logicHelper'
+import { fnQueryObject } from 'utils/http'
 
 import Modal from 'components/PromptModal'
 import WindowWidth from 'components/WindowWidth'
 import ListCollapse from 'components/ListCollapse'
 
 import { LoadingStateImage } from 'components/LoadingBlock'
-
-import {
-  userIsAuthenticated
-} from 'containers/App/auth'
-
+import { userIsAuthenticated } from 'containers/App/auth'
+import { PRODUCTREVIEW_NAME, RAW_PAYMENT_METHODS } from 'containers/Buckets/constants'
 import {
   setPageTitleAction,
+  setRouteNameAction,
   setShowSearchIconAction,
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
 
-import {
-  RAW_PAYMENT_METHODS
-} from 'containers/Buckets/constants'
-
 import messages from './messages'
+import reducer from './reducer'
+import saga from './saga'
 
 import {
   getOrderProductAction,
@@ -283,8 +283,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   componentDidMount () {
-    const { router: { location: { query } }, getOrderProduct, getMobileNumber, getStore, getBlackList } = this.props
+    const { location: { search }, getOrderProduct, getMobileNumber, getStore, getBlackList, setRouteName } = this.props
 
+    const query = fnQueryObject(search)
     const selectQuery = compose(
       ifElse(
         isEmpty,
@@ -298,6 +299,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       propOr('', 'type')
     )
 
+    setRouteName(PRODUCTREVIEW_NAME)
     getOrderProduct()
     getMobileNumber()
     getBlackList()
@@ -507,6 +509,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
+    setRouteName: (payload) => dispatch(setRouteNameAction(payload)),
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
@@ -522,4 +525,12 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(injectIntl(userIsAuthenticated(ProductReview))))
+const withConnect = connect(mapStateToProps, mapDispatchToProps)
+const withReducer = injectReducer({ key: 'productReview', reducer })
+const withSaga = injectSaga({ key: 'productReview', saga })
+
+export default ReduxCompose(
+  withReducer,
+  withSaga,
+  withConnect
+)(WindowWidth(injectIntl(userIsAuthenticated(ProductReview))))
