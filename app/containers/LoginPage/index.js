@@ -4,12 +4,13 @@
  *
  */
 
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import showdown from 'showdown'
 import Recaptcha from 'react-google-recaptcha'
 
-import { browserHistory } from 'react-router'
 import { connect } from 'react-redux'
+import { compose as ReduxCompose } from 'redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { isEmpty, noop } from 'lodash'
@@ -23,6 +24,13 @@ import {
   lt,
   prop
 } from 'ramda'
+import { Image, Label, Button, Grid } from 'semantic-ui-react'
+
+import injectSaga from 'utils/injectSaga'
+import injectReducer from 'utils/injectReducer'
+import BannerBg from 'images/modal-bg-lightgrey.png'
+import MobileIcon from 'images/icons/mobile-icon.svg'
+import BackIcon from 'images/icons/back.svg'
 
 import CloseButton from 'components/CloseButton'
 import Input from 'components/InputField'
@@ -30,32 +38,17 @@ import Checkbox from 'components/CheckboxField'
 import Modal from 'components/PromptModal'
 import A from 'components/A'
 import PopupVerification from 'components/PopupVerification'
+
 import { LoadingStateInfo } from 'components/LoadingBlock'
-
-import BannerBg from 'images/modal-bg-lightgrey.png'
-import MobileIcon from 'images/icons/mobile-icon.svg'
-import BackIcon from 'images/icons/back.svg'
-
-import { Image, Label, Button, Grid } from 'semantic-ui-react'
-
-import {
-  userIsNotAuthenticated
-} from 'containers/App/auth'
-
-import {
-  RECAPTCHA_SITE_KEY
-} from 'containers/App/constants'
-
-import {
-  setAuthenticatingAction
-} from 'containers/App/actions'
-
-import {
-  selectIsAuthenticating
-} from 'containers/App/selectors'
+import { userIsNotAuthenticated } from 'containers/App/auth'
+import { RECAPTCHA_SITE_KEY } from 'containers/App/constants'
+import { setAuthenticatingAction } from 'containers/App/actions'
+import { selectIsAuthenticating } from 'containers/App/selectors'
 
 import AuthLoader from './AuthLoader'
 import messages from './messages'
+import reducer from './reducer'
+import saga from './saga'
 
 import {
   PopupWrapper,
@@ -400,7 +393,7 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   render () {
-    const { loadingMarkdown, submissionLoader } = this.props
+    const { loadingMarkdown, submissionLoader, history } = this.props
     const { value, check, markdown, toggleTerms, verificationToggle, disabledButton, errModalToggle, errModalName, errorTitle, errorMessage } = this.state
 
     return (
@@ -455,7 +448,7 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
                 <FormattedMessage {...messages.submitButton} />
               </Button>
 
-              <CloseButton close={browserHistory.goBack} text='Close' />
+              <CloseButton close={history.goBack} text='Close' />
             </PopupContent>
           </PopupContainer>
           <Modal
@@ -544,4 +537,12 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthLoader(userIsNotAuthenticated(LoginPage)))
+const withConnect = connect(mapStateToProps, mapDispatchToProps)
+const withReducer = injectReducer({ key: 'loginPage', reducer })
+const withSaga = injectSaga({ key: 'loginPage', saga })
+
+export default ReduxCompose(
+  withReducer,
+  withSaga,
+  withConnect
+)(AuthLoader(userIsNotAuthenticated(LoginPage)))

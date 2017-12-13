@@ -12,6 +12,7 @@ import styled from 'styled-components'
 import { Switch, Route } from 'react-router-dom'
 
 import Buckets from 'containers/Buckets/Loadable'
+import LoginPage from 'containers/LoginPage/Loadable'
 import NotFound from 'containers/NotFoundPage/Loadable'
 
 const AppWrapper = styled.div`
@@ -42,7 +43,8 @@ export default function App () {
           <meta name='description' content='7-11 CLiQQ e-commerce website' />
         </Helmet>
         <Switch>
-          <Route path='/' component={Buckets} />
+          <Route exact path='/' component={Buckets} />
+          <Route path='/login' component={LoginPage} />
           <Route path='' component={NotFound} />
         </Switch>
       </BodyWrapper>
