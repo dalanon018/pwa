@@ -63,6 +63,11 @@ const selectLoader = () => createSelector(
   (substate) => substate.get('loader')
 )
 
+const selectRouteName = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('routeName')
+)
+
 const selectPageTitle = () => createSelector(
   selectBucketDomain(),
   (substate) => substate.get('pageTitle')
@@ -105,6 +110,7 @@ export {
   selectToggleError,
   selectToggleMessage,
   selectLoader,
+  selectRouteName,
   selectPageTitle,
   selectFullScreenHeader,
   selectShowSearchIcon,

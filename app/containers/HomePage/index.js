@@ -32,6 +32,7 @@ import WindowWidth from 'components/WindowWidth'
 
 import {
   setPageTitleAction,
+  setRouteNameAction,
   setShowSearchIconAction,
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
@@ -41,6 +42,9 @@ import {
   selectFeaturedBrands,
   selectLoader
 } from 'containers/Buckets/selectors'
+import {
+  HOME_NAME
+} from 'containers/Buckets/constants'
 
 import messages from './messages'
 import reducer from './reducer'
@@ -133,6 +137,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
   componentDidMount () {
     this.props.getProduct()
+    this.props.setRouteName(HOME_NAME)
   }
 
   render () {
@@ -259,6 +264,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
+    setRouteName: (payload) => dispatch(setRouteNameAction(payload)),
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),

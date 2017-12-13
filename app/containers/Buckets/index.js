@@ -28,20 +28,6 @@ import { isMobileDevice } from 'utils/http'
 import { switchFn } from 'utils/logicHelper'
 import {
   ENVIROMENT
-  // HOME_NAME
-  // PURCHASES_NAME,
-  // RECEIPTPAGE_NAME,
-  // PRODUCT_NAME,
-  // PRODUCTREVIEW_NAME,
-  // CATEGORIES_NAME,
-  // PRODUCTSCATEGORY_NAME,
-  // FAQ_NAME,
-  // PRIVACY_NAME,
-  // TERMS_NAME,
-  // SEARCH_NAME,
-  // BRAND_NAME,
-  // FEATURES_NAME,
-  // OFFLINE_NAME
 } from 'containers/App/constants'
 
 import {
@@ -52,6 +38,7 @@ import {
   selectToggleError,
   selectToggleMessage,
   selectPageTitle,
+  selectRouteName,
   selectFullScreenHeader,
   selectShowSearchIcon,
   selectShowActivityIcon,
@@ -123,6 +110,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
       PropTypes.number
     ]),
     intl: intlShape.isRequired,
+    routeName: PropTypes.string,
     pageTitle: PropTypes.string,
     headerMenuFullScreen: PropTypes.bool.isRequired,
     showSearchIcon: PropTypes.bool.isRequired,
@@ -244,7 +232,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
   _displayHeader = () => {
     const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, match: { path }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen } = this.props
-    console.log(this.props)
+    console.log(routeName)
     /**
      * we have to identify if we should display backbutton
      */
@@ -405,6 +393,7 @@ const mapStateToProps = createStructuredSelector({
   receiptsUpdated: selectReceiptsUpdated(),
   toggleError: selectToggleError(),
   toggleMessage: selectToggleMessage(),
+  routeName: selectRouteName(),
   pageTitle: selectPageTitle(),
   headerMenuFullScreen: selectFullScreenHeader(),
   showSearchIcon: selectShowSearchIcon(),
