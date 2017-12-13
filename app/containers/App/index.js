@@ -9,16 +9,10 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import styled from 'styled-components'
-import { Switch } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 
-import HocRoute from 'components/HocRoute'
 import Buckets from 'containers/Buckets/Loadable'
 import NotFound from 'containers/NotFoundPage/Loadable'
-
-import {
-  BUCKETS_NAME,
-  NOTFOUND_NAME
-} from './constants'
 
 const AppWrapper = styled.div`
 display: block;
@@ -48,8 +42,8 @@ export default function App () {
           <meta name='description' content='7-11 CLiQQ e-commerce website' />
         </Helmet>
         <Switch>
-          <HocRoute routeName={BUCKETS_NAME} path='/' component={Buckets} />
-          <HocRoute routeName={NOTFOUND_NAME} path='' component={NotFound} />
+          <Route path='/' component={Buckets} />
+          <Route path='' component={NotFound} />
         </Switch>
       </BodyWrapper>
     </AppWrapper>

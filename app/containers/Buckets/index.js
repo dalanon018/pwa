@@ -17,9 +17,8 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
-import { Switch } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 
-import HocRoute from 'components/HocRoute'
 import Firebase from 'utils/firebase-realtime'
 import Notification from 'utils/firebase-notification'
 import injectSaga from 'utils/injectSaga'
@@ -28,8 +27,8 @@ import injectReducer from 'utils/injectReducer'
 import { isMobileDevice } from 'utils/http'
 import { switchFn } from 'utils/logicHelper'
 import {
-  ENVIROMENT,
-  HOME_NAME
+  ENVIROMENT
+  // HOME_NAME
   // PURCHASES_NAME,
   // RECEIPTPAGE_NAME,
   // PRODUCT_NAME,
@@ -245,7 +244,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
   _displayHeader = () => {
     const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, match: { path }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen } = this.props
-
+    console.log(this.props)
     /**
      * we have to identify if we should display backbutton
      */
@@ -368,7 +367,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
         <MainContent
           toggleSidebar={toggleSidebar} >
           <Switch>
-            <HocRoute routeName={HOME_NAME} exact path='/' component={HomePage} />
+            <Route exact path='/' component={HomePage} />
           </Switch>
         </MainContent>
         <div

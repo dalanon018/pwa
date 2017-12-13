@@ -135,16 +135,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     this.props.getProduct()
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { featuredProducts } = nextProps
-
-    if (featuredProducts.size) {
-      this.setState({
-        products: featuredProducts.slice(0, 4)
-      })
-    }
-  }
-
   render () {
     const { loader, featuredProducts, featuredCategories, featuredBrands, changeRoute, windowWidth, intl, brandLoader } = this.props
     const numSlide = windowWidth > 767 ? 2 : 1
