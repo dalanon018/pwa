@@ -43,8 +43,9 @@ export default function App () {
           <meta name='description' content='7-11 CLiQQ e-commerce website' />
         </Helmet>
         <Switch>
-          <Route exact path='/' component={Buckets} />
-          <Route path='/login' component={LoginPage} />
+          <Route exact path='/login' component={LoginPage} />
+
+          <Route path='/' component={Buckets} />
           <Route path='' component={NotFound} />
         </Switch>
       </BodyWrapper>
