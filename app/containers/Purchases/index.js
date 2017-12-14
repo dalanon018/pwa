@@ -73,7 +73,8 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
     setShowActivityIcon: PropTypes.func.isRequired,
     getApiPurchases: PropTypes.func.isRequired,
     changeRoute: PropTypes.func.isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    setRouteName: PropTypes.func.isRequired
   }
 
   state = {

@@ -184,7 +184,6 @@ class Receipt extends React.PureComponent {
     const { receipt, statuses } = this.props
     const currentStatus = statuses[receipt.get('status')] || 'FieldDefault'
     const modePayment = this._handleModePayment()
-    console.log(`date${modePayment}${currentStatus}`)
     return (
       <FormattedMessage {...messages[`date${modePayment}${currentStatus}`]} />
     )

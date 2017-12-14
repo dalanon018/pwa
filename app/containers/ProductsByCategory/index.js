@@ -143,7 +143,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     productsViewed: PropTypes.object.isRequired,
     productsFeatured: PropTypes.object.isRequired,
     categories: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired
+    match: PropTypes.object.isRequired,
+    setRouteName: PropTypes.func.isRequired
   }
 
   state = {

@@ -89,7 +89,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     ]).isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
-    setShowActivityIcon: PropTypes.func.isRequired
+    setShowActivityIcon: PropTypes.func.isRequired,
+    setRouteName: PropTypes.func.isRequired
   }
 
   constructor () {

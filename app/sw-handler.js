@@ -4,7 +4,7 @@ const API_REQUESTS_URL = [
 ]
 // eslint-disable-line
 self.addEventListener('fetch', function (e) {
-  console.log('[Service Worker] Fetch', e.request.url)
+  //console.log('[Service Worker] Fetch', e.request.url)
   if (e.request.url.indexOf(API_REQUESTS_URL) > -1) {
     /*
      * When the request URL contains dataUrl, the app is asking for fresh

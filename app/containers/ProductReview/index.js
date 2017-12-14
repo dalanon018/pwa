@@ -112,7 +112,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       PropTypes.string,
       PropTypes.object
     ]).isRequired,
-    storeLocation: PropTypes.object
+    storeLocation: PropTypes.object,
+    setRouteName: PropTypes.func.isRequired
   }
 
   showStoreLocator = 'COD'

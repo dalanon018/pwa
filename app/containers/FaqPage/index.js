@@ -40,6 +40,7 @@ export class FaqPage extends React.PureComponent { // eslint-disable-line react/
     markdown: PropTypes.string,
     getMarkDown: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
+    setRouteName: PropTypes.func.isRequired,
     loader: PropTypes.bool
   }
 

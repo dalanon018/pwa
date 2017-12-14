@@ -10,6 +10,7 @@ describe('<BrandPage />', () => {
     getProductsByBrands: () => {},
     resetProductsByBrands: () => {},
     setPageTitle: () => {},
+    setRouteName: () => {},
     setShowSearchIcon: () => {},
     setShowActivityIcon: () => {},
     loader: false,

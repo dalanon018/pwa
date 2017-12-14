@@ -82,6 +82,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     resetProductsByBrands: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
+    setRouteName: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
     loader: PropTypes.bool.isRequired,
     lazyload: PropTypes.bool.isRequired,

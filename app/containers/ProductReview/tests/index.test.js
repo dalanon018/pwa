@@ -16,6 +16,7 @@ describe('<ProductReview />', () => {
   const minProps = {
     getOrderProduct: () => {},
     getStore: () => {},
+    setRouteName: () => {},
     storeLocator: () => {},
     getProductCategories: () => {},
     getBlackList: () => {},

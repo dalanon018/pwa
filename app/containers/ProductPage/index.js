@@ -78,7 +78,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     loading: PropTypes.bool.isRequired,
     productSuccess: PropTypes.bool.isRequired,
     productError: PropTypes.bool.isRequired,
-    intl: intlShape.isRequired
+    intl: intlShape.isRequired,
+    setRouteName: PropTypes.func.isRequired
   }
 
   /**

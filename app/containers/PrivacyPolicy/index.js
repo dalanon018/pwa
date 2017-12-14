@@ -40,7 +40,8 @@ export class PrivacyPolicy extends React.PureComponent { // eslint-disable-line 
     markdown: PropTypes.string,
     getMarkDown: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
-    loader: PropTypes.bool
+    loader: PropTypes.bool,
+    setRouteName: PropTypes.func.isRequired
   }
 
   componentDidMount () {

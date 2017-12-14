@@ -99,7 +99,8 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
     setShowSearchIcon: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
     getRegisteredPush: PropTypes.func.isRequired,
-    registerPush: PropTypes.func.isRequired
+    registerPush: PropTypes.func.isRequired,
+    setRouteName: PropTypes.func.isRequired
   }
 
   state = {

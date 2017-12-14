@@ -14,6 +14,7 @@ describe('<PrivacyPolicy />', () => {
   const minProps = {
     markdown: '# Lorem ipsum ## dolor sit amet, consectetur adipisicing elit. Vel architecto at necessitatibus voluptas harum explicabo vitae repudiandae facere, soluta assumenda sint sapiente atque ut magni aperiam earum tenetur ullam velit.',
     getMarkDown: () => {},
+    setRouteName: () => {},
     dispatch: () => {},
     loading: false
   }

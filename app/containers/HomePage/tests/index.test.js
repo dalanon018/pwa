@@ -12,6 +12,7 @@ describe('<HomePage />', () => {
   const minProps = {
     changeRoute: () => {},
     getProduct: () => {},
+    setRouteName: () => {},
     getProductCategories: () => {},
     totalFeaturedProductCount: 0,
     loader: false,

@@ -18,6 +18,7 @@ describe('<Products />', () => {
     dispatch: () => {},
     getProduct: () => {},
     setProduct: () => {},
+    setRouteName: () => {},
     changeRoute: () => {},
     setCurrentProduct: () => {},
     setHandlersDefault: () => {},

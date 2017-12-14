@@ -41,7 +41,8 @@ export class TermsConditions extends React.PureComponent { // eslint-disable-lin
     markdown: PropTypes.string,
     getMarkDown: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
-    loader: PropTypes.bool
+    loader: PropTypes.bool,
+    setRouteName: PropTypes.func.isRequired
   }
   componentDidMount () {
     this.props.getMarkDown()
