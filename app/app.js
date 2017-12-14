@@ -45,6 +45,8 @@ import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-256.png'
 import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-384.png'
 import '!file-loader?name=[name].[ext]!./images/manifest-icon/icon-512.png'
 
+// import load testing txt file
+import '!file-loader?name=[name].[ext]!./loaderio-8a4215aa19b3214d900927c755c2551d.txt'
 /* eslint-enable import/no-webpack-loader-syntax */
 
 import configureStore from './configureStore'
