@@ -2,6 +2,8 @@ import moment from 'moment'
 import { takeLatest } from 'redux-saga'
 import { find, isEmpty, isEqual, noop } from 'lodash'
 import {
+  F,
+  T,
   both,
   complement,
   compose,
@@ -295,7 +297,7 @@ function * updateReceiptSnapShot (orders, receiptId) {
     filter(contains('RESERVED')),
     toPairs
   )(STATUSES)
-
+  // we need to make sure that we will not include 'CONFIRMED' and modePayment === 'COD'
   const isConfirmedCOD = (status) => compose(
     both(contains(status), partial(equals(COD_PAYMENT), [order.paymentType])),
     map(head),
@@ -303,8 +305,18 @@ function * updateReceiptSnapShot (orders, receiptId) {
     toPairs
   )(STATUSES)
 
+  // we need to make sure that we will not include if it belongs to the same grouping
+  const isStatusUpdated = ifElse(
+   both(
+     complement(partial(isEmpty, [order])),
+     complement(equals(STATUSES[order.status]))
+    ),
+   T,
+   F
+  )
+
   // we need to be very careful that status should not be empty
-  if (status && (!isEmpty(order) && order.status !== status) && !isReservedStatus(status) && !isConfirmedCOD(status)) {
+  if (status && (isStatusUpdated(STATUSES[status])) && !isReservedStatus(status) && !isConfirmedCOD(status)) {
     order.status = status || order.status
     order.lastUpdated = lastUpdated || order.lastUpdated || ''
     order.claimCode = claimCode || order.claimCode || ''
