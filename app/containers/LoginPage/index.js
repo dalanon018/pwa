@@ -109,7 +109,8 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
     requestmobileRegistration: PropTypes.func.isRequired,
     requestRecaptchaValidation: PropTypes.func.isRequired,
     requestVerificationCode: PropTypes.func.isRequired,
-    resetSubmission: PropTypes.func.isRequired
+    resetSubmission: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired
   }
 
   state = {

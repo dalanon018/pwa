@@ -14,8 +14,10 @@ describe('<BrandPage />', () => {
     setShowActivityIcon: () => {},
     loader: false,
     lazyload: false,
-    params: {
-      id: 'CAT1'
+    match: {
+      params: {
+        id: 'CAT1'
+      }
     },
     productsByBrands: fromJS([]),
     productsFeatured: fromJS([]),

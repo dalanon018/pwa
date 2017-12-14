@@ -29,7 +29,10 @@ describe('<LoginPage />', () => {
     requestmobileRegistration: () => {},
     requestRecaptchaValidation: () => {},
     requestVerificationCode: () => {},
-    resetSubmission: () => {}
+    resetSubmission: () => {},
+    history: {
+      goBack () {}
+    }
   }
 
   it('render without exploding', () => {

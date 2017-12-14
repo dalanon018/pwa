@@ -16,7 +16,9 @@ describe('appReducer', () => {
       currentUser: false,
       userData: fromJS({
         repositories: false
-      })
+      }),
+      session: null,
+      authenticating: false
     })
   })
 

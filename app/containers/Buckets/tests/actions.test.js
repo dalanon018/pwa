@@ -1,5 +1,7 @@
 
 import {
+  setRouteNameAction,
+
   getPageTitleAction,
   setPageTitleAction,
 
@@ -33,6 +35,8 @@ import {
 } from '../actions'
 
 import {
+  SET_ROUTE_NAME,
+
   GET_PAGE_TITLE,
   SET_PAGE_TITLE,
 
@@ -66,6 +70,17 @@ import {
 } from '../constants'
 
 describe('Buckets actions', () => {
+  describe('setRouteNameAction', () => {
+    it('has type of SET_ROUTE_NAME', () => {
+      const payload = 'homePage'
+      const expectedResult = {
+        type: SET_ROUTE_NAME,
+        payload
+      }
+      expect(setRouteNameAction(payload)).toEqual(expectedResult)
+    })
+  })
+
   describe('getPageTitleAction', () => {
     it('has type of GET_PAGE_TITLE', () => {
       const expectedResult = {

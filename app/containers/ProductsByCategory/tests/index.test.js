@@ -22,7 +22,12 @@ describe('<ProductsByCategory />', () => {
     productsByCategory: fromJS([]),
     productsFeatured: fromJS([]),
     productsViewed: fromJS([]),
-    categories: fromJS([])
+    categories: fromJS([]),
+    match: {
+      params: {
+        id: 1
+      }
+    }
   }
 
   it('should render a div', () => {

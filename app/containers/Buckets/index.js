@@ -127,6 +127,8 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     intl: intlShape.isRequired,
     routeName: PropTypes.string,
     pageTitle: PropTypes.string,
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
     headerMenuFullScreen: PropTypes.bool.isRequired,
     showSearchIcon: PropTypes.bool.isRequired,
     showActivityIcon: PropTypes.bool.isRequired,

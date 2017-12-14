@@ -87,7 +87,8 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     lazyload: PropTypes.bool.isRequired,
     productsByBrands: PropTypes.object.isRequired,
     productsFeatured: PropTypes.object.isRequired,
-    brands: PropTypes.object.isRequired
+    brands: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired
   }
 
   state = {

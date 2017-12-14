@@ -36,9 +36,11 @@ describe('<Buckets />', () => {
       formatHTMLMessage: () => {},
       now: () => {}
     },
-    routes: [{
-      path: '/'
-    }],
+    match: {},
+    location: {
+      pathname: '/'
+    },
+    routeName: null,
     getCategories: () => {},
     getBrands: () => {},
     getUpdatedReceipts: () => {},
