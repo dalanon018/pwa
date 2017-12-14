@@ -1,14 +1,14 @@
 {
   "name": "react-boilerplate-pwa",
   "version": "3.5.0",
-  "description": "7-eleven cliqq Application",
+  "description": "CliQQ Shop Application",
   "repository": {
     "type": "git",
-    "url": "git@github.com:joshuaalpuerto/react-boilerplate-pwa.git"
+    "url": "git@bitbucket.org:anteraaron/e-commerce-front-end.git"
   },
   "engines": {
-    "npm": ">=4",
-    "node": "7.10.1",
+    "npm": ">=5",
+    "node": "8.9.0",
     "yarn": "0.27.5"
   },
   "author": "Offshorly Devs",
