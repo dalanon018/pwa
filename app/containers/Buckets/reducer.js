@@ -6,6 +6,8 @@
 
 import { fromJS } from 'immutable'
 import {
+  SET_ROUTE_NAME,
+
   SET_PAGE_TITLE,
 
   SET_SHOW_SEARCH_ICON,
@@ -43,6 +45,7 @@ const initialState = fromJS({
   toggleError: false,
   toggleMessage: null,
   loader: false,
+  routeName: null,
   pageTitle: null,
   headerMenuFullScreen: false,
   searchIconShow: false,
@@ -53,6 +56,9 @@ const initialState = fromJS({
 
 function bucketsReducer (state = initialState, action) {
   switch (action.type) {
+    case SET_ROUTE_NAME:
+      return state.set('routeName', action.payload)
+
     case SET_PAGE_TITLE:
       return state.set('pageTitle', action.payload)
 

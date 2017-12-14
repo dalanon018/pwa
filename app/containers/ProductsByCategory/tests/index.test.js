@@ -7,6 +7,7 @@ import { ProductsByCategory } from '../index'
 describe('<ProductsByCategory />', () => {
   const minProps = {
     changeRoute: () => {},
+    setRouteName: () => {},
     getProductsByCategory: () => {},
     getProductCategories: () => {},
     getProductsViewed: () => {},
@@ -17,15 +18,17 @@ describe('<ProductsByCategory />', () => {
     totalCount: 0,
     loader: false,
     lazyload: false,
-    params: {
-      id: 'CAT1'
-    },
     allCategoryProducts: fromJS([]),
     productsByTags: fromJS([]),
     productsByCategory: fromJS([]),
     productsFeatured: fromJS([]),
     productsViewed: fromJS([]),
-    categories: fromJS([])
+    categories: fromJS([]),
+    match: {
+      params: {
+        id: 1
+      }
+    }
   }
 
   it('should render a div', () => {

@@ -4,6 +4,8 @@
  *
  */
 
+export const SET_ROUTE_NAME = 'app/Buckets/SET_ROUTE_NAME'
+
 export const GET_PRODUCT_CATEGORIES = 'app/Buckets/GET_PRODUCT_CATEGORIES'
 export const SET_PRODUCT_CATEGORIES = 'app/Buckets/SET_PRODUCT_CATEGORIES'
 
@@ -129,3 +131,21 @@ export const COD_DATE_ORDERED_STATUS = [
   'CONFIRMED',
   'INTRANSIT'
 ]
+
+// WE NAME OUR ROUTES
+export const HOME_NAME = 'home'
+export const PURCHASES_NAME = 'purchases'
+export const RECEIPTPAGE_NAME = 'receiptPage'
+export const PRODUCT_NAME = 'productPage'
+export const PRODUCTREVIEW_NAME = 'productReview'
+export const CATEGORIES_NAME = 'browseCategories'
+export const PRODUCTSCATEGORY_NAME = 'productsByCategory'
+export const FAQ_NAME = 'faqPage'
+export const PRIVACY_NAME = 'privacyPolicy'
+export const TERMS_NAME = 'termsConditions'
+export const SEARCH_NAME = 'searchPage'
+export const BRAND_NAME = 'brandPage'
+export const FEATURES_NAME = 'features'
+export const OFFLINE_NAME = 'pageoffline'
+export const LOGIN_NAME = 'loginPage'
+export const NOTFOUND_NAME = 'pagenotfound'

@@ -20,6 +20,7 @@ describe('<ReceiptPage />', () => {
     dispatch: () => {},
     changeRoute: () => {},
     setPageTitle: () => {},
+    setRouteName: () => {},
     setShowSearchIcon: () => {},
     setShowActivityIcon: () => {},
     getRegisteredPush: () => {},

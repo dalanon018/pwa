@@ -14,7 +14,8 @@ import {
   selectShowSearchIcon,
   selectShowActivityIcon,
   selectIsRegisteredPush,
-  selectLoyaltyToken
+  selectLoyaltyToken,
+  selectRouteName
 } from '../selectors'
 
 describe('Buckets Selectors', () => {
@@ -158,6 +159,20 @@ describe('Buckets Selectors', () => {
         }
       })
       expect(selectPageTitleSelectors(mockedState)).toEqual(pageTitle)
+    })
+  })
+
+  describe('selectRouteName', () => {
+    const selectRouteNameSelectors = selectRouteName()
+
+    it('should get updated pageTitle', () => {
+      const routeName = 'Admin'
+      const mockedState = fromJS({
+        buckets: {
+          routeName
+        }
+      })
+      expect(selectRouteNameSelectors(mockedState)).toEqual(routeName)
     })
   })
 

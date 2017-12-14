@@ -4,18 +4,31 @@
     <!-- The first thing in any HTML file should be the charset -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+
     <!-- Make the page mobile compatible -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
     <!-- Allow installing the app to the homescreen -->
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#8DC640"/>
+
     <!-- for imgix compression image -->
     <meta property="ix:srcAttribute" content="data-src">
     <meta property="ix:srcsetAttribute" content="data-srcset">
     <meta property="ix:sizesAttribute" content="data-sizes">
     <!-- /for imgix compression image -->
+
+    <!-- iOS home screen icons -->
+    <meta name="apple-mobile-web-app-title" content="CLiQQ Shop">
+    <link rel="apple-touch-icon" sizes="120x120" href="/icon-120.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icon-152.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="/icon-167.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icon-180.png">
+
+    <link rel="icon" href="/favicon.ico" />
     <title>CLiQQ Shop</title>
+
     <script>
       // Load the SDK asynchronously
       (function(d, s, id) {

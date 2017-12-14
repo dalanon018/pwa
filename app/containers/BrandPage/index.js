@@ -4,8 +4,12 @@
  *
  */
 
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
+
 import { connect } from 'react-redux'
+import { compose as ReduxCompose } from 'redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
@@ -20,8 +24,12 @@ import {
   partial,
   path
 } from 'ramda'
-import styled from 'styled-components'
 import { Container } from 'semantic-ui-react'
+
+import injectSaga from 'utils/injectSaga'
+import injectReducer from 'utils/injectReducer'
+
+import { paramsImgix } from 'utils/image-stock'
 
 import ProductView from 'components/ProductView'
 import Footer from 'components/Footer'
@@ -32,33 +40,32 @@ import EmptyProducts from 'components/EmptyProductsBlock'
 import LoadingIndicator from 'components/LoadingIndicator'
 import LazyLoading from 'components/LazyLoading'
 
-import { paramsImgix } from 'utils/image-stock'
-
 import {
   setPageTitleAction,
+  setRouteNameAction,
   setShowSearchIconAction,
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
-
 import {
   selectBrands,
   selectLoader
 } from 'containers/Buckets/selectors'
+import { BRAND_NAME } from 'containers/Buckets/constants'
 
 import messages from './messages'
+import reducer from './reducer'
+import saga from './saga'
 
 import {
   getProductsByBrandsAction,
   resetProductsByBrandsAction
 } from './actions'
-
 import {
   selectLazyload,
   selectLoading,
   selectProductsByBrandsItems,
   selectProductsByBrandsFeatured
 } from './selectors'
-
 import {
   LIMIT_ITEMS
 } from './constants'
@@ -75,13 +82,14 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     resetProductsByBrands: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
+    setRouteName: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
     loader: PropTypes.bool.isRequired,
     lazyload: PropTypes.bool.isRequired,
     productsByBrands: PropTypes.object.isRequired,
     productsFeatured: PropTypes.object.isRequired,
     brands: PropTypes.object.isRequired,
-    params: PropTypes.object.isRequired
+    match: PropTypes.object.isRequired
   }
 
   state = {
@@ -105,7 +113,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   _handlePageTitle = (nextProps) => {
-    const { brands, params: { id } } = nextProps
+    const { brands, match: { params: { id } } } = nextProps
 
     if (brands.size) {
       const brand = brands.find((entity) => entity.get('id') === id)
@@ -205,7 +213,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
    * @param {*w} props
    */
   _fetchProductByBrands = (props) => {
-    const { getProductsByBrands, params: { id } } = props
+    const { getProductsByBrands, match: { params: { id } } } = props
     const { offset, limit } = this.state
 
     // since this data is change and we know exactly
@@ -241,6 +249,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   componentDidMount () {
     // initial data
     this._fetchProductByBrands(this.props)
+    this.props.setRouteName(BRAND_NAME)
   }
 
   componentWillUnmount () {
@@ -248,11 +257,11 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   componentWillReceiveProps (nextProps) {
-    const { params } = this.props
+    const { match: { params } } = this.props
 
     const isParamsEqual = (id, props) => compose(
       equals(id),
-      path(['params', 'id'])
+      path(['match', 'params', 'id'])
     )(props)
 
     const updateFetchProduct = ifElse(
@@ -317,6 +326,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
+    setRouteName: (payload) => dispatch(setRouteNameAction(payload)),
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
@@ -327,4 +337,12 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(BrandPage))
+const withConnect = connect(mapStateToProps, mapDispatchToProps)
+const withReducer = injectReducer({ key: 'brandPage', reducer })
+const withSaga = injectSaga({ key: 'brandPage', saga })
+
+export default ReduxCompose(
+  withReducer,
+  withSaga,
+  withConnect
+)(WindowWidth(BrandPage))

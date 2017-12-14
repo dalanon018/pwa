@@ -23,6 +23,7 @@ describe('<Purchases />', () => {
     dispatch: () => {},
     changeRoute: () => {},
     setPageTitle: () => {},
+    setRouteName: () => {},
     setShowSearchIcon: () => {},
     setShowActivityIcon: () => {}
   }

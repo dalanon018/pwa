@@ -4,22 +4,37 @@
  *
  */
 
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Helmet from 'react-helmet'
-import { FormattedMessage, injectIntl } from 'react-intl'
-import messages from './messages'
 
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
+import { compose as ReduxCompose } from 'redux'
 import { createStructuredSelector } from 'reselect'
+
+import injectSaga from 'utils/injectSaga'
+import injectReducer from 'utils/injectReducer'
 
 // import ProductResults from 'components/ProductResults'
 import SearchResult from 'components/SearchResult'
 import H3 from 'components/H3'
 import WindowWidth from 'components/WindowWidth'
-
 import EmptyProducts from './EmptyProducts'
+
+import {
+  setToggleAction
+} from 'containers/Buckets/actions'
+
+import {
+  selectToggle
+} from 'containers/Buckets/selectors'
+
+import messages from './messages'
+import reducer from './reducer'
+import saga from './saga'
 
 import {
   selectSearchProductLoading,
@@ -33,14 +48,6 @@ import {
   setMobileNumbersAction,
   setProductHandlersDefaultAction
 } from './actions'
-
-import {
-  setToggleAction
-} from 'containers/Buckets/actions'
-
-import {
-  selectToggle
-} from 'containers/Buckets/selectors'
 
 const SearchListWrapper = styled.div`
   display: flex;
@@ -172,4 +179,12 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(injectIntl(SearchPage)))
+const withConnect = connect(mapStateToProps, mapDispatchToProps)
+const withReducer = injectReducer({ key: 'searchPage', reducer })
+const withSaga = injectSaga({ key: 'searchPage', saga })
+
+export default ReduxCompose(
+  withReducer,
+  withSaga,
+  withConnect
+)(WindowWidth(injectIntl(SearchPage)))

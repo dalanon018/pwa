@@ -4,7 +4,8 @@
  *
  */
 
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
 
@@ -12,15 +13,13 @@ import { noop } from 'lodash'
 import { allPass, ifElse, equals, both, compose, prop, partial } from 'ramda'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
+import { compose as ReduxCompose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 import { FormattedMessage } from 'react-intl'
 
 import Notification from 'utils/firebase-notification'
-
-import Receipt from 'components/Receipt'
-import Modal from 'components/PromptModal'
-import WindowWidth from 'components/WindowWidth'
-
+import injectSaga from 'utils/injectSaga'
+import injectReducer from 'utils/injectReducer'
 import RESERVED from 'images/ticket-backgrounds/reserve.png'
 import UNPAID from 'images/ticket-backgrounds/unpaid.png'
 import CONFIRMED from 'images/ticket-backgrounds/paid.png'
@@ -29,33 +28,33 @@ import DELIVERED from 'images/ticket-backgrounds/pickup.png'
 import CLAIMED from 'images/ticket-backgrounds/claimed.png'
 import UNCLAIMED from 'images/ticket-backgrounds/not-claimed.png'
 
-import {
-  userIsAuthenticated
-} from 'containers/App/auth'
+import Receipt from 'components/Receipt'
+import Modal from 'components/PromptModal'
+import WindowWidth from 'components/WindowWidth'
 
+import { userIsAuthenticated } from 'containers/App/auth'
+import { ENVIROMENT } from 'containers/App/constants'
 import {
   STATUSES,
   PURCHASE_ORDER,
-  PURCHASE_USECASE
+  PURCHASE_USECASE,
+  RECEIPTPAGE_NAME
 } from 'containers/Buckets/constants'
-
 import {
   selectIsRegisteredPush
 } from 'containers/Buckets/selectors'
-
 import {
   setPageTitleAction,
+  setRouteNameAction,
   setShowSearchIconAction,
   setShowActivityIconAction,
   registerPushAction,
   getRegisteredPushAction
 } from 'containers/Buckets/actions'
 
-import {
-  ENVIROMENT
-} from 'containers/App/constants'
-
 import messages from './messages'
+import reducer from './reducer'
+import saga from './saga'
 
 import {
   selectLoading,
@@ -100,7 +99,8 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
     setShowSearchIcon: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
     getRegisteredPush: PropTypes.func.isRequired,
-    registerPush: PropTypes.func.isRequired
+    registerPush: PropTypes.func.isRequired,
+    setRouteName: PropTypes.func.isRequired
   }
 
   state = {
@@ -218,8 +218,10 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
   }
 
   componentDidMount () {
-    const { params: { trackingNumber }, getRegisteredPush } = this.props
+    const { match: { params: { trackingNumber } }, getRegisteredPush, setRouteName } = this.props
+
     this.props.getReceipt({ trackingNumber })
+    setRouteName(RECEIPTPAGE_NAME)
     getRegisteredPush()
   }
 
@@ -281,6 +283,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
+    setRouteName: (payload) => dispatch(setRouteNameAction(payload)),
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
@@ -293,4 +296,12 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(userIsAuthenticated(ReceiptPage)))
+const withConnect = connect(mapStateToProps, mapDispatchToProps)
+const withReducer = injectReducer({ key: 'receiptPage', reducer })
+const withSaga = injectSaga({ key: 'receiptPage', saga })
+
+export default ReduxCompose(
+  withReducer,
+  withSaga,
+  withConnect
+)(WindowWidth(userIsAuthenticated(ReceiptPage)))

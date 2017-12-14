@@ -25,12 +25,12 @@ const selectBrands = () => createSelector(
 
 const selectFeaturedCategories = () => createSelector(
   selectProductCategories(),
-  (substate) => substate.filter((state) => state.get('isFeatured')).slice(0, 6)
+  (substate) => substate.filter((state) => state.get('isFeatured')).slice(0, 4)
 )
 
 const selectFeaturedBrands = () => createSelector(
   selectBrands(),
-  (substate) => substate.filter((state) => state.get('isFeatured')).slice(0, 6)
+  (substate) => substate.filter((state) => state.get('isFeatured')).slice(0, 4)
 )
 
 const selectToggle = () => createSelector(
@@ -61,6 +61,11 @@ const selectToggleMessage = () => createSelector(
 const selectLoader = () => createSelector(
   selectBucketDomain(),
   (substate) => substate.get('loader')
+)
+
+const selectRouteName = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('routeName')
 )
 
 const selectPageTitle = () => createSelector(
@@ -105,6 +110,7 @@ export {
   selectToggleError,
   selectToggleMessage,
   selectLoader,
+  selectRouteName,
   selectPageTitle,
   selectFullScreenHeader,
   selectShowSearchIcon,

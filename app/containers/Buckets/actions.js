@@ -5,6 +5,8 @@
  */
 
 import {
+  SET_ROUTE_NAME,
+
   GET_PAGE_TITLE,
   SET_PAGE_TITLE,
 
@@ -40,6 +42,13 @@ import {
 
   SET_HEADER_FULL_SCREEN
 } from './constants'
+
+export function setRouteNameAction (payload) {
+  return {
+    type: SET_ROUTE_NAME,
+    payload
+  }
+}
 
 export function getPageTitleAction () {
   return {

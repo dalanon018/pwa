@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import ReactNotification from 'react-notification-system'
 
@@ -11,17 +12,23 @@ import {
   partial
 } from 'ramda'
 import { noop } from 'lodash'
-import { browserHistory } from 'react-router'
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
+import { compose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
+import { Switch, Route } from 'react-router-dom'
 
 import Firebase from 'utils/firebase-realtime'
 import Notification from 'utils/firebase-notification'
-import { switchFn } from 'utils/logicHelper'
+import injectSaga from 'utils/injectSaga'
+import injectReducer from 'utils/injectReducer'
 
 import { isMobileDevice } from 'utils/http'
+import { switchFn } from 'utils/logicHelper'
+import {
+  ENVIROMENT
+} from 'containers/App/constants'
 
 import {
   selectProductCategories,
@@ -31,6 +38,7 @@ import {
   selectToggleError,
   selectToggleMessage,
   selectPageTitle,
+  selectRouteName,
   selectFullScreenHeader,
   selectShowSearchIcon,
   selectShowActivityIcon,
@@ -56,18 +64,32 @@ import {
 } from './constants'
 
 import {
-  ENVIROMENT
-} from 'containers/App/constants'
-
-import {
   getSearchProductAction,
   setSearchProductAction
 } from 'containers/SearchPage/actions'
+
+import HomePage from 'containers/HomePage/Loadable'
+import ProductPage from 'containers/ProductPage/Loadable'
+import ReviewPage from 'containers/ProductReview/Loadable'
+import PurchaseListPage from 'containers/Purchases/Loadable'
+import ReceiptPage from 'containers/ReceiptPage/Loadable'
+import ProductsByCategoryPage from 'containers/ProductsByCategory/Loadable'
+import BrandsPage from 'containers/BrandPage/Loadable'
+import SearchPage from 'containers/SearchPage/Loadable'
+
+import TermsPage from 'containers/TermsConditions/Loadable'
+import PrivacyPage from 'containers/PrivacyPolicy/Loadable'
+import FaqPage from 'containers/FaqPage/Loadable'
+
+import NotFound from 'containers/PageNotFound/Loadable'
+import OfflinePage from 'containers/PageOffline/Loadable'
 
 import ModalWithHeader from 'components/ModalWithHeader'
 import Modal from 'components/PromptModal'
 import WindowWidth from 'components/WindowWidth'
 
+import reducer from './reducer'
+import saga from './saga'
 import messages from './messages'
 import HeaderMenu from './HeaderMenu'
 import SearchMenu from './SearchMenu'
@@ -87,7 +109,6 @@ const MainContent = styled.div`
 export class Buckets extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     isMobile: PropTypes.bool.isRequired,
-    children: PropTypes.object.isRequired,
     getCategories: PropTypes.func.isRequired,
     getBrands: PropTypes.func.isRequired,
     getUpdatedReceipts: PropTypes.func.isRequired,
@@ -98,14 +119,16 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     productCategories: PropTypes.object.isRequired,
     brands: PropTypes.object.isRequired,
     mobileNumbers: PropTypes.object,
-    routes: PropTypes.array.isRequired,
     toggleError: PropTypes.bool.isRequired,
     toggleMessage: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
     ]),
     intl: intlShape.isRequired,
+    routeName: PropTypes.string,
     pageTitle: PropTypes.string,
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
     headerMenuFullScreen: PropTypes.bool.isRequired,
     showSearchIcon: PropTypes.bool.isRequired,
     showActivityIcon: PropTypes.bool.isRequired,
@@ -133,13 +156,12 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
   _displayBestViewedMobileNotification = () =>
     setTimeout(() =>
-    // we need to make sure that notification ref is defined before we show it.
-    this._notificationRef && this._notificationRef.addNotification({
-      title: <FormattedMessage {...messages.bestViewedTitle} />,
-      message: <FormattedMessage {...messages.bestViewedContent} />,
-      autoDismiss: 0,
-      level: 'success'
-    })
+      this._notificationRef && this._notificationRef.addNotification({
+        title: <FormattedMessage {...messages.bestViewedTitle} />,
+        message: <FormattedMessage {...messages.bestViewedContent} />,
+        autoDismiss: 0,
+        level: 'success'
+      })
     , 2000)
 
   _goToHome = () => {
@@ -190,11 +212,13 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
    * this is a factory fn since we button is dynamic base on the url of the user.
    */
   _handleLeftButtonAction = () => {
+    const { history } = this.props
+
     if (this._hideBackButton()) {
       return this._handleToggleSideBar()
     }
 
-    return browserHistory.goBack()
+    return history.goBack()
   }
 
   /**
@@ -209,6 +233,12 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     return false
   }
 
+  _handleChangeRouteFromSideBar = (payload) => {
+    const { changeRoute } = this.props
+    this._handleCloseSidebarClickPusher()
+    return changeRoute(payload)
+  }
+
   /**
    * if route is not:[
    *  '/',
@@ -218,23 +248,19 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
    * then we will show the backbutton
    */
   _hideBackButton = () => {
-    const { routes } = this.props
-    const { path } = routes.slice().pop()
+    const { location: { pathname } } = this.props
 
-    return HIDE_BACK_BUTTON.includes(path.split('/')[1])
+    return HIDE_BACK_BUTTON.includes(pathname.split('/')[1])
   }
 
   _displayHeader = () => {
-    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, routes, searchProduct, setProductSearchList, intl, headerMenuFullScreen } = this.props
-    const { path } = routes.slice().pop()
-    const currentRoute = routes.slice().pop().name
-
+    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, location: { pathname }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen } = this.props
     /**
      * we have to identify if we should display backbutton
      */
     const hideBackButton = this._hideBackButton()
 
-    if (path === '/search') {
+    if (pathname === '/search') {
       return (
         <SearchMenu
           clearSearch={setProductSearchList}
@@ -254,7 +280,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
         hideBackButton={hideBackButton}
         leftButtonAction={this._handleLeftButtonAction}
         changeRoute={changeRoute}
-        currentRoute={currentRoute}
+        currentRoute={routeName}
         searchProduct={searchProduct}
         intl={intl}
       />
@@ -329,8 +355,6 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     getLoyaltyToken()
 
     shouldDisplayNotification(isMobile)
-
-    browserHistory.listen(this._handleBackButton)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -345,21 +369,37 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   render () {
-    const { children, productCategories, changeRoute, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken } = this.props
+    const { productCategories, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken } = this.props
     const { toggleSidebar } = this.state
     return (
       <Wrapper toggleSidebar={toggleSidebar}>
         { this._displayHeader() }
         <MainContent
           toggleSidebar={toggleSidebar} >
-          { children }
+          <Switch>
+            <Route exact path='/' component={HomePage} />
+            <Route path='/product/:id' component={ProductPage} />
+            <Route path='/review' component={ReviewPage} />
+            <Route exact path='/purchases' component={PurchaseListPage} />
+            <Route exact path='/purchases/:trackingNumber' component={ReceiptPage} />
+            <Route exact path='/products-category/:id' component={ProductsByCategoryPage} />
+            <Route exact path='/brands/:id' component={BrandsPage} />
+            <Route exact path='/search' component={SearchPage} />
+
+            <Route exact path='/terms-conditions' component={TermsPage} />
+            <Route exact path='/privacy-policy' component={PrivacyPage} />
+            <Route exact path='/faq' component={FaqPage} />
+
+            <Route path='/offline' component={OfflinePage} />
+            <Route path='' component={NotFound} />
+          </Switch>
         </MainContent>
         <div
           className='sidebar-wrapper' >
           <SidebarMenu
             isSignIn={!!loyaltyToken}
             signOut={removeLoyaltyToken}
-            changeRoute={changeRoute}
+            changeRoute={this._handleChangeRouteFromSideBar}
             categories={productCategories}
             brands={brands}
             toggleSidebar={toggleSidebar}
@@ -389,6 +429,7 @@ const mapStateToProps = createStructuredSelector({
   receiptsUpdated: selectReceiptsUpdated(),
   toggleError: selectToggleError(),
   toggleMessage: selectToggleMessage(),
+  routeName: selectRouteName(),
   pageTitle: selectPageTitle(),
   headerMenuFullScreen: selectFullScreenHeader(),
   showSearchIcon: selectShowSearchIcon(),
@@ -416,4 +457,12 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(injectIntl(Buckets)))
+const withConnect = connect(mapStateToProps, mapDispatchToProps)
+const withReducer = injectReducer({ key: 'buckets', reducer })
+const withSaga = injectSaga({ key: 'buckets', saga })
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect
+)(WindowWidth(injectIntl(Buckets)))

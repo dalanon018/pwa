@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { FormattedMessage } from 'react-intl'
@@ -40,6 +41,7 @@ const StyledCheckBox = styled(Checkbox)`
     margin: 5px;
     padding: 0 !important;
     width: 50px;
+    text-align: center;
   }
 
   & input[type=checkbox]:checked + label {
@@ -52,7 +54,7 @@ function SizeSelector ({ product, onSizeChange }) {
   return (
     <SizesWrapper className='border_top__one--light-grey'>
       <div>
-        <Label className='color__secondary' as='p' basic size='big'>
+        <Label className='color__secondary center' as='p' basic size='big'>
           <FormattedMessage {...messages.selectSize} />
         </Label>
       </div>

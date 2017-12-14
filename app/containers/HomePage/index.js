@@ -4,21 +4,23 @@
  *
  */
 
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
+import Helmet from 'react-helmet'
 import LazyLoad from 'react-lazyload'
 
 import { connect } from 'react-redux'
+import { compose } from 'redux'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
 import { gt, ifElse, identity } from 'ramda'
+import { Container, Grid, Button, Input } from 'semantic-ui-react'
+
+import injectSaga from 'utils/injectSaga'
+import injectReducer from 'utils/injectReducer'
 
 import { paramsImgix } from 'utils/image-stock'
-
-import Helmet from 'react-helmet'
-import messages from './messages'
-
-import { Container, Grid, Button, Input } from 'semantic-ui-react'
 
 import BannerSlider from 'components/BannerSlider'
 import ProductView from 'components/ProductView'
@@ -30,6 +32,7 @@ import WindowWidth from 'components/WindowWidth'
 
 import {
   setPageTitleAction,
+  setRouteNameAction,
   setShowSearchIconAction,
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
@@ -39,17 +42,22 @@ import {
   selectFeaturedBrands,
   selectLoader
 } from 'containers/Buckets/selectors'
+import {
+  HOME_NAME
+} from 'containers/Buckets/constants'
+
+import messages from './messages'
+import reducer from './reducer'
+import saga from './saga'
 
 import {
   getFeaturedProductsAction
 } from './actions'
-
 import {
   selectLoading,
   selectFeaturedProducts,
   selectTotalCount
 } from './selectors'
-
 import {
   LIMIT_ITEMS
 } from './constants'
@@ -81,7 +89,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     ]).isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
-    setShowActivityIcon: PropTypes.func.isRequired
+    setShowActivityIcon: PropTypes.func.isRequired,
+    setRouteName: PropTypes.func.isRequired
   }
 
   constructor () {
@@ -129,6 +138,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
   componentDidMount () {
     this.props.getProduct()
+    this.props.setRouteName(HOME_NAME)
   }
 
   render () {
@@ -155,9 +165,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         <Helmet
           title='Home Page'
           meta={[
-            { name: 'description', content: '7-eleven CliQQ home page' }
+          { name: 'description', content: '7-eleven CliQQ home page' }
           ]}
-        />
+      />
 
         <SearchContainer className='background__light-grey' data-attribute='search'>
           <Grid padded>
@@ -233,6 +243,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                   </H3>
                 )(featuredBrands.size > 0)
               }
+
               <Brand brands={featuredBrands} loader={brandLoader} />
             </div>
           </LazyLoad>
@@ -254,6 +265,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps (dispatch) {
   return {
+    setRouteName: (payload) => dispatch(setRouteNameAction(payload)),
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
@@ -262,5 +274,12 @@ function mapDispatchToProps (dispatch) {
     dispatch
   }
 }
+const withConnect = connect(mapStateToProps, mapDispatchToProps)
+const withReducer = injectReducer({ key: 'home', reducer })
+const withSaga = injectSaga({ key: 'home', saga })
 
-export default WindowWidth(connect(mapStateToProps, mapDispatchToProps)(injectIntl(HomePage)))
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect
+)(WindowWidth(injectIntl(HomePage)))

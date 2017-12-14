@@ -4,7 +4,8 @@
 *
 */
 
-import React, {PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { throttle, noop } from 'lodash'
 import {
@@ -139,8 +140,8 @@ LazyLoading.propTypes = {
   onScroll: PropTypes.func.isRequired,
   // children to load
   children: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.children
+    PropTypes.object,
+    PropTypes.node
   ]).isRequired,
   // data
   results: PropTypes.object.isRequired,

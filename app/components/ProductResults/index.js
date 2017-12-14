@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { Grid } from 'semantic-ui-react'
@@ -38,7 +39,7 @@ const ProductDescription = styled.div`
   justify-content: center;
   letter-spacing: 2px;
   width: 65%;
-  
+
   h6 {
     line-height: 10px;
     text-align: right;
