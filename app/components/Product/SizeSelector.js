@@ -41,6 +41,7 @@ const StyledCheckBox = styled(Checkbox)`
     margin: 5px;
     padding: 0 !important;
     width: 50px;
+    text-align: center;
   }
 
   & input[type=checkbox]:checked + label {
