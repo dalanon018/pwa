@@ -20,7 +20,6 @@ import {
   ProductInfo,
   ProductPriceWrapper,
   ProductWrapper,
-  RibbonWrapper,
   ImageContent
 } from './styles'
 
@@ -82,14 +81,6 @@ function ProductView ({
                 <ImageWrapper>
                   <ImageContent>
                     <Image alt={product.get('title')} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
-                    {
-                      +product.get('quantity') === 0 &&
-                      <RibbonWrapper>
-                        <div className='ribbon-tag'>
-                          <FormattedMessage className='ribbon-text' {...messages.noStock} />
-                        </div>
-                      </RibbonWrapper>
-                    }
                   </ImageContent>
                 </ImageWrapper>
                 <ProductInfo brandName={product.get('brand')}>

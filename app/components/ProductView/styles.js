@@ -80,53 +80,53 @@ const ProductPriceWrapper = styled.div`
 `
 
 const RibbonWrapper = styled.div`
-position: absolute;
-z-index: 1;
-top: 0;
-right: 8px;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 8px;
 
-// sorting styles is sensitive on ribbon-tag class
-.ribbon-tag {
-  background: #db2828;
-  border-bottom: 2px solid #db2828;
-  display: flex;
-  height: 40px;
-  justify-content: center;
-  position: relative;
-  font-size: 11px;
-  line-height: 14px;
-  font-weight: 700;
-  text-align: center;
-  vertical-align: middle;
-  width: 50px;
-  align-items: middle;
-
-  &:after, &:before {
-    content: '';
-    position: absolute;
-    border-top: 10px solid #db2828;
-    height: 0;
-    width: 0;
-    top: 100%;
-  }
-
-  &:after {
-    border-left: 50px solid transparent;
-    right: 0px;
-  }
-
-  &:before {
-    border-right: 50px solid transparent;
-    left: 0px;
-  }
-
-  span {
-    align-items: center;
-    color: #FFFFFF !important;
-    // display: inline-flex;
-    padding: 5px;
+  .ribbon-tag {
+    background: #db2828;
+    border-bottom: 2px solid #db2828;
+    display: flex;
+    height: 40px;
+    justify-content: center;
+    position: relative;
+    font-size: 11px;
+    line-height: 14px;
+    font-weight: 700;
     text-align: center;
-    text-transform: uppercase;
+    vertical-align: middle;
+    width: 50px;
+    align-items: middle;
+
+    &:after, &:before {
+      content: '';
+      position: absolute;
+      border-top: 10px solid #db2828;
+      height: 0;
+      width: 0;
+      top: 100%;
+    }
+
+    &:after {
+      border-left: 50px solid transparent;
+      right: 0px;
+    }
+
+    &:before {
+      border-right: 50px solid transparent;
+      left: 0px;
+    }
+
+    span {
+      align-items: center;
+      color: #FFFFFF !important;
+      // display: inline-flex;
+      padding: 5px;
+      text-align: center;
+      text-transform: uppercase;
+    }
   }
 `
 
