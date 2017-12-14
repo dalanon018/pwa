@@ -24,7 +24,7 @@ export const fnSearchParams = (params) => compose(
  */
 export const fnQueryObject = compose(
   fromPairs,
-  map(split('=')),
+  map(compose(split('='), decodeURIComponent)),
   split('&'),
   replace('?', '')
 )
