@@ -4,7 +4,8 @@
  *
  */
 
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import { noop, isEmpty } from 'lodash'
 import { ifElse, equals, both, compose, prop, propOr, either, identity } from 'ramda'

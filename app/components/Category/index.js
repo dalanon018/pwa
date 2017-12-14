@@ -4,7 +4,8 @@
 *
 */
 
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import EmptyDataBlock from 'components/EmptyDataBlock'
 import { Grid, Label } from 'semantic-ui-react'
 import { imageStock, paramsImgix } from 'utils/image-stock'
