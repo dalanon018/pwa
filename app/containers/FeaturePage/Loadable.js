@@ -3,9 +3,9 @@
  */
 import Loadable from 'react-loadable'
 
-import LoadingIndicator from 'components/LoadingIndicator'
+import PageLoading from 'components/PageLoading'
 
 export default Loadable({
   loader: () => import('./index'),
-  loading: LoadingIndicator
+  loading: PageLoading
 })

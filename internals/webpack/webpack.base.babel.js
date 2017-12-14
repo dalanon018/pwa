@@ -6,6 +6,7 @@ const path = require('path')
 const webpack = require('webpack')
 const HappyPack = require('happypack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const StyleExtHtmlWebpackPlugin = require('style-ext-html-webpack-plugin')
 
 // Remove this line once the following warning goes away (it was meant for webpack loader authors not users):
 // 'DeprecationWarning: loaderUtils.parseQuery() received a non-string value which can be problematic,
@@ -101,6 +102,8 @@ module.exports = (options) => ({
     }),
 
     new ExtractTextPlugin('styles.css'),
+    // make our style inline
+    new StyleExtHtmlWebpackPlugin(),
 
     new webpack.ProvidePlugin({
       // make fetch available
