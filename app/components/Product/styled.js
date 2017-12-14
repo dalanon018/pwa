@@ -18,7 +18,7 @@ export const ProductWrapper = styled(AnimateDiv)`
     height: auto;
     margin: 0 auto;
   }
-  
+
   @media (min-width: 1024px) and (max-width: 1365px) {
     .brand-logo {
       width: 300px;
@@ -60,7 +60,7 @@ export const ProductImageSlider = styled.div`
 export const ProductMainContent = styled(AnimateDiv)`
   margin: 20px 0;
   text-align: center;
-  
+
   @media (min-width: 768px) {
     h3 {
       font-size: 25px;
@@ -105,7 +105,7 @@ export const DetailsWrapper = styled(AnimateDiv)`
 export const ProductDetailsContainer = styled(AnimateDiv)`
   padding: 35px 25px;
   font-weight: 100;
-  
+
   @media (min-width: 1024px) and (max-width: 1365px) {
     padding: 35px 200px;
   }
@@ -164,7 +164,7 @@ export const ShareWrapper = styled.div`
 
   .mail.icon {
     font-size: 15px;
-    line-height: 13px !important;    
+    line-height: 13px !important;
   }
 `
 
@@ -175,7 +175,7 @@ export const CollapseContent = styled.div`
   img {
     width: auto;
     height: 30px;
-    min-width: 45px; 
+    min-width: 45px;
     flex: 0.1;
     margin-top: 8px;
   }
@@ -195,7 +195,7 @@ export const EmailDesktopWarning = styled.div`
 `
 
 export const SizesWrapper = styled.div`
-  text-align: center
+  text-align: center;
   padding: 10px 0;
 
   .no-margin {

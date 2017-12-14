@@ -54,7 +54,7 @@ function SizeSelector ({ product, onSizeChange }) {
   return (
     <SizesWrapper className='border_top__one--light-grey'>
       <div>
-        <Label className='color__secondary' as='p' basic size='big'>
+        <Label className='color__secondary center' as='p' basic size='big'>
           <FormattedMessage {...messages.selectSize} />
         </Label>
       </div>
