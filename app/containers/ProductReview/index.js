@@ -11,7 +11,7 @@ import { noop, isEmpty } from 'lodash'
 import { ifElse, equals, both, compose, prop, propOr, either, identity } from 'ramda'
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
-import { push } from 'react-router-redux'
+import { replace } from 'react-router-redux'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 
@@ -522,7 +522,7 @@ function mapDispatchToProps (dispatch) {
     getStore: () => dispatch(getStoreAction()),
     storeLocator: (payload) => dispatch(storeLocatorAction(payload)),
     setHandlersDefault: () => dispatch(setOrderHandlersDefaultAction()),
-    changeRoute: (url) => dispatch(push(url)),
+    changeRoute: (url) => dispatch(replace(url)),
     dispatch
   }
 }
