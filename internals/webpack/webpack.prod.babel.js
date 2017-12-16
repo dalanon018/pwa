@@ -20,11 +20,11 @@ module.exports = require('./webpack.base.babel')({
   },
 
   babelQuery: {
-    plugins: ['lodash', 'ramda', 'transform-semantic-ui-react-imports']
+    plugins: ['lodash', 'transform-semantic-ui-react-imports']
   },
 
   plugins: [
-    new webpack.optimize.UglifyJsPlugin(), // minify everything
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(), // Merge chunks
     // new webpack.optimize.CommonsChunkPlugin({
     //   name: 'vendor',
