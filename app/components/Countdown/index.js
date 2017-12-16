@@ -30,7 +30,7 @@ export default function (WrapperComponent) {
     _startCountDownTimer = (props) => {
       const { receipt, statuses } = props
       if (statuses[receipt.get('status')] === 'RESERVED') {
-        const endDate = CountdownParser(receipt.get('claimExpiry'))
+        const endDate = CountdownParser(receipt.get('expiryDate'))
 
         clearInterval(this.countdownInterval)
 

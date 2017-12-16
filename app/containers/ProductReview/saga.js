@@ -70,7 +70,6 @@ function * transformResponse ({ order: { sevenConnectRefNum, transactionId, expi
   // we have to recode the 'PREPAID' static status
   return {
     trackingNumber: transactionId,
-    claimExpiry: expiryDate,
     dateCreated: moment().format('YYYY-MM-DD HH:mm:ss'),
     lastUpdated: moment().format('YYYY-MM-DD HH:mm:ss'),
     claimDate: '',
@@ -92,6 +91,7 @@ function * transformResponse ({ order: { sevenConnectRefNum, transactionId, expi
       }
     }],
     status: (paymentType === COD_PAYMENT) ? DEFAULT_STATUS_COD_PAYMENT : status,
+    expiryDate,
     uom,
     brand,
     mobileNumber,
