@@ -417,7 +417,7 @@ function * removeLoyaltyToken () {
   yield put(setLoyaltyTokenAction(null))
   yield put(setCurrentSessionAction(null))
 
-  yield * removeMobileNumbers()
+  yield removeMobileNumbers()
 }
 
 export function * getIsRegisteredPush () {
@@ -472,11 +472,11 @@ export function * bucketsSagas () {
     fork(getIsRegisteredPushSaga),
 
     // get loyaltyToken
-    fork(getLoyaltyTokenSaga),
+    fork(getLoyaltyTokenSaga)
     // remove loyaltyToken / sign out
-    fork(removeLoyaltyTokenSaga)
   ]
-
+  // remember no to cancel this action on change of locations since it wont trigger anymore
+  yield takeLatest(REMOVE_LOYALTY_TOKEN, removeLoyaltyToken)
   // Suspend execution until location changes
   yield take(LOCATION_CHANGE)
   yield watcher.map((task) => cancel(task))

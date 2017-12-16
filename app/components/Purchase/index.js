@@ -152,6 +152,7 @@ class Purchase extends React.PureComponent {
         PROCESSING: receipt.get('dateCreated'),
         CONFIRMED: receipt.get('lastUpdated'),
         INTRANSIT: receipt.get('lastUpdated'),
+        LOSTINTRANSIT: receipt.get('lastUpdated'),
         CLAIMED: receipt.get('lastUpdated'),
         DELIVERED: receipt.get('lastUpdated'),
         UNPAID: receipt.get('lastUpdated'),
