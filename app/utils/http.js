@@ -1,4 +1,5 @@
 import {
+  adjust,
   compose,
   concat,
   fromPairs,
@@ -22,12 +23,29 @@ export const fnSearchParams = (params) => compose(
 /**
  * from Query to Object
  */
-export const fnQueryObject = compose(
-  fromPairs,
-  map(compose(split('='), decodeURIComponent)),
-  split('&'),
-  replace('?', '')
-)
+export const fnQueryObject = (queryParams) => {
+  const handeDecodeError = (data) => {
+    try {
+      const partiallyDecoded = decodeURI(data)
+      // we need to clean and replace % to empty if its not converted correclty
+      return decodeURIComponent(partiallyDecoded).replace('%', '')
+    } catch (e) {
+      return ''
+    }
+  }
+
+  const parseQueryString = compose(
+    fromPairs,
+    map(compose(
+      adjust(handeDecodeError, 1),
+      split('=')
+    )),
+    split('&'),
+    replace('?', '')
+  )
+
+  return parseQueryString(queryParams)
+}
 
 export const getBrowserInfo = () => {
   let ua = navigator.userAgent
