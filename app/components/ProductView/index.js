@@ -5,6 +5,8 @@
 */
 
 import React from 'react'
+import LazyLoad from 'react-lazyload'
+
 import { range } from 'lodash'
 
 import {
@@ -24,6 +26,7 @@ import {
 } from './styles'
 
 import EmptyDataBlock from 'components/EmptyDataBlock'
+import LoadingIndicator from 'components/LoadingIndicator'
 
 import ParagraphImage from 'images/test-images/short-paragraph.png'
 
@@ -80,7 +83,13 @@ function ProductView ({
               <ProductWrapper>
                 <ImageWrapper>
                   <ImageContent>
-                    <Image alt={product.get('title')} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
+                    <LazyLoad
+                      placeholder={<LoadingIndicator />}
+                      height={300}
+                      once
+                    >
+                      <Image alt={product.get('title')} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
+                    </LazyLoad>
                   </ImageContent>
                 </ImageWrapper>
                 <ProductInfo brandName={product.get('brand')}>
