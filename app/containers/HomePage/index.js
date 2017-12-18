@@ -198,23 +198,30 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         </BannerWrapper>
 
         <Container>
-          <Grid padded>
-            <Grid.Row columns={1}>
+          {
+            this._shouldDisplayHeader(
+              <H3>
+                <FormattedMessage {...messages.browseBrands} />
+              </H3>
+            )(featuredBrands.size > 0)
+          }
+
+          <Brand brands={featuredBrands} loader={brandLoader} />
+          <LazyLoad height='100%' offset={-200} once>
+            <div>
+              <h3 />
               <H3>
                 <FormattedMessage {...messages.featureProduct} />
               </H3>
-            </Grid.Row>
-          </Grid>
 
-          <ProductView
-            changeRoute={changeRoute}
-            loader={loader}
-            products={featuredProducts}
-            windowWidth={windowWidth} />
-          { this._displayViewAll() }
+              <ProductView
+                changeRoute={changeRoute}
+                loader={loader}
+                products={featuredProducts}
+                windowWidth={windowWidth}
+              />
+              { this._displayViewAll() }
 
-          <LazyLoad height='100%' offset={-200} once>
-            <div>
               {
                 this._shouldDisplayHeader(
                   <H3>
@@ -235,16 +242,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                   height='80'
                   categories={featuredCategories} />
               </CategoryWrapper>
-
-              {
-                this._shouldDisplayHeader(
-                  <H3>
-                    <FormattedMessage {...messages.browseBrands} />
-                  </H3>
-                )(featuredBrands.size > 0)
-              }
-
-              <Brand brands={featuredBrands} loader={brandLoader} />
             </div>
           </LazyLoad>
         </Container>
