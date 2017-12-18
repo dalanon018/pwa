@@ -9,7 +9,6 @@ import { Grid, Image, List, Label } from 'semantic-ui-react'
 
 import A from 'components/A'
 import H2 from 'components/H2'
-import LoadingIndicator from 'components/LoadingIndicator'
 
 import FacebookIcon from 'images/icons/facebook-icon.svg'
 import TwitterIcon from 'images/icons/twitter-icon.svg'
@@ -58,7 +57,6 @@ export class Footer extends React.PureComponent {
                 <List.Item>
                   <A rel='noopener' href='https://www.facebook.com/711philippines' target='_blank'>
                     <LazyLoad
-                      placeholder={<LoadingIndicator />}
                       height={150}
                       once
                       >
@@ -69,7 +67,6 @@ export class Footer extends React.PureComponent {
                 <List.Item>
                   <A rel='noopener' href='https://twitter.com/711philippines?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor' target='_blank'>
                     <LazyLoad
-                      placeholder={<LoadingIndicator />}
                       height={150}
                       once
                       >
@@ -80,7 +77,6 @@ export class Footer extends React.PureComponent {
                 <List.Item>
                   <A href='mailto:cliqqsupport@7-eleven.com.ph'>
                     <LazyLoad
-                      placeholder={<LoadingIndicator />}
                       height={150}
                       once
                       >
@@ -95,7 +91,13 @@ export class Footer extends React.PureComponent {
           <Grid.Row columns='equal' verticalAlign='middle' centered divided>
             <Grid.Column>
               <AppInfo className='float__right'>
-                <Image alt='CLiQQ' src={DeliveryIcon} />
+                <LazyLoad
+                  height={150}
+                  once
+                  >
+                  <Image alt='CLiQQ' src={DeliveryIcon} />
+                </LazyLoad>
+
                 <section>
                   <Label as='span' size='tiny' className='color__secondary'> <FormattedMessage {...messages.storeDelivery} /></Label>
                   <br />
@@ -105,7 +107,12 @@ export class Footer extends React.PureComponent {
             </Grid.Column>
             <Grid.Column>
               <AppInfo>
-                <Image alt='CLiQQ' src={ReturnIcon} />
+                <LazyLoad
+                  height={150}
+                  once
+                  >
+                  <Image alt='CLiQQ' src={ReturnIcon} />
+                </LazyLoad>
                 <section>
                   <Label as='span' size='tiny' className='color__secondary'><FormattedMessage {...messages.returnPolicy} /></Label>
                   <br />

@@ -39,7 +39,7 @@ import {
 import {
   selectFeaturedCategories,
   selectFeaturedBrands,
-  selectLoader
+  selectBrandLoader
 } from 'containers/Buckets/selectors'
 import {
   HOME_NAME
@@ -197,15 +197,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         </BannerWrapper>
 
         <Container>
-          {
-            this._shouldDisplayHeader(
-              <H3>
-                <FormattedMessage {...messages.browseBrands} />
-              </H3>
-            )(featuredBrands.size > 0)
-          }
-          <Brand brands={featuredBrands} loader={brandLoader} />
-
           <H3>
             <FormattedMessage {...messages.featureProduct} />
           </H3>
@@ -214,8 +205,17 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             loader={loader}
             products={featuredProducts}
             windowWidth={windowWidth}
-          />
+        />
           { this._displayViewAll() }
+
+          {
+            this._shouldDisplayHeader(
+              <H3>
+                <FormattedMessage {...messages.browseBrands} />
+              </H3>
+            )(featuredBrands.size > 0)
+          }
+          <Brand brands={featuredBrands} loader={brandLoader} />
 
           {
             this._shouldDisplayHeader(
@@ -245,7 +245,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
 const mapStateToProps = createStructuredSelector({
   loader: selectLoading(),
-  brandLoader: selectLoader(),
+  brandLoader: selectBrandLoader(),
   featuredProducts: selectFeaturedProducts(),
   featuredCategories: selectFeaturedCategories(),
   featuredBrands: selectFeaturedBrands(),
