@@ -1,18 +1,15 @@
 import React from 'react'
+import LazyLoad from 'react-lazyload'
+
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { push } from 'react-router-redux'
+import { Grid, Image, List, Label } from 'semantic-ui-react'
 
 import A from 'components/A'
 import H2 from 'components/H2'
-import {
-  AppInfo,
-  CopyRight,
-  HelperLinks,
-  SocialIcons,
-  Wrapper } from './Wrapper'
-import messages from './messages'
+import LoadingIndicator from 'components/LoadingIndicator'
 
 import FacebookIcon from 'images/icons/facebook-icon.svg'
 import TwitterIcon from 'images/icons/twitter-icon.svg'
@@ -20,7 +17,13 @@ import EmailIcon from 'images/icons/email-icon.svg'
 import DeliveryIcon from 'images/icons/delivery-icon.svg'
 import ReturnIcon from 'images/icons/return-icon.svg'
 
-import { Grid, Image, List, Label } from 'semantic-ui-react'
+import {
+  AppInfo,
+  CopyRight,
+  HelperLinks,
+  SocialIcons,
+  Wrapper } from './Wrapper'
+import messages from './messages'
 
 export class Footer extends React.PureComponent {
   constructor () {
@@ -54,17 +57,35 @@ export class Footer extends React.PureComponent {
               <List horizontal>
                 <List.Item>
                   <A rel='noopener' href='https://www.facebook.com/711philippines' target='_blank'>
-                    <Image alt='CLiQQ' src={FacebookIcon} />
+                    <LazyLoad
+                      placeholder={<LoadingIndicator />}
+                      height={150}
+                      once
+                      >
+                      <Image alt='CLiQQ' src={FacebookIcon} />
+                    </LazyLoad>
                   </A>
                 </List.Item>
                 <List.Item>
                   <A rel='noopener' href='https://twitter.com/711philippines?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor' target='_blank'>
-                    <Image alt='CLiQQ' src={TwitterIcon} />
+                    <LazyLoad
+                      placeholder={<LoadingIndicator />}
+                      height={150}
+                      once
+                      >
+                      <Image alt='CLiQQ' src={TwitterIcon} />
+                    </LazyLoad>
                   </A>
                 </List.Item>
                 <List.Item>
                   <A href='mailto:cliqqsupport@7-eleven.com.ph'>
-                    <Image alt='CLiQQ' src={EmailIcon} />
+                    <LazyLoad
+                      placeholder={<LoadingIndicator />}
+                      height={150}
+                      once
+                      >
+                      <Image alt='CLiQQ' src={EmailIcon} />
+                    </LazyLoad>
                   </A>
                 </List.Item>
               </List>

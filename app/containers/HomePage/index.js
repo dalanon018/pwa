@@ -7,7 +7,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
-import LazyLoad from 'react-lazyload'
 
 import { connect } from 'react-redux'
 import { compose } from 'redux'
@@ -205,45 +204,38 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               </H3>
             )(featuredBrands.size > 0)
           }
-
           <Brand brands={featuredBrands} loader={brandLoader} />
-          <LazyLoad height='100%' offset={-200} once>
-            <div>
-              <h3 />
+
+          <H3>
+            <FormattedMessage {...messages.featureProduct} />
+          </H3>
+          <ProductView
+            changeRoute={changeRoute}
+            loader={loader}
+            products={featuredProducts}
+            windowWidth={windowWidth}
+          />
+          { this._displayViewAll() }
+
+          {
+            this._shouldDisplayHeader(
               <H3>
-                <FormattedMessage {...messages.featureProduct} />
+                <FormattedMessage {...messages.browseCategory} />
               </H3>
-
-              <ProductView
-                changeRoute={changeRoute}
-                loader={loader}
-                products={featuredProducts}
-                windowWidth={windowWidth}
-              />
-              { this._displayViewAll() }
-
-              {
-                this._shouldDisplayHeader(
-                  <H3>
-                    <FormattedMessage {...messages.browseCategory} />
-                  </H3>
-                )(featuredCategories.size > 0)
-              }
-
-              <CategoryWrapper>
-                <Category
-                  loader={loader}
-                  windowWidth={windowWidth}
-                  margin='2'
-                  changeRoute={changeRoute}
-                  route='/products-category'
-                  iconWidth='25'
-                  fontSize='9'
-                  height='80'
-                  categories={featuredCategories} />
-              </CategoryWrapper>
-            </div>
-          </LazyLoad>
+            )(featuredCategories.size > 0)
+          }
+          <CategoryWrapper>
+            <Category
+              loader={loader}
+              windowWidth={windowWidth}
+              margin='2'
+              changeRoute={changeRoute}
+              route='/products-category'
+              iconWidth='25'
+              fontSize='9'
+              height='80'
+              categories={featuredCategories} />
+          </CategoryWrapper>
         </Container>
         <Footer />
       </div>

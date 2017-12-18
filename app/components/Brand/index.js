@@ -7,12 +7,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import LazyLoad from 'react-lazyload'
 
 import { Grid, Image } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { range } from 'lodash'
 
 import EmptyDataBlock from 'components/EmptyDataBlock'
+import LoadingIndicator from 'components/LoadingIndicator'
 
 import { imageStock, paramsImgix } from 'utils/image-stock'
 
@@ -58,7 +60,13 @@ function Brand ({ brands, loader }) {
             <Grid.Column key={brand.get('id')} >
               <BrandWrapper>
                 <Link to={`/brands/${brand.get('id')}`}>
-                  <Image alt={brand.get('name')} src={paramsImgix(imageShow(brand.get('background')), imgixOptions)} />
+                  <LazyLoad
+                    placeholder={<LoadingIndicator />}
+                    height={300}
+                    once
+                  >
+                    <Image alt={brand.get('name')} src={paramsImgix(imageShow(brand.get('background')), imgixOptions)} />
+                  </LazyLoad>
                 </Link>
               </BrandWrapper>
             </Grid.Column>

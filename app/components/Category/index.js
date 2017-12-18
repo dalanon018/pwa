@@ -6,8 +6,13 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import EmptyDataBlock from 'components/EmptyDataBlock'
+import LazyLoad from 'react-lazyload'
+
 import { Grid, Label } from 'semantic-ui-react'
+
+import EmptyDataBlock from 'components/EmptyDataBlock'
+import LoadingIndicator from 'components/LoadingIndicator'
+
 import { imageStock, paramsImgix } from 'utils/image-stock'
 
 import {
@@ -50,12 +55,18 @@ function Category ({
 
           return (
             <Grid.Column key={index}>
-              <CategoryBlock
-                onClick={handleRedirect}
-                background={paramsImgix(imageShow(category.get('background')), imgixOptions)}>
-                <BackgroundLay className='background__black-transparent' />
-                <Label as='span' basic size='massive' className='color__white'>{category.get('name')}</Label>
-              </CategoryBlock>
+              <LazyLoad
+                placeholder={<LoadingIndicator />}
+                height={100}
+                once
+              >
+                <CategoryBlock
+                  onClick={handleRedirect}
+                  background={paramsImgix(imageShow(category.get('background')), imgixOptions)}>
+                  <BackgroundLay className='background__black-transparent' />
+                  <Label as='span' basic size='massive' className='color__white'>{category.get('name')}</Label>
+                </CategoryBlock>
+              </LazyLoad>
             </Grid.Column>
           )
         }).slice(0, 4)

@@ -18,9 +18,14 @@ const CategoryWrapper = styled.div`
   }
 `
 
+const LazyLoadWrapper = styled.div`
+  padding-top: 14px;
+`
+
 export {
   BannerWrapper,
   SearchWrapper,
   SearchContainer,
-  CategoryWrapper
+  CategoryWrapper,
+  LazyLoadWrapper
 }
