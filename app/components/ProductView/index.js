@@ -84,8 +84,8 @@ function ProductView ({
                 <ImageWrapper>
                   <ImageContent>
                     <LazyLoad
-                      placeholder={<LoadingIndicator />}
                       height={300}
+                      placeholder={<LoadingIndicator />}
                       once
                     >
                       <Image alt={product.get('title')} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />

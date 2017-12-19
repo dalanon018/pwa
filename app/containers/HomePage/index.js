@@ -197,17 +197,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         </BannerWrapper>
 
         <Container>
-          <H3>
-            <FormattedMessage {...messages.featureProduct} />
-          </H3>
-          <ProductView
-            changeRoute={changeRoute}
-            loader={loader}
-            products={featuredProducts}
-            windowWidth={windowWidth}
-        />
-          { this._displayViewAll() }
-
           {
             this._shouldDisplayHeader(
               <H3>
@@ -216,6 +205,17 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             )(featuredBrands.size > 0)
           }
           <Brand brands={featuredBrands} loader={brandLoader} />
+
+          <H3>
+            <FormattedMessage {...messages.featureProduct} />
+          </H3>
+          <ProductView
+            changeRoute={changeRoute}
+            loader={loader}
+            products={featuredProducts}
+            windowWidth={windowWidth}
+          />
+          { this._displayViewAll() }
 
           {
             this._shouldDisplayHeader(
