@@ -14,7 +14,6 @@ import { Link } from 'react-router-dom'
 import { range } from 'lodash'
 
 import EmptyDataBlock from 'components/EmptyDataBlock'
-import LoadingIndicator from 'components/LoadingIndicator'
 
 import { imageStock, paramsImgix } from 'utils/image-stock'
 
@@ -61,7 +60,6 @@ function Brand ({ brands, loader }) {
               <BrandWrapper>
                 <Link to={`/brands/${brand.get('id')}`}>
                   <LazyLoad
-                    placeholder={<LoadingIndicator />}
                     height={300}
                     once
                   >

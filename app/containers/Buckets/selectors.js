@@ -63,6 +63,11 @@ const selectLoader = () => createSelector(
   (substate) => substate.get('loader')
 )
 
+const selectBrandLoader = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('brandLoader')
+)
+
 const selectRouteName = () => createSelector(
   selectBucketDomain(),
   (substate) => substate.get('routeName')
@@ -116,5 +121,6 @@ export {
   selectShowSearchIcon,
   selectShowActivityIcon,
   selectIsRegisteredPush,
-  selectLoyaltyToken
+  selectLoyaltyToken,
+  selectBrandLoader
 }

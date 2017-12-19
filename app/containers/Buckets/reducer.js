@@ -45,6 +45,7 @@ const initialState = fromJS({
   toggleError: false,
   toggleMessage: null,
   loader: false,
+  brandLoader: false,
   routeName: null,
   pageTitle: null,
   headerMenuFullScreen: false,
@@ -87,12 +88,12 @@ function bucketsReducer (state = initialState, action) {
         .set('loader', false)
 
     case GET_BRANDS:
-      return state.set('loader', true)
+      return state.set('brandLoader', true)
 
     case SET_BRANDS:
       return state
         .set('brands', fromJS(action.payload))
-        .set('loader', false)
+        .set('brandLoader', false)
 
     case SET_RECEIPT_UPDATED:
       return state.set('receiptsUpdated', fromJS(action.payload))

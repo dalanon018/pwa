@@ -348,10 +348,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
       this._displayBestViewedMobileNotification
     )
 
+    getBrands()
     getMobileNumbers()
     getRegisteredPush()
     getCategories()
-    getBrands()
     getLoyaltyToken()
 
     shouldDisplayNotification(isMobile)

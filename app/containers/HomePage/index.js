@@ -39,7 +39,7 @@ import {
 import {
   selectFeaturedCategories,
   selectFeaturedBrands,
-  selectLoader
+  selectBrandLoader
 } from 'containers/Buckets/selectors'
 import {
   HOME_NAME
@@ -245,7 +245,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
 const mapStateToProps = createStructuredSelector({
   loader: selectLoading(),
-  brandLoader: selectLoader(),
+  brandLoader: selectBrandLoader(),
   featuredProducts: selectFeaturedProducts(),
   featuredCategories: selectFeaturedCategories(),
   featuredBrands: selectFeaturedBrands(),

@@ -11,7 +11,6 @@ import LazyLoad from 'react-lazyload'
 import { Grid, Label } from 'semantic-ui-react'
 
 import EmptyDataBlock from 'components/EmptyDataBlock'
-import LoadingIndicator from 'components/LoadingIndicator'
 
 import { imageStock, paramsImgix } from 'utils/image-stock'
 
@@ -56,7 +55,6 @@ function Category ({
           return (
             <Grid.Column key={index}>
               <LazyLoad
-                placeholder={<LoadingIndicator />}
                 height={100}
                 once
               >
