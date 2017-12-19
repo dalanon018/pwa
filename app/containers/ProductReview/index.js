@@ -110,7 +110,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     orderSuccess: PropTypes.object.isRequired,
     orderFail: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.object
+      PropTypes.object,
+      PropTypes.number
     ]).isRequired,
     storeLocation: PropTypes.object,
     setRouteName: PropTypes.func.isRequired
