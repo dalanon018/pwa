@@ -205,7 +205,7 @@ class Receipt extends React.PureComponent {
         DELIVERED: receipt.get('lastUpdated'),
         UNPAID: receipt.get('lastUpdated'),
         UNCLAIMED: receipt.get('lastUpdated')
-      })(receipt.get('claimExpiry')),
+      })(receipt.get('expiryDate')),
       handleStatus
     )
 
