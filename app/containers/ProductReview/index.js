@@ -218,7 +218,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     )
 
     this.submitting = true
-    return proceedOrder(modePayment)
+    return (orderedProduct.size > 0) ? proceedOrder(modePayment) : null
   }
 
   _handleStoreLocator () {
