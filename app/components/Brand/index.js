@@ -7,10 +7,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import LazyLoad from 'react-lazyload'
 
 import { Grid, Image } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
 import { range } from 'lodash'
 
 import EmptyDataBlock from 'components/EmptyDataBlock'
@@ -27,6 +25,7 @@ const BrandContainer = styled.div`
 
 export const BrandWrapper = styled.div`
   cursor: pointer;
+  min-height: 160px;
 
   .image {
     width: 100%;
@@ -47,28 +46,25 @@ const imgixOptions = {
   lossless: 0
 }
 
-function Brand ({ brands, loader }) {
+function Brand ({ brands, loader, changeRoute }) {
   const imageShow = (image) => image || imageStock('Brands-Default.jpg', imgixOptions)
-
+  const goToBrand = (id) => () => changeRoute(`/brands/${id}`)
   return (
     <BrandContainer>
       <Grid padded columns='2'>
         {
           loader ? range(4).map((_, index) => <DefaultState key={index} />)
           : brands.valueSeq().map((brand) => (
-            <Grid.Column key={brand.get('id')} >
+            <Grid.Column
+              key={brand.get('id')}
+              onClick={goToBrand(brand.get('id'))}
+              >
               <BrandWrapper>
-                <Link to={`/brands/${brand.get('id')}`}>
-                  <LazyLoad
-                    height={300}
-                    once
-                  >
-                    <Image alt={brand.get('name')} src={paramsImgix(imageShow(brand.get('background')), imgixOptions)} />
-                  </LazyLoad>
-                </Link>
+                <Image alt={brand.get('name')} src={paramsImgix(imageShow(brand.get('background')), imgixOptions)} />
               </BrandWrapper>
             </Grid.Column>
-          ))
+            )
+          )
         }
       </Grid>
     </BrandContainer>
@@ -88,7 +84,8 @@ const DefaultState = () => {
 }
 
 Brand.propTypes = {
-  brands: PropTypes.object.isRequired
+  brands: PropTypes.object.isRequired,
+  changeRoute: PropTypes.func.isRequired
 }
 
 export default Brand
