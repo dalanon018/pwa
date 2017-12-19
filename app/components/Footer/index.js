@@ -1,5 +1,4 @@
 import React from 'react'
-import LazyLoad from 'react-lazyload'
 
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -56,32 +55,17 @@ export class Footer extends React.PureComponent {
               <List horizontal>
                 <List.Item>
                   <A rel='noopener' href='https://www.facebook.com/711philippines' target='_blank'>
-                    <LazyLoad
-                      height={150}
-                      once
-                      >
-                      <Image alt='CLiQQ' src={FacebookIcon} />
-                    </LazyLoad>
+                    <Image alt='CLiQQ' src={FacebookIcon} />
                   </A>
                 </List.Item>
                 <List.Item>
                   <A rel='noopener' href='https://twitter.com/711philippines?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor' target='_blank'>
-                    <LazyLoad
-                      height={150}
-                      once
-                      >
-                      <Image alt='CLiQQ' src={TwitterIcon} />
-                    </LazyLoad>
+                    <Image alt='CLiQQ' src={TwitterIcon} />
                   </A>
                 </List.Item>
                 <List.Item>
                   <A href='mailto:cliqqsupport@7-eleven.com.ph'>
-                    <LazyLoad
-                      height={150}
-                      once
-                      >
-                      <Image alt='CLiQQ' src={EmailIcon} />
-                    </LazyLoad>
+                    <Image alt='CLiQQ' src={EmailIcon} />
                   </A>
                 </List.Item>
               </List>
@@ -91,13 +75,7 @@ export class Footer extends React.PureComponent {
           <Grid.Row columns='equal' verticalAlign='middle' centered divided>
             <Grid.Column>
               <AppInfo className='float__right'>
-                <LazyLoad
-                  height={150}
-                  once
-                  >
-                  <Image alt='CLiQQ' src={DeliveryIcon} />
-                </LazyLoad>
-
+                <Image alt='CLiQQ' src={DeliveryIcon} />
                 <section>
                   <Label as='span' size='tiny' className='color__secondary'> <FormattedMessage {...messages.storeDelivery} /></Label>
                   <br />
@@ -107,12 +85,7 @@ export class Footer extends React.PureComponent {
             </Grid.Column>
             <Grid.Column>
               <AppInfo>
-                <LazyLoad
-                  height={150}
-                  once
-                  >
-                  <Image alt='CLiQQ' src={ReturnIcon} />
-                </LazyLoad>
+                <Image alt='CLiQQ' src={ReturnIcon} />oad>
                 <section>
                   <Label as='span' size='tiny' className='color__secondary'><FormattedMessage {...messages.returnPolicy} /></Label>
                   <br />

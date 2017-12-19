@@ -267,6 +267,7 @@
     "react-router-redux": "5.0.0-alpha.6",
     "react-share": "1.18.0",
     "react-slick": "0.15.4",
+    "react-waypoint": "7.3.4",
     "redux": "3.6.0",
     "redux-auth-wrapper": "2.0.2",
     "redux-immutable": "4.0.0",

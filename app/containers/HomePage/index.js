@@ -7,6 +7,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
+import Waypoint from 'react-waypoint'
 
 import { connect } from 'react-redux'
 import { compose } from 'redux'
@@ -92,6 +93,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     setRouteName: PropTypes.func.isRequired
   }
 
+  state = {
+    showFeaturedItems: false,
+    showFeaturedCategories: false
+  }
   constructor () {
     super()
 
@@ -129,6 +134,20 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       () => null
     )
 
+  _handleFeaturedItemsWaypointEnter = () => {
+    const { featuredBrands } = this.props
+    this.setState({
+      showFeaturedItems: !!featuredBrands.size
+    })
+  }
+
+  _handleFeaturedCategoriesWaypointEnter = () => {
+    const { featuredBrands } = this.props
+    this.setState({
+      showFeaturedCategories: !!featuredBrands.size
+    })
+  }
+
   componentWillMount () {
     this.props.setPageTitle(null)
     this.props.setShowSearchIcon(false)
@@ -142,6 +161,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
   render () {
     const { loader, featuredProducts, featuredCategories, featuredBrands, changeRoute, windowWidth, intl, brandLoader } = this.props
+    const { showFeaturedItems, showFeaturedCategories } = this.state
     const numSlide = windowWidth > 767 ? 2 : 1
     const imgixOptions = {
       w: 800,
@@ -189,7 +209,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
         <BannerWrapper>
           <BannerSlider
-            loader={loader}
+            loader={false}
             images={bannerImages}
             slidesToShow={numSlide}
             isInfinite
@@ -197,24 +217,30 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         </BannerWrapper>
 
         <Container>
-          {
-            this._shouldDisplayHeader(
-              <H3>
-                <FormattedMessage {...messages.browseBrands} />
-              </H3>
-            )(featuredBrands.size > 0)
-          }
-          <Brand brands={featuredBrands} loader={brandLoader} />
+          <H3>
+            <FormattedMessage {...messages.browseBrands} />
+          </H3>
+          <Brand
+            brands={featuredBrands}
+            loader={brandLoader}
+            changeRoute={changeRoute}
+          />
 
           <H3>
             <FormattedMessage {...messages.featureProduct} />
           </H3>
-          <ProductView
-            changeRoute={changeRoute}
-            loader={loader}
-            products={featuredProducts}
-            windowWidth={windowWidth}
-          />
+          <Waypoint
+            onEnter={this._handleFeaturedItemsWaypointEnter}
+          >
+            {
+            showFeaturedItems && <ProductView
+              changeRoute={changeRoute}
+              loader={loader}
+              products={featuredProducts}
+              windowWidth={windowWidth}
+            />
+          }
+          </Waypoint>
           { this._displayViewAll() }
 
           {
@@ -224,18 +250,24 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               </H3>
             )(featuredCategories.size > 0)
           }
-          <CategoryWrapper>
-            <Category
-              loader={loader}
-              windowWidth={windowWidth}
-              margin='2'
-              changeRoute={changeRoute}
-              route='/products-category'
-              iconWidth='25'
-              fontSize='9'
-              height='80'
-              categories={featuredCategories} />
-          </CategoryWrapper>
+          <Waypoint
+            onEnter={this._handleFeaturedCategoriesWaypointEnter}
+          >
+            {
+            showFeaturedCategories && <CategoryWrapper>
+              <Category
+                loader={loader}
+                windowWidth={windowWidth}
+                margin='2'
+                changeRoute={changeRoute}
+                route='/products-category'
+                iconWidth='25'
+                fontSize='9'
+                height='80'
+                categories={featuredCategories} />
+              </CategoryWrapper>
+            }
+          </Waypoint>
         </Container>
         <Footer />
       </div>
