@@ -15,7 +15,9 @@ import {
   selectShowActivityIcon,
   selectIsRegisteredPush,
   selectLoyaltyToken,
-  selectRouteName
+  selectRouteName,
+  selectLoader,
+  selectBrandLoader
 } from '../selectors'
 
 describe('Buckets Selectors', () => {
@@ -229,6 +231,34 @@ describe('Buckets Selectors', () => {
         }
       })
       expect(selectLoyaltyTokenSelectors(mockedState)).toEqual(loyaltyToken)
+    })
+  })
+
+  describe('selectLoader', () => {
+    const selectLoaderSelectors = selectLoader()
+
+    it('should get loader', () => {
+      const loader = false
+      const mockedState = fromJS({
+        buckets: {
+          loader
+        }
+      })
+      expect(selectLoaderSelectors(mockedState)).toEqual(loader)
+    })
+  })
+
+  describe('selectBrandLoader', () => {
+    const selectBrandLoaderSelectors = selectBrandLoader()
+
+    it('should get brandLoader', () => {
+      const brandLoader = false
+      const mockedState = fromJS({
+        buckets: {
+          brandLoader
+        }
+      })
+      expect(selectBrandLoaderSelectors(mockedState)).toEqual(brandLoader)
     })
   })
 })
