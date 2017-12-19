@@ -25,7 +25,7 @@ const BrandContainer = styled.div`
 
 export const BrandWrapper = styled.div`
   cursor: pointer;
-  min-height: 150px;
+  min-height: 160px;
 
   .image {
     width: 100%;

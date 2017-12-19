@@ -135,16 +135,14 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     )
 
   _handleFeaturedItemsWaypointEnter = () => {
-    const { featuredBrands } = this.props
     this.setState({
-      showFeaturedItems: !!featuredBrands.size
+      showFeaturedItems: true
     })
   }
 
   _handleFeaturedCategoriesWaypointEnter = () => {
-    const { featuredBrands } = this.props
     this.setState({
-      showFeaturedCategories: !!featuredBrands.size
+      showFeaturedCategories: true
     })
   }
 
