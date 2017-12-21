@@ -85,7 +85,7 @@ export class Footer extends React.PureComponent {
             </Grid.Column>
             <Grid.Column>
               <AppInfo>
-                <Image alt='CLiQQ' src={ReturnIcon} />oad>
+                <Image alt='CLiQQ' src={ReturnIcon} />
                 <section>
                   <Label as='span' size='tiny' className='color__secondary'><FormattedMessage {...messages.returnPolicy} /></Label>
                   <br />
