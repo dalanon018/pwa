@@ -22,9 +22,9 @@ build:
         npm install -g standard
 
     - script:
-      name: set babel-eslint
+      name: set babel-eslint@8.0.3
       code: |
-        npm install -g babel-eslint
+        npm install -g babel-eslint@8.0.3
 
     - script:
       name: set snazzy
