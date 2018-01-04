@@ -14,7 +14,7 @@ const SideBarChildMenu = ({ entities, changeRoute, location }) => {
   }
 
   const Title = (entity) => (
-    <div key={entity.get('id')} className='title-holder'>
+    <div key={`${entity.get('id')}-${entity.get('name')}`} className='title-holder'>
       <img alt='selected' className='selected' src={Selected} />
       <Label as='span' className='margin__none color__secondary' size='big' onClick={changeRoute.bind(this, `/${location}/${entity.get('id')}`)}>
         {entity.get('name')}
@@ -24,7 +24,7 @@ const SideBarChildMenu = ({ entities, changeRoute, location }) => {
 
   const RenderChildren = (children) => (
     <Label
-      key={children.get('id')} as='p' size='big'
+      key={`${children.get('id')}-${children.get('name')}`} as='p' size='big'
       className='color__grey'
       onClick={changeRoute.bind(this, `/${location}/${children.get('id')}`)}
     >
@@ -33,7 +33,7 @@ const SideBarChildMenu = ({ entities, changeRoute, location }) => {
   )
 
   const RenderWrapper = (entity) => (
-    <ChildAccordion key={entity.get('id')} title={Title(entity)}>
+    <ChildAccordion key={`${entity.get('id')}-${entity.get('name')}`} title={Title(entity)}>
       <div>
         { map(RenderChildren, entity.get('children')) }
       </div>

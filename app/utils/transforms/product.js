@@ -159,7 +159,7 @@ const applyImage = (data) => {
 const applyChangeProductId = (data) => compose(
   assoc('cliqqCode', __, data),
   map(prop('cliqqCode')),
-  prop('cliqqCode')
+  propOr([], 'cliqqCode')
 )(data)
 
 // Apply prices
