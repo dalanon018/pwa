@@ -18,7 +18,7 @@ import { Tab } from 'semantic-ui-react'
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
-import WindowWidth from 'components/WindowWidth'
+import WindowWidth from 'components/Shared/WindowWidth'
 
 import { userIsAuthenticated } from 'containers/App/auth'
 import {

@@ -6,7 +6,7 @@ import React from 'react'
 import { shallow, render } from 'enzyme'
 import { IntlProvider } from 'react-intl'
 
-import ListItem from 'components/ListItem'
+import ListItem from 'components/Shared/ListItem'
 import { RepoListItem } from '../index'
 
 const renderComponent = (props = {}) => render(

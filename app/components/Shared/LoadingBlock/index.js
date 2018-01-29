@@ -12,7 +12,7 @@ import {
 
 import { imageStock } from 'utils/image-stock'
 
-import EmptyDataBlock from 'components/EmptyDataBlock'
+import EmptyDataBlock from 'components/Shared/EmptyDataBlock'
 import ParagraphCenter from 'images/empty-center-text.png'
 import ParagraphLeft from 'images/empty-left-text.png'
 import { range } from 'lodash'

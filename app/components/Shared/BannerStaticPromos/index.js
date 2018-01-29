@@ -8,7 +8,7 @@ import React from 'react'
 
 import { imageStock, paramsImgix } from 'utils/image-stock'
 
-import EmptyDataBlock from 'components/EmptyDataBlock'
+import EmptyDataBlock from 'components/Shared/EmptyDataBlock'
 
 import { Image } from 'semantic-ui-react'
 import { BannerWrapper } from './styles'

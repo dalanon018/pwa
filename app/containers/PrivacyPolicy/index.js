@@ -17,9 +17,9 @@ import { Grid } from 'semantic-ui-react'
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
-import Footer from 'components/Footer'
+import Footer from 'components/Shared/Footer'
 
-import { LoadingStateInfo } from 'components/LoadingBlock'
+import { LoadingStateInfo } from 'components/Shared/LoadingBlock'
 import {
   setPageTitleAction,
   setRouteNameAction,

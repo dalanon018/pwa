@@ -11,7 +11,7 @@ import styled from 'styled-components'
 import { Grid, Image } from 'semantic-ui-react'
 import { range } from 'lodash'
 
-import EmptyDataBlock from 'components/EmptyDataBlock'
+import EmptyDataBlock from 'components/Shared/EmptyDataBlock'
 
 import { imageStock, paramsImgix } from 'utils/image-stock'
 

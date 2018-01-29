@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 import { Label } from 'semantic-ui-react'
 
-// import PackageStatus from 'components/PackageStatus'
+// import PackageStatus from 'components/Shared/PackageStatus'
 
 import messages from './messages'
 

@@ -13,7 +13,7 @@ import {
 } from 'ramda'
 import { FormattedMessage } from 'react-intl'
 
-import Countdown from 'components/Countdown'
+import Countdown from 'components/Shared/Countdown'
 
 import { paramsImgix } from 'utils/image-stock'
 import { DateFormater } from 'utils/date' // DateFormater

@@ -13,7 +13,7 @@ import { FormattedMessage } from 'react-intl'
 import messages from './messages'
 
 import { Button, Modal, Image, Label } from 'semantic-ui-react'
-import TextButton from 'components/CloseButton'
+import TextButton from 'components/Shared/CloseButton'
 
 import LightgreyBackground from 'images/modal-bg-lightgrey.png'
 import RedBackground from 'images/modal-bg-red.png'

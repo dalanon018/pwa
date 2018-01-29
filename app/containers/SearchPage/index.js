@@ -18,10 +18,10 @@ import { createStructuredSelector } from 'reselect'
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
-// import ProductResults from 'components/ProductResults'
-import SearchResult from 'components/SearchResult'
-import H3 from 'components/H3'
-import WindowWidth from 'components/WindowWidth'
+// import ProductResults from 'components/Shared/ProductResults'
+import SearchResult from 'components/Shared/SearchResult'
+import H3 from 'components/Shared/H3'
+import WindowWidth from 'components/Shared/WindowWidth'
 import EmptyProducts from './EmptyProducts'
 
 import {

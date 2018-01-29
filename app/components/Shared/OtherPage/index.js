@@ -7,7 +7,7 @@
 import React from 'react'
 
 import { Image } from 'semantic-ui-react'
-import H1 from 'components/H1'
+import H1 from 'components/Shared/H1'
 
 import { Wrapper } from './styles'
 

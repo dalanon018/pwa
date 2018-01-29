@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import LoadingIndicator from 'components/LoadingIndicator'
+import LoadingIndicator from 'components/Shared/LoadingIndicator'
 
 import {
   ifElse,

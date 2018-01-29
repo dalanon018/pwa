@@ -9,8 +9,8 @@ import { fromJS } from 'immutable'
 import Product from '../index'
 import SizeSelector from '../SizeSelector'
 
-import ProductSlider from 'components/BannerSlider'
-import {LoadingStateInfo} from 'components/LoadingBlock'
+import ProductSlider from 'components/Shared/BannerSlider'
+import {LoadingStateInfo} from 'components/Shared/LoadingBlock'
 
 import {
   ButtonContainer,

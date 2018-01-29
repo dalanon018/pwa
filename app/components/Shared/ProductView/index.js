@@ -29,8 +29,8 @@ import {
   ImageContent
 } from './styles'
 
-import EmptyDataBlock from 'components/EmptyDataBlock'
-import LoadingIndicator from 'components/LoadingIndicator'
+import EmptyDataBlock from 'components/Shared/EmptyDataBlock'
+import LoadingIndicator from 'components/Shared/LoadingIndicator'
 
 import ParagraphImage from 'images/test-images/short-paragraph.png'
 

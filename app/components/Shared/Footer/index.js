@@ -6,8 +6,8 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { push } from 'react-router-redux'
 import { Grid, Image, List, Label } from 'semantic-ui-react'
 
-import A from 'components/A'
-import H2 from 'components/H2'
+import A from 'components/Shared/A'
+import H2 from 'components/Shared/H2'
 
 import FacebookIcon from 'images/icons/facebook-icon.svg'
 import TwitterIcon from 'images/icons/twitter-icon.svg'

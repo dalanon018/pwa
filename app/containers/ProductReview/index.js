@@ -28,11 +28,11 @@ import { FbEventTracking } from 'utils/seo'
 import { switchFn } from 'utils/logicHelper'
 import { fnQueryObject } from 'utils/http'
 
-import Modal from 'components/PromptModal'
-import WindowWidth from 'components/WindowWidth'
-import ListCollapse from 'components/ListCollapse'
+import Modal from 'components/Shared/PromptModal'
+import WindowWidth from 'components/Shared/WindowWidth'
+import ListCollapse from 'components/Shared/ListCollapse'
 
-import { LoadingStateImage } from 'components/LoadingBlock'
+import { LoadingStateImage } from 'components/Shared/LoadingBlock'
 import { userIsAuthenticated } from 'containers/App/auth'
 import { PRODUCTREVIEW_NAME, RAW_PAYMENT_METHODS } from 'containers/Buckets/constants'
 import {

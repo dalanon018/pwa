@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'enzyme'
 
-import ListItem from 'components/ListItem'
+import ListItem from 'components/Shared/ListItem'
 import List from '../index'
 
 describe('<List />', () => {

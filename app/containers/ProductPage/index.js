@@ -33,9 +33,9 @@ import { isMobileDevice } from 'utils/http'
 import { FbEventTracking } from 'utils/seo'
 import { imageStock } from 'utils/image-stock'
 
-import Product from 'components/Product'
-import WindowWidth from 'components/WindowWidth'
-import Modal from 'components/PromptModal'
+import Product from 'components/Shared/Product'
+import WindowWidth from 'components/Shared/WindowWidth'
+import Modal from 'components/Shared/PromptModal'
 
 import {
   setPageTitleAction,

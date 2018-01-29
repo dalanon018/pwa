@@ -10,7 +10,7 @@ import LazyLoad from 'react-lazyload'
 
 import { Grid, Label } from 'semantic-ui-react'
 
-import EmptyDataBlock from 'components/EmptyDataBlock'
+import EmptyDataBlock from 'components/Shared/EmptyDataBlock'
 
 import { imageStock, paramsImgix } from 'utils/image-stock'
 

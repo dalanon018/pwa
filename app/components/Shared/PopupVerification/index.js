@@ -14,8 +14,8 @@ import { createStructuredSelector } from 'reselect'
 import messages from './messages'
 import { push } from 'react-router-redux'
 
-import CloseButton from 'components/CloseButton'
-import Input from 'components/InputField'
+import CloseButton from 'components/Shared/CloseButton'
+import Input from 'components/Shared/InputField'
 
 import BannerBg from 'images/modal-bg-lightgrey.png'
 import MobileIcon from 'images/icons/mobile-icon.svg'

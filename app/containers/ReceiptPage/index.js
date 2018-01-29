@@ -28,9 +28,9 @@ import DELIVERED from 'images/ticket-backgrounds/pickup.png'
 import CLAIMED from 'images/ticket-backgrounds/claimed.png'
 import UNCLAIMED from 'images/ticket-backgrounds/not-claimed.png'
 
-import Receipt from 'components/Receipt'
-import Modal from 'components/PromptModal'
-import WindowWidth from 'components/WindowWidth'
+import Receipt from 'components/Shared/Receipt'
+import Modal from 'components/Shared/PromptModal'
+import WindowWidth from 'components/Shared/WindowWidth'
 
 import { userIsAuthenticated } from 'containers/App/auth'
 import { ENVIROMENT } from 'containers/App/constants'

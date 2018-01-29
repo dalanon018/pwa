@@ -3,8 +3,8 @@ import { shallow } from 'enzyme'
 
 import { PopupVerification } from '../index'
 
-import CloseButton from 'components/CloseButton'
-import Input from 'components/InputField'
+import CloseButton from 'components/Shared/CloseButton'
+import Input from 'components/Shared/InputField'
 
 import {
   PopupWrapper,

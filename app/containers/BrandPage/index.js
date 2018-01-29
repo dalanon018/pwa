@@ -32,14 +32,14 @@ import injectReducer from 'utils/injectReducer'
 
 import { paramsImgix } from 'utils/image-stock'
 
-import ProductView from 'components/ProductView'
-import Footer from 'components/Footer'
-import WindowWidth from 'components/WindowWidth'
-import BannerSlider from 'components/BannerSlider'
-import H3 from 'components/H3'
-import EmptyProducts from 'components/EmptyProductsBlock'
-import LoadingIndicator from 'components/LoadingIndicator'
-// import LazyLoading from 'components/LazyLoading'
+
+import ProductView from 'components/Shared/ProductView'
+import Footer from 'components/Shared/Footer'
+import WindowWidth from 'components/Shared/WindowWidth'
+import BannerSlider from 'components/Shared/BannerSlider'
+import H3 from 'components/Shared/H3'
+import EmptyProducts from 'components/Shared/EmptyProductsBlock'
+import LoadingIndicator from 'components/Shared/LoadingIndicator'
 import { InfiniteLoading, InfiniteWrapper } from 'components/InfiniteLoading'
 
 import {

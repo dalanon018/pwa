@@ -18,8 +18,8 @@ import { noop } from 'lodash'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Label, Button, Image, Checkbox } from 'semantic-ui-react'
 
-import Countdown from 'components/Countdown'
-import LoadingIndicator from 'components/LoadingIndicator'
+import Countdown from 'components/Shared/Countdown'
+import LoadingIndicator from 'components/Shared/LoadingIndicator'
 
 import ReturnIcon from 'images/icons/receipts/return-icon-receipt.svg'
 

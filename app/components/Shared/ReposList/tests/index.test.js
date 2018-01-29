@@ -3,8 +3,8 @@ import React from 'react'
 import { IntlProvider } from 'react-intl'
 
 import RepoListItem from 'containers/RepoListItem'
-import List from 'components/List'
-import LoadingIndicator from 'components/LoadingIndicator'
+import List from 'components/Shared/List'
+import LoadingIndicator from 'components/Shared/LoadingIndicator'
 import ReposList from '../index'
 
 describe('<ReposList />', () => {

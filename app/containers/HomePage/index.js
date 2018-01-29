@@ -22,13 +22,13 @@ import injectReducer from 'utils/injectReducer'
 
 import { paramsImgix } from 'utils/image-stock'
 
-import BannerSlider from 'components/BannerSlider'
-import ProductView from 'components/ProductView'
-import Category from 'components/Category'
-import H3 from 'components/H3'
-import Brand from 'components/Brand'
-import Footer from 'components/Footer'
-import WindowWidth from 'components/WindowWidth'
+import BannerSlider from 'components/Shared/BannerSlider'
+import ProductView from 'components/Shared/ProductView'
+import Category from 'components/Shared/Category'
+import H3 from 'components/Shared/H3'
+import Brand from 'components/Shared/Brand'
+import Footer from 'components/Shared/Footer'
+import WindowWidth from 'components/Shared/WindowWidth'
 
 import {
   setPageTitleAction,

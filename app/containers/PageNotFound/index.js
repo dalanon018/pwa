@@ -8,7 +8,7 @@ import React from 'react'
 
 import messages from './messages'
 
-import OtherPage from 'components/OtherPage'
+import OtherPage from 'components/Shared/OtherPage'
 import notFoundImage from 'images/not-found.png'
 
 export default function PageNotFound () {

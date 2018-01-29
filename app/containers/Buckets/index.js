@@ -84,9 +84,9 @@ import FaqPage from 'containers/FaqPage/Loadable'
 import NotFound from 'containers/PageNotFound/Loadable'
 import OfflinePage from 'containers/PageOffline/Loadable'
 
-import ModalWithHeader from 'components/ModalWithHeader'
-import Modal from 'components/PromptModal'
-import WindowWidth from 'components/WindowWidth'
+import ModalWithHeader from 'components/Shared/ModalWithHeader'
+import Modal from 'components/Shared/PromptModal'
+import WindowWidth from 'components/Shared/WindowWidth'
 
 import reducer from './reducer'
 import saga from './saga'

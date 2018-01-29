@@ -4,7 +4,7 @@ import { fromJS } from 'immutable'
 import { shallow } from 'enzyme'
 import { ProductPage } from '../index'
 
-import Product from 'components/Product'
+import Product from 'components/Shared/Product'
 
 const children = (<h1>Test</h1>)
 const wrapper = (props = {}, enzyme = shallow) => enzyme(

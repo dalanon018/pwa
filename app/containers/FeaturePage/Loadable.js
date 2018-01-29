@@ -3,7 +3,7 @@
  */
 import Loadable from 'react-loadable'
 
-import PageLoading from 'components/PageLoading'
+import PageLoading from 'components/Shared/PageLoading'
 
 export default Loadable({
   loader: () => import('./index'),

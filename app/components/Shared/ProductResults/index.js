@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Grid } from 'semantic-ui-react'
 import { imageStock } from 'utils/image-stock'
 
-import H6 from 'components/H6'
+import H6 from 'components/Shared/H6'
 
 import CliqqLogo from 'images/icons/cliqq.png'
 

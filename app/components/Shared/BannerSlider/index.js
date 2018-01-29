@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 
 import { imageStock } from 'utils/image-stock'
 
-import EmptyDataBlock from 'components/EmptyDataBlock'
+import EmptyDataBlock from 'components/Shared/EmptyDataBlock'
 import SlideShow from './SlideShow'
 
 import {

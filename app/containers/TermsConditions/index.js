@@ -17,10 +17,10 @@ import { Grid } from 'semantic-ui-react'
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
-import Footer from 'components/Footer'
-import H1 from 'components/H1'
+import Footer from 'components/Shared/Footer'
+import H1 from 'components/Shared/H1'
 
-import { LoadingStateInfo } from 'components/LoadingBlock'
+import { LoadingStateInfo } from 'components/Shared/LoadingBlock'
 import {
   setPageTitleAction,
   setRouteNameAction,

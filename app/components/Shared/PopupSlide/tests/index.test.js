@@ -4,12 +4,12 @@ import { shallow, mount } from 'enzyme'
 
 import { PopupSlide } from '../index'
 
-import CloseButton from 'components/CloseButton'
-import Input from 'components/InputField'
-import Checkbox from 'components/CheckboxField'
-import Modal from 'components/PromptModal'
-import A from 'components/A'
-import { LoadingStateInfo } from 'components/LoadingBlock'
+import CloseButton from 'components/Shared/CloseButton'
+import Input from 'components/Shared/InputField'
+import Checkbox from 'components/Shared/CheckboxField'
+import Modal from 'components/Shared/PromptModal'
+import A from 'components/Shared/A'
+import { LoadingStateInfo } from 'components/Shared/LoadingBlock'
 
 import {
   PopupWrapper,

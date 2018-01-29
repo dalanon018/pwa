@@ -25,11 +25,11 @@ import ReturnIcon from 'images/test-images/v2/return-icon.svg'
 import { fbShare } from 'utils/fb-share'
 import { paramsImgix } from 'utils/image-stock'
 
-import ProductSlider from 'components/BannerSlider'
-import ListCollapse from 'components/ListCollapse'
-import PromptModal from 'components/PromptModal'
+import ProductSlider from 'components/Shared/BannerSlider'
+import ListCollapse from 'components/Shared/ListCollapse'
+import PromptModal from 'components/Shared/PromptModal'
 
-import { LoadingStateInfo } from 'components/LoadingBlock'
+import { LoadingStateInfo } from 'components/Shared/LoadingBlock'
 
 import messages from './messages'
 import SizeSelector from './SizeSelector'

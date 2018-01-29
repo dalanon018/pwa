@@ -38,16 +38,16 @@ import injectReducer from 'utils/injectReducer'
 
 import { Uppercase } from 'utils/string'
 
-import ProductView from 'components/ProductView'
-import Footer from 'components/Footer'
-import WindowWidth from 'components/WindowWidth'
-// import LazyLoading from 'components/LazyLoading'
-import H3 from 'components/H3'
-import H4 from 'components/H4'
-import EmptyProducts from 'components/EmptyProductsBlock'
-import LoadingIndicator from 'components/LoadingIndicator'
-
+import ProductView from 'components/Shared/ProductView'
+import Footer from 'components/Shared/Footer'
+import WindowWidth from 'components/Shared/WindowWidth'
+import LazyLoading from 'components/Shared/LazyLoading'
+import H3 from 'components/Shared/H3'
+import H4 from 'components/Shared/H4'
+import EmptyProducts from 'components/Shared/EmptyProductsBlock'
+import LoadingIndicator from 'components/Shared/LoadingIndicator'
 import { InfiniteLoading, InfiniteWrapper } from 'components/InfiniteLoading'
+
 import {
   getProductCategoriesAction,
   setPageTitleAction,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Grid } from 'semantic-ui-react'
 import styled from 'styled-components'
 
-import Purchase from 'components/Purchase'
+import Purchase from 'components/Shared/Purchase'
 import { imageStock } from 'utils/image-stock'
 
 import {
