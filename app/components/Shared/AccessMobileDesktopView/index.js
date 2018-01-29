@@ -8,25 +8,22 @@
 *
 */
 
-import React from 'react'
 import PropTypes from 'prop-types'
 import WindowWidth from 'components/Shared/WindowWidth'
 
-function AccessView ({ MobileView, DesktopView }) {
-  const { windowWidth } = this.props
-
-  return windowWidth >= 1024 ? <DesktopView /> : <MobileView />
+function AccessView ({ mobileView, desktopView, windowWidth }) {
+  return windowWidth >= 1024 ? desktopView : mobileView
 }
 
 AccessView.propTypes = {
-  MobileView: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.children,
+  mobileView: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.object,
     PropTypes.string
   ]),
-  DesktopView: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.children,
+  desktopView: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.object,
     PropTypes.string
   ])
 }

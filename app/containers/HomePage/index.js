@@ -29,6 +29,7 @@ import H3 from 'components/Shared/H3'
 import Brand from 'components/Shared/Brand'
 import Footer from 'components/Shared/Footer'
 import WindowWidth from 'components/Shared/WindowWidth'
+import AccessView from 'components/Shared/AccessMobileDesktopView'
 
 import {
   setPageTitleAction,
@@ -215,9 +216,15 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         </BannerWrapper>
 
         <Container>
-          <H3>
-            <FormattedMessage {...messages.browseBrands} />
-          </H3>
+          <AccessView
+            mobileView={
+              <H3>
+                <FormattedMessage {...messages.browseBrands} />
+              </H3>
+            }
+            desktopView={null}
+          />
+
           <Brand
             brands={featuredBrands}
             loader={brandLoader}
