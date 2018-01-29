@@ -195,24 +195,27 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           ]}
       />
 
-        <SearchContainer className='background__light-grey' data-attribute='search'>
-          <Grid padded>
-            <Grid.Row columns={1}>
-              <Grid.Column>
-                <SearchWrapper>
-                  <Input
-                    aria-label='search'
-                    name='search'
-                    fluid
-                    onClick={changeRoute.bind(this, '/search')}
-                    placeholder={intl.formatMessage(messages.searchPlaceholder)}
-                    icon='search'
-                  />
-                </SearchWrapper>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </SearchContainer>
+        {
+          windowWidth < 1024 &&
+          <SearchContainer className='background__light-grey' data-attribute='search'>
+            <Grid padded>
+              <Grid.Row columns={1}>
+                <Grid.Column>
+                  <SearchWrapper>
+                    <Input
+                      aria-label='search'
+                      name='search'
+                      fluid
+                      onClick={changeRoute.bind(this, '/search')}
+                      placeholder={intl.formatMessage(messages.searchPlaceholder)}
+                      icon='search'
+                    />
+                  </SearchWrapper>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </SearchContainer>
+        }
 
         <BannerWrapper>
           <BannerSlider

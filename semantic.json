@@ -24,6 +24,7 @@
     "checkbox",
     "container",
     "dimmer",
+    "dropdown",
     "grid",
     "header",
     "icon",
@@ -32,12 +33,13 @@
     "label",
     "list",
     "loader",
-    "tab",
     "modal",
     "popup",
     "progress",
     "reset",
     "site",
+    "tab",
+    "transition",
     "visibility"
   ],
   "version": "2.2.13"

@@ -95,6 +95,8 @@ import HeaderMenu from './HeaderMenu'
 import SearchMenu from './SearchMenu'
 import SidebarMenu from './SidebarMenu'
 
+import HeaderNav from 'components/Desktop/HeaderNav'
+
 const Wrapper = styled.div`
   position: relative;
   height: 100%;
@@ -254,7 +256,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   _displayHeader = () => {
-    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, location: { pathname }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen } = this.props
+    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, location: { pathname }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen, productCategories } = this.props
     /**
      * we have to identify if we should display backbutton
      */
@@ -272,18 +274,34 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     }
 
     return (
-      <HeaderMenu
-        headerMenuFullScreen={headerMenuFullScreen}
-        pageTitle={pageTitle}
-        showSearchIcon={showSearchIcon}
-        showActivityIcon={showActivityIcon}
-        hideBackButton={hideBackButton}
-        leftButtonAction={this._handleLeftButtonAction}
-        changeRoute={changeRoute}
-        currentRoute={routeName}
-        searchProduct={searchProduct}
-        intl={intl}
-      />
+      <div>
+        <HeaderMenu
+          headerMenuFullScreen={headerMenuFullScreen}
+          pageTitle={pageTitle}
+          showSearchIcon={showSearchIcon}
+          showActivityIcon={showActivityIcon}
+          hideBackButton={hideBackButton}
+          leftButtonAction={this._handleLeftButtonAction}
+          changeRoute={changeRoute}
+          currentRoute={routeName}
+          searchProduct={searchProduct}
+          intl={intl}
+        />
+
+        <HeaderNav
+          headerMenuFullScreen={headerMenuFullScreen}
+          pageTitle={pageTitle}
+          showSearchIcon={showSearchIcon}
+          showActivityIcon={showActivityIcon}
+          hideBackButton={hideBackButton}
+          leftButtonAction={this._handleLeftButtonAction}
+          changeRoute={changeRoute}
+          currentRoute={routeName}
+          searchProduct={searchProduct}
+          intl={intl}
+          categories={productCategories}
+        />
+      </div>
     )
   }
 
