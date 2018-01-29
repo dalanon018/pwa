@@ -23,13 +23,16 @@ import injectReducer from 'utils/injectReducer'
 import { paramsImgix } from 'utils/image-stock'
 
 import BannerSlider from 'components/Shared/BannerSlider'
-import Category from 'components/Shared/Category'
+
 import H3 from 'components/Shared/H3'
 import MobileBrand from 'components/Mobile/Brand'
 import DesktopBrand from 'components/Desktop/Brand'
 
 import MobileProductView from 'components/Mobile/ProductView'
 import DesktopProductView from 'components/Desktop/ProductView'
+
+import MobileCategory from 'components/Mobile/Category'
+import DesktopCategory from 'components/Desktop/Category'
 
 import Footer from 'components/Shared/Footer'
 import WindowWidth from 'components/Shared/WindowWidth'
@@ -70,8 +73,7 @@ import {
 import {
   BannerWrapper,
   SearchWrapper,
-  SearchContainer,
-  CategoryWrapper
+  SearchContainer
 } from './styles'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -283,18 +285,37 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           <Waypoint
             onEnter={this._handleFeaturedCategoriesWaypointEnter}
           >
-            <CategoryWrapper>
-              <Category
-                loader={loader}
-                windowWidth={windowWidth}
-                margin='2'
-                changeRoute={changeRoute}
-                route='/products-category'
-                iconWidth='25'
-                fontSize='9'
-                height='80'
-                categories={featuredCategories} />
-            </CategoryWrapper>
+            {
+            showFeaturedCategories &&
+            <AccessView
+              mobileView={
+                <MobileCategory
+                  loader={loader}
+                  windowWidth={windowWidth}
+                  margin='2'
+                  changeRoute={changeRoute}
+                  route='/products-category'
+                  iconWidth='25'
+                  fontSize='9'
+                  height='80'
+                  categories={featuredCategories}
+                />
+              }
+              desktopView={
+                <DesktopCategory
+                  loader={loader}
+                  windowWidth={windowWidth}
+                  margin='2'
+                  changeRoute={changeRoute}
+                  route='/products-category'
+                  iconWidth='25'
+                  fontSize='9'
+                  height='80'
+                  categories={featuredCategories}
+                />
+              }
+            />
+            }
           </Waypoint>
         </Container>
         <Footer />
