@@ -87,15 +87,16 @@ import OfflinePage from 'containers/PageOffline/Loadable'
 import ModalWithHeader from 'components/Shared/ModalWithHeader'
 import Modal from 'components/Shared/PromptModal'
 import WindowWidth from 'components/Shared/WindowWidth'
+import AccessView from 'components/Shared/AccessMobileDesktopView'
+
+import MobileHeaderNav from 'components/Mobile/HeaderNav'
+import DesktopHeaderNav from 'components/Desktop/HeaderNav'
 
 import reducer from './reducer'
 import saga from './saga'
 import messages from './messages'
-import HeaderMenu from './HeaderMenu'
 import SearchMenu from './SearchMenu'
 import SidebarMenu from './SidebarMenu'
-
-import HeaderNav from 'components/Desktop/HeaderNav'
 
 const Wrapper = styled.div`
   position: relative;
@@ -275,31 +276,36 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
     return (
       <div>
-        <HeaderMenu
-          headerMenuFullScreen={headerMenuFullScreen}
-          pageTitle={pageTitle}
-          showSearchIcon={showSearchIcon}
-          showActivityIcon={showActivityIcon}
-          hideBackButton={hideBackButton}
-          leftButtonAction={this._handleLeftButtonAction}
-          changeRoute={changeRoute}
-          currentRoute={routeName}
-          searchProduct={searchProduct}
-          intl={intl}
-        />
-
-        <HeaderNav
-          headerMenuFullScreen={headerMenuFullScreen}
-          pageTitle={pageTitle}
-          showSearchIcon={showSearchIcon}
-          showActivityIcon={showActivityIcon}
-          hideBackButton={hideBackButton}
-          leftButtonAction={this._handleLeftButtonAction}
-          changeRoute={changeRoute}
-          currentRoute={routeName}
-          searchProduct={searchProduct}
-          intl={intl}
-          categories={productCategories}
+        <AccessView
+          mobileView={
+            <MobileHeaderNav
+              headerMenuFullScreen={headerMenuFullScreen}
+              pageTitle={pageTitle}
+              showSearchIcon={showSearchIcon}
+              showActivityIcon={showActivityIcon}
+              hideBackButton={hideBackButton}
+              leftButtonAction={this._handleLeftButtonAction}
+              changeRoute={changeRoute}
+              currentRoute={routeName}
+              searchProduct={searchProduct}
+              intl={intl}
+            />
+          }
+          desktopView={
+            <DesktopHeaderNav
+              headerMenuFullScreen={headerMenuFullScreen}
+              pageTitle={pageTitle}
+              showSearchIcon={showSearchIcon}
+              showActivityIcon={showActivityIcon}
+              hideBackButton={hideBackButton}
+              leftButtonAction={this._handleLeftButtonAction}
+              changeRoute={changeRoute}
+              currentRoute={routeName}
+              searchProduct={searchProduct}
+              intl={intl}
+              categories={productCategories}
+            />
+          }
         />
       </div>
     )
