@@ -26,7 +26,8 @@ import BannerSlider from 'components/Shared/BannerSlider'
 import ProductView from 'components/Shared/ProductView'
 import Category from 'components/Shared/Category'
 import H3 from 'components/Shared/H3'
-import Brand from 'components/Shared/Brand'
+import MobileBrand from 'components/Mobile/Brand'
+import DesktopBrand from 'components/Desktop/Brand'
 import Footer from 'components/Shared/Footer'
 import WindowWidth from 'components/Shared/WindowWidth'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
@@ -225,10 +226,21 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             desktopView={null}
           />
 
-          <Brand
-            brands={featuredBrands}
-            loader={brandLoader}
-            changeRoute={changeRoute}
+          <AccessView
+            mobileView={
+              <MobileBrand
+                brands={featuredBrands}
+                loader={brandLoader}
+                changeRoute={changeRoute}
+              />
+            }
+            desktopView={
+              <DesktopBrand
+                brands={featuredBrands}
+                loader={brandLoader}
+                changeRoute={changeRoute}
+              />
+            }
           />
 
           <H3>

@@ -16,11 +16,8 @@ import EmptyDataBlock from 'components/Shared/EmptyDataBlock'
 import { imageStock, paramsImgix } from 'utils/image-stock'
 
 const BrandContainer = styled.div`
-  @media (min-width: 1024px) {
-    .ui.grid {
-      padding: 0 250px;
-    }
-  }
+  padding: 20px;
+  background-color: #EBEBEB;
 `
 
 export const BrandWrapper = styled.div`
@@ -51,7 +48,7 @@ function Brand ({ brands, loader, changeRoute }) {
   const goToBrand = (id) => () => changeRoute(`/brands/${id}`)
   return (
     <BrandContainer>
-      <Grid padded columns='2'>
+      <Grid padded columns='4'>
         {
           loader ? range(4).map((_, index) => <DefaultState key={index} />)
           : brands.valueSeq().map((brand) => (

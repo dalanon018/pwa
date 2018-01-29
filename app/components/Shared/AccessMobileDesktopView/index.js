@@ -1,10 +1,9 @@
 /**
  * main component on accessing if the component should be desktop or mobile
  */
-
- /**
+/**
 *
-* Brand
+* Identifier if we need to load desktop or mobile
 *
 */
 
