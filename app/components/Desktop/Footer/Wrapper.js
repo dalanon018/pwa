@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 
 const Wrapper = styled.footer`
-  margin-bottom: 15px;
   padding: 25px 15px 15px;
   text-align: center;
 
@@ -18,7 +17,7 @@ const HelperLinks = styled.div`
   span {
     cursor: pointer;
     font-family: 'Roboto';
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .item {
@@ -53,8 +52,10 @@ const AppInfo = styled.div`
   align-items: center;
   text-align: left;
   display: flex;
+  margin-bottom: 20px;
 
   section {
+    margin-left: 10px;
     line-height: 1px;
     span {
       font-size: 8px !important;
@@ -71,10 +72,16 @@ const AppInfo = styled.div`
   }
 `
 
+const FooterColumnWrapper = styled.div`
+  flex: 1;
+  flex-direction: column;
+`
+
 export {
   AppInfo,
   CopyRight,
   HelperLinks,
   SocialIcons,
-  Wrapper
+  Wrapper,
+  FooterColumnWrapper
 }
