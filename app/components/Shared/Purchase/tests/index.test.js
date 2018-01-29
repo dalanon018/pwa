@@ -8,7 +8,7 @@ import {
   STATUSES,
   PURCHASE_ORDER,
   PURCHASE_USECASE
-} from '../../../containers/Buckets/constants'
+} from '../../../../containers/Buckets/constants'
 
 const children = (<h1>Test</h1>)
 const wrapper = (props = {}, enzyme = shallow) => enzyme(
