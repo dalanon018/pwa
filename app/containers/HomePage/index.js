@@ -23,11 +23,14 @@ import injectReducer from 'utils/injectReducer'
 import { paramsImgix } from 'utils/image-stock'
 
 import BannerSlider from 'components/Shared/BannerSlider'
-import ProductView from 'components/Shared/ProductView'
 import Category from 'components/Shared/Category'
 import H3 from 'components/Shared/H3'
 import MobileBrand from 'components/Mobile/Brand'
 import DesktopBrand from 'components/Desktop/Brand'
+
+import MobileProductView from 'components/Mobile/ProductView'
+import DesktopProductView from 'components/Desktop/ProductView'
+
 import Footer from 'components/Shared/Footer'
 import WindowWidth from 'components/Shared/WindowWidth'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
@@ -249,14 +252,27 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           <Waypoint
             onEnter={this._handleFeaturedItemsWaypointEnter}
           >
-            <div>
-              <ProductView
-                changeRoute={changeRoute}
-                loader={loader}
-                products={featuredProducts}
-                windowWidth={windowWidth}
-              />
-            </div>
+            {
+            showFeaturedItems &&
+            <AccessView
+              mobileView={
+                <MobileProductView
+                  changeRoute={changeRoute}
+                  loader={loader}
+                  products={featuredProducts}
+                  windowWidth={windowWidth}
+                />
+              }
+              desktopView={
+                <DesktopProductView
+                  changeRoute={changeRoute}
+                  loader={loader}
+                  products={featuredProducts}
+                  windowWidth={windowWidth}
+                />
+              }
+            />
+            }
           </Waypoint>
 
           { this._displayViewAll() }
