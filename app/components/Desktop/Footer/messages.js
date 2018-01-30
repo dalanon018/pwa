@@ -43,5 +43,13 @@ export default defineMessages({
   changeMind: {
     id: `${idSuffix}.returnPolicy`,
     defaultMessage: `Change of Mind is Applicable`
+  },
+  columnCliqqShopHeader: {
+    id: `${idSuffix}.columnCliqqShopHeader`,
+    defaultMessage: `CLiQQ Shop`
+  },
+  columnHelpHeader: {
+    id: `${idSuffix}.columnHelpHeader`,
+    defaultMessage: `Help`
   }
 })

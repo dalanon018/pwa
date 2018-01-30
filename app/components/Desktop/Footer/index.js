@@ -8,7 +8,7 @@ import {
   Container,
   Grid,
   Image,
-  // List,
+  List,
   Label
 } from 'semantic-ui-react'
 
@@ -18,10 +18,12 @@ import ReturnIcon from 'images/icons/return-icon.svg'
 import {
   AppInfo,
   // CopyRight,
-  // HelperLinks,
+  HelperLinks,
   // SocialIcons,
   Wrapper,
-  FooterColumnWrapper
+  FooterColumnWrapper,
+  // FooterColumnTitle,
+  FooterColumnAdjusterFlex
 } from './Wrapper'
 import messages from './messages'
 
@@ -50,7 +52,7 @@ export class Footer extends React.PureComponent {
       <Wrapper className='border_top__one--light-grey background__light-grey'>
         <Container>
           <Grid padded columns='4'>
-            <Grid.Column>
+            <FooterColumnAdjusterFlex>
               <FooterColumnWrapper>
                 <AppInfo>
                   <Image alt='CLiQQ' src={DeliveryIcon} />
@@ -70,6 +72,36 @@ export class Footer extends React.PureComponent {
                       <FormattedMessage {...messages.changeMind} /></Label>
                   </section>
                 </AppInfo>
+              </FooterColumnWrapper>
+            </FooterColumnAdjusterFlex>
+            <Grid.Column>
+              <FooterColumnWrapper>
+                <HelperLinks>
+                  <List>
+                    <List.Item className='color__grey' onClick={this._handleFaqRoute}>
+                      <Label as='span' size='medium' className='color__secondary'>
+                        <FormattedMessage {...messages.columnCliqqShopHeader} />
+                      </Label>
+
+                    </List.Item>
+                    <List.Item className='color__grey' onClick={this._handleFaqRoute}>
+                      <Label as='span' size='tiny' className='color__secondary'>
+                        <FormattedMessage {...messages.returnPolicy} />
+                      </Label>
+
+                    </List.Item>
+                    <List.Item className='color__grey' onClick={this._handleTermsConditionsRoute}>
+                      <Label as='span' size='tiny' className='color__secondary'>
+                        <FormattedMessage {...messages.termsConditions} />
+                      </Label>
+                    </List.Item>
+                    <List.Item className='color__grey' onClick={this._handlePrivacyPolicy}>
+                      <Label as='span' size='tiny' className='color__secondary'>
+                        <FormattedMessage {...messages.privacyPolicy} />
+                      </Label>
+                    </List.Item>
+                  </List>
+                </HelperLinks>
               </FooterColumnWrapper>
             </Grid.Column>
           </Grid>

@@ -1,8 +1,10 @@
 import styled from 'styled-components'
+import {
+  Grid
+} from 'semantic-ui-react'
 
 const Wrapper = styled.footer`
   padding: 25px 15px 15px;
-  text-align: center;
 
   .custom-header {
     margin-bottom: 10px;
@@ -14,14 +16,16 @@ const Wrapper = styled.footer`
 `
 
 const HelperLinks = styled.div`
+  padding: 0 40px;
   span {
     cursor: pointer;
     font-family: 'Roboto';
-    font-size: 12px;
   }
 
   .item {
     position: relative;
+    margin-bottom: 10px;
+
     &:first-child {
       &:before {
         content: '';
@@ -47,35 +51,33 @@ const SocialIcons = styled.div`
     margin: 0 7px;
   }
 `
-
+const FooterColumnAdjusterFlex = styled(Grid.Column)`
+  display: flex !important;
+`
 const AppInfo = styled.div`
-  align-items: center;
   text-align: left;
-  display: flex;
   margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start;
 
   section {
-    margin-left: 10px;
+    margin-left: 20px;
     line-height: 1px;
-    span {
-      font-size: 8px !important;
-
-      &:last-child {
-        font-size: 7px !important;
-      }
-    }
   }
 
   img {
-    width: 20px;
+    width: 40px;
     margin-right: 3px;
   }
 `
 
 const FooterColumnWrapper = styled.div`
-  flex: 1;
+  display: flex;
   flex-direction: column;
+  justify-content: space-between;
 `
+
+const FooterColumnTitle = styled.div``
 
 export {
   AppInfo,
@@ -83,5 +85,7 @@ export {
   HelperLinks,
   SocialIcons,
   Wrapper,
-  FooterColumnWrapper
+  FooterColumnWrapper,
+  FooterColumnTitle,
+  FooterColumnAdjusterFlex
 }
