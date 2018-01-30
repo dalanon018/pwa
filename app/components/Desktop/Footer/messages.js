@@ -12,9 +12,21 @@ export default defineMessages({
     id: `${idSuffix}.stayConnected.message`,
     defaultMessage: 'Stay Connected'
   },
+  activities: {
+    id: `${idSuffix}.activities.message`,
+    defaultMessage: `My Activities`
+  },
+  pointsWallet: {
+    id: `${idSuffix}.pointsWallet.message`,
+    defaultMessage: `Points Wallet`
+  },
+  login: {
+    id: `${idSuffix}.login.message`,
+    defaultMessage: `Mobile Registration`
+  },
   faq: {
     id: `${idSuffix}.faq.message`,
-    defaultMessage: `FAQS`
+    defaultMessage: `Frequently Asked Questions`
   },
   termsConditions: {
     id: `${idSuffix}.termsConditions.message`,
