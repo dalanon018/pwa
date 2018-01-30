@@ -32,9 +32,13 @@ import injectReducer from 'utils/injectReducer'
 
 import { paramsImgix } from 'utils/image-stock'
 
+import MobileProductView from 'components/Mobile/ProductView'
+import DesktopProductView from 'components/Desktop/ProductView'
 
-import ProductView from 'components/Shared/ProductView'
-import Footer from 'components/Shared/Footer'
+import MobileFooter from 'components/Mobile/Footer'
+import DesktopFooter from 'components/Desktop/Footer'
+
+import AccessView from 'components/Shared/AccessMobileDesktopView'
 import WindowWidth from 'components/Shared/WindowWidth'
 import BannerSlider from 'components/Shared/BannerSlider'
 import H3 from 'components/Shared/H3'
@@ -175,11 +179,13 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   _displayEmptyProductViewLoading = () => {
     const { changeRoute, windowWidth, productsByBrands, loader } = this.props
     return (
-      <ProductView
-        changeRoute={changeRoute}
-        loader={loader}
-        products={productsByBrands}
-        windowWidth={windowWidth}
+      <AccessView
+        mobileView={
+          <MobileProductView changeRoute={changeRoute} loader products={productsByBrands} windowWidth={windowWidth} />
+        }
+        desktopView={
+          <DesktopProductView changeRoute={changeRoute} loader products={productsByBrands} windowWidth={windowWidth} />
+        }
       />
     )
   }
@@ -259,12 +265,13 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           rowCount={productsFeatured.size + 1}
         >
           {(props) => (
-            <ProductView
-              changeRoute={changeRoute}
-              loader={loader}
-              products={productsFeatured}
-              windowWidth={windowWidth}
-              {...props}
+            <AccessView
+              mobileView={
+                <MobileProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} { ...props }/>
+              }
+              desktopView={
+                <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} { ...props }/>
+              }
             />
           )}
         </InfiniteLoading>
@@ -301,12 +308,13 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           rowCount={productsByBrands.size + 1}
         >
           {(props) => (
-            <ProductView
-              changeRoute={changeRoute}
-              loader={loader}
-              products={productsByBrands}
-              windowWidth={windowWidth}
-              {...props}
+            <AccessView
+              mobileView={
+                <MobileProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} {...props}/>
+              }
+              desktopView={
+                <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} {...props}/>
+              }
             />
           )}
         </InfiniteLoading>
@@ -392,7 +400,10 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
             { this._displayRegularItems() }
           </InfiniteWrapper>
         </ContentWrapper>
-        <Footer />
+        <AccessView
+          mobileView={<MobileFooter />}
+          desktopView={<DesktopFooter />}
+        />
       </div>
     )
   }
