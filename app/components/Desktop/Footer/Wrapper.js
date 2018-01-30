@@ -41,10 +41,13 @@ const HelperLinks = styled.div`
 `
 
 const CopyRight = styled.p`
-  font-size: 9px;
+  margin-top: 20px !important;
+  font-size: 12px;
 `
 
 const SocialIcons = styled.div`
+  margin-top: 10px;
+
   img {
     height: inherit !important;
     width: 32px !important;
@@ -56,7 +59,7 @@ const FooterColumnAdjusterFlex = styled(Grid.Column)`
 `
 const AppInfo = styled.div`
   text-align: left;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   display: flex;
   align-items: flex-start;
 
@@ -79,6 +82,10 @@ const FooterColumnWrapper = styled.div`
 
 const FooterColumnTitle = styled.div``
 
+const FooterSocialMediaWrapper = styled.div`
+  align-self: flex-end;
+`
+
 export {
   AppInfo,
   CopyRight,
@@ -87,5 +94,6 @@ export {
   Wrapper,
   FooterColumnWrapper,
   FooterColumnTitle,
-  FooterColumnAdjusterFlex
+  FooterColumnAdjusterFlex,
+  FooterSocialMediaWrapper
 }

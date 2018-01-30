@@ -38,7 +38,7 @@ export default defineMessages({
   },
   copyRight: {
     id: `${idSuffix}.copyRight.message`,
-    defaultMessage: `CLiQQ All Rights Reserved`
+    defaultMessage: `{year} CLiQQ All Rights Reserved`
   },
   storeDelivery: {
     id: `${idSuffix}.storeDelivery`,

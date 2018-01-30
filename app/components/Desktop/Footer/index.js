@@ -12,18 +12,24 @@ import {
   Label
 } from 'semantic-ui-react'
 
+import A from 'components/Shared/A'
+
+import FacebookIcon from 'images/icons/facebook-icon.svg'
+import TwitterIcon from 'images/icons/twitter-icon.svg'
+import EmailIcon from 'images/icons/email-icon.svg'
 import DeliveryIcon from 'images/icons/delivery-icon.svg'
 import ReturnIcon from 'images/icons/return-icon.svg'
 
 import {
   AppInfo,
-  // CopyRight,
+  CopyRight,
   HelperLinks,
-  // SocialIcons,
+  SocialIcons,
   Wrapper,
   FooterColumnWrapper,
   // FooterColumnTitle,
-  FooterColumnAdjusterFlex
+  FooterColumnAdjusterFlex,
+  FooterSocialMediaWrapper
 } from './Wrapper'
 import messages from './messages'
 
@@ -53,10 +59,11 @@ export class Footer extends React.PureComponent {
   }
 
   render () {
+    const currentDate = new Date()
     return (
       <Wrapper className='border_top__one--light-grey background__light-grey'>
         <Container>
-          <Grid padded columns='4'>
+          <Grid columns='4'>
             <FooterColumnAdjusterFlex>
               <FooterColumnWrapper>
                 <AppInfo>
@@ -139,7 +146,39 @@ export class Footer extends React.PureComponent {
                 </HelperLinks>
               </FooterColumnWrapper>
             </Grid.Column>
+            <Grid.Column>
+              <FooterColumnWrapper>
+                <FooterSocialMediaWrapper>
+                  <Label as='span' size='medium' className='color__secondary'>
+                    <FormattedMessage {...messages.stayConnected} />
+                  </Label>
+                  <SocialIcons>
+                    <List horizontal>
+                      <List.Item>
+                        <A rel='noopener' href='https://www.facebook.com/711philippines' target='_blank'>
+                          <Image alt='CLiQQ' src={FacebookIcon} />
+                        </A>
+                      </List.Item>
+                      <List.Item>
+                        <A rel='noopener' href='https://twitter.com/711philippines?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor' target='_blank'>
+                          <Image alt='CLiQQ' src={TwitterIcon} />
+                        </A>
+                      </List.Item>
+                      <List.Item>
+                        <A href='mailto:cliqqsupport@7-eleven.com.ph'>
+                          <Image alt='CLiQQ' src={EmailIcon} />
+                        </A>
+                      </List.Item>
+                    </List>
+                  </SocialIcons>
+                </FooterSocialMediaWrapper>
+              </FooterColumnWrapper>
+            </Grid.Column>
+            <Grid.Row centered>
+              <CopyRight className='color__secondary'>&copy; <FormattedMessage {...messages.copyRight} values={{ year: currentDate.getFullYear() }} /></CopyRight>
+            </Grid.Row>
           </Grid>
+
         </Container>
       </Wrapper>
     )
