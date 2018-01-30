@@ -28,23 +28,28 @@ import {
 import messages from './messages'
 
 export class Footer extends React.PureComponent {
-  constructor () {
-    super()
-    this._handleFaqRoute = this._handleFaqRoute.bind(this)
-    this._handleTermsConditionsRoute = this._handleTermsConditionsRoute.bind(this)
-    this._handlePrivacyPolicy = this._handlePrivacyPolicy.bind(this)
-  }
-
-  _handleFaqRoute () {
+  _handleFaqRoute = () => {
     this.props.changeRoute('/faq')
   }
 
-  _handleTermsConditionsRoute () {
+  _handleTermsConditionsRoute = () => {
     this.props.changeRoute('/terms-conditions')
   }
 
-  _handlePrivacyPolicy () {
+  _handlePrivacyPolicy = () => {
     this.props.changeRoute('/privacy-policy')
+  }
+
+  _handleActivitiesRoute = () => {
+    this.props.changeRoute('/purchases')
+  }
+
+  _handleWalletRoute = () => {
+    this.props.changeRoute('/wallet')
+  }
+
+  _handleLoginRoute = () => {
+    this.props.changeRoute('/login')
   }
 
   render () {
@@ -81,6 +86,36 @@ export class Footer extends React.PureComponent {
                     <List.Item className='color__grey' onClick={this._handleFaqRoute}>
                       <Label as='span' size='medium' className='color__secondary'>
                         <FormattedMessage {...messages.columnCliqqShopHeader} />
+                      </Label>
+
+                    </List.Item>
+                    <List.Item className='color__grey' onClick={this._handleActivitiesRoute}>
+                      <Label as='span' size='tiny' className='color__secondary'>
+                        <FormattedMessage {...messages.activities} />
+                      </Label>
+
+                    </List.Item>
+                    <List.Item className='color__grey' onClick={this._handleWalletRoute}>
+                      <Label as='span' size='tiny' className='color__secondary'>
+                        <FormattedMessage {...messages.pointsWallet} />
+                      </Label>
+                    </List.Item>
+                    <List.Item className='color__grey' onClick={this._handleLoginRoute}>
+                      <Label as='span' size='tiny' className='color__secondary'>
+                        <FormattedMessage {...messages.login} />
+                      </Label>
+                    </List.Item>
+                  </List>
+                </HelperLinks>
+              </FooterColumnWrapper>
+            </Grid.Column>
+            <Grid.Column>
+              <FooterColumnWrapper>
+                <HelperLinks>
+                  <List>
+                    <List.Item className='color__grey' onClick={this._handleFaqRoute}>
+                      <Label as='span' size='medium' className='color__secondary'>
+                        <FormattedMessage {...messages.columnHelpHeader} />
                       </Label>
 
                     </List.Item>
