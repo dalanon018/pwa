@@ -38,14 +38,20 @@ import injectReducer from 'utils/injectReducer'
 
 import { Uppercase } from 'utils/string'
 
-import ProductView from 'components/Shared/ProductView'
-import Footer from 'components/Shared/Footer'
+import MobileProductView from 'components/Mobile/ProductView'
+import DesktopProductView from 'components/Desktop/ProductView'
+
+import MobileFooter from 'components/Mobile/Footer'
+import DesktopFooter from 'components/Desktop/Footer'
+
 import WindowWidth from 'components/Shared/WindowWidth'
 import LazyLoading from 'components/Shared/LazyLoading'
 import H3 from 'components/Shared/H3'
 import H4 from 'components/Shared/H4'
 import EmptyProducts from 'components/Shared/EmptyProductsBlock'
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
+import AccessView from 'components/Shared/AccessMobileDesktopView'
+
 import { InfiniteLoading, InfiniteWrapper } from 'components/InfiniteLoading'
 
 import {
@@ -228,12 +234,13 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
           rowCount={totalCount}
         >
           {(props) => (
-            <ProductView
-              changeRoute={changeRoute}
-              loader={loader}
-              products={productsFeatured}
-              windowWidth={windowWidth}
-              {...props}
+            <AccessView
+              mobileView={
+                <MobileProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} { ...props }/>
+              }
+              desktopView={
+                <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} { ...props } />
+              }
             />
           )}
         </InfiniteLoading>
@@ -283,7 +290,14 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     // we only show if items are not empty and not lazyloading
     if (productsViewed.size && !lazyload) {
       return (
-        <ProductView changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
+        <AccessView
+          mobileView={
+            <MobileProductView changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
+          }
+          desktopView={
+            <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
+          }
+        />
       )
     }
 
@@ -297,7 +311,14 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     const { changeRoute, windowWidth } = this.props
 
     return (
-      <ProductView changeRoute={changeRoute} loader products={this._displayAllProductData()} windowWidth={windowWidth} />
+      <AccessView
+        mobileView={
+          <MobileProductView changeRoute={changeRoute} loader products={this._displayAllProductData()} windowWidth={windowWidth} />
+        }
+        desktopView={
+          <DesktopProductView changeRoute={changeRoute} loader products={this._displayAllProductData()} windowWidth={windowWidth} />
+        }
+      />
     )
   }
 
@@ -386,12 +407,13 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
           rowCount={totalCount}
         >
           {(props) => (
-            <ProductView
-              changeRoute={changeRoute}
-              loader={loader}
-              products={products}
-              windowWidth={windowWidth}
-              {...props}
+            <AccessView
+              mobileView={
+                <MobileProductView changeRoute={changeRoute} loader={loader} products={products} windowWidth={windowWidth} { ...props }/>
+              }
+              desktopView={
+                <DesktopProductView changeRoute={changeRoute} loader={loader} products={products} windowWidth={windowWidth} { ...props }/>
+              }
             />
           )}
         </InfiniteLoading>
@@ -508,7 +530,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
             { this._displayRecentlyViewedItems() }
           </InfiniteWrapper>
         </ContentWrapper>
-        <Footer />
+        <AccessView
+          mobileView={<MobileFooter />}
+          desktopView={<DesktopFooter />}
+        />
       </div>
     )
   }
