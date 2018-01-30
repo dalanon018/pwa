@@ -20,6 +20,8 @@ import EmailIcon from 'images/icons/email-icon.svg'
 import DeliveryIcon from 'images/icons/delivery-icon.svg'
 import ReturnIcon from 'images/icons/return-icon.svg'
 
+import FooterBackground from 'images/backgrounds/footer-background.svg'
+
 import {
   AppInfo,
   CopyRight,
@@ -61,7 +63,10 @@ export class Footer extends React.PureComponent {
   render () {
     const currentDate = new Date()
     return (
-      <Wrapper className='border_top__one--light-grey background__light-grey'>
+      <Wrapper
+        backgroundImage={FooterBackground}
+        className='border_top__one--light-grey background__light-grey'
+      >
         <Container>
           <Grid columns='4'>
             <FooterColumnAdjusterFlex>

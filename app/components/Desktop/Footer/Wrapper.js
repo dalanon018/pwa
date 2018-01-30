@@ -4,6 +4,7 @@ import {
 } from 'semantic-ui-react'
 
 const Wrapper = styled.footer`
+  position: relative;
   padding: 25px 15px 15px;
 
   .custom-header {
@@ -12,6 +13,35 @@ const Wrapper = styled.footer`
 
   .ui.grid>.row {
     padding: 7px 0 !important;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 300px;
+    height: 160px;
+
+    background-image: url(${({ backgroundImage }) => backgroundImage});
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: left bottom;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 300px;
+    height: 160px;
+
+    background-image: url(${({ backgroundImage }) => backgroundImage});
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: left bottom;
+    transform: scaleX(-1);
   }
 `
 
