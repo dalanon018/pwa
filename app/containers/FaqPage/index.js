@@ -17,7 +17,9 @@ import { Grid } from 'semantic-ui-react'
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
-import Footer from 'components/Shared/Footer'
+import MobileFooter from 'components/Mobile/Footer'
+import DesktopFooter from 'components/Desktop/Footer'
+import AccessView from 'components/Shared/AccessMobileDesktopView'
 
 import { LoadingStateInfo } from 'components/Shared/LoadingBlock'
 import {
@@ -66,7 +68,10 @@ export class FaqPage extends React.PureComponent { // eslint-disable-line react/
             </LoadingStateInfo>
           </Grid>
         </div>
-        <Footer />
+        <AccessView
+          mobileView={<MobileFooter />}
+          desktopView={<DesktopFooter />}
+        />
       </div>
     )
   }
