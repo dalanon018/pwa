@@ -19,9 +19,11 @@ import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
 // import ProductResults from 'components/Shared/ProductResults'
+
+import MobileSearchResult from 'components/Mobile/SearchResult'
+// import DesktopSearchResult from 'components/Desktop/SearchResult'
 import DesktopFooter from 'components/Desktop/Footer'
 
-import SearchResult from 'components/Shared/SearchResult'
 import H3 from 'components/Shared/H3'
 import WindowWidth from 'components/Shared/WindowWidth'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
@@ -116,7 +118,7 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
       return (
         <div>
           <H3><FormattedMessage {...messages.header} /></H3>
-          <SearchResult
+          <MobileSearchResult
             product={product}
             windowWidth={windowWidth}
             changeRoute={changeRoute} />
