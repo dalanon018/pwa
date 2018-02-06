@@ -144,7 +144,7 @@ export const PushNotificationWrapper = styled.div`
   padding: 14px;
 
   @media (min-width: 1024px) and (max-width: 1365px) {
-    padding: 5px 200px !important;
+    // padding: 5px 200px !important;
   }
   @media (min-width: 1366px) {
     margin-left: auto;
