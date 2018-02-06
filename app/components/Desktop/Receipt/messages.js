@@ -287,5 +287,9 @@ export default defineMessages({
   instructionsLabel: {
     id: 'app.components.Receipt.instructionsLabel',
     defaultMessage: 'Don\'t forget to take a screenshot of your receipt for validation purposes!'
+  },
+  desktopTitle: {
+    id: 'app.components.Receipt.desktopTitle',
+    defaultMessage: 'Your Receipt'
   }
 })
