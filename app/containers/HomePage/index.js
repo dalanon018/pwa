@@ -22,11 +22,12 @@ import injectReducer from 'utils/injectReducer'
 
 import { paramsImgix } from 'utils/image-stock'
 
-import BannerSlider from 'components/Shared/BannerSlider'
-
 import H3 from 'components/Shared/H3'
 import MobileBrand from 'components/Mobile/Brand'
 import DesktopBrand from 'components/Desktop/Brand'
+
+import MobileSlider from 'components/Mobile/BannerSlider'
+import DesktopSlider from 'components/Desktop/BannerSlider'
 
 import MobileProductView from 'components/Mobile/ProductView'
 import DesktopProductView from 'components/Desktop/ProductView'
@@ -186,6 +187,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner4.png', imgixOptions)
     ]
 
+    const desktopBannerImages = [
+      paramsImgix('https://cliqqshop.imgix.net/banner-desktop.jpg')
+    ]
+
     return (
       <div>
         <Helmet
@@ -218,12 +223,25 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         }
 
         <BannerWrapper>
-          <BannerSlider
-            loader={false}
-            images={bannerImages}
-            slidesToShow={numSlide}
-            isInfinite
+          <AccessView
+            mobileView={
+              <MobileSlider
+                loader={false}
+                images={bannerImages}
+                slidesToShow={numSlide}
+                isInfinite
+              />
+            }
+            desktopView={
+              <DesktopSlider
+                loader={false}
+                images={desktopBannerImages}
+                slidesToShow={1}
+                isInfinite
+              />
+            }
           />
+
         </BannerWrapper>
 
         <Container>
