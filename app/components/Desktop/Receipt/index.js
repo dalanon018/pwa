@@ -366,7 +366,7 @@ class Receipt extends React.PureComponent {
     const { receipt, statuses } = this.props
 
     return (
-      <Container>
+      <Container className='padding__medium'>
         <Header className='color__secondary long-title' as='h1'>
           <FormattedMessage {...messages.desktopTitle} />
         </Header>

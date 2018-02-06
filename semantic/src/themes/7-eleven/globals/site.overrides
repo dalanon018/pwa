@@ -421,6 +421,10 @@ svg#barcode {
 
   /* Product Padding */
   .padding {
+    &__medium {
+      padding-left:150px !important;
+      padding-right:150px !important;
+    }
     &__14 {
       padding: 14px !important;
     }
