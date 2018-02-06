@@ -16,7 +16,7 @@ import {
 } from 'ramda'
 import { noop } from 'lodash'
 import { FormattedMessage } from 'react-intl'
-import { Container, Grid, Label, Button, Image, Checkbox } from 'semantic-ui-react'
+import { Container, Grid, Header, Label, Button, Image, Checkbox } from 'semantic-ui-react'
 
 import Countdown from 'components/Shared/Countdown'
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
@@ -367,6 +367,9 @@ class Receipt extends React.PureComponent {
 
     return (
       <Container>
+        <Header className='color__secondary long-title' as='h1'>
+          <FormattedMessage {...messages.desktopTitle} />
+        </Header>
         <ReceiptWrapper>
           <ReceiptContainer className='background__white'>
             <ReceiptHeader className='background__light-grey'>
