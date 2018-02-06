@@ -105,8 +105,9 @@ const Wrapper = styled.div`
 
 const MainContent = styled.div`
   margin-top: 50px;
-  overflow: hidden;
+  // overflow: hidden;
   width: 100%;
+  height: 100%;
 `
 
 export class Buckets extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
