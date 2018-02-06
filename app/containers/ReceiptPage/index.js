@@ -30,6 +30,8 @@ import UNCLAIMED from 'images/ticket-backgrounds/not-claimed.png'
 
 import MobileReceipt from 'components/Mobile/Receipt'
 import DesktopReceipt from 'components/Desktop/Receipt'
+import DesktopFooter from 'components/Desktop/Footer'
+
 import Modal from 'components/Shared/PromptModal'
 import WindowWidth from 'components/Shared/WindowWidth'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
@@ -259,30 +261,36 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
     }
 
     return (
-      <ReceiptWrapper background={this._identifyBackground}>
-        <Helmet
-          title='ReceiptPage'
-          meta={[
-            { name: 'description', content: 'Description of ReceiptPage' }
-          ]}
-        />
-        <AccessView
-          mobileView={
-            <MobileReceipt {...props} />
-          }
-          desktopView={
-            <DesktopReceipt {...props} />
-          }
-        />
+      <div>
+        <ReceiptWrapper background={this._identifyBackground}>
+          <Helmet
+            title='ReceiptPage'
+            meta={[
+              { name: 'description', content: 'Description of ReceiptPage' }
+            ]}
+          />
+          <AccessView
+            mobileView={
+              <MobileReceipt {...props} />
+            }
+            desktopView={
+              <DesktopReceipt {...props} />
+            }
+          />
 
-        <Modal
-          open={modalToggle}
-          name='warning'
-          title={title}
-          content={content}
-          close={this._handleModalClose}
+          <Modal
+            open={modalToggle}
+            name='warning'
+            title={title}
+            content={content}
+            close={this._handleModalClose}
+          />
+        </ReceiptWrapper>
+        <AccessView
+          mobileView={null}
+          desktopView={<DesktopFooter />}
         />
-      </ReceiptWrapper>
+      </div>
     )
   }
 }
