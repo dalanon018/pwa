@@ -16,7 +16,7 @@ import {
 } from 'ramda'
 import { noop } from 'lodash'
 import { FormattedMessage } from 'react-intl'
-import { Grid, Label, Button, Image, Checkbox } from 'semantic-ui-react'
+import { Container, Grid, Label, Button, Image, Checkbox } from 'semantic-ui-react'
 
 import Countdown from 'components/Shared/Countdown'
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
@@ -366,7 +366,7 @@ class Receipt extends React.PureComponent {
     const { receipt, statuses } = this.props
 
     return (
-      <div>
+      <Container>
         <ReceiptWrapper>
           <ReceiptContainer className='background__white'>
             <ReceiptHeader className='background__light-grey'>
@@ -480,7 +480,7 @@ class Receipt extends React.PureComponent {
         <ButtonContainer>
           { this._handleButtonFunctionality() }
         </ButtonContainer>
-      </div>
+      </Container>
     )
   }
 }
