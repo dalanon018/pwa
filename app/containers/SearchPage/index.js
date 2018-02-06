@@ -19,10 +19,12 @@ import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
 // import ProductResults from 'components/Shared/ProductResults'
+import DesktopFooter from 'components/Desktop/Footer'
+
 import SearchResult from 'components/Shared/SearchResult'
 import H3 from 'components/Shared/H3'
 import WindowWidth from 'components/Shared/WindowWidth'
-import EmptyProducts from './EmptyProducts'
+import AccessView from 'components/Shared/AccessMobileDesktopView'
 
 import {
   setToggleAction
@@ -32,6 +34,7 @@ import {
   selectToggle
 } from 'containers/Buckets/selectors'
 
+import EmptyProducts from './EmptyProducts'
 import messages from './messages'
 import reducer from './reducer'
 import saga from './saga'
@@ -146,16 +149,22 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
 
   render () {
     return (
-      <SearchListWrapper>
-        <Helmet
-          title='Search'
-          meta={[
-            { name: 'description', content: 'Description of SearchPage' }
-          ]}
+      <div>
+        <SearchListWrapper>
+          <Helmet
+            title='Search'
+            meta={[
+              { name: 'description', content: 'Description of SearchPage' }
+            ]}
+          />
+          { this._displayEmpty() }
+          { this._displayProduct() }
+        </SearchListWrapper>
+        <AccessView
+          mobileView={null}
+          desktopView={<DesktopFooter />}
         />
-        { this._displayEmpty() }
-        { this._displayProduct() }
-      </SearchListWrapper>
+      </div>
     )
   }
 }
