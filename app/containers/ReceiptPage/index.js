@@ -28,9 +28,11 @@ import DELIVERED from 'images/ticket-backgrounds/pickup.png'
 import CLAIMED from 'images/ticket-backgrounds/claimed.png'
 import UNCLAIMED from 'images/ticket-backgrounds/not-claimed.png'
 
-import Receipt from 'components/Shared/Receipt'
+import MobileReceipt from 'components/Mobile/Receipt'
+import DesktopReceipt from 'components/Desktop/Receipt'
 import Modal from 'components/Shared/PromptModal'
 import WindowWidth from 'components/Shared/WindowWidth'
+import AccessView from 'components/Shared/AccessMobileDesktopView'
 
 import { userIsAuthenticated } from 'containers/App/auth'
 import { ENVIROMENT } from 'containers/App/constants'
@@ -239,6 +241,23 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
     const { modalToggle, title, content, loadingPushToggle } = this.state
     const receiptPageName = route && route.name
     // const widthResponsive = windowWidth >= 768
+
+    const props = {
+      loadingPushToggle: loadingPushToggle,
+      receiptPageName: receiptPageName,
+      loading: loading,
+      statuses: STATUSES,
+      purchaseUsecases: PURCHASE_USECASE,
+      purchaseOrder: PURCHASE_ORDER,
+      receipt: receipt,
+      goHomeFn: this._goToHomeFn,
+      windowWidth: windowWidth,
+      goToProduct: this._repurchaseFn,
+      goReceiptPage: this._goToPurchases,
+      registerPushNotification: this._handleRegistrationPushNotification,
+      isRegisteredPush: isRegisteredPush
+    }
+
     return (
       <ReceiptWrapper background={this._identifyBackground}>
         <Helmet
@@ -247,20 +266,13 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
             { name: 'description', content: 'Description of ReceiptPage' }
           ]}
         />
-        <Receipt
-          loadingPushToggle={loadingPushToggle}
-          receiptPageName={receiptPageName}
-          loading={loading}
-          statuses={STATUSES}
-          purchaseUsecases={PURCHASE_USECASE}
-          purchaseOrder={PURCHASE_ORDER}
-          receipt={receipt}
-          goHomeFn={this._goToHomeFn}
-          windowWidth={windowWidth}
-          goToProduct={this._repurchaseFn}
-          goReceiptPage={this._goToPurchases}
-          registerPushNotification={this._handleRegistrationPushNotification}
-          isRegisteredPush={isRegisteredPush}
+        <AccessView
+          mobileView={
+            <MobileReceipt {...props} />
+          }
+          desktopView={
+            <DesktopReceipt {...props} />
+          }
         />
 
         <Modal
