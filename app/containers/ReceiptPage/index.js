@@ -71,7 +71,6 @@ import {
 } from './actions'
 
 const ReceiptWrapper = styled.div`
-  margin-bottom: 60px;
 
   @media (min-width: 768px) {
     padding: 35px 30px;
