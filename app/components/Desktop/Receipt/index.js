@@ -253,12 +253,12 @@ class Receipt extends React.PureComponent {
 
     return switchFn({
       UNPAID: (
-        <Button fluid onClick={goToProduct} primary>
+        <Button onClick={goToProduct} primary>
           <FormattedMessage {...messages.rePurchase} />
         </Button>
       )
     })(
-      <Button fluid onClick={goReceiptPage} primary>
+      <Button onClick={goReceiptPage} primary>
         <FormattedMessage {...messages.viewActivity} />
       </Button>
     )(currentStatus)
@@ -475,11 +475,11 @@ class Receipt extends React.PureComponent {
           </Grid>
         </InfoContainer>
         */ }
-        { this._handlePushRegistrationUI() }
-
         <ButtonContainer>
           { this._handleButtonFunctionality() }
         </ButtonContainer>
+
+        { this._handlePushRegistrationUI() }
       </Container>
     )
   }

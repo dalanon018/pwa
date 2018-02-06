@@ -40,11 +40,9 @@ export const WarningDescription = styled.div`
 `
 
 export const ButtonContainer = styled.div`
-  bottom: 0;
-  left: 0;
-  position: fixed;
-  width: 100%;
-  z-index: 3;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 60px;
 
   .ui.button.primary {
     padding: 20px 40px !important;
@@ -143,7 +141,6 @@ export const ScannerWrapper = styled.div`
 
 export const PushNotificationWrapper = styled.div`
   border-top: 2px solid #F0F0F0;
-  border-bottom: 2px solid #F0F0F0;
   padding: 14px;
 
   @media (min-width: 1024px) and (max-width: 1365px) {
@@ -184,7 +181,7 @@ export const MatchCode = styled.div`
   position: relative;
   width: 100%;
   text-align: center;
-  
+
   .border-divider {
     border-top: 2px dashed #8E8E8E;
     border-bottom: 2px dashed #8E8E8E;
