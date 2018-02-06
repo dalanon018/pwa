@@ -159,6 +159,12 @@ input.input-field {
   }
 }
 
+.width {
+  &__full {
+    width: 100%;
+  }
+}
+
 .border {
   &__one-primary {
     border: 1px solid @primaryColor !important;

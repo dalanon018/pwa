@@ -257,7 +257,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   _displayHeader = () => {
-    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, location: { pathname }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen, productCategories } = this.props
+    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, location: { pathname }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen, productCategories, brands } = this.props
     /**
      * we have to identify if we should display backbutton
      */
@@ -279,31 +279,32 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
         <AccessView
           mobileView={
             <MobileHeaderNav
-              headerMenuFullScreen={headerMenuFullScreen}
-              pageTitle={pageTitle}
-              showSearchIcon={showSearchIcon}
-              showActivityIcon={showActivityIcon}
-              hideBackButton={hideBackButton}
-              leftButtonAction={this._handleLeftButtonAction}
               changeRoute={changeRoute}
               currentRoute={routeName}
-              searchProduct={searchProduct}
+              headerMenuFullScreen={headerMenuFullScreen}
+              hideBackButton={hideBackButton}
               intl={intl}
+              leftButtonAction={this._handleLeftButtonAction}
+              pageTitle={pageTitle}
+              searchProduct={searchProduct}
+              showActivityIcon={showActivityIcon}
+              showSearchIcon={showSearchIcon}
             />
           }
           desktopView={
             <DesktopHeaderNav
-              headerMenuFullScreen={headerMenuFullScreen}
-              pageTitle={pageTitle}
-              showSearchIcon={showSearchIcon}
-              showActivityIcon={showActivityIcon}
-              hideBackButton={hideBackButton}
-              leftButtonAction={this._handleLeftButtonAction}
+              brands={brands}
+              categories={productCategories}
               changeRoute={changeRoute}
               currentRoute={routeName}
-              searchProduct={searchProduct}
+              headerMenuFullScreen={headerMenuFullScreen}
+              hideBackButton={hideBackButton}
               intl={intl}
-              categories={productCategories}
+              leftButtonAction={this._handleLeftButtonAction}
+              pageTitle={pageTitle}
+              searchProduct={searchProduct}
+              showActivityIcon={showActivityIcon}
+              showSearchIcon={showSearchIcon}
             />
           }
         />

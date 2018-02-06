@@ -10,13 +10,17 @@ import {
   Header,
   Input,
   Container,
-  List
+  List,
+  Label
 } from 'semantic-ui-react'
 
-import { ifElse, identity, equals } from 'ramda'
+import { categoriesGroup } from 'utils/categories-group'
+
+import { ifElse, identity, equals, toPairs } from 'ramda'
 import BarcodeImage from 'images/icons/barcode-header.svg'
 import messages from './messages'
 import MainLogo from 'images/cliqq-logo.svg'
+// import Label from 'semantic-ui-react/dist/commonjs/elements/Label/Label';
 
 const Wrapper = styled.div`
   display: block;
@@ -89,6 +93,10 @@ const LogoWrapper = styled.div`
   }
 `
 
+const MainNav = styled.div`
+  position: relative;
+`
+
 const MenuWrapper = styled.div`
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
@@ -106,7 +114,59 @@ const MenuWrapper = styled.div`
     }
   }
 
+  .float-right {
+    float: right;
+  }
+`
+
+const BrandLists = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`
+
+const BrandsMenuWrapper = styled.div`
+  height: ${props => props.toggle ? '530px' : 0};
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 61px;
+  transition: height 0.3s ease-in;
+  width: 100%;
+  z-index: 1;
+`
+
+const BrandGroup = styled.div`
+  align-items: top;
+  border-top: 2px solid #ebebeb;
+  display: flex;
+  padding: 0 10px;
+
+  .brand-name {
+    margin-right: 10px;
+  }
+
+  .list-margin {
+    margin-top: 5px;
+  }
+
+  .sub-brands {
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all .3s ease;
   
+    &:hover {
+      color: #f58322;
+      text-decoration: underline;
+    }
+  }
+`
+
+const BrandsContainer = styled.div`
+  height: 500px;
+  overflow: auto;
+  padding: 0 15px;
+  width: 100%;
 `
 
 const toggleComponent = (componentA, componentB) => (condition) => {
@@ -126,7 +186,50 @@ class HeaderNav extends PureComponent {
 
   state = {
     activeItem: null,
-    windowHeightOffset: 0
+    windowHeightOffset: 0,
+    brandsMenu: false
+  }
+
+  _handleBrandsMenu = () => {
+    this.setState({
+      brandsMenu: !this.state.brandsMenu
+    })
+  }
+
+  _handleBrandLists = () => {
+    const { brands, changeRoute } = this.props
+    const groupBrands = categoriesGroup(brands)
+    const gotToBrands = (id) => () => {
+      this.setState({
+        brandsMenu: false
+      })
+      changeRoute(`/brands/${id}`)
+    }
+
+    return (
+      <BrandLists>
+        {
+          toPairs(groupBrands).map(([title, item], key) => {
+            return (
+              <BrandGroup key={key}>
+                <Label as='span' className='brand-name color__primary' basic size='large'>{ title }</Label>
+                <List className='list-margin'>
+                  {
+                    item.map((entity, index) => {
+                      return (
+                        <List.Item key={index} onClick={gotToBrands(entity.get('id'))} className='sub-brands'>
+                          { entity.get('name') }
+                        </List.Item>
+                      )
+                    })
+                  }
+                </List>
+              </BrandGroup>
+            )
+          })
+        }
+      </BrandLists>
+    )
   }
 
   _handleColumnSize = (currentRoute, place) => {
@@ -181,11 +284,16 @@ class HeaderNav extends PureComponent {
 
   _filteredCategoryMenu = () => {
     const { categories, changeRoute } = this.props
-    const gotToProduct = (id) => () => changeRoute(`/products-category/${id}`)
+    const gotToProduct = (id) => () => {
+      this.setState({
+        brandsMenu: false
+      })
+      changeRoute(`/products-category/${id}`)
+    }
 
     return (
       <MenuWrapper>
-        <List horizontal>
+        <List horizontal className='width__full'>
           {
             categories && categories.splice(8).map((item, index) => {
               return (
@@ -208,6 +316,11 @@ class HeaderNav extends PureComponent {
                 }
               </Dropdown.Menu>
             </Dropdown>
+
+          </List.Item>
+
+          <List.Item className='float-right' onClick={this._handleBrandsMenu}>
+            Brands
           </List.Item>
         </List>
       </MenuWrapper>
@@ -273,11 +386,20 @@ class HeaderNav extends PureComponent {
             </Grid.Row>
           </Grid>
         </Container>
-        <div className='background__light-grey'>
-          <Container>
-            { this._filteredCategoryMenu() }
-          </Container>
-        </div>
+        <MainNav>
+          <div className='background__light-grey'>
+            <Container>
+              { this._filteredCategoryMenu() }
+            </Container>
+          </div>
+          <BrandsMenuWrapper className='background__white' toggle={this.state.brandsMenu}>
+            <Container>
+              <BrandsContainer>
+                { this._handleBrandLists() }
+              </BrandsContainer>
+            </Container>
+          </BrandsMenuWrapper>
+        </MainNav>
       </Wrapper>
     )
   }
