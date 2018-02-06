@@ -61,7 +61,13 @@ const SearchListWrapper = styled.div`
 `
 
 const SearchPageWrapper = styled.div`
-  height: 100%;
+`
+
+const FooterWrapperAbsolute = styled.div`
+  position:absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 `
 
 export class SearchPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -168,7 +174,11 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
         </SearchListWrapper>
         <AccessView
           mobileView={null}
-          desktopView={<DesktopFooter />}
+          desktopView={
+            <FooterWrapperAbsolute>
+              <DesktopFooter />
+            </FooterWrapperAbsolute>
+          }
         />
       </SearchPageWrapper>
     )
