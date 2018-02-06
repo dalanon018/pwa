@@ -60,6 +60,10 @@ const SearchListWrapper = styled.div`
   padding: 20px 0;
 `
 
+const SearchPageWrapper = styled.div`
+  height: 100%;
+`
+
 export class SearchPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
    * Handler where we will able to identify if the user click search
@@ -151,7 +155,7 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
 
   render () {
     return (
-      <div>
+      <SearchPageWrapper>
         <SearchListWrapper>
           <Helmet
             title='Search'
@@ -166,7 +170,7 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
           mobileView={null}
           desktopView={<DesktopFooter />}
         />
-      </div>
+      </SearchPageWrapper>
     )
   }
 }
