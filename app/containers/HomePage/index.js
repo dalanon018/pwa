@@ -169,10 +169,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
   render () {
     const { loader, featuredProducts, featuredCategories, featuredBrands, changeRoute, windowWidth, intl, brandLoader } = this.props
-
-    const numSlide = windowWidth > 767 ? 2 : 1
+    const { showFeaturedItems, showFeaturedCategories } = this.state
     const imgixOptions = {
-      w: 800,
+      w: windowWidth >= 1024 ? 1170 : 800,
       h: 400,
       fit: 'clamp',
       auto: 'compress',
@@ -188,7 +187,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     ]
 
     const desktopBannerImages = [
-      paramsImgix('https://cliqqshop.imgix.net/banner-desktop.jpg')
+      paramsImgix('https://cliqqshop.imgix.net/banner-desktop.jpg', imgixOptions)
     ]
 
     return (
@@ -228,7 +227,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               <MobileSlider
                 loader={false}
                 images={bannerImages}
-                slidesToShow={numSlide}
                 isInfinite
               />
             }
