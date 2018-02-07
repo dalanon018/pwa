@@ -1,31 +1,21 @@
+/**
+ * Testing our Product View component
+ */
+
 import React from 'react'
-
-import { fromJS } from 'immutable'
 import { shallow } from 'enzyme'
-import { ProductPage } from '../index'
+import { fromJS } from 'immutable'
+import SizeSelector from '../SizeSelector'
 
-import Product from 'components/Shared/Product'
-
-const children = (<h1>Test</h1>)
+const children = 'Test'
 const wrapper = (props = {}, enzyme = shallow) => enzyme(
-  <ProductPage {...props}>
+  <SizeSelector {...props}>
     {children}
-  </ProductPage>
+  </SizeSelector>
 )
 
-describe('<Products />', () => {
+describe('<SizeSelector />', () => {
   const minProps = {
-    dispatch: () => {},
-    getProduct: () => {},
-    setProduct: () => {},
-    setRouteName: () => {},
-    changeRoute: () => {},
-    setCurrentProduct: () => {},
-    setHandlersDefault: () => {},
-    setPageTitle: () => {},
-    setShowSearchIcon: () => {},
-    setShowActivityIcon: () => {},
-    setHeaderMenuFullScreen: () => {},
     product: fromJS({
       'title': 'Penshoppe All Day Sling Bag (Blue)',
       'details': '<p>Men&rsquo;s all day sling bag in 100% polyester coated polycanvas with color blocking pattern, and 2 compartments</p>',
@@ -93,19 +83,7 @@ describe('<Products />', () => {
       'sliders': [],
       'size': 'M'
     }),
-    loading: false,
-    productSuccess: false,
-    productError: false,
-    intl: {
-      formatDate: () => {},
-      formatTime: () => {},
-      formatRelative: () => {},
-      formatNumber: () => {},
-      formatPlural: () => {},
-      formatMessage: () => {},
-      formatHTMLMessage: () => {},
-      now: () => {}
-    }
+    onSizeChange: () => {}
   }
 
   it('render without exploding', () => {
@@ -115,8 +93,21 @@ describe('<Products />', () => {
     ).toEqual(1)
   })
 
-  it('renders zero <Product/> custom component', () => {
+  it('should have 2 checkbox', () => {
     const renderComponent = wrapper(minProps)
-    expect(renderComponent.find(Product)).toHaveLength(0)
+    expect(
+      renderComponent.find('[radio=true]').length
+    ).toEqual(2)
+  })
+
+  it('should trigger on check', () => {
+    const onSizeChange = jest.fn()
+    const props = {
+      ...minProps,
+      onSizeChange
+    }
+    const renderComponent = wrapper(props)
+    renderComponent.find('[radio=true]').first().simulate('change')
+    expect(onSizeChange).toHaveBeenCalled()
   })
 })

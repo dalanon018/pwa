@@ -33,9 +33,13 @@ import { isMobileDevice } from 'utils/http'
 import { FbEventTracking } from 'utils/seo'
 import { imageStock } from 'utils/image-stock'
 
-import Product from 'components/Shared/Product'
+import MobileProduct from 'components/Mobile/Product'
+import DesktopProduct from 'components/Desktop/Product'
+
 import WindowWidth from 'components/Shared/WindowWidth'
 import Modal from 'components/Shared/PromptModal'
+import AccessView from 'components/Shared/AccessMobileDesktopView'
+import DesktopFooter from 'components/Desktop/Footer'
 
 import {
   setPageTitleAction,
@@ -249,25 +253,53 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
           title={`ProductPage - ${product.get('title') || ''}`}
         />
         <div>
-          <Product
-            loading={loading}
-            product={product}
-            windowWidth={windowWidth}
-            onSubmit={this._setCurrentProduct}
-            copied={this._handleCopy}
-            defaultImage={imageStock('default-slider.jpg')}
-            toggle={this.state.socialToggle}
-            toggleClick={this._handleSocialToggle}
-            productPageTrigger={productPageTrigger}
-            changeRoute={changeRoute}
-            openEmailPrompt={this._handleOpenEmailWarning}
-            closeEmailPrompt={this._handleCloseEmailWarning}
-            isMobile={isMobile}
-            togglePrompt={togglePrompt}
-            intl={intl}
-            origPrice={this._handletoggleOrigDiscountPrice}
-            onSizeChange={this._handleSizeChange}
+          <AccessView
+            mobileView={
+              <MobileProduct
+                loading={loading}
+                product={product}
+                windowWidth={windowWidth}
+                onSubmit={this._setCurrentProduct}
+                copied={this._handleCopy}
+                defaultImage={imageStock('default-slider.jpg')}
+                toggle={this.state.socialToggle}
+                toggleClick={this._handleSocialToggle}
+                productPageTrigger={productPageTrigger}
+                changeRoute={changeRoute}
+                openEmailPrompt={this._handleOpenEmailWarning}
+                closeEmailPrompt={this._handleCloseEmailWarning}
+                isMobile={isMobile}
+                togglePrompt={togglePrompt}
+                intl={intl}
+                origPrice={this._handletoggleOrigDiscountPrice}
+                onSizeChange={this._handleSizeChange}
+              />
+            }
+            desktopView={
+              <DesktopProduct
+                loading={loading}
+                product={product}
+                windowWidth={windowWidth}
+                onSubmit={this._setCurrentProduct}
+                copied={this._handleCopy}
+                defaultImage={imageStock('default-slider.jpg')}
+                toggle={this.state.socialToggle}
+                toggleClick={this._handleSocialToggle}
+                productPageTrigger={productPageTrigger}
+                changeRoute={changeRoute}
+                openEmailPrompt={this._handleOpenEmailWarning}
+                closeEmailPrompt={this._handleCloseEmailWarning}
+                isMobile={isMobile}
+                togglePrompt={togglePrompt}
+                intl={intl}
+                origPrice={this._handletoggleOrigDiscountPrice}
+                onSizeChange={this._handleSizeChange}
+              />
+            }
           />
+          <AccessView
+            mobileView={null}
+            desktopView={<DesktopFooter />} />
         </div>
 
         <Modal

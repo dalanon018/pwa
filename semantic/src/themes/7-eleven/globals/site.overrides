@@ -450,6 +450,9 @@ svg#barcode {
       }
     }
     &__bottom {
+      &--5 {
+        padding-bottom: 5px !important;
+      }
       &--15 {
         padding-bottom: 15px;
       }
