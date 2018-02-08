@@ -101,13 +101,17 @@ import SidebarMenu from './SidebarMenu'
 const Wrapper = styled.div`
   position: relative;
   height: 100%;
+
+  @media (min-width: 1024px) {
+    position: static;
+    height: auto;
+  }
 `
 
 const MainContent = styled.div`
   margin-top: 50px;
-  // overflow: hidden;
   width: 100%;
-  height: 100%;
+  height: ${props => props.width ? 'auto' : '100%'};
 `
 
 export class Buckets extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -395,12 +399,15 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   render () {
-    const { productCategories, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken } = this.props
+    const { productCategories, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken, windowWidth } = this.props
     const { toggleSidebar } = this.state
+
+    const desktopView = windowWidth > 1024
     return (
       <Wrapper toggleSidebar={toggleSidebar}>
         { this._displayHeader() }
         <MainContent
+          width={desktopView}
           toggleSidebar={toggleSidebar} >
           <Switch>
             <Route exact path='/' component={HomePage} />

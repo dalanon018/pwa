@@ -6,10 +6,19 @@ injectGlobal`
   body {
     height: 100%;
     width: 100%;
+    
+    @media (min-width: 1024px) {
+      min-height: 100%;
+      position: relative;
+    }
   }
 
   body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+    @media (min-width: 1024px) {
+      margin: 0 0 246px;
+    }
   }
 
   body.robotoLoaded {

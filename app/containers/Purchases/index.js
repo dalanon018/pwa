@@ -13,12 +13,14 @@ import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
 import { createStructuredSelector } from 'reselect'
-import { Tab } from 'semantic-ui-react'
+import { Tab, Container } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
 import WindowWidth from 'components/Shared/WindowWidth'
+import AccessView from 'components/Shared/AccessMobileDesktopView'
+import DesktopFooter from 'components/Desktop/Footer'
 
 import { userIsAuthenticated } from 'containers/App/auth'
 import {
@@ -47,8 +49,23 @@ import {
 
 const PurchaseWrapper = styled.div`
   .ui.tabular{
+    background-color: transparent;
+    display: inline-block;
+    padding: 0 10px 20px;
+
     .item {
-      margin: 0 auto;
+      cursor: pointer;
+      font-weight: 700;
+      margin-right: 40px;
+      padding: 0 0 7px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &.active {
+        border-bottom: 2px solid #8DC640;
+      }
     }
   }
 `
@@ -138,19 +155,29 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
     ]
 
     return (
-      <PurchaseWrapper>
-        <Helmet
-          title='Receipts'
-          meta={[
-            { name: 'description', content: 'List of barcodes' }
-          ]}
-        />
+      <div>
+        <PurchaseWrapper>
+          <Helmet
+            title='Receipts'
+            meta={[
+              { name: 'description', content: 'List of barcodes' }
+            ]}
+          />
 
-        <Tab
-          onTabChange={this._onTabChange}
-          panes={panes}
-        />
-      </PurchaseWrapper>
+          <Container>
+            <div className='padding__medium'>
+              <Tab
+                onTabChange={this._onTabChange}
+                panes={panes}
+              />
+            </div>
+          </Container>
+        </PurchaseWrapper>
+
+        <AccessView
+          mobileView={null}
+          desktopView={<DesktopFooter />} />
+      </div>
     )
   }
 }

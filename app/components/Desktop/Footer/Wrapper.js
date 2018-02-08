@@ -4,8 +4,12 @@ import {
 } from 'semantic-ui-react'
 
 const Wrapper = styled.footer`
-  position: relative;
+  bottom: 0;
+  min-height: 226px;
+  left: 0;
   padding: 25px 15px 15px;
+  position: absolute;
+  width: 100%;
 
   .custom-header {
     margin-bottom: 10px;
