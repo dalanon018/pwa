@@ -46,6 +46,7 @@ class ListCollapse extends React.PureComponent {
     const element = e.target.closest('.ui.accordion')
     const block = element.getElementsByClassName('content')
 
+    !this.props.disableScroll &&
     setTimeout(() => {
       // parentScrollTo.scrollTo(0, ChildTop)
       // we need to make sure that it is not propagated and element exist

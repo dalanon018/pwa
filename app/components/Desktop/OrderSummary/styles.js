@@ -45,9 +45,6 @@ const ProductItem = styled.div`
   }
 `
 const StepWrapper = styled.div`
-  margin-bottom: 90px;
-  padding: 15px 14px;
-
   &.visibility {
     display: ${({ visibility }) => visibility ? 'block' : 'none'};
     transition: all .3s ease;
@@ -81,16 +78,21 @@ const DetailsWrapper = styled.div`
 `
 
 const SelectMethodWrapper = styled.div`
-  padding: 0 14px;
-  width: 100%;
+  .payment-wrapper {
+    display: flex;
+  }
+
+  .label {
+    letter-spacing: 2px;
+  }
 
   .checkbox {
     border-radius: 5px;
     border: 2px solid #F0F0F0;
-    height: 100%;
-    padding: 10px;
+    margin-right: 20px;
+    padding: 15px 10px;
     position: relative;
-    width: 100%;
+    width: 335px;
 
     &.checked {
       border: 2px solid #8DC640;
@@ -137,7 +139,7 @@ const LocationButton = styled(({iconBg, ...props}) => <Button {...props} />)`
   border-radius: 5px !important;
   font-family: 'Cabin' !important;
   letter-spacing: 2px;
-  padding: 20px 10px !important;
+  padding: 20px 100px !important;
   position: relative;
   text-align: left !important;
 
@@ -153,12 +155,17 @@ const LocationButton = styled(({iconBg, ...props}) => <Button {...props} />)`
   }
 `
 
+const BottomWrapper = styled.div`
+  align-items: center;
+  border-top: 2px solid #ebebeb;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  padding-top: 30px;
+`
+
 const ButtonContainer = styled.div`
-  background: #f58322;
-  bottom: 0;
-  left: 0;
-  position: fixed;
-  width: 100%;
+  text-align: right;
 
   .ui.button.primary {
     padding: 20px 40px !important;
@@ -171,25 +178,42 @@ const ReviewContainer = styled.div`
 
 const MethodTitle = styled.div`
   margin-top: 10px;
-  padding: 0 14px;
 `
 
 const ProductContainer = styled.div`
   align-items: center;
-  border-radius: 3px;
-  border: 2px solid #ebebeb;
   display: flex;
   justify-content: space-between;
   margin: 20px 0;
   padding: 15px;
 `
 
+const ProductMain = styled.div`
+  border-radius: 3px;
+  border: 2px solid #ebebeb;
+`
+
 const ProductDetails = styled.div`
   flex-grow: 2;
+
+  .base-price {
+    font-family: 'Roboto';
+    font-size: 35px !important;
+    letter-spacing: -2px;
+    margin-right: 10px;
+  }
+
+  .orig-price {
+    font-family: 'Roboto';
+    font-size: 20px !important;
+    letter-spacing: -2px;
+    text-decoration: line-through;
+  }
 `
 
 export {
   StepHead,
+  BottomWrapper,
   SelectMethodWrapper,
   ProductItem,
   ReviewContainer,
@@ -200,5 +224,6 @@ export {
   MethodTitle,
   StepWrapper,
   ProductDetails,
-  ProductContainer
+  ProductContainer,
+  ProductMain
 }

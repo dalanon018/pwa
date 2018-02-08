@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
 const ListCollapseWrapper = styled.div`
+  cursor: pointer;
+
   .ui.accordion {
     border-bottom: 1px solid #F0F0F0;
 
@@ -8,6 +10,10 @@ const ListCollapseWrapper = styled.div`
       height: ${props => props.heightTransition ? props.height + 'px !important' : 'auto'};
       margin-bottom: 15px;
       transition: all .1s ease-in;
+    }
+
+    @media screen and (min-width: 1024px) {
+      border-bottom: 0;
     }
   }
 

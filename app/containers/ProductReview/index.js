@@ -31,6 +31,7 @@ import WindowWidth from 'components/Shared/WindowWidth'
 
 import MobileOrderSummary from 'components/Mobile/OrderSummary'
 import DesktopOrderSummary from 'components/Desktop/OrderSummary'
+import DesktopFooter from 'components/Desktop/Footer'
 
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 
@@ -164,6 +165,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   _handleToBottom = () => {
+    const { windowWidth } = this.props
+
+    windowWidth <= 1024 &&
     setTimeout(() => {
       // parentScrollTo.scrollTo(0, ChildTop)
       this._innerStepRef &&
@@ -414,28 +418,33 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
           />
         }
         desktopView={
-          <DesktopOrderSummary
-            ShowCodComponent={ShowCodComponent}
-            _handleChange={this._handleChange}
-            _handleModalClose={this._handleModalClose}
-            _handleProceed={this._handleProceed}
-            _handleStoreLocator={this._handleStoreLocator}
-            _handleToBottom={this._handleToBottom}
-            _stepWrapperRef={this._stepWrapperRef}
-            _updateParamsImages={this._updateParamsImages}
-            brandLogo={brandLogo}
-            errorMessage={errorMessage}
-            isBlackListed={isBlackListed}
-            labelOne={labelOne}
-            labelTwo={labelTwo}
-            modalToggle={modalToggle}
-            modePayment={modePayment}
-            orderRequesting={orderRequesting}
-            orderedProduct={orderedProduct}
-            productLoader={productLoader}
-            store={store}
-            visibility={visibility}
-          />
+          <div>
+            <DesktopOrderSummary
+              ShowCodComponent={ShowCodComponent}
+              _handleChange={this._handleChange}
+              _handleModalClose={this._handleModalClose}
+              _handleProceed={this._handleProceed}
+              _handleStoreLocator={this._handleStoreLocator}
+              _handleToBottom={this._handleToBottom}
+              _stepWrapperRef={this._stepWrapperRef}
+              _updateParamsImages={this._updateParamsImages}
+              brandLogo={brandLogo}
+              errorMessage={errorMessage}
+              isBlackListed={isBlackListed}
+              labelOne={labelOne}
+              labelTwo={labelTwo}
+              modalToggle={modalToggle}
+              modePayment={modePayment}
+              orderRequesting={orderRequesting}
+              orderedProduct={orderedProduct}
+              productLoader={productLoader}
+              store={store}
+              visibility={visibility}
+            />
+            <AccessView
+              mobileView={null}
+              desktopView={<DesktopFooter />} />
+          </div>
         }
       />
     )

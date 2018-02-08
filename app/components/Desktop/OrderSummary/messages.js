@@ -50,7 +50,7 @@ export default defineMessages({
   },
   proceedNext: {
     id: `${idSuffix}.proceedNext`,
-    defaultMessage: 'Purchase your Product Now!'
+    defaultMessage: 'Purchase your Product'
   },
   errorHeader: {
     id: `${idSuffix}.errorHeader`,
@@ -75,5 +75,9 @@ export default defineMessages({
   peso: {
     id: `${idSuffix}.peso`,
     defaultMessage: '₱ '
+  },
+  discountText: {
+    id: `${idSuffix}.discountText`,
+    defaultMessage: '*Discounts are automatically discoubted at Method of Payment'
   }
 })
