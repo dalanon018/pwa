@@ -89,6 +89,7 @@ const SearchWrapper = styled.div`
 
 const LogoWrapper = styled.div`
   img {
+    cursor: pointer;
     width: 100px;
   }
 `
@@ -365,7 +366,7 @@ class HeaderNav extends PureComponent {
             <Grid.Row columns={3} verticalAlign='middle'>
               <Grid.Column width={3}>
                 <LogoWrapper>
-                  <Image alt='CLiQQ' src={MainLogo} />
+                  <Image alt='CLiQQ' src={MainLogo} onClick={changeRoute.bind(this, '/')} />
                 </LogoWrapper>
               </Grid.Column>
               <Grid.Column width={10}>

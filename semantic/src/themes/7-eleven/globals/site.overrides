@@ -261,6 +261,18 @@ input.input-field {
 .document-helper {
   margin: 20px 0;
 
+  h1 {
+    @media (min-width: 1024px) {
+      font-size: 20px !important;
+      font-weight: 700 !important;
+    }
+  }
+
+  h2 {
+    @media (min-width: 1024px) {
+      font-weight: 700 !important;
+    }
+  }
 
   ul {
     li {

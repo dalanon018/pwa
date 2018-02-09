@@ -12,12 +12,11 @@ import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
-import { Grid } from 'semantic-ui-react'
+import { Container, Grid } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
-import MobileFooter from 'components/Mobile/Footer'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 import H1 from 'components/Shared/H1'
 
@@ -58,22 +57,36 @@ export class TermsConditions extends React.PureComponent { // eslint-disable-lin
     const converter = new showdown.Converter()
     const html = converter.makeHtml(markdown)
     return (
-      <div>
-        <div className='document-helper terms-conditions margin__top-positive--30'>
-          <Grid padded>
-            <H1 className='padding__top--25 padding__none--horizontal color__secondary'>
-              <FormattedMessage {...messages.header} />
-            </H1>
-            <LoadingStateInfo loading={loader} count='4'>
-              <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
-            </LoadingStateInfo>
-          </Grid>
-        </div>
-        <AccessView
-          mobileView={<MobileFooter />}
-          desktopView={null}
-        />
-      </div>
+      <AccessView
+        mobileView={
+          <div className='document-helper terms-conditions margin__top-positive--30'>
+            <Grid padded>
+              <H1 className='padding__top--25 padding__none--horizontal color__secondary'>
+                <FormattedMessage {...messages.header} />
+              </H1>
+              <LoadingStateInfo loading={loader} count='4'>
+                <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
+              </LoadingStateInfo>
+            </Grid>
+          </div>
+        }
+        desktopView={
+          <div className='document-helper terms-conditions'>
+            <Container>
+              <div className='padding__medium'>
+                <Grid padded>
+                  <H1 className='padding__top--25 padding__none--horizontal color__secondary'>
+                    <FormattedMessage {...messages.header} />
+                  </H1>
+                  <LoadingStateInfo loading={loader} count='4'>
+                    <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
+                  </LoadingStateInfo>
+                </Grid>
+              </div>
+            </Container>
+          </div>
+        }
+      />
     )
   }
 }
