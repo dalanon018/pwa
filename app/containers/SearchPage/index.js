@@ -22,11 +22,9 @@ import injectReducer from 'utils/injectReducer'
 
 import MobileSearchResult from 'components/Mobile/SearchResult'
 // import DesktopSearchResult from 'components/Desktop/SearchResult'
-import DesktopFooter from 'components/Desktop/Footer'
 
 import H3 from 'components/Shared/H3'
 import WindowWidth from 'components/Shared/WindowWidth'
-import AccessView from 'components/Shared/AccessMobileDesktopView'
 
 import {
   setToggleAction
@@ -63,13 +61,6 @@ const SearchListWrapper = styled.div`
 const SearchPageWrapper = styled.div`
   position:relative;
   min-height: 100%;
-`
-
-const FooterWrapperAbsolute = styled.div`
-  position:absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
 `
 
 export class SearchPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -174,14 +165,6 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
           { this._displayEmpty() }
           { this._displayProduct() }
         </SearchListWrapper>
-        <AccessView
-          mobileView={null}
-          desktopView={
-            <FooterWrapperAbsolute>
-              <DesktopFooter />
-            </FooterWrapperAbsolute>
-          }
-        />
       </SearchPageWrapper>
     )
   }

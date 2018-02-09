@@ -30,7 +30,6 @@ import UNCLAIMED from 'images/ticket-backgrounds/not-claimed.png'
 
 import MobileReceipt from 'components/Mobile/Receipt'
 import DesktopReceipt from 'components/Desktop/Receipt'
-import DesktopFooter from 'components/Desktop/Footer'
 
 import Modal from 'components/Shared/PromptModal'
 import WindowWidth from 'components/Shared/WindowWidth'
@@ -287,7 +286,7 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
         </ReceiptWrapper>
         <AccessView
           mobileView={null}
-          desktopView={<DesktopFooter />}
+          desktopView={null}
         />
       </div>
     )

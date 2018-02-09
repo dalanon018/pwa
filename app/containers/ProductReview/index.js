@@ -31,7 +31,6 @@ import WindowWidth from 'components/Shared/WindowWidth'
 
 import MobileOrderSummary from 'components/Mobile/OrderSummary'
 import DesktopOrderSummary from 'components/Desktop/OrderSummary'
-import DesktopFooter from 'components/Desktop/Footer'
 
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 
@@ -441,9 +440,6 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
               store={store}
               visibility={visibility}
             />
-            <AccessView
-              mobileView={null}
-              desktopView={<DesktopFooter />} />
           </div>
         }
       />

@@ -34,9 +34,7 @@ import DesktopProductView from 'components/Desktop/ProductView'
 
 import MobileCategory from 'components/Mobile/Category'
 import DesktopCategory from 'components/Desktop/Category'
-
 import MobileFooter from 'components/Mobile/Footer'
-import DesktopFooter from 'components/Desktop/Footer'
 
 import WindowWidth from 'components/Shared/WindowWidth'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
@@ -341,7 +339,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         </Container>
         <AccessView
           mobileView={<MobileFooter />}
-          desktopView={<DesktopFooter />}
+          desktopView={null}
         />
       </div>
     )

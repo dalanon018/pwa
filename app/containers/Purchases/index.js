@@ -19,8 +19,6 @@ import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
 import WindowWidth from 'components/Shared/WindowWidth'
-import AccessView from 'components/Shared/AccessMobileDesktopView'
-import DesktopFooter from 'components/Desktop/Footer'
 
 import { userIsAuthenticated } from 'containers/App/auth'
 import {
@@ -173,10 +171,6 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
             </div>
           </Container>
         </PurchaseWrapper>
-
-        <AccessView
-          mobileView={null}
-          desktopView={<DesktopFooter />} />
       </div>
     )
   }

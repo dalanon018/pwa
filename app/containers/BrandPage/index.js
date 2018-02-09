@@ -36,7 +36,6 @@ import MobileProductView from 'components/Mobile/ProductView'
 import DesktopProductView from 'components/Desktop/ProductView'
 
 import MobileFooter from 'components/Mobile/Footer'
-import DesktopFooter from 'components/Desktop/Footer'
 
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 import WindowWidth from 'components/Shared/WindowWidth'
@@ -402,7 +401,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
         </ContentWrapper>
         <AccessView
           mobileView={<MobileFooter />}
-          desktopView={<DesktopFooter />}
+          desktopView={null}
         />
       </div>
     )

@@ -40,9 +40,7 @@ import { Uppercase } from 'utils/string'
 
 import MobileProductView from 'components/Mobile/ProductView'
 import DesktopProductView from 'components/Desktop/ProductView'
-
 import MobileFooter from 'components/Mobile/Footer'
-import DesktopFooter from 'components/Desktop/Footer'
 
 import WindowWidth from 'components/Shared/WindowWidth'
 import LazyLoading from 'components/Shared/LazyLoading'
@@ -532,7 +530,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
         </ContentWrapper>
         <AccessView
           mobileView={<MobileFooter />}
-          desktopView={<DesktopFooter />}
+          desktopView={null}
         />
       </div>
     )

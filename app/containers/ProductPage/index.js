@@ -39,7 +39,6 @@ import DesktopProduct from 'components/Desktop/Product'
 import WindowWidth from 'components/Shared/WindowWidth'
 import Modal from 'components/Shared/PromptModal'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
-import DesktopFooter from 'components/Desktop/Footer'
 
 import {
   setPageTitleAction,
@@ -297,9 +296,6 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
               />
             }
           />
-          <AccessView
-            mobileView={null}
-            desktopView={<DesktopFooter />} />
         </div>
 
         <Modal

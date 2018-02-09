@@ -17,11 +17,6 @@ import LoginPage from 'containers/LoginPage/Loadable'
 const AppWrapper = styled.div`
   display: block;
   position: relative;
-  
-  @media (min-width: 1024px) {
-    height: auto !important;
-    position: static;
-  }
 `
 
 const BodyWrapper = styled.div`
@@ -30,9 +25,7 @@ const BodyWrapper = styled.div`
   display: flex;
   height: 100%;
   flex-direction: column;
-
   @media (min-width: 1024px) {
-    height: auto;
     max-width: inherit;
   }
 `

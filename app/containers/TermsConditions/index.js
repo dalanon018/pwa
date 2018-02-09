@@ -18,7 +18,6 @@ import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
 import MobileFooter from 'components/Mobile/Footer'
-import DesktopFooter from 'components/Desktop/Footer'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 import H1 from 'components/Shared/H1'
 
@@ -72,7 +71,7 @@ export class TermsConditions extends React.PureComponent { // eslint-disable-lin
         </div>
         <AccessView
           mobileView={<MobileFooter />}
-          desktopView={<DesktopFooter />}
+          desktopView={null}
         />
       </div>
     )

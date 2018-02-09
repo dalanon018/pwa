@@ -91,6 +91,7 @@ import AccessView from 'components/Shared/AccessMobileDesktopView'
 
 import MobileHeaderNav from 'components/Mobile/HeaderNav'
 import DesktopHeaderNav from 'components/Desktop/HeaderNav'
+import DesktopFooter from 'components/Desktop/Footer'
 
 import reducer from './reducer'
 import saga from './saga'
@@ -101,17 +102,11 @@ import SidebarMenu from './SidebarMenu'
 const Wrapper = styled.div`
   position: relative;
   height: 100%;
-
-  @media (min-width: 1024px) {
-    position: static;
-    height: auto;
-  }
 `
 
 const MainContent = styled.div`
   margin-top: 50px;
   width: 100%;
-  height: ${props => props.width ? 'auto' : '100%'};
 `
 
 export class Buckets extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -399,15 +394,13 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   render () {
-    const { productCategories, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken, windowWidth } = this.props
+    const { productCategories, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken } = this.props
     const { toggleSidebar } = this.state
 
-    const desktopView = windowWidth > 1024
     return (
       <Wrapper toggleSidebar={toggleSidebar}>
         { this._displayHeader() }
         <MainContent
-          width={desktopView}
           toggleSidebar={toggleSidebar} >
           <Switch>
             <Route exact path='/' component={HomePage} />
@@ -426,6 +419,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
             <Route path='/offline' component={OfflinePage} />
             <Route path='' component={NotFound} />
           </Switch>
+          <AccessView
+            mobileView={null}
+            desktopView={<DesktopFooter />}
+          />
         </MainContent>
         <div
           className='sidebar-wrapper' >

@@ -18,7 +18,6 @@ import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
 import MobileFooter from 'components/Mobile/Footer'
-import DesktopFooter from 'components/Desktop/Footer'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 
 import { LoadingStateInfo } from 'components/Shared/LoadingBlock'
@@ -69,7 +68,7 @@ export class PrivacyPolicy extends React.PureComponent { // eslint-disable-line 
         </div>
         <AccessView
           mobileView={<MobileFooter />}
-          desktopView={<DesktopFooter />}
+          desktopView={null}
         />
       </div>
     )
