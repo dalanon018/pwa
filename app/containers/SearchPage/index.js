@@ -116,17 +116,28 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
 
   _displayProduct () {
     const { product, changeRoute, windowWidth } = this.props
+    const stickyFooter = document.getElementsByTagName('footer')[0]
 
-    if (product.size > 0) {
-      return (
-        <div>
-          <H3><FormattedMessage {...messages.header} /></H3>
-          <MobileSearchResult
-            product={product}
-            windowWidth={windowWidth}
-            changeRoute={changeRoute} />
-        </div>
-      )
+    if (stickyFooter) {
+      if (product.size > 0) {
+        stickyFooter.classList.contains('sticky') &&
+        stickyFooter.classList.remove('sticky')
+
+        product.size <= 6 &&
+        stickyFooter.classList.add('sticky')
+
+        return (
+          <div>
+            <H3><FormattedMessage {...messages.header} /></H3>
+            <MobileSearchResult
+              product={product}
+              windowWidth={windowWidth}
+              changeRoute={changeRoute} />
+          </div>
+        )
+      } else {
+        stickyFooter.classList.add('sticky')
+      }
     }
 
     return null

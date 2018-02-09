@@ -365,6 +365,14 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     500: <FormattedMessage {...messages.failedFetch} />
   })(statusCode)(statusCode)
 
+  _handleRemoveStickyFooter = () => {
+    const stickyFooter = document.getElementsByTagName('footer')[0]
+
+    stickyFooter &&
+    stickyFooter.classList.contains('sticky') &&
+    stickyFooter.classList.remove('sticky')
+  }
+
   componentDidMount () {
     const { getMobileNumbers, getCategories, getBrands, getRegisteredPush, getLoyaltyToken, isMobile } = this.props
     const shouldDisplayNotification = ifElse(
@@ -391,6 +399,8 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
     // if isRegister
     this._firebaseHandleRefreshToken(isRegisteredPush)
+
+    this._handleRemoveStickyFooter()
   }
 
   render () {

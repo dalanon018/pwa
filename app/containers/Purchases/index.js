@@ -113,6 +113,22 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
   _handleShow = (entity) => {
     const { activePane } = this.state
     const { loading, changeRoute, windowWidth } = this.props
+    const stickyFooter = document.getElementsByTagName('footer')[0]
+
+    if (stickyFooter) {
+      if (entity.size === 0) {
+        stickyFooter.classList.contains('sticky') &&
+        stickyFooter.classList.remove('sticky')
+      } else if (entity.size > 0) {
+        stickyFooter.classList.contains('sticky') &&
+        stickyFooter.classList.remove('sticky')
+
+        entity.size <= 2 &&
+        stickyFooter.classList.add('sticky')
+      } else {
+        stickyFooter.classList.add('sticky')
+      }
+    }
 
     if (loading === false && entity.size === 0) {
       return <EmptyPurchase active={activePane} />

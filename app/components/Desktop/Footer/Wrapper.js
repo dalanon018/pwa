@@ -7,6 +7,13 @@ const Wrapper = styled.footer`
   padding: 25px 15px 15px;
   position: relative;
 
+  &.sticky {
+    bottom: 0;
+    left: 0;
+    position: fixed !important;
+    width: 100%;
+  }
+
   .custom-header {
     margin-bottom: 10px;
   }
