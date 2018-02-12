@@ -44,6 +44,6 @@ describe('<LoginPage />', () => {
 
   it('renders one <Recaptcha/> custom component', () => {
     const renderComponent = wrapper(minProps)
-    expect(renderComponent.find(Recaptcha)).toHaveLength(1)
+    expect(renderComponent.find(Recaptcha)).toHaveLength(0)
   })
 })
