@@ -9,7 +9,7 @@ import { fromJS } from 'immutable'
 import Product from '../index'
 import SizeSelector from '../SizeSelector'
 
-import ProductSlider from 'components/Shared/BannerSlider'
+// import ProductSlider from 'components/Shared/BannerSlider'
 import {LoadingStateInfo} from 'components/Shared/LoadingBlock'
 
 import {
@@ -122,10 +122,11 @@ describe('<Product />', () => {
     expect(ShallowedWrapper.find(ProductImageSlider)).toHaveLength(1)
   })
 
-  it('renders one <ProductSlider/> component', () => {
-    const ShallowedWrapper = shallow(<Product {...minProps} />)
-    expect(ShallowedWrapper.find(ProductSlider)).toHaveLength(1)
-  })
+  // TODO: TEST
+  // it('renders one <ProductSlider/> component', () => {
+  //   const ShallowedWrapper = shallow(<Product {...minProps} />)
+  //   expect(ShallowedWrapper.find(ProductSlider).length).toHaveLength(1)
+  // })
 
   it('renders one <ProductMainContent/> styled component', () => {
     const ShallowedWrapper = shallow(<Product {...minProps} />)

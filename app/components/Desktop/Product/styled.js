@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Grid } from 'semantic-ui-react'
 
 const AnimateDiv = styled.div`
   animation:fadeIn ease-in 1;
@@ -50,7 +51,7 @@ export const ProductImageSlider = styled.div`
     width: 60%;
   }
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 1024px) {
     img {
       width: 350px;
     }
@@ -218,4 +219,8 @@ export const SizesButton = styled.div`
       border: 2px solid #8DC640;
     }
   }
+`
+
+export const CustomGrid = styled(Grid.Column)`
+  z-index: -1;
 `

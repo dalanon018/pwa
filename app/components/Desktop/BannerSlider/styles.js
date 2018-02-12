@@ -14,6 +14,11 @@ const BannerSliderWrapper = styled.div`
 
   .slick-list {
     padding-bottom: ${props => props.isLowerdots ? '15px' : '0'};
+    overflow: inherit;
+  }
+
+  .slick-cloned {
+    opacity: 0;
   }
 
   .slick-initialized {
@@ -26,6 +31,10 @@ const BannerSliderWrapper = styled.div`
 
   .slick-slide {
     position: relative;
+    
+    div[style='cursor: crosshair; width: 350px; height: 350px; position: relative; user-select: none;'] {
+      margin: 0 auto;
+    }
   }
 
   .slick-dots {

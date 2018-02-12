@@ -7,7 +7,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Slider from 'react-slick'
-import { Image } from 'semantic-ui-react'
+// import { Image } from 'semantic-ui-react'
+
+import ReactImageMagnify from 'react-image-magnify'
 
 import { ifElse, gt } from 'ramda'
 import { noop } from 'lodash'
@@ -60,7 +62,30 @@ class SlideShow extends React.PureComponent {
             return (
               <div key={index}>
                 {
-                  (typeof item === 'string' ? <Image alt='CLiQQ' src={item} /> : '')
+                  (typeof item === 'string'
+                  ? <ReactImageMagnify {...{
+                    smallImage: {
+                      alt: 'CLiQQ',
+                      // isFluidWidth: true,
+                      width: 350,
+                      height: 350,
+                      src: `${item}350`,
+                      srcSet: [
+                        `${item}687 687w`,
+                        `${item}770 770w`,
+                        `${item}861 861w`,
+                        `${item}955 955w`
+                      ].join(', '),
+                      sizes: '(min-width: 1024px) 30vw, 80vw'
+                    },
+                    largeImage: {
+                      alt: 'CLiQQ',
+                      src: `${item}350`,
+                      width: 1200,
+                      height: 1800
+                    }
+                  }} />
+                  : '')
                 }
               </div>
             )

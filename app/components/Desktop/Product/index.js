@@ -25,7 +25,7 @@ import ReturnIcon from 'images/test-images/v2/return-icon.svg'
 import { fbShare } from 'utils/fb-share'
 import { paramsImgix } from 'utils/image-stock'
 
-import ProductSlider from 'components/Shared/BannerSlider'
+import ProductSlider from 'components/Desktop/BannerSlider'
 // import ListCollapse from 'components/Shared/ListCollapse'
 import PromptModal from 'components/Shared/PromptModal'
 
@@ -45,7 +45,8 @@ import {
   ShareWrapper,
   ProductImageSlider,
   DetailsContent,
-  DeliveryPolicy
+  DeliveryPolicy,
+  CustomGrid
 } from './styled'
 
 const showDiscountPrice = (component1, component2) => (condition) => ifElse(
@@ -187,7 +188,7 @@ const Product = ({
                 </ShareWrapper>
               </SocialContainer>
             </Grid.Column>
-            <Grid.Column>
+            <CustomGrid>
               <DetailsWrapper>
                 <LoadingStateInfo>
                   {
@@ -252,7 +253,7 @@ const Product = ({
                   : ''
                 }
               </DetailsWrapper>
-            </Grid.Column>
+            </CustomGrid>
           </Grid.Row>
         </Grid>
       </Container>
