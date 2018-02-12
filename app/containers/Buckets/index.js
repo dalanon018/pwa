@@ -257,7 +257,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   _displayHeader = () => {
-    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, location: { pathname }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen, productCategories, brands } = this.props
+    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, location: { pathname }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen, productCategories, brands, loyaltyToken, removeLoyaltyToken } = this.props
     /**
      * we have to identify if we should display backbutton
      */
@@ -305,6 +305,8 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
               searchProduct={searchProduct}
               showActivityIcon={showActivityIcon}
               showSearchIcon={showSearchIcon}
+              isSignIn={!!loyaltyToken}
+              signOut={removeLoyaltyToken}
             />
           }
         />

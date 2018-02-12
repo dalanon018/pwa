@@ -22,6 +22,8 @@ import messages from './messages'
 import MainLogo from 'images/cliqq-logo.svg'
 // import Label from 'semantic-ui-react/dist/commonjs/elements/Label/Label';
 
+import Logout from 'images/icons/drawer/signout.svg'
+
 const Wrapper = styled.div`
   display: block;
   position: relative;
@@ -54,6 +56,7 @@ const ActiviesIcon = styled.div`
   margin-left: ${props => props.marginLeft ? 0 : 20}px;
 
   img {
+    cursor: pointer;
     display: inline-block !important;
   }
 
@@ -170,6 +173,21 @@ const BrandsContainer = styled.div`
   width: 100%;
 `
 
+const SignOutWrapper = styled.div`
+  display: inline-block;
+  margin-left: 40px;
+
+  img {
+    cursor: pointer;
+    width: 21px !important;
+  }
+`
+const OptionsWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+`
+
 const toggleComponent = (componentA, componentB) => (condition) => {
   return ifElse(
     identity,
@@ -189,6 +207,27 @@ class HeaderNav extends PureComponent {
     activeItem: null,
     windowHeightOffset: 0,
     brandsMenu: false
+  }
+
+  _handleShowLogoutButton = () => {
+    const { isSignIn } = this.props
+
+    const toggleComponent = ifElse(
+      identity,
+      () => (
+        <SignOutWrapper>
+          <Image alt='help' size='mini' onClick={this._handleSignOut} src={Logout} />
+        </SignOutWrapper>
+      ),
+      () => null
+    )
+
+    return toggleComponent(isSignIn)
+  }
+
+  _handleSignOut = () => {
+    const { signOut } = this.props
+    signOut()
   }
 
   _handleBrandsMenu = () => {
@@ -382,7 +421,10 @@ class HeaderNav extends PureComponent {
                 </SearchWrapper>
               </Grid.Column>
               <Grid.Column width={3} textAlign='right'>
-                { ActivitiesToggle(showActivityIcon) }
+                <OptionsWrapper>
+                  { ActivitiesToggle(showActivityIcon) }
+                  { this._handleShowLogoutButton() }
+                </OptionsWrapper>
               </Grid.Column>
             </Grid.Row>
           </Grid>
