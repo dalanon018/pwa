@@ -20,6 +20,7 @@ describe('Buckets Reducer', () => {
       toggle: false,
       toggleError: false,
       toggleMessage: null,
+      lightBoxImage: null,
       loader: false,
       brandLoader: false,
       routeName: null,

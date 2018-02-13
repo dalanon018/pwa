@@ -40,7 +40,9 @@ import {
   SET_LOYALTY_TOKEN,
   REMOVE_LOYALTY_TOKEN,
 
-  SET_HEADER_FULL_SCREEN
+  SET_HEADER_FULL_SCREEN,
+
+  SET_LIGHTBOX_IMAGE
 } from './constants'
 
 export function setRouteNameAction (payload) {
@@ -199,5 +201,12 @@ export function setLoyaltyTokenAction (payload) {
 export function removeLoyaltyTokenAction () {
   return {
     type: REMOVE_LOYALTY_TOKEN
+  }
+}
+
+export function setLightBoxImageAction (payload) {
+  return {
+    type: SET_LIGHTBOX_IMAGE,
+    payload
   }
 }

@@ -41,6 +41,8 @@ class SlideShow extends React.PureComponent {
     clearTimeout(this.assignTimeOut)
   }
 
+  _handleLightBox = imageUri => () => this.props.toggleLightBox(imageUri)
+
   componentDidMount () {
     const { props } = this.slider
     const shouldSlideNext = ifElse(gt(props.children.length), this._initNextSlide, noop)
@@ -63,28 +65,30 @@ class SlideShow extends React.PureComponent {
               <div key={index}>
                 {
                   (typeof item === 'string'
-                  ? <ReactImageMagnify {...{
-                    smallImage: {
-                      alt: 'CLiQQ',
-                      // isFluidWidth: true,
-                      width: 350,
-                      height: 350,
-                      src: `${item}350`,
-                      srcSet: [
-                        `${item}687 687w`,
-                        `${item}770 770w`,
-                        `${item}861 861w`,
-                        `${item}955 955w`
-                      ].join(', '),
-                      sizes: '(min-width: 1024px) 30vw, 80vw'
-                    },
-                    largeImage: {
-                      alt: 'CLiQQ',
-                      src: `${item}350`,
-                      width: 1200,
-                      height: 1800
-                    }
-                  }} />
+                  ? <div onClick={this._handleLightBox(item)}>
+                    <ReactImageMagnify {...{
+                      smallImage: {
+                        alt: 'CLiQQ',
+                        // isFluidWidth: true,
+                        width: 350,
+                        height: 350,
+                        src: `${item}350`,
+                        srcSet: [
+                          `${item}687 687w`,
+                          `${item}770 770w`,
+                          `${item}861 861w`,
+                          `${item}955 955w`
+                        ].join(', '),
+                        sizes: '(min-width: 1024px) 30vw, 80vw'
+                      },
+                      largeImage: {
+                        alt: 'CLiQQ',
+                        src: `${item}350`,
+                        width: 1200,
+                        height: 1800
+                      }
+                    }} />
+                  </div>
                   : '')
                 }
               </div>

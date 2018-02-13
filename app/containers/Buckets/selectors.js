@@ -103,6 +103,11 @@ const selectLoyaltyToken = () => createSelector(
   (substate) => substate.get('loyaltyToken')
 )
 
+const selectLightBoxImage = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('lightBoxImage')
+)
+
 export {
   selectBucketDomain,
   selectToggle,
@@ -122,5 +127,6 @@ export {
   selectShowActivityIcon,
   selectIsRegisteredPush,
   selectLoyaltyToken,
-  selectBrandLoader
+  selectBrandLoader,
+  selectLightBoxImage
 }

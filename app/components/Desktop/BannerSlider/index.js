@@ -21,11 +21,15 @@ function BannerSlider ({
   loader,
   isInfinite,
   isLowerdots,
+  toggleLightBox,
+  lightBoxImage,
   images,
   slidesToShow }) {
   return <HandleBlock
     loader={loader}
     images={images}
+    toggleLightBox={toggleLightBox}
+    lightBoxImage={lightBoxImage}
     isInfinite={isInfinite || false}
     isLowerdots={isLowerdots || false}
     slidesToShow={slidesToShow || 1}
@@ -45,6 +49,7 @@ export const HandleBlock = ({
   loader,
   isInfinite,
   isLowerdots,
+  toggleLightBox,
   images,
   slidesToShow }) => {
   let block
@@ -65,7 +70,7 @@ export const HandleBlock = ({
     block = <DefaultState loader={loader} />
   } else {
     block = <BannerSliderWrapper isLowerdots={isLowerdots}>
-      <SlideShow settings={settings} images={images} />
+      <SlideShow settings={settings} images={images} toggleLightBox={toggleLightBox} />
     </BannerSliderWrapper>
   }
   return block

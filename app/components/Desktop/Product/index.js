@@ -28,6 +28,7 @@ import { paramsImgix } from 'utils/image-stock'
 import ProductSlider from 'components/Desktop/BannerSlider'
 // import ListCollapse from 'components/Shared/ListCollapse'
 import PromptModal from 'components/Shared/PromptModal'
+import LightBox from 'components/Desktop/LightBox'
 
 import { LoadingStateInfo } from 'components/Shared/LoadingBlock'
 
@@ -80,10 +81,12 @@ const Product = ({
   closeEmailPrompt,
   defaultImage,
   intl,
+  toggleLightBox,
   origPrice,
   isMobile,
   copied,
   productSlider,
+  lightBoxImage,
   togglePrompt,
   productPageTrigger,
   windowWidth,
@@ -135,6 +138,8 @@ const Product = ({
               <ProductImageSlider>
                 <ProductSlider
                   images={productImages}
+                  toggleLightBox={toggleLightBox}
+                  lightBoxImage={lightBoxImage}
                   loader={loading}
                   isInfinite
                   isLowerdots
@@ -259,6 +264,9 @@ const Product = ({
       </Container>
 
       <ProductWrapper />
+
+      { lightBoxImage && <LightBox image={lightBoxImage} close={toggleLightBox} /> }
+
       <PromptModal
         title={intl.formatMessage(messages.emailWarningTitle)}
         name='warning'

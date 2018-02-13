@@ -22,6 +22,8 @@ export const SET_NETWORK_ERROR = 'app/Buckets/SET_NETWORK_ERROR'
 
 export const SET_TOGGLE = 'app/Buckets/SET_TOGGLE'
 
+export const SET_LIGHTBOX_IMAGE = 'app/Buckets/SET_LIGHTBOX_IMAGE'
+
 export const GET_PAGE_TITLE = 'app/Container/GET_PAGE_TITLE'
 export const SET_PAGE_TITLE = 'app/Container/SET_PAGE_TITLE'
 

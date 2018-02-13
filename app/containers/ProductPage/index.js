@@ -45,8 +45,12 @@ import {
   setRouteNameAction,
   setShowSearchIconAction,
   setShowActivityIconAction,
-  setHeaderFullScreenAction
+  setHeaderFullScreenAction,
+  setLightBoxImageAction
 } from 'containers/Buckets/actions'
+
+import { selectLightBoxImage } from 'containers/Buckets/selectors'
+
 import { PRODUCT_NAME } from 'containers/Buckets/constants'
 
 import messages from './messages'
@@ -242,7 +246,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   render () {
-    const { loading, product, route, windowWidth, changeRoute, isMobile, intl } = this.props
+    const { loading, product, route, windowWidth, changeRoute, isMobile, intl, setLightBoxImage, lightBoxImage } = this.props
     const { errModalToggle, errModalName, errorTitle, errorMessage, togglePrompt } = this.state
     const productPageTrigger = route && route
 
@@ -255,44 +259,46 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
           <AccessView
             mobileView={
               <MobileProduct
-                loading={loading}
-                product={product}
-                windowWidth={windowWidth}
-                onSubmit={this._setCurrentProduct}
+                changeRoute={changeRoute}
+                closeEmailPrompt={this._handleCloseEmailWarning}
                 copied={this._handleCopy}
                 defaultImage={imageStock('default-slider.jpg')}
+                intl={intl}
+                isMobile={isMobile}
+                loading={loading}
+                onSizeChange={this._handleSizeChange}
+                onSubmit={this._setCurrentProduct}
+                openEmailPrompt={this._handleOpenEmailWarning}
+                origPrice={this._handletoggleOrigDiscountPrice}
+                product={product}
+                productPageTrigger={productPageTrigger}
                 toggle={this.state.socialToggle}
                 toggleClick={this._handleSocialToggle}
-                productPageTrigger={productPageTrigger}
-                changeRoute={changeRoute}
-                openEmailPrompt={this._handleOpenEmailWarning}
-                closeEmailPrompt={this._handleCloseEmailWarning}
-                isMobile={isMobile}
                 togglePrompt={togglePrompt}
-                intl={intl}
-                origPrice={this._handletoggleOrigDiscountPrice}
-                onSizeChange={this._handleSizeChange}
+                windowWidth={windowWidth}
               />
             }
             desktopView={
               <DesktopProduct
-                loading={loading}
-                product={product}
-                windowWidth={windowWidth}
-                onSubmit={this._setCurrentProduct}
+                changeRoute={changeRoute}
+                closeEmailPrompt={this._handleCloseEmailWarning}
                 copied={this._handleCopy}
                 defaultImage={imageStock('default-slider.jpg')}
+                intl={intl}
+                isMobile={isMobile}
+                lightBoxImage={lightBoxImage}
+                loading={loading}
+                onSizeChange={this._handleSizeChange}
+                onSubmit={this._setCurrentProduct}
+                openEmailPrompt={this._handleOpenEmailWarning}
+                origPrice={this._handletoggleOrigDiscountPrice}
+                product={product}
+                productPageTrigger={productPageTrigger}
                 toggle={this.state.socialToggle}
                 toggleClick={this._handleSocialToggle}
-                productPageTrigger={productPageTrigger}
-                changeRoute={changeRoute}
-                openEmailPrompt={this._handleOpenEmailWarning}
-                closeEmailPrompt={this._handleCloseEmailWarning}
-                isMobile={isMobile}
+                toggleLightBox={setLightBoxImage}
                 togglePrompt={togglePrompt}
-                intl={intl}
-                origPrice={this._handletoggleOrigDiscountPrice}
-                onSizeChange={this._handleSizeChange}
+                windowWidth={windowWidth}
               />
             }
           />
@@ -315,12 +321,14 @@ const mapStateToProps = createStructuredSelector({
   loading: selectLoader(),
   product: selectProduct(),
   productSuccess: selectProductSuccess(),
-  productError: selectProductError()
+  productError: selectProductError(),
+  lightBoxImage: selectLightBoxImage()
 })
 
 function mapDispatchToProps (dispatch) {
   return {
     setRouteName: (payload) => dispatch(setRouteNameAction(payload)),
+    setLightBoxImage: (payload) => dispatch(setLightBoxImageAction(payload)),
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setHeaderMenuFullScreen: (payload) => dispatch(setHeaderFullScreenAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
