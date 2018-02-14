@@ -48,36 +48,39 @@ const mapKeys = curry((fn, obj) =>
   fromPairs(map(adjust(fn, 0), toPairs(obj)))
 )
 
-const transformCategory = (data) => {
-  const changeKey = (key) => Schema[key].name
-  const applySchemaName = mapKeys(changeKey, data)
+const changeKey = (key) => Schema[key] ? Schema[key].name : null
 
-  const applyImage = (data) => {
-    const applyImageUrl = (key) => compose(
-      propOr('', 'imageUrl'),
-      find(propEq('imageType', key)),
-      propOr({}, 'images')
-    )
-    return Object.assign({}, data, {
-      icon: applyImageUrl('NAV_ICON')(data),
-      background: applyImageUrl('BACKGROUND')(data),
-      main: applyImageUrl('MAIN')(data)
-    })
-  }
+const applyImage = (data) => {
+  const applyImageUrl = (key) => compose(
+    propOr('', 'imageUrl'),
+    find(propEq('imageType', key)),
+    propOr({}, 'images')
+  )
+  return Object.assign({}, data, {
+    icon: applyImageUrl('NAV_ICON')(data),
+    background: applyImageUrl('BACKGROUND')(data),
+    main: applyImageUrl('MAIN')(data)
+  })
+}
 
-  const applyChildren = (data) => compose(
-    assoc('children', __, data),
-    map(partial(mapKeys, [changeKey])),
-    propOr([], 'children')
-  )(data)
+const applyChildren = (data) => compose(
+  assoc('children', __, data),
+  map(adjustmentObject),
+  map(partial(mapKeys, [changeKey])),
+  propOr([], 'children')
+)(data)
 
+const adjustmentObject = (data) => {
   const removeKeys = ['images']
-  const adjustmentObject = compose(
+  return compose(
     omit(removeKeys),
     applyChildren,
     applyImage
-  )
+  )(data)
+}
 
+const transformCategory = (data) => {
+  const applySchemaName = mapKeys(changeKey, data)
   return adjustmentObject(applySchemaName)
 }
 
