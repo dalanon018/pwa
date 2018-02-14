@@ -7,7 +7,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Image, Icon } from 'semantic-ui-react'
+import { Image } from 'semantic-ui-react'
+import CloseButton from 'images/icons/close.svg'
+import ProductSlider from 'components/Desktop/BannerSlider'
 
 const LightBoxWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.7);
@@ -15,7 +17,6 @@ const LightBoxWrapper = styled.div`
   left: 0;
   position: fixed;
   top: 0;
-  transition: linear 3s;
   width: 100%;
   z-index: 9;
 `
@@ -40,18 +41,30 @@ const ImageWrapper = styled.div`
 
 const IconWrapper = styled.div`
   position: absolute;
-  top: -40px;
-  right: -60px;
+  top: 10px;
+  right: 10px;
   cursor: pointer;
+
+  img {
+    width: 15px !important;
+  }
 `
 
-function LightBox ({ image, close }) {
+function LightBox ({
+  images,
+  close,
+  active,
+  loader
+}) {
   return (
     <LightBoxWrapper>
       <ImageWrapper>
-        <Image src={image} alt='CLiQQ' />
+        <ProductSlider
+          images={images}
+          active={active}
+          loader={loader} />
         <IconWrapper>
-          <Icon onClick={() => close(null)} name='close' size='huge' color='orange' />
+          <Image src={CloseButton} onClick={() => close(null)} />
         </IconWrapper>
       </ImageWrapper>
     </LightBoxWrapper>

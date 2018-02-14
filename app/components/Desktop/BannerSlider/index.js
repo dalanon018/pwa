@@ -20,7 +20,11 @@ import {
 function BannerSlider ({
   loader,
   isInfinite,
+  handleMouseEnter,
+  handleMouseLeave,
   isLowerdots,
+  active,
+  hover,
   toggleLightBox,
   lightBoxImage,
   images,
@@ -28,6 +32,10 @@ function BannerSlider ({
   return <HandleBlock
     loader={loader}
     images={images}
+    active={active}
+    handleMouseEnter={handleMouseEnter}
+    handleMouseLeave={handleMouseLeave}
+    hover={hover}
     toggleLightBox={toggleLightBox}
     lightBoxImage={lightBoxImage}
     isInfinite={isInfinite || false}
@@ -48,29 +56,46 @@ const imgixOptions = {
 export const HandleBlock = ({
   loader,
   isInfinite,
+  active,
+  handleMouseEnter,
+  handleMouseLeave,
+  hover,
   isLowerdots,
+  lightBoxImage,
   toggleLightBox,
   images,
   slidesToShow }) => {
   let block
+
+  const thumbnailPagination = i => <img key={i} src={images[i]} />
+
   const settings = {
-    autoplay: images.length > 1,
+    autoplay: toggleLightBox || active ? false : images.length > 1,
     swipe: images.length > 1,
-    autoplaySpeed: 3500,
+    autoplaySpeed: 4000,
     dots: images.length > 1,
-    infinite: isInfinite,
+    infinite: active ? true : isInfinite,
     speed: 1000,
-    arrows: false,
+    fade: !!toggleLightBox,
+    arrows: !!active,
     slidesToShow: slidesToShow,
     slidesToScroll: slidesToShow,
-    lazyLoad: true
+    lazyLoad: true,
+    initialSlide: active ? parseInt(active) : 0,
+    customPaging: i => thumbnailPagination(i)
   }
 
   if (loader || images.length === 0) {
     block = <DefaultState loader={loader} />
   } else {
-    block = <BannerSliderWrapper isLowerdots={isLowerdots}>
-      <SlideShow settings={settings} images={images} toggleLightBox={toggleLightBox} />
+    block = <BannerSliderWrapper hover={hover} isLowerdots={isLowerdots}>
+      <SlideShow
+        settings={settings}
+        images={images}
+        handleMouseEnter={handleMouseEnter}
+        handleMouseLeave={handleMouseLeave}
+        active={active}
+        toggleLightBox={toggleLightBox} />
     </BannerSliderWrapper>
   }
   return block

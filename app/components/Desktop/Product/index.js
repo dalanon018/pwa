@@ -82,6 +82,8 @@ const Product = ({
   defaultImage,
   intl,
   toggleLightBox,
+  handleMouseEnter,
+  handleMouseLeave,
   origPrice,
   isMobile,
   copied,
@@ -90,7 +92,8 @@ const Product = ({
   togglePrompt,
   productPageTrigger,
   windowWidth,
-  onSizeChange
+  onSizeChange,
+  hover
 }) => {
   const FacebookIcon = generateShareIcon('facebook')
   const TwitterIcon = generateShareIcon('twitter')
@@ -100,12 +103,6 @@ const Product = ({
   const productSliders = product.get('sliders') ? product.get('sliders').toArray().map(updateParamsImages) : []
   // we need to add our main image to sliders
   const productImages = [updateParamsImages(product.get('image'))].concat(productSliders)
-  // const brandLogo = product.get('brandLogo') ? (
-  //   <Image
-  //     className='brand-logo'
-  //     alt='CLiQQ'
-  //     src={updateParamsImages(product.get('brandLogo'), { w: 200, h: 30 })}
-  //     onClick={changeRoute.bind(this, `/brands/${product.getIn(['brand', 'code'])}`)} />) : ''
 
   const toggleDiscount = showDiscountPrice(
     <Label className='product-discount' as='span' basic size='huge' color='grey'>
@@ -134,13 +131,15 @@ const Product = ({
         <Grid>
           <Grid.Row columns={2}>
             <Grid.Column>
-              { /* loading || brandLogo */ }
               <ProductImageSlider>
                 <ProductSlider
+                  hover={hover}
                   images={productImages}
                   toggleLightBox={toggleLightBox}
                   lightBoxImage={lightBoxImage}
                   loader={loading}
+                  handleMouseEnter={handleMouseEnter}
+                  handleMouseLeave={handleMouseLeave}
                   isInfinite
                   isLowerdots
                 />
@@ -265,7 +264,14 @@ const Product = ({
 
       <ProductWrapper />
 
-      { lightBoxImage && <LightBox image={lightBoxImage} close={toggleLightBox} /> }
+      {
+        lightBoxImage &&
+        <LightBox
+          images={productImages}
+          active={lightBoxImage}
+          close={toggleLightBox}
+          loader={loading} />
+      }
 
       <PromptModal
         title={intl.formatMessage(messages.emailWarningTitle)}

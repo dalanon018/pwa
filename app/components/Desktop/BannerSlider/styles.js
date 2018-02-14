@@ -14,11 +14,25 @@ const BannerSliderWrapper = styled.div`
 
   .slick-list {
     padding-bottom: ${props => props.isLowerdots ? '15px' : '0'};
-    overflow: inherit;
+    overflow: ${props => props.hover && 'inherit'};
   }
 
+  .slick-slide {
+    opacity: ${props => props.hover && 0};
+  }
+
+  .slick-prev:before, .slick-next:before {
+    color: #000000 !important;
+  }
+
+  .slick-active {
+    opacity: 1;
+  }
+
+  
+
   .slick-cloned {
-    opacity: 0;
+    overflow: ${props => props.hover && 'hidden'};
   }
 
   .slick-initialized {

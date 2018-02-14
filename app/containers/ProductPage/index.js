@@ -103,7 +103,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       errModalName: 'warning',
       errorTitle: '',
       errorMessage: '',
-      togglePrompt: false
+      togglePrompt: false,
+      hover: false
     }
   }
 
@@ -207,6 +208,14 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     })
   }
 
+  _handleMouseEnter = () => {
+    this.setState(() => ({ hover: true }))
+  }
+
+  _handleMouseLeave = () => {
+    this.setState(() => ({ hover: false }))
+  }
+
   componentWillMount () {
     this.props.setPageTitle('Product Details')
     this.props.setShowSearchIcon(true)
@@ -222,6 +231,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   componentWillUnmount () {
     this.props.setHandlersDefault()
+    this._handleMouseEnter()
+    this._handleMouseLeave()
   }
 
   componentWillReceiveProps (nextProps) {
@@ -247,7 +258,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   render () {
     const { loading, product, route, windowWidth, changeRoute, isMobile, intl, setLightBoxImage, lightBoxImage } = this.props
-    const { errModalToggle, errModalName, errorTitle, errorMessage, togglePrompt } = this.state
+    const { errModalToggle, errModalName, errorTitle, errorMessage, togglePrompt, hover } = this.state
     const productPageTrigger = route && route
 
     return (
@@ -284,6 +295,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
                 closeEmailPrompt={this._handleCloseEmailWarning}
                 copied={this._handleCopy}
                 defaultImage={imageStock('default-slider.jpg')}
+                hover={hover}
                 intl={intl}
                 isMobile={isMobile}
                 lightBoxImage={lightBoxImage}
@@ -299,6 +311,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
                 toggleLightBox={setLightBoxImage}
                 togglePrompt={togglePrompt}
                 windowWidth={windowWidth}
+                handleMouseEnter={this._handleMouseEnter}
+                handleMouseLeave={this._handleMouseLeave}
               />
             }
           />
