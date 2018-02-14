@@ -159,7 +159,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
   render () {
     const { loader, featuredProducts, featuredCategories, featuredBrands, changeRoute, windowWidth, intl, brandLoader } = this.props
-    const { showFeaturedItems, showFeaturedCategories } = this.state
+
     const numSlide = windowWidth > 767 ? 2 : 1
     const imgixOptions = {
       w: 800,
@@ -230,29 +230,25 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           <Waypoint
             onEnter={this._handleFeaturedItemsWaypointEnter}
           >
-            {
-            showFeaturedItems && <ProductView
-              changeRoute={changeRoute}
-              loader={loader}
-              products={featuredProducts}
-              windowWidth={windowWidth}
-            />
-          }
+            <div>
+              <ProductView
+                changeRoute={changeRoute}
+                loader={loader}
+                products={featuredProducts}
+                windowWidth={windowWidth}
+              />
+            </div>
           </Waypoint>
+
           { this._displayViewAll() }
 
-          {
-            this._shouldDisplayHeader(
-              <H3>
-                <FormattedMessage {...messages.browseCategory} />
-              </H3>
-            )(featuredCategories.size > 0)
-          }
+          <H3>
+            <FormattedMessage {...messages.browseCategory} />
+          </H3>
           <Waypoint
             onEnter={this._handleFeaturedCategoriesWaypointEnter}
           >
-            {
-            showFeaturedCategories && <CategoryWrapper>
+            <CategoryWrapper>
               <Category
                 loader={loader}
                 windowWidth={windowWidth}
@@ -263,8 +259,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                 fontSize='9'
                 height='80'
                 categories={featuredCategories} />
-              </CategoryWrapper>
-            }
+            </CategoryWrapper>
           </Waypoint>
         </Container>
         <Footer />
