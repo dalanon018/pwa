@@ -24,7 +24,7 @@ import Input from 'components/Shared/InputField'
 import Checkbox from 'components/Shared/CheckboxField'
 import Modal from 'components/Shared/PromptModal'
 import A from 'components/Shared/A'
-import PopupVerification from 'components/Shared/PopupVerification'
+import PopupVerification from 'components/Mobile/PopupVerification'
 
 import { LoadingStateInfo } from 'components/Shared/LoadingBlock'
 import { RECAPTCHA_SITE_KEY } from 'containers/App/constants'

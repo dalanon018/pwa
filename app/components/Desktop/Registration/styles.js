@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import BoxBorder from 'images/backgrounds/box-border.png'
 
 const PopupContainer = styled.div`
   padding: 10px;
@@ -133,6 +134,67 @@ const ModalContentWrapper = styled.div`
   }
 `
 
+const RegistrationWrapper = styled.div`
+  background-color: #F7F7F7;
+  height: 100vh;
+
+  .ui.primary.button {
+    margin: 0 auto;
+    padding: 20px 40px !important;
+    width: 200px;
+  }
+`
+
+const ContentWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  padding: 0 230px;
+`
+
+const BoxWrapper = styled.div`
+  background-color: #FFFFFF;
+  border: 2px solid #EBEBEB;
+  min-height: 360px;
+  padding: 30px;
+  width: 100%;
+  position: relative;
+
+  &:before {
+    background: url(${BoxBorder}) no-repeat;
+    bottom: 0;
+    content: '';
+    height: 90%;
+    left: -60px;
+    position: absolute;
+    width: 96px;
+    z-index: -1;
+  }
+
+  &:after {
+    background: url(${BoxBorder}) no-repeat;
+    top: 0;
+    content: '';
+    height: 90%;
+    right: -60px;
+    position: absolute;
+    width: 96px;
+    transform: scale(-1, -1);
+    z-index: -1;
+  }
+`
+
+const ImageLogo = styled.img`
+  width: 115px;
+  margin-bottom: 20px;
+`
+
 export {
   TextWrapper,
   PopupContainer,
@@ -141,5 +203,9 @@ export {
   TermsConditionsWrapper,
   ButtonWrapper,
   TermsConditionsHeader,
-  ModalContentWrapper
+  ModalContentWrapper,
+  RegistrationWrapper,
+  ContentWrapper,
+  BoxWrapper,
+  ImageLogo
 }

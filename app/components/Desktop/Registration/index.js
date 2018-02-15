@@ -5,7 +5,6 @@
 */
 
 import React from 'react'
-import styled from 'styled-components'
 import Recaptcha from 'react-google-recaptcha'
 
 import { FormattedMessage } from 'react-intl'
@@ -22,10 +21,9 @@ import Input from 'components/Shared/InputField'
 import Checkbox from 'components/Shared/CheckboxField'
 import Modal from 'components/Shared/PromptModal'
 import A from 'components/Shared/A'
-import PopupVerification from 'components/Shared/PopupVerification'
+import PopupVerification from 'components/Desktop/PopupVerification'
 
 import MainLogo from 'images/cliqq-logo.svg'
-import BoxBorder from 'images/backgrounds/box-border.png'
 
 import { LoadingStateInfo } from 'components/Shared/LoadingBlock'
 import { RECAPTCHA_SITE_KEY } from 'containers/App/constants'
@@ -37,74 +35,12 @@ import {
   TermsConditionsWrapper,
   ButtonWrapper,
   TermsConditionsHeader,
-  CaptchaWrapper
+  CaptchaWrapper,
+  RegistrationWrapper,
+  ContentWrapper,
+  BoxWrapper,
+  ImageLogo
 } from './styles'
-
-const RegistrationWrapper = styled.div`
-  background-color: #F7F7F7;
-  height: 100vh;
-  // left: 0;
-  // position: fixed;
-  // top: 0;
-  // width: 100%;
-  // z-index: 9;
-
-  .ui.primary.button {
-    margin: 0 auto;
-    padding: 20px 40px !important;
-    width: 200px;
-  }
-`
-
-const ContentWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  padding: 0 230px;
-`
-
-const BoxWrapper = styled.div`
-  background-color: #FFFFFF;
-  border: 2px solid #EBEBEB;
-  min-height: 360px;
-  padding: 30px;
-  width: 100%;
-  position: relative;
-
-  &:before {
-    background: url(${BoxBorder}) no-repeat;
-    bottom: 0;
-    content: '';
-    height: 90%;
-    left: -60px;
-    position: absolute;
-    width: 96px;
-    z-index: -1;
-  }
-
-  &:after {
-    background: url(${BoxBorder}) no-repeat;
-    top: 0;
-    content: '';
-    height: 90%;
-    right: -60px;
-    position: absolute;
-    width: 96px;
-    transform: scale(-1, -1);
-    z-index: -1;
-  }
-`
-
-const ImageLogo = styled.img`
-  width: 115px;
-  margin-bottom: 20px;
-`
 
 function Registration ({
   loadingMarkdown,
