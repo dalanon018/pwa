@@ -84,7 +84,8 @@ import FaqPage from 'containers/FaqPage/Loadable'
 import NotFound from 'containers/PageNotFound/Loadable'
 import OfflinePage from 'containers/PageOffline/Loadable'
 
-import ModalWithHeader from 'components/Shared/ModalWithHeader'
+import MobileModal from 'components/Mobile/ModalWithHeader'
+import DesktopModal from 'components/Desktop/ModalWithHeader'
 import Modal from 'components/Shared/PromptModal'
 import WindowWidth from 'components/Shared/WindowWidth'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
@@ -318,15 +319,32 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     const { receiptsUpdated, setUpdatedReceipts, windowWidth } = this.props
 
     return receiptsUpdated.map((receipt, index) =>
-      <ModalWithHeader
-        receipt={receipt}
-        receipts={receiptsUpdated}
+      <AccessView
         key={index}
-        setUpdatedReceipts={setUpdatedReceipts}
-        goToHome={this._goToHome}
-        goToReceipts={this._goToReceipts}
-        goToProducts={this._goToProducts}
-        windowWidth={windowWidth}
+        mobileView={
+          <MobileModal
+            receipt={receipt}
+            receipts={receiptsUpdated}
+            key={index}
+            setUpdatedReceipts={setUpdatedReceipts}
+            goToHome={this._goToHome}
+            goToReceipts={this._goToReceipts}
+            goToProducts={this._goToProducts}
+            windowWidth={windowWidth}
+          />
+        }
+        desktopView={
+          <DesktopModal
+            receipt={receipt}
+            receipts={receiptsUpdated}
+            key={index}
+            setUpdatedReceipts={setUpdatedReceipts}
+            goToHome={this._goToHome}
+            goToReceipts={this._goToReceipts}
+            goToProducts={this._goToProducts}
+            windowWidth={windowWidth}
+          />
+        }
       />
     )
   }

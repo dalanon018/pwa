@@ -10,6 +10,11 @@ import { isEmpty } from 'lodash'
 import { FormattedMessage } from 'react-intl'
 import messages from './messages'
 
+import {
+  identity,
+  ifElse
+} from 'ramda'
+
 import { Grid, Label, Form, Checkbox, Image, Button, Container } from 'semantic-ui-react'
 
 import { LoadingStateImage } from 'components/Shared/LoadingBlock'
@@ -59,10 +64,24 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       _handleChange,
       _updateParamsImages } = this.props
 
+    const showDiscountPrice = (component1, component2) => (condition) => ifElse(
+      identity,
+      () => component1,
+      () => component2
+    )(condition)
+
+    const toggleDiscount = showDiscountPrice(
+      <Label className='padding__none color__grey orig-price' as='b' basic size='large'>
+        <FormattedMessage {...messages.peso} />
+        { orderedProduct.get('price') &&
+          parseFloat(orderedProduct.get('price')).toLocaleString() }
+      </Label>,
+      null
+    )
+
     return (
       <Container>
         <div className='padding__medium'>
-          { /* productLoader || brandLogo */ }
           <Label as='span' basic size='huge' className='color__secondary'>
             <FormattedMessage {...messages.orderSummary} />
           </Label>
@@ -83,13 +102,10 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
                     <Label className='padding__none base-price' as='b' basic size='massive' color='orange'>
                       <FormattedMessage {...messages.peso} />
-                      { orderedProduct.get('discountPrice') }
-                    </Label>
-
-                    <Label className='padding__none color__grey orig-price' as='b' basic size='large'>
-                      <FormattedMessage {...messages.peso} />
                       { orderedProduct.get('price') }
                     </Label>
+
+                    { toggleDiscount(orderedProduct.get('discountPrice')) }
 
                   </ProductDetails>
                 </ProductContainer>
