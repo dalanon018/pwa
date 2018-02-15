@@ -192,12 +192,12 @@ const Product = ({
                 </ShareWrapper>
               </SocialContainer>
             </Grid.Column>
-            <CustomGrid>
+            <CustomGrid className={hover && 'active'}>
               <DetailsWrapper>
                 <LoadingStateInfo>
                   {
                     product.get('brand')
-                    ? <Label className='no-margin-bottom color__secondary margin__none' as='p' basic size='big'>{product.getIn(['brand', 'name'])}</Label>
+                    ? <Label onClick={changeRoute.bind(this, `/brands/${product.getIn(['brand', 'code'])}`)} className='no-margin-bottom color__secondary margin__none brand-title' as='span' basic size='big'>{product.getIn(['brand', 'name'])}</Label>
                     : null
                   }
                   <Label as='p' className='margin__none' basic size='big'>{product.get('title')}</Label>

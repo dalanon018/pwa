@@ -98,6 +98,10 @@ export const ProductPriceWrapper = styled(AnimateDiv)`
 export const DetailsWrapper = styled(AnimateDiv)`
   align-self: stretch;
 
+  .brand-title {
+    cursor: pointer;
+  }
+
   .accordion.ui .title {
     padding: 25px;
   }
@@ -222,5 +226,7 @@ export const SizesButton = styled.div`
 `
 
 export const CustomGrid = styled(Grid.Column)`
-  z-index: -1;
+  &.active {
+    z-index: -1;
+  }
 `

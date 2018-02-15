@@ -52,7 +52,7 @@ const StyledCheckBox = styled(Checkbox)`
 function SizeSelector ({ product, onSizeChange }) {
   const selectedSize = product.get('size')
   return (
-    <SizesWrapper className='border_top__one--light-grey'>
+    <SizesWrapper>
       <div>
         <Label className='color__secondary center' as='p' basic size='big'>
           <FormattedMessage {...messages.selectSize} />

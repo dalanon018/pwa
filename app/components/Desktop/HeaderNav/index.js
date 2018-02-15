@@ -137,7 +137,7 @@ const BrandsMenuWrapper = styled.div`
   top: 61px;
   transition: height 0.3s ease-in;
   width: 100%;
-  z-index: 1;
+  z-index: 999;
 `
 
 const BrandGroup = styled.div`

@@ -83,12 +83,13 @@ export const HandleBlock = ({
     lazyLoad: true,
     initialSlide: active ? parseInt(active) : 0,
     customPaging: i => thumbnailPagination(i)
+    // centerMode: true
   }
 
   if (loader || images.length === 0) {
     block = <DefaultState loader={loader} />
   } else {
-    block = <BannerSliderWrapper hover={hover} isLowerdots={isLowerdots}>
+    block = <BannerSliderWrapper hover={hover} toggleLightBox={toggleLightBox} active={active} isLowerdots={isLowerdots}>
       <SlideShow
         settings={settings}
         images={images}
