@@ -85,6 +85,7 @@ function ProductView ({
                   <ImageContent>
                     <LazyLoad
                       height={300}
+                      offset={300}
                       placeholder={<LoadingIndicator />}
                       once
                     >
