@@ -56,6 +56,7 @@ function Category ({
             <Grid.Column key={index}>
               <LazyLoad
                 height={100}
+                offset={100}
                 once
               >
                 <CategoryBlock
