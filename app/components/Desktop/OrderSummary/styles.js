@@ -103,7 +103,7 @@ const SelectMethodWrapper = styled.div`
       content: '';
       background-color: #8DC640 !important;
       left: 6px;
-      top: ${props => props.checkHeight ? '29px' : '17px'};
+      top: ${props => props.checkHeight ? '29px' : '15px'};
       display: block;
       width: 5px;
       height: 9px;

@@ -27,6 +27,10 @@ const LabelPrice = styled.div`
     letter-spacing: -2px;
     margin-right: 10px;
     margin: 0;
+
+    @media (min-width: 1024px) {
+      font-size: ${props => props.length > 4 ? '30px' : '35px'};
+    }
   }
   .strike {
     align-self: flex-end;

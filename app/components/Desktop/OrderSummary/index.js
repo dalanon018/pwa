@@ -102,7 +102,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
                     <Label className='padding__none base-price' as='b' basic size='massive' color='orange'>
                       <FormattedMessage {...messages.peso} />
-                      { orderedProduct.get('price') }
+                      { orderedProduct.get('discountPrice') }
                     </Label>
 
                     { toggleDiscount(orderedProduct.get('discountPrice')) }

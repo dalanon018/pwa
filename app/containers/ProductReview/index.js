@@ -362,7 +362,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
           <FormattedMessage {...messages.cashPrepaid} />
         </Label>
       </LabelTitle>
-      <LabelPrice>
+      <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
         <span className='total color__orange'>
           <FormattedMessage {...messages.peso} />
           { this._toggleOrigDiscountPrice(orderedProduct) }
@@ -376,7 +376,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
           <FormattedMessage {...messages.cashDelivery} />
         </Label>
       </LabelTitle>
-      <LabelPrice>
+      <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
         <span className='total color__orange'>
           <FormattedMessage {...messages.peso} />
           { this._toggleOrigDiscountPrice(orderedProduct) }
