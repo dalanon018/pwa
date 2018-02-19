@@ -17,7 +17,7 @@ build:
       code: yarn config set cache-folder $WERCKER_CACHE_DIR/yarn
 
     - script:
-      name: set standard
+      name: set standard@10.0.3
       code: |
         npm install -g standard@10.0.3
 
