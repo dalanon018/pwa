@@ -77,7 +77,7 @@ export const HandleBlock = ({
     infinite: active ? true : isInfinite,
     speed: 1000,
     fade: !!toggleLightBox,
-    arrows: !!active,
+    arrows: !!(active && images.length > 1),
     slidesToShow: slidesToShow,
     slidesToScroll: slidesToShow,
     lazyLoad: true,

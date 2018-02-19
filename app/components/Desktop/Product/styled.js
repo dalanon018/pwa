@@ -115,9 +115,6 @@ export const ProductDetailsContainer = styled(AnimateDiv)`
   padding: 20px 0 35px 0;
   font-weight: 100;
 
-  @media (min-width: 1024px) and (max-width: 1365px) {
-    padding: 35px 200px;
-  }
   @media (min-width: 1366px) {
     margin: 0 auto;
     width: 700px;

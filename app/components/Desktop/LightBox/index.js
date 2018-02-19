@@ -18,20 +18,20 @@ const LightBoxWrapper = styled.div`
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 9;
+  z-index: 999;
 `
 
 const ImageWrapper = styled.div`
   background-color: #FFFFFF;
   border-radius: 3px;
   border: 2px solid #EBEBEB;
-  height: 600px;
+  height: 650px;
   left: 50%;
   padding: 30px;
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 600px;
+  width: 650px;
 
   img {
     width: 100% !important;
