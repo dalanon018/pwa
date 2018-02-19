@@ -4,6 +4,7 @@ import {
 } from 'semantic-ui-react'
 
 const Wrapper = styled.footer`
+  margin-top: 50px;
   padding: 25px 15px 15px;
   position: relative;
 
@@ -53,15 +54,16 @@ const Wrapper = styled.footer`
 `
 
 const HelperLinks = styled.div`
-  padding: 0 40px;
+  // padding: 0 40px;
   span {
     cursor: pointer;
     font-family: 'Roboto';
   }
 
   .item {
-    position: relative;
     margin-bottom: 10px;
+    // margin-left: 10px !important;
+    position: relative;
 
     &:first-child {
       &:before {
@@ -88,7 +90,6 @@ const SocialIcons = styled.div`
   img {
     height: inherit !important;
     width: 32px !important;
-    margin: 0 7px;
   }
 `
 const FooterColumnAdjusterFlex = styled(Grid.Column)`

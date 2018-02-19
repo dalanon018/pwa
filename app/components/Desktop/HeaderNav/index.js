@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { injectIntl } from 'react-intl'
+import { chunk } from 'lodash'
 
 import {
   Dropdown,
@@ -26,7 +27,10 @@ import Logout from 'images/icons/drawer/signout.svg'
 
 const Wrapper = styled.div`
   display: block;
-  position: relative;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+  background-color: #FFFFFF;
 
   .no-padding {
     @media screen and (max-width: 767px) {
@@ -98,6 +102,7 @@ const LogoWrapper = styled.div`
 `
 
 const MainNav = styled.div`
+  padding: 0 15px;
   position: relative;
 `
 
@@ -107,13 +112,14 @@ const MenuWrapper = styled.div`
 
   .list {
     &>.item {
-      margin-left: 20px !important;
       cursor: pointer;
-      transition: all .3s ease;
+      height: 46px;
+      margin-left: 20px !important;
+      overflow: visible;
+      padding: 15px 0 !important;
   
       &:hover {
-        color: #f58322;
-        text-decoration: underline;
+        border-bottom: 2px solid #8DC640;
       }
     }
   }
@@ -126,32 +132,38 @@ const MenuWrapper = styled.div`
 const BrandLists = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
 `
 
 const BrandsMenuWrapper = styled.div`
-  height: ${props => props.toggle ? '530px' : 0};
+  box-shadow: 2px 11px 13px -5px rgba(0,0,0,0.14);
+  height: ${props => props.toggle ? '425px' : 0};
   left: 0;
   overflow: hidden;
   position: absolute;
-  top: 61px;
+  top: 46px;
   transition: height 0.3s ease-in;
   width: 100%;
-  z-index: 999;
+  z-index: 10;
 `
 
 const BrandGroup = styled.div`
   align-items: top;
   border-top: 2px solid #ebebeb;
   display: flex;
+  margin: 0 10px 50px;
   padding: 0 10px;
 
   .brand-name {
+    color: #057A5F !important;
+    font-size: 16px !important;
     margin-right: 10px;
+    margin-top: 7px;
   }
 
   .list-margin {
-    margin-top: 5px;
+    margin: 0 10px;
+    padding-top: 10px;
   }
 
   .sub-brands {
@@ -167,9 +179,9 @@ const BrandGroup = styled.div`
 `
 
 const BrandsContainer = styled.div`
-  height: 500px;
+  height: 415px;
   overflow: auto;
-  padding: 0 15px;
+  padding: 20px 15px 0;
   width: 100%;
 `
 
@@ -250,20 +262,30 @@ class HeaderNav extends PureComponent {
       <BrandLists>
         {
           toPairs(groupBrands).map(([title, item], key) => {
+            const isNumber = parseInt(title)
+            const chunkItem = chunk(item, 5)
+
             return (
               <BrandGroup key={key}>
-                <Label as='span' className='brand-name color__primary' basic size='large'>{ title }</Label>
-                <List className='list-margin'>
-                  {
-                    item.map((entity, index) => {
+                <Label as='span' className='brand-name' basic size='large'>{ !isNaN(isNumber) ? '#' : title }</Label>
+                {
+                    chunkItem.map((entity, key) => {
                       return (
-                        <List.Item key={index} onClick={gotToBrands(entity.get('id'))} className='sub-brands'>
-                          { entity.get('name') }
-                        </List.Item>
+                        <List key={key} className='list-margin'>
+                          {
+                            entity.map((data, index) => {
+                              return (
+                                <List.Item key={index} onClick={gotToBrands(data.get('id'))} className='sub-brands'>
+                                  { data.get('name') }
+                                </List.Item>
+                              )
+                            })
+                          }
+                        </List>
                       )
                     })
                   }
-                </List>
+
               </BrandGroup>
             )
           })
@@ -429,12 +451,10 @@ class HeaderNav extends PureComponent {
             </Grid.Row>
           </Grid>
         </Container>
-        <MainNav>
-          <div className='background__light-grey'>
-            <Container>
-              { this._filteredCategoryMenu() }
-            </Container>
-          </div>
+        <MainNav className='background__light-grey'>
+          <Container className='padding__none'>
+            { this._filteredCategoryMenu() }
+          </Container>
           <BrandsMenuWrapper className='background__white' toggle={this.state.brandsMenu}>
             <Container>
               <BrandsContainer>

@@ -93,14 +93,13 @@ export class Footer extends React.PureComponent {
             </FooterColumnAdjusterFlex>
             <Grid.Column>
               <FooterColumnWrapper>
+                <Label as='span' size='medium' className='color__secondary'>
+                  <div className='margin__bottom-positive--10'>
+                    <FormattedMessage {...messages.columnCliqqShopHeader} />
+                  </div>
+                </Label>
                 <HelperLinks>
                   <List>
-                    <List.Item className='color__grey' onClick={this._handleFaqRoute}>
-                      <Label as='span' size='medium' className='color__secondary'>
-                        <FormattedMessage {...messages.columnCliqqShopHeader} />
-                      </Label>
-
-                    </List.Item>
                     <List.Item className='color__grey' onClick={this._handleActivitiesRoute}>
                       <Label as='span' size='tiny' className='color__secondary'>
                         <FormattedMessage {...messages.activities} />
@@ -123,14 +122,13 @@ export class Footer extends React.PureComponent {
             </Grid.Column>
             <Grid.Column>
               <FooterColumnWrapper>
+                <Label as='span' size='medium' className='color__secondary'>
+                  <div className='margin__bottom-positive--10'>
+                    <FormattedMessage {...messages.columnHelpHeader} />
+                  </div>
+                </Label>
                 <HelperLinks>
                   <List>
-                    <List.Item className='color__grey' onClick={this._handleFaqRoute}>
-                      <Label as='span' size='medium' className='color__secondary'>
-                        <FormattedMessage {...messages.columnHelpHeader} />
-                      </Label>
-
-                    </List.Item>
                     <List.Item className='color__grey' onClick={this._handleFaqRoute}>
                       <Label as='span' size='tiny' className='color__secondary'>
                         <FormattedMessage {...messages.returnPolicy} />

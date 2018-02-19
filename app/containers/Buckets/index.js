@@ -106,7 +106,7 @@ const Wrapper = styled.div`
 `
 
 const MainContent = styled.div`
-  margin-top: 50px;
+  margin-top: ${props => props.media >= 1024 ? '120px' : '50px'};
   width: 100%;
 `
 
@@ -424,13 +424,14 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   render () {
-    const { productCategories, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken } = this.props
+    const { productCategories, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken, windowWidth } = this.props
     const { toggleSidebar } = this.state
 
     return (
       <Wrapper toggleSidebar={toggleSidebar}>
         { this._displayHeader() }
         <MainContent
+          media={windowWidth}
           toggleSidebar={toggleSidebar} >
           <Switch>
             <Route exact path='/' component={HomePage} />

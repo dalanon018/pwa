@@ -13,8 +13,8 @@ export const CategoryBlock = styled.div`
     position: relative;
   }
 
-  @media (min-width: 767px) {
-    height: 150px;
+  @media (min-width: 1024px) {
+    height: 80px;
   }
 `
 

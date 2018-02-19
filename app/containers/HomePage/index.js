@@ -219,28 +219,40 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           </SearchContainer>
         }
 
-        <BannerWrapper>
-          <AccessView
-            mobileView={
-              <MobileSlider
-                loader={false}
-                images={bannerImages}
-                isInfinite
-              />
-            }
-            desktopView={
-              <DesktopSlider
-                loader={false}
-                images={desktopBannerImages}
-                slidesToShow={1}
-                isInfinite
-              />
-            }
-          />
-
-        </BannerWrapper>
+        {
+          windowWidth < 1024 &&
+          <BannerWrapper>
+            <AccessView
+              mobileView={
+                <MobileSlider
+                  loader={false}
+                  images={bannerImages}
+                  isInfinite
+                />
+              }
+              desktopView={null}
+            />
+          </BannerWrapper>
+        }
 
         <Container>
+          {
+            windowWidth >= 1024 &&
+            <BannerWrapper>
+              <AccessView
+                mobileView={null}
+                desktopView={
+                  <DesktopSlider
+                    loader={false}
+                    images={desktopBannerImages}
+                    slidesToShow={1}
+                    isInfinite
+                  />
+                }
+              />
+            </BannerWrapper>
+          }
+
           <AccessView
             mobileView={
               <H3>

@@ -64,7 +64,7 @@ function Category ({
                     onClick={handleRedirect}
                     background={paramsImgix(imageShow(category.get('background')), imgixOptions)}>
                     <BackgroundLay className='background__black-transparent' />
-                    <Label as='span' basic size='massive' className='color__white'>{category.get('name')}</Label>
+                    <Label as='span' basic size='huge'>{category.get('name')}</Label>
                   </CategoryBlock>
                 </LazyLoad>
               </Grid.Column>

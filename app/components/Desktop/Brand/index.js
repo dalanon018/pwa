@@ -16,8 +16,9 @@ import EmptyDataBlock from 'components/Shared/EmptyDataBlock'
 import { imageStock, paramsImgix } from 'utils/image-stock'
 
 const BrandContainer = styled.div`
-  padding: 20px;
   background-color: #EBEBEB;
+  margin-top: 30px;
+  padding: 20px;
 `
 
 export const BrandWrapper = styled.div`
