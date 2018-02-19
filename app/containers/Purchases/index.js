@@ -46,23 +46,33 @@ import {
 } from './actions'
 
 const PurchaseWrapper = styled.div`
-  .ui.tabular{
-    background-color: transparent;
-    display: inline-block;
-    padding: 0 10px 20px;
-
-    .item {
-      cursor: pointer;
-      font-weight: 700;
-      margin-right: 40px;
-      padding: 0 0 7px;
-
-      &:last-child {
-        margin-right: 0;
+  @media (max-width: 1024px) {
+    .ui.tabular{
+      .item {
+        margin: 0 auto;
       }
-
-      &.active {
-        border-bottom: 2px solid #8DC640;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .ui.tabular{
+      background-color: transparent;
+      display: inline-block;
+      padding: 0 10px 20px;
+  
+      .item {
+        cursor: pointer;
+        font-weight: 700;
+        margin-right: 40px;
+        padding: 0 0 7px;
+  
+        &:last-child {
+          margin-right: 0;
+        }
+  
+        &.active {
+          border-bottom: 2px solid #8DC640;
+        }
       }
     }
   }
@@ -160,7 +170,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
   }
 
   render () {
-    const { activePurchases, completedPurchases, expiredPurchases } = this.props
+    const { activePurchases, completedPurchases, expiredPurchases, windowWidth } = this.props
 
     const panes = [
       { menuItem: 'Active', render: () => <Tab.Pane>{this._handleShow(activePurchases)}</Tab.Pane> },
@@ -179,7 +189,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
           />
 
           <Container>
-            <div className='padding__medium'>
+            <div className={windowWidth >= 1024 && 'padding__medium'}>
               <Tab
                 onTabChange={this._onTabChange}
                 panes={panes}
