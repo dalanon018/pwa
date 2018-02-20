@@ -45,6 +45,8 @@ function productPageReducer (state = initialState, action) {
 
     case SET_PRODUCT_HANDLER_DEFAULT:
       return state
+        .set('product', fromJS({}))
+        .set('loading', false)
         .set('requestProductSuccess', false)
         .set('requestProductError', false)
 

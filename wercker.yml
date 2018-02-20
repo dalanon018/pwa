@@ -19,7 +19,7 @@ build:
     - script:
       name: set standard
       code: |
-        npm install -g standard
+        npm install -g standard@10.0.3
 
     - script:
       name: set babel-eslint@8.0.3
