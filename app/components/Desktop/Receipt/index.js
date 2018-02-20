@@ -367,7 +367,7 @@ class Receipt extends React.PureComponent {
 
     return (
       <Container className='padding__medium'>
-        <Header className='color__secondary long-title' as='h1'>
+        <Header className='color__secondary long-title' as='h3'>
           <FormattedMessage {...messages.desktopTitle} />
         </Header>
         <ReceiptWrapper>
