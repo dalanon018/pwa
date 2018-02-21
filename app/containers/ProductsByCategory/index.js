@@ -433,6 +433,16 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this.props.resetProductsByCategory()
   }
 
+  shouldComponentUpdate (nextProps, nextState) {
+    const { allCategoryProducts } = this.props
+
+    if (allCategoryProducts.size !== nextProps.allCategoryProducts.size) {
+      return true
+    }
+
+    return false
+  }
+
   componentWillReceiveProps (nextProps) {
     const { match: { params } } = this.props
 
@@ -463,7 +473,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   render () {
     const { loader, lazyload } = this.props
     const { limit } = this.state
-
+    console.log('render')
     return (
       <div>
         <ContentWrapper>
