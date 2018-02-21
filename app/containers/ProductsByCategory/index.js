@@ -41,7 +41,7 @@ import { Uppercase } from 'utils/string'
 import ProductView from 'components/ProductView'
 import Footer from 'components/Footer'
 import WindowWidth from 'components/WindowWidth'
-import LazyLoading from 'components/LazyLoading'
+// import LazyLoading from 'components/LazyLoading'
 import H3 from 'components/H3'
 import H4 from 'components/H4'
 import EmptyProducts from 'components/EmptyProductsBlock'
@@ -471,27 +471,19 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   render () {
-    const { loader, lazyload } = this.props
-    const { limit } = this.state
-    console.log('render')
+    // const { loader, lazyload } = this.props
+    // const { limit } = this.state
     return (
       <div>
         <ContentWrapper>
-          <LazyLoading
-            isLoading={loader}
-            lazyload={lazyload}
-            results={this._displayAllProductData()}
-            onScroll={this._displayMoreProducts}
-            limit={limit}
-          >
-            { this._displayHeaderFeaturesProduct() }
-            { this._displayFeaturesProduct() }
+          { this._displayHeaderFeaturesProduct() }
+          { this._displayFeaturesProduct() }
 
-            <H3 className='margin__none'> {this._handlePageTitle()} </H3>
-            { this._displayNumberProducts() }
-            { this._displayEmptyLoadingIndicator() }
-            { this._displayRegularItems() }
-          </LazyLoading>
+          <H3 className='margin__none'> {this._handlePageTitle()} </H3>
+          { this._displayNumberProducts() }
+          { this._displayEmptyLoadingIndicator() }
+          { this._displayRegularItems() }
+
           { this._displayRecentlyViewedHeader() }
           { this._displayRecentlyViewedItems() }
         </ContentWrapper>
