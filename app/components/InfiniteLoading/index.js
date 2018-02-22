@@ -66,9 +66,9 @@ class InfiniteLoaderProxy extends React.Component { // eslint-disable-line react
   }
 
   render () {
-    const { isLoading, lazyload, loadMoreData, rowCount, results } = this.prop
+    const { isLoading, hasMoreData, loadMoreData, rowCount, results } = this.prop
     // Every row is loaded except for our loading indicator row.
-    const isRowLoaded = ({ index }) => !lazyload || index < results.size
+    const isRowLoaded = ({ index }) => !hasMoreData || index < results.size
     const loadMoreRows = isLoading
         ? () => {}
         : loadMoreData
@@ -95,14 +95,11 @@ InfiniteLoaderProxy.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   // to check if we still need to scroll
   // we need there are still data to be fetched
-  lazyload: PropTypes.bool.isRequired,
+  hasMoreData: PropTypes.bool.isRequired,
   // callback on scroll
   loadMoreData: PropTypes.func.isRequired,
   // children to load
-  children: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.node
-  ]).isRequired,
+  children: PropTypes.func.isRequired,
   results: PropTypes.object.isRequired,
   // total row count
   rowCount: PropTypes.number.isRequired
