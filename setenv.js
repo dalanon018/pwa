@@ -49,6 +49,6 @@ if (env === 'production') {
   console.log(`OATH_RESPONSE_TYPE=token`)
   console.log(`OATH_GRANT_TYPE=client_credentials`)
 
-  console.log(`RECAPTCHA_SITE_KEY=6Le2aDEUAAAAAC_B5o0Xy4_DAAb7Cmvsdrd4ury0`)
+  console.log(`RECAPTCHA_SITE_KEY=6LesJEUUAAAAAOCSNmfSZjaKboDtfGMAoNSdMC_M`)
   console.log(`FB_SHARE_ID=1998676580363463`)
 }
