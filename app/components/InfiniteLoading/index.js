@@ -66,7 +66,7 @@ class InfiniteLoaderProxy extends React.Component { // eslint-disable-line react
   }
 
   render () {
-    const { isLoading, hasMoreData, loadMoreData, rowCount, results } = this.prop
+    const { isLoading, hasMoreData, loadMoreData, rowCount, results } = this.props
     // Every row is loaded except for our loading indicator row.
     const isRowLoaded = ({ index }) => !hasMoreData || index < results.size
     const loadMoreRows = isLoading
