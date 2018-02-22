@@ -55,7 +55,9 @@ function ProductView ({
   products,
   changeRoute,
   windowWidth,
-  customElement
+  customElement,
+  onRowsRendered,
+  registerChild
 }) {
   const columnCount = windowWidth > 767 ? 4 : 2
   const rowCount = Math.ceil(products.size / columnCount)
@@ -139,7 +141,7 @@ function ProductView ({
     <WindowScroller
       scrollElement={customElement || window}
     >
-      {({height, isScrolling, registerChild, onChildScroll, scrollTop}) =>
+      {({height, scrollTop}) =>
         (loader && products.size === 0) ? (
           <Grid
             padded
@@ -152,6 +154,8 @@ function ProductView ({
           <AutoSizer disableHeight>
             {({ width }) => (
               <List
+                onRowsRendered={onRowsRendered}
+                ref={registerChild}
                 autoHeight
                 height={height}
                 width={width}
@@ -184,7 +188,6 @@ const DefaultState = () => {
 }
 
 ProductView.propTypes = {
-
 }
 
 export default ProductView
