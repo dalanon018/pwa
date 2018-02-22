@@ -10,17 +10,14 @@ import LazyLoad from 'react-lazyload'
 import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
-import { CellMeasurer, CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer'
 
-
-import { range } from 'lodash'
-
+import { CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer'
 import {
   identity,
   ifElse
 } from 'ramda'
 import { FormattedMessage } from 'react-intl'
-import { Image, Label } from 'semantic-ui-react'
+import { Grid, Image, Label } from 'semantic-ui-react'
 
 import messages from './messages'
 import {
@@ -48,10 +45,10 @@ const imgixOptions = {
 }
 
 const cache = new CellMeasurerCache({
-  minHeight: 100,
+  minHeight: 300,
   fixedWidth: true,
-  fixedHeight: true,
-});
+  fixedHeight: true
+})
 
 function ProductView ({
   loader,
@@ -61,6 +58,7 @@ function ProductView ({
   customElement
 }) {
   const columnCount = windowWidth > 767 ? 4 : 2
+  const rowCount = Math.ceil(products.size / columnCount)
 
   const toggleOrigDiscountPrice = (product) => {
     const showPrice = product.get('discountPrice') || product.get('price')
@@ -74,24 +72,66 @@ function ProductView ({
     () => component2
   )(condition)
 
-  const ProductEntity = ({ index, isScrolling, key, style }) => {
+  const ProductEntityInfo = (entity) => {
+    const toggleDiscountLabel = showDiscountPrice(
+      <FormattedMessage {...messages.peso} />,
+      null
+    )
+    const toggleDiscountValue = showDiscountPrice(
+      parseFloat(entity.get('price')).toLocaleString(),
+      null
+    )
 
-    if (products.size === 0 ) {
-      return (
-        <div key={index}>
-          loading..
-        </div>
-      )
-    }
-    console.log(index, key)
-    const entity = products.get(index)
     return (
-      <ProductWrapper key={`${key}`} style={style}>
+      <ProductWrapper>
+        <ImageWrapper>
+          <ImageContent>
+            <LazyLoad
+              height={300}
+              placeholder={<LoadingIndicator />}
+              once
+          >
+              <Image alt={entity.get('title')} src={(entity.get('image') && `${paramsImgix(entity.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
+            </LazyLoad>
+          </ImageContent>
+        </ImageWrapper>
         <ProductInfo brandName={entity.get('brand')}>
           <Label as='span' className='brand-name color__secondary' basic size='medium'>{entity.getIn(['brand', 'name'])}</Label>
           <Label className='no-bottom-margin product-name color__secondary' as='p' basic size='tiny'>{entity.get('title')}</Label>
+          <ProductPriceWrapper>
+            <Label className='product-price' as='b' color='orange' basic size='massive'>
+              <FormattedMessage {...messages.peso} />
+              { toggleOrigDiscountPrice(entity) }
+            </Label>
+            <Label className='product-discount' as='span' color='grey' basic size='large'>
+              { toggleDiscountLabel(entity.get('discountPrice') !== 0) }
+              { toggleDiscountValue(entity.get('discountPrice') !== 0) }
+            </Label>
+          </ProductPriceWrapper>
         </ProductInfo>
       </ProductWrapper>
+    )
+  }
+
+  const ProductEntity = ({ index, isScrolling, key, style }) => {
+    const entity1 = products.get(index)
+    const entity2 = products.get(index * columnCount)
+
+    return (
+      <Grid
+        padded
+        stretched
+        columns={columnCount}
+        key={`${key}`}
+        style={style}
+      >
+        <Grid.Column>
+          { ProductEntityInfo(entity1) }
+        </Grid.Column>
+        <Grid.Column>
+          { ProductEntityInfo(entity2) }
+        </Grid.Column>
+      </Grid>
     )
   }
 
@@ -99,21 +139,30 @@ function ProductView ({
     <WindowScroller
       scrollElement={customElement || window}
     >
-      {({height, isScrolling, registerChild, onChildScroll, scrollTop}) => (
-        <AutoSizer disableHeight>
-          {({ width }) => (
-            <List
-              autoHeight
-              height={height}
-              width={width}
-              rowHeight={cache.rowHeight}
-              rowCount={products.size}
-              rowRenderer={ProductEntity}
-              overscanRowCount={15}
-              scrollTop={scrollTop}
+      {({height, isScrolling, registerChild, onChildScroll, scrollTop}) =>
+        (loader && products.size === 0) ? (
+          <Grid
+            padded
+            stretched
+            columns={columnCount}>
+            <DefaultState key={1} loader={loader} />
+            <DefaultState key={2} loader={loader} />
+          </Grid>
+        ) : (
+          <AutoSizer disableHeight>
+            {({ width }) => (
+              <List
+                autoHeight
+                height={height}
+                width={width}
+                rowHeight={cache.rowHeight}
+                rowCount={rowCount}
+                rowRenderer={ProductEntity}
+                overscanRowCount={15}
+                scrollTop={scrollTop}
             />
           )}
-        </AutoSizer>
+          </AutoSizer>
       )}
     </WindowScroller>
   )
