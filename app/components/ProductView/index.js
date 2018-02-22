@@ -6,8 +6,10 @@
 
 import React from 'react'
 import LazyLoad from 'react-lazyload'
+
+import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
-import Grid from 'react-virtualized/dist/commonjs/Grid'
+import List from 'react-virtualized/dist/commonjs/List'
 
 
 import { range } from 'lodash'
@@ -48,7 +50,8 @@ function ProductView ({
   loader,
   products,
   changeRoute,
-  windowWidth
+  windowWidth,
+  customElement
 }) {
   const columnCount = windowWidth > 767 ? 4 : 2
 
@@ -64,57 +67,48 @@ function ProductView ({
     () => component2
   )(condition)
 
-  const ProductEntity = ({ rowIndex, isScrolling, key, style }) => {
+  const ProductEntity = ({ index, isScrolling, key, style }) => {
 
     if (products.size === 0 ) {
       return (
-        <div key={rowIndex}>
+        <div key={index}>
           loading..
         </div>
       )
     }
-    console.log(rowIndex, key)
-    const entity = products.get(rowIndex)
+    console.log(index, key)
+    const entity = products.get(index)
     return (
-        <ProductWrapper key={`${key}`}>
-          <ImageWrapper>
-            <ImageContent>
-              <LazyLoad
-                height={300}
-                offset={300}
-                placeholder={<LoadingIndicator />}
-                once
-              >
-                <Image alt={entity.get('title')} src={(entity.get('image') && `${paramsImgix(entity.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
-              </LazyLoad>
-            </ImageContent>
-          </ImageWrapper>
-          <ProductInfo brandName={entity.get('brand')}>
-            <Label as='span' className='brand-name color__secondary' basic size='medium'>{entity.getIn(['brand', 'name'])}</Label>
-            <Label className='no-bottom-margin product-name color__secondary' as='p' basic size='tiny'>{entity.get('title')}</Label>
-          </ProductInfo>
-        </ProductWrapper>
+      <ProductWrapper key={`${key}`} style={style}>
+        <ProductInfo brandName={entity.get('brand')}>
+          <Label as='span' className='brand-name color__secondary' basic size='medium'>{entity.getIn(['brand', 'name'])}</Label>
+          <Label className='no-bottom-margin product-name color__secondary' as='p' basic size='tiny'>{entity.get('title')}</Label>
+        </ProductInfo>
+      </ProductWrapper>
     )
   }
 
   return (
-    <AutoSizer disableHeight>
-    {
-      ({ width, height }) => (
-        <Grid
-          autoContainerWidth
-          autoHeight
-          columnWidth={(width)}
-          height={200}
-          width={width}
-          rowHeight={200}
-          columnCount={1}
-          rowCount={(products.size)}
-          cellRenderer={ProductEntity}
-        />
-      )
-    }
-    </AutoSizer>
+    <WindowScroller
+      scrollElement={customElement || window}
+    >
+      {({height, isScrolling, registerChild, onChildScroll, scrollTop}) => (
+        <AutoSizer disableHeight>
+          {({ width }) => (
+            <List
+              autoHeight
+              height={height}
+              width={width}
+              rowHeight={200}
+              rowCount={products.size}
+              rowRenderer={ProductEntity}
+              overscanRowCount={15}
+              scrollTop={scrollTop}
+            />
+          )}
+        </AutoSizer>
+      )}
+    </WindowScroller>
   )
 }
 
