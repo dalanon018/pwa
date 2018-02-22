@@ -14,7 +14,8 @@ import List from 'react-virtualized/dist/commonjs/List'
 import { CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer'
 import {
   identity,
-  ifElse
+  ifElse,
+  range
 } from 'ramda'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Image, Label } from 'semantic-ui-react'
@@ -90,6 +91,7 @@ function ProductView ({
           <ImageContent>
             <LazyLoad
               height={300}
+              offset={300}
               placeholder={<LoadingIndicator />}
               once
           >
@@ -116,8 +118,13 @@ function ProductView ({
   }
 
   const ProductEntity = ({ index, isScrolling, key, style }) => {
-    const entity1 = products.get(index)
-    const entity2 = products.get(index * columnCount)
+    const fromIndex = index * columnCount
+    const toIndex = fromIndex + columnCount
+    const render = range(fromIndex, toIndex).map((rangeIndex) => (
+      <Grid.Column key={rangeIndex}>
+        { ProductEntityInfo(products.get(rangeIndex)) }
+      </Grid.Column>
+    ))
 
     return (
       <Grid
@@ -127,12 +134,7 @@ function ProductView ({
         key={`${key}`}
         style={style}
       >
-        <Grid.Column>
-          { ProductEntityInfo(entity1) }
-        </Grid.Column>
-        <Grid.Column>
-          { ProductEntityInfo(entity2) }
-        </Grid.Column>
+        { render }
       </Grid>
     )
   }
