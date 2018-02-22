@@ -10,6 +10,7 @@ import LazyLoad from 'react-lazyload'
 import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
+import { CellMeasurer, CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer'
 
 
 import { range } from 'lodash'
@@ -45,6 +46,12 @@ const imgixOptions = {
   q: 35,
   lossless: 0
 }
+
+const cache = new CellMeasurerCache({
+  minHeight: 100,
+  fixedWidth: true,
+  fixedHeight: true,
+});
 
 function ProductView ({
   loader,
@@ -99,7 +106,7 @@ function ProductView ({
               autoHeight
               height={height}
               width={width}
-              rowHeight={200}
+              rowHeight={cache.rowHeight}
               rowCount={products.size}
               rowRenderer={ProductEntity}
               overscanRowCount={15}
