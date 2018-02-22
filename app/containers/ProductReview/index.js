@@ -121,7 +121,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
   state = {
     store: {},
-    modePayment: 'CASH',
+    modePayment: 'COD',
     visibility: false,
     modalToggle: false,
     errorMessage: ''
@@ -438,18 +438,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             <Grid.Row>
               <SelectMethodWrapper checkHeight={orderedProduct.get('discountPrice') !== 0}>
                 <Form>
-                  <Form.Field>
-                    <Checkbox
-                      radio
-                      className='margin__bottom-positive--20'
-                      name='cash-prepaid'
-                      value='CASH'
-                      label={labelOne}
-                      checked={modePayment === 'CASH'}
-                      onChange={this._handleChange}
-                      />
-                  </Form.Field>
                   <ShowCodComponent
+                    className='margin__bottom-positive--20'
                     radio
                     isBlackListed={isBlackListed}
                     name='cod'
@@ -459,12 +449,22 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                     onChange={this._handleChange}
                     onClick={this._handleToBottom}
                   />
+                  <Form.Field>
+                    <Checkbox
+                      radio
+                      name='cash-prepaid'
+                      value='CASH'
+                      label={labelOne}
+                      checked={modePayment === 'CASH'}
+                      onChange={this._handleChange}
+                      />
+                  </Form.Field>
                 </Form>
               </SelectMethodWrapper>
             </Grid.Row>
           </Grid>
         </CustomGrid>
-        <StepWrapper innerRef={this._stepWrapperRef} className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={visibility}>
+        <StepWrapper innerRef={this._stepWrapperRef} className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={visibility || modePayment === 'COD'}>
           <Label as='p' basic size='big' className='color__secondary'>
             <FormattedMessage {...messages.chooseStore} />
           </Label>
