@@ -6,6 +6,9 @@
 
 import React from 'react'
 import LazyLoad from 'react-lazyload'
+import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
+import Grid from 'react-virtualized/dist/commonjs/Grid'
+
 
 import { range } from 'lodash'
 
@@ -14,7 +17,7 @@ import {
   ifElse
 } from 'ramda'
 import { FormattedMessage } from 'react-intl'
-import { Grid, Image, Label } from 'semantic-ui-react'
+import { Image, Label } from 'semantic-ui-react'
 
 import messages from './messages'
 import {
@@ -60,59 +63,58 @@ function ProductView ({
     () => component1,
     () => component2
   )(condition)
-  return (
-    <Grid padded stretched columns={columnCount}>
-      {
-        // we need to make sure to show this only if only if not items yet and we are loading
-        (loader && products.size === 0) ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
-        : products.valueSeq().map((product, index) => {
-          const goToProduct = () => changeRoute(`/product/${product.get('cliqqCode').first()}`)
-          const toggleDiscountLabel = showDiscountPrice(
-            <FormattedMessage {...messages.peso} />,
-            null
-          )
-          const toggleDiscountValue = showDiscountPrice(
-            parseFloat(product.get('price')).toLocaleString(),
-            null
-          )
 
-          return (
-            <Grid.Column
-              key={`${product.get('cliqqCode')}-${index}`}
-              onClick={goToProduct}>
-              <ProductWrapper>
-                <ImageWrapper>
-                  <ImageContent>
-                    <LazyLoad
-                      height={300}
-                      offset={300}
-                      placeholder={<LoadingIndicator />}
-                      once
-                    >
-                      <Image alt={product.get('title')} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
-                    </LazyLoad>
-                  </ImageContent>
-                </ImageWrapper>
-                <ProductInfo brandName={product.get('brand')}>
-                  <Label as='span' className='brand-name color__secondary' basic size='medium'>{product.getIn(['brand', 'name'])}</Label>
-                  <Label className='no-bottom-margin product-name color__secondary' as='p' basic size='tiny'>{product.get('title')}</Label>
-                  <ProductPriceWrapper>
-                    <Label className='product-price' as='b' color='orange' basic size='massive'>
-                      <FormattedMessage {...messages.peso} />
-                      { toggleOrigDiscountPrice(product) }
-                    </Label>
-                    <Label className='product-discount' as='span' color='grey' basic size='large'>
-                      { toggleDiscountLabel(product.get('discountPrice') !== 0) }
-                      { toggleDiscountValue(product.get('discountPrice') !== 0) }
-                    </Label>
-                  </ProductPriceWrapper>
-                </ProductInfo>
-              </ProductWrapper>
-            </Grid.Column>
-          )
-        })
-      }
-    </Grid>
+  const ProductEntity = ({ rowIndex, isScrolling, key, style }) => {
+
+    if (products.size === 0 ) {
+      return (
+        <div key={rowIndex}>
+          loading..
+        </div>
+      )
+    }
+    console.log(rowIndex, key)
+    const entity = products.get(rowIndex)
+    return (
+        <ProductWrapper key={`${key}`}>
+          <ImageWrapper>
+            <ImageContent>
+              <LazyLoad
+                height={300}
+                offset={300}
+                placeholder={<LoadingIndicator />}
+                once
+              >
+                <Image alt={entity.get('title')} src={(entity.get('image') && `${paramsImgix(entity.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
+              </LazyLoad>
+            </ImageContent>
+          </ImageWrapper>
+          <ProductInfo brandName={entity.get('brand')}>
+            <Label as='span' className='brand-name color__secondary' basic size='medium'>{entity.getIn(['brand', 'name'])}</Label>
+            <Label className='no-bottom-margin product-name color__secondary' as='p' basic size='tiny'>{entity.get('title')}</Label>
+          </ProductInfo>
+        </ProductWrapper>
+    )
+  }
+
+  return (
+    <AutoSizer disableHeight>
+    {
+      ({ width, height }) => (
+        <Grid
+          autoContainerWidth
+          autoHeight
+          columnWidth={(width)}
+          height={200}
+          width={width}
+          rowHeight={200}
+          columnCount={1}
+          rowCount={(products.size)}
+          cellRenderer={ProductEntity}
+        />
+      )
+    }
+    </AutoSizer>
   )
 }
 
