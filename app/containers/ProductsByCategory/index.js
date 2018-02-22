@@ -42,6 +42,7 @@ import ProductView from 'components/ProductView'
 import Footer from 'components/Footer'
 import WindowWidth from 'components/WindowWidth'
 // import LazyLoading from 'components/LazyLoading'
+import InfiniteLoading from 'components/InfiniteLoading'
 import H3 from 'components/H3'
 import H4 from 'components/H4'
 import EmptyProducts from 'components/EmptyProductsBlock'
@@ -218,10 +219,26 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _displayFeaturesProduct () {
-    const { productsFeatured, changeRoute, loader, windowWidth } = this.props
+    const { productsFeatured, changeRoute, loader, lazyload, windowWidth, totalCount } = this.props
     if (this._handleFeaturedProductsPerCategory() && productsFeatured.size) {
       return (
-        <ProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} />
+        <InfiniteLoading
+          results={productsFeatured}
+          hasMoreData={lazyload}
+          loadMoreData={this._displayMoreProducts}
+          isLoading={loader}
+          rowCount={totalCount}
+        >
+          {(props) => (
+            <ProductView
+              changeRoute={changeRoute}
+              loader={loader}
+              products={productsFeatured}
+              windowWidth={windowWidth}
+              {...props}
+            />
+          )}
+        </InfiniteLoading>
       )
     }
 
@@ -471,21 +488,11 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   render () {
-    // const { loader, lazyload } = this.props
-    // const { limit } = this.state
     return (
       <div>
         <ContentWrapper>
           { this._displayHeaderFeaturesProduct() }
           { this._displayFeaturesProduct() }
-
-          <H3 className='margin__none'> {this._handlePageTitle()} </H3>
-          { this._displayNumberProducts() }
-          { this._displayEmptyLoadingIndicator() }
-          { this._displayRegularItems() }
-
-          { this._displayRecentlyViewedHeader() }
-          { this._displayRecentlyViewedItems() }
         </ContentWrapper>
         <Footer />
       </div>
