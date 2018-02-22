@@ -449,6 +449,22 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                     onChange={this._handleChange}
                     onClick={this._handleToBottom}
                   />
+                  <StepWrapper innerRef={this._stepWrapperRef} className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={visibility || modePayment === 'COD'}>
+                    <Label as='p' basic size='big' className='color__secondary'>
+                      <FormattedMessage {...messages.chooseStore} />
+                    </Label>
+                    <StepHead step='2'>
+                      <p><FormattedMessage {...messages.defaultStore} /></p>
+                    </StepHead>
+                    <LocationButton id='scrollToAnimate' className='color__secondary border__two--light-grey' onClick={this._handleStoreLocator} fluid iconBg={NextIcon}>
+                      {
+                        store && isEmpty(store)
+                        ? <FormattedMessage {...messages.findStore} />
+                        : <span>{store.id} {store.name}</span>
+                      }
+                    </LocationButton>
+                  </StepWrapper>
+
                   <Form.Field>
                     <Checkbox
                       radio
@@ -464,21 +480,6 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             </Grid.Row>
           </Grid>
         </CustomGrid>
-        <StepWrapper innerRef={this._stepWrapperRef} className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={visibility || modePayment === 'COD'}>
-          <Label as='p' basic size='big' className='color__secondary'>
-            <FormattedMessage {...messages.chooseStore} />
-          </Label>
-          <StepHead step='2'>
-            <p><FormattedMessage {...messages.defaultStore} /></p>
-          </StepHead>
-          <LocationButton id='scrollToAnimate' className='color__secondary border__two--light-grey' onClick={this._handleStoreLocator} fluid iconBg={NextIcon}>
-            {
-              store && isEmpty(store)
-              ? <FormattedMessage {...messages.findStore} />
-              : <span>{store.id} {store.name}</span>
-            }
-          </LocationButton>
-        </StepWrapper>
 
         <ButtonContainer>
           <Button onClick={this._handleProceed} primary fluid loading={orderRequesting}>
