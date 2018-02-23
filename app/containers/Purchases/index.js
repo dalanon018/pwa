@@ -14,11 +14,14 @@ import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 import { Tab, Container } from 'semantic-ui-react'
+import { FormattedMessage } from 'react-intl'
+import messages from './messages'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
 import WindowWidth from 'components/Shared/WindowWidth'
+import H3 from 'components/Shared/H3'
 
 import { userIsAuthenticated } from 'containers/App/auth'
 import {
@@ -190,6 +193,10 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
 
           <Container>
             <div className={windowWidth >= 1024 && 'padding__medium'}>
+              {
+              windowWidth >= 1024 &&
+              <H3><FormattedMessage {...messages.header} /></H3>
+            }
               <Tab
                 onTabChange={this._onTabChange}
                 panes={panes}

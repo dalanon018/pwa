@@ -226,7 +226,7 @@ class Purchase extends React.PureComponent {
     return (
       <Grid.Row>
         <Grid.Column>
-          <PurchaseWrapper onClick={this._goToReceipt}>
+          <PurchaseWrapper onClick={this._goToReceipt} className='cursor__pointer'>
             <ImageWrapper>
               <Image
                 src={(receipt.getIn(['products', 'image']) &&

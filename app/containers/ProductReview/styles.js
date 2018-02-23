@@ -30,6 +30,7 @@ const LabelPrice = styled.div`
 
     @media (min-width: 1024px) {
       font-size: ${props => props.length > 4 ? '30px' : '35px'};
+      line-height: 41px;
     }
   }
   .strike {
