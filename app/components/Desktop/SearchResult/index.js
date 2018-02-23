@@ -5,7 +5,7 @@
 */
 
 import React from 'react'
-import { List, Icon, Label } from 'semantic-ui-react'
+import { Container, List, Icon, Label } from 'semantic-ui-react'
 import styled from 'styled-components'
 
 const CustomIcon = styled(Icon)`
@@ -18,6 +18,7 @@ const Content = styled.p`
   font-size: 14px;
 `
 const CustomItem = styled(List.Item)`
+  cursor: pointer;
   padding: 10px !important;
   position: relative;
 
@@ -59,33 +60,42 @@ const _productTitle = (title, windowWidth) => {
 
 function SearchResult ({ product, changeRoute, windowWidth }) {
   return (
-    <List divided verticalAlign='middle'>
-      {
-        product.map((result, index) => {
-          return (
-            <CustomItem
-              key={index}
-              onClick={changeRoute.bind(this, `/product/${result.get('cliqqCode').first()}`)}>
-              <List.Content className='arrow-icon' floated='right'>
-                <CustomIcon className='color__orange' name='chevron right' />
-              </List.Content>
-              <ItemWrapper>
-                {
-                  result.get('brand')
-                  ? <Title as='span' basic size='large' className='color__secondary'>{result.getIn(['brand', 'name'])}</Title>
-                  : null
-                }
-                <List.Content>
-                  <Content>
-                    <Label as='span' basic size='medium' className='color__secondary'>{ _productTitle(result.get('title'), windowWidth) }</Label>
-                  </Content>
-                </List.Content>
-              </ItemWrapper>
-            </CustomItem>
-          )
-        })
-      }
-    </List>
+    <Container>
+      <div className='padding__medium'>
+        <div className='margin__bottom-positive--20'>
+          <Label as='p' basic size='small' className='text__align--center color__grey'>
+            {product.size} item{product.size > 1 && 's'} found
+          </Label>
+        </div>
+        <List divided verticalAlign='middle'>
+          {
+            product.map((result, index) => {
+              return (
+                <CustomItem
+                  key={index}
+                  onClick={changeRoute.bind(this, `/product/${result.get('cliqqCode').first()}`)}>
+                  <List.Content className='arrow-icon' floated='right'>
+                    <CustomIcon className='color__orange' name='chevron right' />
+                  </List.Content>
+                  <ItemWrapper>
+                    {
+                      result.get('brand')
+                      ? <Title as='span' basic size='large' className='color__secondary'>{result.getIn(['brand', 'name'])}</Title>
+                      : null
+                    }
+                    <List.Content>
+                      <Content>
+                        <Label as='span' basic size='medium' className='color__secondary'>{ _productTitle(result.get('title'), windowWidth) }</Label>
+                      </Content>
+                    </List.Content>
+                  </ItemWrapper>
+                </CustomItem>
+              )
+            })
+          }
+        </List>
+      </div>
+    </Container>
   )
 }
 

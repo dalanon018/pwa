@@ -21,7 +21,8 @@ import injectReducer from 'utils/injectReducer'
 // import ProductResults from 'components/Shared/ProductResults'
 
 import MobileSearchResult from 'components/Mobile/SearchResult'
-// import DesktopSearchResult from 'components/Desktop/SearchResult'
+import DesktopSearchResult from 'components/Desktop/SearchResult'
+import AccessView from 'components/Shared/AccessMobileDesktopView'
 
 import H3 from 'components/Shared/H3'
 import WindowWidth from 'components/Shared/WindowWidth'
@@ -31,7 +32,8 @@ import {
 } from 'containers/Buckets/actions'
 
 import {
-  selectToggle
+  selectToggle,
+  selectSearchValue
 } from 'containers/Buckets/selectors'
 
 import EmptyProducts from './EmptyProducts'
@@ -51,6 +53,7 @@ import {
   setMobileNumbersAction,
   setProductHandlersDefaultAction
 } from './actions'
+import { Label } from 'semantic-ui-react'
 
 const SearchListWrapper = styled.div`
   display: flex;
@@ -61,6 +64,17 @@ const SearchListWrapper = styled.div`
 const SearchPageWrapper = styled.div`
   position:relative;
   min-height: 100%;
+`
+
+const DesktopHeader = styled.div`
+  text-align: center;
+  margin-bottom: -10px !important;
+
+  h3 {
+    font-family: Lato,Cabin,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    font-size: 20px !important;
+    padding: 0 !important;
+  }
 `
 
 export class SearchPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -115,7 +129,7 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
   }
 
   _displayProduct () {
-    const { product, changeRoute, windowWidth } = this.props
+    const { product, changeRoute, windowWidth, searchValue } = this.props
     const stickyFooter = document.getElementsByTagName('footer')[0]
 
     if (stickyFooter) {
@@ -128,11 +142,32 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
 
         return (
           <div>
-            <H3><FormattedMessage {...messages.header} /></H3>
-            <MobileSearchResult
-              product={product}
-              windowWidth={windowWidth}
-              changeRoute={changeRoute} />
+            {
+              windowWidth < 1024
+              ? <H3><FormattedMessage {...messages.header} /></H3>
+              : <DesktopHeader>
+                <Label as='h3' className='color__secondary'>
+                  <FormattedMessage {...messages.header} />
+                  <span>for '{searchValue}'</span>
+                </Label>
+
+              </DesktopHeader>
+            }
+
+            <AccessView
+              mobileView={
+                <MobileSearchResult
+                  product={product}
+                  windowWidth={windowWidth}
+                  changeRoute={changeRoute} />
+              }
+              desktopView={
+                <DesktopSearchResult
+                  product={product}
+                  windowWidth={windowWidth}
+                  changeRoute={changeRoute} />
+              }
+            />
           </div>
         )
       } else {
@@ -186,7 +221,8 @@ const mapStateToProps = createStructuredSelector({
   loading: selectSearchProductLoading(),
   toggle: selectToggle(),
   productSuccess: selectProductSuccess(),
-  productError: selectProductError()
+  productError: selectProductError(),
+  searchValue: selectSearchValue()
 })
 
 function mapDispatchToProps (dispatch) {

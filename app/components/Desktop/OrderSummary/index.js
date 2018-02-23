@@ -79,6 +79,12 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       null
     )
 
+    const toggleOrigDiscountPrice = () => {
+      const showPrice = orderedProduct.get('discountPrice') || orderedProduct.get('price')
+
+      return showPrice ? showPrice.toLocaleString() : 0
+    }
+
     return (
       <Container>
         <div className='padding__medium'>
@@ -102,7 +108,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
                     <Label className='padding__none base-price' as='b' basic size='massive' color='orange'>
                       <FormattedMessage {...messages.peso} />
-                      { orderedProduct.get('discountPrice') }
+                      { toggleOrigDiscountPrice() }
                     </Label>
 
                     { toggleDiscount(orderedProduct.get('discountPrice')) }

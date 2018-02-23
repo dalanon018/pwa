@@ -108,6 +108,11 @@ const selectLightBoxImage = () => createSelector(
   (substate) => substate.get('lightBoxImage')
 )
 
+const selectSearchValue = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('searchValue')
+)
+
 export {
   selectBucketDomain,
   selectToggle,
@@ -128,5 +133,6 @@ export {
   selectIsRegisteredPush,
   selectLoyaltyToken,
   selectBrandLoader,
-  selectLightBoxImage
+  selectLightBoxImage,
+  selectSearchValue
 }

@@ -56,7 +56,8 @@ import {
   registerPushAction,
   getRegisteredPushAction,
   getLoyaltyTokenAction,
-  removeLoyaltyTokenAction
+  removeLoyaltyTokenAction,
+  setSearchValueAction
 } from './actions'
 
 import {
@@ -270,6 +271,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
           clearSearch={setProductSearchList}
           searchProduct={searchProduct}
           hideBackButton={hideBackButton}
+          _handleSearchInputValue={this._handleSearchInputValue}
           leftButtonAction={this._handleLeftButtonAction}
         />
       )
@@ -393,6 +395,8 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     stickyFooter.classList.remove('sticky')
   }
 
+  _handleSearchInputValue = value => this.props.setSearchValue(value)
+
   componentDidMount () {
     const { getMobileNumbers, getCategories, getBrands, getRegisteredPush, getLoyaltyToken, isMobile } = this.props
     const shouldDisplayNotification = ifElse(
@@ -514,6 +518,7 @@ function mapDispatchToProps (dispatch) {
     setNetworkError: (payload) => dispatch(setNetworkErrorAction(payload)),
     registerPush: (payload) => dispatch(registerPushAction(payload)),
     getRegisteredPush: () => dispatch(getRegisteredPushAction()),
+    setSearchValue: payload => dispatch(setSearchValueAction(payload)),
     dispatch
   }
 }

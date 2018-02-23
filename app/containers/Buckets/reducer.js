@@ -35,7 +35,8 @@ import {
   SET_LOYALTY_TOKEN,
   SET_HEADER_FULL_SCREEN,
 
-  SET_LIGHTBOX_IMAGE
+  SET_LIGHTBOX_IMAGE,
+  SET_SEARCH_VALUE
 } from './constants'
 
 const initialState = fromJS({
@@ -55,7 +56,8 @@ const initialState = fromJS({
   activityIconShow: false,
   isRegisteredPush: false,
   loyaltyToken: null,
-  lightBoxImage: null
+  lightBoxImage: null,
+  searchValue: ''
 })
 
 function bucketsReducer (state = initialState, action) {
@@ -119,6 +121,10 @@ function bucketsReducer (state = initialState, action) {
     case SET_LIGHTBOX_IMAGE:
       return state
         .set('lightBoxImage', action.payload)
+
+    case SET_SEARCH_VALUE:
+      return state
+        .set('searchValue', action.payload)
 
     default:
       return state

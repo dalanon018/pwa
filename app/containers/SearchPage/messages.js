@@ -8,7 +8,7 @@ import { defineMessages } from 'react-intl'
 export default defineMessages({
   header: {
     id: 'app.containers.SearchPage.header',
-    defaultMessage: 'Search Results'
+    defaultMessage: 'Search Results '
   },
   emptyMessage: {
     id: 'app.containers.SearchPage.emptyMessage',

@@ -45,6 +45,12 @@ body {
   }
 }
 
+h3 {
+  @media screen and (min-width: 1024px) {
+   font-weight: 700 !important;
+  }
+}
+
 div[style^="visibility: visible; position: absolute;"] {
   height: 100% !important;
   top: 0 !important;
@@ -105,6 +111,12 @@ p {
   font-size: 16px;
   opacity: 1 !important;
   width: 35px !important;
+}
+
+.cursor {
+  &__pointer {
+    cursor: pointer;
+  }
 }
 
 .ui.loader {
@@ -263,6 +275,10 @@ input.input-field {
 .popup {
   height: inherit !important;
   color: #AEAEAE !important;
+}
+
+.ui.radio.checkbox .box:after, .ui.radio.checkbox label:after {
+  background: transparent !important;
 }
 
 .document-helper {

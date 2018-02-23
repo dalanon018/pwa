@@ -44,6 +44,8 @@ export const SET_LOYALTY_TOKEN = 'app/Container/SET_LOYALTY_TOKEN'
 // TECHNICALLY SIGN OUT IS WHEN WE REMOVE THE LOYALTY TOKEN
 export const REMOVE_LOYALTY_TOKEN = 'app/Container/REMOVE_LOYALTY_TOKEN'
 
+export const SET_SEARCH_VALUE = 'app/Buckets/SET_SEARCH_VALUE'
+
 export const HIDE_BACK_BUTTON = [
   '',
   'home',

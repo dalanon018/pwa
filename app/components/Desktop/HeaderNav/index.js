@@ -152,7 +152,7 @@ const BrandGroup = styled.div`
   border-top: 2px solid #ebebeb;
   display: flex;
   margin: 0 10px 50px;
-  padding: 0 10px;
+  // padding: 0 10px;
 
   .brand-name {
     color: #057A5F !important;
@@ -452,7 +452,7 @@ class HeaderNav extends PureComponent {
           </Grid>
         </Container>
         <MainNav className='background__light-grey'>
-          <Container className='padding__none'>
+          <Container className='padding__none--vertical'>
             { this._filteredCategoryMenu() }
           </Container>
           <BrandsMenuWrapper className='background__white' toggle={this.state.brandsMenu}>

@@ -167,10 +167,12 @@ class SearchMenu extends PureComponent {
   }
 
   _handleSearchProcess = (keyword) => {
-    const { searchProduct } = this.props
+    const { searchProduct, _handleSearchInputValue } = this.props
     FbEventTracking('Search', {
       search_string: keyword
     })
+
+    _handleSearchInputValue(this.state.searchValue)
 
     return searchProduct({ id: keyword })
   }
@@ -205,8 +207,9 @@ class SearchMenu extends PureComponent {
   render () {
     const { leftButtonAction, hideBackButton, intl } = this.props
     const { dirty } = this.state
+
     return (
-      <Wrapper classname='background__light-grey'>
+      <Wrapper className='background__light-grey'>
         <Grid>
           <Grid.Row>
             <Grid.Column className='padding__right--none' verticalAlign='middle' width={2}>
