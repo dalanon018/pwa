@@ -49,6 +49,7 @@ import H4 from 'components/Shared/H4'
 import EmptyProducts from 'components/Shared/EmptyProductsBlock'
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
+import Modal from 'components/Shared/PromptModal'
 
 import { InfiniteLoading, InfiniteWrapper } from 'components/InfiniteLoading'
 
@@ -155,6 +156,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   state = {
     pageOffset: 0,
     offset: 0,
+    togglePrompt: false,
+    over18: false,
     limit: LIMIT_ITEMS // we need this since we are including the feature items.
   }
 
@@ -174,6 +177,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this._displayNumberProducts = this._displayNumberProducts.bind(this)
     this._displayRecentlyViewedHeader = this._displayRecentlyViewedHeader.bind(this)
     this._displayEmpty = this._displayEmpty.bind(this)
+    this._handleRestrictAge = this._handleRestrictAge.bind(this)
+    this._handleClosePrompt = this._handleClosePrompt.bind(this)
+    this._handleOver18 = this._handleOver18.bind(this)
+    this._handleCheckCookie = this._handleCheckCookie.bind(this)
   }
 
   _isCategoryExist () {
@@ -290,10 +297,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
       return (
         <AccessView
           mobileView={
-            <MobileProductView changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
+            <MobileProductView isMinor={this._handleRestrictAge()} over18={this.state.over18} changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
           }
           desktopView={
-            <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
+            <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.state.over18} changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
           }
         />
       )
@@ -311,10 +318,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     return (
       <AccessView
         mobileView={
-          <MobileProductView changeRoute={changeRoute} loader products={this._displayAllProductData()} windowWidth={windowWidth} />
+          <MobileProductView isMinor={this._handleRestrictAge()} over18={this.state.over18} changeRoute={changeRoute} loader products={this._displayAllProductData()} windowWidth={windowWidth} />
         }
         desktopView={
-          <DesktopProductView changeRoute={changeRoute} loader products={this._displayAllProductData()} windowWidth={windowWidth} />
+          <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.state.over18} changeRoute={changeRoute} loader products={this._displayAllProductData()} windowWidth={windowWidth} />
         }
       />
     )
@@ -459,10 +466,61 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     }, () => this._fetchProductByTagCategory(props))
   }
 
+  _handleOver18 (exdays = 500) {
+    let yearExpiry = new Date().getFullYear() + 1 // Cookie will not expire
+    document.cookie = `clq_gt17=true; expires=Mon, 1 Dec ${yearExpiry} 12:00:00 UTC; path=/`
+
+    this.setState({ over18: true })
+    this._handleClosePrompt()
+  }
+
+  _handleCheckCookie () {
+    const getCookie = (cname) => {
+      let name = cname + '='
+      let ca = document.cookie.split(';')
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i]
+        while (c.charAt(0) === ' ') {
+          c = c.substring(1)
+        }
+        if (c.indexOf(name) === 0) {
+          return c.substring(name.length, c.length)
+        }
+      }
+      return ''
+    }
+
+    let isVerified = getCookie('clq_gt17')
+    if (isVerified !== '') {
+      this.setState({ over18: true })
+    }
+  }
+
+  _handleClosePrompt () {
+    this.setState({ togglePrompt: !this.state.togglePrompt })
+  }
+
+  _handleRestrictAge () {
+    const { match: { params: { id } } } = this.props
+    const mockIds = ['04', '900', '15']
+    let adult = false
+
+    mockIds.forEach(i => {
+      switch (id) {
+        case i:
+          adult = true
+          break
+      }
+    })
+
+    return adult
+  }
+
   componentWillMount () {
     this.props.setPageTitle('..')
     this.props.setShowSearchIcon(true)
     this.props.setShowActivityIcon(true)
+    this._handleCheckCookie()
   }
 
   componentDidMount () {
@@ -507,7 +565,11 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   render () {
-    const { lazyload, loader } = this.props
+    const isCategory = window.location.pathname.split('/')[1] === 'products-category'
+
+    const { loader, lazyload } = this.props
+    const { limit, togglePrompt, over18 } = this.state
+
 
     return (
       <div>
@@ -531,6 +593,13 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
         <AccessView
           mobileView={<MobileFooter />}
           desktopView={null}
+        />
+        <Modal
+          open={this._handleRestrictAge() && !togglePrompt && !over18}
+          name='warning'
+          close={this._handleClosePrompt}
+          isCategory={isCategory}
+          letIn={this._handleOver18}
         />
       </div>
     )

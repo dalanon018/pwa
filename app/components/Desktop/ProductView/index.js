@@ -45,7 +45,9 @@ function ProductView ({
   loader,
   products,
   changeRoute,
-  windowWidth
+  windowWidth,
+  over18,
+  isMinor
 }) {
   const toggleOrigDiscountPrice = (product) => {
     const showPrice = product.get('discountPrice') || product.get('price')
@@ -64,7 +66,11 @@ function ProductView ({
         // we need to make sure to show this only if only if not items yet and we are loading
         (loader && products.size === 0) ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
         : products.valueSeq().map((product, index) => {
-          const goToProduct = () => changeRoute(`/product/${product.get('cliqqCode').first()}`)
+          const goToProduct = () => {
+            !isMinor || over18
+            ? changeRoute(`/product/${product.get('cliqqCode').first()}`)
+            : changeRoute('/')
+          }
           const toggleDiscountLabel = showDiscountPrice(
             <FormattedMessage {...messages.peso} />,
             null
@@ -86,7 +92,11 @@ function ProductView ({
                       placeholder={<LoadingIndicator />}
                       once
                     >
-                      <Image alt={product.get('title')} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
+                      {
+                        !isMinor || over18
+                        ? <Image alt={product.get('title')} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
+                        : <Image alt='CLiQQ' src={imageStock('Brands-Default.jpg', imgixOptions)} className='empty-image' />
+                      }
                     </LazyLoad>
                   </ImageContent>
                 </ImageWrapper>

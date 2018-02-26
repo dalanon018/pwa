@@ -47,6 +47,11 @@ const ModalWrapper = styled.div`
 
 const CustomLabel = styled(Label)`
   padding-bottom: 20px;
+
+  &.plain-button {
+    cursor: pointer;
+    margin-top : 15px;
+  }
 `
 
 function PromptModal ({
@@ -54,7 +59,10 @@ function PromptModal ({
   name,
   content,
   open,
-  close
+  close,
+  // category page custom props
+  isCategory,
+  letIn
 }) {
   let color = ''
   const handleColor = () => {
@@ -72,28 +80,62 @@ function PromptModal ({
   }
   handleColor()
   return (
-    <Modal size='small' open={open} onClose={close}>
-      <Modal.Content>
-        <ModalWrapper>
-          <IconWrapper background={color}>
-            <Icon name={name} className='custom-icon' />
-          </IconWrapper>
-          <TitleHead>
-            <Label as='span' basic size='large'>
-              {title}
-            </Label>
-          </TitleHead>
-          <Content>
-            <CustomLabel className='text__roboto--light' as='p' basic size='medium'>
-              {content}
-            </CustomLabel>
-            <Button primary fluid onClick={close}>
-              <FormattedMessage {...messages.promptOk} />
-            </Button>
-          </Content>
-        </ModalWrapper>
-      </Modal.Content>
-    </Modal>
+    <div>
+      {
+        isCategory
+        ? <Modal size='small' open={open}>
+          <Modal.Content>
+            <ModalWrapper>
+              <IconWrapper background={color}>
+                <Icon name={name} className='custom-icon' />
+              </IconWrapper>
+              <TitleHead>
+                <Label as='span' basic size='large'>
+                  WARNING
+                </Label>
+              </TitleHead>
+              <Content>
+                <CustomLabel className='text__roboto--light' as='p' basic size='medium'>
+                  <FormattedMessage {...messages.rated18} />
+                </CustomLabel>
+                <CustomLabel className='text__roboto--light' as='p' basic size='medium'>
+                  <FormattedMessage {...messages.confirm18} />
+                </CustomLabel>
+                <Button primary fluid onClick={letIn}>
+                  <FormattedMessage {...messages.im18} />
+                </Button>
+                <CustomLabel className='text__roboto--light plain-button' as='p' basic size='medium' onClick={close}>
+                  <FormattedMessage {...messages.not18} />
+                </CustomLabel>
+              </Content>
+            </ModalWrapper>
+          </Modal.Content>
+        </Modal>
+        : <Modal size='small' open={open} onClose={close}>
+          <Modal.Content>
+            <ModalWrapper>
+              <IconWrapper background={color}>
+                <Icon name={name} className='custom-icon' />
+              </IconWrapper>
+              <TitleHead>
+                <Label as='span' basic size='large'>
+                  {title}
+                </Label>
+              </TitleHead>
+              <Content>
+                <CustomLabel className='text__roboto--light' as='p' basic size='medium'>
+                  {content}
+                </CustomLabel>
+                <Button primary fluid onClick={close}>
+                  <FormattedMessage {...messages.promptOk} />
+                </Button>
+              </Content>
+            </ModalWrapper>
+          </Modal.Content>
+        </Modal>
+      }
+
+    </div>
   )
 }
 

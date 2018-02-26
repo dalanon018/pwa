@@ -58,7 +58,8 @@ function ProductView ({
   windowWidth,
   customElement,
   onRowsRendered,
-  registerChild
+  registerChild,
+  isMinor
 }) {
   const columnCount = windowWidth > 767 ? 4 : 2
   const rowCount = Math.ceil(products.size / columnCount)
@@ -89,7 +90,9 @@ function ProductView ({
       parseFloat(entity.get('price')).toLocaleString(),
       null
     )
-    const goToProduct = () => changeRoute(`/product/${entity.get('cliqqCode').first()}`)
+    const goToProduct = () => !isMinor || over18
+    ? changeRoute(`/product/${entity.get('cliqqCode').first()}`)
+    : changeRoute('/')
 
     return (
       <ProductWrapper onClick={goToProduct}>
@@ -101,7 +104,11 @@ function ProductView ({
               placeholder={<LoadingIndicator />}
               once
           >
-              <Image alt={entity.get('title')} src={(entity.get('image') && `${paramsImgix(entity.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
+            {
+              !isMinor || over18
+              ? <Image alt={entity.get('title')} src={(entity.get('image') && `${paramsImgix(entity.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
+              : <Image alt='CLiQQ' src={imageStock('Brands-Default.jpg', imgixOptions)} className='empty-image' />
+            }
             </LazyLoad>
           </ImageContent>
         </ImageWrapper>
