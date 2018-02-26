@@ -56,7 +56,7 @@ const ImageLogo = styled.img`
   height: 35px;
 `
 
-const ActiviesIcon = styled.div`
+const ActivitiesIcon = styled.div`
   margin-left: ${props => props.marginLeft ? 0 : 20}px;
 
   img {
@@ -108,13 +108,13 @@ const MainNav = styled.div`
 
 const MenuWrapper = styled.div`
   font-family: 'Roboto', sans-serif;
-  font-weight: 400;
+  font-weight: 600;
 
   .list {
     &>.item {
       cursor: pointer;
       height: 46px;
-      margin-left: 20px !important;
+      margin-left: 30px !important;
       overflow: visible;
       padding: 15px 0 !important;
   
@@ -180,8 +180,9 @@ const BrandGroup = styled.div`
 
 const BrandsContainer = styled.div`
   height: 415px;
+  margin-left: -10px;
   overflow: auto;
-  padding: 20px 15px 0;
+  padding: 20px 0;
   width: 100%;
 `
 
@@ -414,9 +415,9 @@ class HeaderNav extends PureComponent {
     const homeRoute = currentRoute === 'home'
 
     const ActivitiesToggle = toggleComponent(
-      <ActiviesIcon marginLeft={homeRoute}>
+      <ActivitiesIcon marginLeft={homeRoute}>
         <Image alt='Activities' src={BarcodeImage} size='mini' onClick={changeRoute.bind(this, '/purchases')} />
-      </ActiviesIcon>,
+      </ActivitiesIcon>,
       null
     )
 

@@ -102,7 +102,7 @@ function ProductView ({
                 </ImageWrapper>
                 <ProductInfo brandName={product.get('brand')}>
                   <Label as='span' className='brand-name color__secondary' basic size='medium'>{product.getIn(['brand', 'name'])}</Label>
-                  <Label className='no-bottom-margin product-name color__secondary' as='p' basic size='tiny'>{product.get('title')}</Label>
+                  <Label className='no-bottom-margin product-name color__secondary' as='p' basic size='large'>{product.get('title')}</Label>
                   <ProductPriceWrapper>
                     <Label className='product-price' as='b' color='orange' basic size='massive'>
                       <FormattedMessage {...messages.peso} />

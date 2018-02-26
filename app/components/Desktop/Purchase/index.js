@@ -41,8 +41,12 @@ const PurchaseInfo = styled.div`
   align-content: center;
   display: flex;
   flex-wrap: wrap;
-  padding: 14px;
+  padding: 14px 30px;
   width: 100%;
+
+  .product-name {
+    margin: 5px 0 !important;
+  }
 `
 
 const StatusContainer = styled.div`
@@ -66,6 +70,7 @@ const StatusWrapper = styled.div`
   background-color: ${({status}) => status};
   text-align: center;
   width: 100%;
+  padding: 3px 0;
 `
 
 const OtherInfo = styled.div`
@@ -241,7 +246,7 @@ class Purchase extends React.PureComponent {
                   ? <Label as='span' basic size='medium' className='color__secondary'>{receipt.getIn(['products', 'brand', 'name'])}</Label>
                   : null
                 }
-                <Label as='p' basic size='medium' className='color__secondary margin__none'>
+                <Label as='p' basic size='medium' className='color__secondary product-name'>
                   {this._productName(receipt.getIn(['products', 'name']))}
                 </Label>
               </div>

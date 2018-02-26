@@ -25,7 +25,7 @@ const EntityPurchases = ({ entity, changeRoute, windowWidth }) => (
             mobileView={
               <MobilePurchase
                 className='padding__bottom--15'
-                defaultImage={imageStock('Slider-Default.jpg')}
+                defaultImage={imageStock('Brands-Default.jpg')}
                 receipt={receipt}
                 windowWidth={windowWidth}
                 statuses={STATUSES}
@@ -37,7 +37,7 @@ const EntityPurchases = ({ entity, changeRoute, windowWidth }) => (
             desktopView={
               <DesktopPurchase
                 className='padding__bottom--15'
-                defaultImage={imageStock('Slider-Default.jpg')}
+                defaultImage={imageStock('Brands-Default.jpg')}
                 receipt={receipt}
                 windowWidth={windowWidth}
                 statuses={STATUSES}
