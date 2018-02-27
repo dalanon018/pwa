@@ -74,7 +74,9 @@ import {
   getProductsByCategoryAction,
   getProductsByTagsAction,
   getProductsViewedAction,
-  resetProductsByCategoryAction
+  resetProductsByCategoryAction,
+  getOver18Action,
+  submitOver18Action
 } from './actions'
 
 import {
@@ -84,7 +86,8 @@ import {
   selectProductsByCategoryItems,
   selectProductsByCategoryFeatured,
   selectProductsViewed,
-  selectTotalCount
+  selectTotalCount,
+  selectOver18
 } from './selectors'
 
 import {
@@ -150,14 +153,15 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     productsFeatured: PropTypes.object.isRequired,
     categories: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
-    setRouteName: PropTypes.func.isRequired
+    setRouteName: PropTypes.func.isRequired,
+    submitOver18: PropTypes.func.isRequired,
+    getOver18: PropTypes.func.isRequired
   }
 
   state = {
     pageOffset: 0,
     offset: 0,
     togglePrompt: false,
-    over18: false,
     limit: LIMIT_ITEMS // we need this since we are including the feature items.
   }
 
@@ -180,7 +184,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this._handleRestrictAge = this._handleRestrictAge.bind(this)
     this._handleClosePrompt = this._handleClosePrompt.bind(this)
     this._handleOver18 = this._handleOver18.bind(this)
-    this._handleCheckCookie = this._handleCheckCookie.bind(this)
+    this._handleCheckOver18 = this._handleCheckOver18.bind(this)
   }
 
   _isCategoryExist () {
@@ -241,10 +245,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
           {(props) => (
             <AccessView
               mobileView={
-                <MobileProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} { ...props }/>
+                <MobileProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props}/>
               }
               desktopView={
-                <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} { ...props } />
+                <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props}/>
               }
             />
           )}
@@ -297,10 +301,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
       return (
         <AccessView
           mobileView={
-            <MobileProductView isMinor={this._handleRestrictAge()} over18={this.state.over18} changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
+            <MobileProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
           }
           desktopView={
-            <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.state.over18} changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
+            <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
           }
         />
       )
@@ -318,10 +322,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     return (
       <AccessView
         mobileView={
-          <MobileProductView isMinor={this._handleRestrictAge()} over18={this.state.over18} changeRoute={changeRoute} loader products={this._displayAllProductData()} windowWidth={windowWidth} />
+          <MobileProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader products={this._displayAllProductData()} windowWidth={windowWidth} />
         }
         desktopView={
-          <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.state.over18} changeRoute={changeRoute} loader products={this._displayAllProductData()} windowWidth={windowWidth} />
+          <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader products={this._displayAllProductData()} windowWidth={windowWidth} />
         }
       />
     )
@@ -414,10 +418,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
           {(props) => (
             <AccessView
               mobileView={
-                <MobileProductView changeRoute={changeRoute} loader={loader} products={products} windowWidth={windowWidth} { ...props }/>
+                <MobileProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={products} windowWidth={windowWidth} {...props} />
               }
               desktopView={
-                <DesktopProductView changeRoute={changeRoute} loader={loader} products={products} windowWidth={windowWidth} { ...props }/>
+                <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props}/>
               }
             />
           )}
@@ -466,34 +470,13 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     }, () => this._fetchProductByTagCategory(props))
   }
 
-  _handleOver18 (exdays = 500) {
-    let yearExpiry = new Date().getFullYear() + 1 // Cookie will not expire
-    document.cookie = `clq_gt17=true; expires=Mon, 1 Dec ${yearExpiry} 12:00:00 UTC; path=/`
-
-    this.setState({ over18: true })
+  _handleOver18 () {
+    this.props.submitOver18(true)
     this._handleClosePrompt()
   }
 
-  _handleCheckCookie () {
-    const getCookie = (cname) => {
-      let name = cname + '='
-      let ca = document.cookie.split(';')
-      for (let i = 0; i < ca.length; i++) {
-        let c = ca[i]
-        while (c.charAt(0) === ' ') {
-          c = c.substring(1)
-        }
-        if (c.indexOf(name) === 0) {
-          return c.substring(name.length, c.length)
-        }
-      }
-      return ''
-    }
-
-    let isVerified = getCookie('clq_gt17')
-    if (isVerified !== '') {
-      this.setState({ over18: true })
-    }
+  _handleCheckOver18 () {
+    this.props.getOver18()
   }
 
   _handleClosePrompt () {
@@ -502,6 +485,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
   _handleRestrictAge () {
     const { match: { params: { id } } } = this.props
+    // const mockIds = ['01', '02', '10']
     const mockIds = ['04', '900', '15']
     let adult = false
 
@@ -520,7 +504,6 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this.props.setPageTitle('..')
     this.props.setShowSearchIcon(true)
     this.props.setShowActivityIcon(true)
-    this._handleCheckCookie()
   }
 
   componentDidMount () {
@@ -531,6 +514,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     getProductsViewed()
 
     this._fetchProductByTagCategory(this.props)
+    this._handleCheckOver18()
   }
 
   componentWillUnmount () {
@@ -566,10 +550,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
   render () {
     const isCategory = window.location.pathname.split('/')[1] === 'products-category'
-
-    const { loader, lazyload } = this.props
-    const { limit, togglePrompt, over18 } = this.state
-
+    const { loader, lazyload, over18 } = this.props
+    const { limit, togglePrompt } = this.state
 
     return (
       <div>
@@ -616,7 +598,8 @@ const mapStateToProps = createStructuredSelector({
   loader: selectLoading(),
   lazyload: selectLazyload(),
   totalCount: selectTotalCount(),
-  categoryLoader: selectLoader()
+  categoryLoader: selectLoader(),
+  over18: selectOver18()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -630,6 +613,8 @@ function mapDispatchToProps (dispatch) {
     getProductsByTags: payload => dispatch(getProductsByTagsAction(payload)),
     getProductsViewed: () => dispatch(getProductsViewedAction()),
     resetProductsByCategory: () => dispatch(resetProductsByCategoryAction()),
+    submitOver18: payload => dispatch(submitOver18Action(payload)),
+    getOver18: () => dispatch(getOver18Action()),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
   }

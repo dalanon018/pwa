@@ -17,7 +17,10 @@ import {
 
   SET_PRODUCTS_VIEWED,
 
-  LIMIT_ITEMS
+  LIMIT_ITEMS,
+
+  SET_OVER18,
+  SUBMIT_OVER18
 } from './constants'
 
 const initialState = fromJS({
@@ -25,7 +28,8 @@ const initialState = fromJS({
   productsViewed: [],
   totalCount: 0,
   loading: true,
-  lazyload: false
+  lazyload: false,
+  isOver18: true
 })
 
 function productsByCategoryReducer (state = initialState, action) {
@@ -56,6 +60,14 @@ function productsByCategoryReducer (state = initialState, action) {
     case SET_PRODUCTS_VIEWED:
       return state
         .set('productsViewed', fromJS(action.payload))
+
+    case SET_OVER18:
+      return state
+        .set('isOver18', action.payload)
+
+    case SUBMIT_OVER18:
+      return state
+        .set('isOver18', action.payload)
 
     default:
       return state

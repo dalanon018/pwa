@@ -14,7 +14,11 @@ import {
   GET_PRODUCTS_VIEWED,
   SET_PRODUCTS_VIEWED,
 
-  SET_PRODUCTS_COUNT
+  SET_PRODUCTS_COUNT,
+
+  GET_OVER18,
+  SET_OVER18,
+  SUBMIT_OVER18
 } from './constants'
 
 export function getProductsByCategoryAction (payload) {
@@ -61,6 +65,26 @@ export function setProductsViewedAction (payload) {
 export function setProductsCountsAction (payload) {
   return {
     type: SET_PRODUCTS_COUNT,
+    payload
+  }
+}
+
+export function getOver18Action () {
+  return {
+    type: GET_OVER18
+  }
+}
+
+export function setOver18Action (payload) {
+  return {
+    type: SET_OVER18,
+    payload
+  }
+}
+
+export function submitOver18Action (payload) {
+  return {
+    type: SUBMIT_OVER18,
     payload
   }
 }

@@ -15,6 +15,8 @@ describe('<ProductsByCategory />', () => {
     setPageTitle: () => {},
     setShowSearchIcon: () => {},
     setShowActivityIcon: () => {},
+    submitOver18: () => {},
+    getOver18: () => {},
     totalCount: 0,
     loader: false,
     lazyload: false,
