@@ -84,9 +84,10 @@ function ProductView ({
       parseFloat(entity.get('price')).toLocaleString(),
       null
     )
+    const goToProduct = () => changeRoute(`/product/${entity.get('cliqqCode').first()}`)
 
     return (
-      <ProductWrapper>
+      <ProductWrapper onClick={goToProduct}>
         <ImageWrapper>
           <ImageContent>
             <LazyLoad
