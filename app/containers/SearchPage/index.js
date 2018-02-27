@@ -128,9 +128,9 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
   }
 
   _displayProduct () {
-    const { product, changeRoute, windowWidth, searchValue, loading } = this.props
+    const { product, changeRoute, windowWidth, searchValue } = this.props
     const stickyFooter = document.getElementsByTagName('footer')[0]
-    const isEmpty = loading === false && product.size === 0 && this._userSearch === true
+    const isEmpty = product.size === 0
 
     if (windowWidth >= 1024 && stickyFooter) {
       if (product.size > 0) {
