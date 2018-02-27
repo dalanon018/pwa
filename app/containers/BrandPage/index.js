@@ -39,6 +39,7 @@ import H3 from 'components/H3'
 import EmptyProducts from 'components/EmptyProductsBlock'
 import LoadingIndicator from 'components/LoadingIndicator'
 // import LazyLoading from 'components/LazyLoading'
+import InfiniteLoading from 'components/InfiniteLoading'
 
 import {
   setPageTitleAction,
@@ -170,9 +171,14 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
    * this will simply display items that we are loading
    */
   _displayEmptyProductViewLoading = () => {
-    const { changeRoute, windowWidth, productsByBrands } = this.props
+    const { changeRoute, windowWidth, productsByBrands, loader } = this.props
     return (
-      <ProductView changeRoute={changeRoute} loader products={productsByBrands} windowWidth={windowWidth} />
+      <ProductView
+        changeRoute={changeRoute}
+        loader={loader}
+        products={productsByBrands}
+        windowWidth={windowWidth}
+      />
     )
   }
 
@@ -219,7 +225,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   _displayFeaturedProducts = () => {
-    const { productsFeatured, loader, changeRoute, windowWidth } = this.props
+    const { productsFeatured, loader, changeRoute, windowWidth, lazyload } = this.props
 
     const displayFeatured = ifElse(
       lt(0),
@@ -228,13 +234,57 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           <H3>
             <FormattedMessage {...messages.feature} />
           </H3>
-          <ProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} />
+          <InfiniteLoading
+            results={productsFeatured}
+            hasMoreData={lazyload}
+            loadMoreData={this._displayMoreProducts}
+            isLoading={loader}
+            rowCount={productsFeatured.size}
+          >
+            {(props) => (
+              <ProductView
+                changeRoute={changeRoute}
+                loader={loader}
+                products={productsFeatured}
+                windowWidth={windowWidth}
+                {...props}
+              />
+            )}
+          </InfiniteLoading>
         </div>
       ),
       noop
     )
 
     return displayFeatured(productsFeatured.size)
+  }
+
+  _displayRegularItems = () => {
+    const { productsByBrands, changeRoute, loader, lazyload, windowWidth } = this.props
+
+    if (productsByBrands.size !== 0) {
+      return (
+        <InfiniteLoading
+          results={productsByBrands}
+          hasMoreData={lazyload}
+          loadMoreData={this._displayMoreProducts}
+          isLoading={loader}
+          rowCount={(productsByBrands.size + 1)}
+        >
+          {(props) => (
+            <ProductView
+              changeRoute={changeRoute}
+              loader={loader}
+              products={productsByBrands}
+              windowWidth={windowWidth}
+              {...props}
+            />
+          )}
+        </InfiniteLoading>
+      )
+    }
+
+    return null
   }
 
   componentWillMount () {
@@ -282,7 +332,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   render () {
-    const { productsByBrands, loader, changeRoute, windowWidth } = this.props
+    const { productsByBrands, loader } = this.props
     const { brandImages } = this.state
 
     return (
@@ -293,11 +343,15 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           loader={loader}
           images={brandImages}
         />
-        <ContentWrapper className='padding__horizontal--10'>
+        <ContentWrapper>
+
           { this._displayFeaturedProducts() }
-          { this._displayHeaderTitle() }
+
+          <H3>
+            <FormattedMessage {...messages.brandsTitle} />
+          </H3>
           { this._displayEmptyLoadingIndicator() }
-          <ProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
+          { this._displayRegularItems() }
         </ContentWrapper>
         <Footer />
       </div>
