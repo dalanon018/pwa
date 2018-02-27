@@ -22,7 +22,6 @@ import injectReducer from 'utils/injectReducer'
 
 import MobileSearchResult from 'components/Mobile/SearchResult'
 import DesktopSearchResult from 'components/Desktop/SearchResult'
-import AccessView from 'components/Shared/AccessMobileDesktopView'
 
 import H3 from 'components/Shared/H3'
 import WindowWidth from 'components/Shared/WindowWidth'
@@ -129,10 +128,11 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
   }
 
   _displayProduct () {
-    const { product, changeRoute, windowWidth, searchValue } = this.props
+    const { product, changeRoute, windowWidth, searchValue, loading } = this.props
     const stickyFooter = document.getElementsByTagName('footer')[0]
+    const isEmpty = loading === false && product.size === 0 && this._userSearch === true
 
-    if (stickyFooter) {
+    if (windowWidth >= 1024 && stickyFooter) {
       if (product.size > 0) {
         stickyFooter.classList.contains('sticky') &&
         stickyFooter.classList.remove('sticky')
@@ -143,9 +143,8 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
         return (
           <div>
             {
-              windowWidth < 1024
-              ? <H3><FormattedMessage {...messages.header} /></H3>
-              : <DesktopHeader>
+              !isEmpty &&
+              <DesktopHeader>
                 <Label as='h3' className='color__secondary'>
                   <FormattedMessage {...messages.header} />
                   <span>for '{searchValue}'</span>
@@ -153,20 +152,10 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
               </DesktopHeader>
             }
 
-            <AccessView
-              mobileView={
-                <MobileSearchResult
-                  product={product}
-                  windowWidth={windowWidth}
-                  changeRoute={changeRoute} />
-              }
-              desktopView={
-                <DesktopSearchResult
-                  product={product}
-                  windowWidth={windowWidth}
-                  changeRoute={changeRoute} />
-              }
-            />
+            <DesktopSearchResult
+              product={product}
+              windowWidth={windowWidth}
+              changeRoute={changeRoute} />
           </div>
         )
       } else {
@@ -174,7 +163,16 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
       }
     }
 
-    return null
+    return (
+      <div>
+        { !isEmpty && <H3><FormattedMessage {...messages.header} /></H3> }
+
+        <MobileSearchResult
+          product={product}
+          windowWidth={windowWidth}
+          changeRoute={changeRoute} />
+      </div>
+    )
   }
 
   _displayEmpty () {
