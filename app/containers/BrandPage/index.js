@@ -38,7 +38,7 @@ import BannerSlider from 'components/BannerSlider'
 import H3 from 'components/H3'
 import EmptyProducts from 'components/EmptyProductsBlock'
 import LoadingIndicator from 'components/LoadingIndicator'
-import LazyLoading from 'components/LazyLoading'
+// import LazyLoading from 'components/LazyLoading'
 
 import {
   setPageTitleAction,
@@ -282,8 +282,8 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   render () {
-    const { productsByBrands, loader, changeRoute, windowWidth, lazyload } = this.props
-    const { brandImages, limit } = this.state
+    const { productsByBrands, loader, changeRoute, windowWidth } = this.props
+    const { brandImages } = this.state
 
     return (
       <div>
@@ -294,18 +294,10 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           images={brandImages}
         />
         <ContentWrapper className='padding__horizontal--10'>
-          <LazyLoading
-            isLoading={loader}
-            lazyload={lazyload}
-            results={productsByBrands}
-            onScroll={this._displayMoreProducts}
-            limit={limit}
-          >
-            { this._displayFeaturedProducts() }
-            { this._displayHeaderTitle() }
-            { this._displayEmptyLoadingIndicator() }
-            <ProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
-          </LazyLoading>
+          { this._displayFeaturedProducts() }
+          { this._displayHeaderTitle() }
+          { this._displayEmptyLoadingIndicator() }
+          <ProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
         </ContentWrapper>
         <Footer />
       </div>
