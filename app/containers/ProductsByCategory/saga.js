@@ -1,11 +1,8 @@
 import {
   call,
-  cancel,
   fork,
-  put,
-  take
+  put
 } from 'redux-saga/effects'
-import { LOCATION_CHANGE } from 'react-router-redux'
 import { takeLatest, takeEvery } from 'redux-saga'
 import { isEmpty } from 'lodash'
 import {
@@ -180,7 +177,7 @@ export function * setOver18Saga () {
 
 // Individual exports for testing
 export function * productsCategorySagas () {
-  const watcher = yield [
+  yield * [
     fork(getOver18Saga),
     fork(setOver18Saga),
 
@@ -190,8 +187,6 @@ export function * productsCategorySagas () {
 
     fork(getProductsViewedSaga)
   ]
-  yield take(LOCATION_CHANGE)
-  yield watcher.map(task => cancel(task))
 }
 
 // All sagas to be loaded
