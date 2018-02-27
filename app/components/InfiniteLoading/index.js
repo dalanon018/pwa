@@ -69,6 +69,27 @@ class InfiniteLoaderProxy extends React.Component { // eslint-disable-line react
   _srollTopBeforeUnload = () => {
     window.scrollTo(0, 0)
   }
+  /*
+  * We need to identify if we need to show the lazy load if
+  * items are more than equal to the limit and lazyload === true
+  */
+  _displayLazyLoadIndicator = () => {
+    const { hasMoreData, isLoading } = this.props
+    const showLoadingIndicator = ifElse(
+      // both(identity, itemsGreaterEqLimit),
+      identity,
+      () => (
+        <WrapperLoadingIndicator>
+          <LoadingIndicator />
+          <LoadMoreText>
+            <FormattedMessage {...messages.loadingText} />
+          </LoadMoreText>
+        </WrapperLoadingIndicator>
+      ),
+      () => null
+    )
+    return showLoadingIndicator(hasMoreData && isLoading)
+  }
 
   _shouldTriggerRequest = () => {
     const { isLoading, hasMoreData } = this.props
@@ -105,10 +126,12 @@ class InfiniteLoaderProxy extends React.Component { // eslint-disable-line react
           loadMoreRows={loadMoreRows}
           rowCount={rowCount}
         >
-          {({ onRowsRendered, registerChild }) => this.props.children({
-            onRowsRendered,
-            registerChild
-          })}
+          {({ onRowsRendered, registerChild }) => (
+            <div>
+              {this.props.children({ onRowsRendered, registerChild })}
+              {this._displayLazyLoadIndicator()}
+            </div>
+          )}
         </InfiniteLoader>
       </ScrollContent>
     )

@@ -461,7 +461,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
   // shouldComponentUpdate (nextProps, nextState) {
   //   const { allCategoryProducts } = this.props
-
+  //   console.log(allCategoryProducts.size,  nextProps.allCategoryProducts.size)
   //   if (allCategoryProducts.size !== nextProps.allCategoryProducts.size) {
   //     return true
   //   }
