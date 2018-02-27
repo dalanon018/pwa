@@ -25,6 +25,8 @@ import MainLogo from 'images/cliqq-logo.svg'
 
 import Logout from 'images/icons/drawer/signout.svg'
 
+import SearchMenu from 'containers/Buckets/SearchMenu'
+
 const Wrapper = styled.div`
   display: block;
   position: fixed;
@@ -263,12 +265,13 @@ class HeaderNav extends PureComponent {
       <BrandLists>
         {
           toPairs(groupBrands).map(([title, item], key) => {
-            const isNumber = parseInt(title)
+            // const isNumber = parseInt(title)
             const chunkItem = chunk(item, 5)
 
             return (
               <BrandGroup key={key}>
-                <Label as='span' className='brand-name' basic size='large'>{ !isNaN(isNumber) ? '#' : title }</Label>
+                {/* <Label as='span' className='brand-name' basic size='large'>{ !isNaN(isNumber) ? '#' : title }</Label> */}
+                <Label as='span' className='brand-name' basic size='large'>{ title }</Label>
                 {
                     chunkItem.map((entity, key) => {
                       return (
@@ -410,9 +413,10 @@ class HeaderNav extends PureComponent {
   }
 
   render () {
-    const { changeRoute, showActivityIcon, currentRoute } = this.props
+    const { changeRoute, showActivityIcon, currentRoute, clearSearchNav, searchProductNav, hideBackButtonNav, _handleSearchInputValueNav, leftButtonActionNav } = this.props
 
     const homeRoute = currentRoute === 'home'
+    const pathname = window.location.pathname.split('/')[1] === 'search'
 
     const ActivitiesToggle = toggleComponent(
       <ActivitiesIcon marginLeft={homeRoute}>
@@ -433,14 +437,24 @@ class HeaderNav extends PureComponent {
               </Grid.Column>
               <Grid.Column width={10}>
                 <SearchWrapper>
-                  <Input
-                    aria-label='search'
-                    name='search'
-                    fluid
-                    onClick={changeRoute.bind(this, '/search')}
-                    placeholder={this.props.intl.formatMessage(messages.searchPlaceHolder)}
-                    icon='search'
-                  />
+                  {
+                    pathname
+                    ? <SearchMenu
+                      clearSearch={clearSearchNav}
+                      searchProduct={searchProductNav}
+                      hideBackButton={hideBackButtonNav}
+                      _handleSearchInputValue={_handleSearchInputValueNav}
+                      leftButtonAction={leftButtonActionNav}
+                    />
+                    : <Input
+                      aria-label='search'
+                      name='search'
+                      fluid
+                      onClick={changeRoute.bind(this, '/search')}
+                      placeholder={this.props.intl.formatMessage(messages.searchPlaceHolder)}
+                      icon='search'
+                    />
+                  }
                 </SearchWrapper>
               </Grid.Column>
               <Grid.Column width={3} textAlign='right'>

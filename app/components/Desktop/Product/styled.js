@@ -227,3 +227,8 @@ export const CustomGrid = styled(Grid.Column)`
     z-index: -1;
   }
 `
+
+export const LeftColumnWrapper = styled.div`
+  position: fixed;
+  width: 30%;
+`

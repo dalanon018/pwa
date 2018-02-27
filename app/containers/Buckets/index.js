@@ -267,12 +267,40 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
     if (pathname === '/search') {
       return (
-        <SearchMenu
-          clearSearch={setProductSearchList}
-          searchProduct={searchProduct}
-          hideBackButton={hideBackButton}
-          _handleSearchInputValue={this._handleSearchInputValue}
-          leftButtonAction={this._handleLeftButtonAction}
+        <AccessView
+          mobileView={
+            <SearchMenu
+              clearSearch={setProductSearchList}
+              searchProduct={searchProduct}
+              hideBackButton={hideBackButton}
+              _handleSearchInputValue={this._handleSearchInputValue}
+              leftButtonAction={this._handleLeftButtonAction}
+            />
+          }
+          desktopView={
+            <DesktopHeaderNav
+              brands={brands}
+              categories={productCategories}
+              changeRoute={changeRoute}
+              currentRoute={routeName}
+              headerMenuFullScreen={headerMenuFullScreen}
+              hideBackButton={hideBackButton}
+              intl={intl}
+              leftButtonAction={this._handleLeftButtonAction}
+              pageTitle={pageTitle}
+              searchProduct={searchProduct}
+              showActivityIcon={showActivityIcon}
+              showSearchIcon={showSearchIcon}
+              isSignIn={!!loyaltyToken}
+              signOut={removeLoyaltyToken}
+
+              clearSearchNav={setProductSearchList}
+              searchProductNav={searchProduct}
+              hideBackButtonNav={hideBackButton}
+              _handleSearchInputValueNav={this._handleSearchInputValue}
+              leftButtonActionNav={this._handleLeftButtonAction}
+            />
+          }
         />
       )
     }

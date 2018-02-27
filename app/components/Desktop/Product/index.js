@@ -47,7 +47,8 @@ import {
   ProductImageSlider,
   DetailsContent,
   DeliveryPolicy,
-  CustomGrid
+  CustomGrid,
+  LeftColumnWrapper
 } from './styled'
 
 const showDiscountPrice = (component1, component2) => (condition) => ifElse(
@@ -131,66 +132,68 @@ const Product = ({
         <Grid>
           <Grid.Row columns={2}>
             <Grid.Column>
-              <ProductImageSlider>
-                <ProductSlider
-                  hover={hover}
-                  images={productImages}
-                  toggleLightBox={toggleLightBox}
-                  lightBoxImage={lightBoxImage}
-                  loader={loading}
-                  handleMouseEnter={handleMouseEnter}
-                  handleMouseLeave={handleMouseLeave}
-                  isInfinite
-                  isLowerdots
-                />
+              <LeftColumnWrapper>
+                <ProductImageSlider>
+                  <ProductSlider
+                    hover={hover}
+                    images={productImages}
+                    toggleLightBox={toggleLightBox}
+                    lightBoxImage={lightBoxImage}
+                    loader={loading}
+                    handleMouseEnter={handleMouseEnter}
+                    handleMouseLeave={handleMouseLeave}
+                    isInfinite
+                    isLowerdots
+                  />
+                  {
+                    +product.get('quantity') === 0 &&
+                    <Label className='text__align--center' as='p' basic size='huge' color='red'>
+                      <FormattedMessage {...messages.noStock} />
+                    </Label>
+                  }
+                </ProductImageSlider>
+                <ProductMainContent>
+                  <LoadingStateInfo loading={loading} center>
+                    <ButtonContainer className='background__white'>
+                      <Button
+                        onClick={onSubmit}
+                        loading={loading}
+                        primary
+                        disabled={+product.get('quantity') === 0} > <FormattedMessage {...messages.orderNow} /> </Button>
+                    </ButtonContainer>
+                  </LoadingStateInfo>
+                </ProductMainContent>
+
                 {
-                  +product.get('quantity') === 0 &&
-                  <Label className='text__align--center' as='p' basic size='huge' color='red'>
-                    <FormattedMessage {...messages.noStock} />
-                  </Label>
+                  product.get('association') &&
+                  <SizeSelector
+                    product={product}
+                    onSizeChange={onSizeChange}
+                  />
                 }
-              </ProductImageSlider>
-              <ProductMainContent>
-                <LoadingStateInfo loading={loading} center>
-                  <ButtonContainer className='background__white'>
-                    <Button
-                      onClick={onSubmit}
-                      loading={loading}
-                      primary
-                      disabled={+product.get('quantity') === 0} > <FormattedMessage {...messages.orderNow} /> </Button>
-                  </ButtonContainer>
-                </LoadingStateInfo>
-              </ProductMainContent>
 
-              {
-                product.get('association') &&
-                <SizeSelector
-                  product={product}
-                  onSizeChange={onSizeChange}
-                />
-              }
+                <SocialContainer>
+                  <p className='share-item ui big basic label color__secondary'><FormattedMessage {...messages.shareItem} /></p>
+                  <ShareWrapper>
 
-              <SocialContainer>
-                <p className='share-item ui big basic label color__secondary'><FormattedMessage {...messages.shareItem} /></p>
-                <ShareWrapper>
+                    <button className='unstyle-button share-button' onClick={fbShareAction}>
+                      <FacebookIcon round size={30} />
+                    </button>
 
-                  <button className='unstyle-button share-button' onClick={fbShareAction}>
-                    <FacebookIcon round size={30} />
-                  </button>
+                    <TwitterShareButton
+                      className='share-button'
+                      title={product.get('title')}
+                      via='711philippines'
+                      url={window.location.href} >
+                      <TwitterIcon size={30} round />
+                    </TwitterShareButton>
 
-                  <TwitterShareButton
-                    className='share-button'
-                    title={product.get('title')}
-                    via='711philippines'
-                    url={window.location.href} >
-                    <TwitterIcon size={30} round />
-                  </TwitterShareButton>
-
-                  <a onClick={_handleMailTo} className='share-button'>
-                    <Icon circular inverted name='mail' color='orange' />
-                  </a>
-                </ShareWrapper>
-              </SocialContainer>
+                    <a onClick={_handleMailTo} className='share-button'>
+                      <Icon circular inverted name='mail' color='orange' />
+                    </a>
+                  </ShareWrapper>
+                </SocialContainer>
+              </LeftColumnWrapper>
             </Grid.Column>
             <CustomGrid className={hover && 'active'}>
               <DetailsWrapper>

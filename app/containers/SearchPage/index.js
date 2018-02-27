@@ -150,7 +150,6 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
                   <FormattedMessage {...messages.header} />
                   <span>for '{searchValue}'</span>
                 </Label>
-
               </DesktopHeader>
             }
 

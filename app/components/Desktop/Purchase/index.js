@@ -53,10 +53,12 @@ const StatusContainer = styled.div`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  min-width: 146px;
+  // min-width: 146px;
+  min-width: 170px;
   padding: 10px;
   position: relative;
-  width: 146px;
+  // width: 146px;
+  width: 170px;
 
   .status-info {
 
@@ -259,7 +261,7 @@ class Purchase extends React.PureComponent {
             </PurchaseInfo>
 
             <StatusContainer>
-              <Label as='p' basic size='mini' className='color__secondary margin__none'>
+              <Label as='p' basic size='small' className='color__secondary margin__none'>
                 <FormattedMessage {...messages.status} />
               </Label>
               <StatusWrapper status={this._getColorStatus(currentStatus)}>
@@ -268,10 +270,10 @@ class Purchase extends React.PureComponent {
                 </Label>
               </StatusWrapper>
               <div className='status-info'>
-                <Label as='span' basic size='mini' className='color__secondary'>
+                <Label as='span' basic size='small' className='color__secondary'>
                   { this._handleDateString() }
                 </Label>
-                <Label as='span' basic size='mini' className='color__secondary'>
+                <Label as='span' basic size='small' className='color__secondary'>
                   { this._handleDateValue() }
                 </Label>
               </div>

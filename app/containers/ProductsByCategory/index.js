@@ -131,6 +131,21 @@ const ContentWrapper = styled(Container)`
   }
 `
 
+const DesktopTitle = styled.p`
+  font-family: Lato,Cabin,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+`
+
+const DesktopItemCount = styled.p`
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 20px;
+  text-align: center;
+`
+
 const isTag = curry((tags, id) => contains(id, tags))
 
 export class ProductsByCategory extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -260,7 +275,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _displayNumberProducts () {
-    const { match: { params: { id } }, productsFeatured, totalCount } = this.props
+    const { match: { params: { id } }, productsFeatured, totalCount, windowWidth } = this.props
     const displayTotalCount = ifElse(partial(isTag(this._tags), [id]),
       identity,
       subtract(__, productsFeatured.size)
@@ -269,7 +284,12 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
     if (product.size) {
       return (
-        <H4 className='color__grey'>
+        windowWidth >= 1024
+        ? <DesktopItemCount className='color__grey'>
+          { displayTotalCount(totalCount) }
+          <FormattedMessage {...messages.items} />
+        </DesktopItemCount>
+        : <H4 className='color__grey'>
           { displayTotalCount(totalCount) }
           <FormattedMessage {...messages.items} />
         </H4>
@@ -550,7 +570,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
   render () {
     const isCategory = window.location.pathname.split('/')[1] === 'products-category'
-    const { loader, lazyload, over18 } = this.props
+    const { loader, lazyload, over18, windowWidth } = this.props
     const { limit, togglePrompt } = this.state
 
     return (
@@ -563,7 +583,12 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
             { this._displayHeaderFeaturesProduct() }
             { this._displayFeaturesProduct() }
 
-            <H3 className='margin__none'> {this._handlePageTitle()} </H3>
+            {
+              windowWidth >= 1024
+              ? <DesktopTitle> {this._handlePageTitle()} </DesktopTitle>
+              : <H3 className='margin__none'> {this._handlePageTitle()} </H3>
+            }
+
             { this._displayNumberProducts() }
             { this._displayEmptyLoadingIndicator() }
             { this._displayRegularItems() }

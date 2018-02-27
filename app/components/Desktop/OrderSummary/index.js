@@ -190,7 +190,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
             <BottomWrapper>
               <div className='discount-text'>
-                <Label as='span' size='small' basic className='color__grey'>
+                <Label as='span' size='medium' basic className='color__grey'>
                   <FormattedMessage {...messages.discountText} />
                 </Label>
               </div>
