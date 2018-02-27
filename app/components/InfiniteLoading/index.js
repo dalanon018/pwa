@@ -10,8 +10,13 @@ import styled from 'styled-components'
 import InfiniteLoader from 'react-virtualized/dist/commonjs/InfiniteLoader'
 
 import {
+  F,
+  T,
+  allPass,
+  equals,
   identity,
-  ifElse
+  ifElse,
+  lt
 } from 'ramda'
 
 import LoadingIndicator from 'components/LoadingIndicator'
@@ -65,18 +70,38 @@ class InfiniteLoaderProxy extends React.Component { // eslint-disable-line react
     window.scrollTo(0, 0)
   }
 
+  _shouldTriggerRequest = () => {
+    const { isLoading, hasMoreData } = this.props
+    const body = document.body
+    const html = document.documentElement
+
+    const scrollY = window.pageYOffset
+    const offset = 1900
+    const height = Math.max(body.scrollHeight, body.offsetHeight,
+      html.clientHeight, html.scrollHeight, html.offsetHeight)
+
+    const onBottom = () => lt(height, (scrollY + offset))
+    const isNotLoading = () => equals(false, isLoading)
+
+    const shouldTriggerRequest = ifElse(
+      allPass([onBottom, identity, isNotLoading]),
+      F,
+      T
+    )
+
+    return shouldTriggerRequest(hasMoreData)
+  }
+
   render () {
-    const { isLoading, hasMoreData, loadMoreData, rowCount, results } = this.props
-    // Every row is loaded except for our loading indicator row.
-    const isRowLoaded = ({ index }) => !hasMoreData || index < results.size
+    const { isLoading, loadMoreData, rowCount } = this.props
+
     const loadMoreRows = isLoading
         ? () => {}
         : loadMoreData
-
     return (
       <ScrollContent>
         <InfiniteLoader
-          isRowLoaded={isRowLoaded}
+          isRowLoaded={this._shouldTriggerRequest}
           loadMoreRows={loadMoreRows}
           rowCount={rowCount}
         >

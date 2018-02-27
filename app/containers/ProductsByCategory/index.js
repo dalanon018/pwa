@@ -200,9 +200,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this.setState({
       pageOffset: incrementOffset,
       offset: (incrementOffset * limit)
-    })
-
-    this._fetchProductByTagCategory(this.props)
+    }, () => this._fetchProductByTagCategory(this.props))
   }
 
   _displayHeaderFeaturesProduct () {
