@@ -7,6 +7,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import Waypoint from 'react-waypoint'
 
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
@@ -94,6 +95,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   state = {
+    showBannerVisible: true,
     brandImages: [],
     pageOffset: 0,
     offset: 0,
@@ -224,6 +226,12 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     getProductsByBrands({ offset, limit, id })
   }
 
+  _handleShowBannerIfVisible = (show) => () => {
+    this.setState({
+      showBannerVisible: show
+    })
+  }
+
   _displayFeaturedProducts = () => {
     const { productsFeatured, loader, changeRoute, windowWidth, lazyload } = this.props
 
@@ -269,7 +277,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           hasMoreData={lazyload}
           loadMoreData={this._displayMoreProducts}
           isLoading={loader}
-          rowCount={(productsByBrands.size + 1)}
+          rowCount={productsByBrands.size}
         >
           {(props) => (
             <ProductView
@@ -333,16 +341,24 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
 
   render () {
     const { productsByBrands, loader } = this.props
-    const { brandImages } = this.state
-
+    const { brandImages, showBannerVisible } = this.state
     return (
       <div>
-        <BannerSlider
-          isInfinite
-          results={productsByBrands}
-          loader={loader}
-          images={brandImages}
-        />
+        <Waypoint
+          onEnter={this._handleShowBannerIfVisible(true)}
+          onLeave={this._handleShowBannerIfVisible(false)}
+        >
+          <div>
+            {
+              showBannerVisible && <BannerSlider
+                isInfinite
+                results={productsByBrands}
+                loader={loader}
+                images={brandImages}
+              />
+            }
+          </div>
+        </Waypoint>
         <ContentWrapper>
 
           { this._displayFeaturedProducts() }
