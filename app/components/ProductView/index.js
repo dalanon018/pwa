@@ -76,6 +76,11 @@ function ProductView ({
   )(condition)
 
   const ProductEntityInfo = (entity) => {
+    // make sure not to display if undefined
+    if (!entity) {
+      return null
+    }
+
     const toggleDiscountLabel = showDiscountPrice(
       <FormattedMessage {...messages.peso} />,
       null
