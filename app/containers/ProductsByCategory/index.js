@@ -450,15 +450,15 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this.props.resetProductsByCategory()
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    const { allCategoryProducts } = this.props
+  // shouldComponentUpdate (nextProps, nextState) {
+  //   const { allCategoryProducts } = this.props
 
-    if (allCategoryProducts.size !== nextProps.allCategoryProducts.size) {
-      return true
-    }
+  //   if (allCategoryProducts.size !== nextProps.allCategoryProducts.size) {
+  //     return true
+  //   }
 
-    return false
-  }
+  //   return false
+  // }
 
   componentWillReceiveProps (nextProps) {
     const { match: { params } } = this.props
