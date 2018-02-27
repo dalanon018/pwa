@@ -373,17 +373,28 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _displayRegularItems = () => {
-    const { loader, changeRoute, windowWidth } = this.props
+    const { changeRoute, loader, lazyload, windowWidth, totalCount } = this.props
     const products = this._displayProductData()
 
     if (products.size !== 0) {
       return (
-        <ProductView
-          changeRoute={changeRoute}
-          loader={loader}
-          products={products}
-          windowWidth={windowWidth}
-        />
+        <InfiniteLoading
+          results={products}
+          hasMoreData={lazyload}
+          loadMoreData={this._displayMoreProducts}
+          isLoading={loader}
+          rowCount={totalCount}
+        >
+          {(props) => (
+            <ProductView
+              changeRoute={changeRoute}
+              loader={loader}
+              products={products}
+              windowWidth={windowWidth}
+              {...props}
+            />
+          )}
+        </InfiniteLoading>
       )
     }
 
@@ -491,6 +502,14 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
         <ContentWrapper>
           { this._displayHeaderFeaturesProduct() }
           { this._displayFeaturesProduct() }
+
+          <H3 className='margin__none'> {this._handlePageTitle()} </H3>
+          { this._displayNumberProducts() }
+          { this._displayEmptyLoadingIndicator() }
+          { this._displayRegularItems() }
+
+          { this._displayRecentlyViewedHeader() }
+          { this._displayRecentlyViewedItems() }
         </ContentWrapper>
         <Footer />
       </div>
