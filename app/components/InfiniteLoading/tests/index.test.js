@@ -3,16 +3,16 @@ import React from 'react'
 import { fromJS } from 'immutable'
 import { shallow } from 'enzyme'
 
-import LazyLoading from '../index'
+import { InfiniteLoading } from '../index'
 
-const Children = () => (<h1> Lazyloading </h1>)
+const Children = () => (<h1> InfiniteLoading </h1>)
 const wrapper = (props = {}, enzyme = shallow) => shallow(
-  <LazyLoading {...props}>
+  <InfiniteLoading {...props}>
     <Children />
-  </LazyLoading>
+  </InfiniteLoading>
 )
 
-describe('<LazyLoading />', () => {
+describe('<InfiniteLoading />', () => {
   const minProps = {
     isLoading: false,
     lazyload: false,
