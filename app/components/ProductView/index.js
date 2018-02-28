@@ -155,8 +155,9 @@ function ProductView ({
             padded
             stretched
             columns={columnCount}>
-            <DefaultState key={1} loader={loader} />
-            <DefaultState key={2} loader={loader} />
+            {range(1, columnCount).map((ranger) => (
+              <DefaultState key={ranger} loader={loader} />
+            ))}
           </Grid>
         ) : (
           <AutoSizer disableHeight>
