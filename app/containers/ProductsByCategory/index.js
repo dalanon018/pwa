@@ -42,12 +42,12 @@ import ProductView from 'components/ProductView'
 import Footer from 'components/Footer'
 import WindowWidth from 'components/WindowWidth'
 // import LazyLoading from 'components/LazyLoading'
-import InfiniteLoading from 'components/InfiniteLoading'
 import H3 from 'components/H3'
 import H4 from 'components/H4'
 import EmptyProducts from 'components/EmptyProductsBlock'
 import LoadingIndicator from 'components/LoadingIndicator'
 
+import { InfiniteLoading, InfiniteWrapper } from 'components/InfiniteLoading'
 import {
   getProductCategoriesAction,
   setPageTitleAction,
@@ -487,19 +487,26 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   render () {
+    const { lazyload, loader } = this.props
+
     return (
       <div>
         <ContentWrapper>
-          { this._displayHeaderFeaturesProduct() }
-          { this._displayFeaturesProduct() }
+          <InfiniteWrapper
+            hasMoreData={lazyload}
+            isLoading={loader}
+          >
+            { this._displayHeaderFeaturesProduct() }
+            { this._displayFeaturesProduct() }
 
-          <H3 className='margin__none'> {this._handlePageTitle()} </H3>
-          { this._displayNumberProducts() }
-          { this._displayEmptyLoadingIndicator() }
-          { this._displayRegularItems() }
+            <H3 className='margin__none'> {this._handlePageTitle()} </H3>
+            { this._displayNumberProducts() }
+            { this._displayEmptyLoadingIndicator() }
+            { this._displayRegularItems() }
 
-          { this._displayRecentlyViewedHeader() }
-          { this._displayRecentlyViewedItems() }
+            { this._displayRecentlyViewedHeader() }
+            { this._displayRecentlyViewedItems() }
+          </InfiniteWrapper>
         </ContentWrapper>
         <Footer />
       </div>

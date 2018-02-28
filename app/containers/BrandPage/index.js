@@ -40,7 +40,7 @@ import H3 from 'components/H3'
 import EmptyProducts from 'components/EmptyProductsBlock'
 import LoadingIndicator from 'components/LoadingIndicator'
 // import LazyLoading from 'components/LazyLoading'
-import InfiniteLoading from 'components/InfiniteLoading'
+import { InfiniteLoading, InfiniteWrapper } from 'components/InfiniteLoading'
 
 import {
   setPageTitleAction,
@@ -361,11 +361,11 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   render () {
-    const { productsByBrands, loader } = this.props
+    const { productsByBrands, loader, lazyload } = this.props
     const { brandImages, animateBanner } = this.state
     return (
       <div>
-        {/*<Waypoint
+        {/* <Waypoint
           onEnter={this._handleBannerAnimation(true)}
           onLeave={this._handleBannerAnimation(false)}
         >
@@ -379,13 +379,17 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           </div>
            </Waypoint> */}
         <ContentWrapper>
+          <InfiniteWrapper
+           hasMoreData={lazyload}
+           isLoading={loader}
+          >
+            { this._displayHeaderFeaturesProduct() }
+            { this._displayFeaturedProducts() }
 
-          { this._displayHeaderFeaturesProduct() }
-          { this._displayFeaturedProducts() }
-
-          { this._displayHeaderRegularProduct() }
-          { this._displayEmptyLoadingIndicator() }
-          { this._displayRegularItems() }
+            { this._displayHeaderRegularProduct() }
+            { this._displayEmptyLoadingIndicator() }
+            { this._displayRegularItems() }
+          </InfiniteWrapper>
         </ContentWrapper>
         <Footer />
       </div>
