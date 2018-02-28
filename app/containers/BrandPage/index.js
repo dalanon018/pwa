@@ -365,23 +365,24 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     const { brandImages, animateBanner } = this.state
     return (
       <div>
-        {/* <Waypoint
+        <Waypoint
           onEnter={this._handleBannerAnimation(true)}
           onLeave={this._handleBannerAnimation(false)}
         >
           <div>
-           {animateBanner && <BannerSlider
+            <BannerSlider
               isInfinite
+              autoplay={animateBanner}
               results={productsByBrands}
               loader={loader}
               images={brandImages}
-            />}
+            />
           </div>
-           </Waypoint> */}
+        </Waypoint>
         <ContentWrapper>
           <InfiniteWrapper
-           hasMoreData={lazyload}
-           isLoading={loader}
+            hasMoreData={lazyload}
+            isLoading={loader}
           >
             { this._displayHeaderFeaturesProduct() }
             { this._displayFeaturedProducts() }

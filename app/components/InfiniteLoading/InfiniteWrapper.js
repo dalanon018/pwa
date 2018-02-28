@@ -9,9 +9,8 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import {
-  equals,
   identity,
-  ifElse,
+  ifElse
 } from 'ramda'
 
 import LoadingIndicator from 'components/LoadingIndicator'

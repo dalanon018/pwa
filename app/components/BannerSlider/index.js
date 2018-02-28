@@ -22,13 +22,16 @@ function BannerSlider ({
   isInfinite,
   isLowerdots,
   images,
-  slidesToShow }) {
+  slidesToShow,
+  autoplay
+}) {
   return <HandleBlock
     loader={loader}
     images={images}
     isInfinite={isInfinite || false}
     isLowerdots={isLowerdots || false}
     slidesToShow={slidesToShow || 1}
+    autoplay={autoplay}
     />
 }
 
@@ -46,7 +49,7 @@ export const HandleBlock = ({
   isInfinite,
   isLowerdots,
   images,
-  slidesToShow,
+  slidesToShow = 1,
   autoplay = true
 }) => {
   let block

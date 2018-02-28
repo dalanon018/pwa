@@ -9,9 +9,6 @@ import PropTypes from 'prop-types'
 import Slider from 'react-slick'
 import { Image } from 'semantic-ui-react'
 
-import { ifElse, gt } from 'ramda'
-import { noop } from 'lodash'
-
 class SlideShow extends React.PureComponent {
   static propTypes = {
     isLowerdots: PropTypes.bool,
@@ -39,21 +36,13 @@ class SlideShow extends React.PureComponent {
     clearTimeout(this.assignTimeOut)
   }
 
-  componentDidMount () {
-    const { props } = this.slider
-    const shouldSlideNext = ifElse(gt(props.children.length), this._initNextSlide, noop)
-
-    shouldSlideNext(1)
-  }
-
   render () {
     const { settings, images } = this.props
 
     return (
       <Slider
         ref={this._innerSliderRef}
-        {...settings}
-        afterChange={this._clearTimeOut}>
+        {...settings}>
         {
           images &&
           images.map((item, index) => {
