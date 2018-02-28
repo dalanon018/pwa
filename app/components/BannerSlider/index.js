@@ -46,10 +46,12 @@ export const HandleBlock = ({
   isInfinite,
   isLowerdots,
   images,
-  slidesToShow }) => {
+  slidesToShow,
+  autoplay = true
+}) => {
   let block
   const settings = {
-    autoplay: images.length > 1,
+    autoplay: autoplay && images.length > 1,
     swipe: images.length > 1,
     autoplaySpeed: 3500,
     dots: images.length > 1,
