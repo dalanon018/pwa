@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { shallow } from 'enzyme'
 import { fromJS } from 'immutable'
 
@@ -29,13 +30,14 @@ describe('<BrandPage />', () => {
     const renderedComponent = shallow(
       <BrandPage {...minProps} />
     )
-    expect(renderedComponent.find('div').length).toEqual(1)
+    expect(renderedComponent.find('div').length).toEqual(2)
   })
 
-  it('should render a ProductView', () => {
+  it('should render a Waypoint', () => {
     const renderedComponent = shallow(
       <BrandPage {...minProps} />
     )
-    expect(renderedComponent.find('ProductView').length).toEqual(1)
+
+    expect(renderedComponent.find('Waypoint').length).toEqual(1)
   })
 })

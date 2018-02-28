@@ -7,6 +7,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import Waypoint from 'react-waypoint'
 
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
@@ -38,7 +39,8 @@ import BannerSlider from 'components/BannerSlider'
 import H3 from 'components/H3'
 import EmptyProducts from 'components/EmptyProductsBlock'
 import LoadingIndicator from 'components/LoadingIndicator'
-import LazyLoading from 'components/LazyLoading'
+// import LazyLoading from 'components/LazyLoading'
+import { InfiniteLoading, InfiniteWrapper } from 'components/InfiniteLoading'
 
 import {
   setPageTitleAction,
@@ -71,8 +73,8 @@ import {
 } from './constants'
 
 const ContentWrapper = styled(Container)`
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
 `
 
 export class BrandPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -93,6 +95,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   state = {
+    animateBanner: true,
     brandImages: [],
     pageOffset: 0,
     offset: 0,
@@ -149,9 +152,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     this.setState({
       pageOffset: incrementOffset,
       offset: (incrementOffset * limit)
-    })
-
-    this._fetchProductByBrands(this.props)
+    }, () => this._fetchProductByBrands(this.props))
   }
 
   _displayLoader = () => {
@@ -172,9 +173,14 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
    * this will simply display items that we are loading
    */
   _displayEmptyProductViewLoading = () => {
-    const { changeRoute, windowWidth, productsByBrands } = this.props
+    const { changeRoute, windowWidth, productsByBrands, loader } = this.props
     return (
-      <ProductView changeRoute={changeRoute} loader products={productsByBrands} windowWidth={windowWidth} />
+      <ProductView
+        changeRoute={changeRoute}
+        loader={loader}
+        products={productsByBrands}
+        windowWidth={windowWidth}
+      />
     )
   }
 
@@ -220,23 +226,94 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     getProductsByBrands({ offset, limit, id })
   }
 
+  _handleBannerAnimation = (show) => () => {
+    this.setState({
+      animateBanner: show
+    })
+  }
+
+  _displayHeaderFeaturesProduct () {
+    const { productsFeatured } = this.props
+    if (productsFeatured.size) {
+      return (
+        <H3>
+          <FormattedMessage {...messages.feature} />
+        </H3>
+      )
+    }
+
+    return null
+  }
+
   _displayFeaturedProducts = () => {
-    const { productsFeatured, loader, changeRoute, windowWidth } = this.props
+    const { productsFeatured, loader, changeRoute, windowWidth, lazyload } = this.props
 
     const displayFeatured = ifElse(
       lt(0),
       () => (
-        <div>
-          <H3>
-            <FormattedMessage {...messages.feature} />
-          </H3>
-          <ProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} />
-        </div>
+        <InfiniteLoading
+          results={productsFeatured}
+          hasMoreData={lazyload}
+          loadMoreData={this._displayMoreProducts}
+          isLoading={loader}
+          rowCount={productsFeatured.size + 1}
+        >
+          {(props) => (
+            <ProductView
+              changeRoute={changeRoute}
+              loader={loader}
+              products={productsFeatured}
+              windowWidth={windowWidth}
+              {...props}
+            />
+          )}
+        </InfiniteLoading>
       ),
       noop
     )
 
     return displayFeatured(productsFeatured.size)
+  }
+
+  _displayHeaderRegularProduct () {
+    const { productsByBrands } = this.props
+    if (productsByBrands.size) {
+      return (
+        <H3>
+          <FormattedMessage {...messages.brandsTitle} />
+        </H3>
+      )
+    }
+
+    return null
+  }
+
+  _displayRegularItems = () => {
+    const { productsByBrands, changeRoute, loader, lazyload, windowWidth } = this.props
+
+    if (productsByBrands.size > 1 || lazyload === false) {
+      return (
+        <InfiniteLoading
+          results={productsByBrands}
+          hasMoreData={lazyload}
+          loadMoreData={this._displayMoreProducts}
+          isLoading={loader}
+          rowCount={productsByBrands.size + 1}
+        >
+          {(props) => (
+            <ProductView
+              changeRoute={changeRoute}
+              loader={loader}
+              products={productsByBrands}
+              windowWidth={windowWidth}
+              {...props}
+            />
+          )}
+        </InfiniteLoading>
+      )
+    }
+
+    return null
   }
 
   componentWillMount () {
@@ -284,30 +361,36 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   render () {
-    const { productsByBrands, loader, changeRoute, windowWidth, lazyload } = this.props
-    const { brandImages, limit } = this.state
-
+    const { productsByBrands, loader, lazyload } = this.props
+    const { brandImages, animateBanner } = this.state
     return (
       <div>
-        <BannerSlider
-          isInfinite
-          results={productsByBrands}
-          loader={loader}
-          images={brandImages}
-        />
-        <ContentWrapper className='padding__horizontal--10'>
-          <LazyLoading
+        <Waypoint
+          onEnter={this._handleBannerAnimation(true)}
+          onLeave={this._handleBannerAnimation(false)}
+        >
+          <div>
+            <BannerSlider
+              isInfinite
+              autoplay={animateBanner}
+              results={productsByBrands}
+              loader={loader}
+              images={brandImages}
+            />
+          </div>
+        </Waypoint>
+        <ContentWrapper>
+          <InfiniteWrapper
+            hasMoreData={lazyload}
             isLoading={loader}
-            lazyload={lazyload}
-            results={productsByBrands}
-            onScroll={this._displayMoreProducts}
-            limit={limit}
           >
+            { this._displayHeaderFeaturesProduct() }
             { this._displayFeaturedProducts() }
-            { this._displayHeaderTitle() }
+
+            { this._displayHeaderRegularProduct() }
             { this._displayEmptyLoadingIndicator() }
-            <ProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
-          </LazyLoading>
+            { this._displayRegularItems() }
+          </InfiniteWrapper>
         </ContentWrapper>
         <Footer />
       </div>

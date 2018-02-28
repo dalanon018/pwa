@@ -41,12 +41,13 @@ import { Uppercase } from 'utils/string'
 import ProductView from 'components/ProductView'
 import Footer from 'components/Footer'
 import WindowWidth from 'components/WindowWidth'
-import LazyLoading from 'components/LazyLoading'
+// import LazyLoading from 'components/LazyLoading'
 import H3 from 'components/H3'
 import H4 from 'components/H4'
 import EmptyProducts from 'components/EmptyProductsBlock'
 import LoadingIndicator from 'components/LoadingIndicator'
 
+import { InfiniteLoading, InfiniteWrapper } from 'components/InfiniteLoading'
 import {
   getProductCategoriesAction,
   setPageTitleAction,
@@ -199,9 +200,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this.setState({
       pageOffset: incrementOffset,
       offset: (incrementOffset * limit)
-    })
-
-    this._fetchProductByTagCategory(this.props)
+    }, () => this._fetchProductByTagCategory(this.props))
   }
 
   _displayHeaderFeaturesProduct () {
@@ -218,10 +217,26 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _displayFeaturesProduct () {
-    const { productsFeatured, changeRoute, loader, windowWidth } = this.props
+    const { productsFeatured, changeRoute, loader, lazyload, windowWidth, totalCount } = this.props
     if (this._handleFeaturedProductsPerCategory() && productsFeatured.size) {
       return (
-        <ProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} />
+        <InfiniteLoading
+          results={productsFeatured}
+          hasMoreData={lazyload}
+          loadMoreData={this._displayMoreProducts}
+          isLoading={loader}
+          rowCount={totalCount}
+        >
+          {(props) => (
+            <ProductView
+              changeRoute={changeRoute}
+              loader={loader}
+              products={productsFeatured}
+              windowWidth={windowWidth}
+              {...props}
+            />
+          )}
+        </InfiniteLoading>
       )
     }
 
@@ -358,17 +373,28 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _displayRegularItems = () => {
-    const { loader, changeRoute, windowWidth } = this.props
+    const { changeRoute, loader, lazyload, windowWidth, totalCount } = this.props
     const products = this._displayProductData()
 
     if (products.size !== 0) {
       return (
-        <ProductView
-          changeRoute={changeRoute}
-          loader={loader}
-          products={products}
-          windowWidth={windowWidth}
-        />
+        <InfiniteLoading
+          results={products}
+          hasMoreData={lazyload}
+          loadMoreData={this._displayMoreProducts}
+          isLoading={loader}
+          rowCount={totalCount}
+        >
+          {(props) => (
+            <ProductView
+              changeRoute={changeRoute}
+              loader={loader}
+              products={products}
+              windowWidth={windowWidth}
+              {...props}
+            />
+          )}
+        </InfiniteLoading>
       )
     }
 
@@ -461,18 +487,14 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   render () {
-    const { loader, lazyload } = this.props
-    const { limit } = this.state
+    const { lazyload, loader } = this.props
 
     return (
       <div>
         <ContentWrapper>
-          <LazyLoading
+          <InfiniteWrapper
+            hasMoreData={lazyload}
             isLoading={loader}
-            lazyload={lazyload}
-            results={this._displayAllProductData()}
-            onScroll={this._displayMoreProducts}
-            limit={limit}
           >
             { this._displayHeaderFeaturesProduct() }
             { this._displayFeaturesProduct() }
@@ -481,9 +503,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
             { this._displayNumberProducts() }
             { this._displayEmptyLoadingIndicator() }
             { this._displayRegularItems() }
-          </LazyLoading>
-          { this._displayRecentlyViewedHeader() }
-          { this._displayRecentlyViewedItems() }
+
+            { this._displayRecentlyViewedHeader() }
+            { this._displayRecentlyViewedItems() }
+          </InfiniteWrapper>
         </ContentWrapper>
         <Footer />
       </div>
