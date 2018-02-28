@@ -229,6 +229,7 @@ export const CustomGrid = styled(Grid.Column)`
 `
 
 export const LeftColumnWrapper = styled.div`
-  position: fixed;
-  width: 30%;
+  // height: 100%;
+  // position: relative;
+  // width: 100%;
 `

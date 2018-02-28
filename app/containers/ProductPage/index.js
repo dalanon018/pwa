@@ -104,7 +104,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       errorTitle: '',
       errorMessage: '',
       togglePrompt: false,
-      hover: false
+      hover: false,
+      offset: 0
     }
   }
 
@@ -216,6 +217,14 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.setState(() => ({ hover: false }))
   }
 
+  _handleCountOffset = () => {
+    const left = document.getElementById('affix-element').offsetHeight
+    const right = document.getElementById('right-column-preview').offsetHeight
+    const subtracted = left - right
+
+    this.setState({ offset: Math.abs(subtracted) })
+  }
+
   componentWillMount () {
     this.props.setPageTitle('Product Details')
     this.props.setShowSearchIcon(true)
@@ -227,6 +236,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
     getProduct({ id })
     setRouteName(PRODUCT_NAME)
+
+    this._handleCountOffset()
   }
 
   componentWillUnmount () {
@@ -258,7 +269,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
   render () {
     const { loading, product, route, windowWidth, changeRoute, isMobile, intl, setLightBoxImage, lightBoxImage } = this.props
-    const { errModalToggle, errModalName, errorTitle, errorMessage, togglePrompt, hover } = this.state
+    const { errModalToggle, errModalName, errorTitle, errorMessage, togglePrompt, hover, offset } = this.state
     const productPageTrigger = route && route
 
     return (
@@ -313,6 +324,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
                 windowWidth={windowWidth}
                 handleMouseEnter={this._handleMouseEnter}
                 handleMouseLeave={this._handleMouseLeave}
+                offset={offset}
               />
             }
           />
