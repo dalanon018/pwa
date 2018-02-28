@@ -73,8 +73,8 @@ import {
 } from './constants'
 
 const ContentWrapper = styled(Container)`
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
 `
 
 export class BrandPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -95,7 +95,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   state = {
-    showBannerVisible: true,
+    animateBanner: true,
     brandImages: [],
     pageOffset: 0,
     offset: 0,
@@ -226,10 +226,23 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     getProductsByBrands({ offset, limit, id })
   }
 
-  _handleShowBannerIfVisible = (show) => () => {
+  _handleBannerAnimation = (show) => () => {
     this.setState({
-      showBannerVisible: show
+      animateBanner: show
     })
+  }
+
+  _displayHeaderFeaturesProduct () {
+    const { productsFeatured } = this.props
+    if (productsFeatured.size) {
+      return (
+        <H3>
+          <FormattedMessage {...messages.feature} />
+        </H3>
+      )
+    }
+
+    return null
   }
 
   _displayFeaturedProducts = () => {
@@ -238,28 +251,23 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     const displayFeatured = ifElse(
       lt(0),
       () => (
-        <div>
-          <H3>
-            <FormattedMessage {...messages.feature} />
-          </H3>
-          <InfiniteLoading
-            results={productsFeatured}
-            hasMoreData={lazyload}
-            loadMoreData={this._displayMoreProducts}
-            isLoading={loader}
-            rowCount={productsFeatured.size}
-          >
-            {(props) => (
-              <ProductView
-                changeRoute={changeRoute}
-                loader={loader}
-                products={productsFeatured}
-                windowWidth={windowWidth}
-                {...props}
-              />
-            )}
-          </InfiniteLoading>
-        </div>
+        <InfiniteLoading
+          results={productsFeatured}
+          hasMoreData={lazyload}
+          loadMoreData={this._displayMoreProducts}
+          isLoading={loader}
+          rowCount={productsFeatured.size}
+        >
+          {(props) => (
+            <ProductView
+              changeRoute={changeRoute}
+              loader={loader}
+              products={productsFeatured}
+              windowWidth={windowWidth}
+              {...props}
+            />
+          )}
+        </InfiniteLoading>
       ),
       noop
     )
@@ -341,26 +349,26 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
 
   render () {
     const { productsByBrands, loader } = this.props
-    const { brandImages, showBannerVisible } = this.state
+    const { brandImages, animateBanner } = this.state
     return (
       <div>
         <Waypoint
-          onEnter={this._handleShowBannerIfVisible(true)}
-          onLeave={this._handleShowBannerIfVisible(false)}
+          onEnter={this._handleBannerAnimation(true)}
+          onLeave={this._handleBannerAnimation(false)}
         >
           <div>
-            {
-              showBannerVisible && <BannerSlider
-                isInfinite
-                results={productsByBrands}
-                loader={loader}
-                images={brandImages}
-              />
-            }
+            <BannerSlider
+              isInfinite
+              autoplay={animateBanner}
+              results={productsByBrands}
+              loader={loader}
+              images={brandImages}
+            />
           </div>
         </Waypoint>
         <ContentWrapper>
 
+          { this._displayHeaderFeaturesProduct() }
           { this._displayFeaturedProducts() }
 
           <H3>
