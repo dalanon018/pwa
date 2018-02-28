@@ -256,7 +256,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           hasMoreData={lazyload}
           loadMoreData={this._displayMoreProducts}
           isLoading={loader}
-          rowCount={productsFeatured.size}
+          rowCount={productsFeatured.size + 1}
         >
           {(props) => (
             <ProductView
@@ -275,17 +275,30 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     return displayFeatured(productsFeatured.size)
   }
 
+  _displayHeaderRegularProduct () {
+    const { productsByBrands } = this.props
+    if (productsByBrands.size) {
+      return (
+        <H3>
+          <FormattedMessage {...messages.brandsTitle} />
+        </H3>
+      )
+    }
+
+    return null
+  }
+
   _displayRegularItems = () => {
     const { productsByBrands, changeRoute, loader, lazyload, windowWidth } = this.props
 
-    if (productsByBrands.size !== 0) {
+    if (productsByBrands.size > 1 || lazyload === false) {
       return (
         <InfiniteLoading
           results={productsByBrands}
           hasMoreData={lazyload}
           loadMoreData={this._displayMoreProducts}
           isLoading={loader}
-          rowCount={productsByBrands.size}
+          rowCount={productsByBrands.size + 1}
         >
           {(props) => (
             <ProductView
@@ -352,28 +365,25 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     const { brandImages, animateBanner } = this.state
     return (
       <div>
-        <Waypoint
+        {/*<Waypoint
           onEnter={this._handleBannerAnimation(true)}
           onLeave={this._handleBannerAnimation(false)}
         >
           <div>
-            <BannerSlider
+           {animateBanner && <BannerSlider
               isInfinite
-              autoplay={animateBanner}
               results={productsByBrands}
               loader={loader}
               images={brandImages}
-            />
+            />}
           </div>
-        </Waypoint>
+           </Waypoint> */}
         <ContentWrapper>
 
           { this._displayHeaderFeaturesProduct() }
           { this._displayFeaturedProducts() }
 
-          <H3>
-            <FormattedMessage {...messages.brandsTitle} />
-          </H3>
+          { this._displayHeaderRegularProduct() }
           { this._displayEmptyLoadingIndicator() }
           { this._displayRegularItems() }
         </ContentWrapper>
