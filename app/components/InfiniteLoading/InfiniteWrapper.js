@@ -76,7 +76,11 @@ InfiniteWrapperProxy.propTypes = {
   // we need there are still data to be fetched
   hasMoreData: PropTypes.bool.isRequired,
   // children to load
-  children: PropTypes.func.isRequired
+  children: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.array,
+    PropTypes.object
+  ]).isRequired
 }
 
 export default InfiniteWrapperProxy
