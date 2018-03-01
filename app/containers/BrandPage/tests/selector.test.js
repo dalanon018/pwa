@@ -3,7 +3,8 @@ import {
   selectProductsByBrands,
   selectProductsByBrandsItems,
   selectProductsByBrandsFeatured,
-  selectLazyload
+  selectLazyload,
+  selectTotalCount
 } from '../selectors'
 
 describe('productsByBrandsDomain', () => {
@@ -60,6 +61,20 @@ describe('productsByBrandsDomain', () => {
         }
       })
       expect(selector(mockedState)).toEqual(lazyload)
+    })
+  })
+
+  describe('selectTotalCount', () => {
+    const selector = selectTotalCount()
+
+    it('should get totalCount', () => {
+      const totalCount = 0
+      const mockedState = fromJS({
+        brandPage: {
+          totalCount
+        }
+      })
+      expect(selector(mockedState)).toEqual(totalCount)
     })
   })
 })

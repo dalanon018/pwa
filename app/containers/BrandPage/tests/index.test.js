@@ -21,6 +21,7 @@ describe('<BrandPage />', () => {
         id: 'CAT1'
       }
     },
+    totalCount: 0,
     productsByBrands: fromJS([]),
     productsFeatured: fromJS([]),
     brands: fromJS([])
@@ -30,7 +31,7 @@ describe('<BrandPage />', () => {
     const renderedComponent = shallow(
       <BrandPage {...minProps} />
     )
-    expect(renderedComponent.find('div').length).toEqual(4)
+    expect(renderedComponent.find('div').length).toEqual(3)
   })
 
   it('should render a Waypoint', () => {

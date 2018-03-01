@@ -28,6 +28,11 @@ const selectProductsByBrandsFeatured = () => createSelector(
   (substate) => substate.filter((state) => state.get('isFeatured'))
 )
 
+const selectTotalCount = () => createSelector(
+  selectBrandPageDomain(),
+  subState => subState.get('totalCount')
+)
+
 const selectLoading = () => createSelector(
   selectBrandPageDomain(),
   subState => subState.get('loading')
@@ -44,5 +49,6 @@ export {
   selectProductsByBrandsItems,
   selectProductsByBrandsFeatured,
   selectLoading,
-  selectLazyload
+  selectLazyload,
+  selectTotalCount
 }

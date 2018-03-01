@@ -10,6 +10,7 @@ describe('productsByBrandsReducer', () => {
   beforeEach(() => {
     state = fromJS({
       productsByBrands: [],
+      totalCount: 0,
       loading: false,
       lazyload: false
     })
