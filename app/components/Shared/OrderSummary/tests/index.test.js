@@ -37,13 +37,18 @@ const wrapper = (props = {}, enzyme = shallow) => enzyme(
 
 describe('<OrderSummary />', () => {
   const minProps = {
-    _updateParamsImages: () => {},
+    _updateParamsImages: () => null,
     _handleModalClose: () => {},
     _handleProceed: () => {},
     _handleStoreLocator: () => {},
     _stepWrapperRef: () => {},
     _handleToBottom: () => {},
     _handleChange: () => {},
+    ShowCodComponent: () => <div />,
+    modalToggle: false,
+    labelOne: '',
+    labelTwo: '',
+    visibility: true,
     isBlackListed: false,
     loader: false,
     orderedProduct: fromJS({
@@ -51,6 +56,7 @@ describe('<OrderSummary />', () => {
       'image': null,
       'title': 'All Day Backpack | (wine)',
       'price': '600',
+      'discountprice': 0,
       'discount': {
         'percent': '25',
         'thru': '2015-04-06 12:00:00'
@@ -59,18 +65,16 @@ describe('<OrderSummary />', () => {
       'shipping': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla.',
       'barcode': '718037806839'
     }),
+    brandLogo: null,
     productLoader: false,
     mobileLoader: false,
     orderSuccess: fromJS({}),
     orderFail: fromJS({}),
     mobileNumber: '999999999',
+    errorMessage: '',
     orderRequesting: false,
     store: (!null || !undefined) && 'Quezon City'
   }
-
-  it('Expect to have unit tests specified', () => {
-    expect(true).toEqual(true)
-  })
 
   it('render without exploding', () => {
     const renderComponent = wrapper(minProps)
