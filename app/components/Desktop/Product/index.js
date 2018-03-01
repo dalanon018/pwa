@@ -149,7 +149,7 @@ const Product = ({
                       isLowerdots
                     />
                     {
-                      product.get('quantity') === 0 &&
+                      +product.get('quantity') === 0 &&
                       <Label className='text__align--center' as='p' basic size='huge' color='red'>
                         <FormattedMessage {...messages.noStock} />
                       </Label>
