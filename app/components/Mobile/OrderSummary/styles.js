@@ -80,7 +80,7 @@ const ProductItem = styled.div`
   }
 `
 const StepWrapper = styled.div`
-  margin-bottom: 90px;
+  // margin-bottom: 90px;
   padding: 15px 14px;
 
   &.visibility {

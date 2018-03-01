@@ -113,7 +113,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   state = {
     store: {},
     modePayment: 'COD',
-    visibility: false,
+    visibility: true,
     modalToggle: false,
     errorMessage: ''
   }

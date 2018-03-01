@@ -99,6 +99,31 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
               <SelectMethodWrapper checkHeight={orderedProduct.get('discountPrice') !== 0}>
                 <Form>
                   <Form.Field>
+                    <ShowCodComponent
+                      radio
+                      isBlackListed={isBlackListed}
+                      name='cod'
+                      value='COD'
+                      label={labelTwo}
+                      checked={modePayment === 'COD'}
+                      onChange={_handleChange}
+                      onClick={_handleToBottom}
+                  />
+                    <StepWrapper innerRef={_stepWrapperRef} className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={visibility}>
+                      <Label as='p' basic size='big' className='color__secondary'>
+                        <FormattedMessage {...messages.chooseStore} />
+                      </Label>
+                      <StepHead step='2'>
+                        <p><FormattedMessage {...messages.defaultStore} /></p>
+                      </StepHead>
+                      <LocationButton id='scrollToAnimate' className='color__secondary border__two--light-grey' onClick={_handleStoreLocator} fluid iconBg={NextIcon}>
+                        {
+                        store && isEmpty(store)
+                        ? <FormattedMessage {...messages.findStore} />
+                        : <span>{store.id} {store.name}</span>
+                      }
+                      </LocationButton>
+                    </StepWrapper>
                     <Checkbox
                       radio
                       className='margin__bottom-positive--20'
@@ -107,38 +132,13 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                       label={labelOne}
                       checked={modePayment === 'CASH'}
                       onChange={_handleChange}
-                      />
+                    />
                   </Form.Field>
-                  <ShowCodComponent
-                    radio
-                    isBlackListed={isBlackListed}
-                    name='cod'
-                    value='COD'
-                    label={labelTwo}
-                    checked={modePayment === 'COD'}
-                    onChange={_handleChange}
-                    onClick={_handleToBottom}
-                  />
                 </Form>
               </SelectMethodWrapper>
             </Grid.Row>
           </Grid>
         </CustomGrid>
-        <StepWrapper innerRef={_stepWrapperRef} className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={visibility}>
-          <Label as='p' basic size='big' className='color__secondary'>
-            <FormattedMessage {...messages.chooseStore} />
-          </Label>
-          <StepHead step='2'>
-            <p><FormattedMessage {...messages.defaultStore} /></p>
-          </StepHead>
-          <LocationButton id='scrollToAnimate' className='color__secondary border__two--light-grey' onClick={_handleStoreLocator} fluid iconBg={NextIcon}>
-            {
-              store && isEmpty(store)
-              ? <FormattedMessage {...messages.findStore} />
-              : <span>{store.id} {store.name}</span>
-            }
-          </LocationButton>
-        </StepWrapper>
 
         <ButtonContainer>
           <Button onClick={_handleProceed} primary fluid loading={orderRequesting}>
