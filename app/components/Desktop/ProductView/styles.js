@@ -57,12 +57,6 @@ const ProductInfo = styled.div`
       min-height: 40px;
     }
   }
-
-  @media (min-width: 1024px) {
-    .brand-name {
-      font-size: 14px !important;
-    }
-  }
 `
 
 const ProductPriceWrapper = styled.div`

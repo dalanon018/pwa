@@ -7,11 +7,15 @@
 import React from 'react'
 import LazyLoad from 'react-lazyload'
 
-import { range } from 'lodash'
+import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller'
+import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
+import List from 'react-virtualized/dist/commonjs/List'
 
+import { CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer'
 import {
   identity,
-  ifElse
+  ifElse,
+  range
 } from 'ramda'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Image, Label } from 'semantic-ui-react'
@@ -41,14 +45,26 @@ const imgixOptions = {
   lossless: 0
 }
 
+const cache = new CellMeasurerCache({
+  minHeight: 400,
+  fixedWidth: true,
+  fixedHeight: true
+})
+
 function ProductView ({
   loader,
   products,
   changeRoute,
   windowWidth,
+  customElement,
+  onRowsRendered,
+  registerChild,
   over18,
   isMinor
 }) {
+  const columnCount = windowWidth > 767 ? 4 : 2
+  const rowCount = Math.ceil(products.size / columnCount)
+
   const toggleOrigDiscountPrice = (product) => {
     const showPrice = product.get('discountPrice') || product.get('price')
 
@@ -60,66 +76,116 @@ function ProductView ({
     () => component1,
     () => component2
   )(condition)
-  return (
-    <Grid padded stretched columns={4}>
-      {
-        // we need to make sure to show this only if only if not items yet and we are loading
-        (loader && products.size === 0) ? range(4).map((_, index) => <DefaultState key={index} loader={loader} />)
-        : products.valueSeq().map((product, index) => {
-          const goToProduct = () => {
-            !isMinor || over18
-            ? changeRoute(`/product/${product.get('cliqqCode').first()}`)
-            : changeRoute('/')
-          }
-          const toggleDiscountLabel = showDiscountPrice(
-            <FormattedMessage {...messages.peso} />,
-            null
-          )
-          const toggleDiscountValue = showDiscountPrice(
-            parseFloat(product.get('price')).toLocaleString(),
-            null
-          )
 
-          return (
-            <Grid.Column
-              key={`${product.get('cliqqCode')}-${index}`}
-              onClick={goToProduct}>
-              <ProductWrapper>
-                <ImageWrapper>
-                  <ImageContent>
-                    <LazyLoad
-                      height={300}
-                      placeholder={<LoadingIndicator />}
-                      once
-                    >
-                      {
-                        !isMinor || over18
-                        ? <Image alt={product.get('title')} src={(product.get('image') && `${paramsImgix(product.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
-                        : <Image alt='CLiQQ' src={imageStock('Brands-Default.jpg', imgixOptions)} className='empty-image' />
-                      }
-                    </LazyLoad>
-                  </ImageContent>
-                </ImageWrapper>
-                <ProductInfo brandName={product.get('brand')}>
-                  <Label as='span' className='brand-name color__secondary' basic size='medium'>{product.getIn(['brand', 'name'])}</Label>
-                  <Label className='no-bottom-margin product-name color__secondary' as='p' basic size='large'>{product.get('title')}</Label>
-                  <ProductPriceWrapper>
-                    <Label className='product-price' as='b' color='orange' basic size='massive'>
-                      <FormattedMessage {...messages.peso} />
-                      { toggleOrigDiscountPrice(product) }
-                    </Label>
-                    <Label className='product-discount' as='span' color='grey' basic size='large'>
-                      { toggleDiscountLabel(product.get('discountPrice') !== 0) }
-                      { toggleDiscountValue(product.get('discountPrice') !== 0) }
-                    </Label>
-                  </ProductPriceWrapper>
-                </ProductInfo>
-              </ProductWrapper>
-            </Grid.Column>
-          )
-        })
-      }
-    </Grid>
+  const ProductEntityInfo = (entity) => {
+    // make sure not to display if undefined
+    if (!entity) {
+      return null
+    }
+
+    const toggleDiscountLabel = showDiscountPrice(
+      <FormattedMessage {...messages.peso} />,
+      null
+    )
+    const toggleDiscountValue = showDiscountPrice(
+      parseFloat(entity.get('price')).toLocaleString(),
+      null
+    )
+    const goToProduct = () => !isMinor || over18
+    ? changeRoute(`/product/${entity.get('cliqqCode').first()}`)
+    : changeRoute('/')
+
+    return (
+      <ProductWrapper onClick={goToProduct}>
+        <ImageWrapper>
+          <ImageContent>
+            <LazyLoad
+              height={300}
+              offset={300}
+              placeholder={<LoadingIndicator />}
+              once
+          >
+              {
+              !isMinor || over18
+              ? <Image alt={entity.get('title')} src={(entity.get('image') && `${paramsImgix(entity.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
+              : <Image alt='CLiQQ' src={imageStock('Brands-Default.jpg', imgixOptions)} className='empty-image' />
+            }
+            </LazyLoad>
+          </ImageContent>
+        </ImageWrapper>
+        <ProductInfo brandName={entity.get('brand')}>
+          <Label as='span' className='brand-name color__secondary' basic size='medium'>{entity.getIn(['brand', 'name'])}</Label>
+          <Label className='no-bottom-margin product-name color__secondary' as='p' basic size='large'>{entity.get('title')}</Label>
+          <ProductPriceWrapper>
+            <Label className='product-price' as='b' color='orange' basic size='massive'>
+              <FormattedMessage {...messages.peso} />
+              { toggleOrigDiscountPrice(entity) }
+            </Label>
+            <Label className='product-discount' as='span' color='grey' basic size='large'>
+              { toggleDiscountLabel(entity.get('discountPrice') !== 0) }
+              { toggleDiscountValue(entity.get('discountPrice') !== 0) }
+            </Label>
+          </ProductPriceWrapper>
+        </ProductInfo>
+      </ProductWrapper>
+    )
+  }
+
+  const ProductEntity = ({ index, isScrolling, key, style }) => {
+    const fromIndex = index * columnCount
+    const toIndex = fromIndex + columnCount
+    const render = range(fromIndex, toIndex).map((rangeIndex) => (
+      <Grid.Column key={rangeIndex}>
+        { ProductEntityInfo(products.get(rangeIndex)) }
+      </Grid.Column>
+    ))
+
+    return (
+      <Grid
+        padded
+        stretched
+        columns={columnCount}
+        key={`${key}`}
+        style={style}
+      >
+        { render }
+      </Grid>
+    )
+  }
+
+  return (
+    <WindowScroller
+      scrollElement={customElement || window}
+    >
+      {({height, scrollTop}) =>
+        (loader && products.size === 0) ? (
+          <Grid
+            padded
+            stretched
+            columns={columnCount}>
+            {range(0, columnCount).map((ranger) => (
+              <DefaultState key={ranger} loader={loader} />
+            ))}
+          </Grid>
+        ) : (
+          <AutoSizer disableHeight>
+            {({ width }) => (
+              <List
+                onRowsRendered={onRowsRendered}
+                ref={registerChild}
+                autoHeight
+                height={height}
+                width={width}
+                rowHeight={cache.rowHeight}
+                rowCount={rowCount}
+                rowRenderer={ProductEntity}
+                overscanRowCount={15}
+                scrollTop={scrollTop}
+            />
+          )}
+          </AutoSizer>
+      )}
+    </WindowScroller>
   )
 }
 
@@ -139,7 +205,6 @@ const DefaultState = () => {
 }
 
 ProductView.propTypes = {
-
 }
 
 export default ProductView
