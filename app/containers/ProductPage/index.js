@@ -218,9 +218,12 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   _handleCountOffset = () => {
-    const left = document.getElementById('affix-element').offsetHeight
-    const right = document.getElementById('right-column-preview').offsetHeight
-    const subtracted = left - right
+    const affixElement = document.getElementById('affix-element')
+    const preview = document.getElementById('right-column-preview')
+
+    const subtracted =
+      (affixElement ? affixElement.offsetHeight : 0) -
+      (preview ? preview.offsetHeight : 0)
 
     this.setState({ offset: Math.abs(subtracted) })
   }
