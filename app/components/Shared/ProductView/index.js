@@ -59,6 +59,7 @@ function ProductView ({
   customElement,
   onRowsRendered,
   registerChild,
+  over18,
   isMinor
 }) {
   const columnCount = windowWidth > 767 ? 4 : 2
@@ -104,7 +105,7 @@ function ProductView ({
               placeholder={<LoadingIndicator />}
               once
           >
-            {
+              {
               !isMinor || over18
               ? <Image alt={entity.get('title')} src={(entity.get('image') && `${paramsImgix(entity.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
               : <Image alt='CLiQQ' src={imageStock('Brands-Default.jpg', imgixOptions)} className='empty-image' />
