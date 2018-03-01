@@ -43,7 +43,6 @@ import DesktopProductView from 'components/Desktop/ProductView'
 import MobileFooter from 'components/Mobile/Footer'
 
 import WindowWidth from 'components/Shared/WindowWidth'
-import LazyLoading from 'components/Shared/LazyLoading'
 import H3 from 'components/Shared/H3'
 import H4 from 'components/Shared/H4'
 import EmptyProducts from 'components/Shared/EmptyProductsBlock'
@@ -260,10 +259,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
           {(props) => (
             <AccessView
               mobileView={
-                <MobileProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props}/>
+                <MobileProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
               }
               desktopView={
-                <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props}/>
+                <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
               }
             />
           )}
@@ -441,7 +440,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
                 <MobileProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={products} windowWidth={windowWidth} {...props} />
               }
               desktopView={
-                <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props}/>
+                <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={products} windowWidth={windowWidth} {...props} />
               }
             />
           )}
@@ -571,7 +570,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   render () {
     const isCategory = window.location.pathname.split('/')[1] === 'products-category'
     const { loader, lazyload, over18, windowWidth } = this.props
-    const { limit, togglePrompt } = this.state
+    const { togglePrompt } = this.state
 
     return (
       <div>
