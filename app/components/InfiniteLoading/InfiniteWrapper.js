@@ -13,7 +13,7 @@ import {
   ifElse
 } from 'ramda'
 
-import LoadingIndicator from 'components/LoadingIndicator'
+import LoadingIndicator from 'components/Shared/LoadingIndicator'
 
 import { FormattedMessage } from 'react-intl'
 import messages from './messages'
