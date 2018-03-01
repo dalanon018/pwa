@@ -43,6 +43,11 @@ const Content = styled.div`
 
 const ModalWrapper = styled.div`
   padding: 10px 50px !important;
+
+  @media (min-width: 1024px) {
+    background-color: #FFFFFF;
+    padding: 30px 50px !important;
+  }
 `
 
 const CustomLabel = styled(Label)`
@@ -51,6 +56,27 @@ const CustomLabel = styled(Label)`
   &.plain-button {
     cursor: pointer;
     margin-top : 15px;
+  }
+`
+
+const ModalContentCustom = styled(Modal.Content)`
+  @media (min-width: 1024px) {
+    background: transparent !important;
+    padding: 21px 100px !important;
+  }
+`
+
+const CustomModal = styled(Modal)`
+  @media (min-width: 1024px) {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+`
+
+const PrimaryButtonWrapper = styled.div`
+  @media (min-width: 1024px) {
+    margin-top: 10px;
+    padding: 0 110px;
   }
 `
 
@@ -83,8 +109,8 @@ function PromptModal ({
     <div>
       {
         isCategory
-        ? <Modal size='small' open={open}>
-          <Modal.Content>
+        ? <CustomModal size='small' open={open}>
+          <ModalContentCustom>
             <ModalWrapper>
               <IconWrapper background={color}>
                 <Icon name={name} className='custom-icon' />
@@ -109,10 +135,10 @@ function PromptModal ({
                 </CustomLabel>
               </Content>
             </ModalWrapper>
-          </Modal.Content>
-        </Modal>
-        : <Modal size='small' open={open} onClose={close}>
-          <Modal.Content>
+          </ModalContentCustom>
+        </CustomModal>
+        : <CustomModal size='small' open={open} onClose={close}>
+          <ModalContentCustom>
             <ModalWrapper>
               <IconWrapper background={color}>
                 <Icon name={name} className='custom-icon' />
@@ -126,13 +152,15 @@ function PromptModal ({
                 <CustomLabel className='text__roboto--light' as='p' basic size='medium'>
                   {content}
                 </CustomLabel>
-                <Button primary fluid onClick={close}>
-                  <FormattedMessage {...messages.promptOk} />
-                </Button>
+                <PrimaryButtonWrapper>
+                  <Button primary fluid onClick={close}>
+                    <FormattedMessage {...messages.promptOk} />
+                  </Button>
+                </PrimaryButtonWrapper>
               </Content>
             </ModalWrapper>
-          </Modal.Content>
-        </Modal>
+          </ModalContentCustom>
+        </CustomModal>
       }
 
     </div>
