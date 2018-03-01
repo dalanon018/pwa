@@ -106,6 +106,10 @@ const SearchInput = styled(Input)`
   letter-spacing: 1px;
   margin: 0 5px;
   width: 100%;
+
+  @media (min-width: 1024px) {
+    margin: 0;
+  }
 `
 
 const CloseIcon = styled(Icon)`
@@ -125,6 +129,12 @@ const InputContainer = styled.div`
     right: 0;
     top: 8px;
     margin: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .magnifier {
+      top: 9.5px !important;
+    }
   }
 `
 
@@ -250,18 +260,16 @@ class SearchMenu extends PureComponent {
           </Wrapper>
         }
         desktopView={
-          <SearchContainer>
-            <InputContainer>
-              <SearchInput
-                className='color__secondary border__none'
-                ref={this._inputReference}
-                onChange={this._handleOnchange}
-                onKeyPress={this._handleKeyPress}
-                placeholder={intl.formatMessage(messages.searchPlaceHolder)}
-              />
-              <Icon className='magnifier cursor__pointer' name='search' onClick={this._handlePressSearch} />
-            </InputContainer>
-          </SearchContainer>
+          <InputContainer>
+            <SearchInput
+              className='color__secondary border__none'
+              ref={this._inputReference}
+              onChange={this._handleOnchange}
+              onKeyPress={this._handleKeyPress}
+              placeholder={intl.formatMessage(messages.searchPlaceHolder)}
+            />
+            <Icon className='magnifier cursor__pointer' name='search' onClick={this._handlePressSearch} />
+          </InputContainer>
         }
       />
     )
