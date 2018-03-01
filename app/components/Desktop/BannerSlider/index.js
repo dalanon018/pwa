@@ -28,7 +28,9 @@ function BannerSlider ({
   toggleLightBox,
   lightBoxImage,
   images,
-  slidesToShow }) {
+  slidesToShow,
+  autoplay
+}) {
   return <HandleBlock
     loader={loader}
     images={images}
@@ -41,6 +43,7 @@ function BannerSlider ({
     isInfinite={isInfinite || false}
     isLowerdots={isLowerdots || false}
     slidesToShow={slidesToShow || 1}
+    autoplay={autoplay}
     />
 }
 
@@ -64,13 +67,14 @@ export const HandleBlock = ({
   lightBoxImage,
   toggleLightBox,
   images,
-  slidesToShow }) => {
+  slidesToShow = 1,
+  autoplay = true
+}) => {
   let block
-
   const thumbnailPagination = i => <img key={i} src={images[i]} />
 
   const settings = {
-    autoplay: toggleLightBox || active ? false : images.length > 1,
+    autoplay: (autoplay && (toggleLightBox || active)) ? false : images.length > 1,
     swipe: images.length > 1,
     autoplaySpeed: 4000,
     dots: images.length > 1,

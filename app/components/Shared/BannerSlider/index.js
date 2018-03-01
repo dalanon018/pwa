@@ -54,7 +54,9 @@ export const HandleBlock = ({
 }) => {
   let block
   const settings = {
-    autoplay: autoplay && images.length > 1,
+    // @TODO:
+    // for now we will make this false since it's causing issue with setState on desktop
+    autoplay: false,
     swipe: images.length > 1,
     autoplaySpeed: 3500,
     dots: images.length > 1,
