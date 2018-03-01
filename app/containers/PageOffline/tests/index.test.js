@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import PageOffline from '../index'
-import OtherPage from 'components/OtherPage'
+import OtherPage from 'components/Shared/OtherPage'
 
 describe('<PageOffline />', () => {
   const minProps = {

@@ -56,7 +56,8 @@ import {
   registerPushAction,
   getRegisteredPushAction,
   getLoyaltyTokenAction,
-  removeLoyaltyTokenAction
+  removeLoyaltyTokenAction,
+  setSearchValueAction
 } from './actions'
 
 import {
@@ -84,14 +85,19 @@ import FaqPage from 'containers/FaqPage/Loadable'
 import NotFound from 'containers/PageNotFound/Loadable'
 import OfflinePage from 'containers/PageOffline/Loadable'
 
-import ModalWithHeader from 'components/ModalWithHeader'
-import Modal from 'components/PromptModal'
-import WindowWidth from 'components/WindowWidth'
+import MobileModal from 'components/Mobile/ModalWithHeader'
+import DesktopModal from 'components/Desktop/ModalWithHeader'
+import Modal from 'components/Shared/PromptModal'
+import WindowWidth from 'components/Shared/WindowWidth'
+import AccessView from 'components/Shared/AccessMobileDesktopView'
+
+import MobileHeaderNav from 'components/Mobile/HeaderNav'
+import DesktopHeaderNav from 'components/Desktop/HeaderNav'
+import DesktopFooter from 'components/Desktop/Footer'
 
 import reducer from './reducer'
 import saga from './saga'
 import messages from './messages'
-import HeaderMenu from './HeaderMenu'
 import SearchMenu from './SearchMenu'
 import SidebarMenu from './SidebarMenu'
 
@@ -101,8 +107,7 @@ const Wrapper = styled.div`
 `
 
 const MainContent = styled.div`
-  margin-top: 50px;
-  overflow: hidden;
+  margin-top: ${props => props.media >= 1024 ? '120px' : '50px'};
   width: 100%;
 `
 
@@ -254,7 +259,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   _displayHeader = () => {
-    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, location: { pathname }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen } = this.props
+    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, location: { pathname }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen, productCategories, brands, loyaltyToken, removeLoyaltyToken } = this.props
     /**
      * we have to identify if we should display backbutton
      */
@@ -262,28 +267,81 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
     if (pathname === '/search') {
       return (
-        <SearchMenu
-          clearSearch={setProductSearchList}
-          searchProduct={searchProduct}
-          hideBackButton={hideBackButton}
-          leftButtonAction={this._handleLeftButtonAction}
+        <AccessView
+          mobileView={
+            <SearchMenu
+              clearSearch={setProductSearchList}
+              searchProduct={searchProduct}
+              hideBackButton={hideBackButton}
+              _handleSearchInputValue={this._handleSearchInputValue}
+              leftButtonAction={this._handleLeftButtonAction}
+            />
+          }
+          desktopView={
+            <DesktopHeaderNav
+              brands={brands}
+              categories={productCategories}
+              changeRoute={changeRoute}
+              currentRoute={routeName}
+              headerMenuFullScreen={headerMenuFullScreen}
+              hideBackButton={hideBackButton}
+              intl={intl}
+              leftButtonAction={this._handleLeftButtonAction}
+              pageTitle={pageTitle}
+              searchProduct={searchProduct}
+              showActivityIcon={showActivityIcon}
+              showSearchIcon={showSearchIcon}
+              isSignIn={!!loyaltyToken}
+              signOut={removeLoyaltyToken}
+
+              clearSearchNav={setProductSearchList}
+              searchProductNav={searchProduct}
+              hideBackButtonNav={hideBackButton}
+              _handleSearchInputValueNav={this._handleSearchInputValue}
+              leftButtonActionNav={this._handleLeftButtonAction}
+            />
+          }
         />
       )
     }
 
     return (
-      <HeaderMenu
-        headerMenuFullScreen={headerMenuFullScreen}
-        pageTitle={pageTitle}
-        showSearchIcon={showSearchIcon}
-        showActivityIcon={showActivityIcon}
-        hideBackButton={hideBackButton}
-        leftButtonAction={this._handleLeftButtonAction}
-        changeRoute={changeRoute}
-        currentRoute={routeName}
-        searchProduct={searchProduct}
-        intl={intl}
-      />
+      <div>
+        <AccessView
+          mobileView={
+            <MobileHeaderNav
+              changeRoute={changeRoute}
+              currentRoute={routeName}
+              headerMenuFullScreen={headerMenuFullScreen}
+              hideBackButton={hideBackButton}
+              intl={intl}
+              leftButtonAction={this._handleLeftButtonAction}
+              pageTitle={pageTitle}
+              searchProduct={searchProduct}
+              showActivityIcon={showActivityIcon}
+              showSearchIcon={showSearchIcon}
+            />
+          }
+          desktopView={
+            <DesktopHeaderNav
+              brands={brands}
+              categories={productCategories}
+              changeRoute={changeRoute}
+              currentRoute={routeName}
+              headerMenuFullScreen={headerMenuFullScreen}
+              hideBackButton={hideBackButton}
+              intl={intl}
+              leftButtonAction={this._handleLeftButtonAction}
+              pageTitle={pageTitle}
+              searchProduct={searchProduct}
+              showActivityIcon={showActivityIcon}
+              showSearchIcon={showSearchIcon}
+              isSignIn={!!loyaltyToken}
+              signOut={removeLoyaltyToken}
+            />
+          }
+        />
+      </div>
     )
   }
 
@@ -291,15 +349,32 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     const { receiptsUpdated, setUpdatedReceipts, windowWidth } = this.props
 
     return receiptsUpdated.map((receipt, index) =>
-      <ModalWithHeader
-        receipt={receipt}
-        receipts={receiptsUpdated}
+      <AccessView
         key={index}
-        setUpdatedReceipts={setUpdatedReceipts}
-        goToHome={this._goToHome}
-        goToReceipts={this._goToReceipts}
-        goToProducts={this._goToProducts}
-        windowWidth={windowWidth}
+        mobileView={
+          <MobileModal
+            receipt={receipt}
+            receipts={receiptsUpdated}
+            key={index}
+            setUpdatedReceipts={setUpdatedReceipts}
+            goToHome={this._goToHome}
+            goToReceipts={this._goToReceipts}
+            goToProducts={this._goToProducts}
+            windowWidth={windowWidth}
+          />
+        }
+        desktopView={
+          <DesktopModal
+            receipt={receipt}
+            receipts={receiptsUpdated}
+            key={index}
+            setUpdatedReceipts={setUpdatedReceipts}
+            goToHome={this._goToHome}
+            goToReceipts={this._goToReceipts}
+            goToProducts={this._goToProducts}
+            windowWidth={windowWidth}
+          />
+        }
       />
     )
   }
@@ -340,6 +415,16 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     500: <FormattedMessage {...messages.failedFetch} />
   })(statusCode)(statusCode)
 
+  _handleRemoveStickyFooter = () => {
+    const stickyFooter = document.getElementsByTagName('footer')[0]
+
+    stickyFooter &&
+    stickyFooter.classList.contains('sticky') &&
+    stickyFooter.classList.remove('sticky')
+  }
+
+  _handleSearchInputValue = value => this.props.setSearchValue(value)
+
   componentDidMount () {
     const { getMobileNumbers, getCategories, getBrands, getRegisteredPush, getLoyaltyToken, isMobile } = this.props
     const shouldDisplayNotification = ifElse(
@@ -366,15 +451,19 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
     // if isRegister
     this._firebaseHandleRefreshToken(isRegisteredPush)
+
+    this._handleRemoveStickyFooter()
   }
 
   render () {
-    const { productCategories, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken } = this.props
+    const { productCategories, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken, windowWidth } = this.props
     const { toggleSidebar } = this.state
+
     return (
       <Wrapper toggleSidebar={toggleSidebar}>
         { this._displayHeader() }
         <MainContent
+          media={windowWidth}
           toggleSidebar={toggleSidebar} >
           <Switch>
             <Route exact path='/' component={HomePage} />
@@ -393,6 +482,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
             <Route path='/offline' component={OfflinePage} />
             <Route path='' component={NotFound} />
           </Switch>
+          <AccessView
+            mobileView={null}
+            desktopView={<DesktopFooter />}
+          />
         </MainContent>
         <div
           className='sidebar-wrapper' >
@@ -453,6 +546,7 @@ function mapDispatchToProps (dispatch) {
     setNetworkError: (payload) => dispatch(setNetworkErrorAction(payload)),
     registerPush: (payload) => dispatch(registerPushAction(payload)),
     getRegisteredPush: () => dispatch(getRegisteredPushAction()),
+    setSearchValue: payload => dispatch(setSearchValueAction(payload)),
     dispatch
   }
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import PageNotFound from '../index'
-import OtherPage from 'components/OtherPage'
+import OtherPage from 'components/Shared/OtherPage'
 
 describe('<PageNotFound />', () => {
   const minProps = {

@@ -4,7 +4,7 @@ import { fromJS } from 'immutable'
 import { shallow } from 'enzyme'
 import { ProductPage } from '../index'
 
-import Product from 'components/Product'
+import Product from 'components/Shared/Product'
 
 const children = (<h1>Test</h1>)
 const wrapper = (props = {}, enzyme = shallow) => enzyme(
@@ -115,8 +115,8 @@ describe('<Products />', () => {
     ).toEqual(1)
   })
 
-  it('renders one <Product/> custom component', () => {
+  it('renders zero <Product/> custom component', () => {
     const renderComponent = wrapper(minProps)
-    expect(renderComponent.find(Product)).toHaveLength(1)
+    expect(renderComponent.find(Product)).toHaveLength(0)
   })
 })

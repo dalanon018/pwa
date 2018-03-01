@@ -28,9 +28,12 @@ import DELIVERED from 'images/ticket-backgrounds/pickup.png'
 import CLAIMED from 'images/ticket-backgrounds/claimed.png'
 import UNCLAIMED from 'images/ticket-backgrounds/not-claimed.png'
 
-import Receipt from 'components/Receipt'
-import Modal from 'components/PromptModal'
-import WindowWidth from 'components/WindowWidth'
+import MobileReceipt from 'components/Mobile/Receipt'
+import DesktopReceipt from 'components/Desktop/Receipt'
+
+import Modal from 'components/Shared/PromptModal'
+import WindowWidth from 'components/Shared/WindowWidth'
+import AccessView from 'components/Shared/AccessMobileDesktopView'
 
 import { userIsAuthenticated } from 'containers/App/auth'
 import { ENVIROMENT } from 'containers/App/constants'
@@ -67,7 +70,6 @@ import {
 } from './actions'
 
 const ReceiptWrapper = styled.div`
-  margin-bottom: 60px;
 
   @media (min-width: 768px) {
     padding: 35px 30px;
@@ -239,38 +241,54 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
     const { modalToggle, title, content, loadingPushToggle } = this.state
     const receiptPageName = route && route.name
     // const widthResponsive = windowWidth >= 768
-    return (
-      <ReceiptWrapper background={this._identifyBackground}>
-        <Helmet
-          title='ReceiptPage'
-          meta={[
-            { name: 'description', content: 'Description of ReceiptPage' }
-          ]}
-        />
-        <Receipt
-          loadingPushToggle={loadingPushToggle}
-          receiptPageName={receiptPageName}
-          loading={loading}
-          statuses={STATUSES}
-          purchaseUsecases={PURCHASE_USECASE}
-          purchaseOrder={PURCHASE_ORDER}
-          receipt={receipt}
-          goHomeFn={this._goToHomeFn}
-          windowWidth={windowWidth}
-          goToProduct={this._repurchaseFn}
-          goReceiptPage={this._goToPurchases}
-          registerPushNotification={this._handleRegistrationPushNotification}
-          isRegisteredPush={isRegisteredPush}
-        />
 
-        <Modal
-          open={modalToggle}
-          name='warning'
-          title={title}
-          content={content}
-          close={this._handleModalClose}
+    const props = {
+      loadingPushToggle: loadingPushToggle,
+      receiptPageName: receiptPageName,
+      loading: loading,
+      statuses: STATUSES,
+      purchaseUsecases: PURCHASE_USECASE,
+      purchaseOrder: PURCHASE_ORDER,
+      receipt: receipt,
+      goHomeFn: this._goToHomeFn,
+      windowWidth: windowWidth,
+      goToProduct: this._repurchaseFn,
+      goReceiptPage: this._goToPurchases,
+      registerPushNotification: this._handleRegistrationPushNotification,
+      isRegisteredPush: isRegisteredPush
+    }
+
+    return (
+      <div>
+        <ReceiptWrapper background={this._identifyBackground}>
+          <Helmet
+            title='ReceiptPage'
+            meta={[
+              { name: 'description', content: 'Description of ReceiptPage' }
+            ]}
+          />
+          <AccessView
+            mobileView={
+              <MobileReceipt {...props} />
+            }
+            desktopView={
+              <DesktopReceipt {...props} />
+            }
+          />
+
+          <Modal
+            open={modalToggle}
+            name='warning'
+            title={title}
+            content={content}
+            close={this._handleModalClose}
+          />
+        </ReceiptWrapper>
+        <AccessView
+          mobileView={null}
+          desktopView={null}
         />
-      </ReceiptWrapper>
+      </div>
     )
   }
 }

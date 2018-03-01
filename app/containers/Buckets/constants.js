@@ -22,6 +22,8 @@ export const SET_NETWORK_ERROR = 'app/Buckets/SET_NETWORK_ERROR'
 
 export const SET_TOGGLE = 'app/Buckets/SET_TOGGLE'
 
+export const SET_LIGHTBOX_IMAGE = 'app/Buckets/SET_LIGHTBOX_IMAGE'
+
 export const GET_PAGE_TITLE = 'app/Container/GET_PAGE_TITLE'
 export const SET_PAGE_TITLE = 'app/Container/SET_PAGE_TITLE'
 
@@ -41,6 +43,8 @@ export const GET_LOYALTY_TOKEN = 'app/Container/GET_LOYALTY_TOKEN'
 export const SET_LOYALTY_TOKEN = 'app/Container/SET_LOYALTY_TOKEN'
 // TECHNICALLY SIGN OUT IS WHEN WE REMOVE THE LOYALTY TOKEN
 export const REMOVE_LOYALTY_TOKEN = 'app/Container/REMOVE_LOYALTY_TOKEN'
+
+export const SET_SEARCH_VALUE = 'app/Buckets/SET_SEARCH_VALUE'
 
 export const HIDE_BACK_BUTTON = [
   '',

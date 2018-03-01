@@ -12,6 +12,8 @@ import {
 
 import { FbEventTracking } from 'utils/seo'
 
+import AccessView from 'components/Shared/AccessMobileDesktopView'
+
 import messages from './messages'
 
 const Wrapper = styled.div`
@@ -167,10 +169,12 @@ class SearchMenu extends PureComponent {
   }
 
   _handleSearchProcess = (keyword) => {
-    const { searchProduct } = this.props
+    const { searchProduct, _handleSearchInputValue } = this.props
     FbEventTracking('Search', {
       search_string: keyword
     })
+
+    _handleSearchInputValue(this.state.searchValue)
 
     return searchProduct({ id: keyword })
   }
@@ -205,42 +209,56 @@ class SearchMenu extends PureComponent {
   render () {
     const { leftButtonAction, hideBackButton, intl } = this.props
     const { dirty } = this.state
+
     return (
-      <Wrapper classname='background__light-grey'>
-        <Grid>
-          <Grid.Row>
-            <Grid.Column className='padding__right--none' verticalAlign='middle' width={2}>
-              <LeftWrapper onClick={leftButtonAction} >
-                <Hamburger className='border__none'>
-                  <HamburgerSpan className='background__secondary' active={!hideBackButton}>toggle menu</HamburgerSpan>
-                </Hamburger>
-              </LeftWrapper>
-            </Grid.Column>
-            <Grid.Column className='padding__none--horizontal' verticalAlign='middle' width={13}>
-              <SearchContainer>
-                <InputContainer>
-                  <SearchInput
-                    className='color__secondary border__none'
-                    ref={this._inputReference}
-                    onChange={this._handleOnchange}
-                    onKeyPress={this._handleKeyPress}
-                    placeholder={intl.formatMessage(messages.searchPlaceHolder)}
-                  />
-                  <Icon className='magnifier' name='search' onClick={this._handlePressSearch} />
-                </InputContainer>
-                {
-                  dirty &&
-                  <CloseIcon
-                    onClick={this._clearInput}
-                    name='remove'
-                    color='orange'
-                    size='big' />
-                }
-              </SearchContainer>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Wrapper>
+      <AccessView
+        mobileView={
+          <Wrapper className='background__light-grey'>
+            <Grid>
+              <Grid.Row>
+                <Grid.Column className='padding__right--none' verticalAlign='middle' width={2}>
+                  <LeftWrapper onClick={leftButtonAction} >
+                    <Hamburger className='border__none'>
+                      <HamburgerSpan className='background__secondary' active={!hideBackButton}>toggle menu</HamburgerSpan>
+                    </Hamburger>
+                  </LeftWrapper>
+                </Grid.Column>
+                <Grid.Column className='padding__none--horizontal' verticalAlign='middle' width={13}>
+                  <SearchContainer>
+                    <InputContainer>
+                      <SearchInput
+                        className='color__secondary border__none'
+                        ref={this._inputReference}
+                        onChange={this._handleOnchange}
+                        onKeyPress={this._handleKeyPress}
+                        placeholder={intl.formatMessage(messages.searchPlaceHolder)}
+                      />
+                      <Icon className='magnifier' name='search' onClick={this._handlePressSearch} />
+                    </InputContainer>
+                    {
+                      dirty &&
+                      <CloseIcon
+                        onClick={this._clearInput}
+                        name='remove'
+                        color='orange'
+                        size='big' />
+                    }
+                  </SearchContainer>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Wrapper>
+        }
+        desktopView={
+          <SearchInput
+            className='color__secondary border__none'
+            ref={this._inputReference}
+            onChange={this._handleOnchange}
+            onKeyPress={this._handleKeyPress}
+            placeholder={intl.formatMessage(messages.searchPlaceHolder)}
+          />
+        }
+      />
     )
   }
 }

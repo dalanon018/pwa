@@ -7,7 +7,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import showdown from 'showdown'
-import Recaptcha from 'react-google-recaptcha'
 
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
@@ -24,24 +23,15 @@ import {
   lt,
   prop
 } from 'ramda'
-import { Image, Label, Button, Grid } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
-import BannerBg from 'images/modal-bg-lightgrey.png'
-import MobileIcon from 'images/icons/mobile-icon.svg'
-import BackIcon from 'images/icons/back.svg'
 
-import CloseButton from 'components/CloseButton'
-import Input from 'components/InputField'
-import Checkbox from 'components/CheckboxField'
-import Modal from 'components/PromptModal'
-import A from 'components/A'
-import PopupVerification from 'components/PopupVerification'
+import MobileRegistration from 'components/Mobile/Registration'
+import DesktopRegistration from 'components/Desktop/Registration'
+import AccessView from 'components/Shared/AccessMobileDesktopView'
 
-import { LoadingStateInfo } from 'components/LoadingBlock'
 import { userIsNotAuthenticated } from 'containers/App/auth'
-import { RECAPTCHA_SITE_KEY } from 'containers/App/constants'
 import { setAuthenticatingAction } from 'containers/App/actions'
 import { selectIsAuthenticating } from 'containers/App/selectors'
 
@@ -49,18 +39,6 @@ import AuthLoader from './AuthLoader'
 import messages from './messages'
 import reducer from './reducer'
 import saga from './saga'
-
-import {
-  PopupWrapper,
-  PopupContainer,
-  InputWrapper,
-  BannerHeader,
-  TextWrapper,
-  PopupContent,
-  TermsConditionsWrapper,
-  ButtonWrapper,
-  TermsConditionsHeader
-} from './styles'
 
 import {
   selectMobileNumbers,
@@ -399,112 +377,68 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
 
     return (
       <div>
-        <PopupWrapper className='background__white'>
-          <BannerHeader background={BannerBg}>
-            <span className='background__smoke-grey border__three-white'>
-              <Image alt='CLiQQ' src={MobileIcon} />
-            </span>
-          </BannerHeader>
-          <PopupContainer>
-            <PopupContent>
-              <TextWrapper>
-                <Label as='p' basic size='huge' className='color__secondary'>
-                  <FormattedMessage {...messages.register} />
-                </Label>
-                <Label as='p' basic color='grey' size='medium'><FormattedMessage {...messages.label} /></Label>
-              </TextWrapper>
+        <AccessView
+          mobileView={
+            <MobileRegistration
+              check={check}
+              disabledButton={disabledButton}
+              errModalName={errModalName}
+              errModalToggle={errModalToggle}
+              errorMessage={errorMessage}
+              errorTitle={errorTitle}
+              history={history}
+              loadingMarkdown={loadingMarkdown}
+              markdown={markdown}
+              submissionLoader={submissionLoader}
+              toggleTerms={toggleTerms}
+              value={value}
+              verificationToggle={verificationToggle}
 
-              <InputWrapper>
-                <Label as='span' basic color='grey' size='massive'>
-                  <FormattedMessage {...messages.phonePrefix} />
-                </Label>
+              _agreeAction={this._agreeAction}
+              _closePopupSlide={this._closePopupSlide}
+              _executeCaptcha={this._executeCaptcha}
+              _executeResendCode={this._executeResendCode}
+              _handleCheck={this._handleCheck}
+              _handleErrModalClose={this._handleErrModalClose}
+              _handleInput={this._handleInput}
+              _handlePaste={this._handlePaste}
+              _handleSubmit={this._handleSubmit}
+              _handleSubmitVerification={this._handleSubmitVerification}
+              _recaptchaRef={this._recaptchaRef}
+              _toggleTerms={this._toggleTerms}
+            />
+          }
+          desktopView={
+            <DesktopRegistration
+              check={check}
+              disabledButton={disabledButton}
+              errModalName={errModalName}
+              errModalToggle={errModalToggle}
+              errorMessage={errorMessage}
+              errorTitle={errorTitle}
+              history={history}
+              loadingMarkdown={loadingMarkdown}
+              markdown={markdown}
+              submissionLoader={submissionLoader}
+              toggleTerms={toggleTerms}
+              value={value}
+              verificationToggle={verificationToggle}
 
-                <Input
-                  type='tel'
-                  value={value}
-                  onChange={this._handleInput}
-                  placeholder='9XXXXXXXXX'
-                  onPaste={this._handlePaste} />
-              </InputWrapper>
-              <Checkbox
-                className='margin__bottom-positive--20'
-                onChange={this._handleCheck}
-                checked={check}
-                name='checkbox'
-                label={(
-                  <span className='checkbox-label'>
-                    <FormattedMessage {...messages.checkTermsLabel} />
-                    <A key={0} onClick={this._toggleTerms}>
-                      <FormattedMessage {...messages.checkTermsLink} />
-                    </A>
-                  </span>
-                )}
-              />
-              <Button
-                disabled={disabledButton}
-                loading={submissionLoader}
-                primary
-                fluid
-                onClick={this._handleSubmit}>
-                <FormattedMessage {...messages.submitButton} />
-              </Button>
-
-              <CloseButton close={history.goBack} text='Close' />
-            </PopupContent>
-          </PopupContainer>
-          <Modal
-            open={errModalToggle}
-            name={errModalName}
-            title={errorTitle}
-            content={errorMessage}
-            close={this._handleErrModalClose}
-          />
-
-          <PopupVerification
-            submit={this._handleSubmitVerification}
-            toggle={verificationToggle}
-            onClose={this._closePopupSlide}
-            submissionLoader={submissionLoader}
-            resendCode={this._executeResendCode}
-          />
-
-          <Recaptcha
-            ref={this._recaptchaRef}
-            size='invisible'
-            badge='inline'
-            sitekey={RECAPTCHA_SITE_KEY}
-            onChange={this._executeCaptcha}
-          />
-        </PopupWrapper>
-        <TermsConditionsWrapper toggle={toggleTerms} className='background__white'>
-          <div className='document-helper terms-conditions'>
-            <Grid padded>
-              <TermsConditionsHeader toggle={toggleTerms} className='background__white'>
-                <Grid padded>
-                  <Grid.Row>
-                    <Grid.Column width={3}>
-                      <div className='back-icon-container'>
-                        <Image alt='CLiQQ' src={BackIcon} onClick={this._toggleTerms} />
-                      </div>
-                    </Grid.Column>
-                    <Grid.Column width={10}>
-                      <Label as='span' size='large' className='tc-header-label'>
-                        <FormattedMessage {...messages.headerTerms} />
-                      </Label>
-                    </Grid.Column>
-                    <Grid.Column width={3} />
-                  </Grid.Row>
-                </Grid>
-              </TermsConditionsHeader>
-              <LoadingStateInfo loading={loadingMarkdown} count='4'>
-                <div className='animation-fade tc-content color__grey' dangerouslySetInnerHTML={{__html: markdown}} />
-              </LoadingStateInfo>
-              <ButtonWrapper toggle={toggleTerms}>
-                <Button primary fluid onClick={this._agreeAction}><FormattedMessage {...messages.buttonLabelAgree} /></Button>
-              </ButtonWrapper>
-            </Grid>
-          </div>
-        </TermsConditionsWrapper>
+              _agreeAction={this._agreeAction}
+              _closePopupSlide={this._closePopupSlide}
+              _executeCaptcha={this._executeCaptcha}
+              _executeResendCode={this._executeResendCode}
+              _handleCheck={this._handleCheck}
+              _handleErrModalClose={this._handleErrModalClose}
+              _handleInput={this._handleInput}
+              _handlePaste={this._handlePaste}
+              _handleSubmit={this._handleSubmit}
+              _handleSubmitVerification={this._handleSubmitVerification}
+              _recaptchaRef={this._recaptchaRef}
+              _toggleTerms={this._toggleTerms}
+            />
+          }
+        />
       </div>
     )
   }

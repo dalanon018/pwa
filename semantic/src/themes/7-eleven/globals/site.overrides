@@ -45,6 +45,12 @@ body {
   }
 }
 
+h3 {
+  @media screen and (min-width: 1024px) {
+   font-weight: 700 !important;
+  }
+}
+
 div[style^="visibility: visible; position: absolute;"] {
   height: 100% !important;
   top: 0 !important;
@@ -55,10 +61,11 @@ div[style^="visibility: visible; position: absolute;"] {
 }
 
 div[style^="margin: 0px auto; top: 0px; left: 0px; right: 0px; position: absolute;"] {
-  @media screen and (min-width: 768px) {
-    top: 50% !important;
-    transform: translate(-50%, -50%);
-    left: 50% !important;
+  @media screen and (min-width: 1024px) {
+   left: 50% !important;
+   right: 50% !important;
+   top: 50% !important;
+   transform: translate(-50%, -50%);
   }
 }
 
@@ -104,6 +111,12 @@ p {
   font-size: 16px;
   opacity: 1 !important;
   width: 35px !important;
+}
+
+.cursor {
+  &__pointer {
+    cursor: pointer;
+  }
 }
 
 .ui.loader {
@@ -156,6 +169,18 @@ input.input-field {
     &--center {
       text-align: center;
     }
+  }
+}
+
+.width {
+  &__full {
+    width: 100%;
+  }
+}
+
+.position {
+  &__relative {
+    position: relative;
   }
 }
 
@@ -252,9 +277,25 @@ input.input-field {
   color: #AEAEAE !important;
 }
 
+.ui.radio.checkbox .box:after, .ui.radio.checkbox label:after {
+  background: transparent !important;
+}
+
 .document-helper {
   margin: 20px 0;
 
+  h1 {
+    @media (min-width: 1024px) {
+      font-size: 20px !important;
+      font-weight: 700 !important;
+    }
+  }
+
+  h2 {
+    @media (min-width: 1024px) {
+      font-weight: 700 !important;
+    }
+  }
 
   ul {
     li {
@@ -415,6 +456,10 @@ svg#barcode {
 
   /* Product Padding */
   .padding {
+    &__medium {
+      padding-left:150px !important;
+      padding-right:150px !important;
+    }
     &__14 {
       padding: 14px !important;
     }
@@ -444,6 +489,9 @@ svg#barcode {
       }
     }
     &__bottom {
+      &--5 {
+        padding-bottom: 5px !important;
+      }
       &--15 {
         padding-bottom: 15px;
       }

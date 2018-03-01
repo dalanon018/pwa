@@ -14,6 +14,7 @@ const wrapper = (props = {}, enzyme = shallow) => enzyme(
 describe('<Buckets />', () => {
   const minProps = {
     isMobile: true,
+    lightBoxImage: null,
     children: {},
     productCategories: fromJS({}),
     brands: fromJS({}),

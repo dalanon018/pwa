@@ -6,6 +6,10 @@
 import { defineMessages } from 'react-intl'
 
 export default defineMessages({
+  header: {
+    id: 'app.containers.Purchases.header',
+    defaultMessage: 'My Activities'
+  },
   receiptsTitle: {
     id: 'app.containers.Purchases.receiptsTitle',
     defaultMessage: 'RECEIPTS'

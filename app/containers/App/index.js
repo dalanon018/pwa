@@ -15,20 +15,19 @@ import Buckets from 'containers/Buckets/Loadable'
 import LoginPage from 'containers/LoginPage/Loadable'
 
 const AppWrapper = styled.div`
-display: block;
-position: relative;
+  display: block;
+  position: relative;
 `
 
 const BodyWrapper = styled.div`
-max-width: calc(767px + 16px * 2);
-margin: 0 auto;
-display: flex;
-height: 100%;
-flex-direction: column;
-
-@media (min-width: 1024px) {
-  max-width: none;
-}
+  max-width: calc(767px + 16px * 2);
+  margin: 0 auto;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  @media (min-width: 1024px) {
+    max-width: inherit;
+  }
 `
 
 export default function App () {

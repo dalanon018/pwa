@@ -15,12 +15,11 @@ import { replace } from 'react-router-redux'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 
-import { Grid, Label, Form, Checkbox, Image, Button } from 'semantic-ui-react'
+import { Label, Form, Checkbox, Image } from 'semantic-ui-react'
 
 import scrollPolyfill from 'utils/scrollPolyfill'
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
-import NextIcon from 'images/icons/greater-than-icon.svg'
 
 import { paramsImgix } from 'utils/image-stock'
 import { transformStore } from 'utils/transforms'
@@ -28,11 +27,13 @@ import { FbEventTracking } from 'utils/seo'
 import { switchFn } from 'utils/logicHelper'
 import { fnQueryObject } from 'utils/http'
 
-import Modal from 'components/PromptModal'
-import WindowWidth from 'components/WindowWidth'
-import ListCollapse from 'components/ListCollapse'
+import WindowWidth from 'components/Shared/WindowWidth'
 
-import { LoadingStateImage } from 'components/LoadingBlock'
+import MobileOrderSummary from 'components/Mobile/OrderSummary'
+import DesktopOrderSummary from 'components/Desktop/OrderSummary'
+
+import AccessView from 'components/Shared/AccessMobileDesktopView'
+
 import { userIsAuthenticated } from 'containers/App/auth'
 import { PRODUCTREVIEW_NAME, RAW_PAYMENT_METHODS } from 'containers/Buckets/constants'
 import {
@@ -70,17 +71,7 @@ import {
 
 import {
   LabelTitle,
-  LabelPrice,
-  DetailsWrapper,
-  ButtonContainer,
-  SelectMethodWrapper,
-  ProductItem,
-  ProductReviewWrapper,
-  MethodTitle,
-  StepWrapper,
-  StepHead,
-  LocationButton,
-  CustomGrid
+  LabelPrice
 } from './styles'
 
 // Helper
@@ -122,7 +113,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   state = {
     store: {},
     modePayment: 'COD',
-    visibility: false,
+    visibility: true,
     modalToggle: false,
     errorMessage: ''
   }
@@ -173,6 +164,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   _handleToBottom = () => {
+    const { windowWidth } = this.props
+
+    windowWidth <= 1024 &&
     setTimeout(() => {
       // parentScrollTo.scrollTo(0, ChildTop)
       this._innerStepRef &&
@@ -368,7 +362,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
           <FormattedMessage {...messages.cashPrepaid} />
         </Label>
       </LabelTitle>
-      <LabelPrice>
+      <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
         <span className='total color__orange'>
           <FormattedMessage {...messages.peso} />
           { this._toggleOrigDiscountPrice(orderedProduct) }
@@ -382,7 +376,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
           <FormattedMessage {...messages.cashDelivery} />
         </Label>
       </LabelTitle>
-      <LabelPrice>
+      <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
         <span className='total color__orange'>
           <FormattedMessage {...messages.peso} />
           { this._toggleOrigDiscountPrice(orderedProduct) }
@@ -397,104 +391,58 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         src={this._updateParamsImages(orderedProduct.get('brandLogo'), { w: 200, h: 30 })} />) : ''
 
     return (
-      <ProductReviewWrapper>
-        { productLoader || brandLogo }
-        <LoadingStateImage loading={productLoader} center>
-          <ProductItem>
-            <Image alt='CLiQQ' src={this._updateParamsImages(orderedProduct.get('image'))} />
-            {
-              orderedProduct.get('brand')
-              ? <Label as='span' basic size='big' className='color__secondary'>{orderedProduct.getIn(['brand', 'name'])}</Label>
-              : null
-            }
-            <Label as='p' basic size='big' className='color__secondary'>{orderedProduct.get('title')}</Label>
-          </ProductItem>
-        </LoadingStateImage>
-        <ListCollapse title={
-          <Label as='p' className='margin__none color__secondary' size='large'>
-            <FormattedMessage {...messages.viewDetails} />
-          </Label>
-        }>
-          <DetailsWrapper>
-            <div className='sub-title color__secondary'>
-              <FormattedMessage {...messages.productDetailsTitle} />
-            </div>
-            <div className='margin__bottom-positive--10 text__roboto--light color__dark-grey' dangerouslySetInnerHTML={{__html: orderedProduct.get('details')}} />
-            <div className='sub-title color__secondary'>
-              <FormattedMessage {...messages.productDeliveryTitle} />
-            </div>
-            <div className='text__roboto--light color__dark-grey' dangerouslySetInnerHTML={{__html: orderedProduct.get('deliveryPromiseMessage')}} />
-          </DetailsWrapper>
-        </ListCollapse>
-        <CustomGrid>
-          <Grid padded>
-            <Grid.Row>
-              <MethodTitle>
-                <Label as='span' basic size='huge' className='color__secondary'>
-                  <FormattedMessage {...messages.methodPayment} />
-                </Label>
-              </MethodTitle>
-            </Grid.Row>
-            <Grid.Row>
-              <SelectMethodWrapper checkHeight={orderedProduct.get('discountPrice') !== 0}>
-                <Form>
-                  <ShowCodComponent
-                    className='margin__bottom-positive--20'
-                    radio
-                    isBlackListed={isBlackListed}
-                    name='cod'
-                    value='COD'
-                    label={labelTwo}
-                    checked={modePayment === 'COD'}
-                    onChange={this._handleChange}
-                    onClick={this._handleToBottom}
-                  />
-                  <StepWrapper innerRef={this._stepWrapperRef} className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={visibility || modePayment === 'COD'}>
-                    <Label as='p' basic size='big' className='color__secondary'>
-                      <FormattedMessage {...messages.chooseStore} />
-                    </Label>
-                    <StepHead step='2'>
-                      <p><FormattedMessage {...messages.defaultStore} /></p>
-                    </StepHead>
-                    <LocationButton id='scrollToAnimate' className='color__secondary border__two--light-grey' onClick={this._handleStoreLocator} fluid iconBg={NextIcon}>
-                      {
-                        store && isEmpty(store)
-                        ? <FormattedMessage {...messages.findStore} />
-                        : <span>{store.id} {store.name}</span>
-                      }
-                    </LocationButton>
-                  </StepWrapper>
-
-                  <Form.Field>
-                    <Checkbox
-                      radio
-                      name='cash-prepaid'
-                      value='CASH'
-                      label={labelOne}
-                      checked={modePayment === 'CASH'}
-                      onChange={this._handleChange}
-                      />
-                  </Form.Field>
-                </Form>
-              </SelectMethodWrapper>
-            </Grid.Row>
-          </Grid>
-        </CustomGrid>
-
-        <ButtonContainer>
-          <Button onClick={this._handleProceed} primary fluid loading={orderRequesting}>
-            <FormattedMessage {...messages.proceedNext} />
-          </Button>
-        </ButtonContainer>
-
-        <Modal
-          open={modalToggle}
-          name='warning'
-          title={errorMessage}
-          content=''
-          close={this._handleModalClose}
-        />
-      </ProductReviewWrapper>
+      <AccessView
+        mobileView={
+          <MobileOrderSummary
+            ShowCodComponent={ShowCodComponent}
+            _handleChange={this._handleChange}
+            _handleModalClose={this._handleModalClose}
+            _handleProceed={this._handleProceed}
+            _handleStoreLocator={this._handleStoreLocator}
+            _handleToBottom={this._handleToBottom}
+            _stepWrapperRef={this._stepWrapperRef}
+            _updateParamsImages={this._updateParamsImages}
+            brandLogo={brandLogo}
+            errorMessage={errorMessage}
+            isBlackListed={isBlackListed}
+            labelOne={labelOne}
+            labelTwo={labelTwo}
+            modalToggle={modalToggle}
+            modePayment={modePayment}
+            orderRequesting={orderRequesting}
+            orderedProduct={orderedProduct}
+            productLoader={productLoader}
+            store={store}
+            visibility={visibility}
+          />
+        }
+        desktopView={
+          <div>
+            <DesktopOrderSummary
+              ShowCodComponent={ShowCodComponent}
+              _handleChange={this._handleChange}
+              _handleModalClose={this._handleModalClose}
+              _handleProceed={this._handleProceed}
+              _handleStoreLocator={this._handleStoreLocator}
+              _handleToBottom={this._handleToBottom}
+              _stepWrapperRef={this._stepWrapperRef}
+              _updateParamsImages={this._updateParamsImages}
+              brandLogo={brandLogo}
+              errorMessage={errorMessage}
+              isBlackListed={isBlackListed}
+              labelOne={labelOne}
+              labelTwo={labelTwo}
+              modalToggle={modalToggle}
+              modePayment={modePayment}
+              orderRequesting={orderRequesting}
+              orderedProduct={orderedProduct}
+              productLoader={productLoader}
+              store={store}
+              visibility={visibility}
+            />
+          </div>
+        }
+      />
     )
   }
 }

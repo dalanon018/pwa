@@ -10,16 +10,17 @@ import showdown from 'showdown'
 
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
-import { injectIntl } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
-import { Grid } from 'semantic-ui-react'
+import { Container, Grid } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
-import Footer from 'components/Footer'
+import H1 from 'components/Shared/H1'
+import AccessView from 'components/Shared/AccessMobileDesktopView'
 
-import { LoadingStateInfo } from 'components/LoadingBlock'
+import { LoadingStateInfo } from 'components/Shared/LoadingBlock'
 import {
   setPageTitleAction,
   setRouteNameAction,
@@ -57,16 +58,33 @@ export class PrivacyPolicy extends React.PureComponent { // eslint-disable-line 
     const converter = new showdown.Converter()
     const html = converter.makeHtml(markdown)
     return (
-      <div>
-        <div className='document-helper'>
-          <Grid padded>
-            <LoadingStateInfo loading={loader} count='4'>
-              <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
-            </LoadingStateInfo>
-          </Grid>
-        </div>
-        <Footer />
-      </div>
+      <AccessView
+        mobileView={
+          <div className='document-helper'>
+            <Grid padded>
+              <LoadingStateInfo loading={loader} count='4'>
+                <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
+              </LoadingStateInfo>
+            </Grid>
+          </div>
+        }
+        desktopView={
+          <div className='document-helper'>
+            <Container>
+              <div className='padding__medium'>
+                <Grid padded>
+                  <LoadingStateInfo loading={loader} count='4'>
+                    <H1 className='padding__top--25 padding__none--horizontal color__secondary'>
+                      <FormattedMessage {...messages.header} />
+                    </H1>
+                    <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
+                  </LoadingStateInfo>
+                </Grid>
+              </div>
+            </Container>
+          </div>
+        }
+      />
     )
   }
 }

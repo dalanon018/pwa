@@ -33,17 +33,24 @@ import { isMobileDevice } from 'utils/http'
 import { FbEventTracking } from 'utils/seo'
 import { imageStock } from 'utils/image-stock'
 
-import Product from 'components/Product'
-import WindowWidth from 'components/WindowWidth'
-import Modal from 'components/PromptModal'
+import MobileProduct from 'components/Mobile/Product'
+import DesktopProduct from 'components/Desktop/Product'
+
+import WindowWidth from 'components/Shared/WindowWidth'
+import Modal from 'components/Shared/PromptModal'
+import AccessView from 'components/Shared/AccessMobileDesktopView'
 
 import {
   setPageTitleAction,
   setRouteNameAction,
   setShowSearchIconAction,
   setShowActivityIconAction,
-  setHeaderFullScreenAction
+  setHeaderFullScreenAction,
+  setLightBoxImageAction
 } from 'containers/Buckets/actions'
+
+import { selectLightBoxImage } from 'containers/Buckets/selectors'
+
 import { PRODUCT_NAME } from 'containers/Buckets/constants'
 
 import messages from './messages'
@@ -96,7 +103,9 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       errModalName: 'warning',
       errorTitle: '',
       errorMessage: '',
-      togglePrompt: false
+      togglePrompt: false,
+      hover: false,
+      offset: 0
     }
   }
 
@@ -200,6 +209,25 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     })
   }
 
+  _handleMouseEnter = () => {
+    this.setState(() => ({ hover: true }))
+  }
+
+  _handleMouseLeave = () => {
+    this.setState(() => ({ hover: false }))
+  }
+
+  _handleCountOffset = () => {
+    const affixElement = document.getElementById('affix-element')
+    const preview = document.getElementById('right-column-preview')
+
+    const subtracted =
+      (affixElement ? affixElement.offsetHeight : 0) -
+      (preview ? preview.offsetHeight : 0)
+
+    this.setState({ offset: Math.abs(subtracted) })
+  }
+
   componentWillMount () {
     this.props.setPageTitle('Product Details')
     this.props.setShowSearchIcon(true)
@@ -211,10 +239,14 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
     getProduct({ id })
     setRouteName(PRODUCT_NAME)
+
+    this._handleCountOffset()
   }
 
   componentWillUnmount () {
     this.props.setHandlersDefault()
+    this._handleMouseEnter()
+    this._handleMouseLeave()
   }
 
   componentWillReceiveProps (nextProps) {
@@ -239,8 +271,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   render () {
-    const { loading, product, route, windowWidth, changeRoute, isMobile, intl } = this.props
-    const { errModalToggle, errModalName, errorTitle, errorMessage, togglePrompt } = this.state
+    const { loading, product, route, windowWidth, changeRoute, isMobile, intl, setLightBoxImage, lightBoxImage } = this.props
+    const { errModalToggle, errModalName, errorTitle, errorMessage, togglePrompt, hover, offset } = this.state
     const productPageTrigger = route && route
 
     return (
@@ -249,24 +281,55 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
           title={`ProductPage - ${product.get('title') || ''}`}
         />
         <div>
-          <Product
-            loading={loading}
-            product={product}
-            windowWidth={windowWidth}
-            onSubmit={this._setCurrentProduct}
-            copied={this._handleCopy}
-            defaultImage={imageStock('default-slider.jpg')}
-            toggle={this.state.socialToggle}
-            toggleClick={this._handleSocialToggle}
-            productPageTrigger={productPageTrigger}
-            changeRoute={changeRoute}
-            openEmailPrompt={this._handleOpenEmailWarning}
-            closeEmailPrompt={this._handleCloseEmailWarning}
-            isMobile={isMobile}
-            togglePrompt={togglePrompt}
-            intl={intl}
-            origPrice={this._handletoggleOrigDiscountPrice}
-            onSizeChange={this._handleSizeChange}
+          <AccessView
+            mobileView={
+              <MobileProduct
+                changeRoute={changeRoute}
+                closeEmailPrompt={this._handleCloseEmailWarning}
+                copied={this._handleCopy}
+                defaultImage={imageStock('default-slider.jpg')}
+                intl={intl}
+                isMobile={isMobile}
+                loading={loading}
+                onSizeChange={this._handleSizeChange}
+                onSubmit={this._setCurrentProduct}
+                openEmailPrompt={this._handleOpenEmailWarning}
+                origPrice={this._handletoggleOrigDiscountPrice}
+                product={product}
+                productPageTrigger={productPageTrigger}
+                toggle={this.state.socialToggle}
+                toggleClick={this._handleSocialToggle}
+                togglePrompt={togglePrompt}
+                windowWidth={windowWidth}
+              />
+            }
+            desktopView={
+              <DesktopProduct
+                changeRoute={changeRoute}
+                closeEmailPrompt={this._handleCloseEmailWarning}
+                copied={this._handleCopy}
+                defaultImage={imageStock('default-slider.jpg')}
+                hover={hover}
+                intl={intl}
+                isMobile={isMobile}
+                lightBoxImage={lightBoxImage}
+                loading={loading}
+                onSizeChange={this._handleSizeChange}
+                onSubmit={this._setCurrentProduct}
+                openEmailPrompt={this._handleOpenEmailWarning}
+                origPrice={this._handletoggleOrigDiscountPrice}
+                product={product}
+                productPageTrigger={productPageTrigger}
+                toggle={this.state.socialToggle}
+                toggleClick={this._handleSocialToggle}
+                toggleLightBox={setLightBoxImage}
+                togglePrompt={togglePrompt}
+                windowWidth={windowWidth}
+                handleMouseEnter={this._handleMouseEnter}
+                handleMouseLeave={this._handleMouseLeave}
+                offset={offset}
+              />
+            }
           />
         </div>
 
@@ -287,12 +350,14 @@ const mapStateToProps = createStructuredSelector({
   loading: selectLoader(),
   product: selectProduct(),
   productSuccess: selectProductSuccess(),
-  productError: selectProductError()
+  productError: selectProductError(),
+  lightBoxImage: selectLightBoxImage()
 })
 
 function mapDispatchToProps (dispatch) {
   return {
     setRouteName: (payload) => dispatch(setRouteNameAction(payload)),
+    setLightBoxImage: (payload) => dispatch(setLightBoxImageAction(payload)),
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setHeaderMenuFullScreen: (payload) => dispatch(setHeaderFullScreenAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),

@@ -14,7 +14,8 @@ describe('productsByCategoryReducer', () => {
       productsViewed: [],
       totalCount: 0,
       loading: true,
-      lazyload: false
+      lazyload: false,
+      isOver18: true
     })
   })
 

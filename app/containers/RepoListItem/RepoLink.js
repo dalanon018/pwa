@@ -1,4 +1,4 @@
-import NormalA from 'components/A'
+import NormalA from 'components/Shared/A'
 
 const RepoLink = NormalA.extend`
   height: 100%;

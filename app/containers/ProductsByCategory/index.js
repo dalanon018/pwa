@@ -38,16 +38,20 @@ import injectReducer from 'utils/injectReducer'
 
 import { Uppercase } from 'utils/string'
 
-import ProductView from 'components/ProductView'
-import Footer from 'components/Footer'
-import WindowWidth from 'components/WindowWidth'
-// import LazyLoading from 'components/LazyLoading'
-import H3 from 'components/H3'
-import H4 from 'components/H4'
-import EmptyProducts from 'components/EmptyProductsBlock'
-import LoadingIndicator from 'components/LoadingIndicator'
+import MobileProductView from 'components/Mobile/ProductView'
+import DesktopProductView from 'components/Desktop/ProductView'
+import MobileFooter from 'components/Mobile/Footer'
 
-import { InfiniteLoading, InfiniteWrapper } from 'components/InfiniteLoading'
+import WindowWidth from 'components/Shared/WindowWidth'
+import H3 from 'components/Shared/H3'
+import H4 from 'components/Shared/H4'
+import EmptyProducts from 'components/Shared/EmptyProductsBlock'
+import LoadingIndicator from 'components/Shared/LoadingIndicator'
+import AccessView from 'components/Shared/AccessMobileDesktopView'
+import Modal from 'components/Shared/PromptModal'
+
+import { InfiniteLoading, InfiniteWrapper } from 'components/Shared/InfiniteLoading'
+
 import {
   getProductCategoriesAction,
   setPageTitleAction,
@@ -69,7 +73,9 @@ import {
   getProductsByCategoryAction,
   getProductsByTagsAction,
   getProductsViewedAction,
-  resetProductsByCategoryAction
+  resetProductsByCategoryAction,
+  getOver18Action,
+  submitOver18Action
 } from './actions'
 
 import {
@@ -79,7 +85,8 @@ import {
   selectProductsByCategoryItems,
   selectProductsByCategoryFeatured,
   selectProductsViewed,
-  selectTotalCount
+  selectTotalCount,
+  selectOver18
 } from './selectors'
 
 import {
@@ -123,6 +130,21 @@ const ContentWrapper = styled(Container)`
   }
 `
 
+const DesktopTitle = styled.p`
+  font-family: Lato,Cabin,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+`
+
+const DesktopItemCount = styled.p`
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 20px;
+  text-align: center;
+`
+
 const isTag = curry((tags, id) => contains(id, tags))
 
 export class ProductsByCategory extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -145,12 +167,15 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     productsFeatured: PropTypes.object.isRequired,
     categories: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
-    setRouteName: PropTypes.func.isRequired
+    setRouteName: PropTypes.func.isRequired,
+    submitOver18: PropTypes.func.isRequired,
+    getOver18: PropTypes.func.isRequired
   }
 
   state = {
     pageOffset: 0,
     offset: 0,
+    togglePrompt: false,
     limit: LIMIT_ITEMS // we need this since we are including the feature items.
   }
 
@@ -170,6 +195,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this._displayNumberProducts = this._displayNumberProducts.bind(this)
     this._displayRecentlyViewedHeader = this._displayRecentlyViewedHeader.bind(this)
     this._displayEmpty = this._displayEmpty.bind(this)
+    this._handleRestrictAge = this._handleRestrictAge.bind(this)
+    this._handleClosePrompt = this._handleClosePrompt.bind(this)
+    this._handleOver18 = this._handleOver18.bind(this)
+    this._handleCheckOver18 = this._handleCheckOver18.bind(this)
   }
 
   _isCategoryExist () {
@@ -228,12 +257,13 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
           rowCount={totalCount}
         >
           {(props) => (
-            <ProductView
-              changeRoute={changeRoute}
-              loader={loader}
-              products={productsFeatured}
-              windowWidth={windowWidth}
-              {...props}
+            <AccessView
+              mobileView={
+                <MobileProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
+              }
+              desktopView={
+                <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
+              }
             />
           )}
         </InfiniteLoading>
@@ -244,7 +274,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _displayNumberProducts () {
-    const { match: { params: { id } }, productsFeatured, totalCount } = this.props
+    const { match: { params: { id } }, productsFeatured, totalCount, windowWidth } = this.props
     const displayTotalCount = ifElse(partial(isTag(this._tags), [id]),
       identity,
       subtract(__, productsFeatured.size)
@@ -253,7 +283,12 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
     if (product.size) {
       return (
-        <H4 className='color__grey'>
+        windowWidth >= 1024
+        ? <DesktopItemCount className='color__grey'>
+          { displayTotalCount(totalCount) }
+          <FormattedMessage {...messages.items} />
+        </DesktopItemCount>
+        : <H4 className='color__grey'>
           { displayTotalCount(totalCount) }
           <FormattedMessage {...messages.items} />
         </H4>
@@ -283,7 +318,14 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     // we only show if items are not empty and not lazyloading
     if (productsViewed.size && !lazyload) {
       return (
-        <ProductView changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
+        <AccessView
+          mobileView={
+            <MobileProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
+          }
+          desktopView={
+            <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
+          }
+        />
       )
     }
 
@@ -297,7 +339,14 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     const { changeRoute, windowWidth } = this.props
 
     return (
-      <ProductView changeRoute={changeRoute} loader products={this._displayAllProductData()} windowWidth={windowWidth} />
+      <AccessView
+        mobileView={
+          <MobileProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader products={this._displayAllProductData()} windowWidth={windowWidth} />
+        }
+        desktopView={
+          <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader products={this._displayAllProductData()} windowWidth={windowWidth} />
+        }
+      />
     )
   }
 
@@ -386,12 +435,13 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
           rowCount={totalCount}
         >
           {(props) => (
-            <ProductView
-              changeRoute={changeRoute}
-              loader={loader}
-              products={products}
-              windowWidth={windowWidth}
-              {...props}
+            <AccessView
+              mobileView={
+                <MobileProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={products} windowWidth={windowWidth} {...props} />
+              }
+              desktopView={
+                <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={products} windowWidth={windowWidth} {...props} />
+              }
             />
           )}
         </InfiniteLoading>
@@ -439,6 +489,36 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     }, () => this._fetchProductByTagCategory(props))
   }
 
+  _handleOver18 () {
+    this.props.submitOver18(true)
+    this._handleClosePrompt()
+  }
+
+  _handleCheckOver18 () {
+    this.props.getOver18()
+  }
+
+  _handleClosePrompt () {
+    this.setState({ togglePrompt: !this.state.togglePrompt })
+  }
+
+  _handleRestrictAge () {
+    const { match: { params: { id } } } = this.props
+    // const mockIds = ['01', '02', '10']
+    const mockIds = ['04', '900', '15']
+    let adult = false
+
+    mockIds.forEach(i => {
+      switch (id) {
+        case i:
+          adult = true
+          break
+      }
+    })
+
+    return adult
+  }
+
   componentWillMount () {
     this.props.setPageTitle('..')
     this.props.setShowSearchIcon(true)
@@ -453,6 +533,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     getProductsViewed()
 
     this._fetchProductByTagCategory(this.props)
+    this._handleCheckOver18()
   }
 
   componentWillUnmount () {
@@ -487,7 +568,9 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   render () {
-    const { lazyload, loader } = this.props
+    const isCategory = window.location.pathname.split('/')[1] === 'products-category'
+    const { loader, lazyload, over18, windowWidth } = this.props
+    const { togglePrompt } = this.state
 
     return (
       <div>
@@ -499,7 +582,12 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
             { this._displayHeaderFeaturesProduct() }
             { this._displayFeaturesProduct() }
 
-            <H3 className='margin__none'> {this._handlePageTitle()} </H3>
+            {
+              windowWidth >= 1024
+              ? <DesktopTitle> {this._handlePageTitle()} </DesktopTitle>
+              : <H3 className='margin__none'> {this._handlePageTitle()} </H3>
+            }
+
             { this._displayNumberProducts() }
             { this._displayEmptyLoadingIndicator() }
             { this._displayRegularItems() }
@@ -508,7 +596,17 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
             { this._displayRecentlyViewedItems() }
           </InfiniteWrapper>
         </ContentWrapper>
-        <Footer />
+        <AccessView
+          mobileView={<MobileFooter />}
+          desktopView={null}
+        />
+        <Modal
+          open={this._handleRestrictAge() && !togglePrompt && !over18}
+          name='warning'
+          close={this._handleClosePrompt}
+          isCategory={isCategory}
+          letIn={this._handleOver18}
+        />
       </div>
     )
   }
@@ -524,7 +622,8 @@ const mapStateToProps = createStructuredSelector({
   loader: selectLoading(),
   lazyload: selectLazyload(),
   totalCount: selectTotalCount(),
-  categoryLoader: selectLoader()
+  categoryLoader: selectLoader(),
+  over18: selectOver18()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -538,6 +637,8 @@ function mapDispatchToProps (dispatch) {
     getProductsByTags: payload => dispatch(getProductsByTagsAction(payload)),
     getProductsViewed: () => dispatch(getProductsViewedAction()),
     resetProductsByCategory: () => dispatch(resetProductsByCategoryAction()),
+    submitOver18: payload => dispatch(submitOver18Action(payload)),
+    getOver18: () => dispatch(getOver18Action()),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
   }

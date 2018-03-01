@@ -8,7 +8,7 @@ import {
   List
 } from 'semantic-ui-react'
 import { identity, ifElse } from 'ramda'
-import ListCollapse from 'components/ListCollapse'
+import ListCollapse from 'components/Shared/ListCollapse'
 
 import messages from './messages'
 import SideBarChildMenu from './SideBarChildMenu'

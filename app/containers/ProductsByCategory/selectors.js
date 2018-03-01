@@ -53,6 +53,11 @@ const selectTotalCount = () => createSelector(
   subState => subState.get('totalCount')
 )
 
+const selectOver18 = () => createSelector(
+  selectProductsByCategoryDomain(),
+  subState => subState.get('isOver18')
+)
+
 export {
   selectProductsByCategoryDomain,
   selectProductsByCategory,
@@ -62,5 +67,6 @@ export {
   selectLoading,
   selectLazyload,
   selectFeaturedProducts,
-  selectTotalCount
+  selectTotalCount,
+  selectOver18
 }

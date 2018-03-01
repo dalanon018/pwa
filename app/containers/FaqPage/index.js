@@ -10,16 +10,17 @@ import showdown from 'showdown'
 
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
-import { injectIntl } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
-import { Grid } from 'semantic-ui-react'
+import { Container, Grid } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
-import Footer from 'components/Footer'
+import AccessView from 'components/Shared/AccessMobileDesktopView'
+import H1 from 'components/Shared/H1'
 
-import { LoadingStateInfo } from 'components/LoadingBlock'
+import { LoadingStateInfo } from 'components/Shared/LoadingBlock'
 import {
   setPageTitleAction,
   setRouteNameAction,
@@ -58,16 +59,33 @@ export class FaqPage extends React.PureComponent { // eslint-disable-line react/
     const html = converter.makeHtml(markdown)
     // const filteredHtml = html.replace('{{< img src="../img/device_widget.png" alt="widget" >}}', `<img src='https://cliqq.imgix.net/000CE.png?w=175&h=175&fit=clamp'>`)
     return (
-      <div>
-        <div className='document-helper'>
-          <Grid padded>
-            <LoadingStateInfo loading={loader} count='4'>
-              <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
-            </LoadingStateInfo>
-          </Grid>
-        </div>
-        <Footer />
-      </div>
+      <AccessView
+        mobileView={
+          <div className='document-helper'>
+            <Grid padded>
+              <LoadingStateInfo loading={loader} count='4'>
+                <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
+              </LoadingStateInfo>
+            </Grid>
+          </div>
+        }
+        desktopView={
+          <div className='document-helper'>
+            <Container>
+              <div className='padding__medium'>
+                <Grid padded>
+                  <LoadingStateInfo loading={loader} count='4'>
+                    <H1 className='padding__top--25 padding__none--horizontal color__secondary'>
+                      <FormattedMessage {...messages.header} />
+                    </H1>
+                    <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
+                  </LoadingStateInfo>
+                </Grid>
+              </div>
+            </Container>
+          </div>
+        }
+      />
     )
   }
 }

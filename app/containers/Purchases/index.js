@@ -13,12 +13,15 @@ import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
 import { createStructuredSelector } from 'reselect'
-import { Tab } from 'semantic-ui-react'
+import { Tab, Container } from 'semantic-ui-react'
+import { FormattedMessage } from 'react-intl'
+import messages from './messages'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
-import WindowWidth from 'components/WindowWidth'
+import WindowWidth from 'components/Shared/WindowWidth'
+import H3 from 'components/Shared/H3'
 
 import { userIsAuthenticated } from 'containers/App/auth'
 import {
@@ -46,9 +49,34 @@ import {
 } from './actions'
 
 const PurchaseWrapper = styled.div`
-  .ui.tabular{
-    .item {
-      margin: 0 auto;
+  @media (max-width: 1024px) {
+    .ui.tabular{
+      .item {
+        margin: 0 auto;
+      }
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .ui.tabular{
+      background-color: transparent;
+      display: inline-block;
+      padding: 0 10px 20px;
+  
+      .item {
+        cursor: pointer;
+        font-weight: 700;
+        margin-right: 40px;
+        padding: 0 0 7px;
+  
+        &:last-child {
+          margin-right: 0;
+        }
+  
+        &.active {
+          border-bottom: 2px solid #8DC640;
+        }
+      }
     }
   }
 `
@@ -98,6 +126,22 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
   _handleShow = (entity) => {
     const { activePane } = this.state
     const { loading, changeRoute, windowWidth } = this.props
+    const stickyFooter = document.getElementsByTagName('footer')[0]
+
+    if (stickyFooter) {
+      if (entity.size === 0) {
+        stickyFooter.classList.contains('sticky') &&
+        stickyFooter.classList.remove('sticky')
+      } else if (entity.size > 0) {
+        stickyFooter.classList.contains('sticky') &&
+        stickyFooter.classList.remove('sticky')
+
+        entity.size <= 2 &&
+        stickyFooter.classList.add('sticky')
+      } else {
+        stickyFooter.classList.add('sticky')
+      }
+    }
 
     if (loading === false && entity.size === 0) {
       return <EmptyPurchase active={activePane} />
@@ -129,7 +173,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
   }
 
   render () {
-    const { activePurchases, completedPurchases, expiredPurchases } = this.props
+    const { activePurchases, completedPurchases, expiredPurchases, windowWidth } = this.props
 
     const panes = [
       { menuItem: 'Active', render: () => <Tab.Pane>{this._handleShow(activePurchases)}</Tab.Pane> },
@@ -138,19 +182,29 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
     ]
 
     return (
-      <PurchaseWrapper>
-        <Helmet
-          title='Receipts'
-          meta={[
-            { name: 'description', content: 'List of barcodes' }
-          ]}
-        />
+      <div>
+        <PurchaseWrapper>
+          <Helmet
+            title='Receipts'
+            meta={[
+              { name: 'description', content: 'List of barcodes' }
+            ]}
+          />
 
-        <Tab
-          onTabChange={this._onTabChange}
-          panes={panes}
-        />
-      </PurchaseWrapper>
+          <Container>
+            <div className={windowWidth >= 1024 && 'padding__medium'}>
+              {
+              windowWidth >= 1024 &&
+              <H3><FormattedMessage {...messages.header} /></H3>
+            }
+              <Tab
+                onTabChange={this._onTabChange}
+                panes={panes}
+              />
+            </div>
+          </Container>
+        </PurchaseWrapper>
+      </div>
     )
   }
 }

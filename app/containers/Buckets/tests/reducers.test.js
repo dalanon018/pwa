@@ -20,6 +20,7 @@ describe('Buckets Reducer', () => {
       toggle: false,
       toggleError: false,
       toggleMessage: null,
+      lightBoxImage: null,
       loader: false,
       brandLoader: false,
       routeName: null,
@@ -28,7 +29,8 @@ describe('Buckets Reducer', () => {
       searchIconShow: false,
       activityIconShow: false,
       isRegisteredPush: false,
-      loyaltyToken: null
+      loyaltyToken: null,
+      searchValue: ''
     })
   })
 

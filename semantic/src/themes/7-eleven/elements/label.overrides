@@ -68,31 +68,31 @@ span.ui.label {
 }
 
 
-@media (min-width: 1024px) {
-  .ui.label {
-    &.mini {
-      font-size: 12px;
-    }
-    &.tiny {
-      font-size: 13px;
-    }
-    &.small {
-      font-size: 14px;
-    }
-    &.medium{
-      font-size: 16px;
-    }
-    &.large {
-      font-size: 18px;
-    }
-    &.big {
-      font-size: 21px;
-    }
-    &.huge {
-      font-size: 23px;
-    }
-    &.massive {
-      font-size: 27px;
-    }
-  }
-}
+// @media (min-width: 1024px) {
+//   .ui.label {
+//     &.mini {
+//       font-size: 12px;
+//     }
+//     &.tiny {
+//       font-size: 13px;
+//     }
+//     &.small {
+//       font-size: 14px;
+//     }
+//     &.medium{
+//       font-size: 16px;
+//     }
+//     &.large {
+//       font-size: 18px;
+//     }
+//     &.big {
+//       font-size: 21px;
+//     }
+//     &.huge {
+//       font-size: 23px;
+//     }
+//     &.massive {
+//       font-size: 27px;
+//     }
+//   }
+// }

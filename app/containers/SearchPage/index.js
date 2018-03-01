@@ -18,20 +18,24 @@ import { createStructuredSelector } from 'reselect'
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
-// import ProductResults from 'components/ProductResults'
-import SearchResult from 'components/SearchResult'
-import H3 from 'components/H3'
-import WindowWidth from 'components/WindowWidth'
-import EmptyProducts from './EmptyProducts'
+// import ProductResults from 'components/Shared/ProductResults'
+
+import MobileSearchResult from 'components/Mobile/SearchResult'
+import DesktopSearchResult from 'components/Desktop/SearchResult'
+
+import H3 from 'components/Shared/H3'
+import WindowWidth from 'components/Shared/WindowWidth'
 
 import {
   setToggleAction
 } from 'containers/Buckets/actions'
 
 import {
-  selectToggle
+  selectToggle,
+  selectSearchValue
 } from 'containers/Buckets/selectors'
 
+import EmptyProducts from './EmptyProducts'
 import messages from './messages'
 import reducer from './reducer'
 import saga from './saga'
@@ -48,11 +52,28 @@ import {
   setMobileNumbersAction,
   setProductHandlersDefaultAction
 } from './actions'
+import { Label } from 'semantic-ui-react'
 
 const SearchListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px 0;
+`
+
+const SearchPageWrapper = styled.div`
+  position:relative;
+  min-height: 100%;
+`
+
+const DesktopHeader = styled.div`
+  text-align: center;
+  margin-bottom: -10px !important;
+
+  h3 {
+    font-family: Lato,Cabin,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    font-size: 20px !important;
+    padding: 0 !important;
+  }
 `
 
 export class SearchPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -107,21 +128,51 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
   }
 
   _displayProduct () {
-    const { product, changeRoute, windowWidth } = this.props
+    const { product, changeRoute, windowWidth, searchValue } = this.props
+    const stickyFooter = document.getElementsByTagName('footer')[0]
+    const isEmpty = product.size === 0
 
-    if (product.size > 0) {
-      return (
-        <div>
-          <H3><FormattedMessage {...messages.header} /></H3>
-          <SearchResult
-            product={product}
-            windowWidth={windowWidth}
-            changeRoute={changeRoute} />
-        </div>
-      )
+    if (windowWidth >= 1024 && stickyFooter) {
+      if (product.size > 0) {
+        stickyFooter.classList.contains('sticky') &&
+        stickyFooter.classList.remove('sticky')
+
+        product.size <= 6 &&
+        stickyFooter.classList.add('sticky')
+
+        return (
+          <div>
+            {
+              !isEmpty &&
+              <DesktopHeader>
+                <Label as='h3' className='color__secondary'>
+                  <FormattedMessage {...messages.header} />
+                  <span>for '{searchValue}'</span>
+                </Label>
+              </DesktopHeader>
+            }
+
+            <DesktopSearchResult
+              product={product}
+              windowWidth={windowWidth}
+              changeRoute={changeRoute} />
+          </div>
+        )
+      } else {
+        stickyFooter.classList.add('sticky')
+      }
     }
 
-    return null
+    return (
+      <div>
+        { !isEmpty && <H3><FormattedMessage {...messages.header} /></H3> }
+
+        <MobileSearchResult
+          product={product}
+          windowWidth={windowWidth}
+          changeRoute={changeRoute} />
+      </div>
+    )
   }
 
   _displayEmpty () {
@@ -146,16 +197,18 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
 
   render () {
     return (
-      <SearchListWrapper>
-        <Helmet
-          title='Search'
-          meta={[
-            { name: 'description', content: 'Description of SearchPage' }
-          ]}
-        />
-        { this._displayEmpty() }
-        { this._displayProduct() }
-      </SearchListWrapper>
+      <SearchPageWrapper>
+        <SearchListWrapper>
+          <Helmet
+            title='Search'
+            meta={[
+              { name: 'description', content: 'Description of SearchPage' }
+            ]}
+          />
+          { this._displayEmpty() }
+          { this._displayProduct() }
+        </SearchListWrapper>
+      </SearchPageWrapper>
     )
   }
 }
@@ -165,7 +218,8 @@ const mapStateToProps = createStructuredSelector({
   loading: selectSearchProductLoading(),
   toggle: selectToggle(),
   productSuccess: selectProductSuccess(),
-  productError: selectProductError()
+  productError: selectProductError(),
+  searchValue: selectSearchValue()
 })
 
 function mapDispatchToProps (dispatch) {

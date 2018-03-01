@@ -7,7 +7,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
-import Waypoint from 'react-waypoint'
 
 import { connect } from 'react-redux'
 import { compose } from 'redux'
@@ -22,13 +21,22 @@ import injectReducer from 'utils/injectReducer'
 
 import { paramsImgix } from 'utils/image-stock'
 
-import BannerSlider from 'components/BannerSlider'
-import ProductView from 'components/ProductView'
-import Category from 'components/Category'
-import H3 from 'components/H3'
-import Brand from 'components/Brand'
-import Footer from 'components/Footer'
-import WindowWidth from 'components/WindowWidth'
+import H3 from 'components/Shared/H3'
+import MobileBrand from 'components/Mobile/Brand'
+import DesktopBrand from 'components/Desktop/Brand'
+
+import MobileSlider from 'components/Mobile/BannerSlider'
+import DesktopSlider from 'components/Desktop/BannerSlider'
+
+import MobileProductView from 'components/Mobile/ProductView'
+import DesktopProductView from 'components/Desktop/ProductView'
+
+import MobileCategory from 'components/Mobile/Category'
+import DesktopCategory from 'components/Desktop/Category'
+import MobileFooter from 'components/Mobile/Footer'
+
+import WindowWidth from 'components/Shared/WindowWidth'
+import AccessView from 'components/Shared/AccessMobileDesktopView'
 
 import {
   setPageTitleAction,
@@ -65,8 +73,7 @@ import {
 import {
   BannerWrapper,
   SearchWrapper,
-  SearchContainer,
-  CategoryWrapper
+  SearchContainer
 } from './styles'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -159,10 +166,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
   render () {
     const { loader, featuredProducts, featuredCategories, featuredBrands, changeRoute, windowWidth, intl, brandLoader } = this.props
-
-    const numSlide = windowWidth > 767 ? 2 : 1
     const imgixOptions = {
-      w: 800,
+      w: windowWidth >= 1024 ? 1170 : 800,
       h: 400,
       fit: 'clamp',
       auto: 'compress',
@@ -177,6 +182,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner4.png', imgixOptions)
     ]
 
+    const desktopBannerImages = [
+      paramsImgix('https://cliqqshop.imgix.net/banner-desktop.jpg', imgixOptions)
+    ]
+
     return (
       <div>
         <Helmet
@@ -186,70 +195,118 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           ]}
       />
 
-        <SearchContainer className='background__light-grey' data-attribute='search'>
-          <Grid padded>
-            <Grid.Row columns={1}>
-              <Grid.Column>
-                <SearchWrapper>
-                  <Input
-                    aria-label='search'
-                    name='search'
-                    fluid
-                    onClick={changeRoute.bind(this, '/search')}
-                    placeholder={intl.formatMessage(messages.searchPlaceholder)}
-                    icon='search'
-                  />
-                </SearchWrapper>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </SearchContainer>
+        {
+          windowWidth < 1024 &&
+          <SearchContainer className='background__light-grey' data-attribute='search'>
+            <Grid padded>
+              <Grid.Row columns={1}>
+                <Grid.Column>
+                  <SearchWrapper>
+                    <Input
+                      aria-label='search'
+                      name='search'
+                      fluid
+                      onClick={changeRoute.bind(this, '/search')}
+                      placeholder={intl.formatMessage(messages.searchPlaceholder)}
+                      icon='search'
+                    />
+                  </SearchWrapper>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </SearchContainer>
+        }
 
-        <BannerWrapper>
-          <BannerSlider
-            loader={false}
-            images={bannerImages}
-            slidesToShow={numSlide}
-            isInfinite
-          />
-        </BannerWrapper>
+        {
+          windowWidth < 1024 &&
+          <BannerWrapper>
+            <AccessView
+              mobileView={
+                <MobileSlider
+                  loader={false}
+                  images={bannerImages}
+                  isInfinite
+                />
+              }
+              desktopView={null}
+            />
+          </BannerWrapper>
+        }
 
         <Container>
-          <H3>
-            <FormattedMessage {...messages.browseBrands} />
-          </H3>
-          <Brand
-            brands={featuredBrands}
-            loader={brandLoader}
-            changeRoute={changeRoute}
+          {
+            windowWidth >= 1024 &&
+            <BannerWrapper>
+              <AccessView
+                mobileView={null}
+                desktopView={
+                  <DesktopSlider
+                    loader={false}
+                    images={desktopBannerImages}
+                    slidesToShow={1}
+                    isInfinite
+                  />
+                }
+              />
+            </BannerWrapper>
+          }
+
+          <AccessView
+            mobileView={
+              <H3>
+                <FormattedMessage {...messages.browseBrands} />
+              </H3>
+            }
+            desktopView={null}
+          />
+
+          <AccessView
+            mobileView={
+              <MobileBrand
+                brands={featuredBrands}
+                loader={brandLoader}
+                changeRoute={changeRoute}
+              />
+            }
+            desktopView={
+              <DesktopBrand
+                brands={featuredBrands}
+                loader={brandLoader}
+                changeRoute={changeRoute}
+              />
+            }
           />
 
           <H3>
             <FormattedMessage {...messages.featureProduct} />
           </H3>
-          <Waypoint
-            onEnter={this._handleFeaturedItemsWaypointEnter}
-          >
-            <div>
-              <ProductView
+          <AccessView
+            mobileView={
+              <MobileProductView
                 changeRoute={changeRoute}
                 loader={loader}
                 products={featuredProducts}
                 windowWidth={windowWidth}
               />
-            </div>
-          </Waypoint>
+            }
+            desktopView={
+              <DesktopProductView
+                changeRoute={changeRoute}
+                loader={loader}
+                products={featuredProducts}
+                windowWidth={windowWidth}
+              />
+            }
+          />
 
           { this._displayViewAll() }
 
           <H3>
             <FormattedMessage {...messages.browseCategory} />
           </H3>
-          <Waypoint
-            onEnter={this._handleFeaturedCategoriesWaypointEnter}
-          >
-            <CategoryWrapper>
-              <Category
+          <AccessView
+            mobileView={
+              <MobileCategory
                 loader={loader}
                 windowWidth={windowWidth}
                 margin='2'
@@ -258,11 +315,28 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                 iconWidth='25'
                 fontSize='9'
                 height='80'
-                categories={featuredCategories} />
-            </CategoryWrapper>
-          </Waypoint>
+                categories={featuredCategories}
+              />
+            }
+            desktopView={
+              <DesktopCategory
+                loader={loader}
+                windowWidth={windowWidth}
+                margin='2'
+                changeRoute={changeRoute}
+                route='/products-category'
+                iconWidth='25'
+                fontSize='9'
+                height='80'
+                categories={featuredCategories}
+              />
+            }
+          />
         </Container>
-        <Footer />
+        <AccessView
+          mobileView={<MobileFooter />}
+          desktopView={null}
+        />
       </div>
     )
   }

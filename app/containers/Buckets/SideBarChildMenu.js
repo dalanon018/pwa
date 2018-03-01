@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { ifElse, map, gte } from 'ramda'
 import { Label } from 'semantic-ui-react'
 
-import ChildAccordion from 'components/ChildAccordion'
+import ChildAccordion from 'components/Shared/ChildAccordion'
 import Selected from 'images/icons/drawer/selected.svg'
 
 const SideBarChildMenu = ({ entities, changeRoute, location }) => {

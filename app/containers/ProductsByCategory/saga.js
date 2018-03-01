@@ -1,11 +1,8 @@
 import {
   call,
-  cancel,
   fork,
-  put,
-  take
+  put
 } from 'redux-saga/effects'
-import { LOCATION_CHANGE } from 'react-router-redux'
 import { takeLatest, takeEvery } from 'redux-saga'
 import { isEmpty } from 'lodash'
 import {
@@ -20,17 +17,23 @@ import {
 import { getRequestData } from 'utils/offline-request'
 
 import { transformProduct } from 'utils/transforms'
-import { getItem } from 'utils/localStorage'
+import { getItem, setItem } from 'utils/localStorage'
 
 import {
   GET_PRODUCTS_CATEGORY,
   GET_TAGS_PRODUCTS,
-  GET_PRODUCTS_VIEWED
+  GET_PRODUCTS_VIEWED,
+
+  GET_OVER18,
+  SET_OVER18,
+  SUBMIT_OVER18
 } from './constants'
 import {
   setProductsByCategoryAction,
   setProductsViewedAction,
-  setProductsCountsAction
+  setProductsCountsAction,
+
+  setOver18Action
 } from './actions'
 
 import {
@@ -54,6 +57,18 @@ import {
 function * transformEachEntity (entity) {
   const response = yield call(transformProduct, entity)
   return response
+}
+
+function * getOver18 () {
+  const over18 = yield call(getItem, SET_OVER18)
+
+  return over18
+}
+
+function * setOver18 (payload) {
+  const over18 = yield call(setItem, SET_OVER18, payload)
+
+  return over18
 }
 
 function * getLastViewedItems () {
@@ -120,6 +135,20 @@ export function * getProductByTags (args) {
   yield put(setProductsCountsAction(count))
 }
 
+export function * getOver18Item () {
+  const response = yield * getOver18()
+
+  yield put(setOver18Action(response))
+}
+
+export function * setOver18Item (args) {
+  const { payload } = args
+
+  const response = yield * setOver18(payload)
+
+  yield put(setOver18Action(response))
+}
+
 export function * getProductsViewed () {
   const response = yield * getLastViewedItems()
 
@@ -138,17 +167,26 @@ export function * getProductsViewedSaga () {
   yield * takeLatest(GET_PRODUCTS_VIEWED, getProductsViewed)
 }
 
+export function * getOver18Saga () {
+  yield * takeEvery(GET_OVER18, getOver18Item)
+}
+
+export function * setOver18Saga () {
+  yield * takeEvery(SUBMIT_OVER18, setOver18Item)
+}
+
 // Individual exports for testing
 export function * productsCategorySagas () {
-  const watcher = yield [
+  yield * [
+    fork(getOver18Saga),
+    fork(setOver18Saga),
+
     fork(getProductByCategorySaga),
 
     fork(getProductByTagsSaga),
 
     fork(getProductsViewedSaga)
   ]
-  yield take(LOCATION_CHANGE)
-  yield watcher.map(task => cancel(task))
 }
 
 // All sagas to be loaded
