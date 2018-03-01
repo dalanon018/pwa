@@ -78,6 +78,6 @@ export default defineMessages({
   },
   discountText: {
     id: `${idSuffix}.discountText`,
-    defaultMessage: '*Discounts are automatically discoubted at Method of Payment'
+    defaultMessage: '*Discounts are automatically discounted at Method of Payment'
   }
 })

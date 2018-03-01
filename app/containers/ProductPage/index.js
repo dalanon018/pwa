@@ -228,6 +228,18 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     this.setState({ offset: Math.abs(subtracted) })
   }
 
+  _handleStickyFooter = () => {
+    const bodyHeight = window.innerHeight
+    const screenHeight = window.screen.height
+    const stickyFooter = document.getElementsByTagName('footer')[0]
+
+    if (stickyFooter) {
+      if (bodyHeight < screenHeight) {
+        stickyFooter.classList.add('sticky')
+      }
+    }
+  }
+
   componentWillMount () {
     this.props.setPageTitle('Product Details')
     this.props.setShowSearchIcon(true)
@@ -241,6 +253,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     setRouteName(PRODUCT_NAME)
 
     this._handleCountOffset()
+    this._handleStickyFooter()
   }
 
   componentWillUnmount () {

@@ -250,13 +250,18 @@ class SearchMenu extends PureComponent {
           </Wrapper>
         }
         desktopView={
-          <SearchInput
-            className='color__secondary border__none'
-            ref={this._inputReference}
-            onChange={this._handleOnchange}
-            onKeyPress={this._handleKeyPress}
-            placeholder={intl.formatMessage(messages.searchPlaceHolder)}
-          />
+          <SearchContainer>
+            <InputContainer>
+              <SearchInput
+                className='color__secondary border__none'
+                ref={this._inputReference}
+                onChange={this._handleOnchange}
+                onKeyPress={this._handleKeyPress}
+                placeholder={intl.formatMessage(messages.searchPlaceHolder)}
+              />
+              <Icon className='magnifier cursor__pointer' name='search' onClick={this._handlePressSearch} />
+            </InputContainer>
+          </SearchContainer>
         }
       />
     )

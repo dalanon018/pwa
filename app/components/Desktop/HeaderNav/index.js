@@ -203,6 +203,15 @@ const OptionsWrapper = styled.div`
   justify-content: flex-end;
 `
 
+const MagicBlock = styled.div`
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+`
+
 const toggleComponent = (componentA, componentB) => (condition) => {
   return ifElse(
     identity,
@@ -246,10 +255,12 @@ class HeaderNav extends PureComponent {
   }
 
   _handleBrandsMenu = () => {
-    this.setState({
-      brandsMenu: !this.state.brandsMenu
-    })
+    this.setState((prevState) => ({
+      brandsMenu: !prevState.brandsMenu
+    }))
   }
+
+  _handleCloseBrands = () => this.setState({ brandsMenu: false })
 
   _handleBrandLists = () => {
     const { brands, changeRoute } = this.props
@@ -426,59 +437,62 @@ class HeaderNav extends PureComponent {
     )
 
     return (
-      <Wrapper>
-        <Container>
-          <Grid>
-            <Grid.Row columns={3} verticalAlign='middle'>
-              <Grid.Column width={3}>
-                <LogoWrapper>
-                  <Image alt='CLiQQ' src={MainLogo} onClick={changeRoute.bind(this, '/')} />
-                </LogoWrapper>
-              </Grid.Column>
-              <Grid.Column width={10}>
-                <SearchWrapper>
-                  {
-                    pathname
-                    ? <SearchMenu
-                      clearSearch={clearSearchNav}
-                      searchProduct={searchProductNav}
-                      hideBackButton={hideBackButtonNav}
-                      _handleSearchInputValue={_handleSearchInputValueNav}
-                      leftButtonAction={leftButtonActionNav}
-                    />
-                    : <Input
-                      aria-label='search'
-                      name='search'
-                      fluid
-                      onClick={changeRoute.bind(this, '/search')}
-                      placeholder={this.props.intl.formatMessage(messages.searchPlaceHolder)}
-                      icon='search'
-                    />
-                  }
-                </SearchWrapper>
-              </Grid.Column>
-              <Grid.Column width={3} textAlign='right'>
-                <OptionsWrapper>
-                  { ActivitiesToggle(showActivityIcon) }
-                  { this._handleShowLogoutButton() }
-                </OptionsWrapper>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Container>
-        <MainNav className='background__light-grey'>
-          <Container className='padding__none--vertical'>
-            { this._filteredCategoryMenu() }
+      <div>
+        { this.state.brandsMenu && <MagicBlock onClick={this._handleCloseBrands} /> }
+        <Wrapper>
+          <Container>
+            <Grid>
+              <Grid.Row columns={3} verticalAlign='middle'>
+                <Grid.Column width={3}>
+                  <LogoWrapper>
+                    <Image alt='CLiQQ' src={MainLogo} onClick={changeRoute.bind(this, '/')} />
+                  </LogoWrapper>
+                </Grid.Column>
+                <Grid.Column width={10}>
+                  <SearchWrapper>
+                    {
+                      pathname
+                      ? <SearchMenu
+                        clearSearch={clearSearchNav}
+                        searchProduct={searchProductNav}
+                        hideBackButton={hideBackButtonNav}
+                        _handleSearchInputValue={_handleSearchInputValueNav}
+                        leftButtonAction={leftButtonActionNav}
+                      />
+                      : <Input
+                        aria-label='search'
+                        name='search'
+                        fluid
+                        onClick={changeRoute.bind(this, '/search')}
+                        placeholder={this.props.intl.formatMessage(messages.searchPlaceHolder)}
+                        icon='search'
+                      />
+                    }
+                  </SearchWrapper>
+                </Grid.Column>
+                <Grid.Column width={3} textAlign='right'>
+                  <OptionsWrapper>
+                    { ActivitiesToggle(showActivityIcon) }
+                    { this._handleShowLogoutButton() }
+                  </OptionsWrapper>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
           </Container>
-          <BrandsMenuWrapper className='background__white' toggle={this.state.brandsMenu}>
-            <Container>
-              <BrandsContainer>
-                { this._handleBrandLists() }
-              </BrandsContainer>
+          <MainNav className='background__light-grey'>
+            <Container className='padding__none--vertical'>
+              { this._filteredCategoryMenu() }
             </Container>
-          </BrandsMenuWrapper>
-        </MainNav>
-      </Wrapper>
+            <BrandsMenuWrapper className='background__white' toggle={this.state.brandsMenu}>
+              <Container>
+                <BrandsContainer>
+                  { this._handleBrandLists() }
+                </BrandsContainer>
+              </Container>
+            </BrandsMenuWrapper>
+          </MainNav>
+        </Wrapper>
+      </div>
     )
   }
 }

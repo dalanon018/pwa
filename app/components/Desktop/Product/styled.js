@@ -115,10 +115,10 @@ export const ProductDetailsContainer = styled(AnimateDiv)`
   padding: 20px 0 35px 0;
   font-weight: 100;
 
-  @media (min-width: 1366px) {
-    margin: 0 auto;
-    width: 700px;
-  }
+  // @media (min-width: 1366px) {
+  //   margin: 0 auto;
+  //   width: 700px;
+  // }
 `
 
 export const ProductDetails = styled(ProductDetailsContainer)`
@@ -229,7 +229,7 @@ export const CustomGrid = styled(Grid.Column)`
 `
 
 export const LeftColumnWrapper = styled.div`
-  // height: 100%;
-  // position: relative;
-  // width: 100%;
+  height: 100%;
+  position: relative;
+  width: 100%;
 `
