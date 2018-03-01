@@ -43,7 +43,7 @@ import BannerSlider from 'components/Shared/BannerSlider'
 import H3 from 'components/Shared/H3'
 import EmptyProducts from 'components/Shared/EmptyProductsBlock'
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
-import { InfiniteLoading, InfiniteWrapper } from 'components/InfiniteLoading'
+import { InfiniteLoading, InfiniteWrapper } from 'components/Shared/InfiniteLoading'
 
 import {
   setPageTitleAction,

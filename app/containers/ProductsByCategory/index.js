@@ -50,7 +50,7 @@ import LoadingIndicator from 'components/Shared/LoadingIndicator'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 import Modal from 'components/Shared/PromptModal'
 
-import { InfiniteLoading, InfiniteWrapper } from 'components/InfiniteLoading'
+import { InfiniteLoading, InfiniteWrapper } from 'components/Shared/InfiniteLoading'
 
 import {
   getProductCategoriesAction,
