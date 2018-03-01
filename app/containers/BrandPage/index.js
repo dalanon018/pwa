@@ -71,7 +71,8 @@ import {
   selectLazyload,
   selectLoading,
   selectProductsByBrandsItems,
-  selectProductsByBrandsFeatured
+  selectProductsByBrandsFeatured,
+  selectTotalCount
 } from './selectors'
 import {
   LIMIT_ITEMS
@@ -111,6 +112,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     lazyload: PropTypes.bool.isRequired,
     productsByBrands: PropTypes.object.isRequired,
     productsFeatured: PropTypes.object.isRequired,
+    totalCount: PropTypes.number.isRequired,
     brands: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired
   }
@@ -255,7 +257,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   _displayFeaturedProducts = () => {
-    const { productsFeatured, loader, changeRoute, windowWidth, lazyload } = this.props
+    const { productsFeatured, loader, changeRoute, windowWidth, lazyload, totalCount } = this.props
 
     const displayFeatured = ifElse(
       lt(0),
@@ -266,7 +268,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
             hasMoreData={lazyload}
             loadMoreData={this._displayMoreProducts}
             isLoading={loader}
-            rowCount={productsFeatured.size + 1}
+            rowCount={totalCount}
           >
             {(props) => (
               <AccessView
@@ -288,36 +290,36 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   _displayHeaderRegularProduct () {
-    const { lazyload, productsByBrands, windowWidth } = this.props
+    const { lazyload, productsByBrands, totalCount } = this.props
 
     if (lazyload && productsByBrands.size === 0) {
       return null
     }
 
     return (
-      <div>
-        {
-          windowWidth >= 1024
-          ? <div className='margin__vertical--30'>
+      <AccessView
+        mobileView={
+          <H3>
+            <FormattedMessage {...messages.brandsTitle} />
+          </H3>
+        }
+        desktopView={
+          <div className='margin__vertical--30'>
             <DesktopTitle>
               <FormattedMessage {...messages.brandsTitle} />
             </DesktopTitle>
             <DesktopItemCount className='color__grey'>
-              { productsByBrands.size }
+              { totalCount }
               <FormattedMessage {...messages.items} />
             </DesktopItemCount>
           </div>
-          : <H3>
-            <FormattedMessage {...messages.brandsTitle} />
-          </H3>
         }
-      </div>
+      />
     )
   }
 
   _displayRegularItems = () => {
-    const { productsByBrands, changeRoute, loader, lazyload, windowWidth } = this.props
-
+    const { productsByBrands, changeRoute, loader, lazyload, windowWidth, totalCount } = this.props
     if (productsByBrands.size > 1 || lazyload === false) {
       return (
         <InfiniteLoading
@@ -325,7 +327,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           hasMoreData={lazyload}
           loadMoreData={this._displayMoreProducts}
           isLoading={loader}
-          rowCount={productsByBrands.size + 1}
+          rowCount={totalCount}
         >
           {(props) => (
             <AccessView
@@ -451,6 +453,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
 const mapStateToProps = createStructuredSelector({
   productsByBrands: selectProductsByBrandsItems(),
   productsFeatured: selectProductsByBrandsFeatured(),
+  totalCount: selectTotalCount(),
   brands: selectBrands(),
   loader: selectLoading(),
   lazyload: selectLazyload(),

@@ -25,7 +25,8 @@ import {
   GET_PRODUCTS_BRANDS
 } from './constants'
 import {
-  setProductsByBrandsAction
+  setProductsByBrandsAction,
+  setProductsCountsAction
 } from './actions'
 
 import {
@@ -52,6 +53,7 @@ function * transformEachEntity (entity) {
 export function * getProductByBrands (args) {
   const { payload: { offset, limit, id } } = args
   let products = []
+  let count = 0
 
   // TODO: we need to change this to the correct url
   const token = yield getAccessToken()
@@ -65,13 +67,16 @@ export function * getProductByBrands (args) {
       map(transformEachEntity),
       propOr([], 'productList')
     )
+    const totalCount = propOr(0, 'totalCount')
 
     products = yield transform(req)
+    count = totalCount(req)
   } else {
     yield put(setNetworkErrorAction(500))
   }
 
   yield put(setProductsByBrandsAction(products))
+  yield put(setProductsCountsAction(count))
 }
 
 export function * getProductByBrandsSaga () {
