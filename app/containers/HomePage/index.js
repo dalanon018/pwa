@@ -7,7 +7,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
-import Waypoint from 'react-waypoint'
 
 import { connect } from 'react-redux'
 import { compose } from 'redux'
@@ -167,7 +166,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
   render () {
     const { loader, featuredProducts, featuredCategories, featuredBrands, changeRoute, windowWidth, intl, brandLoader } = this.props
-    const { showFeaturedItems, showFeaturedCategories } = this.state
     const imgixOptions = {
       w: windowWidth >= 1024 ? 1170 : 800,
       h: 400,
@@ -282,72 +280,58 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           <H3>
             <FormattedMessage {...messages.featureProduct} />
           </H3>
-          <Waypoint
-            onEnter={this._handleFeaturedItemsWaypointEnter}
-          >
-            {
-            showFeaturedItems &&
-            <AccessView
-              mobileView={
-                <MobileProductView
-                  changeRoute={changeRoute}
-                  loader={loader}
-                  products={featuredProducts}
-                  windowWidth={windowWidth}
-                />
-              }
-              desktopView={
-                <DesktopProductView
-                  changeRoute={changeRoute}
-                  loader={loader}
-                  products={featuredProducts}
-                  windowWidth={windowWidth}
-                />
-              }
-            />
+          <AccessView
+            mobileView={
+              <MobileProductView
+                changeRoute={changeRoute}
+                loader={loader}
+                products={featuredProducts}
+                windowWidth={windowWidth}
+              />
             }
-          </Waypoint>
+            desktopView={
+              <DesktopProductView
+                changeRoute={changeRoute}
+                loader={loader}
+                products={featuredProducts}
+                windowWidth={windowWidth}
+              />
+            }
+          />
 
           { this._displayViewAll() }
 
           <H3>
             <FormattedMessage {...messages.browseCategory} />
           </H3>
-          <Waypoint
-            onEnter={this._handleFeaturedCategoriesWaypointEnter}
-          >
-            {
-            showFeaturedCategories &&
-            <AccessView
-              mobileView={
-                <MobileCategory
-                  loader={loader}
-                  windowWidth={windowWidth}
-                  margin='2'
-                  changeRoute={changeRoute}
-                  route='/products-category'
-                  iconWidth='25'
-                  fontSize='9'
-                  height='80'
-                  categories={featuredCategories}
-                />
-              }
-              desktopView={
-                <DesktopCategory
-                  loader={loader}
-                  windowWidth={windowWidth}
-                  margin='2'
-                  changeRoute={changeRoute}
-                  route='/products-category'
-                  iconWidth='25'
-                  fontSize='9'
-                  height='80'
-                  categories={featuredCategories}
-                />
-              }
-            />
+          <AccessView
+            mobileView={
+              <MobileCategory
+                loader={loader}
+                windowWidth={windowWidth}
+                margin='2'
+                changeRoute={changeRoute}
+                route='/products-category'
+                iconWidth='25'
+                fontSize='9'
+                height='80'
+                categories={featuredCategories}
+              />
             }
-          </Waypoint>
+            desktopView={
+              <DesktopCategory
+                loader={loader}
+                windowWidth={windowWidth}
+                margin='2'
+                changeRoute={changeRoute}
+                route='/products-category'
+                iconWidth='25'
+                fontSize='9'
+                height='80'
+                categories={featuredCategories}
+              />
+            }
+          />
         </Container>
         <AccessView
           mobileView={<MobileFooter />}
