@@ -505,7 +505,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   _handleRestrictAge () {
     const { match: { params: { id } } } = this.props
     // const mockIds = ['01', '02', '10']
-    const mockIds = ['04', '900', '15']
+    // const mockIds = ['04', '900', '15']
+    const mockIds = ['0123456789']
     let adult = false
 
     mockIds.forEach(i => {
