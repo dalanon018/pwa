@@ -2,13 +2,15 @@
 import {
   getProductsByBrandsAction,
   setProductsByBrandsAction,
-  resetProductsByBrandsAction
+  resetProductsByBrandsAction,
+  setProductsCountsAction
 } from '../actions'
 
 import {
   GET_PRODUCTS_BRANDS,
   SET_PRODUCTS_BRANDS,
-  RESET_PRODUCTS_BRANDS
+  RESET_PRODUCTS_BRANDS,
+  SET_PRODUCTS_COUNT
 } from '../constants'
 
 describe('Brands actions', () => {
@@ -38,6 +40,15 @@ describe('Brands actions', () => {
         payload
       }
       expect(resetProductsByBrandsAction(payload)).toEqual(expected)
+    })
+
+    it('has a type of SET_PRODUCTS_COUNT', () => {
+      const payload = 0
+      const expected = {
+        type: SET_PRODUCTS_COUNT,
+        payload
+      }
+      expect(setProductsCountsAction(payload)).toEqual(expected)
     })
   })
 })
