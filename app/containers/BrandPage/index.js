@@ -180,10 +180,10 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     return (
       <AccessView
         mobileView={
-          <MobileProductView changeRoute={changeRoute} loader products={productsByBrands} windowWidth={windowWidth} />
+          <MobileProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
         }
         desktopView={
-          <DesktopProductView changeRoute={changeRoute} loader products={productsByBrands} windowWidth={windowWidth} />
+          <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
         }
       />
     )
@@ -266,10 +266,10 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           {(props) => (
             <AccessView
               mobileView={
-                <MobileProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} { ...props }/>
+                <MobileProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
               }
               desktopView={
-                <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} { ...props }/>
+                <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
               }
             />
           )}
@@ -309,10 +309,10 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           {(props) => (
             <AccessView
               mobileView={
-                <MobileProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} {...props}/>
+                <MobileProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} {...props} />
               }
               desktopView={
-                <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} {...props}/>
+                <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} {...props} />
               }
             />
           )}
