@@ -1,14 +1,14 @@
 import React, { Component, PropTypes } from 'react'
-import styled from 'styled-components'
+// import styled from 'styled-components'
 
-const AffixWrapper = styled.div`
-  ${
-    props =>
-    props.affix
-    ? 'position: absolute;top: ' + props.top + 'px;width: 100%;'
-    : 'position: fixed;width: 50.5%;@media (min-width: 1025px){width: 31%!important;}'
-  }
-`
+// const AffixWrapper = styled.div`
+//   ${
+//     props =>
+//     props.affix
+//     ? 'position: absolute;top: ' + props.top + 'px;width: 100%;'
+//     : 'position: fixed;width: 50.5%;@media (min-width: 1025px){width: 31%!important;}'
+//   }
+// `
 
 class Affix extends Component {
   static propTypes = {
@@ -57,9 +57,9 @@ class Affix extends Component {
     const { className, top, ...props } = this.props
 
     return (
-      <AffixWrapper id='affix-element' {...props} className={`${className || ''} ${affix}`} affix={affix} top={top}>
+      <div id='affix-element' {...props} className={`${className || ''} ${affix}`}>
         {this.props.children}
-      </AffixWrapper>
+      </div>
     )
   }
 }

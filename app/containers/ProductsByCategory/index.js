@@ -205,7 +205,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     const { categories, match: { params: { id } } } = this.props
     if (categories.size) {
       const category = categories.find((cat) => cat.get('id') === id)
-      return category ? category.get('name') : ''
+      return category ? `All ${category.get('name')}` : ''
     }
     return ''
   }

@@ -548,6 +548,11 @@ svg#barcode {
         margin: 0 14px;
       }
     }
+    &__vertical {
+      &--30 {
+        margin: 30px 0;
+      }
+    }
   }
 
   /* Elements Responsive */

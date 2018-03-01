@@ -29,7 +29,7 @@ const Wrapper = styled.footer`
     left: 0;
     bottom: 0;
     width: 300px;
-    height: 160px;
+    height: 74px;
 
     background-image: url(${({ backgroundImage }) => backgroundImage});
     background-repeat: no-repeat;
@@ -43,7 +43,7 @@ const Wrapper = styled.footer`
     right: 0;
     bottom: 0;
     width: 300px;
-    height: 160px;
+    height: 74px;
 
     background-image: url(${({ backgroundImage }) => backgroundImage});
     background-repeat: no-repeat;
@@ -89,7 +89,7 @@ const SocialIcons = styled.div`
 
   img {
     height: inherit !important;
-    width: 32px !important;
+    width: 36px !important;
   }
 `
 const FooterColumnAdjusterFlex = styled(Grid.Column)`
@@ -121,7 +121,7 @@ const FooterColumnWrapper = styled.div`
 const FooterColumnTitle = styled.div``
 
 const FooterSocialMediaWrapper = styled.div`
-  align-self: flex-end;
+  // align-self: flex-end;
 `
 
 export {

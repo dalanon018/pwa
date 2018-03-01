@@ -82,6 +82,22 @@ const ContentWrapper = styled(Container)`
   padding-bottom: 20px !important;
 `
 
+const DesktopItemCount = styled.p`
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 20px;
+  text-align: center;
+`
+
+const DesktopTitle = styled.p`
+  font-family: Lato,Cabin,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0;
+`
+
 export class BrandPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     changeRoute: PropTypes.func.isRequired,
@@ -134,20 +150,6 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
       return brand ? brand.get('name') : ''
     }
     return ''
-  }
-
-  _displayHeaderTitle = () => {
-    const { lazyload, productsByBrands } = this.props
-
-    if (lazyload && productsByBrands.size === 0) {
-      return null
-    }
-
-    return (
-      <H3>
-        <FormattedMessage {...messages.brandsTitle} />
-      </H3>
-    )
   }
 
   _displayMoreProducts = () => {
@@ -258,24 +260,26 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     const displayFeatured = ifElse(
       lt(0),
       () => (
-        <InfiniteLoading
-          results={productsFeatured}
-          hasMoreData={lazyload}
-          loadMoreData={this._displayMoreProducts}
-          isLoading={loader}
-          rowCount={productsFeatured.size + 1}
-        >
-          {(props) => (
-            <AccessView
-              mobileView={
-                <MobileProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
-              }
-              desktopView={
-                <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
-              }
-            />
-          )}
-        </InfiniteLoading>
+        <div className='margin__top-positive--30'>
+          <InfiniteLoading
+            results={productsFeatured}
+            hasMoreData={lazyload}
+            loadMoreData={this._displayMoreProducts}
+            isLoading={loader}
+            rowCount={productsFeatured.size + 1}
+          >
+            {(props) => (
+              <AccessView
+                mobileView={
+                  <MobileProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
+                }
+                desktopView={
+                  <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
+                }
+              />
+            )}
+          </InfiniteLoading>
+        </div>
       ),
       noop
     )
@@ -284,16 +288,31 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   _displayHeaderRegularProduct () {
-    const { productsByBrands } = this.props
-    if (productsByBrands.size) {
-      return (
-        <H3>
-          <FormattedMessage {...messages.brandsTitle} />
-        </H3>
-      )
+    const { lazyload, productsByBrands, windowWidth } = this.props
+
+    if (lazyload && productsByBrands.size === 0) {
+      return null
     }
 
-    return null
+    return (
+      <div>
+        {
+          windowWidth >= 1024
+          ? <div className='margin__vertical--30'>
+            <DesktopTitle>
+              <FormattedMessage {...messages.brandsTitle} />
+            </DesktopTitle>
+            <DesktopItemCount className='color__grey'>
+              { productsByBrands.size }
+              <FormattedMessage {...messages.items} />
+            </DesktopItemCount>
+          </div>
+          : <H3>
+            <FormattedMessage {...messages.brandsTitle} />
+          </H3>
+        }
+      </div>
+    )
   }
 
   _displayRegularItems = () => {
@@ -389,30 +408,36 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
                   images={brandImages}
                 />
               }
-              desktopView={
-                <SharedBannerSlider
-                  isInfinite
-                  autoplay={animateBanner}
-                  results={productsByBrands}
-                  loader={loader}
-                  images={brandImages}
-                />
-              }
+              desktopView={null}
             />
           </div>
         </Waypoint>
         <ContentWrapper>
-          <InfiniteWrapper
-            hasMoreData={lazyload}
-            isLoading={loader}
-          >
-            { this._displayHeaderFeaturesProduct() }
-            { this._displayFeaturedProducts() }
+          <AccessView
+            mobileView={null}
+            desktopView={
+              <SharedBannerSlider
+                isInfinite
+                autoplay={animateBanner}
+                results={productsByBrands}
+                loader={loader}
+                images={brandImages}
+            />
+            }
+          />
+          <div className='margin__top-positive--30'>
+            <InfiniteWrapper
+              hasMoreData={lazyload}
+              isLoading={loader}
+            >
+              { this._displayHeaderFeaturesProduct() }
+              { this._displayFeaturedProducts() }
 
-            { this._displayHeaderRegularProduct() }
-            { this._displayEmptyLoadingIndicator() }
-            { this._displayRegularItems() }
-          </InfiniteWrapper>
+              { this._displayHeaderRegularProduct() }
+              { this._displayEmptyLoadingIndicator() }
+              { this._displayRegularItems() }
+            </InfiniteWrapper>
+          </div>
         </ContentWrapper>
         <AccessView
           mobileView={<MobileFooter />}

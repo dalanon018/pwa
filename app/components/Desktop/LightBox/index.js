@@ -57,7 +57,7 @@ function LightBox ({
   loader
 }) {
   return (
-    <LightBoxWrapper>
+    <LightBoxWrapper onClick={() => close(null)} >
       <ImageWrapper>
         <ProductSlider
           images={images}
