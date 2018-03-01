@@ -103,7 +103,6 @@ function ProductView ({
               height={300}
               offset={300}
               placeholder={<LoadingIndicator />}
-              once
           >
               {
               !isMinor || over18

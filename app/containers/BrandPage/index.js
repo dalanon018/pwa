@@ -37,9 +37,11 @@ import DesktopProductView from 'components/Desktop/ProductView'
 
 import MobileFooter from 'components/Mobile/Footer'
 
+import MobileBannerSlider from 'components/Mobile/BannerSlider'
+import SharedBannerSlider from 'components/Shared/BannerSlider'
+
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 import WindowWidth from 'components/Shared/WindowWidth'
-import BannerSlider from 'components/Shared/BannerSlider'
 import H3 from 'components/Shared/H3'
 import EmptyProducts from 'components/Shared/EmptyProductsBlock'
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
@@ -377,12 +379,25 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           onLeave={this._handleBannerAnimation(false)}
         >
           <div>
-            <BannerSlider
-              isInfinite
-              autoplay={animateBanner}
-              results={productsByBrands}
-              loader={loader}
-              images={brandImages}
+            <AccessView
+              mobileView={
+                <MobileBannerSlider
+                  isInfinite
+                  autoplay={animateBanner}
+                  results={productsByBrands}
+                  loader={loader}
+                  images={brandImages}
+                />
+              }
+              desktopView={
+                <SharedBannerSlider
+                  isInfinite
+                  autoplay={animateBanner}
+                  results={productsByBrands}
+                  loader={loader}
+                  images={brandImages}
+                />
+              }
             />
           </div>
         </Waypoint>
