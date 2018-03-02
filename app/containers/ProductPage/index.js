@@ -253,7 +253,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     setRouteName(PRODUCT_NAME)
 
     this._handleCountOffset()
-    this._handleStickyFooter()
+    // this._handleStickyFooter()
   }
 
   componentWillUnmount () {
@@ -281,6 +281,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     ifElse(both(equals(true), () => this.successSubmission), this._handleError, noop)(productError)
 
     triggerFBEventProduct(product)
+
+    // this._handleStickyFooter()
   }
 
   render () {
