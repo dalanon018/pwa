@@ -72,8 +72,8 @@ import {
 
 import {
   BannerWrapper,
-  SearchWrapper,
-  SearchContainer
+  SearchWrapper
+  // SearchContainer
 } from './styles'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -195,61 +195,27 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           ]}
       />
 
-        {
-          windowWidth < 1024 &&
-          <SearchContainer className='background__light-grey' data-attribute='search'>
-            <Grid padded>
-              <Grid.Row columns={1}>
-                <Grid.Column>
-                  <SearchWrapper>
-                    <Input
-                      aria-label='search'
-                      name='search'
-                      fluid
-                      onClick={changeRoute.bind(this, '/search')}
-                      placeholder={intl.formatMessage(messages.searchPlaceholder)}
-                      icon='search'
-                    />
-                  </SearchWrapper>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </SearchContainer>
-        }
-
-        {
-          windowWidth < 1024 &&
+        <Container>
           <BannerWrapper>
             <AccessView
               mobileView={
                 <MobileSlider
+                  curved
                   loader={false}
                   images={bannerImages}
                   isInfinite
                 />
               }
-              desktopView={null}
+              desktopView={
+                <DesktopSlider
+                  loader={false}
+                  images={desktopBannerImages}
+                  slidesToShow={1}
+                  isInfinite
+                />
+              }
             />
           </BannerWrapper>
-        }
-
-        <Container>
-          {
-            windowWidth >= 1024 &&
-            <BannerWrapper>
-              <AccessView
-                mobileView={null}
-                desktopView={
-                  <DesktopSlider
-                    loader={false}
-                    images={desktopBannerImages}
-                    slidesToShow={1}
-                    isInfinite
-                  />
-                }
-              />
-            </BannerWrapper>
-          }
 
           <AccessView
             mobileView={

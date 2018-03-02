@@ -13,6 +13,7 @@ const BannerSliderWrapper = styled.div`
   }
 
   .slick-list {
+    ${props => props.curved && 'border-radius: 5px;'}
     padding-bottom: ${props => props.isLowerdots ? '15px' : '0'};
   }
 
@@ -30,11 +31,12 @@ const BannerSliderWrapper = styled.div`
 
   .slick-dots {
     bottom: 0;
+    position: relative;
 
     li {
       height: 25px;
       margin: 0;
-      width: 15px;
+      width: 13px;
       button {
         height: 17px;
         padding: 3px;
@@ -42,13 +44,13 @@ const BannerSliderWrapper = styled.div`
       }
       &.slick-active {
         button:before {
-          color: #DCDCDC;
+          color: #7D878C;
           opacity: .90;
         }
       }
       button:before {
-        color: #EBEBEB;
-        font-size: 10px;
+        color: #A7B4BD;
+        font-size: 6px;
         opacity: .50;
       }
     }

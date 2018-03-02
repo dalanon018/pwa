@@ -12,6 +12,6 @@ export default defineMessages({
   },
   searchPlaceHolder: {
     id: 'app.containers.HeaderNav.searchPlaceHolder',
-    defaultMessage: 'Search for Products, Brands and More'
+    defaultMessage: 'What are you looking for?'
   }
 })

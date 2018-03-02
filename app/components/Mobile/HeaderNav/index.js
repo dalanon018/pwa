@@ -19,6 +19,7 @@ const Wrapper = styled.div`
   display: block;
   position: relative;
 
+
   .no-padding {
     @media screen and (max-width: 767px) {
       padding-left: 0 !important;
@@ -52,8 +53,13 @@ const CenterWrapper = styled.div`
 `
 
 const ImageLogo = styled.img`
-  width: 80px;
   height: 35px;
+  left: 34px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  z-index: 1;
 `
 
 const RightWrapper = styled.div`
@@ -66,7 +72,7 @@ const RightWrapper = styled.div`
   }
 `
 
-const ActiviesIcon = styled.div`
+const ActivitiesIcon = styled.div`
   margin-left: ${props => props.marginLeft ? 0 : 20}px;
 
   @media screen and (max-width: 767px) {
@@ -135,11 +141,11 @@ const HamburgerSpan = styled.span`
 `
 
 const MobileMenu = styled.div`
-  background: #FFF;
-  box-shadow: 1px 1px 5px rgba(174,174,174, 0.8);
+  background: #FF4814;
+  ${props => props.shadow && 'box-shadow: 1px 1px 5px rgba(120,120,120, 0.7);'}
   padding-right: 10px;
   padding-left: 10px;
-  height: ${({headerMenuFullScreen}) => headerMenuFullScreen ? '100vh' : '49px'};
+  height: ${({headerMenuFullScreen}) => headerMenuFullScreen ? '100vh' : '50px'};
   left: 0;
   position: fixed;
   top: 0;
@@ -148,11 +154,22 @@ const MobileMenu = styled.div`
 `
 
 const SearchInput = styled(Input)`
-  border: 0;
   font-size: 18px;
   letter-spacing: 1px;
   margin: 0 5px;
   width: 100%;
+  
+  input {
+    border-radius: 4.5px !important;
+    border: 0 !important;
+    line-height: 22px !important;
+    padding-left: 60px !important;
+    text-align: center !important;
+
+    @media (min-width: 375px) {
+      padding-left: 12.600px !important;
+    }
+  }
 `
 
 const PageTitle = styled.div`
@@ -162,6 +179,15 @@ const PageTitle = styled.div`
       line-height: 18px;
     }
   }
+`
+
+const SearchContainer = styled.div`
+  position: relative;
+  width: 100%;
+`
+
+const CustomRow = styled(Grid.Row)`
+  padding: 5px 0 !important;
 `
 
 const toggleComponent = (componentA, componentB) => (condition) => {
@@ -218,24 +244,24 @@ export default class MainMenu extends PureComponent {
       return <Header className='color__secondary' as='h1'> { pageTitle } </Header>
     }
 
-    const TitleToggle = toggleComponent(
-      <ImageLogo alt='logo' src={MainLogo} onClick={changeRoute.bind(this, '/')} />,
+    const TitleShow = () => (
       <PageTitle>
         {pageTitleParsed()}
       </PageTitle>
     )
 
     const ShowSearchInputLogo = toggleComponent(
-      <SearchInput
-        className='color__secondary'
-        icon='search'
-        placeholder={intl.formatMessage(messages.searchPlaceHolder)}
-        onClick={this._handleGotoSearch}
-      />,
-      TitleToggle(!pageTitle)
+      <SearchContainer onClick={this._handleGotoSearch}>
+        <ImageLogo alt='logo' src={MainLogo} onClick={changeRoute.bind(this, '/')} />
+        <SearchInput
+          className='color__secondary'
+          placeholder={intl.formatMessage(messages.searchPlaceHolder)}
+        />
+      </SearchContainer>,
+      TitleShow(!pageTitle)
     )
 
-    return ShowSearchInputLogo((currentRoute === 'home' && windowHeightOffset >= 53))
+    return ShowSearchInputLogo(currentRoute === 'home')
   }
 
   componentWillReceiveProps (nextProps) {
@@ -259,6 +285,7 @@ export default class MainMenu extends PureComponent {
 
   render () {
     const { leftButtonAction, hideBackButton, changeRoute, showSearchIcon, showActivityIcon, currentRoute, headerMenuFullScreen } = this.props
+    const { windowHeightOffset } = this.state
 
     const homeRoute = currentRoute === 'home'
 
@@ -268,17 +295,17 @@ export default class MainMenu extends PureComponent {
     )
 
     const ActivitiesToggle = toggleComponent(
-      <ActiviesIcon marginLeft={homeRoute}>
+      <ActivitiesIcon marginLeft={homeRoute}>
         <Image alt='Activities' src={BarcodeImage} size='mini' onClick={changeRoute.bind(this, '/purchases')} />
-      </ActiviesIcon>,
+      </ActivitiesIcon>,
       null
     )
 
     return (
       <Wrapper>
-        <MobileMenu className='header-wrapper background__white' headerMenuFullScreen={headerMenuFullScreen}>
+        <MobileMenu className='header-wrapper' headerMenuFullScreen={headerMenuFullScreen} shadow={windowHeightOffset >= 53}>
           <Grid padded className='header-menu-grid'>
-            <Grid.Row>
+            <CustomRow>
               <Grid.Column
                 className='custom-column'
                 width={this._handleColumnSize(currentRoute, 'side')}
@@ -306,7 +333,7 @@ export default class MainMenu extends PureComponent {
                   { ActivitiesToggle(showActivityIcon) }
                 </RightWrapper>
               </Grid.Column>
-            </Grid.Row>
+            </CustomRow>
           </Grid>
         </MobileMenu>
       </Wrapper>
