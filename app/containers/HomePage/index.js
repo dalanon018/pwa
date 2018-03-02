@@ -14,7 +14,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
 import { gt, ifElse, identity } from 'ramda'
-import { Container, Grid, Button, Input } from 'semantic-ui-react'
+import { Container, Grid, Button } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
@@ -71,9 +71,7 @@ import {
 } from './constants'
 
 import {
-  BannerWrapper,
-  SearchWrapper
-  // SearchContainer
+  BannerWrapper
 } from './styles'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -165,7 +163,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render () {
-    const { loader, featuredProducts, featuredCategories, featuredBrands, changeRoute, windowWidth, intl, brandLoader } = this.props
+    const { loader, featuredProducts, featuredCategories, featuredBrands, changeRoute, windowWidth, brandLoader } = this.props
     const imgixOptions = {
       w: windowWidth >= 1024 ? 1170 : 800,
       h: 400,

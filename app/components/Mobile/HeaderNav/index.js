@@ -121,7 +121,7 @@ const HamburgerSpan = styled.span`
     right: 0;
     width: ${({active}) => active ? '50%' : '100%'};
     height: 2px;
-    background-color: #5B5B5B;
+    background-color: #FFFFFF;
     content: "";
   }
 
@@ -234,7 +234,6 @@ export default class MainMenu extends PureComponent {
 
   _handleUniqueHeader = () => {
     const { pageTitle, changeRoute, intl, currentRoute } = this.props
-    const { windowHeightOffset } = this.state
 
     const pageTitleParsed = () => {
       if (pageTitle && pageTitle.length > 17) {
@@ -312,7 +311,7 @@ export default class MainMenu extends PureComponent {
                 verticalAlign='middle'>
                 <LeftWrapper onClick={leftButtonAction} >
                   <Hamburger>
-                    <HamburgerSpan className='background__secondary' active={!hideBackButton}>toggle menu</HamburgerSpan>
+                    <HamburgerSpan className='background__white' active={!hideBackButton}>toggle menu</HamburgerSpan>
                   </Hamburger>
                 </LeftWrapper>
               </Grid.Column>

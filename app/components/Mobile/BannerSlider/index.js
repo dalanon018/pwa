@@ -55,7 +55,6 @@ export const HandleBlock = ({
   slidesToShow = 1,
   autoplay = true
 }) => {
-  console.log('curved', curved)
   let block
   const settings = {
     autoplay: autoplay && images.length > 1,
@@ -81,7 +80,8 @@ export const HandleBlock = ({
 }
 
 export const DefaultState = ({
-  productPageTrigger
+  productPageTrigger,
+  curved
 }) => {
   return (
     <BannerSliderWrapper curved={curved}>
