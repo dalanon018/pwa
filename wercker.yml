@@ -73,7 +73,7 @@ staging:
         -H 'Content-Type: application/json' \
         -d '{"version": "'"$VERSION"'"}'
 
-e2:
+e3:
   steps:
     - heroku-deploy:
       key: $HEROKU_KEY
