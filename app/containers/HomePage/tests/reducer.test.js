@@ -7,9 +7,11 @@ describe('homePageReducer', () => {
   let state
   beforeEach(() => {
     state = fromJS({
-      product: {},
-      loading: true,
+      product: [],
+      loading: false,
       totalCount: 0,
+      lazyload: false,
+
       promos: [],
       promosCount: 0,
       promosLoading: false
@@ -17,12 +19,9 @@ describe('homePageReducer', () => {
   })
 
   it('returns the initial state', () => {
-    const expectedResult = state
+    const expectedResult = state.set('loading', true)
     expect(homePageReducer(undefined, {
-      type: GET_FEATURED_PRODUCTS,
-      payload: fromJS([
-        {test: 'passed'}
-      ])
+      type: GET_FEATURED_PRODUCTS
     })).toEqual(expectedResult)
   })
 })

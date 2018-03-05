@@ -6,7 +6,9 @@ import {
 
   selectPromos,
   selectPromosLoading,
-  selectPromosCount
+  selectPromosCount,
+
+  selectLazyload
 } from '../selectors'
 
 describe('HomePage Selectors', () => {
@@ -74,5 +76,16 @@ describe('HomePage Selectors', () => {
       }
     })
     expect(selector(mockedState)).toEqual(promosCount)
+  })
+
+  it('should get selectLazyload', () => {
+    const selector = selectLazyload()
+    const lazyload = 0
+    const mockedState = fromJS({
+      home: {
+        lazyload
+      }
+    })
+    expect(selector(mockedState)).toEqual(lazyload)
   })
 })
