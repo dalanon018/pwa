@@ -285,13 +285,13 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
       <AccessView
         mobileView={
           <H3>
-            <FormattedMessage {...messages.brandsTitle} />
+            <FormattedMessage {...messages.promoProductsTitle} />
           </H3>
         }
         desktopView={
           <div className='margin__vertical--30'>
             <DesktopTitle>
-              <FormattedMessage {...messages.brandsTitle} />
+              <FormattedMessage {...messages.promoProductsTitle} />
             </DesktopTitle>
             <DesktopItemCount className='color__grey'>
               { productsCount }

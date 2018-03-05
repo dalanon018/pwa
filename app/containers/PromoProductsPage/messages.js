@@ -1,33 +1,33 @@
 /*
- * BrandsPage Messages
+ * PromoProductsPage Messages
  *
- * This contains all the text for the BrandsPage component.
+ * This contains all the text for the PromoProductsPage component.
  */
 import { defineMessages } from 'react-intl'
 
 export default defineMessages({
   items: {
-    id: 'app.containers.BrandsPage.items',
+    id: 'app.containers.PromoProductsPage.items',
     defaultMessage: ' Items'
   },
   feature: {
-    id: 'app.containers.BrandsPage.feature',
+    id: 'app.containers.PromoProductsPage.feature',
     defaultMessage: 'Featured Items'
   },
-  brandsTitle: {
-    id: 'app.containers.BrandsPage.brandsTitle',
-    defaultMessage: 'All Brand Products'
+  promoProductsTitle: {
+    id: 'app.containers.PromoProductsPage.promoProductsTitle',
+    defaultMessage: 'All Promo Products'
   },
   noSeparator: {
-    id: 'app.containers.BrandsPage.noSeparator',
+    id: 'app.containers.PromoProductsPage.noSeparator',
     defaultMessage: ' OF '
   },
   loadMore: {
-    id: 'app.containers.BrandsPage.loadMore',
+    id: 'app.containers.PromoProductsPage.loadMore',
     defaultMessage: 'LOAD MORE'
   },
   emptyMessage: {
-    id: 'app.containers.BrandsPage.emptyMessage',
-    defaultMessage: 'This brand doesn\'t have any products yet.'
+    id: 'app.containers.PromoProductsPage.emptyMessage',
+    defaultMessage: 'This Promo doesn\'t have any products yet.'
   }
 })
