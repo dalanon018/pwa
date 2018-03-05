@@ -65,7 +65,8 @@ export function * getPromoProducts (args) {
 
   if (!isEmpty(req)) {
     const promoClean = yield transformEachEntity(req)
-    const promoEntity = omit(['productList', 'totalCount'], promoClean)
+    console.log(promoClean)
+    const promoEntity = omit(['productList', 'totalCount'])
     const productsEntity = propOr([], 'productList')
     const countEntity = propOr(0, 'totalCount')
 
