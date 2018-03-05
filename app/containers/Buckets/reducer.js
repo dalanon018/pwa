@@ -36,7 +36,10 @@ import {
   SET_HEADER_FULL_SCREEN,
 
   SET_LIGHTBOX_IMAGE,
-  SET_SEARCH_VALUE
+  SET_SEARCH_VALUE,
+
+  GET_PROMOS,
+  SET_PROMOS
 } from './constants'
 
 const initialState = fromJS({
@@ -57,7 +60,10 @@ const initialState = fromJS({
   isRegisteredPush: false,
   loyaltyToken: null,
   lightBoxImage: null,
-  searchValue: ''
+  searchValue: '',
+
+  promos: [],
+  promosLoading: false
 })
 
 function bucketsReducer (state = initialState, action) {
@@ -125,6 +131,14 @@ function bucketsReducer (state = initialState, action) {
     case SET_SEARCH_VALUE:
       return state
         .set('searchValue', action.payload)
+
+    case GET_PROMOS:
+      return state.set('promosLoading', true)
+
+    case SET_PROMOS:
+      return state
+        .set('promos', fromJS(action.payload))
+        .set('promosLoading', false)
 
     default:
       return state

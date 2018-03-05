@@ -113,6 +113,16 @@ const selectSearchValue = () => createSelector(
   (substate) => substate.get('searchValue')
 )
 
+const selectPromos = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('promos')
+)
+
+const selectPromosLoading = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('promosLoading')
+)
+
 export {
   selectBucketDomain,
   selectToggle,
@@ -134,5 +144,8 @@ export {
   selectLoyaltyToken,
   selectBrandLoader,
   selectLightBoxImage,
-  selectSearchValue
+  selectSearchValue,
+
+  selectPromos,
+  selectPromosLoading
 }
