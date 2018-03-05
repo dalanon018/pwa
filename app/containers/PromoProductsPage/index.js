@@ -54,7 +54,7 @@ import {
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
 
-import { BRAND_NAME } from 'containers/Buckets/constants'
+import { PROMO_PRODUCTS_NAME } from 'containers/Buckets/constants'
 
 import messages from './messages'
 import reducer from './reducer'
@@ -341,7 +341,7 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
   componentDidMount () {
     // initial data
     this._fetchPromoProducts(this.props)
-    this.props.setRouteName(BRAND_NAME)
+    this.props.setRouteName(PROMO_PRODUCTS_NAME)
   }
 
   componentWillUnmount () {

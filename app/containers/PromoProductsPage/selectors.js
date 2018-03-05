@@ -18,18 +18,18 @@ const selectPromo = () => createSelector(
   (substate) => substate.get('promo')
 )
 
-const selectPromoProducts = () => createSelector(
+const selectProducts = () => createSelector(
   selectPromoProductsPageDomain(),
   (substate) => substate.get('products')
 )
 
 const selectProductsRegular = () => createSelector(
-  selectPromoProducts(),
+  selectProducts(),
   (substate) => substate.filter((state) => !state.get('isFeatured'))
 )
 
 const selectProductsFeatured = () => createSelector(
-  selectPromoProducts(),
+  selectProducts(),
   (substate) => substate.filter((state) => state.get('isFeatured'))
 )
 
@@ -50,7 +50,7 @@ const selectLazyload = () => createSelector(
 
 export {
   selectPromo,
-  selectPromoProducts,
+  selectProducts,
   selectProductsRegular,
   selectProductsFeatured,
   selectProductsCount,
