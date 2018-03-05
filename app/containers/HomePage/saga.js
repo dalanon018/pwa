@@ -17,8 +17,7 @@ import { transformProduct, transformPromo } from 'utils/transforms'
 
 import {
   GET_FEATURED_PRODUCTS,
-  GET_PROMOS,
-  LIMIT_ITEMS
+  GET_PROMOS
 } from './constants'
 
 import {
@@ -54,9 +53,10 @@ export function * initializeAppGlobals () {
   // code block
 }
 
-export function * getProduct (data) {
+export function * getProduct (args) {
+  const { payload: { offset, limit } } = args
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/productList/featured?offset=0&limit=${LIMIT_ITEMS}`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/productList/featured?offset=${offset}&limit=${limit}`, {
     method: 'GET',
     token: token.access_token
   })

@@ -37,6 +37,7 @@ import MobileFooter from 'components/Mobile/Footer'
 
 import WindowWidth from 'components/Shared/WindowWidth'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
+import { InfiniteLoading, InfiniteWrapper } from 'components/Shared/InfiniteLoading'
 
 import {
   setPageTitleAction,
@@ -68,7 +69,8 @@ import {
   selectTotalCount,
   selectPromos,
   selectPromosLoading,
-  selectPromosCount
+  selectPromosCount,
+  selectLazyload
 } from './selectors'
 import {
   LIMIT_ITEMS
@@ -90,7 +92,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   static propTypes = {
     changeRoute: PropTypes.func.isRequired,
     getProduct: PropTypes.func.isRequired,
-    loader: PropTypes.bool.isRequired,
+    featuredProductsLoader: PropTypes.bool.isRequired,
     totalFeaturedProductCount: PropTypes.number.isRequired,
     featuredProducts: PropTypes.oneOfType([
       PropTypes.array,
@@ -111,12 +113,16 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     promos: PropTypes.object.isRequired,
     promosLoading: PropTypes.bool.isRequired,
     promosCount: PropTypes.number.isRequired,
-    getPromos: PropTypes.func.isRequired
+    getPromos: PropTypes.func.isRequired,
+    lazyload: PropTypes.bool.isRequired
   }
 
   state = {
     showFeaturedItems: false,
-    showFeaturedCategories: false
+    showFeaturedCategories: false,
+    pageOffset: 0,
+    offset: 0,
+    limit: LIMIT_ITEMS
   }
   constructor () {
     super()
@@ -167,6 +173,54 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     })
   }
 
+  /**
+   * Here we will request for our data base on change of route.
+   * @param {*w} props
+   */
+  _fetchFeaturedProducts = (props) => {
+    const { getProduct } = props
+    const { offset, limit } = this.state
+
+    // since this data is change and we know exactly
+    getProduct({ offset, limit })
+  }
+
+  _displayMoreProducts = () => {
+    const { pageOffset, limit } = this.state
+    const incrementOffset = pageOffset + 1
+
+    this.setState({
+      pageOffset: incrementOffset,
+      offset: (incrementOffset * limit)
+    }, () => this._fetchFeaturedProducts(this.props))
+  }
+
+  _displayFeaturedItems = () => {
+    const { featuredProducts, changeRoute, featuredProductsLoader, lazyload, windowWidth, totalFeaturedProductCount } = this.props
+    if (featuredProducts.size > 0 || lazyload === false) {
+      return (
+        <InfiniteLoading
+          results={featuredProducts}
+          hasMoreData={lazyload}
+          loadMoreData={this._displayMoreProducts}
+          isLoading={featuredProductsLoader}
+          rowCount={totalFeaturedProductCount}
+        >
+          {(props) => (
+            <AccessView
+              mobileView={
+                <MobileProductView changeRoute={changeRoute} loader={featuredProductsLoader} products={featuredProducts} windowWidth={windowWidth} {...props} />
+              }
+              desktopView={
+                <DesktopProductView changeRoute={changeRoute} loader={featuredProductsLoader} products={featuredProducts} windowWidth={windowWidth} {...props} />
+              }
+            />
+          )}
+        </InfiniteLoading>
+      )
+    }
+  }
+
   componentWillMount () {
     this.props.setPageTitle(null)
     this.props.setShowSearchIcon(false)
@@ -174,13 +228,13 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   componentDidMount () {
-    this.props.getProduct()
     this.props.getPromos()
     this.props.setRouteName(HOME_NAME)
+    this._fetchFeaturedProducts(this.props)
   }
 
   render () {
-    const { loader, featuredProducts, featuredCategories, featuredBrands, changeRoute, windowWidth, brandLoader } = this.props
+    const { featuredCategories, featuredBrands, changeRoute, windowWidth, brandLoader, featuredProductsLoader, lazyload } = this.props
     const imgixOptions = {
       w: windowWidth >= 1024 ? 1170 : 800,
       h: 400,
@@ -285,7 +339,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           <AccessView
             mobileView={
               <MobileCategory
-                loader={loader}
+                loader={false}
                 windowWidth={windowWidth}
                 margin='2'
                 changeRoute={changeRoute}
@@ -298,7 +352,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             }
             desktopView={
               <DesktopCategory
-                loader={loader}
+                loader={false}
                 windowWidth={windowWidth}
                 margin='2'
                 changeRoute={changeRoute}
@@ -311,26 +365,13 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             }
           />
 
-          { this._displayViewAll() }
-
-          <AccessView
-            mobileView={
-              <MobileProductView
-                changeRoute={changeRoute}
-                loader={loader}
-                products={featuredProducts}
-                windowWidth={windowWidth}
-              />
-            }
-            desktopView={
-              <DesktopProductView
-                changeRoute={changeRoute}
-                loader={loader}
-                products={featuredProducts}
-                windowWidth={windowWidth}
-              />
-            }
-          />
+          <InfiniteWrapper
+            hasMoreData={lazyload}
+            isLoading={featuredProductsLoader}
+          >
+            { this._displayViewAll() }
+            { this._displayFeaturedItems() }
+          </InfiniteWrapper>
         </Container>
         <AccessView
           mobileView={<MobileFooter />}
@@ -342,7 +383,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 }
 
 const mapStateToProps = createStructuredSelector({
-  loader: selectLoading(),
+  featuredProductsLoader: selectLoading(),
   brandLoader: selectBrandLoader(),
   featuredProducts: selectFeaturedProducts(),
   featuredCategories: selectFeaturedCategories(),
@@ -350,7 +391,8 @@ const mapStateToProps = createStructuredSelector({
   totalFeaturedProductCount: selectTotalCount(),
   promos: selectPromos(),
   promosLoading: selectPromosLoading(),
-  promosCount: selectPromosCount()
+  promosCount: selectPromosCount(),
+  lazyload: selectLazyload()
 })
 
 function mapDispatchToProps (dispatch) {

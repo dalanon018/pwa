@@ -5,6 +5,7 @@
  */
 
 import { fromJS } from 'immutable'
+import { isEmpty } from 'lodash'
 import {
   GET_FEATURED_PRODUCTS,
   SET_FEATURED_PRODUCTS,
@@ -13,13 +14,16 @@ import {
 
   GET_PROMOS,
   SET_PROMOS,
-  SET_PROMOS_COUNT
+  SET_PROMOS_COUNT,
+
+  LIMIT_ITEMS
 } from './constants'
 
 const initialState = fromJS({
-  product: {},
+  product: [],
   loading: false,
   totalCount: 0,
+  lazyload: false,
 
   promos: [],
   promosCount: 0,
@@ -30,10 +34,15 @@ function homePageReducer (state = initialState, action) {
   switch (action.type) {
     case GET_FEATURED_PRODUCTS:
       return state.set('loading', true)
-    case SET_FEATURED_PRODUCTS:
+
+    case SET_FEATURED_PRODUCTS: {
+      const concatState = state.get('product').concat(fromJS(action.payload))
       return state
-        .set('product', fromJS(action.payload))
+        .set('product', concatState)
         .set('loading', false)
+        // we will toggle to true lazyload if only items are not empty and payload is greater that the limit
+        .set('lazyload', (!isEmpty(action.payload) && LIMIT_ITEMS <= action.payload.length))
+    }
 
     case SET_PRODUCTS_COUNT:
       return state.set('totalCount', fromJS(action.payload))
