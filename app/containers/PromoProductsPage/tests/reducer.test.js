@@ -1,34 +1,35 @@
 import { fromJS } from 'immutable'
-import productsByBrandsReducer from '../reducer'
+import promoProductsPageReducer from '../reducer'
 
 import {
-  setProductsByBrandsAction
+  setPromoProductsAction
 } from '../actions'
 
-describe('productsByBrandsReducer', () => {
+describe('promoProductsPageReducer', () => {
   let state
   beforeEach(() => {
     state = fromJS({
-      productsByBrands: [],
-      totalCount: 0,
-      loading: false,
+      promo: {},
+      products: [],
+      productsCount: 0,
+      productsLoading: false,
       lazyload: false
     })
   })
 
   it('returns the initial state', () => {
     const expectedResult = state
-    expect(productsByBrandsReducer(undefined, {})).toEqual(expectedResult)
+    expect(promoProductsPageReducer(undefined, {})).toEqual(expectedResult)
   })
 
-  it('should update productsByBrands', () => {
-    const payload = ['brand1', 'brand2']
-    const currentState = state.get('productsByBrands').toJS()
-    const mergeState = currentState.concat(payload)
+  it('should update products', () => {
+    const payload = ['product1', 'product2']
+    const currentState = state.get('products')
+    const mergeState = currentState.concat(fromJS(payload))
     const expectedResult = state
-                            .set('productsByBrands', fromJS(mergeState))
-                            .set('lazyload', false)
+                          .set('products', mergeState)
+                          .set('lazyload', false)
 
-    expect(productsByBrandsReducer(state, setProductsByBrandsAction(payload))).toEqual(expectedResult)
+    expect(promoProductsPageReducer(state, setPromoProductsAction(payload))).toEqual(expectedResult)
   })
 })

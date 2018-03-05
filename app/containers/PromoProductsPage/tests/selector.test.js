@@ -1,52 +1,68 @@
 import { fromJS } from 'immutable'
 import {
-  selectProductsByBrands,
-  selectProductsByBrandsItems,
-  selectProductsByBrandsFeatured,
-  selectLazyload,
-  selectTotalCount
+  selectPromo,
+  selectProducts,
+  selectProductsRegular,
+  selectProductsFeatured,
+  selectProductsCount,
+  selectProductsLoading,
+  selectLazyload
 } from '../selectors'
 
-describe('productsByBrandsDomain', () => {
-  describe('selectProductsByBrands', () => {
-    const selector = selectProductsByBrands()
+describe('selectPromoProductsPageDomain', () => {
+  describe('selectPromo', () => {
+    const selector = selectPromo()
 
-    it('should get products by brands', () => {
-      const productsByBrands = fromJS([1, 2, 3, 4])
+    it('should select Promo', () => {
+      const promo = fromJS({ id: 1, name: 'Promo1' })
       const mockedState = fromJS({
-        brandPage: {
-          productsByBrands
+        promoProductsPage: {
+          promo
         }
       })
-      expect(selector(mockedState)).toEqual(productsByBrands)
+      expect(selector(mockedState)).toEqual(promo)
     })
   })
 
-  describe('selectProductsByBrandsItems', () => {
-    const selector = selectProductsByBrandsItems()
+  describe('selectProducts', () => {
+    const selector = selectProducts()
 
-    it('should get products by brands items', () => {
-      const productsByBrands = fromJS([{ name: 1 }, { name: 2 }])
+    it('should get products', () => {
+      const products = fromJS([{ name: 1 }, { name: 2 }])
       const mockedState = fromJS({
-        brandPage: {
-          productsByBrands
+        promoProductsPage: {
+          products
         }
       })
-      expect(selector(mockedState)).toEqual(productsByBrands)
+      expect(selector(mockedState)).toEqual(products)
     })
   })
 
-  describe('selectProductsByBrandsFeatured', () => {
-    const selector = selectProductsByBrandsFeatured()
+  describe('selectProductsRegular', () => {
+    const selector = selectProductsRegular()
 
-    it('should get products by brands featured', () => {
-      const productsByBrands = fromJS([{isFeatured: true}])
+    it('should get products regular', () => {
+      const products = fromJS([{isFeatured: false}])
       const mockedState = fromJS({
-        brandPage: {
-          productsByBrands
+        promoProductsPage: {
+          products
         }
       })
-      expect(selector(mockedState)).toEqual(productsByBrands)
+      expect(selector(mockedState)).toEqual(products)
+    })
+  })
+
+  describe('selectProductsFeatured', () => {
+    const selector = selectProductsFeatured()
+
+    it('should get products featured', () => {
+      const products = fromJS([{isFeatured: true}])
+      const mockedState = fromJS({
+        promoProductsPage: {
+          products
+        }
+      })
+      expect(selector(mockedState)).toEqual(products)
     })
   })
 
@@ -56,7 +72,7 @@ describe('productsByBrandsDomain', () => {
     it('should get lazyload', () => {
       const lazyload = false
       const mockedState = fromJS({
-        brandPage: {
+        promoProductsPage: {
           lazyload
         }
       })
@@ -64,17 +80,31 @@ describe('productsByBrandsDomain', () => {
     })
   })
 
-  describe('selectTotalCount', () => {
-    const selector = selectTotalCount()
+  describe('selectProductsCount', () => {
+    const selector = selectProductsCount()
 
-    it('should get totalCount', () => {
-      const totalCount = 0
+    it('should get productCount', () => {
+      const productsCount = 0
       const mockedState = fromJS({
-        brandPage: {
-          totalCount
+        promoProductsPage: {
+          productsCount
         }
       })
-      expect(selector(mockedState)).toEqual(totalCount)
+      expect(selector(mockedState)).toEqual(productsCount)
+    })
+  })
+
+  describe('selectProductsLoading', () => {
+    const selector = selectProductsLoading()
+
+    it('should get productLoading', () => {
+      const productsLoading = false
+      const mockedState = fromJS({
+        promoProductsPage: {
+          productsLoading
+        }
+      })
+      expect(selector(mockedState)).toEqual(productsLoading)
     })
   })
 })
