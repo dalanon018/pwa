@@ -14,7 +14,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
 import { gt, ifElse, identity } from 'ramda'
-import { Container, Grid, Button } from 'semantic-ui-react'
+import { Container, Grid, Button, Image, Label } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
@@ -75,8 +75,16 @@ import {
 } from './constants'
 
 import {
-  BannerWrapper
+  BannerWrapper,
+  CategoryIconsWrapper,
+  CategoryItem
 } from './styles'
+
+import AccessoriesIcon from 'images/icons/category-header/accessories-icon.svg'
+// import GadgetsIcon from 'images/icons/category-header/gadgets-icon.svg'
+// import LaundryIcon from 'images/icons/category-header/laundry-icon.svg'
+// import SportsTravelIcon from 'images/icons/category-header/sports-travel-icon.svg'
+import MoreCategoriesIcon from 'images/icons/category-header/more-categories-icon.svg'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
@@ -203,6 +211,27 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       />
 
         <Container>
+          <CategoryIconsWrapper>
+            {
+              featuredCategories.map((category, index) => {
+                return (
+                  <CategoryItem key={index} onClick={() => changeRoute(`/products-category/${category.get('id')}`)}>
+                    <Image src={AccessoriesIcon} alt='CLiQQ' />
+                    <Label basic size='tiny' className='item-label'>
+                      {category.get('name')}
+                    </Label>
+                  </CategoryItem>
+                )
+              })
+            }
+            <CategoryItem>
+              <Image src={MoreCategoriesIcon} alt='CLiQQ' />
+              <Label basic size='tiny' className='item-label'>
+                More
+              </Label>
+            </CategoryItem>
+          </CategoryIconsWrapper>
+
           <BannerWrapper>
             <AccessView
               mobileView={
