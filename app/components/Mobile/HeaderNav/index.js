@@ -67,8 +67,8 @@ const RightWrapper = styled.div`
   justify-content: flex-end;
 
   .mini {
-    height: 25px !important;
-    width: 25px !important;
+    height: 18px !important;
+    width: 14px !important;
   }
 `
 
@@ -89,7 +89,7 @@ const Hamburger = styled.div`
   overflow: hidden;
   margin: 0;
   padding: 0;
-  width: 24px;
+  width: 21px;
   height: 24px;
   font-size: 0;
   text-indent: -9999px;
@@ -128,14 +128,14 @@ const HamburgerSpan = styled.span`
   &::before {
     transform-origin: top right;
     transition: transform 0.3s, width 0.3s, top 0.3s;
-    top: ${({active}) => active ? '0' : '-7px'};
+    top: ${({active}) => active ? '0' : '-5px'};
     transform: ${({active}) => active ? 'translateX(0) translateY(0) rotate(45deg)' : 'none'};
   }
 
   &::after {
     transform-origin: bottom right;
     transition: transform 0.3s, width 0.3s, bottom 0.3s;
-    bottom: ${({active}) => active ? '0' : '-7px'};;
+    bottom: ${({active}) => active ? '0' : '-5px'};;
     transform: ${({active}) => active ? 'translateX(0) translateY(0) rotate(-45deg)' : 'none'};
   }
 `
