@@ -1,54 +1,59 @@
 import { createSelector } from 'reselect'
 
 /**
- * Direct selector to the brandPage state domain
+ * Direct selector to the PromoProductsPage state domain
  */
-const selectBrandPageDomain = () => (state) => state.get('brandPage')
+const selectPromoProductsPageDomain = () => (state) => state.get('promoProductsPage')
 
 /**
  * Other specific selectors
  */
 
 /**
- * Default selector used by BrandPage
+ * Default selector used by PromoProductsPage
  */
 
-const selectProductsByBrands = () => createSelector(
-  selectBrandPageDomain(),
-  (substate) => substate.get('productsByBrands')
+const selectPromo = () => createSelector(
+  selectPromoProductsPageDomain(),
+  (substate) => substate.get('promo')
 )
 
-const selectProductsByBrandsItems = () => createSelector(
-  selectProductsByBrands(),
+const selectPromoProducts = () => createSelector(
+  selectPromoProductsPageDomain(),
+  (substate) => substate.get('products')
+)
+
+const selectProductsRegular = () => createSelector(
+  selectPromoProducts(),
   (substate) => substate.filter((state) => !state.get('isFeatured'))
 )
 
-const selectProductsByBrandsFeatured = () => createSelector(
-  selectProductsByBrands(),
+const selectProductsFeatured = () => createSelector(
+  selectPromoProducts(),
   (substate) => substate.filter((state) => state.get('isFeatured'))
 )
 
-const selectTotalCount = () => createSelector(
-  selectBrandPageDomain(),
-  subState => subState.get('totalCount')
+const selectProductsCount = () => createSelector(
+  selectPromoProductsPageDomain(),
+  subState => subState.get('productsCount')
 )
 
-const selectLoading = () => createSelector(
-  selectBrandPageDomain(),
-  subState => subState.get('loading')
+const selectProductsLoading = () => createSelector(
+  selectPromoProductsPageDomain(),
+  subState => subState.get('productsLoading')
 )
 
 const selectLazyload = () => createSelector(
-  selectBrandPageDomain(),
+  selectPromoProductsPageDomain(),
   subState => subState.get('lazyload')
 )
 
 export {
-  selectBrandPageDomain,
-  selectProductsByBrands,
-  selectProductsByBrandsItems,
-  selectProductsByBrandsFeatured,
-  selectLoading,
-  selectLazyload,
-  selectTotalCount
+  selectPromo,
+  selectPromoProducts,
+  selectProductsRegular,
+  selectProductsFeatured,
+  selectProductsCount,
+  selectProductsLoading,
+  selectLazyload
 }

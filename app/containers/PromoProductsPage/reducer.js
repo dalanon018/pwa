@@ -1,54 +1,60 @@
 /*
  *
- * BrandPage reducer
+ * PromoProductsPage reducer
  *
  */
 
 import { fromJS } from 'immutable'
 import { isEmpty } from 'lodash'
 import {
-  GET_PRODUCTS_BRANDS,
-  SET_PRODUCTS_BRANDS,
-  SET_PRODUCTS_COUNT,
+  GET_PROMO,
+  SET_PROMO,
 
-  RESET_PRODUCTS_BRANDS,
+  SET_PROMO_PRODUCTS,
+  SET_PROMO_PRODUCTS_COUNT,
+
+  RESET_PROMO_PRODUCTS,
 
   LIMIT_ITEMS
 } from './constants'
 
 const initialState = fromJS({
-  productsByBrands: [],
-  totalCount: 0,
-  loading: false,
+  promo: {},
+  products: [],
+  productsCount: 0,
+  productsLoading: false,
   lazyload: false
 })
 
-function brandPageReducer (state = initialState, action) {
+function promoProductsPageReducer (state = initialState, action) {
   switch (action.type) {
-    case GET_PRODUCTS_BRANDS: {
-      return state.set('loading', true)
-    }
-    case SET_PRODUCTS_BRANDS: {
-      const concatState = state.get('productsByBrands').concat(fromJS(action.payload))
+    case GET_PROMO:
+      return state.set('productsLoading', true)
+
+    case SET_PROMO:
+      return state.set('promo', fromJS(action.payload))
+
+    case SET_PROMO_PRODUCTS: {
+      const concatState = state.get('products').concat(fromJS(action.payload))
       return state
-        .set('productsByBrands', concatState)
-        .set('loading', false)
+        .set('products', concatState)
+        .set('productsLoading', false)
         // we will toggle to true lazyload if only items are not empty and payload is greater that the limit
         .set('lazyload', (!isEmpty(action.payload) && LIMIT_ITEMS <= action.payload.length))
     }
 
-    case SET_PRODUCTS_COUNT:
-      return state.set('totalCount', action.payload)
+    case SET_PROMO_PRODUCTS_COUNT:
+      return state.set('productsCount', action.payload)
 
-    case RESET_PRODUCTS_BRANDS:
+    case RESET_PROMO_PRODUCTS:
       return state
-        .set('productsByBrands', fromJS([]))
-        .set('totalCount', 0)
-        .set('loading', false)
+        .set('products', fromJS([]))
+        .set('productsLoading', false)
+        .set('productsCount', 0)
 
     default:
       return state
   }
 }
 
-export default brandPageReducer
+export default promoProductsPageReducer

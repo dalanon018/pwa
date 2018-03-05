@@ -1,40 +1,48 @@
 /*
  *
- * BrandPage actions
+ * PromoProductsPage actions
  *
  */
 
 import {
-  GET_PRODUCTS_BRANDS,
-  SET_PRODUCTS_BRANDS,
-  SET_PRODUCTS_COUNT,
-  RESET_PRODUCTS_BRANDS
+  GET_PROMO,
+  SET_PROMO,
+  SET_PROMO_PRODUCTS,
+  SET_PROMO_PRODUCTS_COUNT,
+  RESET_PROMO_PRODUCTS
 } from './constants'
 
-export function getProductsByBrandsAction (payload) {
+export function getPromoAction (payload) {
   return {
-    type: GET_PRODUCTS_BRANDS,
+    type: GET_PROMO,
     payload
   }
 }
 
-export function setProductsByBrandsAction (payload) {
+export function setPromoAction (payload) {
   return {
-    type: SET_PRODUCTS_BRANDS,
+    type: SET_PROMO,
     payload
   }
 }
 
-export function resetProductsByBrandsAction (payload) {
+export function setPromoProductsAction (payload) {
   return {
-    type: RESET_PRODUCTS_BRANDS,
+    type: SET_PROMO_PRODUCTS,
     payload
   }
 }
 
-export function setProductsCountsAction (payload) {
+export function resetPromoProductsAction (payload) {
   return {
-    type: SET_PRODUCTS_COUNT,
+    type: RESET_PROMO_PRODUCTS,
+    payload
+  }
+}
+
+export function setPromoProductsCountsAction (payload) {
+  return {
+    type: SET_PROMO_PRODUCTS_COUNT,
     payload
   }
 }
