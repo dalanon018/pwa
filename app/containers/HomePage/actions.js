@@ -9,7 +9,11 @@ import {
   GET_FEATURED_PRODUCTS,
   SET_FEATURED_PRODUCTS,
 
-  SET_PRODUCTS_COUNT
+  SET_PRODUCTS_COUNT,
+
+  GET_PROMOS,
+  SET_PROMOS,
+  SET_PROMOS_COUNT
 } from './constants'
 
 export function defaultAction () {
@@ -35,6 +39,26 @@ export function setFeaturedProductsAction (payload) {
 export function setProductsCountsAction (payload) {
   return {
     type: SET_PRODUCTS_COUNT,
+    payload
+  }
+}
+
+export function getPromosAction () {
+  return {
+    type: GET_PROMOS
+  }
+}
+
+export function setPromosAction (payload) {
+  return {
+    type: SET_PROMOS,
+    payload
+  }
+}
+
+export function setPromosCountAction (payload) {
+  return {
+    type: SET_PROMOS_COUNT,
     payload
   }
 }

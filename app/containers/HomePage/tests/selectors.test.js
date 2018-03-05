@@ -2,7 +2,11 @@ import { fromJS } from 'immutable'
 import {
   selectFeaturedProducts,
   selectLoading,
-  selectTotalCount
+  selectTotalCount,
+
+  selectPromos,
+  selectPromosLoading,
+  selectPromosCount
 } from '../selectors'
 
 describe('HomePage Selectors', () => {
@@ -37,5 +41,38 @@ describe('HomePage Selectors', () => {
       }
     })
     expect(selector(mockedState)).toEqual(totalCount)
+  })
+
+  it('should get selectPromos', () => {
+    const selector = selectPromos()
+    const promos = fromJS([{ id: 1 }, { id: 3 }, { id: 3 }, { id: 4 }])
+    const mockedState = fromJS({
+      home: {
+        promos
+      }
+    })
+    expect(selector(mockedState)).toEqual(promos)
+  })
+
+  it('should get selectPromosLoading', () => {
+    const selector = selectPromosLoading()
+    const promosLoading = false
+    const mockedState = fromJS({
+      home: {
+        promosLoading
+      }
+    })
+    expect(selector(mockedState)).toEqual(promosLoading)
+  })
+
+  it('should get selectPromosCount', () => {
+    const selector = selectPromosCount()
+    const promosCount = 0
+    const mockedState = fromJS({
+      home: {
+        promosCount
+      }
+    })
+    expect(selector(mockedState)).toEqual(promosCount)
   })
 })
