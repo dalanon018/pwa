@@ -43,10 +43,7 @@ import {
   SET_HEADER_FULL_SCREEN,
 
   SET_LIGHTBOX_IMAGE,
-  SET_SEARCH_VALUE,
-
-  GET_PROMOS,
-  SET_PROMOS
+  SET_SEARCH_VALUE
 } from './constants'
 
 export function setRouteNameAction (payload) {
@@ -218,19 +215,6 @@ export function setLightBoxImageAction (payload) {
 export function setSearchValueAction (payload) {
   return {
     type: SET_SEARCH_VALUE,
-    payload
-  }
-}
-
-export function getPromosAction () {
-  return {
-    type: GET_PROMOS
-  }
-}
-
-export function setPromosAction (payload) {
-  return {
-    type: SET_PROMOS,
     payload
   }
 }

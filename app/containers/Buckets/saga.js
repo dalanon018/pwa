@@ -38,7 +38,7 @@ import { getRequestData } from 'utils/offline-request'
 // import Categories from 'fixtures/categories-v2.json'
 // import Brands from 'fixtures/brands.json'
 
-import { transformCategory, transformBrand, transformOrder, transformPromo } from 'utils/transforms'
+import { transformCategory, transformBrand, transformOrder } from 'utils/transforms'
 import { getItem, setItem, removeItem } from 'utils/localStorage'
 import { DateDifferece, AddDate } from 'utils/date'
 import { getBrowserInfo } from 'utils/http'
@@ -54,9 +54,7 @@ import {
   GET_LOYALTY_TOKEN,
   REMOVE_LOYALTY_TOKEN,
 
-  COD_PAYMENT,
-
-  GET_PROMOS
+  COD_PAYMENT
 } from './constants'
 
 import {
@@ -66,8 +64,7 @@ import {
   setUpdatedReceiptsAction,
   setNetworkErrorAction,
   setRegisteredPushAction,
-  setLoyaltyTokenAction,
-  setPromosAction
+  setLoyaltyTokenAction
 } from './actions'
 
 import {
@@ -423,34 +420,6 @@ function * removeLoyaltyToken () {
   yield removeMobileNumbers()
 }
 
-export function * getPromos () {
-  let promos = []
-  let count = 0
-
-  const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/promos/?offset=0&limit=3&productOffset=0&productLimit=3`, {
-    method: 'GET',
-    token: token.access_token
-  })
-
-  if (!isEmpty(req)) {
-    const transform = compose(
-      map(transformEachEntity),
-      propOr([], 'promoList')
-    )
-    const totalCount = propOr(0, 'totalCount')
-
-    promos = yield transform(req)
-    count = totalCount(req)
-
-    yield put(setPromosAction(promos))
-    yield put(setPromosCountAction(count))
-  } else {
-    yield put(setNetworkErrorAction(500))
-  }
-}
-
-
 export function * getIsRegisteredPush () {
   const isRegistered = yield call(getItem, REGISTERED_PUSH)
 
@@ -489,10 +458,6 @@ export function * removeLoyaltyTokenSaga () {
   yield * takeLatest(REMOVE_LOYALTY_TOKEN, removeLoyaltyToken)
 }
 
-export function * getPromosSaga () {
-  yield * takeLatest(GET_PROMOS, getPromos)
-}
-
 // All sagas to be loaded
 export function * bucketsSagas () {
   const watcher = yield [
@@ -507,9 +472,7 @@ export function * bucketsSagas () {
     fork(getIsRegisteredPushSaga),
 
     // get loyaltyToken
-    fork(getLoyaltyTokenSaga),
-
-    fork(getPromosSaga)
+    fork(getLoyaltyTokenSaga)
     // remove loyaltyToken / sign out
   ]
   // remember no to cancel this action on change of locations since it wont trigger anymore

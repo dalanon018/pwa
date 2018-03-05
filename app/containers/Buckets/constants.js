@@ -46,10 +46,6 @@ export const REMOVE_LOYALTY_TOKEN = 'app/Container/REMOVE_LOYALTY_TOKEN'
 
 export const SET_SEARCH_VALUE = 'app/Buckets/SET_SEARCH_VALUE'
 
-// REQUESTING THE PROMO ITEMS
-export const GET_PROMOS = 'app/Buckets/GET_PROMOS'
-export const SET_PROMOS = 'app/Buckets/SET_PROMOS'
-
 export const HIDE_BACK_BUTTON = [
   '',
   'home',

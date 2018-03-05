@@ -33,9 +33,27 @@ const selectTotalCount = () => createSelector(
   subState => subState.get('totalCount')
 )
 
+const selectPromos = () => createSelector(
+  selectHomePageDomain(),
+  (substate) => substate.get('promos')
+)
+
+const selectPromosLoading = () => createSelector(
+  selectHomePageDomain(),
+  (substate) => substate.get('promosLoading')
+)
+
+const selectPromosCount = () => createSelector(
+  selectHomePageDomain(),
+  subState => subState.get('promosCount')
+)
+
 export {
   selectHomePageDomain,
   selectFeaturedProducts,
   selectLoading,
-  selectTotalCount
+  selectTotalCount,
+  selectPromos,
+  selectPromosLoading,
+  selectPromosCount
 }
