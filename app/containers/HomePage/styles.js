@@ -24,10 +24,36 @@ const LazyLoadWrapper = styled.div`
   padding-top: 14px;
 `
 
+const CategoryIconsWrapper = styled.div`
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 0 10px;
+`
+
+const CategoryItem = styled.div`
+  text-align: center;
+
+  .item-label {
+    padding: 0;
+
+    @media (max-width: 375px) {
+      font-size: 2.5vw !important;
+    }
+  }
+  img {
+    margin: 0 auto;
+    width: 35px;
+  }
+`
+
 export {
   BannerWrapper,
   SearchWrapper,
   SearchContainer,
   CategoryWrapper,
-  LazyLoadWrapper
+  LazyLoadWrapper,
+  CategoryIconsWrapper,
+  CategoryItem
 }
