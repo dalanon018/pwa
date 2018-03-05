@@ -2,13 +2,21 @@
 import {
   getFeaturedProductsAction,
   setFeaturedProductsAction,
-  setProductsCountsAction
+  setProductsCountsAction,
+
+  getPromosAction,
+  setPromosAction,
+  setPromosCountAction
 } from '../actions'
 import {
   GET_FEATURED_PRODUCTS,
   SET_FEATURED_PRODUCTS,
 
-  SET_PRODUCTS_COUNT
+  SET_PRODUCTS_COUNT,
+
+  GET_PROMOS,
+  SET_PROMOS,
+  SET_PROMOS_COUNT
 } from '../constants'
 
 describe('HomePage actions', () => {
@@ -37,5 +45,30 @@ describe('HomePage actions', () => {
       payload
     }
     expect(setProductsCountsAction(payload)).toEqual(expected)
+  })
+
+  it('should call getPromosAction', () => {
+    const expected = {
+      type: GET_PROMOS
+    }
+    expect(getPromosAction()).toEqual(expected)
+  })
+
+  it('should call setPromosAction', () => {
+    const payload = { id: 1, promo: 'test1' }
+    const expected = {
+      type: SET_PROMOS,
+      payload
+    }
+    expect(setPromosAction(payload)).toEqual(expected)
+  })
+
+  it('should call setPromosCountAction', () => {
+    const payload = 1
+    const expected = {
+      type: SET_PROMOS_COUNT,
+      payload
+    }
+    expect(setPromosCountAction(payload)).toEqual(expected)
   })
 })

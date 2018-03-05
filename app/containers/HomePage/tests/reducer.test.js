@@ -9,7 +9,10 @@ describe('homePageReducer', () => {
     state = fromJS({
       product: {},
       loading: true,
-      totalCount: 0
+      totalCount: 0,
+      promos: [],
+      promosCount: 0,
+      promosLoading: false
     })
   })
 

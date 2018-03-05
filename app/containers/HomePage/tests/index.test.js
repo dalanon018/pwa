@@ -12,13 +12,17 @@ describe('<HomePage />', () => {
   const minProps = {
     changeRoute: () => {},
     getProduct: () => {},
+    getPromos: () => {},
     setRouteName: () => {},
     getProductCategories: () => {},
     totalFeaturedProductCount: 0,
+    promosCount: 0,
     loader: false,
     featuredProducts: fromJS([]),
     featuredCategories: fromJS([]),
     featuredBrands: fromJS([]),
+    promos: fromJS([]),
+    promosLoading: false,
     intl: {
       formatMessage: () => {}
     },
