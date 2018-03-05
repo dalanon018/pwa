@@ -1,6 +1,6 @@
 /*
  *
- * BrandPage
+ * PromoProductsPage
  *
  */
 
@@ -53,10 +53,7 @@ import {
   setShowSearchIconAction,
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
-import {
-  selectBrands,
-  selectLoader
-} from 'containers/Buckets/selectors'
+
 import { BRAND_NAME } from 'containers/Buckets/constants'
 
 import messages from './messages'
@@ -64,16 +61,19 @@ import reducer from './reducer'
 import saga from './saga'
 
 import {
-  getProductsByBrandsAction,
-  resetProductsByBrandsAction
+  getPromoAction,
+  resetPromoProductsAction
 } from './actions'
 import {
-  selectLazyload,
-  selectLoading,
-  selectProductsByBrandsItems,
-  selectProductsByBrandsFeatured,
-  selectTotalCount
+  selectPromo,
+  selectProducts,
+  selectProductsRegular,
+  selectProductsFeatured,
+  selectProductsCount,
+  selectProductsLoading,
+  selectLazyload
 } from './selectors'
+
 import {
   LIMIT_ITEMS
 } from './constants'
@@ -99,27 +99,27 @@ const DesktopTitle = styled.p`
   margin-bottom: 0;
 `
 
-export class BrandPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export class PromoProductsPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     changeRoute: PropTypes.func.isRequired,
-    getProductsByBrands: PropTypes.func.isRequired,
-    resetProductsByBrands: PropTypes.func.isRequired,
+    getPromo: PropTypes.func.isRequired,
+    resetPromo: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
     setRouteName: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
-    loader: PropTypes.bool.isRequired,
+    productsLoading: PropTypes.bool.isRequired,
     lazyload: PropTypes.bool.isRequired,
-    productsByBrands: PropTypes.object.isRequired,
+    allProducts: PropTypes.object.isRequired,
+    productsRegular: PropTypes.object.isRequired,
     productsFeatured: PropTypes.object.isRequired,
-    totalCount: PropTypes.number.isRequired,
-    brands: PropTypes.object.isRequired,
+    productsCount: PropTypes.number.isRequired,
     match: PropTypes.object.isRequired
   }
 
   state = {
     animateBanner: true,
-    brandImages: [],
+    promoImages: [],
     pageOffset: 0,
     offset: 0,
     limit: LIMIT_ITEMS
@@ -139,19 +139,21 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   _handlePageTitle = (nextProps) => {
-    const { brands, match: { params: { id } } } = nextProps
+    const { promo } = nextProps
+    return promo.size ? promo.get('name') : ''
+  }
 
-    if (brands.size) {
-      const brand = brands.find((entity) => entity.get('id') === id)
-      const brandImages = brand.size ? brand.get('sliders').toArray().map(this._updateParamsImages) : []
+  _handlePageBanners = (nextProps) => {
+    const { promo } = nextProps
+
+    if (promo.size) {
+      const promoImages = promo.size ? promo.get('sliders').toArray().map(this._updateParamsImages) : []
 
       this.setState({
-        brandImages
+        promoImages
       })
-
-      return brand ? brand.get('name') : ''
     }
-    return ''
+    return []
   }
 
   _displayMoreProducts = () => {
@@ -161,7 +163,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     this.setState({
       pageOffset: incrementOffset,
       offset: (incrementOffset * limit)
-    }, () => this._fetchProductByBrands(this.props))
+    }, () => this._fetchPromoProducts(this.props))
   }
 
   _displayLoader = () => {
@@ -178,30 +180,13 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     )
   }
 
-  /**
-   * this will simply display items that we are loading
-   */
-  _displayEmptyProductViewLoading = () => {
-    const { changeRoute, windowWidth, productsByBrands, loader } = this.props
-    return (
-      <AccessView
-        mobileView={
-          <MobileProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
-        }
-        desktopView={
-          <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
-        }
-      />
-    )
-  }
-
   _displayEmptyLoadingIndicator = () => {
-    const { loader, lazyload, productsByBrands } = this.props
+    const { productsLoading, lazyload, allProducts } = this.props
 
     const display = cond([
       [allPass([
         equals(false),
-        partial(equals(0), [productsByBrands.size]),
+        partial(equals(0), [allProducts.size]),
         partial(equals(false), [lazyload])
       ]), this._displayEmpty],
       [allPass([
@@ -211,30 +196,30 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
       [equals(false), () => null]
     ])
 
-    return display(loader)
+    return display(productsLoading)
   }
 
   _resetValuesAndFetch = (props) => {
-    const { resetProductsByBrands } = props
+    const { resetPromo } = props
 
-    resetProductsByBrands()
+    resetPromo()
 
     this.setState({
       pageOffset: 0,
       offset: 0
-    }, () => this._fetchProductByBrands(props))
+    }, () => this._fetchPromoProducts(props))
   }
 
   /**
    * Here we will request for our data base on change of route.
    * @param {*w} props
    */
-  _fetchProductByBrands = (props) => {
-    const { getProductsByBrands, match: { params: { id } } } = props
+  _fetchPromoProducts = (props) => {
+    const { getPromo, match: { params: { id } } } = props
     const { offset, limit } = this.state
 
     // since this data is change and we know exactly
-    getProductsByBrands({ offset, limit, id })
+    getPromo({ offset, limit, id })
   }
 
   _handleBannerAnimation = (show) => () => {
@@ -257,7 +242,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   _displayFeaturedProducts = () => {
-    const { productsFeatured, loader, changeRoute, windowWidth, lazyload, totalCount } = this.props
+    const { productsFeatured, productsLoading, changeRoute, windowWidth, lazyload, productsCount } = this.props
 
     const displayFeatured = ifElse(
       lt(0),
@@ -267,16 +252,16 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
             results={productsFeatured}
             hasMoreData={lazyload}
             loadMoreData={this._displayMoreProducts}
-            isLoading={loader}
-            rowCount={totalCount}
+            isLoading={productsLoading}
+            rowCount={productsCount}
           >
             {(props) => (
               <AccessView
                 mobileView={
-                  <MobileProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
+                  <MobileProductView changeRoute={changeRoute} loader={productsLoading} products={productsFeatured} windowWidth={windowWidth} {...props} />
                 }
                 desktopView={
-                  <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
+                  <DesktopProductView changeRoute={changeRoute} loader={productsLoading} products={productsFeatured} windowWidth={windowWidth} {...props} />
                 }
               />
             )}
@@ -290,9 +275,9 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   _displayHeaderRegularProduct () {
-    const { lazyload, productsByBrands, totalCount } = this.props
+    const { lazyload, productsRegular, productsCount } = this.props
 
-    if (lazyload && productsByBrands.size === 0) {
+    if (lazyload && productsRegular.size === 0) {
       return null
     }
 
@@ -309,7 +294,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
               <FormattedMessage {...messages.brandsTitle} />
             </DesktopTitle>
             <DesktopItemCount className='color__grey'>
-              { totalCount }
+              { productsCount }
               <FormattedMessage {...messages.items} />
             </DesktopItemCount>
           </div>
@@ -319,23 +304,23 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   _displayRegularItems = () => {
-    const { productsByBrands, changeRoute, loader, lazyload, windowWidth, totalCount } = this.props
-    if (productsByBrands.size > 1 || lazyload === false) {
+    const { productsRegular, changeRoute, productsLoading, lazyload, windowWidth, productsCount } = this.props
+    if (productsRegular.size > 1 || lazyload === false) {
       return (
         <InfiniteLoading
-          results={productsByBrands}
+          results={productsRegular}
           hasMoreData={lazyload}
           loadMoreData={this._displayMoreProducts}
-          isLoading={loader}
-          rowCount={totalCount}
+          isLoading={productsLoading}
+          rowCount={productsCount}
         >
           {(props) => (
             <AccessView
               mobileView={
-                <MobileProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} {...props} />
+                <MobileProductView changeRoute={changeRoute} loader={productsLoading} products={productsRegular} windowWidth={windowWidth} {...props} />
               }
               desktopView={
-                <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} {...props} />
+                <DesktopProductView changeRoute={changeRoute} loader={productsLoading} products={productsRegular} windowWidth={windowWidth} {...props} />
               }
             />
           )}
@@ -355,12 +340,12 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
 
   componentDidMount () {
     // initial data
-    this._fetchProductByBrands(this.props)
+    this._fetchPromoProducts(this.props)
     this.props.setRouteName(BRAND_NAME)
   }
 
   componentWillUnmount () {
-    this.props.resetProductsByBrands()
+    this.props.resetPromo()
   }
 
   componentWillReceiveProps (nextProps) {
@@ -378,10 +363,13 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     )
 
     const updatePageTitle = ifElse(
-      compose(lt(0), path(['brands', 'size'])),
+      compose(lt(0), path(['promo', 'size'])),
       compose(
         this.props.setPageTitle,
-        this._handlePageTitle
+        (nextProps) => {
+          this._handlePageBanners(nextProps)
+          return this._handlePageTitle(nextProps)
+        }
       ),
       noop
     )
@@ -391,8 +379,8 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   render () {
-    const { productsByBrands, loader, lazyload } = this.props
-    const { brandImages, animateBanner } = this.state
+    const { productsLoading, lazyload } = this.props
+    const { promoImages, animateBanner } = this.state
     return (
       <div>
         <Waypoint
@@ -405,9 +393,8 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
                 <MobileBannerSlider
                   isInfinite
                   autoplay={animateBanner}
-                  results={productsByBrands}
-                  loader={loader}
-                  images={brandImages}
+                  loader={productsLoading}
+                  images={promoImages}
                 />
               }
               desktopView={null}
@@ -421,16 +408,15 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
               <SharedBannerSlider
                 isInfinite
                 autoplay={animateBanner}
-                results={productsByBrands}
-                loader={loader}
-                images={brandImages}
+                loader={productsLoading}
+                images={promoImages}
             />
             }
           />
           <div className='margin__top-positive--30'>
             <InfiniteWrapper
               hasMoreData={lazyload}
-              isLoading={loader}
+              isLoading={productsLoading}
             >
               { this._displayHeaderFeaturesProduct() }
               { this._displayFeaturedProducts() }
@@ -451,13 +437,13 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
 }
 
 const mapStateToProps = createStructuredSelector({
-  productsByBrands: selectProductsByBrandsItems(),
-  productsFeatured: selectProductsByBrandsFeatured(),
-  totalCount: selectTotalCount(),
-  brands: selectBrands(),
-  loader: selectLoading(),
-  lazyload: selectLazyload(),
-  brandsLoader: selectLoader()
+  promo: selectPromo(),
+  allProducts: selectProducts(),
+  productsRegular: selectProductsRegular(),
+  productsFeatured: selectProductsFeatured(),
+  productsCount: selectProductsCount(),
+  productsLoading: selectProductsLoading(),
+  lazyload: selectLazyload()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -466,19 +452,19 @@ function mapDispatchToProps (dispatch) {
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
-    getProductsByBrands: payload => dispatch(getProductsByBrandsAction(payload)),
-    resetProductsByBrands: () => dispatch(resetProductsByBrandsAction()),
+    getPromo: payload => dispatch(getPromoAction(payload)),
+    resetPromo: () => dispatch(resetPromoProductsAction()),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
   }
 }
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps)
-const withReducer = injectReducer({ key: 'brandPage', reducer })
-const withSaga = injectSaga({ key: 'brandPage', saga })
+const withReducer = injectReducer({ key: 'promoProductsPage', reducer })
+const withSaga = injectSaga({ key: 'promoProductsPage', saga })
 
 export default ReduxCompose(
   withReducer,
   withSaga,
   withConnect
-)(WindowWidth(BrandPage))
+)(WindowWidth(PromoProductsPage))
