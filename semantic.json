@@ -21,6 +21,7 @@
   "components": [
     "api",
     "button",
+    "card",
     "checkbox",
     "container",
     "dimmer",

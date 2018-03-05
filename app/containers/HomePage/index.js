@@ -34,6 +34,8 @@ import DesktopProductView from 'components/Desktop/ProductView'
 import MobileCategory from 'components/Mobile/Category'
 import DesktopCategory from 'components/Desktop/Category'
 import MobileFooter from 'components/Mobile/Footer'
+import BrandSlider from 'components/Mobile/BrandSlider'
+import SectionTitle from 'components/Mobile/HomeSectionTitle'
 
 import WindowWidth from 'components/Shared/WindowWidth'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
@@ -306,6 +308,13 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               }
             />
           </BannerWrapper>
+
+          <SectionTitle />
+          <BrandSlider
+            brands={featuredBrands}
+            loader={brandLoader}
+            changeRoute={changeRoute}
+          />
 
           <AccessView
             mobileView={
