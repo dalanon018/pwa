@@ -59,12 +59,16 @@ import reducer from './reducer'
 import saga from './saga'
 
 import {
-  getFeaturedProductsAction
+  getFeaturedProductsAction,
+  getPromosAction
 } from './actions'
 import {
   selectLoading,
   selectFeaturedProducts,
-  selectTotalCount
+  selectTotalCount,
+  selectPromos,
+  selectPromosLoading,
+  selectPromosCount
 } from './selectors'
 import {
   LIMIT_ITEMS
@@ -95,7 +99,11 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
-    setRouteName: PropTypes.func.isRequired
+    setRouteName: PropTypes.func.isRequired,
+    promos: PropTypes.object.isRequired,
+    promosLoading: PropTypes.bool.isRequired,
+    promosCount: PropTypes.number.isRequired,
+    getPromos: PropTypes.func.isRequired
   }
 
   state = {
@@ -159,6 +167,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
   componentDidMount () {
     this.props.getProduct()
+    this.props.getPromos()
     this.props.setRouteName(HOME_NAME)
   }
 
@@ -312,7 +321,10 @@ const mapStateToProps = createStructuredSelector({
   featuredProducts: selectFeaturedProducts(),
   featuredCategories: selectFeaturedCategories(),
   featuredBrands: selectFeaturedBrands(),
-  totalFeaturedProductCount: selectTotalCount()
+  totalFeaturedProductCount: selectTotalCount(),
+  promos: selectPromos(),
+  promosLoading: selectPromosLoading(),
+  promosCount: selectPromosCount()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -322,6 +334,7 @@ function mapDispatchToProps (dispatch) {
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProduct: payload => dispatch(getFeaturedProductsAction(payload)),
+    getPromos: payload => dispatch(getPromosAction(payload)),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
   }
