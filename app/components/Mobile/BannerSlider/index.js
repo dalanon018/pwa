@@ -23,7 +23,8 @@ function BannerSlider ({
   isLowerdots,
   images,
   slidesToShow,
-  autoplay
+  autoplay,
+  curved
 }) {
   return <HandleBlock
     loader={loader}
@@ -32,6 +33,7 @@ function BannerSlider ({
     isLowerdots={isLowerdots || false}
     slidesToShow={slidesToShow || 1}
     autoplay={autoplay}
+    curved={curved}
     />
 }
 
@@ -49,6 +51,7 @@ export const HandleBlock = ({
   isInfinite,
   isLowerdots,
   images,
+  curved,
   slidesToShow = 1,
   autoplay = true
 }) => {
@@ -69,7 +72,7 @@ export const HandleBlock = ({
   if (loader || images.length === 0) {
     block = <DefaultState loader={loader} />
   } else {
-    block = <BannerSliderWrapper isLowerdots={isLowerdots}>
+    block = <BannerSliderWrapper curved={curved} isLowerdots={isLowerdots}>
       <SlideShow settings={settings} images={images} />
     </BannerSliderWrapper>
   }
@@ -77,10 +80,11 @@ export const HandleBlock = ({
 }
 
 export const DefaultState = ({
-  productPageTrigger
+  productPageTrigger,
+  curved
 }) => {
   return (
-    <BannerSliderWrapper>
+    <BannerSliderWrapper curved={curved}>
       <EmptyDataBlock productPageTrigger={productPageTrigger}>
         <ImageWrapper image={imageStock('Slider-Default.jpg', imgixOptions)} />
       </EmptyDataBlock>
