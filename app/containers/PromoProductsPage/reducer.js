@@ -48,6 +48,7 @@ function promoProductsPageReducer (state = initialState, action) {
 
     case RESET_PROMO_PRODUCTS:
       return state
+        .set('promo', fromJS({}))
         .set('products', fromJS([]))
         .set('productsLoading', false)
         .set('productsCount', 0)
