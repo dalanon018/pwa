@@ -10,21 +10,22 @@ import {
   omit,
   toPairs,
   propOr,
-  propEq,
-  partial
+  propEq
 } from 'ramda'
 
 import {
   ARRAY,
-  OBJECT,
   STRING,
+  NUMBER,
   ValidateSchema
 } from './helper'
+
+import transformProduct from './product'
 
 const Schema = {
   id: {
     name: 'id',
-    type: STRING
+    type: NUMBER
   },
   images: {
     name: 'images',
@@ -36,7 +37,7 @@ const Schema = {
   },
   promoCode: {
     name: 'promoCode',
-    type: ARRAY
+    type: STRING
   },
   fromDate: {
     name: 'fromDate',
@@ -44,7 +45,7 @@ const Schema = {
   },
   productList: {
     name: 'productList',
-    type: OBJECT
+    type: ARRAY
   }
 }
 
@@ -67,18 +68,21 @@ const applyImage = (data) => {
   })
 }
 
-const applyChildren = (data) => compose(
-  assoc('children', __, data),
-  map(adjustmentObject),
-  map(partial(mapKeys, [changeKey])),
-  propOr([], 'children')
-)(data)
+const applyProduct = async (data) => {
+  const awaitTransformProduct = await transformProduct
+
+  return compose(
+    assoc('productList', __, data),
+    map(awaitTransformProduct),
+    propOr([], 'productList')
+  )(data)
+}
 
 const adjustmentObject = (data) => {
   const removeKeys = ['images']
   return compose(
     omit(removeKeys),
-    applyChildren,
+    applyProduct,
     applyImage
   )(data)
 }
