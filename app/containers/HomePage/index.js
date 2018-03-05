@@ -280,30 +280,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           />
 
           <H3>
-            <FormattedMessage {...messages.featureProduct} />
-          </H3>
-          <AccessView
-            mobileView={
-              <MobileProductView
-                changeRoute={changeRoute}
-                loader={loader}
-                products={featuredProducts}
-                windowWidth={windowWidth}
-              />
-            }
-            desktopView={
-              <DesktopProductView
-                changeRoute={changeRoute}
-                loader={loader}
-                products={featuredProducts}
-                windowWidth={windowWidth}
-              />
-            }
-          />
-
-          { this._displayViewAll() }
-
-          <H3>
             <FormattedMessage {...messages.browseCategory} />
           </H3>
           <AccessView
@@ -331,6 +307,27 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                 fontSize='9'
                 height='80'
                 categories={featuredCategories}
+              />
+            }
+          />
+
+          { this._displayViewAll() }
+
+          <AccessView
+            mobileView={
+              <MobileProductView
+                changeRoute={changeRoute}
+                loader={loader}
+                products={featuredProducts}
+                windowWidth={windowWidth}
+              />
+            }
+            desktopView={
+              <DesktopProductView
+                changeRoute={changeRoute}
+                loader={loader}
+                products={featuredProducts}
+                windowWidth={windowWidth}
               />
             }
           />
