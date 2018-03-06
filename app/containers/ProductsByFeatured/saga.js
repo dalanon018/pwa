@@ -8,6 +8,8 @@ import { isEmpty } from 'lodash'
 import {
   compose,
   map,
+  filter,
+  prop,
   propOr
 } from 'ramda'
 
@@ -15,22 +17,16 @@ import {
 import { getRequestData } from 'utils/offline-request'
 
 import { transformProduct } from 'utils/transforms'
-import { getItem, setItem } from 'utils/localStorage'
+import { getItem } from 'utils/localStorage'
 
 import {
-  GET_PRODUCTS_CATEGORY,
-  GET_PRODUCTS_VIEWED,
-
-  GET_OVER18,
-  SET_OVER18,
-  SUBMIT_OVER18
+  GET_PRODUCTS_FEATURED,
+  GET_PRODUCTS_VIEWED
 } from './constants'
 import {
-  setProductsByCategoryAction,
+  setProductsByFeaturedAction,
   setProductsViewedAction,
-  setProductsCountsAction,
-
-  setOver18Action
+  setProductsCountsAction
 } from './actions'
 
 import {
@@ -56,63 +52,38 @@ function * transformEachEntity (entity) {
   return response
 }
 
-function * getOver18 () {
-  const over18 = yield call(getItem, SET_OVER18)
-
-  return over18
-}
-
-function * setOver18 (payload) {
-  const over18 = yield call(setItem, SET_OVER18, payload)
-
-  return over18
-}
-
 function * getLastViewedItems () {
   const products = yield call(getItem, LAST_VIEWS_KEY)
 
   return products || []
 }
 
-export function * getProductByCategory (args) {
-  const { payload: { offset, limit, id } } = args
+export function * getProductByFeatured (args) {
+  const { payload: { offset, limit } } = args
   let products = []
   let count = 0
 
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/categories/${id}?offset=${offset}&limit=${limit}`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/productList/featured?offset=${offset}&limit=${limit}`, {
     method: 'GET',
     token: token.access_token
   })
+
   if (!isEmpty(req)) {
     const transform = compose(
       map(transformEachEntity),
+      filter(prop('cliqqCodes')),
       propOr([], 'productList')
     )
     const countEntity = propOr(0, 'totalCount')
-
     products = yield transform(req)
     count = countEntity(req)
   } else {
     yield put(setNetworkErrorAction(500))
   }
 
-  yield put(setProductsByCategoryAction(products))
+  yield put(setProductsByFeaturedAction(products))
   yield put(setProductsCountsAction(count))
-}
-
-export function * getOver18Item () {
-  const response = yield * getOver18()
-
-  yield put(setOver18Action(response))
-}
-
-export function * setOver18Item (args) {
-  const { payload } = args
-
-  const response = yield * setOver18(payload)
-
-  yield put(setOver18Action(response))
 }
 
 export function * getProductsViewed () {
@@ -121,33 +92,22 @@ export function * getProductsViewed () {
   yield put(setProductsViewedAction(response))
 }
 
-export function * getProductByCategorySaga () {
-  yield * takeEvery(GET_PRODUCTS_CATEGORY, getProductByCategory)
+export function * getProductByFeaturedSaga () {
+  yield * takeEvery(GET_PRODUCTS_FEATURED, getProductByFeatured)
 }
 
 export function * getProductsViewedSaga () {
   yield * takeLatest(GET_PRODUCTS_VIEWED, getProductsViewed)
 }
 
-export function * getOver18Saga () {
-  yield * takeEvery(GET_OVER18, getOver18Item)
-}
-
-export function * setOver18Saga () {
-  yield * takeEvery(SUBMIT_OVER18, setOver18Item)
-}
-
 // Individual exports for testing
-export function * productsCategorySagas () {
+export function * productsFeaturedSagas () {
   yield * [
-    fork(getOver18Saga),
-    fork(setOver18Saga),
-
-    fork(getProductByCategorySaga),
+    fork(getProductByFeaturedSaga),
 
     fork(getProductsViewedSaga)
   ]
 }
 
 // All sagas to be loaded
-export default productsCategorySagas
+export default productsFeaturedSagas

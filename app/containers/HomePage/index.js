@@ -130,7 +130,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   _displayFeatured () {
-    this.props.changeRoute(`/products-category/featured`)
+    this.props.changeRoute(`/products-featured`)
   }
 
   _displayViewAll () {
