@@ -21,7 +21,7 @@ import { getItem, setItem } from 'utils/localStorage'
 import {
   GET_PRODUCTS_CATEGORY,
   GET_PRODUCTS_VIEWED,
-  GET_FILTER_CATEGORY,
+  GET_FILTER_CATEGORIES,
 
   GET_OVER18,
   SET_OVER18,
@@ -31,7 +31,7 @@ import {
   setProductsByCategoryAction,
   setProductsViewedAction,
   setProductsCountsAction,
-  setFilterCategoryAction,
+  setFilterCategoriesAction,
 
   setOver18Action
 } from './actions'
@@ -144,7 +144,7 @@ export function * getFilterCategories (args) {
     yield put(setNetworkErrorAction(500))
   }
 
-  yield put(setFilterCategoryAction(categories))
+  yield put(setFilterCategoriesAction(categories))
 }
 
 export function * getProductByCategorySaga () {
@@ -164,7 +164,7 @@ export function * setOver18Saga () {
 }
 
 export function * getFilterCategoriesSaga () {
-  yield * takeLatest(GET_FILTER_CATEGORY, getFilterCategories)
+  yield * takeLatest(GET_FILTER_CATEGORIES, getFilterCategories)
 }
 
 // Individual exports for testing

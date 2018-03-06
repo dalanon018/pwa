@@ -20,8 +20,8 @@ import {
   SET_OVER18,
   SUBMIT_OVER18,
 
-  GET_FILTER_CATEGORY,
-  SET_FILTER_CATEGORY
+  GET_FILTER_CATEGORIES,
+  SET_FILTER_CATEGORIES
 } from './constants'
 
 const initialState = fromJS({
@@ -69,10 +69,10 @@ function productsByCategoryReducer (state = initialState, action) {
       return state
         .set('isOver18', action.payload)
 
-    case GET_FILTER_CATEGORY:
+    case GET_FILTER_CATEGORIES:
       return state.set('filterCategoriesLoading', true)
 
-    case SET_FILTER_CATEGORY:
+    case SET_FILTER_CATEGORIES:
       return state
         .set('filterCategoriesLoading', false)
         .set('filterCategories', fromJS(action.payload))

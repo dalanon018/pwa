@@ -9,8 +9,8 @@ import {
 
   setProductsCountsAction,
 
-  getFilterCategoryAction,
-  setFilterCategoryAction
+  getFilterCategoriesAction,
+  setFilterCategoriesAction
 } from '../actions'
 
 import {
@@ -23,8 +23,8 @@ import {
 
   SET_PRODUCTS_COUNT,
 
-  GET_FILTER_CATEGORY,
-  SET_FILTER_CATEGORY
+  GET_FILTER_CATEGORIES,
+  SET_FILTER_CATEGORIES
 } from '../constants'
 
 describe('ProductsByCategory actions', () => {
@@ -76,22 +76,22 @@ describe('ProductsByCategory actions', () => {
   })
 
   describe('Filtered Categories', () => {
-    it('has a type of GET_FILTER_CATEGORY', () => {
+    it('has a type of GET_FILTER_CATEGORIES', () => {
       const payload = { id: 1 }
       const expected = {
-        type: GET_FILTER_CATEGORY,
+        type: GET_FILTER_CATEGORIES,
         payload
       }
-      expect(getFilterCategoryAction(payload)).toEqual(expected)
+      expect(getFilterCategoriesAction(payload)).toEqual(expected)
     })
 
-    it('has a type of SET_FILTER_CATEGORY', () => {
+    it('has a type of SET_FILTER_CATEGORIES', () => {
       const payload = [ 1, 2, 3 ]
       const expected = {
-        type: SET_FILTER_CATEGORY,
+        type: SET_FILTER_CATEGORIES,
         payload
       }
-      expect(setFilterCategoryAction(payload)).toEqual(expected)
+      expect(setFilterCategoriesAction(payload)).toEqual(expected)
     })
   })
 

@@ -66,7 +66,7 @@ import {
   getProductsByCategoryAction,
   getProductsViewedAction,
   resetProductsByCategoryAction,
-  getFilterCategoryAction,
+  getFilterCategoriesAction,
   getOver18Action,
   submitOver18Action
 } from './actions'
@@ -146,7 +146,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     getProductsByCategory: PropTypes.func.isRequired,
     getProductCategories: PropTypes.func.isRequired,
     getProductsViewed: PropTypes.func.isRequired,
-    getFilterCategory: PropTypes.func.isRequired,
+    getFilterCategories: PropTypes.func.isRequired,
     resetProductsByCategory: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
@@ -459,7 +459,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   componentDidMount () {
-    const { match: { params }, getProductsViewed, getProductCategories, getFilterCategory, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon } = this.props
+    const { match: { params }, getProductsViewed, getProductCategories, getFilterCategories, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon } = this.props
 
     setPageTitle(this._handlePageTitle())
     setShowSearchIcon(true)
@@ -469,7 +469,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     getProductCategories()
     getProductsViewed()
 
-    getFilterCategory({ id: params.id })
+    getFilterCategories({ id: params.id })
 
     this._fetchProductByCategory(this.props)
     this._handleCheckOver18()
@@ -566,7 +566,7 @@ function mapDispatchToProps (dispatch) {
     getProductsByCategory: payload => dispatch(getProductsByCategoryAction(payload)),
     getProductsViewed: () => dispatch(getProductsViewedAction()),
     resetProductsByCategory: () => dispatch(resetProductsByCategoryAction()),
-    getFilterCategory: (payload) => dispatch(getFilterCategoryAction(payload)),
+    getFilterCategories: (payload) => dispatch(getFilterCategoriesAction(payload)),
     submitOver18: payload => dispatch(submitOver18Action(payload)),
     getOver18: () => dispatch(getOver18Action()),
     changeRoute: (url) => dispatch(push(url)),
