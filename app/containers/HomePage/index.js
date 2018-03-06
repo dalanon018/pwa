@@ -31,6 +31,7 @@ import MobileFooter from 'components/Mobile/Footer'
 import BrandSlider from 'components/Mobile/BrandSlider'
 import SectionTitle from 'components/Mobile/HomeSectionTitle'
 import OrderTip from 'components/Mobile/OrderTip'
+import PointAds from 'components/Mobile/PointAds'
 
 import WindowWidth from 'components/Shared/WindowWidth'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
@@ -315,6 +316,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         </Container>
 
         <OrderTip />
+        <PointAds />
 
         <Container>
           <InfiniteWrapper

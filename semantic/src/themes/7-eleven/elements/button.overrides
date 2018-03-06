@@ -5,37 +5,38 @@
 .ui.button {
   border-radius: 0;
   font-family: @pageFont;
-  font-weight: 300;
-  font-size: 16px;
+  font-weight: 700;
+  font-size: 14px;
 
   &.primary {
-    background-color: @primaryColor;
+    background-color: #FF4814;
     color: @white;
     margin: 0;
-    padding: 10px 40px !important;
+    padding: 12px 25px !important;
+    border-radius: 3px;
 
     span {
       margin-right: 10px;
     }
 
-    &:after {
-      -moz-osx-font-smoothing: grayscale;
-      -webkit-backface-visibility: hidden;
-      -webkit-font-smoothing: antialiased;
-      backface-visibility: hidden;
-      content: "\f101";
-      display: inline-block;
-      font-family: Icons;
-      font-size: 20px;
-      font-smoothing: antialiased;
-      font-style: normal;
-      font-weight: 400;
-      opacity: 1;
-      speak: none;
-      text-align: center;
-      text-decoration: inherit;
-      vertical-align: baseline;
-      // width: 1.5em;
-    }
+    // &:after {
+    //   -moz-osx-font-smoothing: grayscale;
+    //   -webkit-backface-visibility: hidden;
+    //   -webkit-font-smoothing: antialiased;
+    //   backface-visibility: hidden;
+    //   content: "\f101";
+    //   display: inline-block;
+    //   font-family: Icons;
+    //   font-size: 20px;
+    //   font-smoothing: antialiased;
+    //   font-style: normal;
+    //   font-weight: 400;
+    //   opacity: 1;
+    //   speak: none;
+    //   text-align: center;
+    //   text-decoration: inherit;
+    //   vertical-align: baseline;
+    //   // width: 1.5em;
+    // }
   }
 }
