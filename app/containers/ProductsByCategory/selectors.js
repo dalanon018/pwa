@@ -63,6 +63,16 @@ const selectFilterCategoriesLoading = () => createSelector(
   subState => subState.get('filterCategoriesLoading')
 )
 
+const selectFilterBrands = () => createSelector(
+  selectProductsByCategoryDomain(),
+  subState => subState.get('filterBrands')
+)
+
+const selectFilterBrandsLoading = () => createSelector(
+  selectProductsByCategoryDomain(),
+  subState => subState.get('filterBrandsLoading')
+)
+
 export {
   selectProductsByCategoryDomain,
   selectProductsByCategory,
@@ -74,5 +84,7 @@ export {
   selectTotalCount,
   selectOver18,
   selectFilterCategories,
-  selectFilterCategoriesLoading
+  selectFilterCategoriesLoading,
+  selectFilterBrands,
+  selectFilterBrandsLoading
 }

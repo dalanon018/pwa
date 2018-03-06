@@ -21,7 +21,10 @@ import {
   SUBMIT_OVER18,
 
   GET_FILTER_CATEGORIES,
-  SET_FILTER_CATEGORIES
+  SET_FILTER_CATEGORIES,
+
+  GET_FILTER_BRANDS,
+  SET_FILTER_BRANDS
 } from './constants'
 
 const initialState = fromJS({
@@ -29,6 +32,8 @@ const initialState = fromJS({
   productsViewed: [],
   filterCategories: [],
   filterCategoriesLoading: false,
+  filterBrands: [],
+  filterBrandsLoading: false,
   totalCount: 0,
   loading: true,
   lazyload: false,
@@ -76,6 +81,14 @@ function productsByCategoryReducer (state = initialState, action) {
       return state
         .set('filterCategoriesLoading', false)
         .set('filterCategories', fromJS(action.payload))
+
+    case GET_FILTER_BRANDS:
+      return state.set('filterBrandsLoading', true)
+
+    case SET_FILTER_BRANDS:
+      return state
+        .set('filterBrandsLoading', false)
+        .set('filterBrands', fromJS(action.payload))
 
     default:
       return state

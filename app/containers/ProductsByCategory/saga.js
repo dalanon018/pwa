@@ -15,13 +15,14 @@ import {
 // import request from 'utils/request'
 import { getRequestData } from 'utils/offline-request'
 
-import { transformProduct, transformCategory } from 'utils/transforms'
+import { transformProduct, transformCategory, transformBrand } from 'utils/transforms'
 import { getItem, setItem } from 'utils/localStorage'
 
 import {
   GET_PRODUCTS_CATEGORY,
   GET_PRODUCTS_VIEWED,
   GET_FILTER_CATEGORIES,
+  GET_FILTER_BRANDS,
 
   GET_OVER18,
   SET_OVER18,
@@ -32,6 +33,7 @@ import {
   setProductsViewedAction,
   setProductsCountsAction,
   setFilterCategoriesAction,
+  setFilterBrandsAction,
 
   setOver18Action
 } from './actions'
@@ -147,6 +149,29 @@ export function * getFilterCategories (args) {
   yield put(setFilterCategoriesAction(categories))
 }
 
+export function * getFilterBrands (args) {
+  const { payload: { id } } = args
+  let brands = []
+
+  const token = yield getAccessToken()
+  const req = yield call(getRequestData, `${API_BASE_URL}/brands?category=${id}`, {
+    method: 'GET',
+    token: token.access_token
+  })
+  if (!isEmpty(req)) {
+    const transform = compose(
+      map(partial(transformEachEntity, [transformBrand])),
+      propOr([], 'brandList')
+    )
+
+    brands = yield transform(req)
+  } else {
+    yield put(setNetworkErrorAction(500))
+  }
+
+  yield put(setFilterBrandsAction(brands))
+}
+
 export function * getProductByCategorySaga () {
   yield * takeEvery(GET_PRODUCTS_CATEGORY, getProductByCategory)
 }
@@ -167,6 +192,10 @@ export function * getFilterCategoriesSaga () {
   yield * takeLatest(GET_FILTER_CATEGORIES, getFilterCategories)
 }
 
+export function * getFilterBrandsSaga () {
+  yield * takeLatest(GET_FILTER_BRANDS, getFilterBrands)
+}
+
 // Individual exports for testing
 export function * productsCategorySagas () {
   yield * [
@@ -177,7 +206,8 @@ export function * productsCategorySagas () {
 
     fork(getProductsViewedSaga),
 
-    fork(getFilterCategoriesSaga)
+    fork(getFilterCategoriesSaga),
+    fork(getFilterBrandsSaga)
   ]
 }
 

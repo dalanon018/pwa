@@ -67,6 +67,7 @@ import {
   getProductsViewedAction,
   resetProductsByCategoryAction,
   getFilterCategoriesAction,
+  getFilterBrandsAction,
   getOver18Action,
   submitOver18Action
 } from './actions'
@@ -81,7 +82,9 @@ import {
   selectTotalCount,
   selectOver18,
   selectFilterCategories,
-  selectFilterCategoriesLoading
+  selectFilterCategoriesLoading,
+  selectFilterBrands,
+  selectFilterBrandsLoading
 } from './selectors'
 
 import {
@@ -457,9 +460,9 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
     return adult
   }
-
+  // TODO: We need to remove extra call for categories specially I think we dont need them anymore
   componentDidMount () {
-    const { match: { params }, getProductsViewed, getProductCategories, getFilterCategories, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon } = this.props
+    const { match: { params }, getProductsViewed, getProductCategories, getFilterCategories, getFilterBrands, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon } = this.props
 
     setPageTitle(this._handlePageTitle())
     setShowSearchIcon(true)
@@ -470,6 +473,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     getProductsViewed()
 
     getFilterCategories({ id: params.id })
+    getFilterBrands({ id: params.id })
 
     this._fetchProductByCategory(this.props)
     this._handleCheckOver18()
@@ -549,6 +553,8 @@ const mapStateToProps = createStructuredSelector({
   categories: selectProductCategories(),
   filterCategories: selectFilterCategories(),
   filterCategoriesLoading: selectFilterCategoriesLoading(),
+  filterBrands: selectFilterBrands(),
+  filterBrandsLoading: selectFilterBrandsLoading(),
   loader: selectLoading(),
   lazyload: selectLazyload(),
   totalCount: selectTotalCount(),
@@ -567,6 +573,7 @@ function mapDispatchToProps (dispatch) {
     getProductsViewed: () => dispatch(getProductsViewedAction()),
     resetProductsByCategory: () => dispatch(resetProductsByCategoryAction()),
     getFilterCategories: (payload) => dispatch(getFilterCategoriesAction(payload)),
+    getFilterBrands: (payload) => dispatch(getFilterBrandsAction(payload)),
     submitOver18: payload => dispatch(submitOver18Action(payload)),
     getOver18: () => dispatch(getOver18Action()),
     changeRoute: (url) => dispatch(push(url)),

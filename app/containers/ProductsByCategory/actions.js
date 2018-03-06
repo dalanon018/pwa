@@ -12,6 +12,9 @@ import {
   GET_FILTER_CATEGORIES,
   SET_FILTER_CATEGORIES,
 
+  GET_FILTER_BRANDS,
+  SET_FILTER_BRANDS,
+
   GET_PRODUCTS_VIEWED,
   SET_PRODUCTS_VIEWED,
 
@@ -46,6 +49,20 @@ export function getFilterCategoriesAction (payload) {
 export function setFilterCategoriesAction (payload) {
   return {
     type: SET_FILTER_CATEGORIES,
+    payload
+  }
+}
+
+export function getFilterBrandsAction (payload) {
+  return {
+    type: GET_FILTER_BRANDS,
+    payload
+  }
+}
+
+export function setFilterBrandsAction (payload) {
+  return {
+    type: SET_FILTER_BRANDS,
     payload
   }
 }
