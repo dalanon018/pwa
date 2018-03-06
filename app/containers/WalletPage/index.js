@@ -47,7 +47,7 @@ import {
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
 
-import { PROMO_PRODUCTS_NAME } from 'containers/Buckets/constants'
+import { WALLET_NAME } from 'containers/Buckets/constants'
 
 import messages from './messages'
 import reducer from './reducer'
@@ -245,7 +245,7 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
   componentDidMount () {
     // initial data
     this._fetchWalletTransactions(this.props)
-    this.props.setRouteName(PROMO_PRODUCTS_NAME)
+    this.props.setRouteName(WALLET_NAME)
   }
 
   componentWillUnmount () {
