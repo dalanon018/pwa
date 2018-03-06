@@ -53,6 +53,26 @@ const selectOver18 = () => createSelector(
   subState => subState.get('isOver18')
 )
 
+const selectFilterCategories = () => createSelector(
+  selectProductsByCategoryDomain(),
+  subState => subState.get('filterCategories')
+)
+
+const selectFilterCategoriesLoading = () => createSelector(
+  selectProductsByCategoryDomain(),
+  subState => subState.get('filterCategoriesLoading')
+)
+
+const selectFilterBrands = () => createSelector(
+  selectProductsByCategoryDomain(),
+  subState => subState.get('filterBrands')
+)
+
+const selectFilterBrandsLoading = () => createSelector(
+  selectProductsByCategoryDomain(),
+  subState => subState.get('filterBrandsLoading')
+)
+
 export {
   selectProductsByCategoryDomain,
   selectProductsByCategory,
@@ -62,5 +82,9 @@ export {
   selectLoading,
   selectLazyload,
   selectTotalCount,
-  selectOver18
+  selectOver18,
+  selectFilterCategories,
+  selectFilterCategoriesLoading,
+  selectFilterBrands,
+  selectFilterBrandsLoading
 }

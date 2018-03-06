@@ -12,6 +12,10 @@ describe('productsByCategoryReducer', () => {
     state = fromJS({
       productsByCategory: [],
       productsViewed: [],
+      filterCategories: [],
+      filterCategoriesLoading: false,
+      filterBrands: [],
+      filterBrandsLoading: false,
       totalCount: 0,
       loading: true,
       lazyload: false,

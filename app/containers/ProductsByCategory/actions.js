@@ -9,6 +9,12 @@ import {
   SET_PRODUCTS_CATEGORY,
   RESET_PRODUCTS_CATEGORY,
 
+  GET_FILTER_CATEGORIES,
+  SET_FILTER_CATEGORIES,
+
+  GET_FILTER_BRANDS,
+  SET_FILTER_BRANDS,
+
   GET_PRODUCTS_VIEWED,
   SET_PRODUCTS_VIEWED,
 
@@ -29,6 +35,34 @@ export function getProductsByCategoryAction (payload) {
 export function setProductsByCategoryAction (payload) {
   return {
     type: SET_PRODUCTS_CATEGORY,
+    payload
+  }
+}
+
+export function getFilterCategoriesAction (payload) {
+  return {
+    type: GET_FILTER_CATEGORIES,
+    payload
+  }
+}
+
+export function setFilterCategoriesAction (payload) {
+  return {
+    type: SET_FILTER_CATEGORIES,
+    payload
+  }
+}
+
+export function getFilterBrandsAction (payload) {
+  return {
+    type: GET_FILTER_BRANDS,
+    payload
+  }
+}
+
+export function setFilterBrandsAction (payload) {
+  return {
+    type: SET_FILTER_BRANDS,
     payload
   }
 }

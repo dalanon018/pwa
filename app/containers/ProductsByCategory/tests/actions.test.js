@@ -7,7 +7,13 @@ import {
   getProductsViewedAction,
   setProductsViewedAction,
 
-  setProductsCountsAction
+  setProductsCountsAction,
+
+  getFilterCategoriesAction,
+  setFilterCategoriesAction,
+
+  getFilterBrandsAction,
+  setFilterBrandsAction
 } from '../actions'
 
 import {
@@ -18,7 +24,13 @@ import {
   GET_PRODUCTS_VIEWED,
   SET_PRODUCTS_VIEWED,
 
-  SET_PRODUCTS_COUNT
+  SET_PRODUCTS_COUNT,
+
+  GET_FILTER_CATEGORIES,
+  SET_FILTER_CATEGORIES,
+
+  GET_FILTER_BRANDS,
+  SET_FILTER_BRANDS
 } from '../constants'
 
 describe('ProductsByCategory actions', () => {
@@ -66,6 +78,46 @@ describe('ProductsByCategory actions', () => {
         payload
       }
       expect(setProductsViewedAction(payload)).toEqual(expected)
+    })
+  })
+
+  describe('Filtered Categories', () => {
+    it('has a type of GET_FILTER_CATEGORIES', () => {
+      const payload = { id: 1 }
+      const expected = {
+        type: GET_FILTER_CATEGORIES,
+        payload
+      }
+      expect(getFilterCategoriesAction(payload)).toEqual(expected)
+    })
+
+    it('has a type of SET_FILTER_CATEGORIES', () => {
+      const payload = [ 1, 2, 3 ]
+      const expected = {
+        type: SET_FILTER_CATEGORIES,
+        payload
+      }
+      expect(setFilterCategoriesAction(payload)).toEqual(expected)
+    })
+  })
+
+  describe('Filtered Brands', () => {
+    it('has a type of GET_FILTER_BRANDS', () => {
+      const payload = { id: 1 }
+      const expected = {
+        type: GET_FILTER_BRANDS,
+        payload
+      }
+      expect(getFilterBrandsAction(payload)).toEqual(expected)
+    })
+
+    it('has a type of SET_FILTER_BRANDS', () => {
+      const payload = [ 1, 2, 3 ]
+      const expected = {
+        type: SET_FILTER_BRANDS,
+        payload
+      }
+      expect(setFilterBrandsAction(payload)).toEqual(expected)
     })
   })
 

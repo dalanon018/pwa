@@ -5,7 +5,11 @@ import {
   selectProductsByCategoryFeatured,
   selectProductsViewed,
   selectLazyload,
-  selectTotalCount
+  selectTotalCount,
+  selectFilterCategories,
+  selectFilterCategoriesLoading,
+  selectFilterBrands,
+  selectFilterBrandsLoading
 } from '../selectors'
 
 describe('makeSelectProductsByCategoryDomain', () => {
@@ -90,6 +94,62 @@ describe('makeSelectProductsByCategoryDomain', () => {
         }
       })
       expect(selector(mockedState)).toEqual(totalCount)
+    })
+  })
+
+  describe('selectFilterCategories', () => {
+    const selector = selectFilterCategories()
+
+    it('should get filtered categories', () => {
+      const filterCategories = fromJS([1, 2, 3, 4])
+      const mockedState = fromJS({
+        productsByCategory: {
+          filterCategories
+        }
+      })
+      expect(selector(mockedState)).toEqual(filterCategories)
+    })
+  })
+
+  describe('selectFilterCategoriesLoading', () => {
+    const selector = selectFilterCategoriesLoading()
+
+    it('should get if filtering is loading', () => {
+      const filterCategoriesLoading = false
+      const mockedState = fromJS({
+        productsByCategory: {
+          filterCategoriesLoading
+        }
+      })
+      expect(selector(mockedState)).toEqual(filterCategoriesLoading)
+    })
+  })
+
+  describe('selectFilterBrands', () => {
+    const selector = selectFilterBrands()
+
+    it('should get filtered Brands', () => {
+      const filterBrands = fromJS([1, 2, 3, 4])
+      const mockedState = fromJS({
+        productsByCategory: {
+          filterBrands
+        }
+      })
+      expect(selector(mockedState)).toEqual(filterBrands)
+    })
+  })
+
+  describe('selectFilterBrandsLoading', () => {
+    const selector = selectFilterBrandsLoading()
+
+    it('should get if filtering is loading', () => {
+      const filterBrandsLoading = false
+      const mockedState = fromJS({
+        productsByCategory: {
+          filterBrandsLoading
+        }
+      })
+      expect(selector(mockedState)).toEqual(filterBrandsLoading)
     })
   })
 })

@@ -267,7 +267,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             {
               featuredCategories.map((category, index) => {
                 return (
-                  <CategoryItem key={index} onClick={() => changeRoute(`/products-category/${category.get('id')}`)}>
+                  <CategoryItem key={index} onClick={() => changeRoute(`/products-category/${category.get('id')}?name=${category.get('name')}`)}>
                     <Image src={AccessoriesIcon} alt='CLiQQ' />
                     <Label basic size='tiny' className='item-label'>
                       {category.get('name')}

@@ -7,6 +7,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import queryString from 'query-string'
 
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
@@ -21,7 +22,6 @@ import {
   cond,
   equals,
   ifElse,
-  lt,
   partial,
   path,
   subtract
@@ -66,6 +66,8 @@ import {
   getProductsByCategoryAction,
   getProductsViewedAction,
   resetProductsByCategoryAction,
+  getFilterCategoriesAction,
+  getFilterBrandsAction,
   getOver18Action,
   submitOver18Action
 } from './actions'
@@ -78,7 +80,11 @@ import {
   selectProductsByCategoryFeatured,
   selectProductsViewed,
   selectTotalCount,
-  selectOver18
+  selectOver18,
+  selectFilterCategories,
+  selectFilterCategoriesLoading,
+  selectFilterBrands,
+  selectFilterBrandsLoading
 } from './selectors'
 
 import {
@@ -143,6 +149,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     getProductsByCategory: PropTypes.func.isRequired,
     getProductCategories: PropTypes.func.isRequired,
     getProductsViewed: PropTypes.func.isRequired,
+    getFilterCategories: PropTypes.func.isRequired,
     resetProductsByCategory: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
@@ -155,6 +162,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     productsViewed: PropTypes.object.isRequired,
     productsFeatured: PropTypes.object.isRequired,
     categories: PropTypes.object.isRequired,
+    filterCategories: PropTypes.object.isRequired,
+    filterCategoriesLoading: PropTypes.bool.isRequired,
     match: PropTypes.object.isRequired,
     setRouteName: PropTypes.func.isRequired,
     submitOver18: PropTypes.func.isRequired,
@@ -174,7 +183,6 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     super()
 
     this._handlePageTitle = this._handlePageTitle.bind(this)
-    this._isCategoryExist = this._isCategoryExist.bind(this)
     this._fetchProductByCategory = this._fetchProductByCategory.bind(this)
     this._displayMoreProducts = this._displayMoreProducts.bind(this)
     this._resetValuesAndFetch = this._resetValuesAndFetch.bind(this)
@@ -189,19 +197,9 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this._handleCheckOver18 = this._handleCheckOver18.bind(this)
   }
 
-  _isCategoryExist () {
-    const { categories, match: { params: { id } } } = this.props
-    if (categories.size) {
-      const category = categories.find((cat) => cat.get('id') === id)
-      return category ? `All ${category.get('name')}` : ''
-    }
-    return ''
-  }
-
   _handlePageTitle (props = this.props) {
-    const { lazyload, products } = props
-    // we will not show this if products size is 0 and lazy loading since we know we are only displaying the featured items
-    return (lazyload && products.size === 0) ? null : this._isCategoryExist()
+    const { name } = queryString.parse(props.location.search)
+    return `All ${name || 'Category'}`
   }
 
   _displayMoreProducts () {
@@ -462,19 +460,20 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
     return adult
   }
-
-  componentWillMount () {
-    this.props.setPageTitle('..')
-    this.props.setShowSearchIcon(true)
-    this.props.setShowActivityIcon(true)
-  }
-
+  // TODO: We need to remove extra call for categories specially I think we dont need them anymore
   componentDidMount () {
-    const { getProductsViewed, getProductCategories, setRouteName } = this.props
+    const { match: { params }, getProductsViewed, getProductCategories, getFilterCategories, getFilterBrands, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon } = this.props
+
+    setPageTitle(this._handlePageTitle())
+    setShowSearchIcon(true)
+    setShowActivityIcon(true)
 
     setRouteName(PRODUCTSCATEGORY_NAME)
     getProductCategories()
     getProductsViewed()
+
+    getFilterCategories({ id: params.id })
+    getFilterBrands({ id: params.id })
 
     this._fetchProductByCategory(this.props)
     this._handleCheckOver18()
@@ -486,10 +485,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
   componentWillReceiveProps (nextProps) {
     const { match: { params } } = this.props
-
+    const paramsId = path(['match', 'params', 'id'])
     const isParamsEqual = (id, props) => compose(
       equals(id),
-      path(['match', 'params', 'id'])
+      paramsId
     )(props)
 
     const updateFetchProduct = ifElse(
@@ -498,17 +497,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
       this._resetValuesAndFetch
     )
 
-    const updatePageTitle = ifElse(
-      compose(lt(0), path(['categories', 'size'])),
-      compose(
-        this.props.setPageTitle,
-        this._handlePageTitle
-      ),
-      noop
-    )
-
     updateFetchProduct(nextProps)
-    updatePageTitle(nextProps)
   }
 
   render () {
@@ -562,6 +551,10 @@ const mapStateToProps = createStructuredSelector({
   productsViewed: selectProductsViewed(),
   productsFeatured: selectProductsByCategoryFeatured(),
   categories: selectProductCategories(),
+  filterCategories: selectFilterCategories(),
+  filterCategoriesLoading: selectFilterCategoriesLoading(),
+  filterBrands: selectFilterBrands(),
+  filterBrandsLoading: selectFilterBrandsLoading(),
   loader: selectLoading(),
   lazyload: selectLazyload(),
   totalCount: selectTotalCount(),
@@ -579,6 +572,8 @@ function mapDispatchToProps (dispatch) {
     getProductsByCategory: payload => dispatch(getProductsByCategoryAction(payload)),
     getProductsViewed: () => dispatch(getProductsViewedAction()),
     resetProductsByCategory: () => dispatch(resetProductsByCategoryAction()),
+    getFilterCategories: (payload) => dispatch(getFilterCategoriesAction(payload)),
+    getFilterBrands: (payload) => dispatch(getFilterBrandsAction(payload)),
     submitOver18: payload => dispatch(submitOver18Action(payload)),
     getOver18: () => dispatch(getOver18Action()),
     changeRoute: (url) => dispatch(push(url)),
