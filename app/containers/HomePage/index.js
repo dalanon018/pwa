@@ -10,11 +10,11 @@ import Helmet from 'react-helmet'
 
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
-import { gt, ifElse, identity } from 'ramda'
-import { Container, Grid, Button, Image, Label } from 'semantic-ui-react'
+import { ifElse, identity } from 'ramda'
+import { Container, Image, Label } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
@@ -122,36 +122,36 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     offset: 0,
     limit: LIMIT_ITEMS
   }
-  constructor () {
-    super()
+  // constructor () {
+  //   super()
 
-    this._displayViewAll = this._displayViewAll.bind(this)
-    this._displayFeatured = this._displayFeatured.bind(this)
-  }
+  //   this._displayViewAll = this._displayViewAll.bind(this)
+  //   this._displayFeatured = this._displayFeatured.bind(this)
+  // }
 
-  _displayFeatured () {
-    this.props.changeRoute(`/products-featured`)
-  }
+  // _displayFeatured () {
+  //   this.props.changeRoute(`/products-category/featured`)
+  // }
 
-  _displayViewAll () {
-    const { totalFeaturedProductCount } = this.props
-    const componentRender = ifElse(
-      gt(LIMIT_ITEMS),
-      () => null,
-      () => (
-        <Grid padded>
-          <Grid.Row centered>
-            <Button
-              onClick={this._displayFeatured}
-              primary >
-              <FormattedMessage {...messages.productViewAll} /> </Button>
-          </Grid.Row>
-        </Grid>
-      )
-    )
+  // _displayViewAll () {
+  //   const { totalFeaturedProductCount } = this.props
+  //   const componentRender = ifElse(
+  //     gt(LIMIT_ITEMS),
+  //     () => null,
+  //     () => (
+  //       <Grid padded>
+  //         <Grid.Row centered>
+  //           <Button
+  //             onClick={this._displayFeatured}
+  //             primary >
+  //             <FormattedMessage {...messages.productViewAll} /> </Button>
+  //         </Grid.Row>
+  //       </Grid>
+  //     )
+  //   )
 
-    return componentRender(totalFeaturedProductCount)
-  }
+  //   return componentRender(totalFeaturedProductCount)
+  // }
 
   _shouldDisplayHeader = (component) => ifElse(
       identity,
@@ -232,7 +232,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render () {
-    const { featuredCategories, featuredBrands, changeRoute, windowWidth, brandLoader, featuredProductsLoader, lazyload } = this.props
+    const { featuredCategories, featuredBrands, changeRoute, windowWidth, brandLoader, featuredProductsLoader, lazyload, intl } = this.props
     const imgixOptions = {
       w: windowWidth >= 1024 ? 1170 : 800,
       h: 400,
@@ -305,7 +305,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             />
           </BannerWrapper>
 
-          <SectionTitle link='/brands/' />
+          <SectionTitle
+            title={intl.formatMessage(messages.browseBrands)}
+            linkLabel={intl.formatMessage(messages.moreBrands)}
+            link='/brands/' />
 
           <BrandSlider
             brands={featuredBrands}
@@ -319,11 +322,14 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         <PointAds />
 
         <Container>
+          <SectionTitle
+            title={intl.formatMessage(messages.featureProduct)}
+            link='/products-featured' />
+
           <InfiniteWrapper
             hasMoreData={lazyload}
             isLoading={featuredProductsLoader}
           >
-            { this._displayViewAll() }
             { this._displayFeaturedItems() }
           </InfiniteWrapper>
         </Container>

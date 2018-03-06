@@ -31,5 +31,9 @@ export default defineMessages({
   searchPlaceholder: {
     id: `${idSuffix}.searchPlaceholder`,
     defaultMessage: 'Search for Products, Brands and More'
+  },
+  moreBrands: {
+    id: `${idSuffix}.moreBrands`,
+    defaultMessage: 'More Brands'
   }
 })

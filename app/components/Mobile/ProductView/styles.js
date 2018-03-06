@@ -4,7 +4,10 @@ const ProductWrapper = styled.div`
   cursor: pointer;
   display: block;
   position: relative;
-  text-align: center;
+  background-color: #FFFFFF;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgba(120,120,120, 0.1);
+
 
   // not included on sorting
   animation:fadeIn ease-in 1;
@@ -37,6 +40,7 @@ const ImageContent = styled.div`
 
 const ProductInfo = styled.div`
   display: block;
+  padding: 0 15px;
 
   .brand-name {
     display: block;
@@ -46,10 +50,10 @@ const ProductInfo = styled.div`
   }
 
   .product-name {
-    min-height: 30px;
-    max-height: 30px;
+    min-height: 37px;
+    max-height: 37px;
     overflow: hidden;
-    padding: 0 15px !important;
+    // padding: 0 15px !important;
   }
 
   @media (min-width: 767px) {
@@ -62,9 +66,10 @@ const ProductInfo = styled.div`
 const ProductPriceWrapper = styled.div`
   align-items: flex-end;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
 
   .product-price {
+    color: #FF4814 !important;
     font-family: 'Roboto';
     letter-spacing: -1.5px;
     line-height: 30px;
@@ -82,50 +87,29 @@ const ProductPriceWrapper = styled.div`
 const RibbonWrapper = styled.div`
   position: absolute;
   z-index: 1;
-  top: 0;
-  right: 8px;
+  top: 10px;
+  right: 0;
 
   .ribbon-tag {
-    background: #db2828;
-    border-bottom: 2px solid #db2828;
+    align-items: middle;
+    background: #FFC60B;
+    border-radius: 3px 0 0 3px;
     display: flex;
-    height: 40px;
-    justify-content: center;
-    position: relative;
+    flex-wrap: wrap;
     font-size: 11px;
-    line-height: 14px;
     font-weight: 700;
+    height: 38px;
+    justify-content: center;
+    line-height: 14px;
+    padding: 4px;
+    position: relative;
     text-align: center;
     vertical-align: middle;
-    width: 50px;
-    align-items: middle;
-
-    &:after, &:before {
-      content: '';
-      position: absolute;
-      border-top: 10px solid #db2828;
-      height: 0;
-      width: 0;
-      top: 100%;
-    }
-
-    &:after {
-      border-left: 50px solid transparent;
-      right: 0px;
-    }
-
-    &:before {
-      border-right: 50px solid transparent;
-      left: 0px;
-    }
+    width: 40px;
 
     span {
-      align-items: center;
-      color: #FFFFFF !important;
-      // display: inline-flex;
-      padding: 5px;
-      text-align: center;
-      text-transform: uppercase;
+      line-height: 10px;
+      margin-top: -5px;
     }
   }
 `

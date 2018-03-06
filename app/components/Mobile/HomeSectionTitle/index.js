@@ -45,15 +45,15 @@ export class HomeSectionTitle extends React.PureComponent {
   }
 
   render () {
+    const { title, linkLabel } = this.props
+
     return (
       <Container className='padding__none--vertical'>
         <Wrapper>
-          <Label basic size='large' className='title padding__none'>
-            Featured Brands
-          </Label>
+          <Label basic size='large' className='title padding__none'>{title}</Label>
           <Label basic size='small' className='link padding__none' onClick={this._handleGoTo()}>
             <LinkWrapper>
-              <span>More Brands</span>
+              <span>{linkLabel || 'See All'}</span>
               <Image src={ArrowIcon} alt='CLiQQ' />
             </LinkWrapper>
           </Label>
