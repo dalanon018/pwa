@@ -11,6 +11,7 @@ describe('<ProductsByCategory />', () => {
     getProductsByCategory: () => {},
     getProductCategories: () => {},
     getFilterCategories: () => {},
+    getFilterBrands: () => {},
     getProductsViewed: () => {},
     resetProductsByCategory: () => {},
     setPageTitle: () => {},
@@ -28,6 +29,8 @@ describe('<ProductsByCategory />', () => {
     categories: fromJS([]),
     filterCategories: fromJS([]),
     filterCategoriesLoading: false,
+    filterBrands: fromJS([]),
+    filterBrandsLoading: false,
     match: {
       params: {
         id: 1

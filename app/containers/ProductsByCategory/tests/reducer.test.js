@@ -14,6 +14,8 @@ describe('productsByCategoryReducer', () => {
       productsViewed: [],
       filterCategories: [],
       filterCategoriesLoading: false,
+      filterBrands: [],
+      filterBrandsLoading: false,
       totalCount: 0,
       loading: true,
       lazyload: false,
