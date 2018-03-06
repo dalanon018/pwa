@@ -1,35 +1,35 @@
 import { fromJS } from 'immutable'
-import promoProductsPageReducer from '../reducer'
+import walletPageReducer from '../reducer'
 
 import {
-  setPromoProductsAction
+  setWalletTransactionsAction
 } from '../actions'
 
-describe('promoProductsPageReducer', () => {
+describe('walletPageReducer', () => {
   let state
   beforeEach(() => {
     state = fromJS({
-      promo: {},
-      products: [],
-      productsCount: 0,
-      productsLoading: false,
+      wallet: {},
+      transactions: [],
+      transactionsCount: 0,
+      transactionsLoading: false,
       lazyload: false
     })
   })
 
   it('returns the initial state', () => {
     const expectedResult = state
-    expect(promoProductsPageReducer(undefined, {})).toEqual(expectedResult)
+    expect(walletPageReducer(undefined, {})).toEqual(expectedResult)
   })
 
-  it('should update products', () => {
-    const payload = ['product1', 'product2']
-    const currentState = state.get('products')
+  it('should update transactions', () => {
+    const payload = ['transactions1', 'transactions2']
+    const currentState = state.get('transactions')
     const mergeState = currentState.concat(fromJS(payload))
     const expectedResult = state
-                          .set('products', mergeState)
+                          .set('transactions', mergeState)
                           .set('lazyload', false)
 
-    expect(promoProductsPageReducer(state, setPromoProductsAction(payload))).toEqual(expectedResult)
+    expect(walletPageReducer(state, setWalletTransactionsAction(payload))).toEqual(expectedResult)
   })
 })

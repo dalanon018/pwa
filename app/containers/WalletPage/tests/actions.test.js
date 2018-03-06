@@ -1,63 +1,61 @@
 
 import {
-  getPromoAction,
-  setPromoAction,
-  setPromoProductsAction,
-  resetPromoProductsAction,
-  setPromoProductsCountsAction
+  getWalletAction,
+  setWalletAction,
+  setWalletTransactionsAction,
+  resetWalletTransactionsAction,
+  setWalletTransactionsCountsAction
 } from '../actions'
 
 import {
-  GET_PROMO,
-  SET_PROMO,
-  SET_PROMO_PRODUCTS,
-  SET_PROMO_PRODUCTS_COUNT,
-  RESET_PROMO_PRODUCTS
+  GET_WALLET,
+  SET_WALLET,
+  SET_WALLET_TRANSACTIONS,
+  SET_WALLET_TRANSACTIONS_COUNT,
+  RESET_WALLET_TRANSACTIONS
 } from '../constants'
 
-describe('PromoProductsPage actions', () => {
-  it('has a type of GET_PROMO', () => {
-    const payload = { id: 1 }
+describe('WalletPage actions', () => {
+  it('has a type of GET_WALLET', () => {
+    const payload = { mobileNumber: 1 }
     const expected = {
-      type: GET_PROMO,
+      type: GET_WALLET,
       payload
     }
-    expect(getPromoAction(payload)).toEqual(expected)
+    expect(getWalletAction(payload)).toEqual(expected)
   })
 
-  it('has a type of SET_PROMO', () => {
+  it('has a type of SET_WALLET', () => {
     const payload = [ 1, 2, 3 ]
     const expected = {
-      type: SET_PROMO,
+      type: SET_WALLET,
       payload
     }
-    expect(setPromoAction(payload)).toEqual(expected)
+    expect(setWalletAction(payload)).toEqual(expected)
   })
 
-  it('has a type of SET_PROMO_PRODUCTS', () => {
+  it('has a type of SET_WALLET_TRANSACTIONS', () => {
     const payload = [ 1, 2, 3 ]
     const expected = {
-      type: SET_PROMO_PRODUCTS,
+      type: SET_WALLET_TRANSACTIONS,
       payload
     }
-    expect(setPromoProductsAction(payload)).toEqual(expected)
+    expect(setWalletTransactionsAction(payload)).toEqual(expected)
   })
 
-  it('has a type of RESET_PROMO_PRODUCTS', () => {
-    const payload = []
+  it('has a type of RESET_WALLET_TRANSACTIONS', () => {
     const expected = {
-      type: RESET_PROMO_PRODUCTS,
-      payload
+      type: RESET_WALLET_TRANSACTIONS
     }
-    expect(resetPromoProductsAction(payload)).toEqual(expected)
+    expect(resetWalletTransactionsAction()).toEqual(expected)
   })
 
-  it('has a type of SET_PROMO_PRODUCTS_COUNT', () => {
+  it('has a type of SET_WALLET_TRANSACTIONS_COUNT', () => {
     const payload = 0
     const expected = {
-      type: SET_PROMO_PRODUCTS_COUNT,
+      type: SET_WALLET_TRANSACTIONS_COUNT,
       payload
     }
-    expect(setPromoProductsCountsAction(payload)).toEqual(expected)
+    expect(setWalletTransactionsCountsAction(payload)).toEqual(expected)
   })
 })

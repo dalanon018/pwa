@@ -1,68 +1,38 @@
 import { fromJS } from 'immutable'
 import {
-  selectPromo,
-  selectProducts,
-  selectProductsRegular,
-  selectProductsFeatured,
-  selectProductsCount,
-  selectProductsLoading,
+  selectWallet,
+  selectTransactions,
+  selectTransactionsCount,
+  selectTransactionsLoading,
   selectLazyload
 } from '../selectors'
 
-describe('selectPromoProductsPageDomain', () => {
-  describe('selectPromo', () => {
-    const selector = selectPromo()
+describe('selectWalletPageDomain', () => {
+  describe('selectWallet', () => {
+    const selector = selectWallet()
 
-    it('should select Promo', () => {
-      const promo = fromJS({ id: 1, name: 'Promo1' })
+    it('should select Wallet', () => {
+      const wallet = fromJS({ id: 1, name: 'Wallet' })
       const mockedState = fromJS({
-        promoProductsPage: {
-          promo
+        walletPage: {
+          wallet
         }
       })
-      expect(selector(mockedState)).toEqual(promo)
+      expect(selector(mockedState)).toEqual(wallet)
     })
   })
 
-  describe('selectProducts', () => {
-    const selector = selectProducts()
+  describe('selectTransactions', () => {
+    const selector = selectTransactions()
 
-    it('should get products', () => {
-      const products = fromJS([{ name: 1 }, { name: 2 }])
+    it('should get Transactions', () => {
+      const transactions = fromJS([{ transaction: 1 }, { transaction: 2 }])
       const mockedState = fromJS({
-        promoProductsPage: {
-          products
+        walletPage: {
+          transactions
         }
       })
-      expect(selector(mockedState)).toEqual(products)
-    })
-  })
-
-  describe('selectProductsRegular', () => {
-    const selector = selectProductsRegular()
-
-    it('should get products regular', () => {
-      const products = fromJS([{isFeatured: false}])
-      const mockedState = fromJS({
-        promoProductsPage: {
-          products
-        }
-      })
-      expect(selector(mockedState)).toEqual(products)
-    })
-  })
-
-  describe('selectProductsFeatured', () => {
-    const selector = selectProductsFeatured()
-
-    it('should get products featured', () => {
-      const products = fromJS([{isFeatured: true}])
-      const mockedState = fromJS({
-        promoProductsPage: {
-          products
-        }
-      })
-      expect(selector(mockedState)).toEqual(products)
+      expect(selector(mockedState)).toEqual(transactions)
     })
   })
 
@@ -72,7 +42,7 @@ describe('selectPromoProductsPageDomain', () => {
     it('should get lazyload', () => {
       const lazyload = false
       const mockedState = fromJS({
-        promoProductsPage: {
+        walletPage: {
           lazyload
         }
       })
@@ -80,31 +50,31 @@ describe('selectPromoProductsPageDomain', () => {
     })
   })
 
-  describe('selectProductsCount', () => {
-    const selector = selectProductsCount()
+  describe('selectTransactionsCount', () => {
+    const selector = selectTransactionsCount()
 
-    it('should get productCount', () => {
-      const productsCount = 0
+    it('should get transactionCount', () => {
+      const transactionsCount = 0
       const mockedState = fromJS({
-        promoProductsPage: {
-          productsCount
+        walletPage: {
+          transactionsCount
         }
       })
-      expect(selector(mockedState)).toEqual(productsCount)
+      expect(selector(mockedState)).toEqual(transactionsCount)
     })
   })
 
-  describe('selectProductsLoading', () => {
-    const selector = selectProductsLoading()
+  describe('selectTransactionsLoading', () => {
+    const selector = selectTransactionsLoading()
 
-    it('should get productLoading', () => {
-      const productsLoading = false
+    it('should get Transactions Loading', () => {
+      const transactionsLoading = false
       const mockedState = fromJS({
-        promoProductsPage: {
-          productsLoading
+        walletPage: {
+          transactionsLoading
         }
       })
-      expect(selector(mockedState)).toEqual(productsLoading)
+      expect(selector(mockedState)).toEqual(transactionsLoading)
     })
   })
 })
