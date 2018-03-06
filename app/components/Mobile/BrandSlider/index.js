@@ -52,6 +52,7 @@ function BrandSlider ({ brands, loader, changeRoute }) {
 
   var settings = {
     arrows: false,
+    infinite: false,
     slidesToShow: 1,
     speed: 800,
     swipeToSlide: true,
