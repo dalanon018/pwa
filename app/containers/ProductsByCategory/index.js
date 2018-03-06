@@ -198,12 +198,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     return ''
   }
 
-  _handlePageTitle () {
-    const { lazyload } = this.props
-    const product = this._displayProductData()
-
-    // we will not show this if product size is 0 and lazy loading since we know we are only displaying the featured items
-    return (lazyload && product.size === 0) ? null : this._isCategoryExist()
+  _handlePageTitle (props = this.props) {
+    const { lazyload, products } = props
+    // we will not show this if products size is 0 and lazy loading since we know we are only displaying the featured items
+    return (lazyload && products.size === 0) ? null : this._isCategoryExist()
   }
 
   _displayMoreProducts () {
