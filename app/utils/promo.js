@@ -20,10 +20,10 @@ const identifyCalculation = cases => dafultFn => key =>
   * Gettting amount percentage
   * @param {*} product
   */
-const calculatePercentage = (product) =>
+export const calculatePercentage = (product) =>
   getTotalPrice(
     parseFloat(product.get('price')),
-    parseFloat(product.getIn(['discount', 'value']))
+    parseFloat(product.get('discountPrice'))
   )
 
 /**
