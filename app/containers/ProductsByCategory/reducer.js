@@ -18,12 +18,17 @@ import {
   LIMIT_ITEMS,
 
   SET_OVER18,
-  SUBMIT_OVER18
+  SUBMIT_OVER18,
+
+  GET_FILTER_CATEGORY,
+  SET_FILTER_CATEGORY
 } from './constants'
 
 const initialState = fromJS({
   productsByCategory: [],
   productsViewed: [],
+  filterCategories: [],
+  filterCategoriesLoading: false,
   totalCount: 0,
   loading: true,
   lazyload: false,
@@ -63,6 +68,14 @@ function productsByCategoryReducer (state = initialState, action) {
     case SUBMIT_OVER18:
       return state
         .set('isOver18', action.payload)
+
+    case GET_FILTER_CATEGORY:
+      return state.set('filterCategoriesLoading', true)
+
+    case SET_FILTER_CATEGORY:
+      return state
+        .set('filterCategoriesLoading', false)
+        .set('filterCategories', fromJS(action.payload))
 
     default:
       return state

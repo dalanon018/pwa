@@ -9,6 +9,9 @@ import {
   SET_PRODUCTS_CATEGORY,
   RESET_PRODUCTS_CATEGORY,
 
+  GET_FILTER_CATEGORY,
+  SET_FILTER_CATEGORY,
+
   GET_PRODUCTS_VIEWED,
   SET_PRODUCTS_VIEWED,
 
@@ -29,6 +32,20 @@ export function getProductsByCategoryAction (payload) {
 export function setProductsByCategoryAction (payload) {
   return {
     type: SET_PRODUCTS_CATEGORY,
+    payload
+  }
+}
+
+export function getFilterCategoryAction (payload) {
+  return {
+    type: GET_FILTER_CATEGORY,
+    payload
+  }
+}
+
+export function setFilterCategoryAction (payload) {
+  return {
+    type: SET_FILTER_CATEGORY,
     payload
   }
 }

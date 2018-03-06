@@ -8,18 +8,20 @@ import { isEmpty } from 'lodash'
 import {
   compose,
   map,
+  partial,
   propOr
 } from 'ramda'
 
 // import request from 'utils/request'
 import { getRequestData } from 'utils/offline-request'
 
-import { transformProduct } from 'utils/transforms'
+import { transformProduct, transformCategory } from 'utils/transforms'
 import { getItem, setItem } from 'utils/localStorage'
 
 import {
   GET_PRODUCTS_CATEGORY,
   GET_PRODUCTS_VIEWED,
+  GET_FILTER_CATEGORY,
 
   GET_OVER18,
   SET_OVER18,
@@ -29,6 +31,7 @@ import {
   setProductsByCategoryAction,
   setProductsViewedAction,
   setProductsCountsAction,
+  setFilterCategoryAction,
 
   setOver18Action
 } from './actions'
@@ -51,8 +54,8 @@ import {
 //   yield new Promise(resolve => setTimeout(resolve, ms))
 // }
 
-function * transformEachEntity (entity) {
-  const response = yield call(transformProduct, entity)
+function * transformEachEntity (transform, entity) {
+  const response = yield call(transform, entity)
   return response
 }
 
@@ -86,7 +89,7 @@ export function * getProductByCategory (args) {
   })
   if (!isEmpty(req)) {
     const transform = compose(
-      map(transformEachEntity),
+      map(partial(transformEachEntity, [transformProduct])),
       propOr([], 'productList')
     )
     const countEntity = propOr(0, 'totalCount')
@@ -121,6 +124,29 @@ export function * getProductsViewed () {
   yield put(setProductsViewedAction(response))
 }
 
+export function * getFilterCategories (args) {
+  const { payload: { id } } = args
+  let categories = []
+
+  const token = yield getAccessToken()
+  const req = yield call(getRequestData, `${API_BASE_URL}/categories?parent=${id}`, {
+    method: 'GET',
+    token: token.access_token
+  })
+  if (!isEmpty(req)) {
+    const transform = compose(
+      map(partial(transformEachEntity, [transformCategory])),
+      propOr([], 'categoryList')
+    )
+
+    categories = yield transform(req)
+  } else {
+    yield put(setNetworkErrorAction(500))
+  }
+
+  yield put(setFilterCategoryAction(categories))
+}
+
 export function * getProductByCategorySaga () {
   yield * takeEvery(GET_PRODUCTS_CATEGORY, getProductByCategory)
 }
@@ -137,6 +163,10 @@ export function * setOver18Saga () {
   yield * takeEvery(SUBMIT_OVER18, setOver18Item)
 }
 
+export function * getFilterCategoriesSaga () {
+  yield * takeLatest(GET_FILTER_CATEGORY, getFilterCategories)
+}
+
 // Individual exports for testing
 export function * productsCategorySagas () {
   yield * [
@@ -145,7 +175,9 @@ export function * productsCategorySagas () {
 
     fork(getProductByCategorySaga),
 
-    fork(getProductsViewedSaga)
+    fork(getProductsViewedSaga),
+
+    fork(getFilterCategoriesSaga)
   ]
 }
 
