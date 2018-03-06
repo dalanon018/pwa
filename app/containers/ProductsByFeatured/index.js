@@ -15,11 +15,16 @@ import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
 import { noop } from 'lodash'
 import {
+  F,
+  T,
   __,
   allPass,
   compose,
   cond,
+  contains,
+  curry,
   equals,
+  identity,
   ifElse,
   lt,
   partial,
@@ -30,6 +35,8 @@ import { Container } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
+
+import { Uppercase } from 'utils/string'
 
 import MobileProductView from 'components/Mobile/ProductView'
 import DesktopProductView from 'components/Desktop/ProductView'
@@ -64,6 +71,7 @@ import saga from './saga'
 
 import {
   getProductsByCategoryAction,
+  getProductsByTagsAction,
   getProductsViewedAction,
   resetProductsByCategoryAction,
   getOver18Action,
@@ -137,6 +145,8 @@ const DesktopItemCount = styled.p`
   text-align: center;
 `
 
+const isTag = curry((tags, id) => contains(id, tags))
+
 export class ProductsByCategory extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     changeRoute: PropTypes.func.isRequired,
@@ -150,7 +160,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     totalCount: PropTypes.number.isRequired,
     loader: PropTypes.bool.isRequired,
     lazyload: PropTypes.bool.isRequired,
-    products: PropTypes.object.isRequired,
+    allCategoryProducts: PropTypes.object.isRequired,
+    productsByTags: PropTypes.object.isRequired,
     productsByCategory: PropTypes.object.isRequired,
     productsViewed: PropTypes.object.isRequired,
     productsFeatured: PropTypes.object.isRequired,
@@ -175,9 +186,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
     this._handlePageTitle = this._handlePageTitle.bind(this)
     this._isCategoryExist = this._isCategoryExist.bind(this)
-    this._fetchProductByCategory = this._fetchProductByCategory.bind(this)
+    this._fetchProductByTagCategory = this._fetchProductByTagCategory.bind(this)
     this._displayMoreProducts = this._displayMoreProducts.bind(this)
     this._resetValuesAndFetch = this._resetValuesAndFetch.bind(this)
+    this._handleFeaturedProductsPerCategory = this._handleFeaturedProductsPerCategory.bind(this)
     this._displayFeaturesProduct = this._displayFeaturesProduct.bind(this)
     this._displayHeaderFeaturesProduct = this._displayHeaderFeaturesProduct.bind(this)
     this._displayNumberProducts = this._displayNumberProducts.bind(this)
@@ -199,11 +211,15 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _handlePageTitle () {
-    const { lazyload } = this.props
+    const { match: { params: { id } }, lazyload } = this.props
+    const IstagText = (tag) => `${Uppercase(tag)} Items`
     const product = this._displayProductData()
 
+    const titleCondition = ifElse(isTag(this._tags), IstagText, this._isCategoryExist)
+    const titleComposition = compose(titleCondition)
+
     // we will not show this if product size is 0 and lazy loading since we know we are only displaying the featured items
-    return (lazyload && product.size === 0) ? null : this._isCategoryExist()
+    return (lazyload && product.size === 0) ? null : titleComposition(id)
   }
 
   _displayMoreProducts () {
@@ -213,12 +229,12 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this.setState({
       pageOffset: incrementOffset,
       offset: (incrementOffset * limit)
-    }, () => this._fetchProductByCategory(this.props))
+    }, () => this._fetchProductByTagCategory(this.props))
   }
 
   _displayHeaderFeaturesProduct () {
     const { productsFeatured } = this.props
-    if (productsFeatured.size) {
+    if (this._handleFeaturedProductsPerCategory() && productsFeatured.size) {
       return (
         <H3>
           <FormattedMessage {...messages.feature} />
@@ -231,7 +247,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
   _displayFeaturesProduct () {
     const { productsFeatured, changeRoute, loader, lazyload, windowWidth, totalCount } = this.props
-    if (productsFeatured.size) {
+    if (this._handleFeaturedProductsPerCategory() && productsFeatured.size) {
       return (
         <InfiniteLoading
           results={productsFeatured}
@@ -258,8 +274,11 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _displayNumberProducts () {
-    const { productsFeatured, totalCount, windowWidth } = this.props
-    const displayTotalCount = subtract(__, productsFeatured.size)
+    const { match: { params: { id } }, productsFeatured, totalCount, windowWidth } = this.props
+    const displayTotalCount = ifElse(partial(isTag(this._tags), [id]),
+      identity,
+      subtract(__, productsFeatured.size)
+    )
     const product = this._displayProductData()
 
     if (product.size) {
@@ -368,9 +387,23 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     )
   }
 
+  /**
+   * What does this solve?
+   * Well if your page is for featured item
+   * technically you have to show the featured items along with the ordinary items.
+   *
+   * else where if you're on a category then you have certain distinction
+   * weather the item is featured or ordinary
+   */
   _displayProductData = () => {
-    const { productsByCategory } = this.props
-    return productsByCategory
+    const { match: { params: { id } }, productsByTags, productsByCategory } = this.props
+    const shouldDiplayTagItems = ifElse(
+      isTag(this._tags),
+      () => productsByTags,
+      () => productsByCategory
+    )
+
+    return shouldDiplayTagItems(id)
   }
 
   /**
@@ -378,8 +411,14 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
    * now this solves is to return ALL data regardless it is a featured or not.
    */
   _displayAllProductData = () => {
-    const { products } = this.props
-    return products
+    const { match: { params: { id } }, productsByTags, allCategoryProducts } = this.props
+    const shouldDiplayTagItems = ifElse(
+      isTag(this._tags),
+      () => productsByTags,
+      () => allCategoryProducts
+    )
+
+    return shouldDiplayTagItems(id)
   }
 
   _displayRegularItems = () => {
@@ -412,15 +451,31 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     return null
   }
 
+  _handleFeaturedProductsPerCategory () {
+    const { match: { params: { id } } } = this.props
+    const shouldNotDisplay = (id) => (isTag(this._tags)(id))
+
+    const showFeaturedItem = ifElse(shouldNotDisplay, F, T)
+
+    return showFeaturedItem(id)
+  }
+
   /**
    * Here we will request for our data base on change of route.
    * @param {*w} props
    */
-  _fetchProductByCategory (props) {
-    const { getProductsByCategory, match: { params: { id } } } = props
+  _fetchProductByTagCategory (props) {
+    const { getProductsByTags, getProductsByCategory, match: { params: { id } } } = props
     const { offset, limit } = this.state
+    const requestData = curry((fn, id) => fn({ offset, limit, id }))
+    const executeFetchData = ifElse(
+      isTag(this._tags),
+      requestData(getProductsByTags),
+      requestData(getProductsByCategory)
+    )
 
-    getProductsByCategory({ offset, limit, id })
+    // since this data is change and we know exactly
+    executeFetchData(id)
   }
 
   _resetValuesAndFetch (props) {
@@ -431,7 +486,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this.setState({
       pageOffset: 0,
       offset: 0
-    }, () => this._fetchProductByCategory(props))
+    }, () => this._fetchProductByTagCategory(props))
   }
 
   _handleOver18 () {
@@ -478,7 +533,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     getProductCategories()
     getProductsViewed()
 
-    this._fetchProductByCategory(this.props)
+    this._fetchProductByTagCategory(this.props)
     this._handleCheckOver18()
   }
 
@@ -559,7 +614,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 }
 
 const mapStateToProps = createStructuredSelector({
-  products: selectProductsByCategory(),
+  allCategoryProducts: selectProductsByCategory(),
+  productsByTags: selectProductsByCategory(),
   productsByCategory: selectProductsByCategoryItems(),
   productsViewed: selectProductsViewed(),
   productsFeatured: selectProductsByCategoryFeatured(),
@@ -579,6 +635,7 @@ function mapDispatchToProps (dispatch) {
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProductCategories: payload => dispatch(getProductCategoriesAction(payload)),
     getProductsByCategory: payload => dispatch(getProductsByCategoryAction(payload)),
+    getProductsByTags: payload => dispatch(getProductsByTagsAction(payload)),
     getProductsViewed: () => dispatch(getProductsViewedAction()),
     resetProductsByCategory: () => dispatch(resetProductsByCategoryAction()),
     submitOver18: payload => dispatch(submitOver18Action(payload)),

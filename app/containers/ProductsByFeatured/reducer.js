@@ -7,6 +7,8 @@
 import { fromJS } from 'immutable'
 import { isEmpty } from 'lodash'
 import {
+  GET_TAGS_PRODUCTS,
+
   GET_PRODUCTS_CATEGORY,
   SET_PRODUCTS_CATEGORY,
   RESET_PRODUCTS_CATEGORY,
@@ -32,6 +34,9 @@ const initialState = fromJS({
 
 function productsByCategoryReducer (state = initialState, action) {
   switch (action.type) {
+    case GET_TAGS_PRODUCTS:
+      return state.set('loading', true)
+
     case GET_PRODUCTS_CATEGORY:
       return state.set('loading', true)
 

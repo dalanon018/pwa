@@ -43,6 +43,11 @@ const selectLazyload = () => createSelector(
   subState => subState.get('lazyload')
 )
 
+const selectFeaturedProducts = () => createSelector(
+  selectProductsByCategoryDomain(),
+  subState => subState.get('productsFeatured')
+)
+
 const selectTotalCount = () => createSelector(
   selectProductsByCategoryDomain(),
   subState => subState.get('totalCount')
@@ -61,6 +66,7 @@ export {
   selectProductsViewed,
   selectLoading,
   selectLazyload,
+  selectFeaturedProducts,
   selectTotalCount,
   selectOver18
 }

@@ -8,6 +8,8 @@ import { isEmpty } from 'lodash'
 import {
   compose,
   map,
+  filter,
+  prop,
   propOr
 } from 'ramda'
 
@@ -19,6 +21,7 @@ import { getItem, setItem } from 'utils/localStorage'
 
 import {
   GET_PRODUCTS_CATEGORY,
+  GET_TAGS_PRODUCTS,
   GET_PRODUCTS_VIEWED,
 
   GET_OVER18,
@@ -74,6 +77,11 @@ function * getLastViewedItems () {
   return products || []
 }
 
+function * getProductsCategory (response) {
+  const count = propOr(0, 'totalCount')
+  return count(response)
+}
+
 export function * getProductByCategory (args) {
   const { payload: { offset, limit, id } } = args
   let products = []
@@ -89,10 +97,36 @@ export function * getProductByCategory (args) {
       map(transformEachEntity),
       propOr([], 'productList')
     )
-    const countEntity = propOr(0, 'totalCount')
 
     products = yield transform(req)
-    count = countEntity(req)
+    count = yield getProductsCategory(req)
+  } else {
+    yield put(setNetworkErrorAction(500))
+  }
+
+  yield put(setProductsByCategoryAction(products))
+  yield put(setProductsCountsAction(count))
+}
+
+export function * getProductByTags (args) {
+  const { payload: { offset, limit } } = args
+  let products = []
+  let count = 0
+
+  const token = yield getAccessToken()
+  const req = yield call(getRequestData, `${API_BASE_URL}/productList/featured?offset=${offset}&limit=${limit}`, {
+    method: 'GET',
+    token: token.access_token
+  })
+
+  if (!isEmpty(req)) {
+    const transform = compose(
+      map(transformEachEntity),
+      filter(prop('cliqqCodes')),
+      propOr([], 'productList')
+    )
+    products = yield transform(req)
+    count = yield getProductsCategory(req)
   } else {
     yield put(setNetworkErrorAction(500))
   }
@@ -125,6 +159,10 @@ export function * getProductByCategorySaga () {
   yield * takeEvery(GET_PRODUCTS_CATEGORY, getProductByCategory)
 }
 
+export function * getProductByTagsSaga () {
+  yield * takeEvery(GET_TAGS_PRODUCTS, getProductByTags)
+}
+
 export function * getProductsViewedSaga () {
   yield * takeLatest(GET_PRODUCTS_VIEWED, getProductsViewed)
 }
@@ -144,6 +182,8 @@ export function * productsCategorySagas () {
     fork(setOver18Saga),
 
     fork(getProductByCategorySaga),
+
+    fork(getProductByTagsSaga),
 
     fork(getProductsViewedSaga)
   ]
