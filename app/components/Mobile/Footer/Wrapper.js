@@ -6,6 +6,7 @@ const Wrapper = styled.footer`
   text-align: center;
 
   .custom-header {
+    font-size: 20px;
     margin-bottom: 10px;
   }
 
@@ -18,7 +19,8 @@ const HelperLinks = styled.div`
   span {
     cursor: pointer;
     font-family: 'Roboto';
-    font-size: 11px;
+    font-size: 14px;
+    color: #2F2F2F;
   }
 
   .item {
@@ -42,39 +44,37 @@ const CopyRight = styled.p`
 `
 
 const SocialIcons = styled.div`
-  img {
-    height: inherit !important;
-    width: 32px !important;
-    margin: 0 7px;
-  }
+  // img {
+  //   height: inherit !important;
+  //   width: 32px !important;
+  //   margin: 0 7px;
+  // }
 `
 
-const AppInfo = styled.div`
-  align-items: center;
-  text-align: left;
-  display: flex;
-
-  section {
-    line-height: 1px;
-    span {
-      font-size: 8px !important;
-
-      &:last-child {
-        font-size: 7px !important;
-      }
-    }
+const IconItem = styled.div`
+  &.fb-icon {
+    width: 46px;
+    height: 44px;
+    background: url(${props => props.icon})no-repeat 2px 0 / cover;
   }
 
-  img {
-    width: 20px;
-    margin-right: 3px;
+  &.twitter-icon {
+    width: 46px;
+    height: 44px;
+    background: url(${props => props.icon})no-repeat -69px 0 / cover;
+  }
+
+  &.mail-icon {
+    width: 46px;
+    height: 44px;
+    background: url(${props => props.icon})no-repeat -139px 0 / cover;
   }
 `
 
 export {
-  AppInfo,
   CopyRight,
   HelperLinks,
   SocialIcons,
+  IconItem,
   Wrapper
 }

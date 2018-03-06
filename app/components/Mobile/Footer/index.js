@@ -4,22 +4,18 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { push } from 'react-router-redux'
-import { Grid, Image, List, Label } from 'semantic-ui-react'
+import { Grid, List } from 'semantic-ui-react'
 
 import A from 'components/Shared/A'
 import H2 from 'components/Shared/H2'
 
-import FacebookIcon from 'images/icons/facebook-icon.svg'
-import TwitterIcon from 'images/icons/twitter-icon.svg'
-import EmailIcon from 'images/icons/email-icon.svg'
-import DeliveryIcon from 'images/icons/delivery-icon.svg'
-import ReturnIcon from 'images/icons/return-icon.svg'
+import SocialIconsSprite from 'images/icons/social-icons.svg'
 
 import {
-  AppInfo,
   CopyRight,
   HelperLinks,
   SocialIcons,
+  IconItem,
   Wrapper } from './Wrapper'
 import messages from './messages'
 
@@ -45,66 +41,43 @@ export class Footer extends React.PureComponent {
 
   render () {
     return (
-      <Wrapper className='border_top__one--light-grey'>
+      <Wrapper className='border_top__three--grey'>
         <Grid>
           <Grid.Row centered>
-            <H2 className='custom-header color__secondary' >
+            <H2 className='custom-header color__dark' >
               <FormattedMessage {...messages.stayConnected} />
             </H2>
             <SocialIcons>
               <List horizontal>
                 <List.Item>
                   <A rel='noopener' href='https://www.facebook.com/711philippines' target='_blank'>
-                    <Image alt='CLiQQ' src={FacebookIcon} />
+                    <IconItem className='fb-icon' icon={SocialIconsSprite} />
                   </A>
                 </List.Item>
                 <List.Item>
                   <A rel='noopener' href='https://twitter.com/711philippines?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor' target='_blank'>
-                    <Image alt='CLiQQ' src={TwitterIcon} />
+                    <IconItem className='twitter-icon' icon={SocialIconsSprite} />
                   </A>
                 </List.Item>
                 <List.Item>
                   <A href='mailto:cliqqsupport@7-eleven.com.ph'>
-                    <Image alt='CLiQQ' src={EmailIcon} />
+                    <IconItem className='mail-icon' icon={SocialIconsSprite} />
                   </A>
                 </List.Item>
               </List>
             </SocialIcons>
           </Grid.Row>
 
-          <Grid.Row columns='equal' verticalAlign='middle' centered divided>
-            <Grid.Column>
-              <AppInfo className='float__right'>
-                <Image alt='CLiQQ' src={DeliveryIcon} />
-                <section>
-                  <Label as='span' size='tiny' className='color__secondary'> <FormattedMessage {...messages.storeDelivery} /></Label>
-                  <br />
-                  <Label as='span' size='tiny' basic color='grey'><FormattedMessage {...messages.freeShippingDelivery} /></Label>
-                </section>
-              </AppInfo>
-            </Grid.Column>
-            <Grid.Column>
-              <AppInfo>
-                <Image alt='CLiQQ' src={ReturnIcon} />
-                <section>
-                  <Label as='span' size='tiny' className='color__secondary'><FormattedMessage {...messages.returnPolicy} /></Label>
-                  <br />
-                  <Label as='span' size='tiny' basic color='grey'><FormattedMessage {...messages.changeMind} /></Label>
-                </section>
-              </AppInfo>
-            </Grid.Column>
-          </Grid.Row>
-
           <Grid.Row centered>
             <HelperLinks>
               <List horizontal divided>
-                <List.Item className='color__grey' onClick={this._handleFaqRoute}>
+                <List.Item onClick={this._handleFaqRoute}>
                   <FormattedMessage {...messages.faq} />
                 </List.Item>
-                <List.Item className='color__grey' onClick={this._handleTermsConditionsRoute}>
+                <List.Item onClick={this._handleTermsConditionsRoute}>
                   <FormattedMessage {...messages.termsConditions} />
                 </List.Item>
-                <List.Item className='color__grey' onClick={this._handlePrivacyPolicy}>
+                <List.Item onClick={this._handlePrivacyPolicy}>
                   <FormattedMessage {...messages.privacyPolicy} />
                 </List.Item>
               </List>
