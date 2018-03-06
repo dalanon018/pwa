@@ -6,6 +6,7 @@ import transformStore from './store'
 import transformModePayment from './modePayment'
 import transformSubmitOrderPayload from './submitOrderPayload'
 import transformPromo from './promo'
+import transformWallet from './wallet'
 
 export {
   transformCategory,
@@ -15,5 +16,6 @@ export {
   transformStore,
   transformModePayment,
   transformSubmitOrderPayload,
-  transformPromo
+  transformPromo,
+  transformWallet
 }
