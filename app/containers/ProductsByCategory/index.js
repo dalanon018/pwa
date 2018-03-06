@@ -7,6 +7,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import queryString from 'query-string'
 
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
@@ -21,7 +22,6 @@ import {
   cond,
   equals,
   ifElse,
-  lt,
   partial,
   path,
   subtract
@@ -174,7 +174,6 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     super()
 
     this._handlePageTitle = this._handlePageTitle.bind(this)
-    this._isCategoryExist = this._isCategoryExist.bind(this)
     this._fetchProductByCategory = this._fetchProductByCategory.bind(this)
     this._displayMoreProducts = this._displayMoreProducts.bind(this)
     this._resetValuesAndFetch = this._resetValuesAndFetch.bind(this)
@@ -189,19 +188,9 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this._handleCheckOver18 = this._handleCheckOver18.bind(this)
   }
 
-  _isCategoryExist () {
-    const { categories, match: { params: { id } } } = this.props
-    if (categories.size) {
-      const category = categories.find((cat) => cat.get('id') === id)
-      return category ? `All ${category.get('name')}` : ''
-    }
-    return ''
-  }
-
   _handlePageTitle (props = this.props) {
-    const { lazyload, products } = props
-    // we will not show this if products size is 0 and lazy loading since we know we are only displaying the featured items
-    return (lazyload && products.size === 0) ? null : this._isCategoryExist()
+    const { name } = queryString.parse(props.location.search)
+    return `All ${name || 'Category'}`
   }
 
   _displayMoreProducts () {
@@ -463,14 +452,12 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     return adult
   }
 
-  componentWillMount () {
-    this.props.setPageTitle('..')
-    this.props.setShowSearchIcon(true)
-    this.props.setShowActivityIcon(true)
-  }
-
   componentDidMount () {
-    const { getProductsViewed, getProductCategories, setRouteName } = this.props
+    const { getProductsViewed, getProductCategories, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon } = this.props
+
+    setPageTitle(this._handlePageTitle())
+    setShowSearchIcon(true)
+    setShowActivityIcon(true)
 
     setRouteName(PRODUCTSCATEGORY_NAME)
     getProductCategories()
@@ -498,17 +485,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
       this._resetValuesAndFetch
     )
 
-    const updatePageTitle = ifElse(
-      compose(lt(0), path(['categories', 'size'])),
-      compose(
-        this.props.setPageTitle,
-        this._handlePageTitle
-      ),
-      noop
-    )
-
     updateFetchProduct(nextProps)
-    updatePageTitle(nextProps)
   }
 
   render () {
