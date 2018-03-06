@@ -41,11 +41,15 @@ import LoadingIndicator from 'components/Shared/LoadingIndicator'
 import { InfiniteLoading, InfiniteWrapper } from 'components/Shared/InfiniteLoading'
 import { userIsAuthenticated } from 'containers/App/auth'
 import {
+  getMobileNumbersAction,
   setPageTitleAction,
   setRouteNameAction,
   setShowSearchIconAction,
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
+import {
+  selectMobileNumbers
+} from 'containers/Buckets/selectors'
 
 import { WALLET_NAME } from 'containers/Buckets/constants'
 
@@ -94,6 +98,7 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
   static propTypes = {
     changeRoute: PropTypes.func.isRequired,
     getWallet: PropTypes.func.isRequired,
+    getMobileNumbers: PropTypes.func.isRequired,
     resetWallet: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
@@ -101,6 +106,7 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
     setShowActivityIcon: PropTypes.func.isRequired,
     transactionsLoading: PropTypes.bool.isRequired,
     lazyload: PropTypes.bool.isRequired,
+    mobileNumbers: PropTypes.object.isRequired,
     transactions: PropTypes.object.isRequired,
     transactionsCount: PropTypes.number.isRequired,
     match: PropTypes.object.isRequired
@@ -171,11 +177,13 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
    * @param {*w} props
    */
   _fetchWalletTransactions = (props) => {
-    const { getWallet, match: { params: { id } } } = props
+    const { getWallet, mobileNumbers } = props
     const { offset, limit } = this.state
-
-    // since this data is change and we know exactly
-    getWallet({ offset, limit, id })
+    // only request if mobile number is available
+    if (mobileNumbers.size > 0) {
+      // since this data is change and we know exactly
+      getWallet({ offset, limit, mobileNumbers: mobileNumbers.last() })
+    }
   }
 
   _displayHeaderTransactions () {
@@ -246,6 +254,7 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
     // initial data
     this._fetchWalletTransactions(this.props)
     this.props.setRouteName(WALLET_NAME)
+    this.props.getMobileNumbers()
   }
 
   componentWillUnmount () {
@@ -300,6 +309,7 @@ const mapStateToProps = createStructuredSelector({
   transactions: selectTransactions(),
   transactionsCount: selectTransactionsCount(),
   transactionsLoading: selectTransactionsLoading(),
+  mobileNumbers: selectMobileNumbers(),
   lazyload: selectLazyload()
 })
 
@@ -310,6 +320,7 @@ function mapDispatchToProps (dispatch) {
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getWallet: payload => dispatch(getWalletAction(payload)),
+    getMobileNumbers: () => (dispatch(getMobileNumbersAction())),
     resetWallet: () => dispatch(resetWalletTransactionsAction()),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
