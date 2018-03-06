@@ -10,6 +10,10 @@ export default defineMessages({
     id: 'app.containers.ProductsByCategory.viewed',
     defaultMessage: 'Recently Viewed'
   },
+  headerTitle: {
+    id: 'app.containers.ProductsByCategory.headerTitle',
+    defaultMessage: ' Featured Items'
+  },
   items: {
     id: 'app.containers.ProductsByCategory.items',
     defaultMessage: ' Items'

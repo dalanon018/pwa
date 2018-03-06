@@ -1,72 +1,48 @@
 import { createSelector } from 'reselect'
 
 /**
- * Direct selector to the productsByCategory state domain
+ * Direct selector to the ProductsByFeatured state domain
  */
-const selectProductsByCategoryDomain = () => (state) => state.get('productsByCategory')
+const selectProductsByFeaturedDomain = () => (state) => state.get('productsByFeatured')
 
 /**
  * Other specific selectors
  */
 
 /**
- * Default selector used by ProductsByCategory
+ * Default selector used by ProductsByFeatured
  */
 
-const selectProductsByCategory = () => createSelector(
-  selectProductsByCategoryDomain(),
-  (substate) => substate.get('productsByCategory')
-)
-
-const selectProductsByCategoryItems = () => createSelector(
-  selectProductsByCategory(),
-  (substate) => substate.filter((sub) => !sub.get('isFeatured'))
-)
-
-const selectProductsByCategoryFeatured = () => createSelector(
-  selectProductsByCategory(),
-  (substate) => substate.filter((sub) => sub.get('isFeatured'))
+const selectProducts = () => createSelector(
+  selectProductsByFeaturedDomain(),
+  (substate) => substate.get('products')
 )
 
 const selectProductsViewed = () => createSelector(
-  selectProductsByCategoryDomain(),
+  selectProductsByFeaturedDomain(),
   (substate) => substate.get('productsViewed')
 )
 
 const selectLoading = () => createSelector(
-  selectProductsByCategoryDomain(),
+  selectProductsByFeaturedDomain(),
   subState => subState.get('loading')
 )
 
 const selectLazyload = () => createSelector(
-  selectProductsByCategoryDomain(),
+  selectProductsByFeaturedDomain(),
   subState => subState.get('lazyload')
 )
 
-const selectFeaturedProducts = () => createSelector(
-  selectProductsByCategoryDomain(),
-  subState => subState.get('productsFeatured')
-)
-
 const selectTotalCount = () => createSelector(
-  selectProductsByCategoryDomain(),
+  selectProductsByFeaturedDomain(),
   subState => subState.get('totalCount')
 )
 
-const selectOver18 = () => createSelector(
-  selectProductsByCategoryDomain(),
-  subState => subState.get('isOver18')
-)
-
 export {
-  selectProductsByCategoryDomain,
-  selectProductsByCategory,
-  selectProductsByCategoryItems,
-  selectProductsByCategoryFeatured,
+  selectProductsByFeaturedDomain,
+  selectProducts,
   selectProductsViewed,
   selectLoading,
   selectLazyload,
-  selectFeaturedProducts,
-  selectTotalCount,
-  selectOver18
+  selectTotalCount
 }

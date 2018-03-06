@@ -1,6 +1,6 @@
 /*
  *
- * ProductsByCategoryPage
+ * ProductsByFeatured
  *
  */
 
@@ -10,33 +10,23 @@ import styled from 'styled-components'
 
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
 import { noop } from 'lodash'
 import {
-  F,
-  T,
-  __,
   allPass,
   compose,
   cond,
-  contains,
-  curry,
   equals,
-  identity,
   ifElse,
-  lt,
   partial,
-  path,
-  subtract
+  path
 } from 'ramda'
 import { Container } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
-
-import { Uppercase } from 'utils/string'
 
 import MobileProductView from 'components/Mobile/ProductView'
 import DesktopProductView from 'components/Desktop/ProductView'
@@ -48,21 +38,16 @@ import H4 from 'components/Shared/H4'
 import EmptyProducts from 'components/Shared/EmptyProductsBlock'
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
-import Modal from 'components/Shared/PromptModal'
 
 import { InfiniteLoading, InfiniteWrapper } from 'components/Shared/InfiniteLoading'
 
 import {
-  getProductCategoriesAction,
   setPageTitleAction,
   setRouteNameAction,
   setShowSearchIconAction,
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
-import {
-  selectProductCategories,
-  selectLoader
-} from 'containers/Buckets/selectors'
+
 import { PRODUCTS_FEATURED_NAME } from 'containers/Buckets/constants'
 
 import messages from './messages'
@@ -70,23 +55,17 @@ import reducer from './reducer'
 import saga from './saga'
 
 import {
-  getProductsByCategoryAction,
-  getProductsByTagsAction,
+  getProductsByFeaturedAction,
   getProductsViewedAction,
-  resetProductsByCategoryAction,
-  getOver18Action,
-  submitOver18Action
+  resetProductsByFeaturedAction
 } from './actions'
 
 import {
   selectLazyload,
   selectLoading,
-  selectProductsByCategory,
-  selectProductsByCategoryItems,
-  selectProductsByCategoryFeatured,
+  selectProducts,
   selectProductsViewed,
-  selectTotalCount,
-  selectOver18
+  selectTotalCount
 } from './selectors'
 
 import {
@@ -145,81 +124,38 @@ const DesktopItemCount = styled.p`
   text-align: center;
 `
 
-const isTag = curry((tags, id) => contains(id, tags))
-
-export class ProductsByCategory extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export class ProductsByFeatured extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     changeRoute: PropTypes.func.isRequired,
-    getProductsByCategory: PropTypes.func.isRequired,
-    getProductCategories: PropTypes.func.isRequired,
+    getProducts: PropTypes.func.isRequired,
     getProductsViewed: PropTypes.func.isRequired,
-    resetProductsByCategory: PropTypes.func.isRequired,
+    resetProductsByFeatured: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
     totalCount: PropTypes.number.isRequired,
     loader: PropTypes.bool.isRequired,
     lazyload: PropTypes.bool.isRequired,
-    allCategoryProducts: PropTypes.object.isRequired,
-    productsByTags: PropTypes.object.isRequired,
-    productsByCategory: PropTypes.object.isRequired,
+    products: PropTypes.object.isRequired,
     productsViewed: PropTypes.object.isRequired,
-    productsFeatured: PropTypes.object.isRequired,
-    categories: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
-    setRouteName: PropTypes.func.isRequired,
-    submitOver18: PropTypes.func.isRequired,
-    getOver18: PropTypes.func.isRequired
+    intl: intlShape.isRequired
   }
 
   state = {
     pageOffset: 0,
     offset: 0,
-    togglePrompt: false,
     limit: LIMIT_ITEMS // we need this since we are including the feature items.
   }
 
-  _tags = ['featured', 'sale']
-
   constructor () {
     super()
-
-    this._handlePageTitle = this._handlePageTitle.bind(this)
-    this._isCategoryExist = this._isCategoryExist.bind(this)
-    this._fetchProductByTagCategory = this._fetchProductByTagCategory.bind(this)
+    this._fetchProductByFeatured = this._fetchProductByFeatured.bind(this)
     this._displayMoreProducts = this._displayMoreProducts.bind(this)
     this._resetValuesAndFetch = this._resetValuesAndFetch.bind(this)
-    this._handleFeaturedProductsPerCategory = this._handleFeaturedProductsPerCategory.bind(this)
-    this._displayFeaturesProduct = this._displayFeaturesProduct.bind(this)
-    this._displayHeaderFeaturesProduct = this._displayHeaderFeaturesProduct.bind(this)
+    this._displayProducts = this._displayProducts.bind(this)
     this._displayNumberProducts = this._displayNumberProducts.bind(this)
     this._displayRecentlyViewedHeader = this._displayRecentlyViewedHeader.bind(this)
     this._displayEmpty = this._displayEmpty.bind(this)
-    this._handleRestrictAge = this._handleRestrictAge.bind(this)
-    this._handleClosePrompt = this._handleClosePrompt.bind(this)
-    this._handleOver18 = this._handleOver18.bind(this)
-    this._handleCheckOver18 = this._handleCheckOver18.bind(this)
-  }
-
-  _isCategoryExist () {
-    const { categories, match: { params: { id } } } = this.props
-    if (categories.size) {
-      const category = categories.find((cat) => cat.get('id') === id)
-      return category ? `All ${category.get('name')}` : ''
-    }
-    return ''
-  }
-
-  _handlePageTitle () {
-    const { match: { params: { id } }, lazyload } = this.props
-    const IstagText = (tag) => `${Uppercase(tag)} Items`
-    const product = this._displayProductData()
-
-    const titleCondition = ifElse(isTag(this._tags), IstagText, this._isCategoryExist)
-    const titleComposition = compose(titleCondition)
-
-    // we will not show this if product size is 0 and lazy loading since we know we are only displaying the featured items
-    return (lazyload && product.size === 0) ? null : titleComposition(id)
   }
 
   _displayMoreProducts () {
@@ -229,28 +165,15 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this.setState({
       pageOffset: incrementOffset,
       offset: (incrementOffset * limit)
-    }, () => this._fetchProductByTagCategory(this.props))
+    }, () => this._fetchProductByFeatured(this.props))
   }
 
-  _displayHeaderFeaturesProduct () {
-    const { productsFeatured } = this.props
-    if (this._handleFeaturedProductsPerCategory() && productsFeatured.size) {
-      return (
-        <H3>
-          <FormattedMessage {...messages.feature} />
-        </H3>
-      )
-    }
-
-    return null
-  }
-
-  _displayFeaturesProduct () {
-    const { productsFeatured, changeRoute, loader, lazyload, windowWidth, totalCount } = this.props
-    if (this._handleFeaturedProductsPerCategory() && productsFeatured.size) {
+  _displayProducts () {
+    const { products, changeRoute, loader, lazyload, windowWidth, totalCount } = this.props
+    if (products.size) {
       return (
         <InfiniteLoading
-          results={productsFeatured}
+          results={products}
           hasMoreData={lazyload}
           loadMoreData={this._displayMoreProducts}
           isLoading={loader}
@@ -259,10 +182,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
           {(props) => (
             <AccessView
               mobileView={
-                <MobileProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
+                <MobileProductView changeRoute={changeRoute} loader={loader} products={products} windowWidth={windowWidth} {...props} />
               }
               desktopView={
-                <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
+                <DesktopProductView changeRoute={changeRoute} loader={loader} products={products} windowWidth={windowWidth} {...props} />
               }
             />
           )}
@@ -274,22 +197,16 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _displayNumberProducts () {
-    const { match: { params: { id } }, productsFeatured, totalCount, windowWidth } = this.props
-    const displayTotalCount = ifElse(partial(isTag(this._tags), [id]),
-      identity,
-      subtract(__, productsFeatured.size)
-    )
-    const product = this._displayProductData()
-
-    if (product.size) {
+    const { totalCount, windowWidth } = this.props
+    if (totalCount) {
       return (
         windowWidth >= 1024
         ? <DesktopItemCount className='color__grey'>
-          { displayTotalCount(totalCount) }
+          { totalCount }
           <FormattedMessage {...messages.items} />
         </DesktopItemCount>
         : <H4 className='color__grey'>
-          { displayTotalCount(totalCount) }
+          { totalCount }
           <FormattedMessage {...messages.items} />
         </H4>
       )
@@ -320,10 +237,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
       return (
         <AccessView
           mobileView={
-            <MobileProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
+            <MobileProductView changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
           }
           desktopView={
-            <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
+            <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsViewed} windowWidth={windowWidth} />
           }
         />
       )
@@ -336,32 +253,31 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
    * this will simply display items that we are loading
    */
   _displayEmptyProductViewLoading = () => {
-    const { changeRoute, windowWidth } = this.props
+    const { changeRoute, windowWidth, products } = this.props
 
     return (
       <AccessView
         mobileView={
-          <MobileProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader products={this._displayAllProductData()} windowWidth={windowWidth} />
+          <MobileProductView changeRoute={changeRoute} loader products={products} windowWidth={windowWidth} />
         }
         desktopView={
-          <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader products={this._displayAllProductData()} windowWidth={windowWidth} />
+          <DesktopProductView changeRoute={changeRoute} loader products={products} windowWidth={windowWidth} />
         }
       />
     )
   }
 
   _displayEmptyLoadingIndicator = () => {
-    const { loader, lazyload } = this.props
-    const product = this._displayAllProductData()
+    const { loader, lazyload, products } = this.props
     const display = cond([
       [allPass([
         equals(false),
-        partial(equals(0), [product.size]),
+        partial(equals(0), [products.size]),
         partial(equals(false), [lazyload])
       ]), this._displayEmpty],
       [allPass([
         equals(true),
-        partial(equals(0), [product.size])
+        partial(equals(0), [products.size])
       ]), this._displayEmptyProductViewLoading],
       [allPass([
         equals(true),
@@ -388,157 +304,42 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   /**
-   * What does this solve?
-   * Well if your page is for featured item
-   * technically you have to show the featured items along with the ordinary items.
-   *
-   * else where if you're on a category then you have certain distinction
-   * weather the item is featured or ordinary
-   */
-  _displayProductData = () => {
-    const { match: { params: { id } }, productsByTags, productsByCategory } = this.props
-    const shouldDiplayTagItems = ifElse(
-      isTag(this._tags),
-      () => productsByTags,
-      () => productsByCategory
-    )
-
-    return shouldDiplayTagItems(id)
-  }
-
-  /**
-   * Since we have different selector due to featured items and regular
-   * now this solves is to return ALL data regardless it is a featured or not.
-   */
-  _displayAllProductData = () => {
-    const { match: { params: { id } }, productsByTags, allCategoryProducts } = this.props
-    const shouldDiplayTagItems = ifElse(
-      isTag(this._tags),
-      () => productsByTags,
-      () => allCategoryProducts
-    )
-
-    return shouldDiplayTagItems(id)
-  }
-
-  _displayRegularItems = () => {
-    const { changeRoute, loader, lazyload, windowWidth, totalCount } = this.props
-    const products = this._displayProductData()
-
-    if (products.size !== 0) {
-      return (
-        <InfiniteLoading
-          results={products}
-          hasMoreData={lazyload}
-          loadMoreData={this._displayMoreProducts}
-          isLoading={loader}
-          rowCount={totalCount}
-        >
-          {(props) => (
-            <AccessView
-              mobileView={
-                <MobileProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={products} windowWidth={windowWidth} {...props} />
-              }
-              desktopView={
-                <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={products} windowWidth={windowWidth} {...props} />
-              }
-            />
-          )}
-        </InfiniteLoading>
-      )
-    }
-
-    return null
-  }
-
-  _handleFeaturedProductsPerCategory () {
-    const { match: { params: { id } } } = this.props
-    const shouldNotDisplay = (id) => (isTag(this._tags)(id))
-
-    const showFeaturedItem = ifElse(shouldNotDisplay, F, T)
-
-    return showFeaturedItem(id)
-  }
-
-  /**
    * Here we will request for our data base on change of route.
    * @param {*w} props
    */
-  _fetchProductByTagCategory (props) {
-    const { getProductsByTags, getProductsByCategory, match: { params: { id } } } = props
+  _fetchProductByFeatured (props) {
+    const { getProducts, match: { params: { id } } } = props
     const { offset, limit } = this.state
-    const requestData = curry((fn, id) => fn({ offset, limit, id }))
-    const executeFetchData = ifElse(
-      isTag(this._tags),
-      requestData(getProductsByTags),
-      requestData(getProductsByCategory)
-    )
 
-    // since this data is change and we know exactly
-    executeFetchData(id)
+    getProducts({ offset, limit, id })
   }
 
   _resetValuesAndFetch (props) {
-    const { resetProductsByCategory } = props
+    const { resetProductsByFeatured } = props
 
-    resetProductsByCategory()
+    resetProductsByFeatured()
 
     this.setState({
       pageOffset: 0,
       offset: 0
-    }, () => this._fetchProductByTagCategory(props))
-  }
-
-  _handleOver18 () {
-    this.props.submitOver18(true)
-    this._handleClosePrompt()
-  }
-
-  _handleCheckOver18 () {
-    this.props.getOver18()
-  }
-
-  _handleClosePrompt () {
-    this.setState({ togglePrompt: !this.state.togglePrompt })
-  }
-
-  _handleRestrictAge () {
-    const { match: { params: { id } } } = this.props
-    // const mockIds = ['01', '02', '10']
-    // const mockIds = ['04', '900', '15']
-    const mockIds = ['0123456789']
-    let adult = false
-
-    mockIds.forEach(i => {
-      switch (id) {
-        case i:
-          adult = true
-          break
-      }
-    })
-
-    return adult
-  }
-
-  componentWillMount () {
-    this.props.setPageTitle('..')
-    this.props.setShowSearchIcon(true)
-    this.props.setShowActivityIcon(true)
+    }, () => this._fetchProductByFeatured(props))
   }
 
   componentDidMount () {
-    const { getProductsViewed, getProductCategories, setRouteName } = this.props
+    const { getProductsViewed, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon, intl } = this.props
+
+    setPageTitle(intl.formatMessage(messages.headerTitle))
+    setShowSearchIcon(true)
+    setShowActivityIcon(true)
 
     setRouteName(PRODUCTS_FEATURED_NAME)
-    getProductCategories()
     getProductsViewed()
 
-    this._fetchProductByTagCategory(this.props)
-    this._handleCheckOver18()
+    this._fetchProductByFeatured(this.props)
   }
 
   componentWillUnmount () {
-    this.props.resetProductsByCategory()
+    this.props.resetProductsByFeatured()
   }
 
   componentWillReceiveProps (nextProps) {
@@ -555,23 +356,11 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
       this._resetValuesAndFetch
     )
 
-    const updatePageTitle = ifElse(
-      compose(lt(0), path(['categories', 'size'])),
-      compose(
-        this.props.setPageTitle,
-        this._handlePageTitle
-      ),
-      noop
-    )
-
     updateFetchProduct(nextProps)
-    updatePageTitle(nextProps)
   }
 
   render () {
-    const isCategory = window.location.pathname.split('/')[1] === 'products-category'
-    const { loader, lazyload, over18, windowWidth } = this.props
-    const { togglePrompt } = this.state
+    const { loader, lazyload, windowWidth } = this.props
 
     return (
       <div>
@@ -580,18 +369,19 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
             hasMoreData={lazyload}
             isLoading={loader}
           >
-            { this._displayHeaderFeaturesProduct() }
-            { this._displayFeaturesProduct() }
-
             {
               windowWidth >= 1024
-              ? <DesktopTitle> {this._handlePageTitle()} </DesktopTitle>
-              : <H3 className='margin__none'> {this._handlePageTitle()} </H3>
+              ? <DesktopTitle>
+                <FormattedMessage {...messages.headerTitle} />
+              </DesktopTitle>
+              : <H3 className='margin__none'>
+                <FormattedMessage {...messages.headerTitle} />
+              </H3>
             }
 
             { this._displayNumberProducts() }
             { this._displayEmptyLoadingIndicator() }
-            { this._displayRegularItems() }
+            { this._displayProducts() }
 
             { this._displayRecentlyViewedHeader() }
             { this._displayRecentlyViewedItems() }
@@ -601,30 +391,17 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
           mobileView={<MobileFooter />}
           desktopView={null}
         />
-        <Modal
-          open={this._handleRestrictAge() && !togglePrompt && !over18}
-          name='warning'
-          close={this._handleClosePrompt}
-          isCategory={isCategory}
-          letIn={this._handleOver18}
-        />
       </div>
     )
   }
 }
 
 const mapStateToProps = createStructuredSelector({
-  allCategoryProducts: selectProductsByCategory(),
-  productsByTags: selectProductsByCategory(),
-  productsByCategory: selectProductsByCategoryItems(),
+  products: selectProducts(),
   productsViewed: selectProductsViewed(),
-  productsFeatured: selectProductsByCategoryFeatured(),
-  categories: selectProductCategories(),
   loader: selectLoading(),
   lazyload: selectLazyload(),
-  totalCount: selectTotalCount(),
-  categoryLoader: selectLoader(),
-  over18: selectOver18()
+  totalCount: selectTotalCount()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -633,24 +410,20 @@ function mapDispatchToProps (dispatch) {
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
-    getProductCategories: payload => dispatch(getProductCategoriesAction(payload)),
-    getProductsByCategory: payload => dispatch(getProductsByCategoryAction(payload)),
-    getProductsByTags: payload => dispatch(getProductsByTagsAction(payload)),
+    getProducts: payload => dispatch(getProductsByFeaturedAction(payload)),
     getProductsViewed: () => dispatch(getProductsViewedAction()),
-    resetProductsByCategory: () => dispatch(resetProductsByCategoryAction()),
-    submitOver18: payload => dispatch(submitOver18Action(payload)),
-    getOver18: () => dispatch(getOver18Action()),
+    resetProductsByFeatured: () => dispatch(resetProductsByFeaturedAction()),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
   }
 }
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps)
-const withReducer = injectReducer({ key: 'productsByCategory', reducer })
-const withSaga = injectSaga({ key: 'productsByCategory', saga })
+const withReducer = injectReducer({ key: 'productsByFeatured', reducer })
+const withSaga = injectSaga({ key: 'productsByFeatured', saga })
 
 export default ReduxCompose(
   withReducer,
   withSaga,
   withConnect
-)(WindowWidth(ProductsByCategory))
+)(WindowWidth(injectIntl(ProductsByFeatured)))

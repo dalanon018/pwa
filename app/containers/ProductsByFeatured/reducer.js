@@ -1,30 +1,25 @@
 /*
  *
- * ProductsByCategory reducer
+ * ProductsByFeatured reducer
  *
  */
 
 import { fromJS } from 'immutable'
 import { isEmpty } from 'lodash'
 import {
-  GET_TAGS_PRODUCTS,
-
-  GET_PRODUCTS_CATEGORY,
-  SET_PRODUCTS_CATEGORY,
-  RESET_PRODUCTS_CATEGORY,
+  GET_PRODUCTS_FEATURED,
+  SET_PRODUCTS_FEATURED,
+  RESET_PRODUCTS_FEATURED,
 
   SET_PRODUCTS_COUNT,
 
   SET_PRODUCTS_VIEWED,
 
-  LIMIT_ITEMS,
-
-  SET_OVER18,
-  SUBMIT_OVER18
+  LIMIT_ITEMS
 } from './constants'
 
 const initialState = fromJS({
-  productsByCategory: [],
+  products: [],
   productsViewed: [],
   totalCount: 0,
   loading: true,
@@ -32,25 +27,22 @@ const initialState = fromJS({
   isOver18: true
 })
 
-function productsByCategoryReducer (state = initialState, action) {
+function productsByFeaturedReducer (state = initialState, action) {
   switch (action.type) {
-    case GET_TAGS_PRODUCTS:
+    case GET_PRODUCTS_FEATURED:
       return state.set('loading', true)
 
-    case GET_PRODUCTS_CATEGORY:
-      return state.set('loading', true)
-
-    case SET_PRODUCTS_CATEGORY: {
-      const concatState = state.get('productsByCategory').concat(fromJS(action.payload))
+    case SET_PRODUCTS_FEATURED: {
+      const concatState = state.get('products').concat(fromJS(action.payload))
       return state
-        .set('productsByCategory', concatState)
+        .set('products', concatState)
         .set('loading', false)
          // we will toggle to true lazyload if only items are not empty and payload is greater that the limit
          .set('lazyload', (!isEmpty(action.payload) && LIMIT_ITEMS <= action.payload.length))
     }
-    case RESET_PRODUCTS_CATEGORY:
+    case RESET_PRODUCTS_FEATURED:
       return state
-        .set('productsByCategory', fromJS([]))
+        .set('products', fromJS([]))
         .set('totalCount', 0)
         .set('loading', false)
 
@@ -61,17 +53,9 @@ function productsByCategoryReducer (state = initialState, action) {
       return state
         .set('productsViewed', fromJS(action.payload))
 
-    case SET_OVER18:
-      return state
-        .set('isOver18', action.payload)
-
-    case SUBMIT_OVER18:
-      return state
-        .set('isOver18', action.payload)
-
     default:
       return state
   }
 }
 
-export default productsByCategoryReducer
+export default productsByFeaturedReducer
