@@ -1,45 +1,44 @@
 import { fromJS } from 'immutable'
-import productsByCategoryReducer from '../reducer'
+import productsByFeaturedReducer from '../reducer'
 
 import {
-  setProductsByCategoryAction,
+  setProductsByFeaturedAction,
   setProductsCountsAction
 } from '../actions'
 
-describe('productsByCategoryReducer', () => {
+describe('productsByFeaturedReducer', () => {
   let state
   beforeEach(() => {
     state = fromJS({
-      productsByCategory: [],
+      products: [],
       productsViewed: [],
       totalCount: 0,
       loading: true,
-      lazyload: false,
-      isOver18: true
+      lazyload: false
     })
   })
 
   it('returns the initial state', () => {
     const expectedResult = state
-    expect(productsByCategoryReducer(undefined, {})).toEqual(expectedResult)
+    expect(productsByFeaturedReducer(undefined, {})).toEqual(expectedResult)
   })
 
-  it('should update productsByCategory', () => {
+  it('should update products', () => {
     const payload = ['cat1', 'cat2']
-    const currentState = state.get('productsByCategory').toJS()
+    const currentState = state.get('products').toJS()
     const mergeState = currentState.concat(payload)
     const expectedResult = state
-                            .set('productsByCategory', fromJS(mergeState))
+                            .set('products', fromJS(mergeState))
                             .set('loading', false)
                             .set('lazyload', false)
 
-    expect(productsByCategoryReducer(state, setProductsByCategoryAction(payload))).toEqual(expectedResult)
+    expect(productsByFeaturedReducer(state, setProductsByFeaturedAction(payload))).toEqual(expectedResult)
   })
 
   it('should update totalCount', () => {
     const payload = 10
     const expectedResult = state
                             .set('totalCount', payload)
-    expect(productsByCategoryReducer(state, setProductsCountsAction(payload))).toEqual(expectedResult)
+    expect(productsByFeaturedReducer(state, setProductsCountsAction(payload))).toEqual(expectedResult)
   })
 })

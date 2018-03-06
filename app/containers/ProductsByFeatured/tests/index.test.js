@@ -2,47 +2,46 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { fromJS } from 'immutable'
 
-import { ProductsByCategory } from '../index'
+import { ProductsByFeatured } from '../index'
 
-describe('<ProductsByCategory />', () => {
+describe('<ProductsByFeatured />', () => {
   const minProps = {
     changeRoute: () => {},
     setRouteName: () => {},
-    getProductsByCategory: () => {},
-    getProductCategories: () => {},
+    getProducts: () => {},
     getProductsViewed: () => {},
-    resetProductsByCategory: () => {},
+    resetProductsByFeatured: () => {},
     setPageTitle: () => {},
     setShowSearchIcon: () => {},
     setShowActivityIcon: () => {},
-    submitOver18: () => {},
-    getOver18: () => {},
     totalCount: 0,
     loader: false,
     lazyload: false,
-    allCategoryProducts: fromJS([]),
-    productsByTags: fromJS([]),
-    productsByCategory: fromJS([]),
-    productsFeatured: fromJS([]),
+    products: fromJS([]),
     productsViewed: fromJS([]),
     categories: fromJS([]),
-    match: {
-      params: {
-        id: 1
-      }
+    intl: {
+      formatDate: () => {},
+      formatTime: () => {},
+      formatRelative: () => {},
+      formatNumber: () => {},
+      formatPlural: () => {},
+      formatMessage: () => {},
+      formatHTMLMessage: () => {},
+      now: () => {}
     }
   }
 
   it('should render a div', () => {
     const renderedComponent = shallow(
-      <ProductsByCategory {...minProps} />
+      <ProductsByFeatured {...minProps} />
     )
     expect(renderedComponent.find('div').length).toEqual(1)
   })
 
   it('should render not render ProductView if not Items yet', () => {
     const renderedComponent = shallow(
-      <ProductsByCategory {...minProps} />
+      <ProductsByFeatured {...minProps} />
     )
     expect(renderedComponent.find('ProductView').length).toEqual(0)
   })

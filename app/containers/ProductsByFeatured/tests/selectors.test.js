@@ -1,53 +1,23 @@
 import { fromJS } from 'immutable'
 import {
-  selectProductsByCategory,
-  selectProductsByCategoryItems,
-  selectProductsByCategoryFeatured,
+  selectProducts,
   selectProductsViewed,
   selectLazyload,
   selectTotalCount
 } from '../selectors'
 
-describe('makeSelectProductsByCategoryDomain', () => {
-  describe('selectProductsByCategory', () => {
-    const selector = selectProductsByCategory()
+describe('selectProductsByFeaturedDomain', () => {
+  describe('selectProducts', () => {
+    const selector = selectProducts()
 
-    it('should get products by categories', () => {
-      const productsByCategory = fromJS([1, 2, 3, 4])
+    it('should get products by features', () => {
+      const products = fromJS([1, 2, 3, 4])
       const mockedState = fromJS({
-        productsByCategory: {
-          productsByCategory
+        productsByFeatured: {
+          products
         }
       })
-      expect(selector(mockedState)).toEqual(productsByCategory)
-    })
-  })
-
-  describe('selectProductsByCategoryItems', () => {
-    const selector = selectProductsByCategoryItems()
-
-    it('should get products by categories items', () => {
-      const productsByCategory = fromJS([{ name: 1 }, { name: 2 }])
-      const mockedState = fromJS({
-        productsByCategory: {
-          productsByCategory
-        }
-      })
-      expect(selector(mockedState)).toEqual(productsByCategory)
-    })
-  })
-
-  describe('selectProductsByCategoryFeatured', () => {
-    const selector = selectProductsByCategoryFeatured()
-
-    it('should get products by categories featured', () => {
-      const productsByCategory = fromJS([{ isFeatured: true }])
-      const mockedState = fromJS({
-        productsByCategory: {
-          productsByCategory
-        }
-      })
-      expect(selector(mockedState)).toEqual(productsByCategory)
+      expect(selector(mockedState)).toEqual(products)
     })
   })
 
@@ -57,7 +27,7 @@ describe('makeSelectProductsByCategoryDomain', () => {
     it('should get products last viewed', () => {
       const productsViewed = fromJS([1, 2, 3, 4])
       const mockedState = fromJS({
-        productsByCategory: {
+        productsByFeatured: {
           productsViewed
         }
       })
@@ -71,7 +41,7 @@ describe('makeSelectProductsByCategoryDomain', () => {
     it('should get lazyload', () => {
       const lazyload = false
       const mockedState = fromJS({
-        productsByCategory: {
+        productsByFeatured: {
           lazyload
         }
       })
@@ -85,7 +55,7 @@ describe('makeSelectProductsByCategoryDomain', () => {
     it('should get totalCount of Products', () => {
       const totalCount = 10
       const mockedState = fromJS({
-        productsByCategory: {
+        productsByFeatured: {
           totalCount
         }
       })

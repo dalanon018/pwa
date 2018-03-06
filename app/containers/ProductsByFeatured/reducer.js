@@ -23,8 +23,7 @@ const initialState = fromJS({
   productsViewed: [],
   totalCount: 0,
   loading: true,
-  lazyload: false,
-  isOver18: true
+  lazyload: false
 })
 
 function productsByFeaturedReducer (state = initialState, action) {
