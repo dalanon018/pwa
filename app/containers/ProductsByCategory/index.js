@@ -66,6 +66,7 @@ import {
   getProductsByCategoryAction,
   getProductsViewedAction,
   resetProductsByCategoryAction,
+  getFilterCategoryAction,
   getOver18Action,
   submitOver18Action
 } from './actions'
@@ -78,7 +79,9 @@ import {
   selectProductsByCategoryFeatured,
   selectProductsViewed,
   selectTotalCount,
-  selectOver18
+  selectOver18,
+  selectFilterCategories,
+  selectFilterCategoriesLoading
 } from './selectors'
 
 import {
@@ -143,6 +146,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     getProductsByCategory: PropTypes.func.isRequired,
     getProductCategories: PropTypes.func.isRequired,
     getProductsViewed: PropTypes.func.isRequired,
+    getFilterCategory: PropTypes.func.isRequired,
     resetProductsByCategory: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
@@ -155,6 +159,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     productsViewed: PropTypes.object.isRequired,
     productsFeatured: PropTypes.object.isRequired,
     categories: PropTypes.object.isRequired,
+    filterCategories: PropTypes.object.isRequired,
+    filterCategoriesLoading: PropTypes.bool.isRequired,
     match: PropTypes.object.isRequired,
     setRouteName: PropTypes.func.isRequired,
     submitOver18: PropTypes.func.isRequired,
@@ -453,7 +459,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   componentDidMount () {
-    const { getProductsViewed, getProductCategories, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon } = this.props
+    const { match: { params }, getProductsViewed, getProductCategories, getFilterCategory, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon } = this.props
 
     setPageTitle(this._handlePageTitle())
     setShowSearchIcon(true)
@@ -462,6 +468,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     setRouteName(PRODUCTSCATEGORY_NAME)
     getProductCategories()
     getProductsViewed()
+
+    getFilterCategory({ id: params.id })
 
     this._fetchProductByCategory(this.props)
     this._handleCheckOver18()
@@ -473,10 +481,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
   componentWillReceiveProps (nextProps) {
     const { match: { params } } = this.props
-
+    const paramsId = path(['match', 'params', 'id'])
     const isParamsEqual = (id, props) => compose(
       equals(id),
-      path(['match', 'params', 'id'])
+      paramsId
     )(props)
 
     const updateFetchProduct = ifElse(
@@ -539,6 +547,8 @@ const mapStateToProps = createStructuredSelector({
   productsViewed: selectProductsViewed(),
   productsFeatured: selectProductsByCategoryFeatured(),
   categories: selectProductCategories(),
+  filterCategories: selectFilterCategories(),
+  filterCategoriesLoading: selectFilterCategoriesLoading(),
   loader: selectLoading(),
   lazyload: selectLazyload(),
   totalCount: selectTotalCount(),
@@ -556,6 +566,7 @@ function mapDispatchToProps (dispatch) {
     getProductsByCategory: payload => dispatch(getProductsByCategoryAction(payload)),
     getProductsViewed: () => dispatch(getProductsViewedAction()),
     resetProductsByCategory: () => dispatch(resetProductsByCategoryAction()),
+    getFilterCategory: (payload) => dispatch(getFilterCategoryAction(payload)),
     submitOver18: payload => dispatch(submitOver18Action(payload)),
     getOver18: () => dispatch(getOver18Action()),
     changeRoute: (url) => dispatch(push(url)),
