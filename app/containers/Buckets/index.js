@@ -75,6 +75,7 @@ import ReviewPage from 'containers/ProductReview/Loadable'
 import PurchaseListPage from 'containers/Purchases/Loadable'
 import ReceiptPage from 'containers/ReceiptPage/Loadable'
 import ProductsByCategoryPage from 'containers/ProductsByCategory/Loadable'
+import ProductsByFeaturedPage from 'containers/ProductsByFeatured/Loadable'
 import BrandsPage from 'containers/BrandPage/Loadable'
 import SearchPage from 'containers/SearchPage/Loadable'
 import PromoProductsPage from 'containers/PromoProductsPage/Loadable'
@@ -474,6 +475,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
             <Route exact path='/purchases' component={PurchaseListPage} />
             <Route exact path='/purchases/:trackingNumber' component={ReceiptPage} />
             <Route exact path='/products-category/:id' component={ProductsByCategoryPage} />
+            <Route exact path='/products-featured' component={ProductsByFeaturedPage} />
             <Route exact path='/brands/:id' component={BrandsPage} />
             <Route exact path='/search' component={SearchPage} />
             <Route exact path='/promos/:id' component={PromoProductsPage} />

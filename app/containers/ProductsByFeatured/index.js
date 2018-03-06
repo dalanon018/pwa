@@ -63,7 +63,7 @@ import {
   selectProductCategories,
   selectLoader
 } from 'containers/Buckets/selectors'
-import { PRODUCTSCATEGORY_NAME } from 'containers/Buckets/constants'
+import { PRODUCTS_FEATURED_NAME } from 'containers/Buckets/constants'
 
 import messages from './messages'
 import reducer from './reducer'
@@ -529,7 +529,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   componentDidMount () {
     const { getProductsViewed, getProductCategories, setRouteName } = this.props
 
-    setRouteName(PRODUCTSCATEGORY_NAME)
+    setRouteName(PRODUCTS_FEATURED_NAME)
     getProductCategories()
     getProductsViewed()
 
