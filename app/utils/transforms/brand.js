@@ -1,13 +1,9 @@
 import {
-  adjust,
   compose,
-  curry,
   find,
   filter,
-  fromPairs,
   map,
   omit,
-  toPairs,
   prop,
   propOr,
   propEq
@@ -17,7 +13,8 @@ import {
   ARRAY,
   STRING,
   BOOLEAN,
-  ValidateSchema
+  ValidateSchema,
+  mapKeys
 } from './helper'
 
 const Schema = {
@@ -38,10 +35,6 @@ const Schema = {
     type: BOOLEAN
   }
 }
-
-const mapKeys = curry((fn, obj) =>
-  fromPairs(map(adjust(fn, 0), toPairs(obj)))
-)
 
 const transformBrand = (data) => {
   const changeKey = (key) => Schema[key].name

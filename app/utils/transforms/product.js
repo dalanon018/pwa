@@ -1,15 +1,12 @@
 
 import {
   __,
-  adjust,
   assoc,
   compose,
   concat,
-  curry,
   evolve,
   filter,
   find,
-  fromPairs,
   head,
   map,
   omit,
@@ -17,8 +14,7 @@ import {
   pick,
   prop,
   propEq,
-  propOr,
-  toPairs
+  propOr
 } from 'ramda'
 
 import {
@@ -26,7 +22,8 @@ import {
   BOOLEAN,
   OBJECT,
   STRING,
-  ValidateSchema
+  ValidateSchema,
+  mapKeys
   // SwitchFn
 } from './helper'
 
@@ -104,10 +101,6 @@ const Schema = {
     type: ARRAY
   }
 }
-
-const mapKeys = curry((fn, obj) =>
-  fromPairs(map(adjust(fn, 0), toPairs(obj)))
-)
 
 const associationProducts = (data) => {
   // we need to insert the main item to the association

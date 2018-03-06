@@ -1,10 +1,5 @@
 import {
-  adjust,
-  curry,
   ifElse,
-  fromPairs,
-  map,
-  toPairs,
   identity
 } from 'ramda'
 
@@ -12,7 +7,8 @@ import {
   STRING,
   ValidateSchema,
   PropertiesExists,
-  EmptyObject
+  EmptyObject,
+  mapKeys
 } from './helper'
 
 const Schema = {
@@ -25,10 +21,6 @@ const Schema = {
     type: STRING
   }
 }
-
-const mapKeys = curry((fn, obj) =>
-  fromPairs(map(adjust(fn, 0), toPairs(obj)))
-)
 
 const transformStore = (data) => {
   const changeKey = (key) => Schema[key].name
