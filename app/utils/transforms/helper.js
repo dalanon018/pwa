@@ -1,5 +1,17 @@
 import { omit } from 'lodash'
-import { all, equals, isNil, map, compose, curry, complement, prop } from 'ramda'
+import {
+  adjust,
+  all,
+  complement,
+  compose,
+  curry,
+  equals,
+  fromPairs,
+  isNil,
+  map,
+  prop,
+  toPairs
+} from 'ramda'
 
 /**
  * Helper to check the data type so we know we are accepting what we accept
@@ -47,6 +59,13 @@ export const PropertiesExists = curry((props, data) => compose(
     compose(all, equals(true)),
     map((property) => compose(complement(isNil), prop(property))(data))
   )(props)
+)
+
+/**
+* Function that switching our functions
+*/
+export const mapKeys = curry((fn, obj) =>
+ fromPairs(map(adjust(fn, 0), toPairs(obj)))
 )
 
 /**

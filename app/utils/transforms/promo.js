@@ -1,14 +1,10 @@
 import {
   __,
   assoc,
-  adjust,
   compose,
-  curry,
   find,
-  fromPairs,
   map,
   omit,
-  toPairs,
   propOr,
   propEq
 } from 'ramda'
@@ -17,7 +13,8 @@ import {
   ARRAY,
   STRING,
   NUMBER,
-  ValidateSchema
+  ValidateSchema,
+  mapKeys
 } from './helper'
 
 import transformProduct from './product'
@@ -48,10 +45,6 @@ const Schema = {
     type: ARRAY
   }
 }
-
-const mapKeys = curry((fn, obj) =>
-  fromPairs(map(adjust(fn, 0), toPairs(obj)))
-)
 
 const changeKey = (key) => Schema[key] ? Schema[key].name : null
 

@@ -1,17 +1,14 @@
 import {
   __,
-  adjust,
   apply,
   assoc,
   compose,
-  curry,
   equals,
   evolve,
   filter,
   fromPairs,
   identity,
   ifElse,
-  map,
   omit,
   partial,
   path,
@@ -25,7 +22,8 @@ import {
   OBJECT,
   NUMBER,
   STRING,
-  ValidateSchema
+  ValidateSchema,
+  mapKeys
 } from './helper'
 import modePayment from './modePayment'
 
@@ -115,10 +113,6 @@ const Schema = {
     type: ARRAY
   }
 }
-
-const mapKeys = curry((fn, obj) =>
-  fromPairs(map(adjust(fn, 0), toPairs(obj)))
-)
 
 // what product object should have
 const product = ['name', 'image', 'brandLogo', 'cliqqCode', 'brand']

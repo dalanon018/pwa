@@ -1,14 +1,10 @@
 import {
   __,
   assoc,
-  adjust,
   compose,
-  curry,
   find,
-  fromPairs,
   map,
   omit,
-  toPairs,
   propOr,
   propEq,
   partial
@@ -18,7 +14,8 @@ import {
   ARRAY,
   STRING,
   BOOLEAN,
-  ValidateSchema
+  ValidateSchema,
+  mapKeys
 } from './helper'
 
 const Schema = {
@@ -43,10 +40,6 @@ const Schema = {
     type: BOOLEAN
   }
 }
-
-const mapKeys = curry((fn, obj) =>
-  fromPairs(map(adjust(fn, 0), toPairs(obj)))
-)
 
 const changeKey = (key) => Schema[key] ? Schema[key].name : null
 
