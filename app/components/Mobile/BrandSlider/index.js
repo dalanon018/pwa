@@ -63,11 +63,11 @@ function BrandSlider ({ brands, loader, changeRoute }) {
       <BrandsWrapper>
         <Carousel {...settings}>
           {
-            loader ? range(4).map((_, index) => <SliderItem><DefaultState key={index} /></SliderItem>)
+            loader ? range(4).map((_, index) => <SliderItem key={index}><DefaultState /></SliderItem>)
             : brands.map((brand, index) => {
               return (
                 <SliderItem key={index} onClick={goToBrand(brand.get('id'))}>
-                  <PlainCard>
+                  <PlainCard size={94}>
                     <Image src={TestBrand} alt='CLiQQ' />
                   </PlainCard>
                 </SliderItem>

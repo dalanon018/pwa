@@ -309,7 +309,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             />
           </BannerWrapper>
 
-          <SectionTitle />
+          <SectionTitle link='/brands/' />
+
           <BrandSlider
             brands={featuredBrands}
             loader={brandLoader}
