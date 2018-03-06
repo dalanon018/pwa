@@ -7,7 +7,10 @@ import {
   getProductsViewedAction,
   setProductsViewedAction,
 
-  setProductsCountsAction
+  setProductsCountsAction,
+
+  getFilterCategoryAction,
+  setFilterCategoryAction
 } from '../actions'
 
 import {
@@ -18,7 +21,10 @@ import {
   GET_PRODUCTS_VIEWED,
   SET_PRODUCTS_VIEWED,
 
-  SET_PRODUCTS_COUNT
+  SET_PRODUCTS_COUNT,
+
+  GET_FILTER_CATEGORY,
+  SET_FILTER_CATEGORY
 } from '../constants'
 
 describe('ProductsByCategory actions', () => {
@@ -66,6 +72,26 @@ describe('ProductsByCategory actions', () => {
         payload
       }
       expect(setProductsViewedAction(payload)).toEqual(expected)
+    })
+  })
+
+  describe('Filtered Categories', () => {
+    it('has a type of GET_FILTER_CATEGORY', () => {
+      const payload = { id: 1 }
+      const expected = {
+        type: GET_FILTER_CATEGORY,
+        payload
+      }
+      expect(getFilterCategoryAction(payload)).toEqual(expected)
+    })
+
+    it('has a type of SET_FILTER_CATEGORY', () => {
+      const payload = [ 1, 2, 3 ]
+      const expected = {
+        type: SET_FILTER_CATEGORY,
+        payload
+      }
+      expect(setFilterCategoryAction(payload)).toEqual(expected)
     })
   })
 

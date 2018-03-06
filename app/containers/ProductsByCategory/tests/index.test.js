@@ -10,6 +10,7 @@ describe('<ProductsByCategory />', () => {
     setRouteName: () => {},
     getProductsByCategory: () => {},
     getProductCategories: () => {},
+    getFilterCategory: () => {},
     getProductsViewed: () => {},
     resetProductsByCategory: () => {},
     setPageTitle: () => {},
@@ -25,10 +26,15 @@ describe('<ProductsByCategory />', () => {
     productsFeatured: fromJS([]),
     productsViewed: fromJS([]),
     categories: fromJS([]),
+    filterCategories: fromJS([]),
+    filterCategoriesLoading: false,
     match: {
       params: {
         id: 1
       }
+    },
+    location: {
+      search: ''
     }
   }
 

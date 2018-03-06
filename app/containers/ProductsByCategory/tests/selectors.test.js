@@ -5,7 +5,9 @@ import {
   selectProductsByCategoryFeatured,
   selectProductsViewed,
   selectLazyload,
-  selectTotalCount
+  selectTotalCount,
+  selectFilterCategories,
+  selectFilterCategoriesLoading
 } from '../selectors'
 
 describe('makeSelectProductsByCategoryDomain', () => {
@@ -90,6 +92,34 @@ describe('makeSelectProductsByCategoryDomain', () => {
         }
       })
       expect(selector(mockedState)).toEqual(totalCount)
+    })
+  })
+
+  describe('selectFilterCategories', () => {
+    const selector = selectFilterCategories()
+
+    it('should get filtered categories', () => {
+      const filterCategories = fromJS([1, 2, 3, 4])
+      const mockedState = fromJS({
+        productsByCategory: {
+          filterCategories
+        }
+      })
+      expect(selector(mockedState)).toEqual(filterCategories)
+    })
+  })
+
+  describe('selectFilterCategoriesLoading', () => {
+    const selector = selectFilterCategoriesLoading()
+
+    it('should get products by categories items', () => {
+      const filterCategoriesLoading = false
+      const mockedState = fromJS({
+        productsByCategory: {
+          filterCategoriesLoading
+        }
+      })
+      expect(selector(mockedState)).toEqual(filterCategoriesLoading)
     })
   })
 })
