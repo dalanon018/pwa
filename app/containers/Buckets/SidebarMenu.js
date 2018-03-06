@@ -8,15 +8,11 @@ import {
   List
 } from 'semantic-ui-react'
 import { identity, ifElse } from 'ramda'
-import ListCollapse from 'components/Shared/ListCollapse'
 
 import messages from './messages'
-import SideBarChildMenu from './SideBarChildMenu'
 
 import Home from 'images/icons/drawer/home.svg'
 import Barcode from 'images/icons/drawer/activity.svg'
-import Categories from 'images/icons/drawer/categories.svg'
-import Brands from 'images/icons/drawer/brands.svg'
 // import Help from 'images/icons/drawer/help.svg'
 import Logout from 'images/icons/drawer/signout.svg'
 import Close from 'images/icons/drawer/close.svg'
@@ -46,68 +42,6 @@ const ListWrapper = styled(List.Item)`
   & img {
     margin-right: 10px !important;
   }
-`
-
-const ListAccordionWrapper = styled(({ itemIcon, ...rest }) => <List.Item {...rest} />)`
-  display: flex !important;
-  padding: 0 30px !important;
-  position: relative;
-
-  &:before {
-    background: url(${props => props.itemIcon});
-    content: '';
-    height: 27px;
-    position: absolute;
-    top: 27px;
-    width: 27px;
-  }
-
-  & img {
-    margin-top: 27px !important;
-    margin-right: 10px !important;
-  }
-
-  & .content {
-    width: 100%;
-  }
-
-  & .ui.accordion {
-    border: none!important;
-
-    & .content.active .title-holder {
-      padding: 10px;
-
-      img.selected {
-        margin-top: 0 !important;
-        margin-right: 5px !important;
-        width: 16px;
-        height: 16px;
-        display: inline-block;
-        visibility: hidden;
-      }
-    }
-
-    & .title {
-      border: none!important;
-      padding: 25px 0;
-    }
-
-    & .title.active {
-      padding-bottom: 10px;
-
-      img.selected {
-        visibility: visible !important;
-      }
-    }
-
-    & .content.active > .collapse-content{
-      padding: 0;
-    }
-  }
-`
-
-const CustomContent = styled(List.Content)`
-  padding-left: 46px;
 `
 
 const CloseButton = styled(Image)`
@@ -169,7 +103,7 @@ class SidebarMenu extends React.PureComponent {
 
   render () {
     const {
-      categories, brands, changeRoute, toggleSidebar, toggleAction
+      toggleSidebar, toggleAction
     } = this.props
     return (
       <SidebarContainer className='background__black-transparent' toggle={toggleSidebar}>
@@ -192,42 +126,6 @@ class SidebarMenu extends React.PureComponent {
                 </Label>
               </List.Content>
             </ListWrapper>
-            <ListAccordionWrapper itemIcon={Categories}>
-              {/* <Image alt='categories' size='mini' src={Categories} /> */}
-              <CustomContent>
-                <ListCollapse
-                  heightTransition
-                  title={
-                    <Label as='p' className='margin__none color__secondary' size='huge' >
-                      <FormattedMessage {...messages.menuCategories} />
-                    </Label>
-                }>
-                  <SideBarChildMenu
-                    entities={categories}
-                    changeRoute={changeRoute}
-                    location='products-category'
-                  />
-                </ListCollapse>
-              </CustomContent>
-            </ListAccordionWrapper>
-            <ListAccordionWrapper itemIcon={Brands}>
-              {/* <Image alt='brands' size='mini' src={Brands} /> */}
-              <CustomContent>
-                <ListCollapse
-                  heightTransition
-                  title={
-                    <Label as='p' className='margin__none color__secondary' size='huge'>
-                      <FormattedMessage {...messages.menuBrands} />
-                    </Label>
-                } >
-                  <SideBarChildMenu
-                    entities={brands}
-                    changeRoute={changeRoute}
-                    location='brands'
-                  />
-                </ListCollapse>
-              </CustomContent>
-            </ListAccordionWrapper>
             {/*
               <ListWrapper>
                 <Image alt='help' size='mini' src={Help} />

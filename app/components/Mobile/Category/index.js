@@ -52,7 +52,7 @@ function Category ({
           loader ? range(4).map((_, index) => <DefaultState key={index} loader={loader} margin={margin} />)
           : categories &&
           categories.valueSeq().map((category, index) => {
-            const handleRedirect = () => changeRoute(`/products-category/${category.get('id')}`)
+            const handleRedirect = () => changeRoute(`/products-category/${category.get('id')}?name=${category.get('name')}`)
 
             return (
               <Grid.Column key={index}>
