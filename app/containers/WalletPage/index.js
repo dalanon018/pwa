@@ -39,7 +39,7 @@ import H3 from 'components/Shared/H3'
 import EmptyProducts from 'components/Shared/EmptyProductsBlock'
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
 import { InfiniteLoading, InfiniteWrapper } from 'components/Shared/InfiniteLoading'
-
+import { userIsAuthenticated } from 'containers/App/auth'
 import {
   setPageTitleAction,
   setRouteNameAction,
@@ -324,4 +324,4 @@ export default ReduxCompose(
   withReducer,
   withSaga,
   withConnect
-)(WindowWidth(WalletPage))
+)(WindowWidth(userIsAuthenticated(WalletPage)))
