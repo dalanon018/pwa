@@ -6,7 +6,6 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { createStructuredSelector } from 'reselect'
 import styled from 'styled-components'
 // import H3 from 'components/Shared/H3'
 import { Label, Image, Container } from 'semantic-ui-react'
@@ -64,10 +63,6 @@ export class HomeSectionTitle extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-
-})
-
 function mapDispatchToProps (dispatch) {
   return {
     changeRoute: (url) => dispatch(push(url)),
@@ -79,4 +74,4 @@ HomeSectionTitle.propTypes = {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeSectionTitle)
+export default connect(null, mapDispatchToProps)(HomeSectionTitle)

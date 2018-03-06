@@ -170,6 +170,11 @@ input.input-field {
       text-align: center;
     }
   }
+  &__weight {
+    &--300 {
+      font-weight: 300 !important;
+    }
+  }
 }
 
 .width {

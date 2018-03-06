@@ -21,21 +21,16 @@ import injectReducer from 'utils/injectReducer'
 
 import { paramsImgix } from 'utils/image-stock'
 
-import H3 from 'components/Shared/H3'
-import MobileBrand from 'components/Mobile/Brand'
-import DesktopBrand from 'components/Desktop/Brand'
-
 import MobileSlider from 'components/Mobile/BannerSlider'
 import DesktopSlider from 'components/Desktop/BannerSlider'
 
 import MobileProductView from 'components/Mobile/ProductView'
 import DesktopProductView from 'components/Desktop/ProductView'
 
-import MobileCategory from 'components/Mobile/Category'
-import DesktopCategory from 'components/Desktop/Category'
 import MobileFooter from 'components/Mobile/Footer'
 import BrandSlider from 'components/Mobile/BrandSlider'
 import SectionTitle from 'components/Mobile/HomeSectionTitle'
+import OrderTip from 'components/Mobile/OrderTip'
 
 import WindowWidth from 'components/Shared/WindowWidth'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
@@ -317,64 +312,11 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             changeRoute={changeRoute}
           />
 
-          <AccessView
-            mobileView={
-              <H3>
-                <FormattedMessage {...messages.browseBrands} />
-              </H3>
-            }
-            desktopView={null}
-          />
+        </Container>
 
-          <AccessView
-            mobileView={
-              <MobileBrand
-                brands={featuredBrands}
-                loader={brandLoader}
-                changeRoute={changeRoute}
-              />
-            }
-            desktopView={
-              <DesktopBrand
-                brands={featuredBrands}
-                loader={brandLoader}
-                changeRoute={changeRoute}
-              />
-            }
-          />
+        <OrderTip />
 
-          <H3>
-            <FormattedMessage {...messages.browseCategory} />
-          </H3>
-          <AccessView
-            mobileView={
-              <MobileCategory
-                loader={false}
-                windowWidth={windowWidth}
-                margin='2'
-                changeRoute={changeRoute}
-                route='/products-category'
-                iconWidth='25'
-                fontSize='9'
-                height='80'
-                categories={featuredCategories}
-              />
-            }
-            desktopView={
-              <DesktopCategory
-                loader={false}
-                windowWidth={windowWidth}
-                margin='2'
-                changeRoute={changeRoute}
-                route='/products-category'
-                iconWidth='25'
-                fontSize='9'
-                height='80'
-                categories={featuredCategories}
-              />
-            }
-          />
-
+        <Container>
           <InfiniteWrapper
             hasMoreData={lazyload}
             isLoading={featuredProductsLoader}
