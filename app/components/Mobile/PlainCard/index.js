@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   align-items: center;
   background-color: #FFFFFF;
   border-radius: 6px;
-  box-shadow: 0px 0px 5px 0px rgba(247,247,247,1);
+  box-shadow: 0 0 5px rgba(120,120,120, 0.1);
   display: flex;
   height: ${props => props.size}px;
   // padding: 2px;

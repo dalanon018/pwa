@@ -68,10 +68,11 @@ const Schema = {
     name: 'barcode',
     type: STRING
   },
-  returnable: {
-    name: 'returnable',
-    type: BOOLEAN
-  },
+  // @TODO: return this back once done
+  // returnable: {
+  //   name: 'returnable',
+  //   type: BOOLEAN
+  // },
   deliveryPromiseMessage: {
     name: 'deliveryPromiseMessage',
     type: STRING
