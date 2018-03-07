@@ -54,7 +54,8 @@ import {
   setOrderHandlersDefaultAction,
   getStoreAction,
   storeLocatorAction,
-  getBlackListAction
+  getBlackListAction,
+  getVisitedStoresAction
 } from './actions'
 
 import {
@@ -66,7 +67,9 @@ import {
   selectSubmissionSuccess,
   selectSubmissionError,
   selectStoreLocation,
-  selectBlackListed
+  selectBlackListed,
+  selectVisitedStores,
+  selectVisitedStoresLoading
 } from './selectors'
 
 import {
@@ -88,6 +91,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     getOrderProduct: PropTypes.func.isRequired,
     getStore: PropTypes.func.isRequired,
     storeLocator: PropTypes.func.isRequired,
+    getVisitedStores: PropTypes.func.isRequired,
     productLoader: PropTypes.bool.isRequired,
     mobileLoader: PropTypes.bool.isRequired,
     isBlackListed: PropTypes.bool.isRequired,
@@ -105,7 +109,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       PropTypes.number
     ]).isRequired,
     storeLocation: PropTypes.object,
-    setRouteName: PropTypes.func.isRequired
+    setRouteName: PropTypes.func.isRequired,
+    visitedStores: PropTypes.object.isRequired,
+    visitedStoresLoading: PropTypes.bool.isRequired
   }
 
   showStoreLocator = 'COD'
@@ -456,7 +462,9 @@ const mapStateToProps = createStructuredSelector({
   orderSuccess: selectSubmissionSuccess(),
   orderFail: selectSubmissionError(),
   previousStore: selectStoreLocation(),
-  isBlackListed: selectBlackListed()
+  isBlackListed: selectBlackListed(),
+  visitedStores: selectVisitedStores(),
+  visitedStoresLoading: selectVisitedStoresLoading()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -471,6 +479,7 @@ function mapDispatchToProps (dispatch) {
     submitOrder: (payload) => dispatch(submitOrderAction(payload)),
     getStore: () => dispatch(getStoreAction()),
     storeLocator: (payload) => dispatch(storeLocatorAction(payload)),
+    getVisitedStores: () => dispatch(getVisitedStoresAction()),
     setHandlersDefault: () => dispatch(setOrderHandlersDefaultAction()),
     changeRoute: (url) => dispatch(replace(url)),
     dispatch

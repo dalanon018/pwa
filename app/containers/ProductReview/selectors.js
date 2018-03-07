@@ -58,6 +58,16 @@ const selectBlackListed = () => createSelector(
   (substate) => substate.get('isBlackListed')
 )
 
+const selectVisitedStores = () => createSelector(
+  selectProductReviewDomain(),
+  (substate) => substate.get('visitedStores')
+)
+
+const selectVisitedStoresLoading = () => createSelector(
+  selectProductReviewDomain(),
+  (substate) => substate.get('visitedStoresLoading')
+)
+
 export {
   selectOrderProduct,
   selectMobileNumber,
@@ -67,5 +77,7 @@ export {
   selectSubmissionSuccess,
   selectSubmissionError,
   selectStoreLocation,
-  selectBlackListed
+  selectBlackListed,
+  selectVisitedStores,
+  selectVisitedStoresLoading
 }

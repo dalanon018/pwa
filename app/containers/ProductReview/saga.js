@@ -18,6 +18,7 @@ import {
   ORDER_SUBMIT,
   GET_STORE,
   STORE_LOCATOR,
+  GET_VISITED_STORES,
   GET_BLACKLIST
 } from './constants'
 
@@ -27,7 +28,8 @@ import {
   successOrderAction,
   setStoreAction,
   errorOrderAction,
-  setBlackListAction
+  setBlackListAction,
+  setVisitedStoresAction
 } from './actions'
 
 import {
@@ -267,6 +269,24 @@ export function * getIsBlackList () {
   }
 }
 
+export function * getVisitedStore () {
+  const token = yield getAccessToken()
+  const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
+  // we will only get the last mobileNumber used
+  const mobile = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
+
+  const req = yield call(request, `${API_BASE_URL}/recent-store/0${mobile}`, {
+    method: 'GET',
+    token: token.access_token
+  })
+  // @TODO: we need to know the structure wether we need to create a transformation layer for this.
+  if (!isEmpty(req)) {
+    yield put(setVisitedStoresAction(req))
+  } else {
+    yield put(setVisitedStoresAction([]))
+  }
+}
+
 export function * getOrderProductSaga () {
   yield * takeLatest(GET_ORDER_PRODUCT, getOrderProduct)
 }
@@ -291,6 +311,10 @@ export function * getIsBlackListSaga () {
   yield * takeLatest(GET_BLACKLIST, getIsBlackList)
 }
 
+export function * getVisitedStoreSaga () {
+  yield * takeLatest(GET_VISITED_STORES, getVisitedStore)
+}
+
 export function * productReviewSagas () {
   const watcher = yield [
     fork(getOrderProductSaga),
@@ -300,6 +324,8 @@ export function * productReviewSagas () {
 
     fork(getStoreLocationSaga),
     fork(storeLocatorSaga),
+
+    fork(getVisitedStoreSaga),
 
     fork(submitOrderSaga)
   ]
