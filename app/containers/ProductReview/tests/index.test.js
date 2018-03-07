@@ -20,6 +20,7 @@ describe('<ProductReview />', () => {
     storeLocator: () => {},
     getProductCategories: () => {},
     getBlackList: () => {},
+    getVisitedStores: () => {},
     isBlackListed: false,
     loader: false,
     orderedProduct: fromJS({
@@ -40,7 +41,9 @@ describe('<ProductReview />', () => {
     orderSuccess: fromJS({}),
     orderFail: fromJS({}),
     mobileNumber: '999999999',
-    orderRequesting: false
+    orderRequesting: false,
+    visitedStores: fromJS({}),
+    visitedStoresLoading: false
   }
 
   it('render without exploding', () => {

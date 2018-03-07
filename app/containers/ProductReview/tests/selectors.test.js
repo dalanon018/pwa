@@ -4,7 +4,9 @@ import {
   selectOrderProduct,
   selectMobileNumber,
   selectStoreLocation,
-  selectBlackListed
+  selectBlackListed,
+  selectVisitedStores,
+  selectVisitedStoresLoading
 } from '../selectors'
 
 describe('ProductReview Selectors', () => {
@@ -64,6 +66,34 @@ describe('ProductReview Selectors', () => {
         }
       })
       expect(selectBlackListedSelectors(mockedState)).toEqual(isBlackListed)
+    })
+  })
+
+  describe('selectVisitedStores', () => {
+    const selectVisitedStoresSelectors = selectVisitedStores()
+
+    it('should get success submission', () => {
+      const visitedStores = true
+      const mockedState = fromJS({
+        productReview: {
+          visitedStores
+        }
+      })
+      expect(selectVisitedStoresSelectors(mockedState)).toEqual(visitedStores)
+    })
+  })
+
+  describe('selectVisitedStoresLoading', () => {
+    const selectVisitedStoresLoadingSelectors = selectVisitedStoresLoading()
+
+    it('should get success submission', () => {
+      const visitedStoresLoading = true
+      const mockedState = fromJS({
+        productReview: {
+          visitedStoresLoading
+        }
+      })
+      expect(selectVisitedStoresLoadingSelectors(mockedState)).toEqual(visitedStoresLoading)
     })
   })
 })

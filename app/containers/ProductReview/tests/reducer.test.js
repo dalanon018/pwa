@@ -19,6 +19,8 @@ describe('productReviewReducer', () => {
       mobileNumber: null,
       mobileLoading: false,
       storeLocation: {},
+      visitedStores: [],
+      visitedStoresLoading: false,
       isBlackListed: true
     })
   })

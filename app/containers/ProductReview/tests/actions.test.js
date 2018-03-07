@@ -1,17 +1,19 @@
 
 import {
- getOrderProductAction,
- setOrderProductAction,
- getMobileNumberAction,
- setMobileNumberAction,
- submitOrderAction,
- successOrderAction,
- errorOrderAction,
- getStoreAction,
- setStoreAction,
- storeLocatorAction,
- getBlackListAction,
- setBlackListAction
+  getOrderProductAction,
+  setOrderProductAction,
+  getMobileNumberAction,
+  setMobileNumberAction,
+  submitOrderAction,
+  successOrderAction,
+  errorOrderAction,
+  getStoreAction,
+  setStoreAction,
+  storeLocatorAction,
+  getBlackListAction,
+  setBlackListAction,
+  getVisitedStoresAction,
+  setVisitedStoresAction
 } from '../actions'
 
 import {
@@ -28,6 +30,9 @@ import {
   GET_STORE,
   SET_STORE,
   STORE_LOCATOR,
+
+  GET_VISITED_STORES,
+  SET_VISITED_STORES,
 
   GET_BLACKLIST,
   SET_BLACKLIST
@@ -184,6 +189,24 @@ describe('ProductsReview actions', () => {
         payload
       }
       expect(setBlackListAction(payload)).toEqual(expectedResult)
+    })
+  })
+
+  describe('Recently Visited Actions', () => {
+    it('should get visited store', () => {
+      const expectedResult = {
+        type: GET_VISITED_STORES
+      }
+      expect(getVisitedStoresAction()).toEqual(expectedResult)
+    })
+
+    it('should set visited store', () => {
+      const payload = [1, 2, 3]
+      const expectedResult = {
+        type: SET_VISITED_STORES,
+        payload
+      }
+      expect(setVisitedStoresAction(payload)).toEqual(expectedResult)
     })
   })
 })
