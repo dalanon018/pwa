@@ -20,7 +20,7 @@ import { Container, Image, Label } from 'semantic-ui-react'
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
-import { paramsImgix } from 'utils/image-stock'
+import { paramsImgix, imageStock } from 'utils/image-stock'
 
 import MobileSlider from 'components/Mobile/BannerSlider'
 import DesktopSlider from 'components/Desktop/BannerSlider'
@@ -83,7 +83,6 @@ import {
   CustomHr
 } from './styles'
 
-import DefaultCategoryIcon from 'images/icons/mobile-category-icon.png'
 import MoreCategoriesIcon from 'images/icons/category-header/more-categories-icon.svg'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -223,7 +222,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   _handleDefaultCategoryIcon = (key) => {
     return (
       <CategoryItem key={key}>
-        <Image src={DefaultCategoryIcon} alt='CLiQQ' />
+        <Image src={imageStock('mobile-category-icon-default.png')} alt='CLiQQ' />
         <CustomHr />
       </CategoryItem>
     )
@@ -279,7 +278,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               : featuredCategories.map((category, index) => {
                 return (
                   <CategoryItem key={index} onClick={() => changeRoute(`/products-category/${category.get('id')}?name=${category.get('name')}`)}>
-                    <Image src={category.get('icon') !== '' ? category.get('icon') : DefaultCategoryIcon} alt='CLiQQ' />
+                    <Image src={category.get('icon') !== '' ? category.get('icon') : imageStock('mobile-category-icon-default.png')} alt='CLiQQ' />
                     <Label basic size='tiny' className='item-label'>
                       {category.get('name')}
                     </Label>
@@ -297,7 +296,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                   </Label>
                 </span>
                 : <span>
-                  <Image src={DefaultCategoryIcon} alt='CLiQQ' />
+                  <Image src={imageStock('mobile-category-icon-default.png')} alt='CLiQQ' />
                   <CustomHr />
                 </span>
               }
