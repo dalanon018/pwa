@@ -4,7 +4,9 @@ import {
   selectProductsByBrandsItems,
   selectProductsByBrandsFeatured,
   selectLazyload,
-  selectTotalCount
+  selectTotalCount,
+  selectFilterCategories,
+  selectFilterCategoriesLoading
 } from '../selectors'
 
 describe('productsByBrandsDomain', () => {
@@ -75,6 +77,34 @@ describe('productsByBrandsDomain', () => {
         }
       })
       expect(selector(mockedState)).toEqual(totalCount)
+    })
+  })
+
+  describe('selectFilterCategories', () => {
+    const selector = selectFilterCategories()
+
+    it('should get filtered categories', () => {
+      const filterCategories = fromJS([1, 2, 3, 4])
+      const mockedState = fromJS({
+        brandPage: {
+          filterCategories
+        }
+      })
+      expect(selector(mockedState)).toEqual(filterCategories)
+    })
+  })
+
+  describe('selectFilterCategoriesLoading', () => {
+    const selector = selectFilterCategoriesLoading()
+
+    it('should get if filtering is loading', () => {
+      const filterCategoriesLoading = false
+      const mockedState = fromJS({
+        brandPage: {
+          filterCategoriesLoading
+        }
+      })
+      expect(selector(mockedState)).toEqual(filterCategoriesLoading)
     })
   })
 })

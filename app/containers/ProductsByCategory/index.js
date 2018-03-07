@@ -46,7 +46,6 @@ import Modal from 'components/Shared/PromptModal'
 import { InfiniteLoading, InfiniteWrapper } from 'components/Shared/InfiniteLoading'
 
 import {
-  getProductCategoriesAction,
   setPageTitleAction,
   setRouteNameAction,
   setShowSearchIconAction,
@@ -147,9 +146,9 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   static propTypes = {
     changeRoute: PropTypes.func.isRequired,
     getProductsByCategory: PropTypes.func.isRequired,
-    getProductCategories: PropTypes.func.isRequired,
     getProductsViewed: PropTypes.func.isRequired,
     getFilterCategories: PropTypes.func.isRequired,
+    getFilterBrands: PropTypes.func.isRequired,
     resetProductsByCategory: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
@@ -164,6 +163,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     categories: PropTypes.object.isRequired,
     filterCategories: PropTypes.object.isRequired,
     filterCategoriesLoading: PropTypes.bool.isRequired,
+    filterBrands: PropTypes.object.isRequired,
+    filterBrandsLoading: PropTypes.bool.isRequired,
     match: PropTypes.object.isRequired,
     setRouteName: PropTypes.func.isRequired,
     submitOver18: PropTypes.func.isRequired,
@@ -462,14 +463,13 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
   // TODO: We need to remove extra call for categories specially I think we dont need them anymore
   componentDidMount () {
-    const { match: { params }, getProductsViewed, getProductCategories, getFilterCategories, getFilterBrands, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon } = this.props
+    const { match: { params }, getProductsViewed, getFilterCategories, getFilterBrands, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon } = this.props
 
     setPageTitle(this._handlePageTitle())
     setShowSearchIcon(true)
     setShowActivityIcon(true)
 
     setRouteName(PRODUCTSCATEGORY_NAME)
-    getProductCategories()
     getProductsViewed()
 
     getFilterCategories({ id: params.id })
@@ -568,7 +568,6 @@ function mapDispatchToProps (dispatch) {
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
-    getProductCategories: payload => dispatch(getProductCategoriesAction(payload)),
     getProductsByCategory: payload => dispatch(getProductsByCategoryAction(payload)),
     getProductsViewed: () => dispatch(getProductsViewedAction()),
     resetProductsByCategory: () => dispatch(resetProductsByCategoryAction()),

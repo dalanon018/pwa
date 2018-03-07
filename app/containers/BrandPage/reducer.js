@@ -13,6 +13,9 @@ import {
 
   RESET_PRODUCTS_BRANDS,
 
+  GET_FILTER_CATEGORIES,
+  SET_FILTER_CATEGORIES,
+
   LIMIT_ITEMS
 } from './constants'
 
@@ -20,7 +23,10 @@ const initialState = fromJS({
   productsByBrands: [],
   totalCount: 0,
   loading: false,
-  lazyload: false
+  lazyload: false,
+
+  filterCategories: [],
+  filterCategoriesLoading: false
 })
 
 function brandPageReducer (state = initialState, action) {
@@ -45,6 +51,14 @@ function brandPageReducer (state = initialState, action) {
         .set('productsByBrands', fromJS([]))
         .set('totalCount', 0)
         .set('loading', false)
+
+    case GET_FILTER_CATEGORIES:
+      return state.set('filterCategoriesLoading', true)
+
+    case SET_FILTER_CATEGORIES:
+      return state
+        .set('filterCategoriesLoading', false)
+        .set('filterCategories', fromJS(action.payload))
 
     default:
       return state

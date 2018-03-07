@@ -12,7 +12,10 @@ describe('productsByBrandsReducer', () => {
       productsByBrands: [],
       totalCount: 0,
       loading: false,
-      lazyload: false
+      lazyload: false,
+
+      filterCategories: [],
+      filterCategoriesLoading: false
     })
   })
 

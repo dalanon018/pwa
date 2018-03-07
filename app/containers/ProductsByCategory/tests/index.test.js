@@ -9,7 +9,6 @@ describe('<ProductsByCategory />', () => {
     changeRoute: () => {},
     setRouteName: () => {},
     getProductsByCategory: () => {},
-    getProductCategories: () => {},
     getFilterCategories: () => {},
     getFilterBrands: () => {},
     getProductsViewed: () => {},
