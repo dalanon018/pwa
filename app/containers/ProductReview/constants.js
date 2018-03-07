@@ -20,6 +20,9 @@ export const STORE_LOCATOR = 'app/ProductReview/STORE_LOCATOR'
 export const GET_VISITED_STORES = 'app/ProductReview/GET_VISITED_STORES'
 export const SET_VISITED_STORES = 'app/ProductReview/SET_VISITED_STORES'
 
+export const GET_CURRENT_POINTS = 'app/ProductReview/GET_CURRENT_POINTS'
+export const SET_CURRENT_POINTS = 'app/ProductReview/SET_CURRENT_POINTS'
+
 // This will set our /success and error handler to default
 export const SET_ORDER_HANDLER_DEFAULT = 'app/ProductReview/SET_ORDER_HANDLER_DEFAULT'
 

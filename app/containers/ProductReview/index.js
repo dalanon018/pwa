@@ -55,7 +55,8 @@ import {
   getStoreAction,
   storeLocatorAction,
   getBlackListAction,
-  getVisitedStoresAction
+  getVisitedStoresAction,
+  getCurrentPointsAction
 } from './actions'
 
 import {
@@ -69,7 +70,9 @@ import {
   selectStoreLocation,
   selectBlackListed,
   selectVisitedStores,
-  selectVisitedStoresLoading
+  selectVisitedStoresLoading,
+  selectCurrentPoints,
+  selectCurrentPointsLoading
 } from './selectors'
 
 import {
@@ -92,6 +95,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     getStore: PropTypes.func.isRequired,
     storeLocator: PropTypes.func.isRequired,
     getVisitedStores: PropTypes.func.isRequired,
+    getCurrentPoints: PropTypes.func.isRequired,
     productLoader: PropTypes.bool.isRequired,
     mobileLoader: PropTypes.bool.isRequired,
     isBlackListed: PropTypes.bool.isRequired,
@@ -111,7 +115,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     storeLocation: PropTypes.object,
     setRouteName: PropTypes.func.isRequired,
     visitedStores: PropTypes.object.isRequired,
-    visitedStoresLoading: PropTypes.bool.isRequired
+    visitedStoresLoading: PropTypes.bool.isRequired,
+    currentPoints: PropTypes.object.isRequired,
+    currentPointsLoading: PropTypes.bool.isRequired
   }
 
   showStoreLocator = 'COD'
@@ -464,7 +470,9 @@ const mapStateToProps = createStructuredSelector({
   previousStore: selectStoreLocation(),
   isBlackListed: selectBlackListed(),
   visitedStores: selectVisitedStores(),
-  visitedStoresLoading: selectVisitedStoresLoading()
+  visitedStoresLoading: selectVisitedStoresLoading(),
+  currentPoints: selectCurrentPoints(),
+  currentPointsLoading: selectCurrentPointsLoading()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -480,6 +488,7 @@ function mapDispatchToProps (dispatch) {
     getStore: () => dispatch(getStoreAction()),
     storeLocator: (payload) => dispatch(storeLocatorAction(payload)),
     getVisitedStores: () => dispatch(getVisitedStoresAction()),
+    getCurrentPoints: () => dispatch(getCurrentPointsAction()),
     setHandlersDefault: () => dispatch(setOrderHandlersDefaultAction()),
     changeRoute: (url) => dispatch(replace(url)),
     dispatch

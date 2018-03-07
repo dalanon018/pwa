@@ -68,6 +68,16 @@ const selectVisitedStoresLoading = () => createSelector(
   (substate) => substate.get('visitedStoresLoading')
 )
 
+const selectCurrentPoints = () => createSelector(
+  selectProductReviewDomain(),
+  (substate) => substate.get('currentPoints')
+)
+
+const selectCurrentPointsLoading = () => createSelector(
+  selectProductReviewDomain(),
+  (substate) => substate.get('currentPointsLoading')
+)
+
 export {
   selectOrderProduct,
   selectMobileNumber,
@@ -79,5 +89,7 @@ export {
   selectStoreLocation,
   selectBlackListed,
   selectVisitedStores,
-  selectVisitedStoresLoading
+  selectVisitedStoresLoading,
+  selectCurrentPoints,
+  selectCurrentPointsLoading
 }
