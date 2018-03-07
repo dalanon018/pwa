@@ -13,7 +13,9 @@ import {
   getBlackListAction,
   setBlackListAction,
   getVisitedStoresAction,
-  setVisitedStoresAction
+  setVisitedStoresAction,
+  getCurrentPointsAction,
+  setCurrentPointsAction
 } from '../actions'
 
 import {
@@ -33,6 +35,9 @@ import {
 
   GET_VISITED_STORES,
   SET_VISITED_STORES,
+
+  GET_CURRENT_POINTS,
+  SET_CURRENT_POINTS,
 
   GET_BLACKLIST,
   SET_BLACKLIST
@@ -207,6 +212,24 @@ describe('ProductsReview actions', () => {
         payload
       }
       expect(setVisitedStoresAction(payload)).toEqual(expectedResult)
+    })
+  })
+
+  describe('Current Points Actions', () => {
+    it('should get current points', () => {
+      const expectedResult = {
+        type: GET_CURRENT_POINTS
+      }
+      expect(getCurrentPointsAction()).toEqual(expectedResult)
+    })
+
+    it('should set current points', () => {
+      const payload = [1, 2, 3]
+      const expectedResult = {
+        type: SET_CURRENT_POINTS,
+        payload
+      }
+      expect(setCurrentPointsAction(payload)).toEqual(expectedResult)
     })
   })
 })
