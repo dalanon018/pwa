@@ -150,7 +150,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     getProductCategories: PropTypes.func.isRequired,
     getProductsViewed: PropTypes.func.isRequired,
     getFilterCategories: PropTypes.func.isRequired,
-    getBrandsCategories: PropTypes.func.isRequired,
+    getFilterBrands: PropTypes.func.isRequired,
     resetProductsByCategory: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
