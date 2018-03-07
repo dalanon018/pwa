@@ -11,8 +11,8 @@ export const SET_FEATURED_PRODUCTS = 'app/HomePage/SET_FEATURED_PRODUCTS'
 export const SET_PRODUCTS_COUNT = 'app/HomePage/SET_PRODUCTS_COUNT'
 
 // REQUESTING THE PROMO ITEMS
-export const GET_PROMOS = 'app/Buckets/GET_PROMOS'
-export const SET_PROMOS = 'app/Buckets/SET_PROMOS'
-export const SET_PROMOS_COUNT = 'app/Buckets/SET_PROMOS_COUNT'
+export const GET_PROMOS = 'app/HomePage/GET_PROMOS'
+export const SET_PROMOS = 'app/HomePage/SET_PROMOS'
+export const SET_PROMOS_COUNT = 'app/HomePage/SET_PROMOS_COUNT'
 
 export const LIMIT_ITEMS = 8
