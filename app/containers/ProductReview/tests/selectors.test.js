@@ -4,7 +4,11 @@ import {
   selectOrderProduct,
   selectMobileNumber,
   selectStoreLocation,
-  selectBlackListed
+  selectBlackListed,
+  selectVisitedStores,
+  selectVisitedStoresLoading,
+  selectCurrentPoints,
+  selectCurrentPointsLoading
 } from '../selectors'
 
 describe('ProductReview Selectors', () => {
@@ -64,6 +68,62 @@ describe('ProductReview Selectors', () => {
         }
       })
       expect(selectBlackListedSelectors(mockedState)).toEqual(isBlackListed)
+    })
+  })
+
+  describe('selectVisitedStores', () => {
+    const selectVisitedStoresSelectors = selectVisitedStores()
+
+    it('should get visitedStores', () => {
+      const visitedStores = fromJS([1, 2, 3])
+      const mockedState = fromJS({
+        productReview: {
+          visitedStores
+        }
+      })
+      expect(selectVisitedStoresSelectors(mockedState)).toEqual(visitedStores)
+    })
+  })
+
+  describe('selectVisitedStoresLoading', () => {
+    const selectVisitedStoresLoadingSelectors = selectVisitedStoresLoading()
+
+    it('should get visitedStoresLoading', () => {
+      const visitedStoresLoading = true
+      const mockedState = fromJS({
+        productReview: {
+          visitedStoresLoading
+        }
+      })
+      expect(selectVisitedStoresLoadingSelectors(mockedState)).toEqual(visitedStoresLoading)
+    })
+  })
+
+  describe('selectCurrentPoints', () => {
+    const selectCurrentPointsSelectors = selectCurrentPoints()
+
+    it('should get currentPoints', () => {
+      const currentPoints = fromJS({ points: 1 })
+      const mockedState = fromJS({
+        productReview: {
+          currentPoints
+        }
+      })
+      expect(selectCurrentPointsSelectors(mockedState)).toEqual(currentPoints)
+    })
+  })
+
+  describe('selectCurrentPointsLoading', () => {
+    const selectCurrentPointsLoadingSelectors = selectCurrentPointsLoading()
+
+    it('should get currentPointsLoading', () => {
+      const currentPointsLoading = true
+      const mockedState = fromJS({
+        productReview: {
+          currentPointsLoading
+        }
+      })
+      expect(selectCurrentPointsLoadingSelectors(mockedState)).toEqual(currentPointsLoading)
     })
   })
 })

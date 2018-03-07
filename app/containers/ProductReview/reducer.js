@@ -18,6 +18,12 @@ import {
 
   SET_STORE,
 
+  GET_VISITED_STORES,
+  SET_VISITED_STORES,
+
+  GET_CURRENT_POINTS,
+  SET_CURRENT_POINTS,
+
   SET_ORDER_HANDLER_DEFAULT,
 
   SET_BLACKLIST
@@ -32,6 +38,10 @@ const initialState = fromJS({
   mobileNumber: null,
   mobileLoading: false,
   storeLocation: {},
+  visitedStores: [],
+  visitedStoresLoading: false,
+  currentPoints: {},
+  currentPointsLoading: false,
   isBlackListed: true
 })
 
@@ -71,6 +81,22 @@ function productReviewReducer (state = initialState, action) {
 
     case SET_STORE:
       return state.set('storeLocation', fromJS(action.payload))
+
+    case GET_VISITED_STORES:
+      return state.set('visitedStoresLoading', true)
+
+    case SET_VISITED_STORES:
+      return state
+          .set('visitedStores', fromJS(action.payload))
+          .set('visitedStoresLoading', false)
+
+    case GET_CURRENT_POINTS:
+      return state.set('currentPointsLoading', true)
+
+    case SET_CURRENT_POINTS:
+      return state
+          .set('currentPoints', fromJS(action.payload))
+          .set('currentPointsLoading', false)
 
     case SET_BLACKLIST:
       return state

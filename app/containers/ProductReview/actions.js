@@ -19,6 +19,12 @@ import {
   SET_STORE,
   STORE_LOCATOR,
 
+  GET_VISITED_STORES,
+  SET_VISITED_STORES,
+
+  GET_CURRENT_POINTS,
+  SET_CURRENT_POINTS,
+
   SET_ORDER_HANDLER_DEFAULT,
 
   GET_BLACKLIST,
@@ -87,6 +93,32 @@ export function getStoreAction () {
 export function setStoreAction (payload) {
   return {
     type: SET_STORE,
+    payload
+  }
+}
+
+export function getVisitedStoresAction () {
+  return {
+    type: GET_VISITED_STORES
+  }
+}
+
+export function setVisitedStoresAction (payload) {
+  return {
+    type: SET_VISITED_STORES,
+    payload
+  }
+}
+
+export function getCurrentPointsAction () {
+  return {
+    type: GET_CURRENT_POINTS
+  }
+}
+
+export function setCurrentPointsAction (payload) {
+  return {
+    type: SET_CURRENT_POINTS,
     payload
   }
 }
