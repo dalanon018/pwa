@@ -8,6 +8,6 @@ import { defineMessages } from 'react-intl'
 export default defineMessages({
   header: {
     id: 'app.components.FlashDeals.header',
-    defaultMessage: 'This is the FlashDeals component !'
+    defaultMessage: 'Flash Deals'
   }
 })

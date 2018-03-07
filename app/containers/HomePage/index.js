@@ -275,7 +275,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     const desktopBannerImages = [
       paramsImgix('https://cliqqshop.imgix.net/banner-desktop.jpg', imgixOptions)
     ]
-
     return (
       <div>
         <Helmet
@@ -353,13 +352,20 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         </Container>
 
         <OrderTip />
-
-        <FlashDeals
-          windowWidth={windowWidth}
-          changeRoute={changeRoute}
-          promos={promos}
-          promosLoading={promosLoading}
-          promosCount={promosCount} />
+        {
+          promos.size > 0 && promos.map((promo) => (
+            <FlashDeals
+              key={promo.get('promoCode')}
+              windowWidth={windowWidth}
+              changeRoute={changeRoute}
+              promo={promo}
+              promosLoading={promosLoading}
+              promosCount={promosCount}
+              intl={intl}
+            />
+            )
+          )
+        }
 
         <PointAds />
 
