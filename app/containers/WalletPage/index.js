@@ -10,7 +10,7 @@ import styled from 'styled-components'
 
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
 import { noop } from 'lodash'
@@ -109,7 +109,8 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
     mobileNumbers: PropTypes.object.isRequired,
     transactions: PropTypes.object.isRequired,
     transactionsCount: PropTypes.number.isRequired,
-    match: PropTypes.object.isRequired
+    match: PropTypes.object.isRequired,
+    intl: intlShape.isRequired
   }
 
   state = {
@@ -182,7 +183,7 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
     // only request if mobile number is available
     if (mobileNumbers.size > 0) {
       // since this data is change and we know exactly
-      getWallet({ offset, limit, mobileNumbers: mobileNumbers.last() })
+      getWallet({ offset, limit, mobileNumber: mobileNumbers.last() })
     }
   }
 
@@ -243,18 +244,17 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
     return null
   }
 
-  componentWillMount () {
-    // we set this as text so it doesnt look
-    this.props.setPageTitle(<FormattedMessage {...messages.title} />)
-    this.props.setShowSearchIcon(true)
-    this.props.setShowActivityIcon(true)
-  }
-
   componentDidMount () {
+    const { setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon, intl, getMobileNumbers } = this.props
     // initial data
     this._fetchWalletTransactions(this.props)
-    this.props.setRouteName(WALLET_NAME)
-    this.props.getMobileNumbers()
+
+    // we set this as text so it doesnt look
+    setPageTitle(intl.formatMessage(messages.title))
+    setShowSearchIcon(true)
+    setShowActivityIcon(true)
+    setRouteName(WALLET_NAME)
+    getMobileNumbers()
   }
 
   componentWillUnmount () {
@@ -335,4 +335,4 @@ export default ReduxCompose(
   withReducer,
   withSaga,
   withConnect
-)(WindowWidth(userIsAuthenticated(WalletPage)))
+)(WindowWidth(injectIntl(userIsAuthenticated(WalletPage))))

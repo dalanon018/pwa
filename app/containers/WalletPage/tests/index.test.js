@@ -24,7 +24,17 @@ describe('<WalletPage />', () => {
     },
     transactionsCount: 0,
     transactions: fromJS([]),
-    mobileNumbers: fromJS([])
+    mobileNumbers: fromJS([]),
+    intl: {
+      formatDate: () => {},
+      formatTime: () => {},
+      formatRelative: () => {},
+      formatNumber: () => {},
+      formatPlural: () => {},
+      formatMessage: () => {},
+      formatHTMLMessage: () => {},
+      now: () => {}
+    }
   }
 
   it('should render a div', () => {

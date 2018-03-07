@@ -55,10 +55,9 @@ export function * getWallet (args) {
   let wallet = {}
   let transactions = []
   let count = 0
-
   // TODO: we need to change this to the correct url
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/wallet/0${mobileNumber}?offset=${offset}&limit=${limit}`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/wallet/${mobileNumber}?offset=${offset}&limit=${limit}`, {
     method: 'GET',
     token: token.access_token
   })
