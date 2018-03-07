@@ -65,14 +65,17 @@ import saga from './saga'
 
 import {
   getProductsByBrandsAction,
-  resetProductsByBrandsAction
+  resetProductsByBrandsAction,
+  getFilterCategoriesAction
 } from './actions'
 import {
   selectLazyload,
   selectLoading,
   selectProductsByBrandsItems,
   selectProductsByBrandsFeatured,
-  selectTotalCount
+  selectTotalCount,
+  selectFilterCategories,
+  selectFilterCategoriesLoading
 } from './selectors'
 import {
   LIMIT_ITEMS
@@ -104,6 +107,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     changeRoute: PropTypes.func.isRequired,
     getProductsByBrands: PropTypes.func.isRequired,
     resetProductsByBrands: PropTypes.func.isRequired,
+    getFilterCategories: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
     setRouteName: PropTypes.func.isRequired,
@@ -112,6 +116,8 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     lazyload: PropTypes.bool.isRequired,
     productsByBrands: PropTypes.object.isRequired,
     productsFeatured: PropTypes.object.isRequired,
+    filterCategories: PropTypes.object.isRequired,
+    filterCategoriesLoading: PropTypes.bool.isRequired,
     totalCount: PropTypes.number.isRequired,
     brands: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired
@@ -346,17 +352,17 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     return null
   }
 
-  componentWillMount () {
-    // we set this as text so it doesnt look
-    this.props.setPageTitle('..')
-    this.props.setShowSearchIcon(true)
-    this.props.setShowActivityIcon(true)
-  }
-
   componentDidMount () {
+    const { match: { params }, getFilterCategories, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon } = this.props
+
     // initial data
     this._fetchProductByBrands(this.props)
-    this.props.setRouteName(BRAND_NAME)
+
+    setPageTitle('..')
+    setShowSearchIcon(true)
+    setShowActivityIcon(true)
+    setRouteName(BRAND_NAME)
+    getFilterCategories({ id: params.id })
   }
 
   componentWillUnmount () {
@@ -454,6 +460,8 @@ const mapStateToProps = createStructuredSelector({
   productsByBrands: selectProductsByBrandsItems(),
   productsFeatured: selectProductsByBrandsFeatured(),
   totalCount: selectTotalCount(),
+  filterCategories: selectFilterCategories(),
+  filterCategoriesLoading: selectFilterCategoriesLoading(),
   brands: selectBrands(),
   loader: selectLoading(),
   lazyload: selectLazyload(),
@@ -468,6 +476,7 @@ function mapDispatchToProps (dispatch) {
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProductsByBrands: payload => dispatch(getProductsByBrandsAction(payload)),
     resetProductsByBrands: () => dispatch(resetProductsByBrandsAction()),
+    getFilterCategories: (payload) => dispatch(getFilterCategoriesAction(payload)),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
   }
