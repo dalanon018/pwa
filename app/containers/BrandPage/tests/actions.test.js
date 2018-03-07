@@ -3,14 +3,18 @@ import {
   getProductsByBrandsAction,
   setProductsByBrandsAction,
   resetProductsByBrandsAction,
-  setProductsCountsAction
+  setProductsCountsAction,
+  getFilterCategoriesAction,
+  setFilterCategoriesAction
 } from '../actions'
 
 import {
   GET_PRODUCTS_BRANDS,
   SET_PRODUCTS_BRANDS,
   RESET_PRODUCTS_BRANDS,
-  SET_PRODUCTS_COUNT
+  SET_PRODUCTS_COUNT,
+  GET_FILTER_CATEGORIES,
+  SET_FILTER_CATEGORIES
 } from '../constants'
 
 describe('Brands actions', () => {
@@ -49,6 +53,26 @@ describe('Brands actions', () => {
         payload
       }
       expect(setProductsCountsAction(payload)).toEqual(expected)
+    })
+
+    describe('Filtered Categories', () => {
+      it('has a type of GET_FILTER_CATEGORIES', () => {
+        const payload = { id: 1 }
+        const expected = {
+          type: GET_FILTER_CATEGORIES,
+          payload
+        }
+        expect(getFilterCategoriesAction(payload)).toEqual(expected)
+      })
+
+      it('has a type of SET_FILTER_CATEGORIES', () => {
+        const payload = [ 1, 2, 3 ]
+        const expected = {
+          type: SET_FILTER_CATEGORIES,
+          payload
+        }
+        expect(setFilterCategoriesAction(payload)).toEqual(expected)
+      })
     })
   })
 })

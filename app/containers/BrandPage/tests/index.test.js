@@ -10,6 +10,7 @@ describe('<BrandPage />', () => {
     changeRoute: () => {},
     getProductsByBrands: () => {},
     resetProductsByBrands: () => {},
+    getFilterCategories: () => {},
     setPageTitle: () => {},
     setRouteName: () => {},
     setShowSearchIcon: () => {},
@@ -24,6 +25,8 @@ describe('<BrandPage />', () => {
     totalCount: 0,
     productsByBrands: fromJS([]),
     productsFeatured: fromJS([]),
+    filterCategories: fromJS([]),
+    filterCategoriesLoading: false,
     brands: fromJS([])
   }
 
