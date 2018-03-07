@@ -48,6 +48,12 @@ const CategoryItem = styled.div`
   }
 `
 
+const CustomHr = styled.div`
+  border-top: 2px solid #E3E3E3;
+  margin-top: 10px;
+  width: 100%;
+`
+
 export {
   BannerWrapper,
   SearchWrapper,
@@ -55,5 +61,6 @@ export {
   CategoryWrapper,
   LazyLoadWrapper,
   CategoryIconsWrapper,
-  CategoryItem
+  CategoryItem,
+  CustomHr
 }

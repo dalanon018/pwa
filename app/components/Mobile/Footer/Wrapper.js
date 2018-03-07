@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { List } from 'semantic-ui-react'
 
 const Wrapper = styled.footer`
   margin-bottom: 15px;
@@ -71,10 +72,15 @@ const IconItem = styled.div`
   }
 `
 
+const CustomItem = styled(List.Item)`
+  margin: 0 15px !important;
+`
+
 export {
   CopyRight,
   HelperLinks,
   SocialIcons,
   IconItem,
-  Wrapper
+  Wrapper,
+  CustomItem
 }

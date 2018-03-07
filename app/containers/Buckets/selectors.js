@@ -113,6 +113,11 @@ const selectSearchValue = () => createSelector(
   (substate) => substate.get('searchValue')
 )
 
+const selectCategoryNavLoader = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('categoryNavLoader')
+)
+
 export {
   selectBucketDomain,
   selectToggle,
@@ -134,5 +139,6 @@ export {
   selectLoyaltyToken,
   selectBrandLoader,
   selectLightBoxImage,
-  selectSearchValue
+  selectSearchValue,
+  selectCategoryNavLoader
 }
