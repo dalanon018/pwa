@@ -49,6 +49,7 @@ const initialState = fromJS({
   toggleMessage: null,
   loader: false,
   brandLoader: false,
+  categoryNavLoader: false,
   routeName: null,
   pageTitle: null,
   headerMenuFullScreen: false,
@@ -78,7 +79,7 @@ function bucketsReducer (state = initialState, action) {
       return state.set('activityIconShow', action.payload)
 
     case GET_PRODUCT_CATEGORIES:
-      return state.set('loader', true)
+      return state.set('categoryNavLoader', true)
 
     case SET_MOBILE_NUMBERS:
       return state.set('mobileNumbers', fromJS(action.payload))
@@ -90,7 +91,7 @@ function bucketsReducer (state = initialState, action) {
       return state
         .set('categories', fromJS(action.payload))
         .set('toggle', false)
-        .set('loader', false)
+        .set('categoryNavLoader', false)
 
     case GET_BRANDS:
       return state.set('brandLoader', true)

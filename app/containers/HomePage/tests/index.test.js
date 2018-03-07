@@ -24,6 +24,7 @@ describe('<HomePage />', () => {
     featuredBrands: fromJS([]),
     promos: fromJS([]),
     promosLoading: false,
+    categoryNavLoader: false,
     intl: {
       formatMessage: () => {}
     },

@@ -14,6 +14,7 @@ import { injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
 import { ifElse, identity } from 'ramda'
+import { range } from 'lodash'
 import { Container, Image, Label } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
@@ -47,7 +48,8 @@ import {
 import {
   selectFeaturedCategories,
   selectFeaturedBrands,
-  selectBrandLoader
+  selectBrandLoader,
+  selectCategoryNavLoader
 } from 'containers/Buckets/selectors'
 import {
   HOME_NAME
@@ -77,13 +79,11 @@ import {
 import {
   BannerWrapper,
   CategoryIconsWrapper,
-  CategoryItem
+  CategoryItem,
+  CustomHr
 } from './styles'
 
-import AccessoriesIcon from 'images/icons/category-header/accessories-icon.svg'
-// import GadgetsIcon from 'images/icons/category-header/gadgets-icon.svg'
-// import LaundryIcon from 'images/icons/category-header/laundry-icon.svg'
-// import SportsTravelIcon from 'images/icons/category-header/sports-travel-icon.svg'
+import DefaultCategoryIcon from 'images/icons/mobile-category-icon.png'
 import MoreCategoriesIcon from 'images/icons/category-header/more-categories-icon.svg'
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -112,7 +112,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     promosLoading: PropTypes.bool.isRequired,
     promosCount: PropTypes.number.isRequired,
     getPromos: PropTypes.func.isRequired,
-    lazyload: PropTypes.bool.isRequired
+    lazyload: PropTypes.bool.isRequired,
+    categoryNavLoader: PropTypes.bool.isRequired
   }
 
   state = {
@@ -219,6 +220,15 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     }
   }
 
+  _handleDefaultCategoryIcon = (key) => {
+    return (
+      <CategoryItem key={key}>
+        <Image src={DefaultCategoryIcon} alt='CLiQQ' />
+        <CustomHr />
+      </CategoryItem>
+    )
+  }
+
   componentWillMount () {
     this.props.setPageTitle(null)
     this.props.setShowSearchIcon(false)
@@ -232,7 +242,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render () {
-    const { featuredCategories, featuredBrands, changeRoute, windowWidth, brandLoader, featuredProductsLoader, lazyload, intl } = this.props
+    const { featuredCategories, featuredBrands, changeRoute, windowWidth, brandLoader, featuredProductsLoader, lazyload, intl, categoryNavLoader } = this.props
     const imgixOptions = {
       w: windowWidth >= 1024 ? 1170 : 800,
       h: 400,
@@ -265,10 +275,11 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         <Container>
           <CategoryIconsWrapper>
             {
-              featuredCategories.map((category, index) => {
+              categoryNavLoader ? range(4).map((_, index) => this._handleDefaultCategoryIcon(index))
+              : featuredCategories.map((category, index) => {
                 return (
                   <CategoryItem key={index} onClick={() => changeRoute(`/products-category/${category.get('id')}?name=${category.get('name')}`)}>
-                    <Image src={AccessoriesIcon} alt='CLiQQ' />
+                    <Image src={category.get('icon') !== '' ? category.get('icon') : DefaultCategoryIcon} alt='CLiQQ' />
                     <Label basic size='tiny' className='item-label'>
                       {category.get('name')}
                     </Label>
@@ -277,10 +288,20 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               })
             }
             <CategoryItem>
-              <Image src={MoreCategoriesIcon} alt='CLiQQ' />
-              <Label basic size='tiny' className='item-label'>
-                More
-              </Label>
+              {
+                !categoryNavLoader
+                ? <span>
+                  <Image src={MoreCategoriesIcon} alt='CLiQQ' />
+                  <Label basic size='tiny' className='item-label'>
+                    More
+                  </Label>
+                </span>
+                : <span>
+                  <Image src={DefaultCategoryIcon} alt='CLiQQ' />
+                  <CustomHr />
+                </span>
+              }
+
             </CategoryItem>
           </CategoryIconsWrapper>
 
@@ -352,7 +373,8 @@ const mapStateToProps = createStructuredSelector({
   promos: selectPromos(),
   promosLoading: selectPromosLoading(),
   promosCount: selectPromosCount(),
-  lazyload: selectLazyload()
+  lazyload: selectLazyload(),
+  categoryNavLoader: selectCategoryNavLoader()
 })
 
 function mapDispatchToProps (dispatch) {

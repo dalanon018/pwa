@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   box-shadow: 0px 0px 5px 0px rgba(247,247,247,1);
   display: flex;
   height: ${props => props.size}px;
-  padding: 2px;
+  // padding: 2px;
   width: ${props => props.size}px;
 `
 
