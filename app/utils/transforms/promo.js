@@ -1,5 +1,4 @@
 import {
-  __,
   assoc,
   compose,
   find,
@@ -40,6 +39,10 @@ const Schema = {
     name: 'fromDate',
     type: STRING
   },
+  thruDate: {
+    name: 'thruDate',
+    type: STRING
+  },
   productList: {
     name: 'productList',
     type: ARRAY
@@ -64,25 +67,28 @@ const applyImage = (data) => {
 const applyProduct = async (data) => {
   const awaitTransformProduct = await transformProduct
 
-  return compose(
-    assoc('productList', __, data),
+  const transformer = compose(
+    async (mapData) => {
+      const promiseArray = await Promise.all(mapData)
+      return promiseArray
+    },
     map(awaitTransformProduct),
     propOr([], 'productList')
-  )(data)
+  )
+  const productList = await transformer(data)
+  return assoc('productList', productList, data)
 }
 
-const adjustmentObject = (data) => {
-  const removeKeys = ['images']
-  return compose(
-    omit(removeKeys),
+const transformPromo = async (data) => {
+  const applySchemaName = mapKeys(changeKey, data)
+  const cleanObject = omit(['images'])
+  const adjustmentObject = compose(
     applyProduct,
     applyImage
-  )(data)
-}
+  )
+  const transform = await adjustmentObject(applySchemaName)
 
-const transformPromo = (data) => {
-  const applySchemaName = mapKeys(changeKey, data)
-  return adjustmentObject(applySchemaName)
+  return cleanObject(transform)
 }
 
 const Promo = async (response) => {
