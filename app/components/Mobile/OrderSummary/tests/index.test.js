@@ -49,7 +49,7 @@ describe('<OrderSummary />', () => {
     modalToggle: false,
     labelOne: '',
     labelTwo: '',
-    visibility: true,
+    storeLocatorVisibility: true,
     isBlackListed: false,
     loader: false,
     orderedProduct: fromJS({

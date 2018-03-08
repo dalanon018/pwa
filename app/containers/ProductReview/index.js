@@ -123,7 +123,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   state = {
     store: {},
     modePayment: 'COD',
-    visibility: true,
+    storeLocatorVisibility: true,
     modalToggle: false,
     errorMessage: ''
   }
@@ -169,7 +169,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   _handleChange = (e, { value }) => {
     this.setState({
       modePayment: value,
-      visibility: value === this.showStoreLocator
+      storeLocatorVisibility: value === this.showStoreLocator
     })
   }
 
@@ -278,7 +278,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         noop,
         async (type) => this.setState({
           modePayment: type.toUpperCase(),
-          visibility: type.toUpperCase() === this.showStoreLocator,
+          storeLocatorVisibility: type.toUpperCase() === this.showStoreLocator,
           store: await transformStore(query) // we update our store
         })
       ),
@@ -336,7 +336,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
   render () {
     const { currentPoints, orderedProduct, orderRequesting, isBlackListed, productLoader } = this.props
-    const { errorMessage, modePayment, modalToggle, visibility, store } = this.state
+    const { errorMessage, modePayment, modalToggle, storeLocatorVisibility, store } = this.state
     return (
       <AccessView
         mobileView={
@@ -360,7 +360,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             orderedProduct={orderedProduct}
             productLoader={productLoader}
             store={store}
-            visibility={visibility}
+            storeLocatorVisibility={storeLocatorVisibility}
           />
         }
         desktopView={
@@ -383,7 +383,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
               orderedProduct={orderedProduct}
               productLoader={productLoader}
               store={store}
-              visibility={visibility}
+              storeLocatorVisibility={storeLocatorVisibility}
             />
           </div>
         }

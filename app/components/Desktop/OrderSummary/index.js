@@ -76,7 +76,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       orderedProduct,
       productLoader,
       store,
-      visibility,
+      storeLocatorVisibility,
 
       _handleModalClose,
       _handleProceed,
@@ -210,7 +210,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                 </SelectMethodWrapper>
               </Grid.Row>
             </Grid>
-            <StepWrapper innerRef={_stepWrapperRef} className='visibility' visibility={visibility}>
+            <StepWrapper innerRef={_stepWrapperRef} className='visibility' visibility={storeLocatorVisibility}>
               <Label as='p' basic size='big' className='color__secondary'>
                 <FormattedMessage {...messages.chooseStore} />
               </Label>
@@ -265,7 +265,7 @@ OrderSummary.propTypes = {
   ]).isRequired,
   modePayment: PropTypes.string.isRequired,
   modalToggle: PropTypes.bool.isRequired,
-  visibility: PropTypes.bool.isRequired,
+  storeLocatorVisibility: PropTypes.bool.isRequired,
   store: PropTypes.object.isRequired,
 
   _handleModalClose: PropTypes.func.isRequired,
