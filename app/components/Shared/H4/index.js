@@ -6,7 +6,7 @@ import { Header } from 'semantic-ui-react'
 
 const Wrapper = styled(Header)`
 font-family: 'Roboto', sans-serif;
-font-weight: 300;
+font-weight: 400;
 `
 
 function H4 ({

@@ -50,8 +50,8 @@ const ProductInfo = styled.div`
   }
 
   .product-name {
-    min-height: 37px;
-    max-height: 37px;
+    min-height: 34px;
+    max-height: 34px;
     overflow: hidden;
     // padding: 0 15px !important;
   }
@@ -69,15 +69,12 @@ const ProductPriceWrapper = styled.div`
   justify-content: flex-start;
 
   .product-price {
-    color: #FF4814 !important;
-    font-family: 'Roboto';
     letter-spacing: -1.5px;
-    line-height: 30px;
+    line-height: 22px;
     padding: 0;
   }
 
   .product-discount {
-    font-family: 'Roboto';
     letter-spacing: -1.5px;
     margin-left: 5px;
     text-decoration: line-through;
@@ -92,7 +89,6 @@ const RibbonWrapper = styled.div`
 
   .ribbon-tag {
     align-items: middle;
-    background: #FFC60B;
     border-radius: 3px 0 0 3px;
     display: flex;
     flex-wrap: wrap;
@@ -108,7 +104,7 @@ const RibbonWrapper = styled.div`
     width: 40px;
 
     span {
-      line-height: 10px;
+      line-height: 8px;
       margin-top: -5px;
     }
   }

@@ -16,13 +16,6 @@ const Wrapper = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
-
-  .title {
-    color: #7D868C !important;
-  }
-  .link {
-    color: #FF4814 !important;
-  }
 `
 
 const LinkWrapper = styled.div`
@@ -50,8 +43,8 @@ export class HomeSectionTitle extends React.PureComponent {
     return (
       <Container className='padding__none--vertical'>
         <Wrapper>
-          <Label basic size='large' className='title padding__none'>{title}</Label>
-          <Label basic size='small' className='link padding__none' onClick={this._handleGoTo()}>
+          <Label basic size='large' className='color__grey text__weight--500 padding__none'>{title}</Label>
+          <Label basic size='small' className='color__primary text__weight--400 padding__none' onClick={this._handleGoTo()}>
             <LinkWrapper>
               <span>{linkLabel || 'See All'}</span>
               <Image src={ArrowIcon} alt='CLiQQ' />

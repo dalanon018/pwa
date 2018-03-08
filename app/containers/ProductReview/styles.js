@@ -1,12 +1,10 @@
 import styled from 'styled-components'
 
 const LabelTitle = styled.p`
-  font-family: 'Cabin';
   font-size: 14px;
   margin: 0;
 
   @media (min-width: 768px) {
-    font-family: 'Cabin';
     font-size: 16px;
     letter-spacing: 5px;
   }

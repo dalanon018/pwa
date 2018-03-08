@@ -45,7 +45,7 @@ export class Footer extends React.PureComponent {
       <Wrapper className='border_top__three--grey'>
         <Grid>
           <Grid.Row centered>
-            <H2 className='custom-header color__dark' >
+            <H2 className='custom-header color__dark-grey' >
               <FormattedMessage {...messages.stayConnected} />
             </H2>
             <SocialIcons>
@@ -86,7 +86,7 @@ export class Footer extends React.PureComponent {
           </Grid.Row>
 
           <Grid.Row centered>
-            <CopyRight className='color__secondary'><FormattedMessage {...messages.copyRight} /></CopyRight>
+            <CopyRight className='color__dark-grey'><FormattedMessage {...messages.copyRight} /></CopyRight>
           </Grid.Row>
         </Grid>
       </Wrapper>

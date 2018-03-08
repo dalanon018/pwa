@@ -250,7 +250,7 @@ class ModalWithHeader extends React.PureComponent {
               <ModalTitle {...{ status: currentStatus, receipt }} />
             </Label>
             <DetailsWrapper>
-              <Label className='weight-300 font-roboto center' as='p' size='large'>
+              <Label className='weight-400 font-roboto center' as='p' size='large'>
                 <ModalDescription {...{ status: currentStatus, receipt }} />
               </Label>
             </DetailsWrapper>

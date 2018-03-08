@@ -16,7 +16,6 @@ const StepHead = styled.div`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  font-family: 'Cabin';
   font-size: 13px;
   letter-spacing: 3px;
   margin-bottom: 15px;
@@ -137,7 +136,6 @@ const SelectMethodWrapper = styled.div`
 const LocationButton = styled(({iconBg, ...props}) => <Button {...props} />)`
   background: transparent !important;
   border-radius: 5px !important;
-  font-family: 'Cabin' !important;
   letter-spacing: 2px;
   padding: 20px 100px !important;
   position: relative;
