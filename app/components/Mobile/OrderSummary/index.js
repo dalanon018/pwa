@@ -5,19 +5,21 @@
 */
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import { isEmpty } from 'lodash'
-
+import { ifElse, identity } from 'ramda'
 import { FormattedMessage } from 'react-intl'
-import messages from './messages'
-
 import { Grid, Label, Form, Checkbox, Image, Button } from 'semantic-ui-react'
 
-import { LoadingStateImage } from 'components/Shared/LoadingBlock'
+import NextIcon from 'images/icons/greater-than-icon.svg'
 import ListCollapse from 'components/Shared/ListCollapse'
 import Modal from 'components/Shared/PromptModal'
+import { LoadingStateImage } from 'components/Shared/LoadingBlock'
 
-import NextIcon from 'images/icons/greater-than-icon.svg'
+import { paramsImgix } from 'utils/image-stock'
+import { calculateEarnPoints } from 'utils/calculation'
 
+import messages from './messages'
 import {
   DetailsWrapper,
   ButtonContainer,
@@ -28,20 +30,55 @@ import {
   StepWrapper,
   StepHead,
   LocationButton,
-  CustomGrid
+  CustomGrid,
+  LabelPrice,
+  LabelTitle
 } from './styles'
 
 class OrderSummary extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  _updateParamsImages = (images, opt = {}) => {
+    const options = {
+      w: 414,
+      h: 246,
+      fit: 'fill',
+      auto: 'compress',
+      q: 35,
+      lossless: 0,
+      ...opt
+    }
+
+    return images ? paramsImgix(images, options) : ''
+  }
+
+  _getHighestPointsEarn = () => (product) => {
+    const amount = product.get('discountPrice') || product.get('price')
+
+    return `${calculateEarnPoints({
+      multiplier: parseFloat(product.getIn(['points', 'multiplier'])),
+      percentage: parseFloat(product.getIn(['points', 'methods', 'cash'])),
+      amount: parseFloat(amount)
+    })} Cliqq Points`
+  }
+
+  _toggleOrigDiscountPrice = (product) => {
+    const showPrice = product.get('discountPrice') || product.get('price')
+
+    return showPrice ? showPrice.toLocaleString() : 0
+  }
+
+  _showDiscountPrice = (component1, component2) => (condition) => ifElse(
+    identity,
+    () => component1,
+    () => component2
+  )(condition)
+
   render () {
     const {
-      brandLogo,
       orderedProduct,
       orderRequesting,
       isBlackListed,
       productLoader,
-      labelOne,
       ShowCodComponent,
-      labelTwo,
       errorMessage,
       modePayment,
       modalToggle,
@@ -53,15 +90,60 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       _handleStoreLocator,
       _stepWrapperRef,
       _handleToBottom,
-      _handleChange,
-      _updateParamsImages } = this.props
+      _handleChange
+    } = this.props
+
+    const toggleDiscount = this._showDiscountPrice(
+      <span className='strike color__grey'>
+        <FormattedMessage {...messages.peso} />
+        { orderedProduct.get('price') &&
+          parseFloat(orderedProduct.get('price')).toLocaleString() }
+      </span>,
+      null
+    )
+
+    const labelOne = <label className='label-custom'>
+      <LabelTitle>
+        <Label as='span' basic size='big' className='color__secondary'>
+          <FormattedMessage {...messages.cashPrepaid} />
+        </Label>
+      </LabelTitle>
+      <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
+        <span className='total color__orange'>
+          <FormattedMessage {...messages.peso} />
+          { this._toggleOrigDiscountPrice(orderedProduct) }
+        </span>
+        { toggleDiscount(orderedProduct.get('discountPrice')) }
+      </LabelPrice>
+    </label>
+
+    const labelTwo = <label className='label-custom'>
+      <LabelTitle>
+        <Label as='span' basic size='big' className='color__secondary'>
+          <FormattedMessage {...messages.cashDelivery} />
+        </Label>
+      </LabelTitle>
+      <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
+        <span className='total color__orange'>
+          <FormattedMessage {...messages.peso} />
+          { this._toggleOrigDiscountPrice(orderedProduct) }
+        </span>
+        { toggleDiscount(orderedProduct.get('discountPrice')) }
+      </LabelPrice>
+    </label>
+
+    const brandLogo = orderedProduct.get('brandLogo') ? (
+      <Image
+        className='brand-logo'
+        alt='CLiQQ'
+        src={this._updateParamsImages(orderedProduct.get('brandLogo'), { w: 200, h: 30 })} />) : ''
 
     return (
       <ProductReviewWrapper>
         { productLoader || brandLogo }
         <LoadingStateImage loading={productLoader} center>
           <ProductItem>
-            <Image alt='CLiQQ' src={_updateParamsImages(orderedProduct.get('image'))} />
+            <Image alt='CLiQQ' src={this._updateParamsImages(orderedProduct.get('image'))} />
             {
               orderedProduct.get('brand')
               ? <Label as='span' basic size='big' className='color__secondary'>{orderedProduct.getIn(['brand', 'name'])}</Label>
@@ -159,7 +241,26 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 }
 
 OrderSummary.propTypes = {
+  orderedProduct: PropTypes.object.isRequired,
+  orderRequesting: PropTypes.bool.isRequired,
+  isBlackListed: PropTypes.bool.isRequired,
+  productLoader: PropTypes.bool.isRequired,
+  ShowCodComponent: PropTypes.func.isRequired,
+  errorMessage: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.string
+  ]).isRequired,
+  modePayment: PropTypes.string.isRequired,
+  modalToggle: PropTypes.bool.isRequired,
+  visibility: PropTypes.bool.isRequired,
+  store: PropTypes.object.isRequired,
 
+  _handleModalClose: PropTypes.func.isRequired,
+  _handleProceed: PropTypes.func.isRequired,
+  _handleStoreLocator: PropTypes.func.isRequired,
+  _stepWrapperRef: PropTypes.func.isRequired,
+  _handleToBottom: PropTypes.func.isRequired,
+  _handleChange: PropTypes.func.isRequired
 }
 
 export default OrderSummary

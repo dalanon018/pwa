@@ -8,20 +8,19 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { noop, isEmpty } from 'lodash'
-import { ifElse, equals, both, compose, prop, propOr, either, identity } from 'ramda'
+import { ifElse, equals, both, compose, prop, propOr, either } from 'ramda'
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
 import { replace } from 'react-router-redux'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 
-import { Label, Form, Checkbox, Image } from 'semantic-ui-react'
+import { Form, Checkbox } from 'semantic-ui-react'
 
 import scrollPolyfill from 'utils/scrollPolyfill'
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
-import { paramsImgix } from 'utils/image-stock'
 import { transformStore } from 'utils/transforms'
 import { FbEventTracking } from 'utils/seo'
 import { switchFn } from 'utils/logicHelper'
@@ -74,11 +73,6 @@ import {
   selectCurrentPoints,
   selectCurrentPointsLoading
 } from './selectors'
-
-import {
-  LabelTitle,
-  LabelPrice
-} from './styles'
 
 // Helper
 const isDoneRequesting = (loader) => () => (loader === false)
@@ -261,32 +255,6 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     }
   }
 
-  _toggleOrigDiscountPrice = (product) => {
-    const showPrice = product.get('discountPrice') || product.get('price')
-
-    return showPrice ? showPrice.toLocaleString() : 0
-  }
-
-  _showDiscountPrice = (component1, component2) => (condition) => ifElse(
-    identity,
-    () => component1,
-    () => component2
-  )(condition)
-
-  _updateParamsImages = (images, opt = {}) => {
-    const options = {
-      w: 414,
-      h: 246,
-      fit: 'fill',
-      auto: 'compress',
-      q: 35,
-      lossless: 0,
-      ...opt
-    }
-
-    return images ? paramsImgix(images, options) : ''
-  }
-
   componentWillUnmount () {
     this.props.setHandlersDefault()
   }
@@ -360,47 +328,6 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   render () {
     const { orderedProduct, orderRequesting, isBlackListed, productLoader } = this.props
     const { errorMessage, modePayment, modalToggle, visibility, store } = this.state
-    const toggleDiscount = this._showDiscountPrice(
-      <span className='strike color__grey'>
-        <FormattedMessage {...messages.peso} />
-        { orderedProduct.get('price') &&
-          parseFloat(orderedProduct.get('price')).toLocaleString() }
-      </span>,
-      null
-    )
-    const labelOne = <label className='label-custom'>
-      <LabelTitle>
-        <Label as='span' basic size='big' className='color__secondary'>
-          <FormattedMessage {...messages.cashPrepaid} />
-        </Label>
-      </LabelTitle>
-      <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
-        <span className='total color__orange'>
-          <FormattedMessage {...messages.peso} />
-          { this._toggleOrigDiscountPrice(orderedProduct) }
-        </span>
-        { toggleDiscount(orderedProduct.get('discountPrice')) }
-      </LabelPrice>
-    </label>
-    const labelTwo = <label className='label-custom'>
-      <LabelTitle>
-        <Label as='span' basic size='big' className='color__secondary'>
-          <FormattedMessage {...messages.cashDelivery} />
-        </Label>
-      </LabelTitle>
-      <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
-        <span className='total color__orange'>
-          <FormattedMessage {...messages.peso} />
-          { this._toggleOrigDiscountPrice(orderedProduct) }
-        </span>
-        { toggleDiscount(orderedProduct.get('discountPrice')) }
-      </LabelPrice>
-    </label>
-    const brandLogo = orderedProduct.get('brandLogo') ? (
-      <Image
-        className='brand-logo'
-        alt='CLiQQ'
-        src={this._updateParamsImages(orderedProduct.get('brandLogo'), { w: 200, h: 30 })} />) : ''
 
     return (
       <AccessView
@@ -413,12 +340,10 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             _handleStoreLocator={this._handleStoreLocator}
             _handleToBottom={this._handleToBottom}
             _stepWrapperRef={this._stepWrapperRef}
-            _updateParamsImages={this._updateParamsImages}
-            brandLogo={brandLogo}
+
             errorMessage={errorMessage}
             isBlackListed={isBlackListed}
-            labelOne={labelOne}
-            labelTwo={labelTwo}
+
             modalToggle={modalToggle}
             modePayment={modePayment}
             orderRequesting={orderRequesting}
@@ -438,12 +363,10 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
               _handleStoreLocator={this._handleStoreLocator}
               _handleToBottom={this._handleToBottom}
               _stepWrapperRef={this._stepWrapperRef}
-              _updateParamsImages={this._updateParamsImages}
-              brandLogo={brandLogo}
+
               errorMessage={errorMessage}
               isBlackListed={isBlackListed}
-              labelOne={labelOne}
-              labelTwo={labelTwo}
+
               modalToggle={modalToggle}
               modePayment={modePayment}
               orderRequesting={orderRequesting}
