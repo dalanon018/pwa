@@ -50,9 +50,8 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     return images ? paramsImgix(images, options) : ''
   }
 
-  _getHighestPointsEarn = (mode) => {
+  _getPointsEarn = (mode, amount) => {
     const { orderedProduct } = this.props
-    const amount = orderedProduct.get('discountPrice') || orderedProduct.get('price')
     return `${calculateEarnPoints({
       multiplier: parseFloat(orderedProduct.getIn(['points', 'multiplier'])),
       percentage: parseFloat(orderedProduct.getIn(['points', 'methods', mode])),
@@ -60,20 +59,45 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     })}`
   }
 
-  _toggleOrigDiscountPrice = (product) => {
-    const showPrice = product.get('discountPrice') || product.get('price')
+  _toggleOrigDiscountPrice = () => {
+    const { orderedProduct } = this.props
+    const showPrice = orderedProduct.get('discountPrice') || orderedProduct.get('price')
 
     return showPrice ? showPrice.toLocaleString() : 0
   }
 
-  _displayEarnPoints = (mode) => {
+  _computeTotalPointsPrice = () => {
+    const { orderedProduct } = this.props
+    const multiplier = parseFloat(orderedProduct.getIn(['points', 'multiplier']))
+    return Math.ceil(parseFloat(this._toggleOrigDiscountPrice()) * multiplier)
+  }
+
+  _isCurrentPointsHalfPricePoints = () => {
+    const { currentPoints } = this.props
+    return currentPoints >= (this._computeTotalPointsPrice() / 2)
+  }
+
+  _computePricePoints = () => {
+    const { orderedProduct, isDisabledPointsOptions } = this.props
+    if (isDisabledPointsOptions) {
+      // we dont need to recompute since we disable this one.
+      return this._toggleOrigDiscountPrice()
+    } else if (this._isCurrentPointsHalfPricePoints()) {
+      const pointsPrice = (this._computeTotalPointsPrice() / 2)
+      return Math.ceil(pointsPrice / parseFloat(orderedProduct.getIn(['points', 'multiplier'])))
+    } else {
+      return 0
+    }
+  }
+
+  _displayEarnPoints = (mode, amount) => {
     const { orderedProduct } = this.props
     if (orderedProduct.get('points')) {
       return (
         <Label as='p' basic size='large' className='color__secondary'>
           <FormattedMessage
             {...messages.earnedPoints}
-            values={{points: <b>{this._getHighestPointsEarn(mode)}</b>}}
+            values={{points: <b>{this._getPointsEarn(mode, amount)}</b>}}
           />
         </Label>
       )
@@ -90,6 +114,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
   render () {
     const {
+      currentPoints,
       isDisabledPointsOptions,
       orderedProduct,
       orderRequesting,
@@ -125,12 +150,12 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         <Label as='span' basic size='big' className='color__secondary'>
           <FormattedMessage {...messages.cashPrepaid} />
         </Label>
-        { this._displayEarnPoints('cash') }
+        { this._displayEarnPoints('cash', this._toggleOrigDiscountPrice()) }
       </LabelTitle>
-      <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
+      <LabelPrice length={this._toggleOrigDiscountPrice().length}>
         <span className='total color__orange'>
           <FormattedMessage {...messages.peso} />
-          { this._toggleOrigDiscountPrice(orderedProduct) }
+          { this._toggleOrigDiscountPrice() }
         </span>
         { toggleDiscount(orderedProduct.get('discountPrice')) }
       </LabelPrice>
@@ -141,12 +166,12 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         <Label as='span' basic size='big' className='color__secondary'>
           <FormattedMessage {...messages.cashDelivery} />
         </Label>
-        { this._displayEarnPoints('cod') }
+        { this._displayEarnPoints('cod', this._toggleOrigDiscountPrice()) }
       </LabelTitle>
-      <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
+      <LabelPrice length={this._toggleOrigDiscountPrice().length}>
         <span className='total color__orange'>
           <FormattedMessage {...messages.peso} />
-          { this._toggleOrigDiscountPrice(orderedProduct) }
+          { this._toggleOrigDiscountPrice() }
         </span>
         { toggleDiscount(orderedProduct.get('discountPrice')) }
       </LabelPrice>
@@ -157,12 +182,12 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         <Label as='span' basic size='big' className='color__secondary'>
           <FormattedMessage {...messages.cashPoints} />
         </Label>
-        { this._displayEarnPoints('poc') }
+        { this._displayEarnPoints('poc', this._computePricePoints()) }
       </LabelTitle>
       <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
         <span className='total color__orange'>
           <FormattedMessage {...messages.peso} />
-          { this._toggleOrigDiscountPrice(orderedProduct) }
+          { this._computePricePoints() }
         </span>
         { toggleDiscount(orderedProduct.get('discountPrice')) }
       </LabelPrice>
@@ -263,7 +288,11 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                     />
                     <StepWrapper className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={pointsModifierVisibility}>
                       <Label as='p' basic size='big' className='color__secondary'>
-                        <FormattedMessage {...messages.chooseStore} />
+                        <FormattedMessage {...messages.choosePointsTitle} />
+                      </Label>
+                      <Label as='span' basic size='large' className='color__secondary'>
+                        <FormattedMessage {...messages.currentPoints} />
+                        { currentPoints }
                       </Label>
                     </StepWrapper>
                   </Form.Field>
@@ -293,6 +322,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
 OrderSummary.propTypes = {
   currentPoints: PropTypes.number.isRequired,
+  usePoints: PropTypes.number.isRequired,
   isDisabledPointsOptions: PropTypes.bool.isRequired,
   orderedProduct: PropTypes.object.isRequired,
   orderRequesting: PropTypes.bool.isRequired,
@@ -309,6 +339,7 @@ OrderSummary.propTypes = {
   pointsModifierVisibility: PropTypes.bool.isRequired,
   store: PropTypes.object.isRequired,
 
+  _updateUsePoints: PropTypes.func.isRequired,
   _handleModalClose: PropTypes.func.isRequired,
   _handleProceed: PropTypes.func.isRequired,
   _handleStoreLocator: PropTypes.func.isRequired,

@@ -124,6 +124,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   state = {
     store: {},
     modePayment: 'COD',
+    usePoints: 0,
     storeLocatorVisibility: true,
     pointsModifierVisibility: false,
     modalToggle: false,
@@ -151,6 +152,14 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     scrollPolyfill.polyfill()
   }
 
+  /**
+   * we need to have a way to update usepoints since we will be needing this on submission
+   */
+  _updateUsePoints = (value) => {
+    this.setState(() => ({
+      usePoints: value
+    }))
+  }
   _stepWrapperRef = (ref) => {
     this._innerStepRef = ref
   }
@@ -341,13 +350,14 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
   render () {
     const { currentPoints, orderedProduct, orderRequesting, isBlackListed, productLoader } = this.props
-    const { errorMessage, modePayment, modalToggle, storeLocatorVisibility, pointsModifierVisibility, store } = this.state
+    const { errorMessage, modePayment, modalToggle, storeLocatorVisibility, pointsModifierVisibility, store, usePoints } = this.state
     return (
       <AccessView
         mobileView={
           <MobileOrderSummary
             isDisabledPointsOptions={this._isDisabledPointsOptions()}
             currentPoints={currentPoints.get('points')}
+            usePoints={usePoints}
             ShowCodComponent={ShowCodComponent}
             _handleChange={this._handleChange}
             _handleModalClose={this._handleModalClose}
@@ -355,6 +365,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             _handleStoreLocator={this._handleStoreLocator}
             _handleToBottom={this._handleToBottom}
             _stepWrapperRef={this._stepWrapperRef}
+            _updateUsePoints={this._updateUsePoints}
 
             errorMessage={errorMessage}
             isBlackListed={isBlackListed}
