@@ -289,7 +289,7 @@ const CustomGrid = styled.div`
   }
 `
 
-const LabelTitle = styled.p`
+const LabelTitle = styled.div`
   font-family: 'Cabin';
   font-size: 14px;
   margin: 0;
