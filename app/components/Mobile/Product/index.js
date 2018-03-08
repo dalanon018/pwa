@@ -131,7 +131,7 @@ const Product = ({
       multiplier: parseFloat(product.getIn(['points', 'multiplier'])),
       percentage: parseFloat(product.getIn(['points', 'methods', 'cash'])),
       amount: parseFloat(amount)
-    })} Cliqq Points`
+    })} CLiQQ Points`
   }
 
   return (

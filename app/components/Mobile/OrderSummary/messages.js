@@ -26,7 +26,7 @@ export default defineMessages({
   },
   choosePointsTitle: {
     id: `${idSuffix}.choosePointsTitle`,
-    defaultMessage: 'Choose how may points to use:'
+    defaultMessage: 'Choose how many points to use:'
   },
   currentPoints: {
     id: `${idSuffix}.currentPoints`,
