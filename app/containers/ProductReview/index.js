@@ -119,11 +119,13 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   showStoreLocator = 'COD'
+  showPointsModifier = 'POINTS'
 
   state = {
     store: {},
     modePayment: 'COD',
     storeLocatorVisibility: true,
+    pointsModifierVisibility: false,
     modalToggle: false,
     errorMessage: ''
   }
@@ -167,9 +169,11 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   _handleChange = (e, { value }) => {
+    console.log(value, this.showPointsModifier)
     this.setState({
       modePayment: value,
-      storeLocatorVisibility: value === this.showStoreLocator
+      storeLocatorVisibility: value === this.showStoreLocator,
+      pointsModifierVisibility: value === this.showPointsModifier
     })
   }
 
@@ -279,6 +283,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         async (type) => this.setState({
           modePayment: type.toUpperCase(),
           storeLocatorVisibility: type.toUpperCase() === this.showStoreLocator,
+          pointsModifierVisibility: type.toUpperCase() === this.showPointsModifier,
           store: await transformStore(query) // we update our store
         })
       ),
@@ -336,7 +341,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
   render () {
     const { currentPoints, orderedProduct, orderRequesting, isBlackListed, productLoader } = this.props
-    const { errorMessage, modePayment, modalToggle, storeLocatorVisibility, store } = this.state
+    const { errorMessage, modePayment, modalToggle, storeLocatorVisibility, pointsModifierVisibility, store } = this.state
     return (
       <AccessView
         mobileView={
@@ -361,6 +366,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             productLoader={productLoader}
             store={store}
             storeLocatorVisibility={storeLocatorVisibility}
+            pointsModifierVisibility={pointsModifierVisibility}
           />
         }
         desktopView={

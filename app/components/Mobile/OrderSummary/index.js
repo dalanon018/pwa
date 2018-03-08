@@ -100,6 +100,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       modePayment,
       modalToggle,
       storeLocatorVisibility,
+      pointsModifierVisibility,
       store,
 
       _handleModalClose,
@@ -260,6 +261,11 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                       checked={modePayment === 'POINTS'}
                       onChange={_handleChange}
                     />
+                    <StepWrapper className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={pointsModifierVisibility}>
+                      <Label as='p' basic size='big' className='color__secondary'>
+                        <FormattedMessage {...messages.chooseStore} />
+                      </Label>
+                    </StepWrapper>
                   </Form.Field>
                 </Form>
               </SelectMethodWrapper>
@@ -300,6 +306,7 @@ OrderSummary.propTypes = {
   modePayment: PropTypes.string.isRequired,
   modalToggle: PropTypes.bool.isRequired,
   storeLocatorVisibility: PropTypes.bool.isRequired,
+  pointsModifierVisibility: PropTypes.bool.isRequired,
   store: PropTypes.object.isRequired,
 
   _handleModalClose: PropTypes.func.isRequired,
