@@ -40,7 +40,7 @@ const initialState = fromJS({
   storeLocation: {},
   visitedStores: [],
   visitedStoresLoading: false,
-  currentPoints: {},
+  currentPoints: { points: 200 }, //temporary
   currentPointsLoading: false,
   isBlackListed: true
 })
