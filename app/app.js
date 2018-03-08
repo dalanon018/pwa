@@ -63,14 +63,12 @@ ErrorTracking.install()
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
 const robotoObserver = new FontFaceObserver('Roboto', {})
-const cabinObserver = new FontFaceObserver('Cabin', {})
 
-cabinObserver.load().then(() => {
-  document.body.classList.add('cabinLoaded')
+robotoObserver.load().then(() => {
+  document.body.classList.add('robotoLoaded')
 }, () => {
-  document.body.classList.remove('cabinLoaded')
+  document.body.classList.remove('robotoLoaded')
 })
-robotoObserver.load()
 
 // Create redux store with history
 const initialState = {}

@@ -41,7 +41,6 @@ const StepHead = styled.div`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  font-family: 'Cabin';
   font-size: 13px;
   letter-spacing: 3px;
   margin-bottom: 15px;
@@ -126,7 +125,6 @@ const DetailsWrapper = styled.div`
   }
 
   @media (min-width: 768px) {
-    font-family: 'Cabin';
     font-size: 14px;
     margin-bottom: 35px;
     margin: 30px 0;
@@ -134,7 +132,6 @@ const DetailsWrapper = styled.div`
 
     span {
       display: block;
-      font-family: 'Cabin';
       font-size: 16px;
       font-weight: 100;
       letter-spacing: 4px;
@@ -230,7 +227,6 @@ const SelectMethodWrapper = styled.div`
 const LocationButton = styled(({iconBg, ...props}) => <Button {...props} />)`
   background: transparent !important;
   border-radius: 5px !important;
-  font-family: 'Cabin' !important;
   letter-spacing: 2px;
   padding: 20px 10px !important;
   position: relative;

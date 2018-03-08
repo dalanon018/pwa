@@ -110,7 +110,6 @@ const ContentWrapper = styled(Container)`
 `
 
 const DesktopTitle = styled.p`
-  font-family: Lato,Cabin,'Helvetica Neue',Arial,Helvetica,sans-serif;
   font-size: 20px;
   font-weight: 700;
   text-align: center;
@@ -119,7 +118,7 @@ const DesktopTitle = styled.p`
 const DesktopItemCount = styled.p`
   font-family: Roboto;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   margin-bottom: 20px;
   text-align: center;
 `

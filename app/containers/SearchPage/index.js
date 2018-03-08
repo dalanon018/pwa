@@ -70,7 +70,6 @@ const DesktopHeader = styled.div`
   margin-bottom: -10px !important;
 
   h3 {
-    font-family: Lato,Cabin,'Helvetica Neue',Arial,Helvetica,sans-serif;
     font-size: 20px !important;
     padding: 0 !important;
   }

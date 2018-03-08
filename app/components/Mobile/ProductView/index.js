@@ -26,8 +26,8 @@ import {
   ProductInfo,
   ProductPriceWrapper,
   ProductWrapper,
-  ImageContent
-  // RibbonWrapper
+  ImageContent,
+  RibbonWrapper
 } from './styles'
 
 import EmptyDataBlock from 'components/Shared/EmptyDataBlock'
@@ -96,19 +96,20 @@ function ProductView ({
     ? changeRoute(`/product/${entity.get('cliqqCode').first()}`)
     : changeRoute('/')
 
-    // const togglePromoTage = () => {
-    //   return (
-    //     <RibbonWrapper>
-    //       <div className='ribbon-tag'>
-    //         <Label as='b' className='color__white padding__none' basic size='medium'>20%</Label>
-    //         <Label as='span' className='color__white padding__none' basic size='small'>OFF</Label>
-    //       </div>
-    //     </RibbonWrapper>
-    //   )
-    // }
+    const togglePromoTag = () => {
+      return (
+        <RibbonWrapper>
+          <div className='ribbon-tag background__gold'>
+            <Label as='b' className='color__white padding__none text__weight--500' basic size='small'>20%</Label>
+            <Label as='span' className='color__white padding__none text__weight--500' basic size='mini'>OFF</Label>
+          </div>
+        </RibbonWrapper>
+      )
+    }
 
     return (
       <ProductWrapper onClick={goToProduct}>
+        {togglePromoTag()}
         <ImageWrapper>
           <ImageContent>
             <LazyLoad
@@ -125,14 +126,14 @@ function ProductView ({
           </ImageContent>
         </ImageWrapper>
         <ProductInfo brandName={entity.get('brand')}>
-          <Label as='span' className='brand-name color__grey' basic size='small'>{entity.getIn(['brand', 'name'])}</Label>
-          <Label className='no-bottom-margin product-name color__secondary' as='p' basic size='medium'>{entity.get('title')}</Label>
+          <Label as='span' className='brand-name text__weight--400 color__grey' basic size='small'>{entity.getIn(['brand', 'name'])}</Label>
+          <Label className='no-bottom-margin text__weight--400 product-name color__secondary margin__none' as='p' basic size='medium'>{entity.get('title')}</Label>
           <ProductPriceWrapper>
-            <Label className='product-price' as='b' basic size='massive'>
+            <Label className='product-price color__primary text__weight--700' as='b' basic size='big'>
               <FormattedMessage {...messages.peso} />
               { toggleOrigDiscountPrice(entity) }
             </Label>
-            <Label className='product-discount' as='span' color='grey' basic size='large'>
+            <Label className='product-discount text__weight--500 color__grey' as='span' basic size='small'>
               { toggleDiscountLabel(entity.get('discountPrice') !== 0) }
               { toggleDiscountValue(entity.get('discountPrice') !== 0) }
             </Label>

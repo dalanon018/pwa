@@ -6,7 +6,7 @@
 
 import React from 'react'
 import styled from 'styled-components'
-import { Container, Image, Grid } from 'semantic-ui-react'
+import { Container, Image, Grid, Label } from 'semantic-ui-react'
 import { imageStock } from 'utils/image-stock'
 
 import { FormattedMessage } from 'react-intl'
@@ -27,7 +27,7 @@ const TimerWrapper = styled.div`
   border-radius: 3px 0 0 3px;
   bottom: 12px;
   min-width: 180px;
-  padding: 5px;
+  padding: 5px 10px;
   position: absolute;
   right: 0;
   z-index: 1;
@@ -41,13 +41,8 @@ const ContentWrapper = styled.div`
 `
 
 const LabelWrapper = styled.div`
-  font-size: 10px;
-  line-height: 10px;
-  width: 60px;
-`
-
-const CountWrapper = styled.div`
-  font-size: 20px;
+  line-height: 5px !important;
+  width: 70px;
 `
 
 function FlashDeals ({
@@ -83,11 +78,13 @@ function FlashDeals ({
                 <TimerWrapper>
                   <ContentWrapper>
                     <LabelWrapper>
-                      <FormattedMessage {...messages.endsIn} />
+                      <Label as='span' size='mini' className='color__white text__weight--400'>
+                        <FormattedMessage {...messages.endsIn} />
+                      </Label>
                     </LabelWrapper>
-                    <CountWrapper>
+                    <Label as='span' size='massive' className='color__white text__weight--400'>
                       <Timer endDate={promo.get('thruDate')} />
-                    </CountWrapper>
+                    </Label>
                   </ContentWrapper>
                 </TimerWrapper>
               }
@@ -97,7 +94,6 @@ function FlashDeals ({
                   ? <Image src={promo.get('background')} />
                   : <Image src={imageStock('Slider-Default.jpg', imgixOptions)} />
                 }
-
               </PlainCard>
             </BannerWrapper>
           </Grid.Column>

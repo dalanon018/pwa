@@ -141,7 +141,6 @@ const HamburgerSpan = styled.span`
 `
 
 const MobileMenu = styled.div`
-  background: #FF4814;
   ${props => props.shadow && 'box-shadow: 1px 1px 5px rgba(120,120,120, 0.7);'}
   padding-right: 10px;
   padding-left: 10px;
@@ -302,7 +301,7 @@ export default class MainMenu extends PureComponent {
 
     return (
       <Wrapper>
-        <MobileMenu className='header-wrapper' headerMenuFullScreen={headerMenuFullScreen} shadow={windowHeightOffset >= 53}>
+        <MobileMenu className='header-wrapper background__primary' headerMenuFullScreen={headerMenuFullScreen} shadow={windowHeightOffset >= 53}>
           <Grid padded className='header-menu-grid'>
             <CustomRow>
               <Grid.Column

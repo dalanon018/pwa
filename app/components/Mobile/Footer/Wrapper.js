@@ -7,7 +7,7 @@ const Wrapper = styled.footer`
   text-align: center;
 
   .custom-header {
-    font-size: 20px;
+    font-size: 18px;
     margin-bottom: 10px;
   }
 
@@ -41,7 +41,7 @@ const HelperLinks = styled.div`
 `
 
 const CopyRight = styled.p`
-  font-size: 9px;
+  font-size: 10px;
 `
 
 const SocialIcons = styled.div`

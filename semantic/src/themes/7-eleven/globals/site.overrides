@@ -6,7 +6,7 @@
         Color Overrides
 *******************************/
 
-@primaryColor: #8DC640;
+/* @primaryColor: #8DC640;
 @lightOrange: #F6A22D;
 @orange: #F58322;
 @grey: #AEAEAE;
@@ -15,7 +15,7 @@
 @lightGrey: #F0F0F0;
 @smokeGrey: #D7D7D7;
 @black: #000000;
-@blackTransparent: rgba(0,0,0,0.2);
+@blackTransparent: rgba(0,0,0,0.2); */
 
 /*******************************
         Element Overrides
@@ -24,8 +24,8 @@
 body {
   color: @darkGrey;
   font-family: @pageFont;
-  font-weight: 300;
-  font-size: 12px;
+  font-weight: 400;
+  font-size: 14px;
 
   ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: @lightGrey;
@@ -93,7 +93,7 @@ div [data-reactroot],
   .item {
     color: @grey !important;
     font-size: 14.5px;
-    font-weight: 300;
+    font-weight: 400;
     padding: 10px 14px;
 
     &.active {
@@ -103,7 +103,7 @@ div [data-reactroot],
 }
 
 p {
-  line-height: 1.5em !important;
+  line-height: 1.35em !important;
 }
 
 .search.icon {
@@ -138,8 +138,7 @@ input.input-field {
   border-radius: 0;
   border-right: 0;
   border-top: 0;
-  font-family: Cabin;
-  font-weight: 300;
+  font-weight: 400;
   padding: 5px 15px;
   width: 100%;
 
@@ -171,8 +170,11 @@ input.input-field {
     }
   }
   &__weight {
-    &--300 {
-      font-weight: 300 !important;
+    &--400 {
+      font-weight: 400 !important;
+    }
+    &--500 {
+      font-weight: 500 !important;
     }
     &--700 {
       font-weight: 700 !important;
@@ -233,7 +235,13 @@ input.input-field {
   &__primary {
     background-color: @primaryColor !important;
   }
-  &__secondary {
+  &__gold {
+    background-color: @gold !important;
+  }
+  &__teal {
+    background-color: @teal !important;
+  }
+  &__dark-grey {
     background-color: @darkGrey !important;
   }
   &__grey {
@@ -242,20 +250,11 @@ input.input-field {
   &__light-grey {
     background-color: @lightGrey !important;
   }
-  &__smoke-grey {
-    background-color: @smokeGrey !important;
-  }
   &__white {
     background-color: @white !important;
   }
-  &__orange {
-    background-color: @orange !important;
-  }
   &__black {
     background-color: @black !important;
-  }
-  &__black-transparent {
-    background-color: @blackTransparent !important;
   }
 }
 
@@ -263,7 +262,13 @@ input.input-field {
   &__primary {
     color: @primaryColor !important;
   }
-  &__secondary {
+  &__gold {
+    color: @gold !important;
+  }
+  &__teal {
+    color: @teal !important;
+  }
+  &__dark-grey {
     color: @darkGrey !important;
   }
   &__grey {
@@ -272,17 +277,11 @@ input.input-field {
   &__light-grey {
     color: @lightGrey !important;
   }
-  &__dark-grey {
-    color: @darkGrey !important;
-  }
   &__white {
     color: @white !important;
   }
-  &__orange {
-    color: @orange !important;
-  }
-  &__dark {
-    color: #2F2F2F !important;
+  &__black {
+    color: @black !important;
   }
 }
 
@@ -340,8 +339,7 @@ input.input-field {
   #termsandconditions,
   #termsandconditions-1 {
     color: #5B5B5B;
-    font-family: 'Cabin';
-    font-weight: 300;
+    font-weight: 400;
     font-size: 11px;
     letter-spacing: 1px;
     // padding-left: 13px;
@@ -370,7 +368,6 @@ input.input-field {
 
   h3 {
     color: #5B5B5B;
-    font-family: 'Cabin';
     font-size: 10px;
     letter-spacing: 1px;
     padding-left: 13px;
@@ -455,9 +452,6 @@ svg#barcode {
 
 @media (min-width: 320px) {
   /* Global */
-  body {
-    font-size: .9em;
-  }
   p {
     margin-bottom: 7px;
   }
@@ -597,7 +591,6 @@ svg#barcode {
     padding: 14px;
   }
   .custom-button {
-    font-family: Cabin !important;
     font-weight: 600;
     letter-spacing: 5px;
     margin: 0 auto !important;

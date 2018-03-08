@@ -14,14 +14,12 @@ import { FormattedMessage } from 'react-intl'
 import messages from './messages'
 
 export const Wrapper = styled.div`
-  background-color: #E8E8E8;
-  padding: 0 10px;
+  padding: 10px;
 `
 
 export const FlexContainer = styled.div`
-  align-items: center;
+  align-items: flex-start;
   display: flex;
-  padding: 10px 0;
 
   img {
     width: 40px;
@@ -32,7 +30,7 @@ export const FlexContainer = styled.div`
     }
   }
 
-  .large {
+  .medium {
     line-height: 18px;
   }
 
@@ -45,29 +43,31 @@ export const FlexContainer = styled.div`
 
 function OrderTip () {
   return (
-    <Wrapper>
+    <Wrapper className='background__lightGrey'>
       <Container>
         <Grid container>
           <Grid.Row columns={2}>
             <Grid.Column>
               <FlexContainer>
                 <Image alt='CLiQQ' src={DeliveryIcon} />
-                <Label as='span' size='large' className='color__secondary custom-label'>
-                  <FormattedMessage {...messages.storeDelivery} />
+                <Label as='span' size='medium' className='color__secondary text__weight--500 custom-label'>
+                  {/* <FormattedMessage {...messages.storeDelivery} /> */}
+                  1 Day In-Store<br />Delivery
                 </Label>
               </FlexContainer>
-              <Label as='span' size='medium' className='color__grey text__weight--300'>
+              <Label as='span' size='small' className='color__grey text__weight--400'>
                 <FormattedMessage {...messages.freeDelivery} />
               </Label>
             </Grid.Column>
             <Grid.Column>
               <FlexContainer>
                 <Image alt='CLiQQ' className='return-icon' src={ReturnIcon} />
-                <Label as='span' size='large' className='color__secondary custom-label'>
-                  <FormattedMessage {...messages.returnPolicy} />
+                <Label as='span' size='medium' className='color__secondary text__weight--500 custom-label'>
+                  {/* <FormattedMessage {...messages.returnPolicy} /> */}
+                  CLiQQ Return<br />Policy
                 </Label>
               </FlexContainer>
-              <Label as='span' size='medium' className='color__grey text__weight--300'>
+              <Label as='span' size='small' className='color__grey text__weight--400'>
                 <FormattedMessage {...messages.noQuestions} />
               </Label>
             </Grid.Column>
