@@ -45,6 +45,7 @@ describe('<OrderSummary />', () => {
     _handleToBottom: () => {},
     _handleChange: () => {},
     ShowCodComponent: () => <div />,
+    modePayment: 'cod',
     modalToggle: false,
     labelOne: '',
     labelTwo: '',
@@ -73,7 +74,7 @@ describe('<OrderSummary />', () => {
     mobileNumber: '999999999',
     errorMessage: '',
     orderRequesting: false,
-    store: (!null || !undefined) && 'Quezon City'
+    store: { name: 'Quezon City', id: 1 }
   }
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(true)
