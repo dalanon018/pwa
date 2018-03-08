@@ -3,21 +3,6 @@
 *******************************/
 
 /*******************************
-        Color Overrides
-*******************************/
-
-/* @primaryColor: #8DC640;
-@lightOrange: #F6A22D;
-@orange: #F58322;
-@grey: #AEAEAE;
-@darkGrey: #5B5B5B;
-@white: #FFFFFF;
-@lightGrey: #F0F0F0;
-@smokeGrey: #D7D7D7;
-@black: #000000;
-@blackTransparent: rgba(0,0,0,0.2); */
-
-/*******************************
         Element Overrides
 *******************************/
 
