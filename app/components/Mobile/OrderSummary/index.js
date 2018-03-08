@@ -90,6 +90,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
   render () {
     const {
+      isDisabledPointsOptions,
       orderedProduct,
       orderRequesting,
       isBlackListed,
@@ -118,7 +119,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       null
     )
 
-    const labelOne = <label className='label-custom'>
+    const cashLabel = <label className='label-custom'>
       <LabelTitle>
         <Label as='span' basic size='big' className='color__secondary'>
           <FormattedMessage {...messages.cashPrepaid} />
@@ -134,12 +135,28 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       </LabelPrice>
     </label>
 
-    const labelTwo = <label className='label-custom'>
+    const codLabel = <label className='label-custom'>
       <LabelTitle>
         <Label as='span' basic size='big' className='color__secondary'>
           <FormattedMessage {...messages.cashDelivery} />
         </Label>
         { this._displayEarnPoints('cod') }
+      </LabelTitle>
+      <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
+        <span className='total color__orange'>
+          <FormattedMessage {...messages.peso} />
+          { this._toggleOrigDiscountPrice(orderedProduct) }
+        </span>
+        { toggleDiscount(orderedProduct.get('discountPrice')) }
+      </LabelPrice>
+    </label>
+
+    const pointsLabel = <label className='label-custom'>
+      <LabelTitle>
+        <Label as='span' basic size='big' className='color__secondary'>
+          <FormattedMessage {...messages.cashPoints} />
+        </Label>
+        { this._displayEarnPoints('poc') }
       </LabelTitle>
       <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
         <span className='total color__orange'>
@@ -204,11 +221,11 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                       isBlackListed={isBlackListed}
                       name='cod'
                       value='COD'
-                      label={labelTwo}
+                      label={codLabel}
                       checked={modePayment === 'COD'}
                       onChange={_handleChange}
                       onClick={_handleToBottom}
-                  />
+                    />
                     <StepWrapper innerRef={_stepWrapperRef} className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={visibility}>
                       <Label as='p' basic size='big' className='color__secondary'>
                         <FormattedMessage {...messages.chooseStore} />
@@ -229,8 +246,18 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                       className='margin__bottom-positive--20'
                       name='cash-prepaid'
                       value='CASH'
-                      label={labelOne}
+                      label={cashLabel}
                       checked={modePayment === 'CASH'}
+                      onChange={_handleChange}
+                    />
+                    <Checkbox
+                      radio
+                      disabled={isDisabledPointsOptions}
+                      className='margin__bottom-positive--20'
+                      name='points'
+                      value='POINTS'
+                      label={pointsLabel}
+                      checked={modePayment === 'POINTS'}
                       onChange={_handleChange}
                     />
                   </Form.Field>
@@ -259,6 +286,8 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 }
 
 OrderSummary.propTypes = {
+  currentPoints: PropTypes.number.isRequired,
+  isDisabledPointsOptions: PropTypes.bool.isRequired,
   orderedProduct: PropTypes.object.isRequired,
   orderRequesting: PropTypes.bool.isRequired,
   isBlackListed: PropTypes.bool.isRequired,

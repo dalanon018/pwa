@@ -74,6 +74,10 @@ import {
   selectCurrentPointsLoading
 } from './selectors'
 
+import {
+  ALLOWED_POINTS
+} from './constants'
+
 // Helper
 const isDoneRequesting = (loader) => () => (loader === false)
 const isEntityEmpty = compose(equals(0), prop('size'))
@@ -255,6 +259,11 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     }
   }
 
+  _isDisabledPointsOptions = () => {
+    const { currentPoints } = this.props
+    return currentPoints.get('points') < ALLOWED_POINTS
+  }
+
   componentWillUnmount () {
     this.props.setHandlersDefault()
   }
@@ -326,13 +335,14 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   render () {
-    const { orderedProduct, orderRequesting, isBlackListed, productLoader } = this.props
+    const { currentPoints, orderedProduct, orderRequesting, isBlackListed, productLoader } = this.props
     const { errorMessage, modePayment, modalToggle, visibility, store } = this.state
-
     return (
       <AccessView
         mobileView={
           <MobileOrderSummary
+            isDisabledPointsOptions={this._isDisabledPointsOptions()}
+            currentPoints={currentPoints.get('points')}
             ShowCodComponent={ShowCodComponent}
             _handleChange={this._handleChange}
             _handleModalClose={this._handleModalClose}
