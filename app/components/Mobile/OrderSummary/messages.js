@@ -44,6 +44,10 @@ export default defineMessages({
     id: `${idSuffix}.cashDelivery`,
     defaultMessage: 'Cash on Delivery'
   },
+  cashPoints: {
+    id: `${idSuffix}.cashPoints`,
+    defaultMessage: 'Points & Cash'
+  },
   proceedNext: {
     id: `${idSuffix}.proceedNext`,
     defaultMessage: 'Purchase your Product Now!'
