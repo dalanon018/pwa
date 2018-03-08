@@ -67,8 +67,6 @@ function FlashDeals ({
     lossless: 0
   }
 
-  console.log('promo', promo.toJS())
-
   return (
     <Container>
       <div className='margin__bottom-positive--20'>
