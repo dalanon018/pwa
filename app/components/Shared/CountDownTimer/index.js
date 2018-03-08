@@ -92,7 +92,7 @@ export default class Timer extends React.Component {
     const { timer } = this.state
 
     return (
-      <p> { timer }</p>
+      <span>{ timer }</span>
     )
   }
 }

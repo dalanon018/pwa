@@ -15,8 +15,6 @@ import { range } from 'lodash'
 
 import PlainCard from 'components/Mobile/PlainCard'
 
-import TestBrand from 'images/test-images/best-foods.png'
-
 import { imageStock } from 'utils/image-stock'
 
 // import { FormattedMessage } from 'react-intl'
@@ -24,43 +22,37 @@ import { imageStock } from 'utils/image-stock'
 
 export const Wrapper = styled.div`
   display: block;
-  margin-bottom: -15px;
   position: relative;
   width: 100%;
+  overflow: hidden;
 `
 
 export const BrandsWrapper = styled.div`
   overflow-y: hidden;
   width: ${props => (94 * props.size) + (10 * props.size) - 10}px;
-
-  .slick-list {
-    padding: 2px;
-  }
 `
 
 export const BrandsContainer = styled.div`
   height: 100%;
   overflow-x: auto;
   overflow-y: hidden;
-  padding-bottom: 15px;
-`
 
-export const HideScroll = styled.div`
-  background-color: #f4f4f4;
-  bottom: 0;
-  height: 15px;
-  left: 0;
-  position: absolute;
-  width: 100%;
-  z-index: 1;
+  &::-webkit-scrollbar {
+    width: 0;
+    display: none;
+    visibility: hidden;
+  }
 `
 
 export const SliderItem = styled.div`
   margin-right: 10px;
   display: inline-block;
+  vertical-align: middle;
 
   // temporary
   img {
+    margin: 0 auto;
+    padding: 2px;
     width: 90px;
   }
 
@@ -84,23 +76,20 @@ function BrandSlider ({ brands, loader, changeRoute }) {
     <Container>
       <Wrapper>
         <BrandsContainer>
-          <div>
-            <HideScroll />
-            <BrandsWrapper size={brands.size ? brands.size : 4}>
-              {
-                loader ? range(4).map((_, index) => <SliderItem key={index}><DefaultState /></SliderItem>)
-                : brands.map((brand, index) => {
-                  return (
-                    <SliderItem key={index} onClick={goToBrand(brand.get('id'))}>
-                      <PlainCard size={94}>
-                        <Image src={TestBrand} alt='CLiQQ' />
-                      </PlainCard>
-                    </SliderItem>
-                  )
-                })
-              }
-            </BrandsWrapper>
-          </div>
+          <BrandsWrapper size={brands.size ? brands.size : 4}>
+            {
+            loader ? range(4).map((_, index) => <SliderItem key={index}><DefaultState /></SliderItem>)
+            : brands.map((brand, index) => {
+              return (
+                <SliderItem key={index} onClick={goToBrand(brand.get('id'))}>
+                  <PlainCard size={94}>
+                    <Image src={brand.get('logo') !== '' ? brand.get('logo') : imageStock('Brands-Default.jpg', imgixOptions)} alt='CLiQQ' />
+                  </PlainCard>
+                </SliderItem>
+              )
+            })
+          }
+          </BrandsWrapper>
         </BrandsContainer>
       </Wrapper>
     </Container>

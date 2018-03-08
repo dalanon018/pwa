@@ -33,6 +33,7 @@ import BrandSlider from 'components/Mobile/BrandSlider'
 import SectionTitle from 'components/Mobile/HomeSectionTitle'
 import OrderTip from 'components/Mobile/OrderTip'
 import PointAds from 'components/Mobile/PointAds'
+import FlashDeals from 'components/Mobile/FlashDeals'
 
 import WindowWidth from 'components/Shared/WindowWidth'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
@@ -241,7 +242,20 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render () {
-    const { featuredCategories, featuredBrands, changeRoute, windowWidth, brandLoader, featuredProductsLoader, lazyload, intl, categoryNavLoader } = this.props
+    const {
+      featuredCategories,
+      featuredBrands,
+      changeRoute,
+      windowWidth,
+      brandLoader,
+      featuredProductsLoader,
+      lazyload,
+      intl,
+      categoryNavLoader,
+      promos,
+      promosLoading,
+      promosCount } = this.props
+
     const imgixOptions = {
       w: windowWidth >= 1024 ? 1170 : 800,
       h: 400,
@@ -261,7 +275,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     const desktopBannerImages = [
       paramsImgix('https://cliqqshop.imgix.net/banner-desktop.jpg', imgixOptions)
     ]
-
     return (
       <div>
         <Helmet
@@ -339,6 +352,21 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         </Container>
 
         <OrderTip />
+        {
+          promos.size > 0 && promos.map((promo) => (
+            <FlashDeals
+              key={promo.get('promoCode')}
+              windowWidth={windowWidth}
+              changeRoute={changeRoute}
+              promo={promo}
+              promosLoading={promosLoading}
+              promosCount={promosCount}
+              intl={intl}
+            />
+            )
+          )
+        }
+
         <PointAds />
 
         <Container>
