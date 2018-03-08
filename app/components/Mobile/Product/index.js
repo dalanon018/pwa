@@ -24,6 +24,7 @@ import ReturnIcon from 'images/test-images/v2/return-icon.svg'
 
 import { fbShare } from 'utils/fb-share'
 import { paramsImgix } from 'utils/image-stock'
+import { calculateEarnPoints } from 'utils/calculation'
 
 import ProductSlider from 'components/Shared/BannerSlider'
 import ListCollapse from 'components/Shared/ListCollapse'
@@ -123,6 +124,16 @@ const Product = ({
     return fbShare(product)
   }
 
+  const getHighestPointsEarn = () => {
+    const amount = product.get('discountPrice') || product.get('price')
+
+    return `${calculateEarnPoints({
+      multiplier: parseFloat(product.getIn(['points', 'multiplier'])),
+      percentage: parseFloat(product.getIn(['points', 'methods', 'cash'])),
+      amount: parseFloat(amount)
+    })} Cliqq Points`
+  }
+
   return (
     <div>
       <ProductWrapper>
@@ -166,6 +177,12 @@ const Product = ({
             product={product}
             onSizeChange={onSizeChange}
           />
+        }
+
+        {
+          product.get('points') && <FormattedMessage
+            {...messages.earnPoints}
+            values={{points: <b>{getHighestPointsEarn()}</b>}} />
         }
 
         <SocialContainer className='border_bottom__one--light-grey border_top__one--light-grey'>
