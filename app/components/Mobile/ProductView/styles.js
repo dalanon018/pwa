@@ -5,7 +5,7 @@ const ProductWrapper = styled.div`
   display: block;
   position: relative;
   background-color: #FFFFFF;
-  border-radius: 3px;
+  border-radius: 4px;
   box-shadow: 0 0 5px rgba(120,120,120, 0.1);
 
 

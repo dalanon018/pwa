@@ -10,7 +10,7 @@ import styled from 'styled-components'
 const Wrapper = styled.div`
   align-items: center;
   background-color: #FFFFFF;
-  border-radius: 6px;
+  border-radius: 4px;
   box-shadow: 0 0 5px rgba(120,120,120, 0.1);
   display: flex;
   height: ${props => props.size}px;
