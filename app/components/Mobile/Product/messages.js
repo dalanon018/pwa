@@ -85,5 +85,9 @@ export default defineMessages({
   noStock: {
     id: 'app.components.Product.noStock',
     defaultMessage: 'OUT OF STOCK'
+  },
+  earnPoints: {
+    id: 'app.containers.ProductPage.earnPoints',
+    defaultMessage: 'Earn up to {points} when you claim this!'
   }
 })
