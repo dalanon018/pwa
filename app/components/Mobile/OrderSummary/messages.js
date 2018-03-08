@@ -71,5 +71,9 @@ export default defineMessages({
   peso: {
     id: `${idSuffix}.peso`,
     defaultMessage: '₱ '
+  },
+  earnedPoints: {
+    id: `${idSuffix}.earnedPoints`,
+    defaultMessage: `Earn {points}`
   }
 })

@@ -50,20 +50,36 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     return images ? paramsImgix(images, options) : ''
   }
 
-  _getHighestPointsEarn = () => (product) => {
-    const amount = product.get('discountPrice') || product.get('price')
-
+  _getHighestPointsEarn = (mode) => {
+    const { orderedProduct } = this.props
+    const amount = orderedProduct.get('discountPrice') || orderedProduct.get('price')
     return `${calculateEarnPoints({
-      multiplier: parseFloat(product.getIn(['points', 'multiplier'])),
-      percentage: parseFloat(product.getIn(['points', 'methods', 'cash'])),
+      multiplier: parseFloat(orderedProduct.getIn(['points', 'multiplier'])),
+      percentage: parseFloat(orderedProduct.getIn(['points', 'methods', mode])),
       amount: parseFloat(amount)
-    })} Cliqq Points`
+    })}`
   }
 
   _toggleOrigDiscountPrice = (product) => {
     const showPrice = product.get('discountPrice') || product.get('price')
 
     return showPrice ? showPrice.toLocaleString() : 0
+  }
+
+  _displayEarnPoints = (mode) => {
+    const { orderedProduct } = this.props
+    if (orderedProduct.get('points')) {
+      return (
+        <Label as='p' basic size='large' className='color__secondary'>
+          <FormattedMessage
+            {...messages.earnedPoints}
+            values={{points: <b>{this._getHighestPointsEarn(mode)}</b>}}
+          />
+        </Label>
+      )
+    }
+
+    return null
   }
 
   _showDiscountPrice = (component1, component2) => (condition) => ifElse(
@@ -107,6 +123,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         <Label as='span' basic size='big' className='color__secondary'>
           <FormattedMessage {...messages.cashPrepaid} />
         </Label>
+        { this._displayEarnPoints('cash') }
       </LabelTitle>
       <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
         <span className='total color__orange'>
@@ -122,6 +139,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         <Label as='span' basic size='big' className='color__secondary'>
           <FormattedMessage {...messages.cashDelivery} />
         </Label>
+        { this._displayEarnPoints('cod') }
       </LabelTitle>
       <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
         <span className='total color__orange'>
