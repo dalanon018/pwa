@@ -45,7 +45,7 @@ describe('<ProductReview />', () => {
     orderRequesting: false,
     visitedStores: fromJS({}),
     visitedStoresLoading: false,
-    currentPoints: fromJS({}),
+    currentPoints: fromJS({ points: 0 }),
     currentPointsLoading: false
   }
 

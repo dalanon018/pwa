@@ -44,12 +44,17 @@ describe('<OrderSummary />', () => {
     _stepWrapperRef: () => {},
     _handleToBottom: () => {},
     _handleChange: () => {},
+    _updateUsePoints: () => {},
     ShowCodComponent: () => <div />,
+    currentPoints: 0,
+    usePoints: 0,
     modePayment: 'cod',
     modalToggle: false,
     labelOne: '',
     labelTwo: '',
     storeLocatorVisibility: true,
+    pointsModifierVisibility: false,
+    isDisabledPointsOptions: false,
     isBlackListed: false,
     loader: false,
     orderedProduct: fromJS({
@@ -119,7 +124,7 @@ describe('<OrderSummary />', () => {
 
   it('renders one <StepWrapper/> styled component', () => {
     const ShallowedWrapper = shallow(<OrderSummary {...minProps} />)
-    expect(ShallowedWrapper.find(StepWrapper)).toHaveLength(1)
+    expect(ShallowedWrapper.find(StepWrapper)).toHaveLength(2)
   })
 
   it('renders one <StepHead/> styled component', () => {
