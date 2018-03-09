@@ -492,7 +492,7 @@ svg#barcode {
         padding-bottom: 10px;
       }
       &--15 {
-        padding-bottom: 15px;
+        padding-bottom: 15px !important;
       }
     }
     &__horizontal {
