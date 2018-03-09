@@ -11,18 +11,17 @@ import {
   T,
   allPass,
   always,
-  complement,
   compose,
   cond,
   divide,
-  equals,
   identity,
   ifElse,
   multiply,
+  subtract,
   path,
   prop,
   when,
-  lt,
+  lt
  } from 'ramda'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Label, Form, Checkbox, Image, Button } from 'semantic-ui-react'
@@ -52,7 +51,6 @@ import {
   LabelPrice,
   LabelTitle
 } from './styles'
-import {switchFn} from '../../../utils/logicHelper';
 
 class OrderSummary extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
@@ -107,17 +105,15 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
   }
 
   _computePricePoints = () => {
-    const { orderedProduct, isDisabledPointsOptions } = this.props
+    const { orderedProduct, isDisabledPointsOptions, usePoints } = this.props
     if (isDisabledPointsOptions) {
       // we dont need to recompute since we disable this one.
       return this._toggleOrigDiscountPrice()
-    } else if (this._isCurrentPointsHalfPricePoints()) {
-      return Math.ceil(divide(
-        this._basePointsRequirementsUse(),
+    } else {
+      return Math.floor(divide(
+        subtract(this._computeTotalPointsPrice(), usePoints),
         orderedProduct.getIn(['points', 'multiplier'])
       ))
-    } else {
-      return 0
     }
   }
 
@@ -146,18 +142,17 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
   // Make sure we accept that the current props has the values.
   // TODO: Make sure that we refactor this one and find a way that functions are not bind to this class
   _initialUpdateProps = () => {
-    const { _updateUsePoints,isDisabledPointsOptions, currentPoints, orderedProduct } = this.props
+    const { _updateUsePoints, isDisabledPointsOptions, currentPoints } = this.props
     const points = cond([
       [this._isCurrentPointsHalfPricePoints, this._basePointsRequirementsUse],
       [always(isDisabledPointsOptions), always(0)],
       [T, always(currentPoints)]
     ])()
-    console.log(points)
     this._pointsInitialized = true
     return _updateUsePoints(Math.ceil(points))
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     // when not yet initialize
     const initializeStartingUsePoints = when(
       allPass([
@@ -169,7 +164,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         compose(
           lt(0),
           path(['orderedProduct', 'size'])
-        ),
+        )
       ]),
       this._initialUpdateProps
     )
@@ -358,7 +353,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                       </Label>
                       <Label as='span' basic size='large' className='color__secondary'>
                         <FormattedMessage {...messages.currentPoints} />
-                        { currentPoints }
+                        { subtract(currentPoints, usePoints) }
                       </Label>
                       <RangeSlider
                         usePoints={usePoints}
