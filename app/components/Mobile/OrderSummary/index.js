@@ -7,13 +7,29 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty } from 'lodash'
-import { ifElse, identity } from 'ramda'
+import {
+  T,
+  allPass,
+  always,
+  complement,
+  compose,
+  cond,
+  divide,
+  equals,
+  identity,
+  ifElse,
+  multiply,
+  path,
+  when,
+ } from 'ramda'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Label, Form, Checkbox, Image, Button } from 'semantic-ui-react'
 
 import NextIcon from 'images/icons/greater-than-icon.svg'
 import ListCollapse from 'components/Shared/ListCollapse'
 import Modal from 'components/Shared/PromptModal'
+import RangeSlider from 'components/Shared/RangeSlider'
+
 import { LoadingStateImage } from 'components/Shared/LoadingBlock'
 
 import { paramsImgix } from 'utils/image-stock'
@@ -34,8 +50,15 @@ import {
   LabelPrice,
   LabelTitle
 } from './styles'
+import {switchFn} from '../../../utils/logicHelper';
 
 class OrderSummary extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  /**
+   * we need to find a way if we already initialize our points else
+   * we will be stuck on circular initialization
+   */
+  _pointsInitialized = false
+
   _updateParamsImages = (images, opt = {}) => {
     const options = {
       w: 414,
@@ -66,15 +89,19 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     return showPrice ? showPrice.toLocaleString() : 0
   }
 
+  _basePointsRequirementsUse = () => {
+    return divide(this._computeTotalPointsPrice(), 2)
+  }
+
   _computeTotalPointsPrice = () => {
     const { orderedProduct } = this.props
-    const multiplier = parseFloat(orderedProduct.getIn(['points', 'multiplier']))
-    return Math.ceil(parseFloat(this._toggleOrigDiscountPrice()) * multiplier)
+    const multiplier = orderedProduct.getIn(['points', 'multiplier'])
+    return Math.ceil(multiply(this._toggleOrigDiscountPrice(), multiplier))
   }
 
   _isCurrentPointsHalfPricePoints = () => {
     const { currentPoints } = this.props
-    return currentPoints >= (this._computeTotalPointsPrice() / 2)
+    return currentPoints >= this._basePointsRequirementsUse()
   }
 
   _computePricePoints = () => {
@@ -83,8 +110,10 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       // we dont need to recompute since we disable this one.
       return this._toggleOrigDiscountPrice()
     } else if (this._isCurrentPointsHalfPricePoints()) {
-      const pointsPrice = (this._computeTotalPointsPrice() / 2)
-      return Math.ceil(pointsPrice / parseFloat(orderedProduct.getIn(['points', 'multiplier'])))
+      return Math.ceil(divide(
+        this._basePointsRequirementsUse(),
+        orderedProduct.getIn(['points', 'multiplier'])
+      ))
     } else {
       return 0
     }
@@ -112,8 +141,28 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     () => component2
   )(condition)
 
+  _initialUpdateProps = () => {
+    const { _updateUsePoints,isDisabledPointsOptions, currentPoints } = this.props
+    const points = cond([
+      [this._isCurrentPointsHalfPricePoints, this._basePointsRequirementsUse],
+      [always(isDisabledPointsOptions), always(0)],
+      [T, always(currentPoints)]
+    ])()
+    return _updateUsePoints(Math.ceil(points))
+  }
+
+  componentDidMount() {
+    // when not yet initialize
+    const initializeStartingUsePoints = when(
+      equals(false),
+      this._initialUpdateProps
+    )
+    initializeStartingUsePoints(this._pointsInitialized)
+  }
+
   render () {
     const {
+      usePoints,
       currentPoints,
       isDisabledPointsOptions,
       orderedProduct,
@@ -128,6 +177,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       pointsModifierVisibility,
       store,
 
+      _updateUsePoints,
       _handleModalClose,
       _handleProceed,
       _handleStoreLocator,
@@ -135,7 +185,6 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       _handleToBottom,
       _handleChange
     } = this.props
-
     const toggleDiscount = this._showDiscountPrice(
       <span className='strike color__grey'>
         <FormattedMessage {...messages.peso} />
@@ -294,6 +343,11 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                         <FormattedMessage {...messages.currentPoints} />
                         { currentPoints }
                       </Label>
+                      <RangeSlider
+                        usePoints={usePoints}
+                        maxPoints={this._computeTotalPointsPrice()}
+                        pointsModifier={_updateUsePoints}
+                      />
                     </StepWrapper>
                   </Form.Field>
                 </Form>
