@@ -82,7 +82,7 @@ function BrandSlider ({ brands, loader, changeRoute }) {
             : brands.map((brand, index) => {
               return (
                 <SliderItem key={index} onClick={goToBrand(brand.get('id'))}>
-                  <PlainCard size={94}>
+                  <PlainCard width={94} height={94}>
                     <Image src={brand.get('logo') !== '' ? brand.get('logo') : imageStock('Brands-Default.jpg', imgixOptions)} alt='CLiQQ' />
                   </PlainCard>
                 </SliderItem>

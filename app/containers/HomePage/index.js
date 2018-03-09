@@ -299,7 +299,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                 )
               })
             }
-            <CategoryItem>
+            <CategoryItem onClick={() => changeRoute(`/categories/`)}>
               {
                 !categoryNavLoader
                 ? <span>

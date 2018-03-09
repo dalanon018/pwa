@@ -43,7 +43,7 @@ export const FlexContainer = styled.div`
 
 function OrderTip () {
   return (
-    <Wrapper className='background__lightGrey'>
+    <Wrapper className='background__light-grey'>
       <Container>
         <Grid container>
           <Grid.Row columns={2}>
