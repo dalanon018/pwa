@@ -20,7 +20,9 @@ import {
   ifElse,
   multiply,
   path,
+  prop,
   when,
+  lt,
  } from 'ramda'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Label, Form, Checkbox, Image, Button } from 'semantic-ui-react'
@@ -141,23 +143,36 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     () => component2
   )(condition)
 
+  // Make sure we accept that the current props has the values.
   _initialUpdateProps = () => {
-    const { _updateUsePoints,isDisabledPointsOptions, currentPoints } = this.props
+    const { _updateUsePoints,isDisabledPointsOptions, currentPoints, orderedProduct } = this.props
     const points = cond([
       [this._isCurrentPointsHalfPricePoints, this._basePointsRequirementsUse],
       [always(isDisabledPointsOptions), always(0)],
       [T, always(currentPoints)]
     ])()
+    console.log(points)
+    this._pointsInitialized = true
     return _updateUsePoints(Math.ceil(points))
   }
 
-  componentDidMount() {
+  componentWillReceiveProps(nextProps) {
     // when not yet initialize
     const initializeStartingUsePoints = when(
-      equals(false),
+      allPass([
+        () => !this._pointsInitialized,
+        compose(
+          lt(0),
+          prop('currentPoints')
+        ),
+        compose(
+          lt(0),
+          path(['orderedProduct', 'size'])
+        ),
+      ]),
       this._initialUpdateProps
     )
-    initializeStartingUsePoints(this._pointsInitialized)
+    initializeStartingUsePoints(this.props)
   }
 
   render () {
