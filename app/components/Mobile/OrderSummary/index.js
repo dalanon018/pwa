@@ -359,6 +359,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                         usePoints={usePoints}
                         maxPoints={this._computeTotalPointsPrice()}
                         pointsModifier={_updateUsePoints}
+                        currentPoints={currentPoints}
                       />
                     </StepWrapper>
                   </Form.Field>
