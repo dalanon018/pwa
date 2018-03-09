@@ -13,14 +13,22 @@ const Wrapper = styled.div`
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(120,120,120, 0.1);
   display: flex;
-  height: ${props => props.size}px;
-  // padding: 2px;
-  width: ${props => props.size}px;
+  flex-wrap: wrap;
+  height: ${props => props.height}px;
+  justify-content: center;
+  width: ${props => props.width ? props.width + 'px' : '100%'};
+
+  img {
+    ${
+      props => props.borderRadius &&
+      'border-radius: 3px;'
+    }
+  }
 `
 
-function PlainCard ({ children, size }) {
+function PlainCard ({ children, borderRadius, width, height }) {
   return (
-    <Wrapper size={size}>
+    <Wrapper borderRadius width={width} height={height}>
       {children}
     </Wrapper>
   )

@@ -2,15 +2,6 @@
          Site Settings
 *******************************/
 
-/* E3 Colors */
-@primaryColor: #FF4813;
-@gold: #FFB70B;
-@teal: #229D90;
-@darkGrey: #2F2F2F;
-@grey: #7D868C;
-@lightGrey: #E8E8E8;
-@fadeGrey: #F4F4F4;
-
 /*-------------------
        Fonts
 --------------------*/
@@ -966,3 +957,12 @@
 @whiteActive           : darken(@white, 5);
 @offWhiteActive        : darken(@offWhite, 5);
 @darkWhiteActive       : darken(@darkWhite, 5);
+
+/* E3 Colors */
+@primaryColor: #FF4813;
+@gold: #FFB70B;
+@teal: #229D90;
+@darkGrey: #2F2F2F;
+@grey: #7D868C;
+@lightGrey: #E8E8E8;
+@fadeGrey: #F4F4F4;

@@ -14,7 +14,6 @@ import messages from './messages'
 import Badge from 'images/7-11-badge.png'
 
 export const Wrapper = styled.div`
-  background-color: #E8E8E8;
   padding: 0 10px;
 `
 
@@ -58,7 +57,7 @@ export const ImageWrapper = styled.div`
 
 function PointAds () {
   return (
-    <Wrapper>
+    <Wrapper className='background__light-grey'>
       <Container>
         <Grid container>
           <Grid.Row>
