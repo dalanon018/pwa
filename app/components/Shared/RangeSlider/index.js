@@ -29,14 +29,11 @@ class RangeSlider extends React.PureComponent { // eslint-disable-line react/pre
   render () {
     const { usePoints, maxPoints } = this.props
     return (
-      <div>
-        { usePoints }
-        <Slider
-          value={usePoints}
-          onChange={this._handlePointsModifier}
-          max={maxPoints}
-        />
-      </div>
+      <Slider
+        value={usePoints}
+        onChange={this._handlePointsModifier}
+        max={maxPoints}
+      />
     )
   }
 }
