@@ -24,6 +24,14 @@ export default defineMessages({
     id: `${idSuffix}.chooseStore`,
     defaultMessage: 'Choose a 7-Eleven store!'
   },
+  choosePointsTitle: {
+    id: `${idSuffix}.choosePointsTitle`,
+    defaultMessage: 'Choose how many points to use:'
+  },
+  currentPoints: {
+    id: `${idSuffix}.currentPoints`,
+    defaultMessage: 'Current Points: '
+  },
   viewDetails: {
     id: `${idSuffix}.viewDetails`,
     defaultMessage: 'View Product Details'
@@ -43,6 +51,10 @@ export default defineMessages({
   cashDelivery: {
     id: `${idSuffix}.cashDelivery`,
     defaultMessage: 'Cash on Delivery'
+  },
+  cashPoints: {
+    id: `${idSuffix}.cashPoints`,
+    defaultMessage: 'Points & Cash'
   },
   proceedNext: {
     id: `${idSuffix}.proceedNext`,
@@ -71,5 +83,9 @@ export default defineMessages({
   peso: {
     id: `${idSuffix}.peso`,
     defaultMessage: '₱ '
+  },
+  earnedPoints: {
+    id: `${idSuffix}.earnedPoints`,
+    defaultMessage: `Earn {points}`
   }
 })

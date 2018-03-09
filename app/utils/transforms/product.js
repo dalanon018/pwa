@@ -99,6 +99,10 @@ const Schema = {
   association: {
     name: 'association',
     type: ARRAY
+  },
+  points: {
+    name: 'points',
+    type: OBJECT
   }
 }
 

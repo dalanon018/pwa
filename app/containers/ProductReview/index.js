@@ -8,20 +8,19 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { noop, isEmpty } from 'lodash'
-import { ifElse, equals, both, compose, prop, propOr, either, identity } from 'ramda'
+import { ifElse, equals, both, compose, prop, propOr, either } from 'ramda'
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
 import { replace } from 'react-router-redux'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 
-import { Label, Form, Checkbox, Image } from 'semantic-ui-react'
+import { Form, Checkbox } from 'semantic-ui-react'
 
 import scrollPolyfill from 'utils/scrollPolyfill'
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
-import { paramsImgix } from 'utils/image-stock'
 import { transformStore } from 'utils/transforms'
 import { FbEventTracking } from 'utils/seo'
 import { switchFn } from 'utils/logicHelper'
@@ -76,9 +75,8 @@ import {
 } from './selectors'
 
 import {
-  LabelTitle,
-  LabelPrice
-} from './styles'
+  ALLOWED_POINTS
+} from './constants'
 
 // Helper
 const isDoneRequesting = (loader) => () => (loader === false)
@@ -121,11 +119,14 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   showStoreLocator = 'COD'
+  showPointsModifier = 'POINTS'
 
   state = {
     store: {},
     modePayment: 'COD',
-    visibility: true,
+    usePoints: 0,
+    storeLocatorVisibility: true,
+    pointsModifierVisibility: false,
     modalToggle: false,
     errorMessage: ''
   }
@@ -151,6 +152,14 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     scrollPolyfill.polyfill()
   }
 
+  /**
+   * we need to have a way to update usepoints since we will be needing this on submission
+   */
+  _updateUsePoints = (value) => {
+    this.setState(() => ({
+      usePoints: value
+    }))
+  }
   _stepWrapperRef = (ref) => {
     this._innerStepRef = ref
   }
@@ -169,9 +178,11 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   _handleChange = (e, { value }) => {
+    console.log(value, this.showPointsModifier)
     this.setState({
       modePayment: value,
-      visibility: value === this.showStoreLocator
+      storeLocatorVisibility: value === this.showStoreLocator,
+      pointsModifierVisibility: value === this.showPointsModifier
     })
   }
 
@@ -261,30 +272,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     }
   }
 
-  _toggleOrigDiscountPrice = (product) => {
-    const showPrice = product.get('discountPrice') || product.get('price')
-
-    return showPrice ? showPrice.toLocaleString() : 0
-  }
-
-  _showDiscountPrice = (component1, component2) => (condition) => ifElse(
-    identity,
-    () => component1,
-    () => component2
-  )(condition)
-
-  _updateParamsImages = (images, opt = {}) => {
-    const options = {
-      w: 414,
-      h: 246,
-      fit: 'fill',
-      auto: 'compress',
-      q: 35,
-      lossless: 0,
-      ...opt
-    }
-
-    return images ? paramsImgix(images, options) : ''
+  _isDisabledPointsOptions = () => {
+    const { currentPoints } = this.props
+    return currentPoints.get('points') < ALLOWED_POINTS
   }
 
   componentWillUnmount () {
@@ -301,7 +291,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         noop,
         async (type) => this.setState({
           modePayment: type.toUpperCase(),
-          visibility: type.toUpperCase() === this.showStoreLocator,
+          storeLocatorVisibility: type.toUpperCase() === this.showStoreLocator,
+          pointsModifierVisibility: type.toUpperCase() === this.showPointsModifier,
           store: await transformStore(query) // we update our store
         })
       ),
@@ -358,54 +349,15 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   render () {
-    const { orderedProduct, orderRequesting, isBlackListed, productLoader } = this.props
-    const { errorMessage, modePayment, modalToggle, visibility, store } = this.state
-    const toggleDiscount = this._showDiscountPrice(
-      <span className='strike color__grey'>
-        <FormattedMessage {...messages.peso} />
-        { orderedProduct.get('price') &&
-          parseFloat(orderedProduct.get('price')).toLocaleString() }
-      </span>,
-      null
-    )
-    const labelOne = <label className='label-custom'>
-      <LabelTitle>
-        <Label as='span' basic size='big' className='color__secondary'>
-          <FormattedMessage {...messages.cashPrepaid} />
-        </Label>
-      </LabelTitle>
-      <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
-        <span className='total color__orange'>
-          <FormattedMessage {...messages.peso} />
-          { this._toggleOrigDiscountPrice(orderedProduct) }
-        </span>
-        { toggleDiscount(orderedProduct.get('discountPrice')) }
-      </LabelPrice>
-    </label>
-    const labelTwo = <label className='label-custom'>
-      <LabelTitle>
-        <Label as='span' basic size='big' className='color__secondary'>
-          <FormattedMessage {...messages.cashDelivery} />
-        </Label>
-      </LabelTitle>
-      <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
-        <span className='total color__orange'>
-          <FormattedMessage {...messages.peso} />
-          { this._toggleOrigDiscountPrice(orderedProduct) }
-        </span>
-        { toggleDiscount(orderedProduct.get('discountPrice')) }
-      </LabelPrice>
-    </label>
-    const brandLogo = orderedProduct.get('brandLogo') ? (
-      <Image
-        className='brand-logo'
-        alt='CLiQQ'
-        src={this._updateParamsImages(orderedProduct.get('brandLogo'), { w: 200, h: 30 })} />) : ''
-
+    const { currentPoints, orderedProduct, orderRequesting, isBlackListed, productLoader } = this.props
+    const { errorMessage, modePayment, modalToggle, storeLocatorVisibility, pointsModifierVisibility, store, usePoints } = this.state
     return (
       <AccessView
         mobileView={
           <MobileOrderSummary
+            isDisabledPointsOptions={this._isDisabledPointsOptions()}
+            currentPoints={currentPoints.get('points')}
+            usePoints={usePoints}
             ShowCodComponent={ShowCodComponent}
             _handleChange={this._handleChange}
             _handleModalClose={this._handleModalClose}
@@ -413,19 +365,19 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             _handleStoreLocator={this._handleStoreLocator}
             _handleToBottom={this._handleToBottom}
             _stepWrapperRef={this._stepWrapperRef}
-            _updateParamsImages={this._updateParamsImages}
-            brandLogo={brandLogo}
+            _updateUsePoints={this._updateUsePoints}
+
             errorMessage={errorMessage}
             isBlackListed={isBlackListed}
-            labelOne={labelOne}
-            labelTwo={labelTwo}
+
             modalToggle={modalToggle}
             modePayment={modePayment}
             orderRequesting={orderRequesting}
             orderedProduct={orderedProduct}
             productLoader={productLoader}
             store={store}
-            visibility={visibility}
+            storeLocatorVisibility={storeLocatorVisibility}
+            pointsModifierVisibility={pointsModifierVisibility}
           />
         }
         desktopView={
@@ -438,19 +390,17 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
               _handleStoreLocator={this._handleStoreLocator}
               _handleToBottom={this._handleToBottom}
               _stepWrapperRef={this._stepWrapperRef}
-              _updateParamsImages={this._updateParamsImages}
-              brandLogo={brandLogo}
+
               errorMessage={errorMessage}
               isBlackListed={isBlackListed}
-              labelOne={labelOne}
-              labelTwo={labelTwo}
+
               modalToggle={modalToggle}
               modePayment={modePayment}
               orderRequesting={orderRequesting}
               orderedProduct={orderedProduct}
               productLoader={productLoader}
               store={store}
-              visibility={visibility}
+              storeLocatorVisibility={storeLocatorVisibility}
             />
           </div>
         }

@@ -5,24 +5,21 @@
 */
 
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import { isEmpty } from 'lodash'
-
+import { ifElse, identity } from 'ramda'
 import { FormattedMessage } from 'react-intl'
-import messages from './messages'
-
-import {
-  identity,
-  ifElse
-} from 'ramda'
-
 import { Grid, Label, Form, Checkbox, Image, Button, Container } from 'semantic-ui-react'
 
-import { LoadingStateImage } from 'components/Shared/LoadingBlock'
-import ListCollapse from 'components/Shared/ListCollapse'
-import Modal from 'components/Shared/PromptModal'
-
 import NextIcon from 'images/icons/greater-than-icon.svg'
+import Modal from 'components/Shared/PromptModal'
+import ListCollapse from 'components/Shared/ListCollapse'
+import { LoadingStateImage } from 'components/Shared/LoadingBlock'
 
+import { paramsImgix } from 'utils/image-stock'
+
+import messages from './messages'
 import {
   DetailsWrapper,
   ButtonContainer,
@@ -36,41 +33,59 @@ import {
   ProductContainer,
   ProductDetails,
   ProductMain,
-  BottomWrapper
+  BottomWrapper,
+  LabelPrice,
+  LabelTitle
 } from './styles'
 
 class OrderSummary extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  _updateParamsImages = (images, opt = {}) => {
+    const options = {
+      w: 414,
+      h: 246,
+      fit: 'fill',
+      auto: 'compress',
+      q: 35,
+      lossless: 0,
+      ...opt
+    }
+
+    return images ? paramsImgix(images, options) : ''
+  }
+
+  _toggleOrigDiscountPrice = (product) => {
+    const showPrice = product.get('discountPrice') || product.get('price')
+
+    return showPrice ? showPrice.toLocaleString() : 0
+  }
+
+  _showDiscountPrice = (component1, component2) => (condition) => ifElse(
+    identity,
+    () => component1,
+    () => component2
+  )(condition)
+
   render () {
     const {
       ShowCodComponent,
-      // brandLogo,
       errorMessage,
       isBlackListed,
-      labelOne,
-      labelTwo,
       modalToggle,
       modePayment,
       orderRequesting,
       orderedProduct,
       productLoader,
       store,
-      visibility,
+      storeLocatorVisibility,
 
       _handleModalClose,
       _handleProceed,
       _handleStoreLocator,
       _stepWrapperRef,
       _handleToBottom,
-      _handleChange,
-      _updateParamsImages } = this.props
+      _handleChange } = this.props
 
-    const showDiscountPrice = (component1, component2) => (condition) => ifElse(
-      identity,
-      () => component1,
-      () => component2
-    )(condition)
-
-    const toggleDiscount = showDiscountPrice(
+    const toggleDiscount = this._showDiscountPrice(
       <Label className='padding__none color__grey orig-price' as='b' basic size='large'>
         <FormattedMessage {...messages.peso} />
         { orderedProduct.get('price') &&
@@ -79,12 +94,35 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       null
     )
 
-    const toggleOrigDiscountPrice = () => {
-      const showPrice = orderedProduct.get('discountPrice') || orderedProduct.get('price')
+    const labelOne = <label className='label-custom'>
+      <LabelTitle>
+        <Label as='span' basic size='big' className='color__secondary'>
+          <FormattedMessage {...messages.cashPrepaid} />
+        </Label>
+      </LabelTitle>
+      <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
+        <span className='total color__orange'>
+          <FormattedMessage {...messages.peso} />
+          { this._toggleOrigDiscountPrice(orderedProduct) }
+        </span>
+        { toggleDiscount(orderedProduct.get('discountPrice')) }
+      </LabelPrice>
+    </label>
 
-      return showPrice ? showPrice.toLocaleString() : 0
-    }
-
+    const labelTwo = <label className='label-custom'>
+      <LabelTitle>
+        <Label as='span' basic size='big' className='color__secondary'>
+          <FormattedMessage {...messages.cashDelivery} />
+        </Label>
+      </LabelTitle>
+      <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
+        <span className='total color__orange'>
+          <FormattedMessage {...messages.peso} />
+          { this._toggleOrigDiscountPrice(orderedProduct) }
+        </span>
+        { toggleDiscount(orderedProduct.get('discountPrice')) }
+      </LabelPrice>
+    </label>
     return (
       <Container>
         <div className='padding__medium'>
@@ -96,7 +134,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
               <ProductMain>
                 <ProductContainer>
                   <ProductItem>
-                    <Image alt='CLiQQ' src={_updateParamsImages(orderedProduct.get('image'))} />
+                    <Image alt='CLiQQ' src={this._updateParamsImages(orderedProduct.get('image'))} />
                   </ProductItem>
                   <ProductDetails>
                     {
@@ -108,7 +146,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
                     <Label className='padding__none base-price' as='b' basic size='massive' color='orange'>
                       <FormattedMessage {...messages.peso} />
-                      { toggleOrigDiscountPrice() }
+                      { this._toggleOrigDiscountPrice(orderedProduct) }
                     </Label>
 
                     { toggleDiscount(orderedProduct.get('discountPrice')) }
@@ -172,7 +210,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                 </SelectMethodWrapper>
               </Grid.Row>
             </Grid>
-            <StepWrapper innerRef={_stepWrapperRef} className='visibility' visibility={visibility}>
+            <StepWrapper innerRef={_stepWrapperRef} className='visibility' visibility={storeLocatorVisibility}>
               <Label as='p' basic size='big' className='color__secondary'>
                 <FormattedMessage {...messages.chooseStore} />
               </Label>
@@ -216,7 +254,26 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 }
 
 OrderSummary.propTypes = {
+  orderedProduct: PropTypes.object.isRequired,
+  orderRequesting: PropTypes.bool.isRequired,
+  isBlackListed: PropTypes.bool.isRequired,
+  productLoader: PropTypes.bool.isRequired,
+  ShowCodComponent: PropTypes.func.isRequired,
+  errorMessage: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.string
+  ]).isRequired,
+  modePayment: PropTypes.string.isRequired,
+  modalToggle: PropTypes.bool.isRequired,
+  storeLocatorVisibility: PropTypes.bool.isRequired,
+  store: PropTypes.object.isRequired,
 
+  _handleModalClose: PropTypes.func.isRequired,
+  _handleProceed: PropTypes.func.isRequired,
+  _handleStoreLocator: PropTypes.func.isRequired,
+  _stepWrapperRef: PropTypes.func.isRequired,
+  _handleToBottom: PropTypes.func.isRequired,
+  _handleChange: PropTypes.func.isRequired
 }
 
 export default OrderSummary

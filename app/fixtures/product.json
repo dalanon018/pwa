@@ -1,0 +1,66 @@
+{
+  "name": "UND POLO Shirt(Man-Black-L)",
+  "shortDescription": "<p>Large shirt for Men with 3M Scotchgard technology</p>\r\n<p>Color:Black</p>",
+  "longDescription": "<p>Measurements</p>\r\n<p>Chest: 46 CM</p>\r\n<p>Length: 66 CM</p>\r\n<p>Model is wearing size: Large</p>\r\n</p></p></p>",
+  "gtin": "20077778",
+  "isFeatured": false,
+  "returnable": true,
+  "returnPolicy": "Not satisfied with your purchase? Depending on our CLiQQ Care Policy, you can return your item anytime of the day within 7 days from claim date. Just go to the 7-Eleven store where the item was purchased and get your Return Slip from the CLiQQ Kiosk and bring it to the cashier.",
+  "uom": {
+      "name": "L",
+      "type": "Size"
+  },
+  "association": [
+    {
+      "product": {
+          "productId": 269,
+          "name": "UND POLO Shirt(Man-Black-XL)",
+          "longDescription": "<p>Measurements</p>\r\n<p>Chest: 48 CM</p>\r\n<p>Length: 68 CM</p>\r\n<p>Model is wearing size: Large</p>\r\n<p>&nbsp;&nbsp;",
+          "availableQuantity": "1",
+          "cliqqCodes": [
+              {
+                  "cliqqCode": "000FD",
+                  "agentCode": "003"
+              }
+          ],
+          "uom": {
+              "name": "XL",
+              "type": "Size"
+          }
+      },
+      "fromDate": "2017-12-14"
+    }
+  ],
+  "images": [
+      {
+          "imageUrl": "https://cliqq.imgix.net/000A4.png",
+          "imageType": "PRIMARY"
+      }
+  ],
+  "priceList": [
+      {
+          "amount": 99,
+          "currency": "PHP"
+      },
+      {
+          "amount": 1,
+          "currency": "LPTS"
+      }
+  ],
+  "cliqqCodes": [
+      {
+          "cliqqCode": "000FE",
+          "agentCode": "003"
+      }
+  ],
+  "availableQuantity": "1",
+  "deliveryPromiseMessage": "<p>Delivery for:</p>\n            <p>Mega Manila: 1-3 Days</p>\n            <p>Major Luzon Provinces: 3-5 Days</p>\n            <p>Vis-Min Provinces: 7-14 Days (Not available yet!)</p>",
+  "points": {
+    "multiplier": "1.3",
+    "methods": {
+      "cod": "5",
+      "cash": "10",
+      "poc": "2"
+    }
+  }
+}
