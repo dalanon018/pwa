@@ -144,6 +144,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
   )(condition)
 
   // Make sure we accept that the current props has the values.
+  // TODO: Make sure that we refactor this one and find a way that functions are not bind to this class
   _initialUpdateProps = () => {
     const { _updateUsePoints,isDisabledPointsOptions, currentPoints, orderedProduct } = this.props
     const points = cond([
@@ -172,6 +173,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       ]),
       this._initialUpdateProps
     )
+    // we will be using this.props since we are having issue with other deps that use the this.props
     initializeStartingUsePoints(this.props)
   }
 
