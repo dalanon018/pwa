@@ -13,12 +13,6 @@ import { injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
 import { compose } from 'redux'
-import { toPairs } from 'ramda'
-import { chunk } from 'lodash'
-
-import { categoriesGroup } from 'utils/categories-group'
-
-import { Grid, Container, Image, Label } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
@@ -26,10 +20,10 @@ import reducer from './reducer'
 import saga from './saga'
 import messages from './messages'
 
-import BrandItem from 'components/Mobile/PlainCard'
 import OrderTip from 'components/Mobile/OrderTip'
 import MobileFooter from 'components/Mobile/Footer'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
+import BrandsGroup from 'components/Mobile/BrandsGroup'
 
 import { selectBrands } from 'containers/Buckets/selectors'
 import { setPageTitleAction, setRouteNameAction } from 'containers/Buckets/actions'
@@ -40,23 +34,6 @@ const Wrapper = styled.div`
   position: relative;
 `
 
-const NavWrapper = styled.div`
-  border-left: 1px solid #E8E8E8;
-  height: 54vh;
-  overflow-y: auto;
-  padding: 15px 0;
-  position: fixed;
-  right: 0;
-  text-align: center;
-  top: 50px;
-  width: 15px;
-  z-index: 1;
-`
-
-const GroupWrapper = styled.div`
-  box-shadow: 0 0 5px rgba(120,120,120, 0.1);
-`
-
 export class BrandLanding extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     setPageTitle: PropTypes.func.isRequired,
@@ -65,82 +42,56 @@ export class BrandLanding extends React.PureComponent { // eslint-disable-line r
     brands: PropTypes.object.isRequired
   }
 
-  _handleNavAnchor = () => {
-    const { brands } = this.props
-    const groupBrands = categoriesGroup(brands)
-
-    return (
-      <NavWrapper className='background__white'>
-        {
-         toPairs(groupBrands).map(([title, item], key) => {
-           return (
-             <div key={key}>
-               <Label as='a' href={`#${title + key}`} basic size='mini' className='padding__none text__weight--500'>
-                 { title }
-               </Label>
-             </div>
-           )
-         })
-       }
-      </NavWrapper>
-    )
+  state = {
+    isBottomScrolled: false
   }
 
   _handleGrouping = () => {
-    const { brands } = this.props
-    const groupBrands = categoriesGroup(brands)
+    const { brands, changeRoute } = this.props
+    const { bottomScroll } = this.state
+    const goToBrand = (id) => () => changeRoute(`/brands/${id}`)
 
     return (
       <Wrapper className='brands-landing-wrapper'>
-        {this._handleNavAnchor()}
-        {
-          toPairs(groupBrands).map(([title, item], key) => {
-            const chunkItem = chunk(item, 5)
-            return (
-              <div key={key}>
-                <Container className='padding__none--vertical'>
-                  <Grid padded>
-                    <Grid.Row>
-                      <Grid.Column>
-                        <Label id={`${title + key}`} as='span' basic size='large' className='text__weight--500'>
-                          { title }
-                        </Label>
-                      </Grid.Column>
-                    </Grid.Row>
-                  </Grid>
-                </Container>
-                <GroupWrapper className='background__white'>
-                  <Grid padded>
-                    <Grid.Row columns={3} stretched verticalAlign='top'>
-                      {
-                        chunkItem.map((entity, key) => (
-                          entity.map((data, index) => (
-                            <Grid.Column key={index} className='padding__bottom--15'>
-                              <div>
-                                <BrandItem borderRadius height={90}>
-                                  <Image src={data.get('background')} alt={data.get('name')} />
-                                </BrandItem>
-                                <Label as='p' basic size='medium' className='margin__top-positive--10 text__weight--400'>{data.get('name')}</Label>
-                              </div>
-                            </Grid.Column>
-                          ))
-                        ))
-                      }
-                    </Grid.Row>
-                  </Grid>
-                </GroupWrapper>
-              </div>
-            )
-          })
-        }
+        <AccessView
+          mobileView={
+            <BrandsGroup
+              brands={brands}
+              bottomScroll={bottomScroll}
+              goToBrand={goToBrand} />
+          }
+          desktopView={null}
+        />
       </Wrapper>
     )
+  }
+
+  _handleScrollBottom = () => {
+    // function to detect when scroollbar reaches the bottom of page
+    const whenScrlBottom = () => {
+      // http://coursesweb.net/javascript/
+      let windowHeight = (this.innerHeight) ? this.innerHeight : document.body.clientHeight    // gets window height
+
+      // gets current vertical scrollbar position
+      let scrollPosition = window.pageYOffset ? window.pageYOffset : document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop
+
+      // if scrollbar reaces to bottom
+      if (document.body.scrollHeight <= (scrollPosition + windowHeight)) {
+        this.setState({isBottomScrolled: true})
+      } else {
+        this.setState({isBottomScrolled: false})
+      }
+    }
+
+    // register event on scrollbar
+    window.onscroll = whenScrlBottom
   }
 
   componentDidMount () {
     const { setPageTitle, setRouteName, intl } = this.props
     setPageTitle(intl.formatMessage(messages.header))
     setRouteName(BRANDS_LANDING_PAGE)
+    this._handleScrollBottom()
   }
 
   render () {
