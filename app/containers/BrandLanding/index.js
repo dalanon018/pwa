@@ -48,7 +48,7 @@ export class BrandLanding extends React.PureComponent { // eslint-disable-line r
 
   _handleGrouping = () => {
     const { brands, changeRoute } = this.props
-    const { bottomScroll } = this.state
+    const { isBottomScrolled } = this.state
     const goToBrand = (id) => () => changeRoute(`/brands/${id}`)
 
     return (
@@ -57,7 +57,7 @@ export class BrandLanding extends React.PureComponent { // eslint-disable-line r
           mobileView={
             <BrandsGroup
               brands={brands}
-              bottomScroll={bottomScroll}
+              bottomScroll={isBottomScrolled}
               goToBrand={goToBrand} />
           }
           desktopView={null}

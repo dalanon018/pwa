@@ -46,6 +46,15 @@ function BrandsGroup ({
   bottomScroll,
   goToBrand
 }) {
+  const imgixOptions = {
+    w: 80,
+    h: 80,
+    fit: 'clamp',
+    auto: 'compress',
+    q: 35,
+    lossless: 0
+  }
+
   const groupBrands = categoriesGroup(brands)
 
   const _handleNavAnchor = () => {
@@ -84,15 +93,6 @@ function BrandsGroup ({
   }
 
   const _handleDefaultState = () => {
-    const imgixOptions = {
-      w: 80,
-      h: 80,
-      fit: 'clamp',
-      auto: 'compress',
-      q: 35,
-      lossless: 0
-    }
-
     return (
       <div>
         <div className='padding__vertical--20' />
@@ -149,7 +149,7 @@ function BrandsGroup ({
                           <Grid.Column key={index} className='padding__bottom--15'>
                             <div onClick={goToBrand(data.get('id'))}>
                               <BrandItem borderRadius height={90}>
-                                <Image src={data.get('background')} alt={data.get('name')} />
+                                <Image src={data.get('background') ? data.get('background') : imageStock('Brands-Default.jpg', imgixOptions)} alt={data.get('name')} />
                               </BrandItem>
                               <Label as='p' basic size='medium' className='margin__top-positive--10 text__weight--400'>{data.get('name')}</Label>
                             </div>
