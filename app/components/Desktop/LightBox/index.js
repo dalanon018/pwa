@@ -12,7 +12,6 @@ import CloseButton from 'images/icons/close.svg'
 import ProductSlider from 'components/Desktop/BannerSlider'
 
 const LightBoxWrapper = styled.div`
-  background-color: rgba(0, 0, 0, 0.7);
   height: 100vh;
   left: 0;
   position: fixed;
@@ -39,6 +38,15 @@ const ImageWrapper = styled.div`
   }
 `
 
+const BackgroundLay = styled.div`
+  background-color: rgba(0, 0, 0, 0.7);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+`
+
 const IconWrapper = styled.div`
   position: absolute;
   top: 10px;
@@ -57,7 +65,8 @@ function LightBox ({
   loader
 }) {
   return (
-    <LightBoxWrapper onClick={() => close(null)} >
+    <LightBoxWrapper>
+      <BackgroundLay onClick={() => close(null)} />
       <ImageWrapper>
         <ProductSlider
           images={images}
