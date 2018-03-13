@@ -27,7 +27,7 @@ import AccessView from 'components/Shared/AccessMobileDesktopView'
 
 import { selectProductCategories } from 'containers/Buckets/selectors'
 import { setPageTitleAction, setRouteNameAction } from 'containers/Buckets/actions'
-import { CATEGORIES_LANDING_PAGE } from 'containers/Buckets/constants'
+import { RECENT_STORE_NAME } from 'containers/Buckets/constants'
 
 export class RecentStorePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
@@ -46,7 +46,7 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
   componentDidMount () {
     const { setPageTitle, setRouteName, intl } = this.props
     setPageTitle(intl.formatMessage(messages.header))
-    setRouteName(CATEGORIES_LANDING_PAGE)
+    setRouteName(RECENT_STORE_NAME)
   }
 
   render () {
