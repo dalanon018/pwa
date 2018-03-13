@@ -322,13 +322,25 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                       <StepHead step='2'>
                         <p><FormattedMessage {...messages.defaultStore} /></p>
                       </StepHead>
-                      <LocationButton id='scrollToAnimate' className='color__secondary border__two--light-grey' onClick={_handleStoreLocator} fluid iconBg={NextIcon}>
+                      <LocationButton id='scrollToAnimate' className='color__secondary border__two--light-grey' fluid iconBg={NextIcon}>
                         {
                         store && isEmpty(store)
                         ? <FormattedMessage {...messages.recentlyViewedStore} />
                         : <span>{store.id} {store.name}</span>
                       }
                       </LocationButton>
+                      <Label as='p' basic size='small' className='color__secondary'>
+                        <FormattedMessage
+                          {...messages.findStore}
+                          values={{storeLocator: (
+                            <span onClick={_handleStoreLocator}>
+                              <FormattedMessage
+                                {...messages.storeLocator}
+                              />
+                            </span>
+                          )}}
+                        />
+                      </Label>
                     </StepWrapper>
                     <Checkbox
                       radio
