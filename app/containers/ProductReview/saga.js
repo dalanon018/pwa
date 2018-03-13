@@ -129,7 +129,7 @@ export function * storeLocator () {
     mobileNumber: `0${mobileNumber}`
   }
 
-  yield window.location = `${STORE_LOCATOR_URL}${fnSearchParams(params)}`
+  yield window.location.replace(`${STORE_LOCATOR_URL}${fnSearchParams(params)}`)
 }
 
 /**
