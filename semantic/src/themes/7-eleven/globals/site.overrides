@@ -167,6 +167,12 @@ input.input-field {
   }
 }
 
+.visibility {
+  &__hidden {
+    visibility: hidden;
+  }
+}
+
 .width {
   &__full {
     width: 100%;
@@ -235,6 +241,9 @@ input.input-field {
   &__light-grey {
     background-color: @lightGrey !important;
   }
+  &__fade-grey {
+    background-color: @fadeGrey !important;
+  }
   &__white {
     background-color: @white !important;
   }
@@ -275,9 +284,11 @@ input.input-field {
   color: #AEAEAE !important;
 }
 
+/*******************************
 .ui.radio.checkbox .box:after, .ui.radio.checkbox label:after {
   background: transparent !important;
 }
+*******************************/
 
 .document-helper {
   margin: 20px 0;
@@ -443,7 +454,7 @@ svg#barcode {
 
   .display {
     &__none {
-      display: none;
+      display: none !important;
     }
   }
 
