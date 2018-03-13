@@ -24,7 +24,7 @@ export const fnSearchParams = (params) => compose(
  * from Query to Object
  */
 export const fnQueryObject = (queryParams) => {
-  const handeDecodeError = (data) => {
+  const handleDecodeError = (data) => {
     try {
       const partiallyDecoded = decodeURI(data)
       // we need to clean and replace % to empty if its not converted correclty
@@ -37,7 +37,7 @@ export const fnQueryObject = (queryParams) => {
   const parseQueryString = compose(
     fromPairs,
     map(compose(
-      adjust(handeDecodeError, 1),
+      adjust(handleDecodeError, 1),
       split('=')
     )),
     split('&'),

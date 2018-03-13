@@ -57,7 +57,7 @@ export class CategoryLanding extends React.PureComponent { // eslint-disable-lin
         <Helmet
           title='Category Page'
           meta={[
-          { name: 'description', content: '7-eleven CliQQ category page' }
+          { name: 'description', content: '7-eleven CLiQQ Category Page' }
           ]}
         />
         <Container>

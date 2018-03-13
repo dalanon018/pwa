@@ -11,7 +11,7 @@ import { noop, isEmpty } from 'lodash'
 import { ifElse, equals, both, compose, prop, propOr, either } from 'ramda'
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
-import { replace } from 'react-router-redux'
+import { replace, push } from 'react-router-redux'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 
@@ -24,7 +24,7 @@ import injectReducer from 'utils/injectReducer'
 import { transformStore } from 'utils/transforms'
 import { FbEventTracking } from 'utils/seo'
 import { switchFn } from 'utils/logicHelper'
-import { fnQueryObject } from 'utils/http'
+import { fnQueryObject, fnSearchParams } from 'utils/http'
 
 import WindowWidth from 'components/Shared/WindowWidth'
 
@@ -54,7 +54,6 @@ import {
   getStoreAction,
   storeLocatorAction,
   getBlackListAction,
-  getVisitedStoresAction,
   getCurrentPointsAction
 } from './actions'
 
@@ -68,8 +67,6 @@ import {
   selectSubmissionError,
   selectStoreLocation,
   selectBlackListed,
-  selectVisitedStores,
-  selectVisitedStoresLoading,
   selectCurrentPoints,
   selectCurrentPointsLoading
 } from './selectors'
@@ -92,7 +89,6 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     getOrderProduct: PropTypes.func.isRequired,
     getStore: PropTypes.func.isRequired,
     storeLocator: PropTypes.func.isRequired,
-    getVisitedStores: PropTypes.func.isRequired,
     getCurrentPoints: PropTypes.func.isRequired,
     productLoader: PropTypes.bool.isRequired,
     mobileLoader: PropTypes.bool.isRequired,
@@ -112,10 +108,10 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     ]).isRequired,
     storeLocation: PropTypes.object,
     setRouteName: PropTypes.func.isRequired,
-    visitedStores: PropTypes.object.isRequired,
-    visitedStoresLoading: PropTypes.bool.isRequired,
     currentPoints: PropTypes.object.isRequired,
-    currentPointsLoading: PropTypes.bool.isRequired
+    currentPointsLoading: PropTypes.bool.isRequired,
+    pushRoute: PropTypes.func.isRequired,
+    changeRoute: PropTypes.func.isRequired
   }
 
   showStoreLocator = 'COD'
@@ -160,6 +156,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       usePoints: value
     }))
   }
+
   _stepWrapperRef = (ref) => {
     this._innerStepRef = ref
   }
@@ -178,7 +175,6 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   _handleChange = (e, { value }) => {
-    console.log(value, this.showPointsModifier)
     this.setState({
       modePayment: value,
       storeLocatorVisibility: value === this.showStoreLocator,
@@ -238,8 +234,13 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     return (orderedProduct.size > 0) ? proceedOrder(modePayment) : null
   }
 
-  _handleStoreLocator () {
+  _handleStoreLocator = () => {
     this.props.storeLocator()
+  }
+
+  _handleRecentStore = () => {
+    const { store } = this.state
+    this.props.pushRoute(`/recent-store${fnSearchParams(store)}`)
   }
 
   _handleDoneFetchOrderNoProductNorMobile () {
@@ -363,6 +364,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             _handleModalClose={this._handleModalClose}
             _handleProceed={this._handleProceed}
             _handleStoreLocator={this._handleStoreLocator}
+            _handleRecentStore={this._handleRecentStore}
             _handleToBottom={this._handleToBottom}
             _stepWrapperRef={this._stepWrapperRef}
             _updateUsePoints={this._updateUsePoints}
@@ -419,8 +421,6 @@ const mapStateToProps = createStructuredSelector({
   orderFail: selectSubmissionError(),
   previousStore: selectStoreLocation(),
   isBlackListed: selectBlackListed(),
-  visitedStores: selectVisitedStores(),
-  visitedStoresLoading: selectVisitedStoresLoading(),
   currentPoints: selectCurrentPoints(),
   currentPointsLoading: selectCurrentPointsLoading()
 })
@@ -437,10 +437,10 @@ function mapDispatchToProps (dispatch) {
     submitOrder: (payload) => dispatch(submitOrderAction(payload)),
     getStore: () => dispatch(getStoreAction()),
     storeLocator: (payload) => dispatch(storeLocatorAction(payload)),
-    getVisitedStores: () => dispatch(getVisitedStoresAction()),
     getCurrentPoints: () => dispatch(getCurrentPointsAction()),
     setHandlersDefault: () => dispatch(setOrderHandlersDefaultAction()),
     changeRoute: (url) => dispatch(replace(url)),
+    pushRoute: (url) => dispatch(push(url)),
     dispatch
   }
 }
