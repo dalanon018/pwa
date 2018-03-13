@@ -32,7 +32,7 @@ import {
   ResendWrapper,
   PopupContent } from './styles'
 
-export class PopupVerification extends React.PureComponent {
+export class RecentStoreList extends React.PureComponent {
   static propTypes = {
     submit: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
@@ -172,15 +172,6 @@ export class PopupVerification extends React.PureComponent {
   }
 }
 
-const mapStateToProps = createStructuredSelector({
 
-})
 
-function mapDispatchToProps (dispatch) {
-  return {
-    changeRoute: (url) => dispatch(push(url)),
-    dispatch
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PopupVerification)
+export default RecentStoreList
