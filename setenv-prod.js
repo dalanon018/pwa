@@ -6,6 +6,8 @@ if (env === 'production') {
   console.log(`APP_BASE_URL=${process.env.APP_BASE_URL}`)
   console.log(`MOBILE_REGISTRATION_URL=${process.env.MOBILE_REGISTRATION_URL}`)
   console.log(`STORE_LOCATOR_URL=${process.env.STORE_LOCATOR_URL}`)
+  console.log(`LOYALTY_URL=${process.env.LOYALTY_URL}`)
+  console.log(`RECENT_STORE_TOKEN=${process.env.RECENT_STORE_TOKEN}`)
 
   console.log(`FIREBASE_API_KEY=${process.env.FIREBASE_API_KEY}`)
   console.log(`FIREBASE_AUTH_DOMAIN=${process.env.FIREBASE_AUTH_DOMAIN}`)
@@ -32,6 +34,8 @@ if (env === 'production') {
   console.log(`APP_BASE_URL=https://cliqqshop.com`)
   console.log(`MOBILE_REGISTRATION_URL=https://gw.cliqq.net:8443`)
   console.log(`STORE_LOCATOR_URL=https://mapservice.cliqq.net/ajax/`)
+  console.log(`LOYALTY_URL=http://test.apollo.com.ph:8084/RedemptionHost/ecmsApi`)
+  console.log(`RECENT_STORE_TOKEN=MmsxN1N0b3JlTG9jYXRvclBhc3N3b3JkRm9yRTE=`)
 
   console.log(`FIREBASE_API_KEY=AIzaSyDYGxDAGSC8Tf6KY7bgyOx-ZFWQy3s1cn4`)
   console.log(`FIREBASE_AUTH_DOMAIN=cliqqshop.firebaseapp.com`)
