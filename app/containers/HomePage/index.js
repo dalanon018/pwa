@@ -123,36 +123,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     offset: 0,
     limit: LIMIT_ITEMS
   }
-  // constructor () {
-  //   super()
-
-  //   this._displayViewAll = this._displayViewAll.bind(this)
-  //   this._displayFeatured = this._displayFeatured.bind(this)
-  // }
-
-  // _displayFeatured () {
-  //   this.props.changeRoute(`/products-category/featured`)
-  // }
-
-  // _displayViewAll () {
-  //   const { totalFeaturedProductCount } = this.props
-  //   const componentRender = ifElse(
-  //     gt(LIMIT_ITEMS),
-  //     () => null,
-  //     () => (
-  //       <Grid padded>
-  //         <Grid.Row centered>
-  //           <Button
-  //             onClick={this._displayFeatured}
-  //             primary >
-  //             <FormattedMessage {...messages.productViewAll} /> </Button>
-  //         </Grid.Row>
-  //       </Grid>
-  //     )
-  //   )
-
-  //   return componentRender(totalFeaturedProductCount)
-  // }
 
   _shouldDisplayHeader = (component) => ifElse(
       identity,
