@@ -1,9 +1,18 @@
 
 import { fromJS } from 'immutable'
-import categoryLandingReducer from '../reducer'
+import recentStorePageReducer from '../reducer'
 
-describe('categoryLandingReducer', () => {
+describe('recentStorePageReducer', () => {
+  let state
+  beforeEach(() => {
+    state = fromJS({
+      visitedStores: [],
+      visitedStoresLoading: false
+    })
+  })
+
   it('returns the initial state', () => {
-    expect(categoryLandingReducer(undefined, {})).toEqual(fromJS({}))
+    const expectedResult = state
+    expect(recentStorePageReducer(undefined, {})).toEqual(expectedResult)
   })
 })

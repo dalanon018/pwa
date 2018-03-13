@@ -1,18 +1,30 @@
 
 import {
-  defaultAction
+  getVisitedStoresAction,
+  setVisitedStoresAction
 } from '../actions'
+
 import {
-  DEFAULT_ACTION
+  GET_VISITED_STORES,
+  SET_VISITED_STORES
 } from '../constants'
 
-describe('CategoryLanding actions', () => {
-  describe('Default Action', () => {
-    it('has a type of DEFAULT_ACTION', () => {
-      const expected = {
-        type: DEFAULT_ACTION
+describe('Recent Store Page  actions', () => {
+  describe('Recently Visited Actions', () => {
+    it('should get visited store', () => {
+      const expectedResult = {
+        type: GET_VISITED_STORES
       }
-      expect(defaultAction()).toEqual(expected)
+      expect(getVisitedStoresAction()).toEqual(expectedResult)
+    })
+
+    it('should set visited store', () => {
+      const payload = [1, 2, 3]
+      const expectedResult = {
+        type: SET_VISITED_STORES,
+        payload
+      }
+      expect(setVisitedStoresAction(payload)).toEqual(expectedResult)
     })
   })
 })

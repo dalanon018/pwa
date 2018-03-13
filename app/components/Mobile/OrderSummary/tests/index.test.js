@@ -41,6 +41,7 @@ describe('<OrderSummary />', () => {
     _handleModalClose: () => {},
     _handleProceed: () => {},
     _handleStoreLocator: () => {},
+    _handleRecentStore: () => {},
     _stepWrapperRef: () => {},
     _handleToBottom: () => {},
     _handleChange: () => {},
