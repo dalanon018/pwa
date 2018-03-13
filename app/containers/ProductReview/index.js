@@ -89,7 +89,6 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     getOrderProduct: PropTypes.func.isRequired,
     getStore: PropTypes.func.isRequired,
     storeLocator: PropTypes.func.isRequired,
-    getVisitedStores: PropTypes.func.isRequired,
     getCurrentPoints: PropTypes.func.isRequired,
     productLoader: PropTypes.bool.isRequired,
     mobileLoader: PropTypes.bool.isRequired,
@@ -233,11 +232,11 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     return (orderedProduct.size > 0) ? proceedOrder(modePayment) : null
   }
 
-  _handleStoreLocator () {
+  _handleStoreLocator = () => {
     this.props.storeLocator()
   }
 
-  _handleRecentStore () {
+  _handleRecentStore = () => {
     const { store } = this.state
     this.props.changeRoute(`/recent-store${fnSearchParams(store)}`)
   }
@@ -363,6 +362,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             _handleModalClose={this._handleModalClose}
             _handleProceed={this._handleProceed}
             _handleStoreLocator={this._handleStoreLocator}
+            _handleRecentStore={this._handleRecentStore}
             _handleToBottom={this._handleToBottom}
             _stepWrapperRef={this._stepWrapperRef}
             _updateUsePoints={this._updateUsePoints}

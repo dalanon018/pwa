@@ -195,6 +195,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       _handleModalClose,
       _handleProceed,
       _handleStoreLocator,
+      _handleRecentStore,
       _stepWrapperRef,
       _handleToBottom,
       _handleChange
@@ -322,7 +323,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                       <StepHead step='2'>
                         <p><FormattedMessage {...messages.defaultStore} /></p>
                       </StepHead>
-                      <LocationButton id='scrollToAnimate' className='color__secondary border__two--light-grey' fluid iconBg={NextIcon}>
+                      <LocationButton id='scrollToAnimate' onClick={_handleRecentStore} className='color__secondary border__two--light-grey' fluid iconBg={NextIcon}>
                         {
                         store && isEmpty(store)
                         ? <FormattedMessage {...messages.recentlyViewedStore} />
@@ -424,6 +425,7 @@ OrderSummary.propTypes = {
   _handleModalClose: PropTypes.func.isRequired,
   _handleProceed: PropTypes.func.isRequired,
   _handleStoreLocator: PropTypes.func.isRequired,
+  _handleRecentStore: PropTypes.func.isRequired,
   _stepWrapperRef: PropTypes.func.isRequired,
   _handleToBottom: PropTypes.func.isRequired,
   _handleChange: PropTypes.func.isRequired
