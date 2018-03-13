@@ -8,11 +8,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 // import styled from 'styled-components';
 
-import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
-import { createStructuredSelector } from 'reselect'
 import messages from './messages'
-import { push } from 'react-router-redux'
 
 import CloseButton from 'components/Shared/CloseButton'
 import Input from 'components/Shared/InputField'
@@ -171,7 +168,5 @@ export class RecentStoreList extends React.PureComponent {
     )
   }
 }
-
-
 
 export default RecentStoreList

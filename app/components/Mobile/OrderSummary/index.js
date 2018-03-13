@@ -420,7 +420,6 @@ OrderSummary.propTypes = {
   pointsModifierVisibility: PropTypes.bool.isRequired,
   store: PropTypes.object.isRequired,
 
-  _updateStore: PropTypes.func.isRequired,
   _updateUsePoints: PropTypes.func.isRequired,
   _handleModalClose: PropTypes.func.isRequired,
   _handleProceed: PropTypes.func.isRequired,
