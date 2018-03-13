@@ -110,10 +110,12 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       // we dont need to recompute since we disable this one.
       return this._toggleOrigDiscountPrice()
     } else {
-      return Math.floor(divide(
+      const calculate = Math.floor(divide(
         subtract(this._computeTotalPointsPrice(), usePoints),
         orderedProduct.getIn(['points', 'multiplier'])
       ))
+      // make sure not NAN
+      return calculate || 0
     }
   }
 
