@@ -21,6 +21,7 @@ import {
   ifElse,
   lt,
   partial,
+  map,
   prop,
   when
 } from 'ramda'
@@ -234,10 +235,11 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     })
   }
 
-  _updateStateBanners = (key) => RCompose(
+  _updateStateBanners = ({ key, props }) => RCompose(
     this._updateStateFromProps(key),
     // convert
-    (immutable) => immutable.toArray()
+    (immutable) => immutable.toArray(),
+    map((items) => paramsImgix(items, this._imgixOptions(props)))
   )
 
   componentDidMount () {
@@ -283,14 +285,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       categoryNavLoader,
       promos,
       promosLoading,
-      promosCount } = this.props
-
-    const bannerImages = [
-      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner1.png', this._imgixOptions({ windowWidth })),
-      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner2.png', this._imgixOptions({ windowWidth })),
-      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner3.png', this._imgixOptions({ windowWidth })),
-      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner4.png', this._imgixOptions({ windowWidth }))
-    ]
+      promosCount,
+      bannersLoading
+    } = this.props
+    const { _banners } = this.state
 
     const desktopBannerImages = [
       paramsImgix('https://cliqqshop.imgix.net/banner-desktop.jpg', this._imgixOptions({ windowWidth }))
@@ -342,8 +340,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               mobileView={
                 <MobileSlider
                   curved
-                  loader={false}
-                  images={bannerImages}
+                  loader={bannersLoading}
+                  images={_banners}
                   isInfinite
                 />
               }
