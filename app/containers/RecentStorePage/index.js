@@ -20,6 +20,7 @@ import reducer from './reducer'
 import saga from './saga'
 import messages from './messages'
 
+import { userIsAuthenticated } from 'containers/App/auth'
 import {
   setPageTitleAction,
   setRouteNameAction
@@ -100,4 +101,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect
-)(injectIntl(RecentStorePage))
+)(injectIntl(userIsAuthenticated(RecentStorePage)))
