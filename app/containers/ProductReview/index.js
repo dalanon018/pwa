@@ -160,6 +160,16 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       usePoints: value
     }))
   }
+  /*
+   * we need to have a way to update store information that we can select on selection of store since we will be needing this on submission
+   */
+ _updateStore = (value) => {
+   this.setState(async () => ({
+      store: await transformStore(value)
+   }))
+ }
+
+
   _stepWrapperRef = (ref) => {
     this._innerStepRef = ref
   }
@@ -178,7 +188,6 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   _handleChange = (e, { value }) => {
-    console.log(value, this.showPointsModifier)
     this.setState({
       modePayment: value,
       storeLocatorVisibility: value === this.showStoreLocator,
@@ -366,6 +375,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             _handleToBottom={this._handleToBottom}
             _stepWrapperRef={this._stepWrapperRef}
             _updateUsePoints={this._updateUsePoints}
+            _updateStore={this._updateStore}
 
             errorMessage={errorMessage}
             isBlackListed={isBlackListed}
