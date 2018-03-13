@@ -63,9 +63,9 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
     return (
       <div>
         <Helmet
-          title='Category Page'
+          title='Recently Visited'
           meta={[
-          { name: 'description', content: '7-eleven CliQQ category page' }
+            { name: 'description', content: '7-eleven CLiQQ Recently Visited Page' }
           ]}
         />
         <Container>
