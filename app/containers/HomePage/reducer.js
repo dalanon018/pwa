@@ -16,6 +16,9 @@ import {
   SET_PROMOS,
   SET_PROMOS_COUNT,
 
+  GET_BANNERS,
+  SET_BANNERS,
+
   LIMIT_ITEMS
 } from './constants'
 
@@ -27,7 +30,11 @@ const initialState = fromJS({
 
   promos: [],
   promosCount: 0,
-  promosLoading: false
+  promosLoading: false,
+
+  banners: [],
+  bannersCount: 0,
+  bannersLoading: false
 })
 
 function homePageReducer (state = initialState, action) {
@@ -57,6 +64,14 @@ function homePageReducer (state = initialState, action) {
 
     case SET_PROMOS_COUNT:
       return state.set('promosCount', fromJS(action.payload))
+
+    case GET_BANNERS :
+      return state.set('bannersLoading', true)
+
+    case SET_BANNERS :
+      return state
+        .set('banners', fromJS(action.payload))
+        .set('bannersLoading', false)
 
     default:
       return state
