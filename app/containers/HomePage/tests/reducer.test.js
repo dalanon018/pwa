@@ -14,7 +14,11 @@ describe('homePageReducer', () => {
 
       promos: [],
       promosCount: 0,
-      promosLoading: false
+      promosLoading: false,
+
+      banners: [],
+      bannersCount: 0,
+      bannersLoading: false
     })
   })
 

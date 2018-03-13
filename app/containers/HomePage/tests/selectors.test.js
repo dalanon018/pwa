@@ -8,6 +8,9 @@ import {
   selectPromosLoading,
   selectPromosCount,
 
+  selectBanners,
+  selectBannersLoading,
+
   selectLazyload
 } from '../selectors'
 
@@ -87,5 +90,29 @@ describe('HomePage Selectors', () => {
       }
     })
     expect(selector(mockedState)).toEqual(lazyload)
+  })
+
+  describe('Banners Selectors', () => {
+    it('should get selectBanners', () => {
+      const selector = selectBanners()
+      const banners = fromJS([{ id: 1 }, { id: 3 }, { id: 3 }, { id: 4 }])
+      const mockedState = fromJS({
+        home: {
+          banners
+        }
+      })
+      expect(selector(mockedState)).toEqual(banners)
+    })
+
+    it('should get selectBannersLoading', () => {
+      const selector = selectBannersLoading()
+      const bannersLoading = false
+      const mockedState = fromJS({
+        home: {
+          bannersLoading
+        }
+      })
+      expect(selector(mockedState)).toEqual(bannersLoading)
+    })
   })
 })
