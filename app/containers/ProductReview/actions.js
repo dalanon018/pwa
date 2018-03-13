@@ -94,8 +94,6 @@ export function setStoreAction (payload) {
   }
 }
 
-
-
 export function getCurrentPointsAction () {
   return {
     type: GET_CURRENT_POINTS

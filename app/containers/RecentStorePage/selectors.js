@@ -1,24 +1,29 @@
 import { createSelector } from 'reselect'
 
 /**
- * Direct selector to the categoryLanding state domain
+ * Direct selector to the RecentStorePage state domain
  */
-const selectCategoryLandingDomain = (state) => state.get('categoryLanding')
+const selectRecentStorePageDomain = (state) => state.get('recentStorePage')
 
 /**
  * Other specific selectors
  */
 
 /**
- * Default selector used by CategoryLanding
+ * Default selector used by RecentStorePage
  */
 
-const makeSelectCategoryLanding = () => createSelector(
-  selectCategoryLandingDomain,
-  (substate) => substate.toJS()
+const selectVisitedStores = () => createSelector(
+  selectRecentStorePageDomain(),
+  (substate) => substate.get('visitedStores')
 )
 
-export default makeSelectCategoryLanding
+const selectVisitedStoresLoading = () => createSelector(
+  selectRecentStorePageDomain(),
+  (substate) => substate.get('visitedStoresLoading')
+)
+
 export {
-  selectCategoryLandingDomain
+  selectVisitedStores,
+  selectVisitedStoresLoading
 }

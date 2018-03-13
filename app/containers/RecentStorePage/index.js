@@ -15,18 +15,24 @@ import Helmet from 'react-helmet'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
-import { Grid, Container, Image, Label } from 'semantic-ui-react'
+import { Grid, Container } from 'semantic-ui-react'
 import reducer from './reducer'
 import saga from './saga'
 import messages from './messages'
 
-import CategoryItem from 'components/Mobile/PlainCard'
-import OrderTip from 'components/Mobile/OrderTip'
-import MobileFooter from 'components/Mobile/Footer'
-import AccessView from 'components/Shared/AccessMobileDesktopView'
+import {
+  setPageTitleAction,
+  setRouteNameAction
+} from 'containers/Buckets/actions'
 
-import { selectProductCategories } from 'containers/Buckets/selectors'
-import { setPageTitleAction, setRouteNameAction } from 'containers/Buckets/actions'
+import {
+  getVisitedStoresAction
+} from './actions'
+
+import {
+  selectVisitedStores,
+  selectVisitedStoresLoading
+} from './selectors'
 import { RECENT_STORE_NAME } from 'containers/Buckets/constants'
 
 export class RecentStorePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -34,7 +40,9 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
     setPageTitle: PropTypes.func.isRequired,
     setRouteName: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
-    categories: PropTypes.object.isRequired
+    getVisitedStore: PropTypes.func.isRequired,
+    visitedStores: PropTypes.object.isRequired,
+    visitedStoresLoading: PropTypes.bool.isRequired
   }
 
   _handleGoTo = (id, name) => () => {
@@ -50,8 +58,6 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
   }
 
   render () {
-    const { categories } = this.props
-
     return (
       <div>
         <Helmet
@@ -62,46 +68,24 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
         />
         <Container>
           <Grid padded>
-            <Grid.Row columns={2} stretched>
-              {
-                categories.map(category => {
-                  return (
-                    <Grid.Column className='padding__bottom--10' key={category.get('id')} onClick={this._handleGoTo(category.get('id'), category.get('name'))}>
-                      <CategoryItem borderRadius height={90}>
-                        <div className='text__align--center padding__10'>
-                          <Image src={category.get('background')} alt={category.get('name')} />
-                          <Label basic as='span' size='medium' className='text__weight--400 margin__top-positive--10'>
-                            {category.get('name')}
-                          </Label>
-                        </div>
-                      </CategoryItem>
-                    </Grid.Column>
-                  )
-                })
-              }
-            </Grid.Row>
+            <Grid.Row columns={2} stretched />
           </Grid>
         </Container>
-        <div className='margin__bottom-positive--20'>
-          <OrderTip />
-        </div>
-        <AccessView
-          mobileView={<MobileFooter />}
-          desktopView={null}
-        />
       </div>
     )
   }
 }
 
 const mapStateToProps = createStructuredSelector({
-  categories: selectProductCategories()
+  visitedStores: selectVisitedStores(),
+  visitedStoresLoading: selectVisitedStoresLoading()
 })
 
 function mapDispatchToProps (dispatch) {
   return {
     setPageTitle: payload => dispatch(setPageTitleAction(payload)),
     setRouteName: payload => dispatch(setRouteNameAction(payload)),
+    getVisitedStores: () => dispatch(getVisitedStoresAction()),
     changeRoute: url => dispatch(push(url)),
     dispatch
   }

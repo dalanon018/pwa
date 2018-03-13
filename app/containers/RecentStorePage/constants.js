@@ -1,7 +1,8 @@
 /*
  *
- * CategoryLanding constants
+ * RecentStorePage constants
  *
  */
 
-export const DEFAULT_ACTION = 'app/CategoryLanding/DEFAULT_ACTION'
+export const GET_VISITED_STORES = 'app/ProductReview/GET_VISITED_STORES'
+export const SET_VISITED_STORES = 'app/ProductReview/SET_VISITED_STORES'

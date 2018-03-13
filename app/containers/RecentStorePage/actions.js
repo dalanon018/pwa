@@ -1,15 +1,23 @@
 /*
  *
- * CategoryLanding actions
+ * RecentStorePage actions
  *
  */
 
 import {
-  DEFAULT_ACTION
+  GET_VISITED_STORES,
+  SET_VISITED_STORES
 } from './constants'
 
-export function defaultAction () {
+export function getVisitedStoresAction () {
   return {
-    type: DEFAULT_ACTION
+    type: GET_VISITED_STORES
+  }
+}
+
+export function setVisitedStoresAction (payload) {
+  return {
+    type: SET_VISITED_STORES,
+    payload
   }
 }

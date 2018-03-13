@@ -1,23 +1,32 @@
 /*
  *
- * CategoryLanding reducer
+ * RecentStorePage reducer
  *
  */
 
 import { fromJS } from 'immutable'
 import {
-  DEFAULT_ACTION
+  GET_VISITED_STORES,
+  SET_VISITED_STORES
 } from './constants'
 
-const initialState = fromJS({})
+const initialState = fromJS({
+  visitedStores: [],
+  visitedStoresLoading: false
+})
 
-function categoryLandingReducer (state = initialState, action) {
+function recentStorePageReducer (state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
+    case GET_VISITED_STORES:
+      return state.set('visitedStoresLoading', true)
+
+    case SET_VISITED_STORES:
       return state
+          .set('visitedStores', fromJS(action.payload))
+          .set('visitedStoresLoading', false)
     default:
       return state
   }
 }
 
-export default categoryLandingReducer
+export default recentStorePageReducer
