@@ -13,7 +13,18 @@ import { compose } from 'redux'
 import { injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
-import { ifElse, identity } from 'ramda'
+import {
+  both,
+  compose as RCompose,
+  identity,
+  ifElse,
+  lt,
+  prop,
+  partial,
+  when,
+  equals,
+  map
+} from 'ramda'
 import { range } from 'lodash'
 import { Container, Image, Label } from 'semantic-ui-react'
 
@@ -62,7 +73,8 @@ import saga from './saga'
 
 import {
   getFeaturedProductsAction,
-  getPromosAction
+  getPromosAction,
+  getBannersAction
 } from './actions'
 import {
   selectLoading,
@@ -71,7 +83,10 @@ import {
   selectPromos,
   selectPromosLoading,
   selectPromosCount,
-  selectLazyload
+  selectLazyload,
+
+  selectBanners,
+  selectBannersLoading
 } from './selectors'
 import {
   LIMIT_ITEMS
@@ -112,16 +127,31 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     promosLoading: PropTypes.bool.isRequired,
     promosCount: PropTypes.number.isRequired,
     getPromos: PropTypes.func.isRequired,
+    banners: PropTypes.object.isRequired,
+    bannersLoading: PropTypes.bool.isRequired,
+    getBanners: PropTypes.func.isRequired,
     lazyload: PropTypes.bool.isRequired,
     categoryNavLoader: PropTypes.bool.isRequired
   }
 
   state = {
+    _banners: [],
     showFeaturedItems: false,
     showFeaturedCategories: false,
     pageOffset: 0,
     offset: 0,
     limit: LIMIT_ITEMS
+  }
+
+  _imgixOptions = ({ windowWidth }) => {
+    return {
+      w: windowWidth >= 1024 ? 1170 : 800,
+      h: 400,
+      fit: 'clamp',
+      auto: 'compress',
+      q: 35,
+      lossless: 0
+    }
   }
 
   _shouldDisplayHeader = (component) => ifElse(
@@ -199,16 +229,50 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     )
   }
 
-  componentWillMount () {
-    this.props.setPageTitle(null)
-    this.props.setShowSearchIcon(false)
-    this.props.setShowActivityIcon(true)
+  _updateStateFromProps = (key) => (data) => {
+    this.setState({
+      [key]: data
+    })
   }
 
+  _updateStateBanners = (key) => RCompose(
+    this._updateStateFromProps(key),
+    // convert
+    (immutable) => immutable.toArray(),
+    map((employee) => ({
+      label: `${employee.getIn(['user', 'lastName'])}, ${employee.getIn(['user', 'firstName'])} - ${employee.getIn(['company', 'name'])}`,
+      value: employee.getIn(['employee', 'id'])
+    }))
+  )
+
   componentDidMount () {
-    this.props.getPromos()
-    this.props.setRouteName(HOME_NAME)
+    const { setPageTitle, setShowActivityIcon, setShowSearchIcon, getPromos, getBanners, setRouteName } = this.props
+    setPageTitle(null)
+    setShowSearchIcon(false)
+    setShowActivityIcon(true)
+
+    getBanners()
+    getPromos()
+    setRouteName(HOME_NAME)
     this._fetchFeaturedProducts(this.props)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const { banners } = nextProps
+    const { _banners } = this.state
+
+    const shouldUpdateBanners = when(
+      both(
+        partial(equals(0), [_banners.length]),
+        RCompose(
+          lt(0),
+          prop('size')
+        )
+      ),
+      this._updateStateBanners('_banners')
+    )
+
+    shouldUpdateBanners(banners)
   }
 
   render () {
@@ -226,24 +290,15 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       promosLoading,
       promosCount } = this.props
 
-    const imgixOptions = {
-      w: windowWidth >= 1024 ? 1170 : 800,
-      h: 400,
-      fit: 'clamp',
-      auto: 'compress',
-      q: 35,
-      lossless: 0
-    }
-
     const bannerImages = [
-      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner1.png', imgixOptions),
-      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner2.png', imgixOptions),
-      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner3.png', imgixOptions),
-      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner4.png', imgixOptions)
+      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner1.png', this._imgixOptions({ windowWidth })),
+      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner2.png', this._imgixOptions({ windowWidth })),
+      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner3.png', this._imgixOptions({ windowWidth })),
+      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner4.png', this._imgixOptions({ windowWidth }))
     ]
 
     const desktopBannerImages = [
-      paramsImgix('https://cliqqshop.imgix.net/banner-desktop.jpg', imgixOptions)
+      paramsImgix('https://cliqqshop.imgix.net/banner-desktop.jpg', this._imgixOptions({ windowWidth }))
     ]
     return (
       <div>
@@ -370,6 +425,8 @@ const mapStateToProps = createStructuredSelector({
   promos: selectPromos(),
   promosLoading: selectPromosLoading(),
   promosCount: selectPromosCount(),
+  banners: selectBanners(),
+  bannersLoading: selectBannersLoading(),
   lazyload: selectLazyload(),
   categoryNavLoader: selectCategoryNavLoader()
 })
@@ -382,6 +439,7 @@ function mapDispatchToProps (dispatch) {
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProduct: payload => dispatch(getFeaturedProductsAction(payload)),
     getPromos: payload => dispatch(getPromosAction(payload)),
+    getBanners: payload => dispatch(getBannersAction(payload)),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
   }
