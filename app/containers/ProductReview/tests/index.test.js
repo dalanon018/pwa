@@ -20,7 +20,6 @@ describe('<ProductReview />', () => {
     storeLocator: () => {},
     getProductCategories: () => {},
     getBlackList: () => {},
-    getVisitedStores: () => {},
     getCurrentPoints: () => {},
     pushRoute: () => {},
     changeRoute: () => {},
@@ -45,8 +44,6 @@ describe('<ProductReview />', () => {
     orderFail: fromJS({}),
     mobileNumber: '999999999',
     orderRequesting: false,
-    visitedStores: fromJS({}),
-    visitedStoresLoading: false,
     currentPoints: fromJS({ points: 0 }),
     currentPointsLoading: false
   }
