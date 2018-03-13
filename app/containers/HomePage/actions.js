@@ -13,7 +13,10 @@ import {
 
   GET_PROMOS,
   SET_PROMOS,
-  SET_PROMOS_COUNT
+  SET_PROMOS_COUNT,
+
+  GET_BANNERS,
+  SET_BANNERS
 } from './constants'
 
 export function defaultAction () {
@@ -59,6 +62,19 @@ export function setPromosAction (payload) {
 export function setPromosCountAction (payload) {
   return {
     type: SET_PROMOS_COUNT,
+    payload
+  }
+}
+
+export function getBannersAction () {
+  return {
+    type: GET_BANNERS
+  }
+}
+
+export function setBannersAction (payload) {
+  return {
+    type: SET_BANNERS,
     payload
   }
 }

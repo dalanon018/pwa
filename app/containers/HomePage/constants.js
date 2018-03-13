@@ -15,4 +15,7 @@ export const GET_PROMOS = 'app/HomePage/GET_PROMOS'
 export const SET_PROMOS = 'app/HomePage/SET_PROMOS'
 export const SET_PROMOS_COUNT = 'app/HomePage/SET_PROMOS_COUNT'
 
+export const GET_BANNERS = 'app/HomePage/GET_BANNERS'
+export const SET_BANNERS = 'app/HomePage/SET_BANNERS'
+
 export const LIMIT_ITEMS = 8

@@ -53,6 +53,16 @@ const selectLazyload = () => createSelector(
   subState => subState.get('lazyload')
 )
 
+const selectBanners = () => createSelector(
+  selectHomePageDomain(),
+  (substate) => substate.get('banners')
+)
+
+const selectBannersLoading = () => createSelector(
+  selectHomePageDomain(),
+  (substate) => substate.get('bannersLoading')
+)
+
 export {
   selectHomePageDomain,
   selectFeaturedProducts,
@@ -62,5 +72,8 @@ export {
 
   selectPromos,
   selectPromosLoading,
-  selectPromosCount
+  selectPromosCount,
+
+  selectBanners,
+  selectBannersLoading
 }

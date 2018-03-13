@@ -17,7 +17,8 @@ import { transformProduct, transformPromo } from 'utils/transforms'
 
 import {
   GET_FEATURED_PRODUCTS,
-  GET_PROMOS
+  GET_PROMOS,
+  GET_BANNERS
 } from './constants'
 
 import {
@@ -25,7 +26,9 @@ import {
   setProductsCountsAction,
 
   setPromosAction,
-  setPromosCountAction
+  setPromosCountAction,
+
+  setBannersAction
 } from './actions'
 
 import {
@@ -103,6 +106,18 @@ export function * getPromos () {
   }
 }
 
+export function * getBanners () {
+  const req = yield call(getRequestData, `https://storage.googleapis.com/cliqqshop/config/banners.json`, {
+    method: 'GET'
+  })
+
+  if (!isEmpty(req)) {
+    yield put(setBannersAction(req))
+  } else {
+    yield put(setNetworkErrorAction(500))
+  }
+}
+
 /**
  * Watches for Every change of locations from router
  * once this triggers we need to check all the items under `initializeAppGlobals`
@@ -119,11 +134,16 @@ export function * getPromosSaga () {
   yield * takeLatest(GET_PROMOS, getPromos)
 }
 
+export function * getBannersSaga () {
+  yield * takeLatest(GET_BANNERS, getBanners)
+}
+
 // Individual exports for testing
 export function * homePageSagas () {
   const watcher = yield [
     fork(getProductSaga),
-    fork(getPromosSaga)
+    fork(getPromosSaga),
+    fork(getBannersSaga)
   ]
   yield take(LOCATION_CHANGE)
   yield watcher.map(task => cancel(task))

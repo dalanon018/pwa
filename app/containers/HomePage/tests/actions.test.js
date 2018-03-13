@@ -6,7 +6,10 @@ import {
 
   getPromosAction,
   setPromosAction,
-  setPromosCountAction
+  setPromosCountAction,
+
+  getBannersAction,
+  setBannersAction
 } from '../actions'
 import {
   GET_FEATURED_PRODUCTS,
@@ -16,7 +19,10 @@ import {
 
   GET_PROMOS,
   SET_PROMOS,
-  SET_PROMOS_COUNT
+  SET_PROMOS_COUNT,
+
+  GET_BANNERS,
+  SET_BANNERS
 } from '../constants'
 
 describe('HomePage actions', () => {
@@ -70,5 +76,23 @@ describe('HomePage actions', () => {
       payload
     }
     expect(setPromosCountAction(payload)).toEqual(expected)
+  })
+
+  describe('Banners Actions', () => {
+    it('should call getBannersAction', () => {
+      const expected = {
+        type: GET_BANNERS
+      }
+      expect(getBannersAction()).toEqual(expected)
+    })
+
+    it('should call setBannersAction', () => {
+      const payload = { id: 1, banner: 'test1' }
+      const expected = {
+        type: SET_BANNERS,
+        payload
+      }
+      expect(setBannersAction(payload)).toEqual(expected)
+    })
   })
 })

@@ -13,7 +13,18 @@ import { compose } from 'redux'
 import { injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
-import { ifElse, identity } from 'ramda'
+import {
+  both,
+  compose as RCompose,
+  equals,
+  identity,
+  ifElse,
+  lt,
+  partial,
+  map,
+  prop,
+  when
+} from 'ramda'
 import { range } from 'lodash'
 import { Container, Image, Label } from 'semantic-ui-react'
 
@@ -62,7 +73,8 @@ import saga from './saga'
 
 import {
   getFeaturedProductsAction,
-  getPromosAction
+  getPromosAction,
+  getBannersAction
 } from './actions'
 import {
   selectLoading,
@@ -71,7 +83,10 @@ import {
   selectPromos,
   selectPromosLoading,
   selectPromosCount,
-  selectLazyload
+  selectLazyload,
+
+  selectBanners,
+  selectBannersLoading
 } from './selectors'
 import {
   LIMIT_ITEMS
@@ -112,47 +127,32 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     promosLoading: PropTypes.bool.isRequired,
     promosCount: PropTypes.number.isRequired,
     getPromos: PropTypes.func.isRequired,
+    banners: PropTypes.object.isRequired,
+    bannersLoading: PropTypes.bool.isRequired,
+    getBanners: PropTypes.func.isRequired,
     lazyload: PropTypes.bool.isRequired,
     categoryNavLoader: PropTypes.bool.isRequired
   }
 
   state = {
+    _banners: [],
     showFeaturedItems: false,
     showFeaturedCategories: false,
     pageOffset: 0,
     offset: 0,
     limit: LIMIT_ITEMS
   }
-  // constructor () {
-  //   super()
 
-  //   this._displayViewAll = this._displayViewAll.bind(this)
-  //   this._displayFeatured = this._displayFeatured.bind(this)
-  // }
-
-  // _displayFeatured () {
-  //   this.props.changeRoute(`/products-category/featured`)
-  // }
-
-  // _displayViewAll () {
-  //   const { totalFeaturedProductCount } = this.props
-  //   const componentRender = ifElse(
-  //     gt(LIMIT_ITEMS),
-  //     () => null,
-  //     () => (
-  //       <Grid padded>
-  //         <Grid.Row centered>
-  //           <Button
-  //             onClick={this._displayFeatured}
-  //             primary >
-  //             <FormattedMessage {...messages.productViewAll} /> </Button>
-  //         </Grid.Row>
-  //       </Grid>
-  //     )
-  //   )
-
-  //   return componentRender(totalFeaturedProductCount)
-  // }
+  _imgixOptions = ({ windowWidth }) => {
+    return {
+      w: windowWidth >= 1024 ? 1170 : 800,
+      h: 400,
+      fit: 'clamp',
+      auto: 'compress',
+      q: 35,
+      lossless: 0
+    }
+  }
 
   _shouldDisplayHeader = (component) => ifElse(
       identity,
@@ -229,16 +229,47 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     )
   }
 
-  componentWillMount () {
-    this.props.setPageTitle(null)
-    this.props.setShowSearchIcon(false)
-    this.props.setShowActivityIcon(true)
+  _updateStateFromProps = (key) => (data) => {
+    this.setState({
+      [key]: data
+    })
   }
 
+  _updateStateBanners = ({ key, props }) => RCompose(
+    this._updateStateFromProps(key),
+    // convert
+    (immutable) => immutable.toArray(),
+    map((items) => paramsImgix(items, this._imgixOptions(props)))
+  )
+
   componentDidMount () {
-    this.props.getPromos()
-    this.props.setRouteName(HOME_NAME)
+    const { setPageTitle, setShowActivityIcon, setShowSearchIcon, getPromos, getBanners, setRouteName } = this.props
+    setPageTitle(null)
+    setShowSearchIcon(false)
+    setShowActivityIcon(true)
+
+    getBanners()
+    getPromos()
+    setRouteName(HOME_NAME)
     this._fetchFeaturedProducts(this.props)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const { banners } = nextProps
+    const { _banners } = this.state
+
+    const shouldUpdateBanners = when(
+      both(
+        partial(equals(0), [_banners.length]),
+        RCompose(
+          lt(0),
+          prop('size')
+        )
+      ),
+      this._updateStateBanners('_banners')
+    )
+
+    shouldUpdateBanners(banners)
   }
 
   render () {
@@ -254,26 +285,13 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       categoryNavLoader,
       promos,
       promosLoading,
-      promosCount } = this.props
-
-    const imgixOptions = {
-      w: windowWidth >= 1024 ? 1170 : 800,
-      h: 400,
-      fit: 'clamp',
-      auto: 'compress',
-      q: 35,
-      lossless: 0
-    }
-
-    const bannerImages = [
-      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner1.png', imgixOptions),
-      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner2.png', imgixOptions),
-      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner3.png', imgixOptions),
-      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner4.png', imgixOptions)
-    ]
+      promosCount,
+      bannersLoading
+    } = this.props
+    const { _banners } = this.state
 
     const desktopBannerImages = [
-      paramsImgix('https://cliqqshop.imgix.net/banner-desktop.jpg', imgixOptions)
+      paramsImgix('https://cliqqshop.imgix.net/banner-desktop.jpg', this._imgixOptions({ windowWidth }))
     ]
     return (
       <div>
@@ -322,8 +340,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               mobileView={
                 <MobileSlider
                   curved
-                  loader={false}
-                  images={bannerImages}
+                  loader={bannersLoading}
+                  images={_banners}
                   isInfinite
                 />
               }
@@ -400,6 +418,8 @@ const mapStateToProps = createStructuredSelector({
   promos: selectPromos(),
   promosLoading: selectPromosLoading(),
   promosCount: selectPromosCount(),
+  banners: selectBanners(),
+  bannersLoading: selectBannersLoading(),
   lazyload: selectLazyload(),
   categoryNavLoader: selectCategoryNavLoader()
 })
@@ -412,6 +432,7 @@ function mapDispatchToProps (dispatch) {
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProduct: payload => dispatch(getFeaturedProductsAction(payload)),
     getPromos: payload => dispatch(getPromosAction(payload)),
+    getBanners: payload => dispatch(getBannersAction(payload)),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
   }

@@ -13,6 +13,7 @@ describe('<HomePage />', () => {
     changeRoute: () => {},
     getProduct: () => {},
     getPromos: () => {},
+    getBanners: () => {},
     setRouteName: () => {},
     getProductCategories: () => {},
     totalFeaturedProductCount: 0,
@@ -24,6 +25,8 @@ describe('<HomePage />', () => {
     featuredBrands: fromJS([]),
     promos: fromJS([]),
     promosLoading: false,
+    banners: fromJS([]),
+    bannersLoading: false,
     categoryNavLoader: false,
     intl: {
       formatMessage: () => {}
