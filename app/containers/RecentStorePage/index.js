@@ -53,9 +53,10 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
   }
 
   componentDidMount () {
-    const { setPageTitle, setRouteName, intl } = this.props
+    const { setPageTitle, setRouteName, intl, getVisitedStores } = this.props
     setPageTitle(intl.formatMessage(messages.header))
     setRouteName(RECENT_STORE_NAME)
+    getVisitedStores()
   }
 
   render () {
