@@ -16,18 +16,22 @@ import {
 } from './actions'
 
 import {
-  API_BASE_URL,
+  RECENT_STORE_TOKEN,
+  LOYALTY_URL,
   MOBILE_NUMBERS_KEY
 } from 'containers/App/constants'
 
 export function * getVisitedStore () {
   const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
   // we will only get the last mobileNumber used
-  const mobile = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
+  const mobileNumber = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
 
-  const req = yield call(request, `${API_BASE_URL}/recent-store/0${mobile}`, {
-    method: 'GET',
-    token: '<STATIC TOKEN>'
+  const req = yield call(request, `${LOYALTY_URL}/recentStores`, {
+    method: 'POST',
+    body: JSON.stringify({
+      mobileNumber,
+      token: RECENT_STORE_TOKEN
+    })
   })
   // @TODO: we need to know the structure wether we need to create a transformation layer for this.
   if (!isEmpty(req)) {
