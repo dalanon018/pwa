@@ -22,6 +22,8 @@ describe('<ProductReview />', () => {
     getBlackList: () => {},
     getVisitedStores: () => {},
     getCurrentPoints: () => {},
+    pushRoute: () => {},
+    changeRoute: () => {},
     isBlackListed: false,
     loader: false,
     orderedProduct: fromJS({
