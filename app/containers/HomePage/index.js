@@ -16,14 +16,13 @@ import { push } from 'react-router-redux'
 import {
   both,
   compose as RCompose,
+  equals,
   identity,
   ifElse,
   lt,
-  prop,
   partial,
-  when,
-  equals,
-  map
+  prop,
+  when
 } from 'ramda'
 import { range } from 'lodash'
 import { Container, Image, Label } from 'semantic-ui-react'
@@ -238,11 +237,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   _updateStateBanners = (key) => RCompose(
     this._updateStateFromProps(key),
     // convert
-    (immutable) => immutable.toArray(),
-    map((employee) => ({
-      label: `${employee.getIn(['user', 'lastName'])}, ${employee.getIn(['user', 'firstName'])} - ${employee.getIn(['company', 'name'])}`,
-      value: employee.getIn(['employee', 'id'])
-    }))
+    (immutable) => immutable.toArray()
   )
 
   componentDidMount () {
