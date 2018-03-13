@@ -25,8 +25,9 @@ const Wrapper = styled.div`
 `
 
 const OptionWrapper = styled.div`
-  height: 92vh;
+  height: 100vh;
   overflow-y: auto;
+  padding-bottom: 66px;
 
   &::-webkit-scrollbar {
     width: 0;
@@ -37,13 +38,16 @@ const OptionWrapper = styled.div`
 
 const ButtonWrapper = styled.div`
   align-items: center;
+  background-color: #FFFFFF;
   bottom: 0;
   display: flex;
   justify-content: space-between;
-  left: 0;
   padding: 14px;
-  position: absolute;
-  width: 100%;
+  position: fixed;
+  right: ${props => props.toggleDrawer ? 0 : '-100%'};
+  transition: ease 0.3s;
+  width: 75%;
+  z-index: 999;
 `
 
 const FormWrapper = styled(Form)`
@@ -171,7 +175,7 @@ class FilterSlider extends React.PureComponent {
           { this._handleRadioGroup() }
           { this._handleCheckboxGroup() }
         </OptionWrapper>
-        <ButtonWrapper>
+        <ButtonWrapper toggleDrawer={toggleDrawer}>
           <Button basic onClick={toggleReset}>
             <FormattedMessage {...messages.reset} />
           </Button>
