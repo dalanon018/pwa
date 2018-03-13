@@ -14,12 +14,12 @@ const selectRecentStorePageDomain = (state) => state.get('recentStorePage')
  */
 
 const selectVisitedStores = () => createSelector(
-  selectRecentStorePageDomain(),
+  selectRecentStorePageDomain,
   (substate) => substate.get('visitedStores')
 )
 
 const selectVisitedStoresLoading = () => createSelector(
-  selectRecentStorePageDomain(),
+  selectRecentStorePageDomain,
   (substate) => substate.get('visitedStoresLoading')
 )
 

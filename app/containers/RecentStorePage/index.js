@@ -41,7 +41,7 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
     setPageTitle: PropTypes.func.isRequired,
     setRouteName: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
-    getVisitedStore: PropTypes.func.isRequired,
+    getVisitedStores: PropTypes.func.isRequired,
     visitedStores: PropTypes.object.isRequired,
     visitedStoresLoading: PropTypes.bool.isRequired
   }
