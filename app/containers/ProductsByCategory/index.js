@@ -40,6 +40,7 @@ import H3 from 'components/Shared/H3'
 import H4 from 'components/Shared/H4'
 import EmptyProducts from 'components/Shared/EmptyProductsBlock'
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
+import FilterTrigger from 'components/Mobile/FilterTrigger'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 import Modal from 'components/Shared/PromptModal'
 
@@ -501,11 +502,15 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
   render () {
     const isCategory = window.location.pathname.split('/')[1] === 'products-category'
-    const { loader, lazyload, over18, windowWidth } = this.props
+    const { loader, lazyload, over18, windowWidth, filterCategories, filterBrands } = this.props
     const { togglePrompt } = this.state
 
     return (
       <div>
+        <FilterTrigger
+          filterCategories={filterCategories}
+          filterBrands={filterBrands} />
+
         <ContentWrapper>
           <InfiniteWrapper
             hasMoreData={lazyload}
