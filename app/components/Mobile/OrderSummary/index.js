@@ -325,7 +325,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                       <LocationButton id='scrollToAnimate' className='color__secondary border__two--light-grey' onClick={_handleStoreLocator} fluid iconBg={NextIcon}>
                         {
                         store && isEmpty(store)
-                        ? <FormattedMessage {...messages.findStore} />
+                        ? <FormattedMessage {...messages.recentlyViewedStore} />
                         : <span>{store.id} {store.name}</span>
                       }
                       </LocationButton>

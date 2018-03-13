@@ -8,6 +8,10 @@ import { defineMessages } from 'react-intl'
 const idSuffix = 'app.containers.OrderSummary'
 
 export default defineMessages({
+  recentlyViewedStore: {
+    id: `${idSuffix}.recentlyViewedStore`,
+    defaultMessage: 'Recently Visited Store'
+  },
   findStore: {
     id: `${idSuffix}.findStore`,
     defaultMessage: 'Find Store Nearby'
