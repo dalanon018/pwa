@@ -11,7 +11,7 @@ import { noop, isEmpty } from 'lodash'
 import { ifElse, equals, both, compose, prop, propOr, either } from 'ramda'
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
-import { replace } from 'react-router-redux'
+import { replace, push } from 'react-router-redux'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 
@@ -109,7 +109,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     storeLocation: PropTypes.object,
     setRouteName: PropTypes.func.isRequired,
     currentPoints: PropTypes.object.isRequired,
-    currentPointsLoading: PropTypes.bool.isRequired
+    currentPointsLoading: PropTypes.bool.isRequired,
+    pushRoute: PropTypes.func.isRequired,
+    changeRoute: PropTypes.func.isRequired
   }
 
   showStoreLocator = 'COD'
@@ -238,7 +240,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
   _handleRecentStore = () => {
     const { store } = this.state
-    this.props.changeRoute(`/recent-store${fnSearchParams(store)}`)
+    this.props.pushRoute(`/recent-store${fnSearchParams(store)}`)
   }
 
   _handleDoneFetchOrderNoProductNorMobile () {
@@ -438,6 +440,7 @@ function mapDispatchToProps (dispatch) {
     getCurrentPoints: () => dispatch(getCurrentPointsAction()),
     setHandlersDefault: () => dispatch(setOrderHandlersDefaultAction()),
     changeRoute: (url) => dispatch(replace(url)),
+    pushRoute: (url) => dispatch(push(url)),
     dispatch
   }
 }
