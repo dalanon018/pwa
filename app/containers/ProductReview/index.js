@@ -24,7 +24,7 @@ import injectReducer from 'utils/injectReducer'
 import { transformStore } from 'utils/transforms'
 import { FbEventTracking } from 'utils/seo'
 import { switchFn } from 'utils/logicHelper'
-import { fnQueryObject } from 'utils/http'
+import { fnQueryObject, fnSearchParams } from 'utils/http'
 
 import WindowWidth from 'components/Shared/WindowWidth'
 
@@ -235,6 +235,11 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
   _handleStoreLocator () {
     this.props.storeLocator()
+  }
+
+  _handleRecentStore () {
+    const { store } = this.state
+    this.props.changeRoute(`/recent-store${fnSearchParams(store)}`)
   }
 
   _handleDoneFetchOrderNoProductNorMobile () {
