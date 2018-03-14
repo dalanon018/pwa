@@ -480,6 +480,9 @@ svg#barcode {
         padding-bottom: 0 !important;
         padding-top: 0 !important;
       }
+      &--bottom {
+        padding-bottom: 0 !important;
+      }
     }
     &__right {
       padding-right: 5px;

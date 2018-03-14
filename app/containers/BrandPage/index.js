@@ -25,7 +25,7 @@ import {
   partial,
   path
 } from 'ramda'
-import { Container } from 'semantic-ui-react'
+import { Container, Grid } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
@@ -44,6 +44,7 @@ import AccessView from 'components/Shared/AccessMobileDesktopView'
 import WindowWidth from 'components/Shared/WindowWidth'
 import H3 from 'components/Shared/H3'
 import EmptyProducts from 'components/Shared/EmptyProductsBlock'
+import FilterTrigger from 'components/Mobile/FilterTrigger'
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
 import { InfiniteLoading, InfiniteWrapper } from 'components/Shared/InfiniteLoading'
 
@@ -81,10 +82,10 @@ import {
   LIMIT_ITEMS
 } from './constants'
 
-const ContentWrapper = styled(Container)`
-  padding-top: 20px !important;
-  padding-bottom: 20px !important;
-`
+// const ContentWrapper = styled(Container)`
+//   padding-top: 20px !important;
+//   padding-bottom: 20px !important;
+// `
 
 const DesktopItemCount = styled.p`
   font-family: Roboto;
@@ -267,7 +268,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     const displayFeatured = ifElse(
       lt(0),
       () => (
-        <div className='margin__top-positive--30'>
+        <div className='margin__top-positive--10'>
           <InfiniteLoading
             results={productsFeatured}
             hasMoreData={lazyload}
@@ -396,8 +397,9 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   render () {
-    const { productsByBrands, loader, lazyload } = this.props
+    const { productsByBrands, loader, lazyload, filterCategories } = this.props
     const { brandImages, animateBanner } = this.state
+
     return (
       <div>
         <Waypoint
@@ -405,21 +407,29 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           onLeave={this._handleBannerAnimation(false)}
         >
           <div>
-            <AccessView
-              mobileView={
-                <MobileBannerSlider
-                  isInfinite
-                  autoplay={animateBanner}
-                  results={productsByBrands}
-                  loader={loader}
-                  images={brandImages}
-                />
-              }
-              desktopView={null}
-            />
+            <FilterTrigger filterCategories={filterCategories} />
           </div>
         </Waypoint>
-        <ContentWrapper>
+        <Container>
+          <Grid padded>
+            <Grid.Row className='padding__none--bottom'>
+              <Grid.Column>
+                <AccessView
+                  mobileView={
+                    <MobileBannerSlider
+                      curved
+                      isInfinite
+                      autoplay={animateBanner}
+                      results={productsByBrands}
+                      loader={loader}
+                      images={brandImages}
+                    />
+                  }
+                  desktopView={null}
+                />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
           <AccessView
             mobileView={null}
             desktopView={
@@ -432,7 +442,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
             />
             }
           />
-          <div className='margin__top-positive--30'>
+          <div className='margin__top-positive--10'>
             <InfiniteWrapper
               hasMoreData={lazyload}
               isLoading={loader}
@@ -445,7 +455,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
               { this._displayRegularItems() }
             </InfiniteWrapper>
           </div>
-        </ContentWrapper>
+        </Container>
         <AccessView
           mobileView={<MobileFooter />}
           desktopView={null}

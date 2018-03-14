@@ -71,14 +71,12 @@ class FilterSlider extends React.PureComponent {
     handleToggleRadio: PropTypes.func.isRequired,
     toggleCheckbox: PropTypes.array,
     handleToggleCheckbox: PropTypes.func.isRequired,
-    filterCategories: PropTypes.object.isRequired,
-    filterBrands: PropTypes.object.isRequired,
     toggleReset: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired
   }
 
   _handleRadioGroup = () => {
-    const { toggleRadio, handleToggleRadio, filterCategories } = this.context
+    const { toggleRadio, handleToggleRadio } = this.context
 
     return (
       <BlockWrapper>
@@ -91,7 +89,7 @@ class FilterSlider extends React.PureComponent {
 
               <FormWrapper>
                 {
-                  filterCategories.map((item, index) => {
+                  this.props.categories.map((item, index) => {
                     const value = item.get('id')
                     const trigger = toggleRadio === value
 
@@ -120,7 +118,7 @@ class FilterSlider extends React.PureComponent {
   }
 
   _handleCheckboxGroup = () => {
-    const { toggleCheckbox, handleToggleCheckbox, filterBrands } = this.context
+    const { toggleCheckbox, handleToggleCheckbox } = this.context
 
     return (
       <BlockWrapper>
@@ -133,7 +131,7 @@ class FilterSlider extends React.PureComponent {
 
               <FormWrapper>
                 {
-                  filterBrands.map((item, index) => {
+                  this.props.brands.map((item, index) => {
                     const value = item.get('id')
                     const trigger = toggleCheckbox.indexOf(value) > -1
 
@@ -168,12 +166,14 @@ class FilterSlider extends React.PureComponent {
   }
 
   render () {
+    const { categories, brands } = this.props
     const { toggleDrawer, toggleReset, handleSubmit } = this.context
+
     return (
       <Wrapper className='background__white' toggleDrawer={toggleDrawer}>
         <OptionWrapper>
-          { this._handleRadioGroup() }
-          { this._handleCheckboxGroup() }
+          { categories && this._handleRadioGroup() }
+          { brands && this._handleCheckboxGroup() }
         </OptionWrapper>
         <ButtonWrapper toggleDrawer={toggleDrawer}>
           <Button basic onClick={toggleReset}>
