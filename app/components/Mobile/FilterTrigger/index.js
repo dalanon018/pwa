@@ -54,8 +54,6 @@ class FilterTrigger extends React.PureComponent {
     handleToggleRadio: PropTypes.func.isRequired,
     toggleCheckbox: PropTypes.array,
     handleToggleCheckbox: PropTypes.func.isRequired,
-    filterCategories: PropTypes.object.isRequired,
-    filterBrands: PropTypes.object.isRequired,
     toggleReset: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired
   }
@@ -73,8 +71,6 @@ class FilterTrigger extends React.PureComponent {
       handleToggleRadio: this._handleToggleRadio,
       toggleCheckbox: this.state.toggleCheckbox,
       handleToggleCheckbox: this._handleToggleCheckbox,
-      filterCategories: this.props.filterCategories,
-      filterBrands: this.props.filterBrands,
       toggleReset: this._handleToggleReset,
       handleSubmit: this._handleSubmit
     }
@@ -101,7 +97,9 @@ class FilterTrigger extends React.PureComponent {
   }
 
   render () {
+    const { filterCategories, filterBrands } = this.props
     const { toggleDrawer } = this.state
+
     return (
       <div>
         { toggleDrawer && <BackGroundLay onClick={this._handleToggleDrawer} /> }
@@ -111,7 +109,10 @@ class FilterTrigger extends React.PureComponent {
             <FormattedMessage {...messages.header} />
           </Label>
         </Wrapper>
-        <FilterSlider />
+        <FilterSlider
+          categories={filterCategories}
+          brands={filterBrands}
+        />
       </div>
     )
   }

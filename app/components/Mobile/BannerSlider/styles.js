@@ -13,7 +13,7 @@ const BannerSliderWrapper = styled.div`
   }
 
   .slick-list {
-    ${props => props.curved && 'border-radius: 5px;'}
+    ${props => props.curved && 'border-radius: 5px; box-shadow: 0 0 5px rgba(120,120,120, 0.1);'}
     padding-bottom: ${props => props.isLowerdots ? '15px' : '0'};
   }
 

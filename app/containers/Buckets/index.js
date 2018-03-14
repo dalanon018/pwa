@@ -115,7 +115,7 @@ const Wrapper = styled.div`
 const MainContent = styled.div`
   margin-top: ${
     props => props.media >= 1024 ? '120px'
-    : props.routeName === 'productsByCategory' ? '89px' : '50px'
+    : props.routeName ? '89px' : '50px'
   };
   width: 100%;
 `
@@ -468,24 +468,27 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     const { productCategories, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken, windowWidth, routeName } = this.props
     const { toggleSidebar } = this.state
 
+    const mobileFilterMargin = routeName === 'productsByCategory' || routeName === 'brandPage'
+    console.log(mobileFilterMargin)
+
     return (
       <Wrapper toggleSidebar={toggleSidebar}>
         { this._displayHeader() }
         <MainContent
-          routeName={routeName}
+          routeName={mobileFilterMargin}
           media={windowWidth}
           toggleSidebar={toggleSidebar} >
           <Switch>
             <Route exact path='/' component={HomePage} />
             <Route path='/product/:id' component={ProductPage} />
-            <Route path='/categories/' component={CategoryLanding} />
-            <Route path='/brands/' component={BrandLanding} />
+            <Route path='/categories' component={CategoryLanding} />
+            <Route exact path='/brands' component={BrandLanding} />
             <Route path='/review' component={ReviewPage} />
             <Route exact path='/purchases' component={PurchaseListPage} />
             <Route exact path='/purchases/:trackingNumber' component={ReceiptPage} />
             <Route exact path='/products-category/:id' component={ProductsByCategoryPage} />
             <Route exact path='/products-featured' component={ProductsByFeaturedPage} />
-            <Route exact path='/brands/:id' component={BrandsPage} />
+            <Route path='/brands/:id' component={BrandsPage} />
             <Route exact path='/search' component={SearchPage} />
             <Route exact path='/promos/:id' component={PromoProductsPage} />
             <Route exact path='/wallet' component={WalletPage} />
