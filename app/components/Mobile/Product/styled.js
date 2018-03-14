@@ -9,9 +9,9 @@ export const ProductWrapper = styled(AnimateDiv)`
   display: flex;
   flex-direction: column;
   flex: 1 0 auto;
-  position: relative;
-  padding-top: 20px;
   margin-bottom: 58px;
+  margin-top: 20px;
+  position: relative;
 
   .brand-logo {
     width: 160px;
@@ -80,10 +80,10 @@ export const ProductPriceWrapper = styled(AnimateDiv)`
   flex-direction: column;
 
   .product-price {
-    font-family: 'Roboto';
+    // font-size: 2.714286rem !important;
+    font-size: 30px !important;
     letter-spacing: -2px;
     padding: 0;
-    font-size: 2.714286rem !important;
   }
 
   .product-discount {
@@ -98,12 +98,12 @@ export const DetailsWrapper = styled(AnimateDiv)`
   align-self: stretch;
 
   .accordion.ui .title {
-    padding: 25px;
+    padding: 20px;
   }
 `
 
 export const ProductDetailsContainer = styled(AnimateDiv)`
-  padding: 35px 25px;
+  padding: 30px 20px;
   font-weight: 100;
 
   @media (min-width: 1024px) and (max-width: 1365px) {
@@ -141,7 +141,6 @@ export const ButtonContainer = styled(AnimateDiv)`
 
 export const SocialContainer = styled.div`
   width: 100%;
-  display: flex;
   padding: 10px 0;
   text-align: center;
 `
@@ -149,13 +148,7 @@ export const SocialContainer = styled.div`
 export const ShareWrapper = styled.div`
   display: flex;
   margin: 0 auto;
-
-  .share-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0 !important;
-    margin-right: 5px;
-  }
+  justify-content: center;
 
   .share-button {
     cursor: pointer;
@@ -163,8 +156,8 @@ export const ShareWrapper = styled.div`
   }
 
   .mail.icon {
-    font-size: 15px;
-    line-height: 13px !important;
+    font-size: 17px;
+    line-height: 15px !important;
   }
 `
 
@@ -175,17 +168,13 @@ export const CollapseContent = styled.div`
   img {
     width: auto;
     height: 30px;
-    min-width: 45px;
+    min-width: 40px;
     flex: 0.1;
     margin-top: 8px;
   }
 
   div.collapse-description {
     padding-left: 10px !important;
-  }
-
-  .description-title {
-    margin-bottom: 5px !important;
   }
 `
 export const EmailDesktopWarning = styled.div`
@@ -195,8 +184,8 @@ export const EmailDesktopWarning = styled.div`
 `
 
 export const SizesWrapper = styled.div`
+  padding: 10px 0 20px;
   text-align: center;
-  padding: 10px 0;
 
   .no-margin {
     margin: 0 !important;
@@ -219,5 +208,18 @@ export const SizesButton = styled.div`
     &:focus, &:active, &:visited {
       border: 2px solid #8DC640;
     }
+  }
+`
+
+export const PointsInfo = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  margin-top: 10px;
+
+  img{
+    width: 16px;
+    margin-right: 10px;
   }
 `

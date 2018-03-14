@@ -35,26 +35,27 @@ const StyledCheckBox = styled(Checkbox)`
   & label {
     background: transparent;
     border-radius: 5px;
-    border: 2px solid #F0F0F0;
-    height: 50px;
-    line-height: 3;
+    border: 1px solid #E8E8E8;
+    height: 43px;
+    line-height: 2.9;
     margin: 5px;
     padding: 0 !important;
-    width: 50px;
+    width: 43px;
     text-align: center;
   }
 
   & input[type=checkbox]:checked + label {
-    border: 2px solid #8DC640;
+    border: 1px solid #FF4813;
+    color: #FF4813;
   }
 `
 
 function SizeSelector ({ product, onSizeChange }) {
   const selectedSize = product.get('size')
   return (
-    <SizesWrapper className='border_top__one--light-grey'>
+    <SizesWrapper className='border_bottom__one--light-grey'>
       <div>
-        <Label className='color__secondary center' as='p' basic size='big'>
+        <Label className='center text__weight--400' as='p' basic size='medium'>
           <FormattedMessage {...messages.selectSize} />
         </Label>
       </div>

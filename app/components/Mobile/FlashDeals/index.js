@@ -23,7 +23,6 @@ const BannerWrapper = styled.div`
 `
 
 const TimerWrapper = styled.div`
-  background: #FF4813;
   border-radius: 3px 0 0 3px;
   bottom: 12px;
   min-width: 180px;
@@ -75,7 +74,7 @@ function FlashDeals ({
             <BannerWrapper>
               {
                 !promosLoading &&
-                <TimerWrapper>
+                <TimerWrapper className='background__primary'>
                   <ContentWrapper>
                     <LabelWrapper>
                       <Label as='span' size='mini' className='color__white text__weight--400'>
