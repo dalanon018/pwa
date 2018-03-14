@@ -48,7 +48,8 @@ import {
   ScannerWrapper,
   PushNotificationWrapper,
   MatchCode,
-  PayCode
+  PayCode,
+  Wrapper
   // InstructionsWrapper
 } from './styled'
 
@@ -366,7 +367,7 @@ class Receipt extends React.PureComponent {
     const { receipt, statuses } = this.props
 
     return (
-      <div>
+      <Wrapper>
         <ReceiptWrapper>
           <ReceiptContainer className='background__white'>
             <ReceiptHeader className='background__light-grey'>
@@ -480,7 +481,7 @@ class Receipt extends React.PureComponent {
         <ButtonContainer>
           { this._handleButtonFunctionality() }
         </ButtonContainer>
-      </div>
+      </Wrapper>
     )
   }
 }
