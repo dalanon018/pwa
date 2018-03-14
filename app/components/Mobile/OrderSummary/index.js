@@ -101,6 +101,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                   <Form.Field>
                     <ShowCodComponent
                       radio
+                      className='margin__bottom-positive--20'
                       isBlackListed={isBlackListed}
                       name='cod'
                       value='COD'
@@ -109,7 +110,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                       onChange={_handleChange}
                       onClick={_handleToBottom}
                   />
-                    <StepWrapper innerRef={_stepWrapperRef} className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={visibility}>
+                    <StepWrapper innerRef={_stepWrapperRef} className='margin__bottom-positive--20 visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={visibility}>
                       <Label as='p' basic size='big' className='color__secondary'>
                         <FormattedMessage {...messages.chooseStore} />
                       </Label>

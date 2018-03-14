@@ -207,3 +207,7 @@ export const MatchCode = styled.div`
 export const PayCode = styled.div`
   width: 100%;
 `
+
+export const Wrapper = styled.div`
+  margin: 80px 0;
+`
