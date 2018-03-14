@@ -469,7 +469,6 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     const { toggleSidebar } = this.state
 
     const mobileFilterMargin = routeName === 'productsByCategory' || routeName === 'brandPage'
-    console.log(mobileFilterMargin)
 
     return (
       <Wrapper toggleSidebar={toggleSidebar}>
