@@ -50,7 +50,7 @@ const ListCollapseWrapper = styled.div`
       &:after{
         content: "";
         position: absolute;
-        background: #F58322 !important;
+        background: #FF4813 !important;
         transition: transform 0.25s ease-out;
       }
 

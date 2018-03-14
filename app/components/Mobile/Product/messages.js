@@ -18,9 +18,9 @@ export default defineMessages({
     id: 'app.components.Product.productDeliveryTitle',
     defaultMessage: 'DELIVERY SCHEDULE'
   },
-  orderNow: {
-    id: 'app.components.Product.orderNow',
-    defaultMessage: 'Order Now!'
+  placeOrder: {
+    id: 'app.components.Product.placeOrder',
+    defaultMessage: 'PLACE ORDER'
   },
   peso: {
     id: 'app.components.Product.peso',
@@ -80,7 +80,7 @@ export default defineMessages({
   },
   selectSize: {
     id: 'app.components.Product.selectSize',
-    defaultMessage: 'Select Size'
+    defaultMessage: 'Select Size:'
   },
   noStock: {
     id: 'app.components.Product.noStock',

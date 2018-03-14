@@ -17,10 +17,11 @@ import {
 } from 'ramda'
 
 import { FormattedMessage } from 'react-intl'
-import { Image, Label, Button, Icon } from 'semantic-ui-react'
+import { Image, Label, Button, Icon, Grid } from 'semantic-ui-react'
 
-import DeliveryIcon from 'images/test-images/v2/delivery-icon.svg'
-import ReturnIcon from 'images/test-images/v2/return-icon.svg'
+import DeliveryIcon from 'images/icons/delivery-icon.svg'
+import ReturnIcon from 'images/icons/return-icon.svg'
+import CliQQPlainLogo from 'images/icons/plain-cliqq-icon.svg'
 
 import { fbShare } from 'utils/fb-share'
 import { paramsImgix } from 'utils/image-stock'
@@ -45,7 +46,8 @@ import {
   SocialContainer,
   ShareWrapper,
   ProductImageSlider,
-  CollapseContent
+  CollapseContent,
+  PointsInfo
 } from './styled'
 
 const showDiscountPrice = (component1, component2) => (condition) => ifElse(
@@ -138,131 +140,155 @@ const Product = ({
     <div>
       <ProductWrapper>
 
-        { loading || brandLogo }
-        <ProductImageSlider className='border_bottom__one--light-grey'>
-          <ProductSlider
-            images={productImages}
-            loader={loading}
-            isInfinite
-            isLowerdots
-          />
-          {
-            +product.get('quantity') === 0 &&
-            <Label className='text__align--center' as='p' basic size='huge' color='red'>
-              <FormattedMessage {...messages.noStock} />
-            </Label>
-          }
-        </ProductImageSlider>
-        <ProductMainContent>
-          <LoadingStateInfo loading={loading} center>
+        <div className='background__white box__shadow--primary'>
+          { loading || brandLogo }
+          <ProductImageSlider>
+            <ProductSlider
+              images={productImages}
+              loader={loading}
+              isInfinite
+              isLowerdots
+            />
             {
-              product.get('brand')
-              ? <Label className='no-margin-bottom color__secondary' as='p' basic size='big'>{product.getIn(['brand', 'name'])}</Label>
-              : null
-            }
-            <Label as='p' basic size='big'>{product.get('title')}</Label>
-            <ProductPriceWrapper>
-              <Label className='product-price' as='b' basic size='massive' color='orange'>
-                <FormattedMessage {...messages.peso} />
-                { origPrice(product) }
+              +product.get('quantity') === 0 &&
+              <Label className='text__align--center' as='p' basic size='huge' color='red'>
+                <FormattedMessage {...messages.noStock} />
               </Label>
-              { toggleDiscount(product.get('discountPrice')) }
-            </ProductPriceWrapper>
-          </LoadingStateInfo>
-        </ProductMainContent>
-
-        {
-          product.get('association') &&
-          <SizeSelector
-            product={product}
-            onSizeChange={onSizeChange}
-          />
-        }
-
-        {
-          product.get('points') && <FormattedMessage
-            {...messages.earnPoints}
-            values={{points: <b>{getHighestPointsEarn()}</b>}} />
-        }
-
-        <SocialContainer className='border_bottom__one--light-grey border_top__one--light-grey'>
-          <ShareWrapper>
-            <p className='share-item ui big basic label color__secondary'><FormattedMessage {...messages.shareItem} /></p>
-
-            <button className='unstyle-button share-button' onClick={fbShareAction}>
-              <FacebookIcon round size={30} />
-            </button>
-
-            <TwitterShareButton
-              className='share-button'
-              title={product.get('title')}
-              via='711philippines'
-              url={window.location.href} >
-              <TwitterIcon size={30} round />
-            </TwitterShareButton>
-
-            <a onClick={_handleMailTo} className='share-button'>
-              <Icon circular inverted name='mail' color='orange' />
-            </a>
-          </ShareWrapper>
-        </SocialContainer>
-
-        <DetailsWrapper>
-          <ProductDetails className='border_bottom__one--light-grey'>
-            <Label as='p' basic size='big' className='color__secondary'> <FormattedMessage {...messages.productDetailsTitle} /> </Label>
-            <LoadingStateInfo loading={loading} className='color__light-grey' >
-              <div className='product-details text__roboto--light color__dark-grey' dangerouslySetInnerHTML={{__html: product.get('details')}} />
+            }
+          </ProductImageSlider>
+          <ProductMainContent>
+            <LoadingStateInfo loading={loading} center>
+              {
+                product.get('brand')
+                ? <Label className='no-margin-bottom color__secondary' as='p' basic size='big'>{product.getIn(['brand', 'name'])}</Label>
+                : null
+              }
+              <Label as='p' basic size='big'>{product.get('title')}</Label>
+              <ProductPriceWrapper>
+                <Label className='product-price text__weight--700 color__primary' as='b' basic size='massive'>
+                  <FormattedMessage {...messages.peso} />
+                  { origPrice(product) }
+                </Label>
+                { toggleDiscount(product.get('discountPrice')) }
+              </ProductPriceWrapper>
             </LoadingStateInfo>
-          </ProductDetails>
-          <ListCollapse title={
-            <Label as='p' className='margin__none color__secondary' size='large' >
-              <FormattedMessage {...messages.deliveryReturnsPolicy} />
-            </Label>
-          }>
-            <CollapseContent>
-              <Image src={DeliveryIcon} alt='CLiQQ' />
-              <div className='collapse-description'>
-                <Label className='description-title color__secondary' as='p' basic size='large'><FormattedMessage {...messages.deliveryTitle} /></Label>
-                <Label className='text__roboto--light color__dark-grey' as='p' basic size='medium'>
-                  <span dangerouslySetInnerHTML={{__html: product.get('deliveryPromiseMessage')}} />
-                </Label>
-              </div>
-            </CollapseContent>
-            <CollapseContent>
-              <Image src={ReturnIcon} alt='CLiQQ' />
-              <div className='collapse-description'>
-                <Label className='description-title primary__secondary' as='p' basic size='large'><FormattedMessage {...messages.returnPolicy} /></Label>
-                <Label className='text__roboto--light color__dark-grey' as='p' basic size='medium'>
-                  <span dangerouslySetInnerHTML={{__html: product.get('returnPolicy')}} />
-                </Label>
-              </div>
-            </CollapseContent>
-          </ListCollapse>
+          </ProductMainContent>
+
           {
-            product.get('additionalDetails')
-            ? <ListCollapse title={
-              <Label as='p' className='margin__none' size='large' >
-                <FormattedMessage {...messages.additionalInfo} />
+            product.get('association') &&
+            <SizeSelector
+              product={product}
+              onSizeChange={onSizeChange}
+            />
+          }
+
+          <Grid padded>
+            <Grid.Row>
+              <Grid.Column>
+                <PointsInfo className='text__align--center'>
+                  <Image src={CliQQPlainLogo} alt='CLiQQ' />
+                  <Label as='span' basic size='medium'>
+                    {
+                      product.get('points') && <FormattedMessage
+                        {...messages.earnPoints}
+                        values={{points: <span className='color__primary'>{getHighestPointsEarn()}</span>}} />
+                    }
+                  </Label>
+                </PointsInfo>
+
+                <SocialContainer>
+                  <Label className='color__secondary text__weight--400' as='p' basic size='medium'>
+                    <FormattedMessage {...messages.shareItem} />
+                  </Label>
+                  <ShareWrapper>
+                    <button className='unstyle-button share-button' onClick={fbShareAction}>
+                      <FacebookIcon round size={35} />
+                    </button>
+
+                    <TwitterShareButton
+                      className='share-button'
+                      title={product.get('title')}
+                      via='711philippines'
+                      url={window.location.href} >
+                      <TwitterIcon size={35} round />
+                    </TwitterShareButton>
+
+                    <a onClick={_handleMailTo} className='share-button'>
+                      <Icon circular inverted name='mail' color='orange' />
+                    </a>
+                  </ShareWrapper>
+                </SocialContainer>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </div>
+
+        <div className='background__white box__shadow--primary margin__top-positive--10'>
+          <DetailsWrapper>
+            <ProductDetails>
+              <Label as='p' basic size='large' className='color__grey text__weight--500'>
+                <FormattedMessage {...messages.productDetailsTitle} />
+              </Label>
+              <LoadingStateInfo loading={loading} className='color__light-grey' >
+                <div className='product-details' dangerouslySetInnerHTML={{__html: product.get('details')}} />
+              </LoadingStateInfo>
+            </ProductDetails>
+            <ListCollapse title={
+              <Label as='p' className='margin__none color__grey text__weight--500' size='large' >
+                <FormattedMessage {...messages.deliveryReturnsPolicy} />
               </Label>
             }>
               <CollapseContent>
-                <Label as='p' color='grey' basic size='medium'>
-                  <span dangerouslySetInnerHTML={{__html: product.get('additionalDetails')}} />
-                </Label>
+                <Image src={DeliveryIcon} alt='CLiQQ' />
+                <div className='collapse-description'>
+                  <Label className='padding__none text__weight--500' as='span' basic size='medium'>
+                    <FormattedMessage {...messages.deliveryTitle} />
+                  </Label>
+                  <Label className='text__weight--400' as='p' basic size='medium'>
+                    <span dangerouslySetInnerHTML={{__html: product.get('deliveryPromiseMessage')}} />
+                  </Label>
+                </div>
+              </CollapseContent>
+              <CollapseContent>
+                <Image src={ReturnIcon} alt='CLiQQ' />
+                <div className='collapse-description'>
+                  <Label className='padding__none text__weight--500' as='span' basic size='medium'>
+                    <FormattedMessage {...messages.returnPolicy} />
+                  </Label>
+                  <Label className='text__weight--400' as='p' basic size='medium'>
+                    <span dangerouslySetInnerHTML={{__html: product.get('returnPolicy')}} />
+                  </Label>
+                </div>
               </CollapseContent>
             </ListCollapse>
-            : ''
-          }
+            {
+              product.get('additionalDetails')
+              ? <ListCollapse title={
+                <Label as='p' className='margin__none' size='large' >
+                  <FormattedMessage {...messages.additionalInfo} />
+                </Label>
+              }>
+                <CollapseContent>
+                  <Label as='p' color='grey' basic size='medium'>
+                    <span dangerouslySetInnerHTML={{__html: product.get('additionalDetails')}} />
+                  </Label>
+                </CollapseContent>
+              </ListCollapse>
+              : ''
+            }
 
-          <ButtonContainer className='background__white'>
-            <Button
-              onClick={onSubmit}
-              loading={loading}
-              primary
-              disabled={+product.get('quantity') === 0}
-              fluid > <FormattedMessage {...messages.orderNow} /> </Button>
-          </ButtonContainer>
-        </DetailsWrapper>
+            <ButtonContainer className='background__white'>
+              <Button
+                onClick={onSubmit}
+                loading={loading}
+                primary
+                className='text__weight--700'
+                disabled={+product.get('quantity') === 0}
+                fluid > <FormattedMessage {...messages.placeOrder} /> </Button>
+            </ButtonContainer>
+          </DetailsWrapper>
+        </div>
+
       </ProductWrapper>
       <PromptModal
         title={intl.formatMessage(messages.emailWarningTitle)}
