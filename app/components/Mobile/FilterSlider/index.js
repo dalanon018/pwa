@@ -81,10 +81,12 @@ class FilterSlider extends React.PureComponent {
 
   static propTypes = {
     toggleDrawer: PropTypes.bool.isRequired,
-    toggleCategory: PropTypes.string,
-    toggleBrands: PropTypes.array,
-    selectedCategory: PropTypes.string,
-    selectedBrands: PropTypes.array
+    toggleCategory: PropTypes.string.isRequired,
+    toggleBrands: PropTypes.array.isRequired,
+    selectedCategory: PropTypes.string.isRequired,
+    selectedBrands: PropTypes.array.isRequired,
+    categoriesLoading: PropTypes.bool.isRequired,
+    brandsLoading: PropTypes.bool.isRequired
   }
 
   state = {
