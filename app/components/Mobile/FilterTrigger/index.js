@@ -127,8 +127,12 @@ class FilterTrigger extends React.PureComponent {
     const { selectedCategory, selectedBrands } = this.state
 
     // We need to make sure that we are not the requesting the same id
-    if ( selectedCategory !== parentId) {
-      const category = filterCategories.find((category) => category.get('id') === selectedCategory).toObject() || {}
+    if (
+      selectedCategory !== parentId ||
+      !isEmpty(selectedBrands)
+    ) {
+      const foundCategory = filterCategories.find((category) => category.get('id') === selectedCategory)
+      const category = foundCategory ? foundCategory.toObject() : {}
 
       requestFromFilter({
         category,
