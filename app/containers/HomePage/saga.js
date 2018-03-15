@@ -11,6 +11,7 @@ import { LOCATION_CHANGE } from 'react-router-redux'
 import { takeLatest } from 'redux-saga'
 
 // import request from 'utils/request'
+import xhr from 'utils/xhr'
 
 import { getRequestData } from 'utils/offline-request'
 import { transformProduct, transformPromo } from 'utils/transforms'
@@ -107,12 +108,16 @@ export function * getPromos () {
 }
 
 export function * getBanners () {
-  const req = yield call(getRequestData, `https://storage.googleapis.com/cliqqshop/config/banners.json`, {
-    method: 'GET'
+  const req = yield call(xhr, `https://storage.googleapis.com/cliqqshop/config/banners.json`, {
+    method: 'GET',
+    content: 'application/json'
   })
 
   if (!isEmpty(req)) {
-    yield put(setBannersAction(req))
+    // still need to parse it since its returning {[]}
+    const data = req.replace(/{|}/g, '')
+
+    yield put(setBannersAction(JSON.parse(data)))
   } else {
     yield put(setNetworkErrorAction(500))
   }
