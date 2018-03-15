@@ -526,7 +526,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     return (
       <div>
         <FilterTrigger
-          parentCategoryId={id}
+          parentId={id}
           requestFromFilter={this._requestFromFilter}
           getFilterCategories={getFilterCategories}
           getFilterBrands={getFilterBrands}
