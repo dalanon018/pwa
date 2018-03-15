@@ -82,7 +82,9 @@ class FilterSlider extends React.PureComponent {
   static propTypes = {
     toggleDrawer: PropTypes.bool.isRequired,
     toggleCategory: PropTypes.string,
-    toggleBrands: PropTypes.array
+    toggleBrands: PropTypes.array,
+    selectedCategory: PropTypes.string,
+    selectedBrands: PropTypes.array
   }
 
   state = {
@@ -188,8 +190,8 @@ class FilterSlider extends React.PureComponent {
   componentWillReceiveProps (nextProps) {
     const shouldDisableReset = ifElse(
       anyPass([
-        this._notEmpty('toggleCategory'),
-        this._notEmpty('toggleBrands')
+        this._notEmpty('selectedCategory'),
+        this._notEmpty('selectedBrands')
       ]),
       this._handleDisabledReset(false),
       this._handleDisabledReset(true)
