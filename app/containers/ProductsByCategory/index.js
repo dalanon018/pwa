@@ -420,7 +420,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     getProductsByCategory({ offset, limit, id })
   }
 
-  _resetValuesAndFetch (props = this.props) {
+  _resetValuesAndFetch (props) {
     const { resetProductsByCategory } = props
 
     resetProductsByCategory()
@@ -429,6 +429,24 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
       pageOffset: 0,
       offset: 0
     }, () => this._fetchProductByCategory(props))
+  }
+
+  _requestFromFilter = ({ brands, category }) => {
+    const { getProductsByCategory, resetProductsByCategory } = this.props
+    const { limit } = this.state
+    resetProductsByCategory()
+
+    this.setState({
+      pageOffset: 0,
+      offset: 0
+    })
+
+    getProductsByCategory({
+      id: category,
+      offset: 0,
+      limit,
+      brands
+    })
   }
 
   _handleOver18 () {
@@ -509,6 +527,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
       <div>
         <FilterTrigger
           parentCategoryId={id}
+          requestFromFilter={this._requestFromFilter}
           getFilterCategories={getFilterCategories}
           getFilterBrands={getFilterBrands}
           filterCategories={filterCategories}
