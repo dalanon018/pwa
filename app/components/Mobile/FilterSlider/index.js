@@ -9,8 +9,15 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 import { Grid, Label, Button, Radio, Form, Checkbox } from 'semantic-ui-react'
-
 import { FormattedMessage } from 'react-intl'
+import {
+  anyPass,
+  compose,
+  ifElse,
+  lt,
+  path
+} from 'ramda'
+
 import messages from './messages'
 
 const Wrapper = styled.div`
@@ -66,13 +73,16 @@ const BlockWrapper = styled.div`
 
 class FilterSlider extends React.PureComponent {
   static contextTypes = {
-    toggleDrawer: PropTypes.bool.isRequired,
-    toggleCategory: PropTypes.string,
     handleToggleCategory: PropTypes.func.isRequired,
-    toggleBrands: PropTypes.array,
     handleToggleBrands: PropTypes.func.isRequired,
     toggleReset: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired
+  }
+
+  static propTypes = {
+    toggleDrawer: PropTypes.bool.isRequired,
+    toggleCategory: PropTypes.string,
+    toggleBrands: PropTypes.array
   }
 
   state = {
@@ -80,7 +90,8 @@ class FilterSlider extends React.PureComponent {
   }
 
   _handleRadioGroup = () => {
-    const { toggleCategory, handleToggleCategory } = this.context
+    const { handleToggleCategory } = this.context
+    const { toggleCategory } = this.props
 
     return (
       <BlockWrapper>
@@ -122,8 +133,8 @@ class FilterSlider extends React.PureComponent {
   }
 
   _handleCheckboxGroup = () => {
-    const { toggleBrands, handleToggleBrands } = this.context
-
+    const { handleToggleBrands } = this.context
+    const { toggleBrands } = this.props
     return (
       <BlockWrapper>
         <Grid padded>
@@ -163,17 +174,34 @@ class FilterSlider extends React.PureComponent {
     )
   }
 
-  shouldComponentUpdate (nextProps, nextState, nextContext) {
-    if (this.context !== nextContext) {
-      return true
-    }
+  _handleDisabledReset = (disabledReset) => () => {
+    this.setState(() => ({
+      disabledReset: disabledReset
+    }))
+  }
+
+  _notEmpty = (key) => compose(
+    lt(0),
+    path([key, 'length'])
+  )
+
+  componentWillReceiveProps (nextProps) {
+    const shouldDisableReset = ifElse(
+      anyPass([
+        this._notEmpty('toggleCategory'),
+        this._notEmpty('toggleBrands')
+      ]),
+      this._handleDisabledReset(false),
+      this._handleDisabledReset(true)
+    )
+
+    shouldDisableReset(nextProps)
   }
 
   render () {
-    const { categories, brands } = this.props
-    const { toggleDrawer, toggleReset, handleSubmit } = this.context
+    const { categories, brands, toggleDrawer } = this.props
+    const { toggleReset, handleSubmit } = this.context
     const { disabledReset } = this.state
-
     return (
       <Wrapper className='background__white' toggleDrawer={toggleDrawer}>
         <OptionWrapper>
