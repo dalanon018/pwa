@@ -7,19 +7,20 @@ import { injectIntl, intlShape } from 'react-intl'
 import {
   Icon,
   Grid,
-  Input
+  Input,
+  Image
 } from 'semantic-ui-react'
 
 import { FbEventTracking } from 'utils/seo'
 
 import AccessView from 'components/Shared/AccessMobileDesktopView'
+import CloseIcon from 'images/icons/close-white.svg'
 
 import messages from './messages'
 
 const Wrapper = styled.div`
-  background: #F0F0F0;
   box-shadow: 1px 1px 5px rgba(174,174,174, 0.8);
-  height: 49px;
+  height: 50px;
   left: 0;
   padding: 10px;
   position: fixed;
@@ -58,14 +59,15 @@ const Hamburger = styled.div`
 `
 
 const HamburgerSpan = styled.span`
+  background-color: #FFFFFF;
   display: block;
-  position: absolute;
-  top: 12px;
-  left: 2px;
-  right: 2px;
   height: 2px;
-  transition: transform 0.3s;
+  left: 2px;
+  position: absolute;
+  right: 2px;
+  top: 12px;
   transform: ${({active}) => active ? 'rotate(180deg)' : 'none'};
+  transition: transform 0.3s;
 
   &::before, &::after {
     position: absolute;
@@ -73,7 +75,7 @@ const HamburgerSpan = styled.span`
     right: 0;
     width: ${({active}) => active ? '50%' : '100%'};
     height: 2px;
-    background-color: #5B5B5B;
+    background-color: #FFFFFF;
     content: "";
   }
 
@@ -107,17 +109,23 @@ const SearchInput = styled(Input)`
   margin: 0 5px;
   width: 100%;
 
+  input {
+    border-radius: 4.5px !important;
+    border: 0 !important;
+  }
+
   @media (min-width: 1024px) {
     margin: 0;
   }
 `
 
-const CloseIcon = styled(Icon)`
+const ImageIcon = styled(Image)`
   align-items: center;
   display: flex !important;
   justify-content: center;
-  margin-left: 10px !important;
+  margin-left: 22px !important;
   margin-right: 0 !important;
+  width: 16px;
 `
 
 const InputContainer = styled.div`
@@ -223,7 +231,7 @@ class SearchMenu extends PureComponent {
     return (
       <AccessView
         mobileView={
-          <Wrapper className='background__light-grey'>
+          <Wrapper className='background__primary'>
             <Grid>
               <Grid.Row>
                 <Grid.Column className='padding__right--none' verticalAlign='middle' width={2}>
@@ -247,11 +255,10 @@ class SearchMenu extends PureComponent {
                     </InputContainer>
                     {
                       dirty &&
-                      <CloseIcon
+                      <ImageIcon
                         onClick={this._clearInput}
-                        name='remove'
-                        color='orange'
-                        size='big' />
+                        src={CloseIcon}
+                        alt='CliQQ' />
                     }
                   </SearchContainer>
                 </Grid.Column>

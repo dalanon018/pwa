@@ -6,6 +6,17 @@
   "isFeatured": false,
   "returnable": true,
   "returnPolicy": "Not satisfied with your purchase? Depending on our CLiQQ Care Policy, you can return your item anytime of the day within 7 days from claim date. Just go to the 7-Eleven store where the item was purchased and get your Return Slip from the CLiQQ Kiosk and bring it to the cashier.",
+  "brand": {
+        "code": "056",
+        "name": "Omena",
+        "isFeatured": false,
+        "images": [
+            {
+                "imageUrl": "https://cliqqshop.imgix.net/PWA/brands/slider-056_1.jpg",
+                "imageType": "SLIDER"
+            }
+        ]
+    },
   "uom": {
       "name": "L",
       "type": "Size"
