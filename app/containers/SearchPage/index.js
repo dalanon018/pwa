@@ -20,7 +20,7 @@ import injectReducer from 'utils/injectReducer'
 
 // import ProductResults from 'components/Shared/ProductResults'
 
-import MobileSearchResult from 'components/Mobile/SearchResult'
+import MobileSearchResult from 'components/Mobile/ProductView'
 import DesktopSearchResult from 'components/Desktop/SearchResult'
 
 import H3 from 'components/Shared/H3'
@@ -167,7 +167,7 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
         { !isEmpty && <H3><FormattedMessage {...messages.header} /></H3> }
 
         <MobileSearchResult
-          product={product}
+          products={product}
           windowWidth={windowWidth}
           changeRoute={changeRoute} />
       </div>
