@@ -56,6 +56,8 @@ class FilterTrigger extends React.PureComponent {
   }
 
   state = {
+    selectedBrands: [],
+    selectedCategory: '',
     toggleDrawer: false,
     toggleBrands: [],
     toggleCategory: ''
@@ -75,12 +77,25 @@ class FilterTrigger extends React.PureComponent {
     document.getElementsByTagName('body')[0].classList.toggle('custom__body')
   }
 
-  _handleToggleCategory = value => this.setState({toggleCategory: value})
+  _handleToggleCategory = value =>
+    this.setState({
+      toggleCategory: value,
+      selectedCategory: value
 
-  _handleToggleBrands = value => this.setState({toggleBrands: getToggledOptions(this.state.toggleBrands, value)})
+    })
+
+  _handleToggleBrands = value => {
+    const brands = getToggledOptions(this.state.toggleBrands, value)
+    this.setState({
+      toggleBrands: brands,
+      selectedBrands: brands
+    })
+  }
 
   _handleToggleReset = () => {
     this.setState({
+      selectedBrands: [],
+      selectedCategory: '',
       toggleBrands: [],
       toggleCategory: ''
     })
@@ -92,7 +107,7 @@ class FilterTrigger extends React.PureComponent {
 
   render () {
     const { filterCategories, filterBrands } = this.props
-    const { toggleDrawer, toggleBrands, toggleCategory } = this.state
+    const { toggleDrawer, toggleBrands, toggleCategory, selectedBrands, selectedCategory } = this.state
 
     return (
       <div>
@@ -104,6 +119,8 @@ class FilterTrigger extends React.PureComponent {
           </Label>
         </Wrapper>
         <FilterSlider
+          selectedBrands={selectedBrands}
+          selectedCategory={selectedCategory}
           toggleDrawer={toggleDrawer}
           toggleCategory={toggleCategory}
           toggleBrands={toggleBrands}
