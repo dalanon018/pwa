@@ -47,10 +47,10 @@ const LeftWrapper = styled.div`
   animation-duration: .5s;
 `
 
-const CenterWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`
+// const CenterWrapper = styled.div`
+//   display: flex;
+//   justify-content: center;
+// `
 
 const ImageLogo = styled.img`
   height: 35px;
@@ -63,12 +63,18 @@ const ImageLogo = styled.img`
 `
 
 const RightWrapper = styled.div`
+  align-items: center;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 
   .mini {
     height: 18px !important;
     width: 14px !important;
+  }
+  
+  .small {
+    height: 21px !important;
+    width: 17px !important;
   }
 `
 
@@ -215,12 +221,20 @@ export default class MainMenu extends PureComponent {
 
   _handleColumnSize = (currentRoute, place) => {
     const pageSetWidth = {
-      home: {side: 2, middle: 12},
-      termsConditions: {side: 2, middle: 12},
-      productPage: {side: 3, middle: 10}
+      home: {leftSide: 2, middle: 11, rightSide: 3},
+      termsConditions: {leftSide: 2, middle: 11, rightSide: 3},
+      productPage: {leftSide: 2, middle: 11, rightSide: 3}
     }
 
-    return pageSetWidth[currentRoute] ? pageSetWidth[currentRoute][place] : (place === 'side' ? 4 : 8)
+    if (pageSetWidth[currentRoute]) {
+      return pageSetWidth[currentRoute][place]
+    } else if (place === 'leftSide') {
+      return 2
+    } else if (place === 'rightSide') {
+      return 3
+    } else {
+      return 11
+    }
   }
 
   _handleGotoSearch = () => this.props.changeRoute('/search')
@@ -236,10 +250,10 @@ export default class MainMenu extends PureComponent {
 
     const pageTitleParsed = () => {
       if (pageTitle && pageTitle.length > 17) {
-        return <Header className='color__secondary long-title' as='h1'> { pageTitle } </Header>
+        return <Header className='color__white margin__top-positive--3 long-title' as='h1'> { pageTitle } </Header>
       }
 
-      return <Header className='color__secondary' as='h1'> { pageTitle } </Header>
+      return <Header className='color__white margin__top-positive--3 text__align--left' as='h1'> { pageTitle } </Header>
     }
 
     const TitleShow = () => (
@@ -252,7 +266,7 @@ export default class MainMenu extends PureComponent {
       <SearchContainer onClick={this._handleGotoSearch}>
         <ImageLogo alt='logo' src={MainLogo} onClick={changeRoute.bind(this, '/')} />
         <SearchInput
-          className='color__secondary'
+          className='color__light-grey'
           placeholder={intl.formatMessage(messages.searchPlaceHolder)}
         />
       </SearchContainer>,
@@ -288,7 +302,7 @@ export default class MainMenu extends PureComponent {
     const homeRoute = currentRoute === 'home'
 
     const SearchToggle = toggleComponent(
-      <Image alt='CLiQQ' src={SearchImage} size='mini' onClick={changeRoute.bind(this, '/search')} />,
+      <Image alt='CLiQQ' src={SearchImage} size='small' onClick={changeRoute.bind(this, '/search')} />,
       null
     )
 
@@ -306,7 +320,7 @@ export default class MainMenu extends PureComponent {
             <CustomRow>
               <Grid.Column
                 className='custom-column'
-                width={this._handleColumnSize(currentRoute, 'side')}
+                width={this._handleColumnSize(currentRoute, 'leftSide')}
                 verticalAlign='middle'>
                 <LeftWrapper onClick={leftButtonAction} >
                   <Hamburger>
@@ -318,13 +332,11 @@ export default class MainMenu extends PureComponent {
                 className={homeRoute ? 'no-padding-left' : null}
                 width={this._handleColumnSize(currentRoute, 'middle')}
                 verticalAlign='middle'>
-                <CenterWrapper>
-                  { this._handleUniqueHeader() }
-                </CenterWrapper>
+                { this._handleUniqueHeader() }
               </Grid.Column>
               <Grid.Column
                 className='no-padding'
-                width={this._handleColumnSize(currentRoute, 'side')}
+                width={this._handleColumnSize(currentRoute, 'rightSide')}
                 verticalAlign='middle'>
                 <RightWrapper>
                   { SearchToggle(showSearchIcon) }

@@ -153,6 +153,9 @@ input.input-field {
     &--center {
       text-align: center;
     }
+    &--left {
+      text-align: left !important;
+    }
   }
   &__weight {
     &--400 {
@@ -541,6 +544,9 @@ svg#barcode {
         margin-top: 0;
       }
       &-positive {
+        &--3 {
+          margin-top: 3px !important;
+        }
         &--10 {
           margin-top: 10px !important;
         }
