@@ -49,6 +49,7 @@ const BackGroundLay = styled.div`
 
 class FilterTrigger extends React.PureComponent {
   static propTypes = {
+    parentCategoryId: PropTypes.string.isRequired,
     getFilterCategories: PropTypes.func.isRequired,
     getFilterBrands: PropTypes.func.isRequired,
     filterCategories: PropTypes.object.isRequired,
@@ -108,12 +109,16 @@ class FilterTrigger extends React.PureComponent {
   }
 
   _handleToggleReset = () => {
+    const { parentCategoryId, getFilterCategories, getFilterBrands } = this.props
     this.setState({
       selectedBrands: [],
       selectedCategory: '',
       toggleBrands: [],
       toggleCategory: ''
     })
+
+    getFilterCategories({ id: parentCategoryId })
+    getFilterBrands({ id: parentCategoryId })
   }
 
   _handleSubmit = () => {
