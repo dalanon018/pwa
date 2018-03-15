@@ -18,6 +18,8 @@ import {
   path
 } from 'ramda'
 
+import LoadingIndicator from 'components/Shared/LoadingIndicator'
+
 import messages from './messages'
 
 const Wrapper = styled.div`
@@ -95,7 +97,7 @@ class FilterSlider extends React.PureComponent {
 
   _handleRadioGroup = () => {
     const { handleToggleCategory } = this.context
-    const { toggleCategory } = this.props
+    const { toggleCategory, categoriesLoading } = this.props
 
     return (
       <BlockWrapper>
@@ -107,6 +109,7 @@ class FilterSlider extends React.PureComponent {
               </Label>
 
               <FormWrapper>
+                { categoriesLoading && <LoadingIndicator /> }
                 {
                   this.props.categories.map((item, index) => {
                     const value = item.get('id')
@@ -138,7 +141,7 @@ class FilterSlider extends React.PureComponent {
 
   _handleCheckboxGroup = () => {
     const { handleToggleBrands } = this.context
-    const { toggleBrands } = this.props
+    const { toggleBrands, brandsLoading } = this.props
     return (
       <BlockWrapper>
         <Grid padded>
@@ -149,6 +152,7 @@ class FilterSlider extends React.PureComponent {
               </Label>
 
               <FormWrapper>
+                { brandsLoading && <LoadingIndicator /> }
                 {
                   this.props.brands.map((item, index) => {
                     const value = item.get('id')
