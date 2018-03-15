@@ -415,10 +415,11 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
    * @param {*w} props
    */
   _fetchProductByCategory (props) {
-    const { getProductsByCategory, match: { params: { id } } } = props
+    const { getProductsByCategory, match: { params: { id } }, location: { search } } = props
     const { offset, limit } = this.state
+    const { brands } = queryString.parse(search)
 
-    getProductsByCategory({ offset, limit, id })
+    getProductsByCategory({ offset, limit, id, brands })
   }
 
   // if ID is different from previous prop then we assume this is a new loaded page
@@ -441,7 +442,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _requestFromFilter = ({ brands, category: { id, name } }) => {
-    const { location: { search }, match: { params }, resetProductsByCategory, changeRoute } = this.props
+    const { location: { search }, match: { params }
+    , resetProductsByCategory, changeRoute } = this.props
     const locationSearch = queryString.parse(search)
     // if category prop is undefined meaning that we didn't found the category
     // it's because we only choose the brands so we have to use the existing

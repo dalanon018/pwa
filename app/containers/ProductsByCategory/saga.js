@@ -80,12 +80,12 @@ function * getLastViewedItems () {
 }
 
 export function * getProductByCategory (args) {
-  const { payload: { offset, limit, id } } = args
+  const { payload: { offset, limit, id, brands } } = args
   let products = []
   let count = 0
 
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/categories/${id}?offset=${offset}&limit=${limit}`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/categories/${id}?offset=${offset}&limit=${limit}&brands=${brands}`, {
     method: 'GET',
     token: token.access_token
   })
