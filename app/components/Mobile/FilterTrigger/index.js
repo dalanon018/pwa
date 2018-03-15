@@ -87,9 +87,12 @@ class FilterTrigger extends React.PureComponent {
   }
 
   _handleToggleCategory = value => {
+    // each request we have to reset our selected brand and toggle brand since we expect different data
     this.setState({
       toggleCategory: value,
-      selectedCategory: value
+      selectedCategory: value,
+      toggleBrands: [],
+      selectedBrands: []
     })
 
     this.props.getFilterCategories({ id: value })
