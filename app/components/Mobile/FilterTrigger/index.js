@@ -86,12 +86,15 @@ class FilterTrigger extends React.PureComponent {
     document.getElementsByTagName('body')[0].classList.toggle('custom__body')
   }
 
-  _handleToggleCategory = value =>
+  _handleToggleCategory = value => {
     this.setState({
       toggleCategory: value,
       selectedCategory: value
-
     })
+
+    this.props.getFilterCategories({ id: value })
+    this.props.getFilterBrands({ id: value })
+  }
 
   _handleToggleBrands = value => {
     const brands = getToggledOptions(this.state.toggleBrands, value)
@@ -115,7 +118,7 @@ class FilterTrigger extends React.PureComponent {
   }
 
   render () {
-    const { filterCategories, filterBrands } = this.props
+    const { filterCategories, filterBrands, filterCategoriesLoading, filterBrandsLoading } = this.props
     const { toggleDrawer, toggleBrands, toggleCategory, selectedBrands, selectedCategory } = this.state
 
     return (
@@ -135,6 +138,8 @@ class FilterTrigger extends React.PureComponent {
           toggleBrands={toggleBrands}
           categories={filterCategories}
           brands={filterBrands}
+          categoriesLoading={filterCategoriesLoading}
+          brandsLoading={filterBrandsLoading}
         />
       </div>
     )
