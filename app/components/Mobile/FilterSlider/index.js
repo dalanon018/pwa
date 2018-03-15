@@ -75,6 +75,10 @@ class FilterSlider extends React.PureComponent {
     handleSubmit: PropTypes.func.isRequired
   }
 
+  state = {
+    disabledReset: true
+  }
+
   _handleRadioGroup = () => {
     const { toggleCategory, handleToggleCategory } = this.context
 
@@ -168,6 +172,7 @@ class FilterSlider extends React.PureComponent {
   render () {
     const { categories, brands } = this.props
     const { toggleDrawer, toggleReset, handleSubmit } = this.context
+    const { disabledReset } = this.state
 
     return (
       <Wrapper className='background__white' toggleDrawer={toggleDrawer}>
@@ -176,7 +181,7 @@ class FilterSlider extends React.PureComponent {
           { brands && this._handleCheckboxGroup() }
         </OptionWrapper>
         <ButtonWrapper toggleDrawer={toggleDrawer}>
-          <Button basic onClick={toggleReset}>
+          <Button basic onClick={toggleReset} disabled={disabledReset}>
             <FormattedMessage {...messages.reset} />
           </Button>
           <Button primary onClick={handleSubmit}>
