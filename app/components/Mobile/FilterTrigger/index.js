@@ -49,8 +49,9 @@ const BackGroundLay = styled.div`
 
 class FilterTrigger extends React.PureComponent {
   static propTypes = {
-    parentCategoryId: PropTypes.string.isRequired,
+    parentId: PropTypes.string.isRequired,
     getFilterCategories: PropTypes.func.isRequired,
+    requestFromFilter: PropTypes.func.isRequired,
     getFilterBrands: PropTypes.func.isRequired,
     filterCategories: PropTypes.object.isRequired,
     filterBrands: PropTypes.object.isRequired,
@@ -109,7 +110,7 @@ class FilterTrigger extends React.PureComponent {
   }
 
   _handleToggleReset = () => {
-    const { parentCategoryId, getFilterCategories, getFilterBrands } = this.props
+    const { parentId, getFilterCategories, getFilterBrands } = this.props
     this.setState({
       selectedBrands: [],
       selectedCategory: '',
@@ -117,12 +118,25 @@ class FilterTrigger extends React.PureComponent {
       toggleCategory: ''
     })
 
-    getFilterCategories({ id: parentCategoryId })
-    getFilterBrands({ id: parentCategoryId })
+    getFilterCategories({ id: parentId })
+    getFilterBrands({ id: parentId })
   }
 
   _handleSubmit = () => {
-    this.setState({toggleDrawer: false})
+    const { requestFromFilter } = this.props
+    const { selectedCategory, selectedBrands } = this.state
+
+    requestFromFilter({
+      category: selectedCategory,
+      brands: selectedBrands
+    })
+
+    this.setState({
+      toggleDrawer: false
+    })
+
+    // reset the values as well
+    this._handleToggleReset()
   }
 
   render () {
