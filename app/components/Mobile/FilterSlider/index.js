@@ -67,16 +67,16 @@ const BlockWrapper = styled.div`
 class FilterSlider extends React.PureComponent {
   static contextTypes = {
     toggleDrawer: PropTypes.bool.isRequired,
-    toggleRadio: PropTypes.string,
-    handleToggleRadio: PropTypes.func.isRequired,
-    toggleCheckbox: PropTypes.array,
-    handleToggleCheckbox: PropTypes.func.isRequired,
+    toggleCategory: PropTypes.string,
+    handleToggleCategory: PropTypes.func.isRequired,
+    toggleBrands: PropTypes.array,
+    handleToggleBrands: PropTypes.func.isRequired,
     toggleReset: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired
   }
 
   _handleRadioGroup = () => {
-    const { toggleRadio, handleToggleRadio } = this.context
+    const { toggleCategory, handleToggleCategory } = this.context
 
     return (
       <BlockWrapper>
@@ -91,11 +91,11 @@ class FilterSlider extends React.PureComponent {
                 {
                   this.props.categories.map((item, index) => {
                     const value = item.get('id')
-                    const trigger = toggleRadio === value
+                    const trigger = toggleCategory === value
 
                     return (
                       <Form.Field key={index}>
-                        <Button className={`${trigger && 'active-radio-checkbox'} background__fade-grey`} onClick={() => handleToggleRadio(value)}>
+                        <Button className={`${trigger && 'active-radio-checkbox'} background__fade-grey`} onClick={() => handleToggleCategory(value)}>
                           {item.get('name')}
                         </Button>
                         <Radio
@@ -118,7 +118,7 @@ class FilterSlider extends React.PureComponent {
   }
 
   _handleCheckboxGroup = () => {
-    const { toggleCheckbox, handleToggleCheckbox } = this.context
+    const { toggleBrands, handleToggleBrands } = this.context
 
     return (
       <BlockWrapper>
@@ -133,11 +133,11 @@ class FilterSlider extends React.PureComponent {
                 {
                   this.props.brands.map((item, index) => {
                     const value = item.get('id')
-                    const trigger = toggleCheckbox.indexOf(value) > -1
+                    const trigger = toggleBrands.indexOf(value) > -1
 
                     return (
                       <Form.Field key={index}>
-                        <Button className={`${trigger && 'active-radio-checkbox'} background__fade-grey`} onClick={() => handleToggleCheckbox(value)}>
+                        <Button className={`${trigger && 'active-radio-checkbox'} background__fade-grey`} onClick={() => handleToggleBrands(value)}>
                           {item.get('name')}
                         </Button>
                         <Checkbox

@@ -50,27 +50,27 @@ const BackGroundLay = styled.div`
 class FilterTrigger extends React.PureComponent {
   static childContextTypes = {
     toggleDrawer: PropTypes.bool.isRequired,
-    toggleRadio: PropTypes.string,
-    handleToggleRadio: PropTypes.func.isRequired,
-    toggleCheckbox: PropTypes.array,
-    handleToggleCheckbox: PropTypes.func.isRequired,
+    toggleCategory: PropTypes.string,
+    handleToggleCategory: PropTypes.func.isRequired,
+    toggleBrands: PropTypes.array,
+    handleToggleBrands: PropTypes.func.isRequired,
     toggleReset: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired
   }
 
   state = {
     toggleDrawer: false,
-    toggleCheckbox: [],
-    toggleRadio: ''
+    toggleBrands: [],
+    toggleCategory: ''
   }
 
   getChildContext () {
     return {
       toggleDrawer: this.state.toggleDrawer,
-      toggleRadio: this.state.toggleRadio,
-      handleToggleRadio: this._handleToggleRadio,
-      toggleCheckbox: this.state.toggleCheckbox,
-      handleToggleCheckbox: this._handleToggleCheckbox,
+      toggleCategory: this.state.toggleCategory,
+      handleToggleCategory: this._handleToggleCategory,
+      toggleBrands: this.state.toggleBrands,
+      handleToggleBrands: this._handleToggleBrands,
       toggleReset: this._handleToggleReset,
       handleSubmit: this._handleSubmit
     }
@@ -81,14 +81,14 @@ class FilterTrigger extends React.PureComponent {
     document.getElementsByTagName('body')[0].classList.toggle('custom__body')
   }
 
-  _handleToggleRadio = value => this.setState({toggleRadio: value})
+  _handleToggleCategory = value => this.setState({toggleCategory: value})
 
-  _handleToggleCheckbox = value => this.setState({toggleCheckbox: getToggledOptions(this.state.toggleCheckbox, value)})
+  _handleToggleBrands = value => this.setState({toggleBrands: getToggledOptions(this.state.toggleBrands, value)})
 
   _handleToggleReset = () => {
     this.setState({
-      toggleCheckbox: [],
-      toggleRadio: ''
+      toggleBrands: [],
+      toggleCategory: ''
     })
   }
 
