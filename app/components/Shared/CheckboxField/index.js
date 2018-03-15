@@ -21,10 +21,6 @@ const CheckboxWrapper = styled.div`
   span {
     line-height: 17px !important;
   }
-  a {
-    color: #F58322;
-    text-decoration: underline;
-  }
 
   &.prompt-number {
     justify-content: center;

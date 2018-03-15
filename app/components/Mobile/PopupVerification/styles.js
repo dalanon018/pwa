@@ -31,9 +31,8 @@ const InputWrapper = styled.div`
   display: flex;
   font-size: 30px;
   justify-content: center;
-  margin-bottom: 20px;
   width: 150px;
-  margin: 0 auto 20px;
+  margin: 25px auto;
 
   input {
     font-size: 2.514286rem;
@@ -55,7 +54,7 @@ const TextWrapper = styled.div`
 
 const BannerHeader = styled.div`
   background: url(${props => props.background}) no-repeat top right / cover;
-  height: 140px;
+  height: 100px;
   margin-bottom: 40px;
   position: relative;
   width: 100%;
@@ -69,14 +68,14 @@ const BannerHeader = styled.div`
     border-radius: 50px;
     bottom: -35px;
     display: flex;
-    height: 75px;
+    height: 80px;
     justify-content: center;
     left: 50%;
     transform: translate(-50%);
     margin-right: -50%;
     margin: 0 auto;
     position: absolute;
-    width: 75px;
+    width: 80px;
     z-index: 1;
   }
 `
@@ -92,7 +91,7 @@ const ResendWrapper = styled.div`
   }
 
   span {
-    margin-left: 10px;
+    margin-left: 5px;
   }
 
   img {

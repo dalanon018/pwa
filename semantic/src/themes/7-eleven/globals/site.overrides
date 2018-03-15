@@ -213,6 +213,9 @@ input.input-field {
   &__three--primary {
     border-bottom: 3px solid @primaryColor !important;
   }
+  &__three--teal {
+    border-bottom: 3px solid @teal !important;
+  }
 }
 
 .border_top {

@@ -144,7 +144,8 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   _handleDisable = () => {
-    if ((this.state.value.length === 10 && this.state.value.charAt(0) === '9') && this.state.check === true) {
+    if (this.state.value.length === 10 && this.state.value.charAt(0) === '9') {
+      // this.state.check === true ---removed
       this.setState({
         disabledButton: false
       })

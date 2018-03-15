@@ -28,26 +28,25 @@ const PopupContent = styled.div`
 const InputWrapper = styled.div`
   display: flex;
   font-size: 30px;
-  margin-bottom: 20px;
-  margin: 20px auto;
+  margin: 40px auto;
 
   input {
-    font-size: 2.514286rem;
+    font-size: 2.14rem;
     margin-left: 10px;
     padding: 2px 6px 0 6px;
     width: 100%;
     font-weight: bold !important;
 
     @media screen and (max-width: 374px) {
-      font-size: 2.5rem;
+      font-size: 2.0rem;
       padding: 1px 6px 0 6px;
     }
   }
 
   span {
-    font-size: 2.514286rem;
+    font-size: 2.14rem;
     @media screen and (max-width: 374px) {
-      font-size: 2.5rem;
+      font-size: 2.0rem;
     }
   }
 `
@@ -59,28 +58,28 @@ const TextWrapper = styled.div`
 
 const BannerHeader = styled.div`
   background: url(${props => props.background}) no-repeat top right / cover;
-  height: 85px;
+  height: 100px;
   margin-bottom: 40px;
   position: relative;
   width: 100%;
 
   .image {
     align-self: center;
-    width: 20px;
+    width: 22px;
   }
 
   span {
     border-radius: 50px;
     bottom: -35px;
     display: flex;
-    height: 75px;
+    height: 80px;
     justify-content: center;
     left: 50%;
     transform: translate(-50%);
     margin-right: -50%;
     margin: 0 auto;
     position: absolute;
-    width: 75px;
+    width: 80px;
     z-index: 1;
   }
 `
@@ -166,6 +165,10 @@ const ModalContentWrapper = styled.div`
   }
 `
 
+const Wrapper = styled.div`
+  height: 100vh;
+`
+
 export {
   PopupWrapper,
   TextWrapper,
@@ -176,5 +179,6 @@ export {
   TermsConditionsWrapper,
   ButtonWrapper,
   TermsConditionsHeader,
-  ModalContentWrapper
+  ModalContentWrapper,
+  Wrapper
 }

@@ -38,7 +38,8 @@ import {
   PopupContent,
   TermsConditionsWrapper,
   ButtonWrapper,
-  TermsConditionsHeader
+  TermsConditionsHeader,
+  Wrapper
 } from './styles'
 
 // const RegistrationWrapper = styled.div`
@@ -76,7 +77,7 @@ function Registration ({
   submissionLoader,
   history,
   value,
-  check,
+  // check,
   markdown,
   toggleTerms,
   verificationToggle,
@@ -110,24 +111,24 @@ function Registration ({
     //   </Container>
     // </RegistrationWrapper>
 
-    <div>
-      <PopupWrapper className='background__white'>
+    <Wrapper className='background__white'>
+      <PopupWrapper>
         <BannerHeader background={BannerBg}>
-          <span className='background__smoke-grey border__three-white'>
+          <span className='background__teal'>
             <Image alt='CLiQQ' src={MobileIcon} />
           </span>
         </BannerHeader>
-        <PopupContainer>
+        <PopupContainer className='background__white'>
           <PopupContent>
             <TextWrapper>
-              <Label as='p' basic size='huge' className='color__secondary'>
+              <Label as='p' basic size='huge' className='text__weight--500'>
                 <FormattedMessage {...messages.register} />
               </Label>
-              <Label as='p' basic color='grey' size='medium'><FormattedMessage {...messages.label} /></Label>
+              <Label as='p' basic size='large' className='text__weight--400'><FormattedMessage {...messages.label} /></Label>
             </TextWrapper>
 
             <InputWrapper>
-              <Label as='span' basic color='grey' size='massive'>
+              <Label as='span' basic className='color__grey text__weight--700' size='massive'>
                 <FormattedMessage {...messages.phonePrefix} />
               </Label>
 
@@ -139,17 +140,17 @@ function Registration ({
                 onPaste={_handlePaste} />
             </InputWrapper>
             <Checkbox
-              className='margin__bottom-positive--20'
+              className='margin__bottom-positive--20 display__none'
               onChange={_handleCheck}
-              checked={check}
+              checked
               name='checkbox'
               label={(
-                <span className='checkbox-label'>
+                <Label as='span' basic className='color__grey text__weight--400 text__align--center' size='medium'>
                   <FormattedMessage {...messages.checkTermsLabel} />
-                  <A key={0} onClick={_toggleTerms}>
+                  <A key={0} className='color__primary text__weight--500' onClick={_toggleTerms}>
                     <FormattedMessage {...messages.checkTermsLink} />
                   </A>
-                </span>
+                </Label>
               )}
             />
             <Button
@@ -161,7 +162,7 @@ function Registration ({
               <FormattedMessage {...messages.submitButton} />
             </Button>
 
-            <CloseButton close={history.goBack} text='Close' />
+            <CloseButton close={history.goBack} text='Cancel' />
           </PopupContent>
         </PopupContainer>
         <Modal
@@ -174,7 +175,7 @@ function Registration ({
 
         <PopupVerification
           submit={_handleSubmitVerification}
-          toggle={verificationToggle}
+          toggle
           onClose={_closePopupSlide}
           submissionLoader={submissionLoader}
           resendCode={_executeResendCode}
@@ -217,7 +218,7 @@ function Registration ({
           </Grid>
         </div>
       </TermsConditionsWrapper>
-    </div>
+    </Wrapper>
   )
 }
 
