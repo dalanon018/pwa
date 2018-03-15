@@ -123,20 +123,20 @@ class FilterTrigger extends React.PureComponent {
   }
 
   _handleSubmit = () => {
-    const { requestFromFilter } = this.props
+    const { parentId, requestFromFilter } = this.props
     const { selectedCategory, selectedBrands } = this.state
 
-    requestFromFilter({
-      category: selectedCategory,
-      brands: selectedBrands
-    })
+    // We need to make sure that we are not the requesting the same id
+    if ( selectedCategory !== parentId) {
+      requestFromFilter({
+        category: selectedCategory,
+        brands: selectedBrands
+      })
 
-    this.setState({
-      toggleDrawer: false
-    })
-
-    // reset the values as well
-    this._handleToggleReset()
+      this.setState({
+        toggleDrawer: false
+      })
+    }
   }
 
   render () {
