@@ -73,6 +73,7 @@ import HomePage from 'containers/HomePage/Loadable'
 import ProductPage from 'containers/ProductPage/Loadable'
 import CategoryLanding from 'containers/CategoryLanding/Loadable'
 import BrandLanding from 'containers/BrandLanding/Loadable'
+import FlashDealsLanding from 'containers/FlashDealsLanding/Loadable'
 import ReviewPage from 'containers/ProductReview/Loadable'
 import PurchaseListPage from 'containers/Purchases/Loadable'
 import ReceiptPage from 'containers/ReceiptPage/Loadable'
@@ -482,6 +483,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
             <Route path='/product/:id' component={ProductPage} />
             <Route path='/categories' component={CategoryLanding} />
             <Route exact path='/brands' component={BrandLanding} />
+            <Route exact path='/flash-deals' component={FlashDealsLanding} />
             <Route path='/review' component={ReviewPage} />
             <Route exact path='/purchases' component={PurchaseListPage} />
             <Route exact path='/purchases/:trackingNumber' component={ReceiptPage} />

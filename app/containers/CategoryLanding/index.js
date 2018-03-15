@@ -69,7 +69,7 @@ export class CategoryLanding extends React.PureComponent { // eslint-disable-lin
                     <Grid.Column className='padding__bottom--10' key={category.get('id')} onClick={this._handleGoTo(category.get('id'), category.get('name'))}>
                       <CategoryItem borderRadius height={90}>
                         <div className='text__align--center padding__10'>
-                          <Image src={category.get('background')} alt={category.get('name')} />
+                          <Image src={category.get('background')} alt='CLiQQ' />
                           <Label basic as='span' size='medium' className='text__weight--400 margin__top-positive--10'>
                             {category.get('name')}
                           </Label>
