@@ -66,7 +66,7 @@ function FlashDeals ({
       <div className='margin__bottom-positive--20'>
         <SectionTitle
           title={intl.formatMessage(messages.header)}
-          link={`/promos/${promo.get('promoCode')}`} />
+          link={`/flash-deals`} />
       </div>
       <Grid container>
         <Grid.Row className='padding__none--vertical'>
