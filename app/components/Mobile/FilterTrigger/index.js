@@ -123,13 +123,15 @@ class FilterTrigger extends React.PureComponent {
   }
 
   _handleSubmit = () => {
-    const { parentId, requestFromFilter } = this.props
+    const { parentId, requestFromFilter, filterCategories } = this.props
     const { selectedCategory, selectedBrands } = this.state
 
     // We need to make sure that we are not the requesting the same id
     if ( selectedCategory !== parentId) {
+      const category = filterCategories.find((category) => category.get('id') === selectedCategory).toObject() || {}
+
       requestFromFilter({
-        category: selectedCategory,
+        category,
         brands: selectedBrands
       })
 
