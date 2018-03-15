@@ -266,7 +266,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           prop('size')
         )
       ),
-      this._updateStateBanners('_banners')
+      this._updateStateBanners({
+        key: '_banners',
+        props: nextProps
+      })
     )
 
     shouldUpdateBanners(banners)
