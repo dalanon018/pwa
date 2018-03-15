@@ -49,10 +49,7 @@ const BackGroundLay = styled.div`
 
 class FilterTrigger extends React.PureComponent {
   static childContextTypes = {
-    toggleDrawer: PropTypes.bool.isRequired,
-    toggleCategory: PropTypes.string,
     handleToggleCategory: PropTypes.func.isRequired,
-    toggleBrands: PropTypes.array,
     handleToggleBrands: PropTypes.func.isRequired,
     toggleReset: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired
@@ -66,10 +63,7 @@ class FilterTrigger extends React.PureComponent {
 
   getChildContext () {
     return {
-      toggleDrawer: this.state.toggleDrawer,
-      toggleCategory: this.state.toggleCategory,
       handleToggleCategory: this._handleToggleCategory,
-      toggleBrands: this.state.toggleBrands,
       handleToggleBrands: this._handleToggleBrands,
       toggleReset: this._handleToggleReset,
       handleSubmit: this._handleSubmit
@@ -98,7 +92,7 @@ class FilterTrigger extends React.PureComponent {
 
   render () {
     const { filterCategories, filterBrands } = this.props
-    const { toggleDrawer } = this.state
+    const { toggleDrawer, toggleBrands, toggleCategory } = this.state
 
     return (
       <div>
@@ -110,6 +104,9 @@ class FilterTrigger extends React.PureComponent {
           </Label>
         </Wrapper>
         <FilterSlider
+          toggleDrawer={toggleDrawer}
+          toggleCategory={toggleCategory}
+          toggleBrands={toggleBrands}
           categories={filterCategories}
           brands={filterBrands}
         />
