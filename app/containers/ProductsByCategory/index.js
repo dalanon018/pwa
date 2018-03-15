@@ -420,7 +420,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     getProductsByCategory({ offset, limit, id })
   }
 
-  _resetValuesAndFetch (props) {
+  _resetValuesAndFetch (props = this.props) {
     const { resetProductsByCategory } = props
 
     resetProductsByCategory()
