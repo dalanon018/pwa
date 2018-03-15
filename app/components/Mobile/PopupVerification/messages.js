@@ -26,6 +26,6 @@ export default defineMessages({
   },
   submit: {
     id: `${idSuffix}.submit`,
-    defaultMessage: 'Submit'
+    defaultMessage: 'SUBMIT'
   }
 })

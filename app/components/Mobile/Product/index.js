@@ -160,7 +160,7 @@ const Product = ({
             <LoadingStateInfo loading={loading} center>
               {
                 product.get('brand')
-                ? <Label className='no-margin-bottom color__secondary' as='p' basic size='big'>{product.getIn(['brand', 'name'])}</Label>
+                ? <Label className='no-margin-bottom color__grey' as='p' basic size='large'>{product.getIn(['brand', 'name'])}</Label>
                 : null
               }
               <Label as='p' basic size='big'>{product.get('title')}</Label>

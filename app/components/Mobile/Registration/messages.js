@@ -30,11 +30,11 @@ export default defineMessages({
   },
   submitButton: {
     id: `${idSuffix}.submitButton`,
-    defaultMessage: 'Submit'
+    defaultMessage: 'SUBMIT'
   },
   checkTermsLabel: {
     id: `${idSuffix}.checkTermsLabel`,
-    defaultMessage: 'I have read and accepted the '
+    defaultMessage: 'By clicking `Submit` I agree to have read and accepted the '
   },
   checkTermsLink: {
     id: `${idSuffix}.checkTermsLink`,

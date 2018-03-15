@@ -14,7 +14,7 @@ function InputField ({
   ...props
 }) {
   return (
-    <input className='input-field color__secondary border_bottom__three--primary' {...props} />
+    <input className='input-field border_bottom__three--teal' {...props} />
   )
 }
 

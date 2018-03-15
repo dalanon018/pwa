@@ -28,7 +28,7 @@ const ButtonWrapper = styled.div`
 function CloseButton ({close, text}) {
   return (
     <ButtonWrapper>
-      <Button onClick={close}><Label as='p' basic size='large' className='color__secondary'>{text}</Label></Button>
+      <Button onClick={close}><Label as='p' basic size='large' className='text__weight--400'>{text}</Label></Button>
     </ButtonWrapper>
   )
 }

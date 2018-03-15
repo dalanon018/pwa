@@ -19,7 +19,7 @@ import Input from 'components/Shared/InputField'
 
 import BannerBg from 'images/modal-bg-lightgrey.png'
 import MobileIcon from 'images/icons/mobile-icon.svg'
-import ResendIcon from 'images/icons/resend.png'
+import ResendIcon from 'images/icons/resend.svg'
 
 import { Image, Label, Button } from 'semantic-ui-react'
 
@@ -126,17 +126,17 @@ export class PopupVerification extends React.PureComponent {
     return (
       <PopupWrapper toggle={toggle} className='background__white'>
         <BannerHeader background={BannerBg}>
-          <span className='background__smoke-grey border__three-white'>
+          <span className='background__teal'>
             <Image alt='CLiQQ' src={MobileIcon} />
           </span>
         </BannerHeader>
         <PopupContainer>
           <PopupContent>
             <TextWrapper>
-              <Label as='p' basic size='big' className='color__secondary'>
+              <Label as='p' basic size='huge' className='text__weight--500'>
                 <FormattedMessage {...messages.register} />
               </Label>
-              <Label as='p' basic color='grey' size='medium'><FormattedMessage {...messages.label} /></Label>
+              <Label as='p' basic size='large' className='text__weight--400'><FormattedMessage {...messages.label} /></Label>
             </TextWrapper>
 
             <InputWrapper>
@@ -151,7 +151,7 @@ export class PopupVerification extends React.PureComponent {
             <ResendWrapper>
               <div className='resend-content' onClick={resendCode}>
                 <Image src={ResendIcon} />
-                <Label as='span' basic size='large' className='color__secondary'><FormattedMessage {...messages.resend} /></Label>
+                <Label as='span' basic size='medium' className='color__primary'><FormattedMessage {...messages.resend} /></Label>
               </div>
             </ResendWrapper>
 
@@ -164,7 +164,7 @@ export class PopupVerification extends React.PureComponent {
               <FormattedMessage {...messages.submit} />
             </Button>
 
-            <CloseButton close={onClose} text='Close' />
+            <CloseButton close={onClose} text='Cancel' />
           </PopupContent>
         </PopupContainer>
       </PopupWrapper>
