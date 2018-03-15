@@ -502,12 +502,13 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
   render () {
     const isCategory = window.location.pathname.split('/')[1] === 'products-category'
-    const { loader, lazyload, over18, windowWidth, filterCategories, filterBrands, filterCategoriesLoading, filterBrandsLoading, getFilterCategories, getFilterBrands } = this.props
+    const { match: { params: { id } }, loader, lazyload, over18, windowWidth, filterCategories, filterBrands, filterCategoriesLoading, filterBrandsLoading, getFilterCategories, getFilterBrands } = this.props
     const { togglePrompt } = this.state
 
     return (
       <div>
         <FilterTrigger
+          parentCategoryId={id}
           getFilterCategories={getFilterCategories}
           getFilterBrands={getFilterBrands}
           filterCategories={filterCategories}
