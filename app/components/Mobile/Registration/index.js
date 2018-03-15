@@ -175,7 +175,7 @@ function Registration ({
 
         <PopupVerification
           submit={_handleSubmitVerification}
-          toggle
+          toggle={verificationToggle}
           onClose={_closePopupSlide}
           submissionLoader={submissionLoader}
           resendCode={_executeResendCode}
