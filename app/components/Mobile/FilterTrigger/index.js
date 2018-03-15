@@ -10,6 +10,9 @@ import PropTypes from 'prop-types'
 
 import { Image, Label } from 'semantic-ui-react'
 import { FormattedMessage } from 'react-intl'
+import {
+  isEmpty
+} from 'ramda'
 
 import FilterIcon from 'images/icons/filter-icon.svg'
 
