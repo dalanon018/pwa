@@ -469,8 +469,6 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     const { productCategories, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken, windowWidth, routeName } = this.props
     const { toggleSidebar } = this.state
 
-    console.log(this.props)
-
     const mobileFilterMargin = routeName === 'productsByCategory' || routeName === 'brandPage' || routeName === 'purchases'
 
     return (
