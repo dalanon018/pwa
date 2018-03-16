@@ -7,11 +7,17 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import queryString from 'query-string'
 
 import { Image, Label } from 'semantic-ui-react'
 import { FormattedMessage } from 'react-intl'
 import {
-  isEmpty
+  complement,
+  compose,
+  equals,
+  isEmpty,
+  propOr,
+  when
 } from 'ramda'
 
 import FilterIcon from 'images/icons/filter-icon.svg'
@@ -146,6 +152,19 @@ class FilterTrigger extends React.PureComponent {
         toggleDrawer: false
       })
     }
+  }
+
+  componentDidMount () {
+    const { brands } = queryString.parse(window.location.search)
+    const shouldUpdateSelectedBrands = when(
+      compose(complement(equals(0)), propOr(0, 'length')),
+      (param) => this.setState(() => ({
+        selectedBrands: param.split(','),
+        toggleBrands: param.split(',')
+      }))
+    )
+
+    shouldUpdateSelectedBrands(brands)
   }
 
   render () {
