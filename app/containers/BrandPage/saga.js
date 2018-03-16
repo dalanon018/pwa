@@ -54,13 +54,13 @@ function * transformEachEntity (transform, entity) {
 }
 
 export function * getProductByBrands (args) {
-  const { payload: { offset, limit, id } } = args
+  const { payload: { offset, limit, id, category } } = args
   let products = []
   let count = 0
 
   // TODO: we need to change this to the correct url
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/brands/${id}?offset=${offset}&limit=${limit}`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/brands/${id}?offset=${offset}&limit=${limit}&category=${category || ''}`, {
     method: 'GET',
     token: token.access_token
   })
@@ -83,11 +83,11 @@ export function * getProductByBrands (args) {
 }
 
 export function * getFilterCategories (args) {
-  const { payload: { id } } = args
+  const { payload: { category, brand } } = args
   let categories = []
 
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/categories?brand=${id}`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/categories?brand=${brand || ''}&category=${category || ''}`, {
     method: 'GET',
     token: token.access_token
   })

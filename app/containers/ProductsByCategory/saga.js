@@ -85,7 +85,7 @@ export function * getProductByCategory (args) {
   let count = 0
 
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/categories/${id}?offset=${offset}&limit=${limit}&brands=${brands}`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/categories/${id}?offset=${offset}&limit=${limit}&brands=${brands || ''}`, {
     method: 'GET',
     token: token.access_token
   })
