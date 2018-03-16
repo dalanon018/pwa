@@ -11,7 +11,7 @@ const wrapper = (props = {}, enzyme = shallow) => shallow(
 
 describe('<FilterTrigger />', () => {
   const minProps = {
-    parentId: '1',
+    categoryId: '1',
     getFilterCategories: () => {},
     requestFromFilter: () => {},
     getFilterBrands: () => {},
