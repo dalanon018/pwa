@@ -72,10 +72,6 @@ const PurchaseWrapper = styled.div`
         &:last-child {
           margin-right: 0;
         }
-  
-        &.active {
-          border-bottom: 2px solid #8DC640;
-        }
       }
     }
   }
@@ -190,6 +186,10 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
               { name: 'description', content: 'List of barcodes' }
             ]}
           />
+          <Tab
+            onTabChange={this._onTabChange}
+            panes={panes}
+          />
 
           <Container>
             <div className={windowWidth >= 1024 && 'padding__medium'}>
@@ -197,10 +197,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
               windowWidth >= 1024 &&
               <H3><FormattedMessage {...messages.header} /></H3>
             }
-              <Tab
-                onTabChange={this._onTabChange}
-                panes={panes}
-              />
+
             </div>
           </Container>
         </PurchaseWrapper>
