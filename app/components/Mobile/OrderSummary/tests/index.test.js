@@ -23,7 +23,7 @@ import {
   ProductItem,
   MethodTitle,
   StepWrapper,
-  StepHead,
+  // StepHead,
   LocationButton,
   CustomGrid
 } from '../styles'
@@ -128,10 +128,10 @@ describe('<OrderSummary />', () => {
     expect(ShallowedWrapper.find(StepWrapper)).toHaveLength(2)
   })
 
-  it('renders one <StepHead/> styled component', () => {
-    const ShallowedWrapper = shallow(<OrderSummary {...minProps} />)
-    expect(ShallowedWrapper.find(StepHead)).toHaveLength(1)
-  })
+  // it('renders one <StepHead/> styled component', () => {
+  //   const ShallowedWrapper = shallow(<OrderSummary {...minProps} />)
+  //   expect(ShallowedWrapper.find(StepHead)).toHaveLength(1)
+  // })
 
   it('renders one <LocationButton/> styled component', () => {
     const ShallowedWrapper = shallow(<OrderSummary {...minProps} />)

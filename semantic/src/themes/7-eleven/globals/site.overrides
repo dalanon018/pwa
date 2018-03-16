@@ -296,11 +296,14 @@ input.input-field {
   color: #AEAEAE !important;
 }
 
-/*******************************
 .ui.radio.checkbox .box:after, .ui.radio.checkbox label:after {
   background: transparent !important;
 }
-*******************************/
+
+.ui.radio.checkbox .box:before, .ui.radio.checkbox label:before {
+  height: 24px !important;
+  width: 24px !important;
+}
 
 .document-helper {
   margin: 20px 0;
@@ -447,6 +450,30 @@ svg#barcode {
   padding: 0;
 }
 
+.rangeslider {
+  &.rangeslider-horizontal {
+    height: 5px !important;
+    box-shadow: 0 !important
+  }
+
+  .rangeslider__fill {
+    background-color: @teal !important;
+    height: 5px !important;
+  }
+
+  .rangeslider__handle {
+    background: @white !important;
+    border: 2px solid @teal !important;
+    box-shadow: 0 !important;
+    height: 20px !important;
+    width: 20px !important;
+
+    &:after {
+      visibility: hidden;
+    }
+  }
+}
+
 /*******************************
         Responsive Overrides
 *******************************/
@@ -569,11 +596,24 @@ svg#barcode {
     }
     &__bottom {
       &-positive {
+        &--5 {
+          margin-bottom: 5px !important;
+        }
         &--10 {
           margin-bottom: 10px;
         }
         &--20 {
           margin-bottom: 20px;
+        }
+      }
+    }
+    &__left {
+      &-positive {
+        &--10 {
+          margin-left: 10px;
+        }
+        &--20 {
+          margin-left: 20px;
         }
       }
     }
@@ -583,6 +623,9 @@ svg#barcode {
       }
     }
     &__vertical {
+      &--10 {
+        margin: 10px 0;
+      }
       &--30 {
         margin: 30px 0;
       }
