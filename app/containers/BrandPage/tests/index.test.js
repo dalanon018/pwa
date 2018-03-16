@@ -22,6 +22,9 @@ describe('<BrandPage />', () => {
         id: 'CAT1'
       }
     },
+    location: {
+      search: ''
+    },
     totalCount: 0,
     productsByBrands: fromJS([]),
     productsFeatured: fromJS([]),

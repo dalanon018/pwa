@@ -7,9 +7,17 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import queryString from 'query-string'
 
 import { Image, Label } from 'semantic-ui-react'
 import { FormattedMessage } from 'react-intl'
+import {
+  complement,
+  compose,
+  equals,
+  propOr,
+  when
+} from 'ramda'
 
 import FilterIcon from 'images/icons/filter-icon.svg'
 
@@ -48,29 +56,36 @@ const BackGroundLay = styled.div`
 `
 
 class FilterTrigger extends React.PureComponent {
+  static propTypes = {
+    getFilterCategories: PropTypes.func.isRequired,
+    requestFromFilter: PropTypes.func.isRequired,
+    filterCategories: PropTypes.object.isRequired,
+    filterCategoriesLoading: PropTypes.bool.isRequired,
+    categoryId: PropTypes.string,
+    getFilterBrands: PropTypes.func,
+    filterBrands: PropTypes.object,
+    filterBrandsLoading: PropTypes.bool
+  }
+
   static childContextTypes = {
-    toggleDrawer: PropTypes.bool.isRequired,
-    toggleRadio: PropTypes.string,
-    handleToggleRadio: PropTypes.func.isRequired,
-    toggleCheckbox: PropTypes.array,
-    handleToggleCheckbox: PropTypes.func.isRequired,
+    handleToggleCategory: PropTypes.func.isRequired,
+    handleToggleBrands: PropTypes.func.isRequired,
     toggleReset: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired
   }
 
   state = {
+    selectedBrands: [],
+    selectedCategory: '',
     toggleDrawer: false,
-    toggleCheckbox: [],
-    toggleRadio: ''
+    toggleBrands: [],
+    toggleCategory: ''
   }
 
   getChildContext () {
     return {
-      toggleDrawer: this.state.toggleDrawer,
-      toggleRadio: this.state.toggleRadio,
-      handleToggleRadio: this._handleToggleRadio,
-      toggleCheckbox: this.state.toggleCheckbox,
-      handleToggleCheckbox: this._handleToggleCheckbox,
+      handleToggleCategory: this._handleToggleCategory,
+      handleToggleBrands: this._handleToggleBrands,
       toggleReset: this._handleToggleReset,
       handleSubmit: this._handleSubmit
     }
@@ -81,24 +96,75 @@ class FilterTrigger extends React.PureComponent {
     document.getElementsByTagName('body')[0].classList.toggle('custom__body')
   }
 
-  _handleToggleRadio = value => this.setState({toggleRadio: value})
-
-  _handleToggleCheckbox = value => this.setState({toggleCheckbox: getToggledOptions(this.state.toggleCheckbox, value)})
-
-  _handleToggleReset = () => {
+  _handleToggleCategory = value => {
+    const { getFilterCategories, getFilterBrands } = this.props
+    // each request we have to reset our selected brand and toggle brand since we expect different data
     this.setState({
-      toggleCheckbox: [],
-      toggleRadio: ''
+      toggleCategory: value,
+      selectedCategory: value,
+      toggleBrands: [],
+      selectedBrands: []
+    })
+
+    // we only call this fn if exist
+    getFilterCategories && getFilterCategories({ category: value })
+    getFilterBrands && getFilterBrands({ category: value })
+  }
+
+  _handleToggleBrands = value => {
+    const brands = getToggledOptions(this.state.toggleBrands, value)
+    this.setState({
+      toggleBrands: brands,
+      selectedBrands: brands
     })
   }
 
+  _handleToggleReset = () => {
+    const { categoryId, getFilterCategories, getFilterBrands } = this.props
+    this.setState({
+      selectedBrands: [],
+      selectedCategory: '',
+      toggleBrands: [],
+      toggleCategory: ''
+    })
+
+    getFilterCategories && getFilterCategories({ category: categoryId })
+    getFilterBrands && getFilterBrands({ category: categoryId })
+  }
+
   _handleSubmit = () => {
-    this.setState({toggleDrawer: false})
+    const { requestFromFilter, filterCategories } = this.props
+    const { selectedCategory, selectedBrands } = this.state
+
+    const foundCategory = filterCategories.find((category) => category.get('id') === selectedCategory)
+    const category = foundCategory ? foundCategory.toObject() : {}
+
+    requestFromFilter({
+      category,
+      brands: selectedBrands
+    })
+
+    this.setState({
+      toggleDrawer: false
+    })
+  }
+
+  componentDidMount () {
+    const { brands } = queryString.parse(window.location.search)
+    const shouldUpdateSelectedBrands = when(
+      compose(complement(equals(0)), propOr(0, 'length')),
+      (param) => this.setState(() => ({
+        selectedBrands: param.split(','),
+        toggleBrands: param.split(',')
+      }))
+    )
+
+    shouldUpdateSelectedBrands(brands)
   }
 
   render () {
-    const { filterCategories, filterBrands } = this.props
-    const { toggleDrawer } = this.state
+    const { filterCategories, filterBrands, filterCategoriesLoading, filterBrandsLoading } = this.props
+    const { toggleDrawer, toggleBrands, toggleCategory, selectedBrands, selectedCategory } = this.state
 
     return (
       <div>
@@ -110,8 +176,15 @@ class FilterTrigger extends React.PureComponent {
           </Label>
         </Wrapper>
         <FilterSlider
+          selectedBrands={selectedBrands}
+          selectedCategory={selectedCategory}
+          toggleDrawer={toggleDrawer}
+          toggleCategory={toggleCategory}
+          toggleBrands={toggleBrands}
           categories={filterCategories}
           brands={filterBrands}
+          categoriesLoading={filterCategoriesLoading}
+          brandsLoading={filterBrandsLoading}
         />
       </div>
     )

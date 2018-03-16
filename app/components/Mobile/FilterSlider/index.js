@@ -9,8 +9,17 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 import { Grid, Label, Button, Radio, Form, Checkbox } from 'semantic-ui-react'
-
 import { FormattedMessage } from 'react-intl'
+import {
+  anyPass,
+  compose,
+  ifElse,
+  lt,
+  path
+} from 'ramda'
+
+import LoadingIndicator from 'components/Shared/LoadingIndicator'
+
 import messages from './messages'
 
 const Wrapper = styled.div`
@@ -66,17 +75,29 @@ const BlockWrapper = styled.div`
 
 class FilterSlider extends React.PureComponent {
   static contextTypes = {
-    toggleDrawer: PropTypes.bool.isRequired,
-    toggleRadio: PropTypes.string,
-    handleToggleRadio: PropTypes.func.isRequired,
-    toggleCheckbox: PropTypes.array,
-    handleToggleCheckbox: PropTypes.func.isRequired,
+    handleToggleCategory: PropTypes.func.isRequired,
+    handleToggleBrands: PropTypes.func.isRequired,
     toggleReset: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired
   }
 
+  static propTypes = {
+    toggleDrawer: PropTypes.bool.isRequired,
+    toggleCategory: PropTypes.string.isRequired,
+    toggleBrands: PropTypes.array.isRequired,
+    selectedCategory: PropTypes.string.isRequired,
+    selectedBrands: PropTypes.array.isRequired,
+    categoriesLoading: PropTypes.bool.isRequired,
+    brandsLoading: PropTypes.bool
+  }
+
+  state = {
+    disabledReset: true
+  }
+
   _handleRadioGroup = () => {
-    const { toggleRadio, handleToggleRadio } = this.context
+    const { handleToggleCategory } = this.context
+    const { toggleCategory, categoriesLoading } = this.props
 
     return (
       <BlockWrapper>
@@ -88,14 +109,15 @@ class FilterSlider extends React.PureComponent {
               </Label>
 
               <FormWrapper>
+                { categoriesLoading && <LoadingIndicator /> }
                 {
                   this.props.categories.map((item, index) => {
                     const value = item.get('id')
-                    const trigger = toggleRadio === value
+                    const trigger = toggleCategory === value
 
                     return (
                       <Form.Field key={index}>
-                        <Button className={`${trigger && 'active-radio-checkbox'} background__fade-grey`} onClick={() => handleToggleRadio(value)}>
+                        <Button className={`${trigger && 'active-radio-checkbox'} background__fade-grey`} onClick={() => handleToggleCategory(value)}>
                           {item.get('name')}
                         </Button>
                         <Radio
@@ -118,8 +140,8 @@ class FilterSlider extends React.PureComponent {
   }
 
   _handleCheckboxGroup = () => {
-    const { toggleCheckbox, handleToggleCheckbox } = this.context
-
+    const { handleToggleBrands } = this.context
+    const { toggleBrands, brandsLoading } = this.props
     return (
       <BlockWrapper>
         <Grid padded>
@@ -130,14 +152,15 @@ class FilterSlider extends React.PureComponent {
               </Label>
 
               <FormWrapper>
+                { brandsLoading && <LoadingIndicator /> }
                 {
                   this.props.brands.map((item, index) => {
                     const value = item.get('id')
-                    const trigger = toggleCheckbox.indexOf(value) > -1
+                    const trigger = toggleBrands.indexOf(value) > -1
 
                     return (
                       <Form.Field key={index}>
-                        <Button className={`${trigger && 'active-radio-checkbox'} background__fade-grey`} onClick={() => handleToggleCheckbox(value)}>
+                        <Button className={`${trigger && 'active-radio-checkbox'} background__fade-grey`} onClick={() => handleToggleBrands(value)}>
                           {item.get('name')}
                         </Button>
                         <Checkbox
@@ -159,16 +182,34 @@ class FilterSlider extends React.PureComponent {
     )
   }
 
-  shouldComponentUpdate (nextProps, nextState, nextContext) {
-    if (this.context !== nextContext) {
-      return true
-    }
+  _handleDisabledReset = (disabledReset) => () => {
+    this.setState(() => ({
+      disabledReset: disabledReset
+    }))
+  }
+
+  _notEmpty = (key) => compose(
+    lt(0),
+    path([key, 'length'])
+  )
+
+  componentWillReceiveProps (nextProps) {
+    const shouldDisableReset = ifElse(
+      anyPass([
+        this._notEmpty('selectedCategory'),
+        this._notEmpty('selectedBrands')
+      ]),
+      this._handleDisabledReset(false),
+      this._handleDisabledReset(true)
+    )
+
+    shouldDisableReset(nextProps)
   }
 
   render () {
-    const { categories, brands } = this.props
-    const { toggleDrawer, toggleReset, handleSubmit } = this.context
-
+    const { categories, brands, toggleDrawer } = this.props
+    const { toggleReset, handleSubmit } = this.context
+    const { disabledReset } = this.state
     return (
       <Wrapper className='background__white' toggleDrawer={toggleDrawer}>
         <OptionWrapper>
@@ -176,7 +217,7 @@ class FilterSlider extends React.PureComponent {
           { brands && this._handleCheckboxGroup() }
         </OptionWrapper>
         <ButtonWrapper toggleDrawer={toggleDrawer}>
-          <Button basic onClick={toggleReset}>
+          <Button basic onClick={toggleReset} disabled={disabledReset}>
             <FormattedMessage {...messages.reset} />
           </Button>
           <Button primary onClick={handleSubmit}>

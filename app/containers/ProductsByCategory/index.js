@@ -14,17 +14,18 @@ import { compose as ReduxCompose } from 'redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
-import { noop } from 'lodash'
 import {
   __,
   allPass,
+  anyPass,
+  complement,
   compose,
   cond,
   equals,
-  ifElse,
   partial,
   path,
-  subtract
+  subtract,
+  when
 } from 'ramda'
 import { Container } from 'semantic-ui-react'
 
@@ -414,21 +415,58 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
    * @param {*w} props
    */
   _fetchProductByCategory (props) {
-    const { getProductsByCategory, match: { params: { id } } } = props
+    const { getProductsByCategory, match: { params: { id } }, location: { search } } = props
     const { offset, limit } = this.state
+    const { brands } = queryString.parse(search)
 
-    getProductsByCategory({ offset, limit, id })
+    getProductsByCategory({ offset, limit, id, brands })
   }
 
+  // if ID is different from previous prop then we assume this is a new loaded page
+  // need to request differnt items.
   _resetValuesAndFetch (props) {
-    const { resetProductsByCategory } = props
+    const { match: { params }, setPageTitle, resetProductsByCategory } = props
 
     resetProductsByCategory()
+
+    // make sure we updated the page title
+    setPageTitle(this._handlePageTitle(props))
+
+    this._fetchFilteredCategories({ category: params.id })
+    this._fetchFilteredBrands({ category: params.id })
 
     this.setState({
       pageOffset: 0,
       offset: 0
     }, () => this._fetchProductByCategory(props))
+  }
+
+  _fetchFilteredCategories = ({ props = this.props, category }) => {
+    const { getFilterCategories } = props
+
+    getFilterCategories({ category })
+  }
+
+  _fetchFilteredBrands = ({ props = this.props, category }) => {
+    const { getFilterBrands } = props
+
+    getFilterBrands({ category })
+  }
+
+  _requestFromFilter = ({ brands, category: { id, name } }) => {
+    const { location: { search }, match: { params }, changeRoute } = this.props
+    const locationSearch = queryString.parse(search)
+    // if category prop is undefined meaning that we didn't found the category
+    // it's because we only choose the brands so we have to use the existing
+    const useId = id || params.id
+    const useName = name || locationSearch.name
+
+    this.setState({
+      pageOffset: 0,
+      offset: 0
+    })
+
+    changeRoute(`/products-category/${useId}?brands=${brands.join(',')}&name=${useName}`)
   }
 
   _handleOver18 () {
@@ -463,7 +501,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
   // TODO: We need to remove extra call for categories specially I think we dont need them anymore
   componentDidMount () {
-    const { match: { params }, getProductsViewed, getFilterCategories, getFilterBrands, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon } = this.props
+    const { match: { params }, getProductsViewed, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon } = this.props
 
     setPageTitle(this._handlePageTitle())
     setShowSearchIcon(true)
@@ -472,11 +510,11 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     setRouteName(PRODUCTSCATEGORY_NAME)
     getProductsViewed()
 
-    getFilterCategories({ id: params.id })
-    getFilterBrands({ id: params.id })
-
     this._fetchProductByCategory(this.props)
     this._handleCheckOver18()
+
+    this._fetchFilteredCategories({ category: params.id })
+    this._fetchFilteredBrands({ category: params.id })
   }
 
   componentWillUnmount () {
@@ -484,16 +522,22 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   componentWillReceiveProps (nextProps) {
-    const { match: { params } } = this.props
+    const { match: { params }, location: { search } } = this.props
+    /**
+     * we need to check if ID and brands are the same so we can trigger requesting
+     */
     const paramsId = path(['match', 'params', 'id'])
-    const isParamsEqual = (id, props) => compose(
-      equals(id),
+    const locationSearch = path(['location', 'search'])
+    const isIdNotEqual = (id, props) => compose(
+      complement(equals(id)),
       paramsId
     )(props)
 
-    const updateFetchProduct = ifElse(
-      partial(isParamsEqual, [params.id]),
-      noop,
+    const updateFetchProduct = when(
+      anyPass([
+        partial(isIdNotEqual, [params.id]),
+        compose(complement(equals(search)), locationSearch)
+      ]),
       this._resetValuesAndFetch
     )
 
@@ -502,14 +546,21 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
   render () {
     const isCategory = window.location.pathname.split('/')[1] === 'products-category'
-    const { loader, lazyload, over18, windowWidth, filterCategories, filterBrands } = this.props
+    const { match: { params: { id } }, loader, lazyload, over18, windowWidth, filterCategories, filterBrands, filterCategoriesLoading, filterBrandsLoading } = this.props
     const { togglePrompt } = this.state
 
     return (
       <div>
         <FilterTrigger
+          parentId={id}
+          requestFromFilter={this._requestFromFilter}
+          getFilterCategories={this._fetchFilteredCategories}
+          getFilterBrands={this._fetchFilteredBrands}
           filterCategories={filterCategories}
-          filterBrands={filterBrands} />
+          filterBrands={filterBrands}
+          filterCategoriesLoading={filterCategoriesLoading}
+          filterBrandsLoading={filterBrandsLoading}
+        />
 
         <ContentWrapper>
           <InfiniteWrapper

@@ -32,7 +32,7 @@ describe('<ProductsByCategory />', () => {
     filterBrandsLoading: false,
     match: {
       params: {
-        id: 1
+        id: '01'
       }
     },
     location: {
