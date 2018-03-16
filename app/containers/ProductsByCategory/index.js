@@ -425,15 +425,15 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   // if ID is different from previous prop then we assume this is a new loaded page
   // need to request differnt items.
   _resetValuesAndFetch (props) {
-    const { match: { params }, setPageTitle, getFilterCategories, getFilterBrands, resetProductsByCategory } = props
+    const { match: { params }, setPageTitle, resetProductsByCategory } = props
 
     resetProductsByCategory()
 
     // make sure we updated the page title
     setPageTitle(this._handlePageTitle(props))
 
-    getFilterCategories({ id: params.id })
-    getFilterBrands({ id: params.id })
+    this._fetchFilteredCategories({ category: params.id })
+    this._fetchFilteredBrands({ category: params.id })
 
     this.setState({
       pageOffset: 0,
@@ -441,15 +441,25 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     }, () => this._fetchProductByCategory(props))
   }
 
+  _fetchFilteredCategories = ({ props = this.props, category }) => {
+    const { getFilterCategories } = props
+
+    getFilterCategories({ category })
+  }
+
+  _fetchFilteredBrands = ({ props = this.props, category }) => {
+    const { getFilterBrands } = props
+
+    getFilterBrands({ category })
+  }
+
   _requestFromFilter = ({ brands, category: { id, name } }) => {
-    const { location: { search }, match: { params }
-    , resetProductsByCategory, changeRoute } = this.props
+    const { location: { search }, match: { params }, changeRoute } = this.props
     const locationSearch = queryString.parse(search)
     // if category prop is undefined meaning that we didn't found the category
     // it's because we only choose the brands so we have to use the existing
     const useId = id || params.id
     const useName = name || locationSearch.name
-    resetProductsByCategory()
 
     this.setState({
       pageOffset: 0,
@@ -491,7 +501,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
   // TODO: We need to remove extra call for categories specially I think we dont need them anymore
   componentDidMount () {
-    const { match: { params }, getFilterCategories, getFilterBrands, getProductsViewed, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon } = this.props
+    const { match: { params }, getProductsViewed, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon } = this.props
 
     setPageTitle(this._handlePageTitle())
     setShowSearchIcon(true)
@@ -503,8 +513,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this._fetchProductByCategory(this.props)
     this._handleCheckOver18()
 
-    getFilterCategories({ id: params.id })
-    getFilterBrands({ id: params.id })
+    this._fetchFilteredCategories({ category: params.id })
+    this._fetchFilteredBrands({ category: params.id })
   }
 
   componentWillUnmount () {
@@ -536,7 +546,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
   render () {
     const isCategory = window.location.pathname.split('/')[1] === 'products-category'
-    const { match: { params: { id } }, loader, lazyload, over18, windowWidth, filterCategories, filterBrands, filterCategoriesLoading, filterBrandsLoading, getFilterCategories, getFilterBrands } = this.props
+    const { match: { params: { id } }, loader, lazyload, over18, windowWidth, filterCategories, filterBrands, filterCategoriesLoading, filterBrandsLoading } = this.props
     const { togglePrompt } = this.state
 
     return (
@@ -544,8 +554,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
         <FilterTrigger
           parentId={id}
           requestFromFilter={this._requestFromFilter}
-          getFilterCategories={getFilterCategories}
-          getFilterBrands={getFilterBrands}
+          getFilterCategories={this._fetchFilteredCategories}
+          getFilterBrands={this._fetchFilteredBrands}
           filterCategories={filterCategories}
           filterBrands={filterBrands}
           filterCategoriesLoading={filterCategoriesLoading}
