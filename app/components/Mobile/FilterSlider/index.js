@@ -88,7 +88,7 @@ class FilterSlider extends React.PureComponent {
     selectedCategory: PropTypes.string.isRequired,
     selectedBrands: PropTypes.array.isRequired,
     categoriesLoading: PropTypes.bool.isRequired,
-    brandsLoading: PropTypes.bool.isRequired
+    brandsLoading: PropTypes.bool
   }
 
   state = {

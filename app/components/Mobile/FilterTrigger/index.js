@@ -58,14 +58,14 @@ const BackGroundLay = styled.div`
 
 class FilterTrigger extends React.PureComponent {
   static propTypes = {
-    parentId: PropTypes.string,
     getFilterCategories: PropTypes.func.isRequired,
     requestFromFilter: PropTypes.func.isRequired,
-    getFilterBrands: PropTypes.func.isRequired,
     filterCategories: PropTypes.object.isRequired,
-    filterBrands: PropTypes.object.isRequired,
     filterCategoriesLoading: PropTypes.bool.isRequired,
-    filterBrandsLoading: PropTypes.bool.isRequired
+    parentId: PropTypes.string,
+    getFilterBrands: PropTypes.func,
+    filterBrands: PropTypes.object,
+    filterBrandsLoading: PropTypes.bool
   }
 
   static childContextTypes = {
