@@ -11,6 +11,13 @@ const ProductReviewWrapper = styled.div`
     margin: 0 auto;
   }
 
+  .cliqq-plain-icon {
+    // width: 11px !important;
+    display: inline-block !important;
+    margin: -2px -5px 0;
+    transform: scale(0.45);
+  }
+
   @media (min-width: 768px) {
     .brand-logo {
       width: 300px;
@@ -47,7 +54,6 @@ const StepHead = styled.div`
   text-transform: uppercase;
 
   p {
-    font-family: 'Roboto';
     font-size: 14px;
     letter-spacing: initial;
     font-weight: 100;
@@ -80,7 +86,7 @@ const ProductItem = styled.div`
 `
 const StepWrapper = styled.div`
   // margin-bottom: 90px;
-  padding: 15px 14px;
+  padding: 15px 0;
 
   &.visibility {
     display: ${({ visibility }) => visibility ? 'block' : 'none'};
@@ -150,41 +156,55 @@ const SelectMethodWrapper = styled.div`
 
   .checkbox {
     border-radius: 5px;
-    border: 2px solid #F0F0F0;
+    border: 1px solid #E8E8E8;
     height: 100%;
-    padding: 10px;
+    padding: 18px 15px;
     position: relative;
     width: 100%;
 
     &.checked {
-      border: 2px solid #8DC640;
+      border: 1px solid #FF4813;
     }
 
     input:checked~label:after {
       // Don't sort this block
+      // content: '';
+      // background-color: #8DC640 !important;
+      // left: 6px;
+      // top: ${props => props.checkHeight ? '29px' : '17px'};
+      // display: block;
+      // width: 5px;
+      // height: 9px;
+      // border: solid #FFFFFF;
+      // border-width: 0 2px 2px 0;
+      // transform: rotate(-45deg); !important;
+
       content: '';
-      background-color: #8DC640 !important;
-      left: 6px;
-      top: ${props => props.checkHeight ? '29px' : '17px'};
-      display: block;
-      width: 5px;
-      height: 9px;
-      border: solid #FFFFFF;
-      border-width: 0 2px 2px 0;
-      transform: rotate(45deg) !important;
+      width: 12px;
+      height: 7px;
+      position: absolute;
+      top: 43%;
+      left: 5px;
+      border: 3px solid #fcfff4;
+      border-top: none;
+      border-right: none;
+      background: transparent !important;
+      transform: rotate(-45deg);
     }
 
     input:checked~label:before {
-      background-color: #8DC640 !important;
-      border-color: #8DC640 !important;
-      height: 18px;
-      width: 18px;
+      background-color: #229D90 !important;
+      border-color: #229D90 !important;
+      height: 24px;
+      position: absolute;
+      width: 24px;
     }
 
     .label-custom {
       align-items: center;
       display: flex;
       justify-content: space-between;
+      padding-left: 35px !important;
       position: relative;
     }
   }
@@ -195,45 +215,56 @@ const SelectMethodWrapper = styled.div`
     transform: translateY(-50%);
   }
 
-  @media (min-width: 768px) {
-    .checkbox {
+  // @media (min-width: 768px) {
+  //   .checkbox {
 
-      .label-custom {
-        flex-wrap: wrap;
-        padding-left: 50px !important;
-      }
-      input:before {
-        border: 3px solid #F0F0F0 !important;
-      }
-      input:checked~label:before {
-        border: 3px solid #8DC640 !important;
-        height: 22px;
-        width: 22px;
-      }
-      input:checked~label:after {
-        width: 5px;
-        height: 11px;
-        left: 8px;
-        top: 42% !important;
-      }
-    }
-    .checkbox {
-      border-radius: 10px;
-      padding: 40px 30px;
-    }
-  }
+  //     .label-custom {
+  //       flex-wrap: wrap;
+  //       padding-left: 50px !important;
+  //     }
+  //     input:before {
+  //       border: 3px solid #F0F0F0 !important;
+  //     }
+  //     input:checked~label:before {
+  //       border: 3px solid #8DC640 !important;
+  //       height: 22px;
+  //       width: 22px;
+  //     }
+  //     input:checked~label:after {
+  //       width: 5px;
+  //       height: 11px;
+  //       left: 8px;
+  //       top: 42% !important;
+  //     }
+  //   }
+  //   .checkbox {
+  //     border-radius: 10px;
+  //     padding: 40px 30px;
+  //   }
+  // }
 `
 
-const LocationButton = styled(({iconBg, ...props}) => <Button {...props} />)`
+const LocationButton = styled(({nextIcon, locationIcon, ...props}) => <Button {...props} />)`
   background: transparent !important;
   border-radius: 5px !important;
   letter-spacing: 2px;
-  padding: 20px 10px !important;
+  padding: 15px 10px !important;
   position: relative;
   text-align: left !important;
 
+  &:before {
+    background: url(${({ locationIcon }) => locationIcon}) no-repeat center center / contain;
+    content: '';
+    height: 15px;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+  }
+
   &:after {
-    background: url(${({ iconBg }) => iconBg}) no-repeat center center / contain;
+    background: url(${({ nextIcon }) => nextIcon}) no-repeat center center / contain;
     content: '';
     height: 15px;
     position: absolute;
@@ -290,12 +321,10 @@ const CustomGrid = styled.div`
 `
 
 const LabelTitle = styled.div`
-  font-family: 'Cabin';
   font-size: 14px;
   margin: 0;
 
   @media (min-width: 768px) {
-    font-family: 'Cabin';
     font-size: 16px;
     letter-spacing: 5px;
   }
@@ -309,13 +338,13 @@ const LabelPrice = styled.div`
   line-height: normal;
 
   .total {
-    width: 100%;
-    font-family: 'Roboto';
-    font-size: 35px;
-    font-weight: 700;
     letter-spacing: -2px;
-    margin-right: 10px;
-    margin: 0;
+    width: 100%;
+    
+    // font-size: 35px;
+    // font-weight: 700;
+    // margin-right: 10px;
+    // margin: 0;
 
     @media (min-width: 1024px) {
       font-size: ${props => props.length > 4 ? '30px' : '35px'};
@@ -326,7 +355,6 @@ const LabelPrice = styled.div`
     align-self: flex-end;
     font-size: 20px;
     width: 100%;
-    font-family: 'Roboto';
     font-weight: 700;
     line-height: initial;
     text-decoration: line-through;

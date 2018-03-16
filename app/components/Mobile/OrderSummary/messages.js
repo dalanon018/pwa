@@ -26,11 +26,11 @@ export default defineMessages({
   },
   methodPayment: {
     id: `${idSuffix}.methodPayment`,
-    defaultMessage: 'Method of Payment:'
+    defaultMessage: 'Select Payment Mehod'
   },
   chooseStore: {
     id: `${idSuffix}.chooseStore`,
-    defaultMessage: 'Choose a 7-Eleven store!'
+    defaultMessage: 'Select a 7-Eleven store!'
   },
   choosePointsTitle: {
     id: `${idSuffix}.choosePointsTitle`,
@@ -66,7 +66,7 @@ export default defineMessages({
   },
   proceedNext: {
     id: `${idSuffix}.proceedNext`,
-    defaultMessage: 'Purchase your Product Now!'
+    defaultMessage: 'PLACE ORDER'
   },
   errorHeader: {
     id: `${idSuffix}.errorHeader`,
@@ -94,6 +94,10 @@ export default defineMessages({
   },
   earnedPoints: {
     id: `${idSuffix}.earnedPoints`,
-    defaultMessage: `Earn {points}`
+    defaultMessage: `Earn: {icon} {points}`
+  },
+  pointsTip: {
+    id: `${idSuffix}.pointsTip`,
+    defaultMessage: `Points will be earned once claimed.`
   }
 })

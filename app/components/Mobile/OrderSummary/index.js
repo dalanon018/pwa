@@ -26,12 +26,15 @@ import {
 import { FormattedMessage } from 'react-intl'
 import { Grid, Label, Form, Checkbox, Image, Button } from 'semantic-ui-react'
 
-import NextIcon from 'images/icons/greater-than-icon.svg'
+import NextIcon from 'images/icons/goto-icon.svg'
 import ListCollapse from 'components/Shared/ListCollapse'
 import Modal from 'components/Shared/PromptModal'
 import RangeSlider from 'components/Shared/RangeSlider'
 
 import { LoadingStateImage } from 'components/Shared/LoadingBlock'
+
+import PlainCliqqPlain from 'images/icons/plain-cliqq-icon.svg'
+import LocationIcon from 'images/icons/location-icon.svg'
 
 import { paramsImgix } from 'utils/image-stock'
 import { calculateEarnPoints } from 'utils/calculation'
@@ -45,7 +48,7 @@ import {
   ProductReviewWrapper,
   MethodTitle,
   StepWrapper,
-  StepHead,
+  // StepHead,
   LocationButton,
   CustomGrid,
   LabelPrice,
@@ -123,10 +126,13 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     const { orderedProduct } = this.props
     if (orderedProduct.get('points')) {
       return (
-        <Label as='p' basic size='large' className='color__secondary'>
+        <Label as='p' basic size='medium' className='text__weight--400 margin__none'>
           <FormattedMessage
             {...messages.earnedPoints}
-            values={{points: <b>{this._getPointsEarn(mode, amount)}</b>}}
+            values={{
+              points: <b>{this._getPointsEarn(mode, amount)}</b>,
+              icon: <Image src={PlainCliqqPlain} className='cliqq-plain-icon' alt='CLiQQ' />
+            }}
           />
         </Label>
       )
@@ -211,48 +217,48 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
     const cashLabel = <label className='label-custom'>
       <LabelTitle>
-        <Label as='span' basic size='big' className='color__secondary'>
+        <Label as='p' basic size='large' className='text__weight--500 margin__bottom-positive--5'>
           <FormattedMessage {...messages.cashPrepaid} />
         </Label>
         { this._displayEarnPoints('cash', this._toggleOrigDiscountPrice()) }
       </LabelTitle>
       <LabelPrice length={this._toggleOrigDiscountPrice().length}>
-        <span className='total color__orange'>
+        <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
           <FormattedMessage {...messages.peso} />
           { this._toggleOrigDiscountPrice() }
-        </span>
+        </Label>
         { toggleDiscount(orderedProduct.get('discountPrice')) }
       </LabelPrice>
     </label>
 
     const codLabel = <label className='label-custom'>
       <LabelTitle>
-        <Label as='span' basic size='big' className='color__secondary'>
+        <Label as='p' basic size='large' className='text__weight--500 margin__bottom-positive--5'>
           <FormattedMessage {...messages.cashDelivery} />
         </Label>
         { this._displayEarnPoints('cod', this._toggleOrigDiscountPrice()) }
       </LabelTitle>
       <LabelPrice length={this._toggleOrigDiscountPrice().length}>
-        <span className='total color__orange'>
+        <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
           <FormattedMessage {...messages.peso} />
           { this._toggleOrigDiscountPrice() }
-        </span>
+        </Label>
         { toggleDiscount(orderedProduct.get('discountPrice')) }
       </LabelPrice>
     </label>
 
     const pointsLabel = <label className='label-custom'>
       <LabelTitle>
-        <Label as='span' basic size='big' className='color__secondary'>
+        <Label as='p' basic size='large' className='text__weight--500 margin__bottom-positive--5'>
           <FormattedMessage {...messages.cashPoints} />
         </Label>
         { this._displayEarnPoints('poc', this._computePricePoints()) }
       </LabelTitle>
       <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
-        <span className='total color__orange'>
+        <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
           <FormattedMessage {...messages.peso} />
           { this._computePricePoints() }
-        </span>
+        </Label>
         { toggleDiscount(orderedProduct.get('discountPrice')) }
       </LabelPrice>
     </label>
@@ -271,34 +277,37 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
             <Image alt='CLiQQ' src={this._updateParamsImages(orderedProduct.get('image'))} />
             {
               orderedProduct.get('brand')
-              ? <Label as='span' basic size='big' className='color__secondary'>{orderedProduct.getIn(['brand', 'name'])}</Label>
+              ? <Label className='no-margin-bottom color__grey' as='p' basic size='large'>{orderedProduct.getIn(['brand', 'name'])}</Label>
               : null
             }
-            <Label as='p' basic size='big' className='color__secondary'>{orderedProduct.get('title')}</Label>
+            <Label as='p' basic size='big'>{orderedProduct.get('title')}</Label>
           </ProductItem>
         </LoadingStateImage>
         <ListCollapse title={
-          <Label as='p' className='margin__none color__secondary' size='large'>
+          <Label as='p' className='margin__none color__grey text__weight--500' size='large' >
             <FormattedMessage {...messages.viewDetails} />
           </Label>
         }>
           <DetailsWrapper>
-            <div className='sub-title color__secondary'>
+            <Label className='padding__none text__weight--500' as='span' basic size='medium'>
               <FormattedMessage {...messages.productDetailsTitle} />
-            </div>
-            <div className='margin__bottom-positive--10 text__roboto--light color__dark-grey' dangerouslySetInnerHTML={{__html: orderedProduct.get('details')}} />
+            </Label>
+            <div className='margin__bottom-positive--10' dangerouslySetInnerHTML={{__html: orderedProduct.get('details')}} />
             <div className='sub-title color__secondary'>
               <FormattedMessage {...messages.productDeliveryTitle} />
             </div>
-            <div className='text__roboto--light color__dark-grey' dangerouslySetInnerHTML={{__html: orderedProduct.get('deliveryPromiseMessage')}} />
+            <div dangerouslySetInnerHTML={{__html: orderedProduct.get('deliveryPromiseMessage')}} />
           </DetailsWrapper>
         </ListCollapse>
         <CustomGrid>
           <Grid padded>
             <Grid.Row>
               <MethodTitle>
-                <Label as='span' basic size='huge' className='color__secondary'>
+                <Label as='p' className='color__grey text__weight--500' size='large' >
                   <FormattedMessage {...messages.methodPayment} />
+                </Label>
+                <Label as='p' className='margin__none text__weight--400' size='medium'>
+                  <FormattedMessage {...messages.pointsTip} />
                 </Label>
               </MethodTitle>
             </Grid.Row>
@@ -317,24 +326,29 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                       onClick={_handleToBottom}
                     />
                     <StepWrapper innerRef={_stepWrapperRef} className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={storeLocatorVisibility}>
-                      <Label as='p' basic size='big' className='color__secondary'>
+                      <Label as='p' className='color__grey text__weight--500' size='large' >
                         <FormattedMessage {...messages.chooseStore} />
                       </Label>
-                      <StepHead step='2'>
-                        <p><FormattedMessage {...messages.defaultStore} /></p>
-                      </StepHead>
-                      <LocationButton id='scrollToAnimate' onClick={_handleRecentStore} className='color__secondary border__two--light-grey' fluid iconBg={NextIcon}>
+                      <LocationButton id='scrollToAnimate' onClick={_handleRecentStore} className='color__secondary border__two--light-grey' fluid nextIcon={NextIcon} locationIcon={LocationIcon}>
                         {
-                        store && isEmpty(store)
-                        ? <FormattedMessage {...messages.recentlyViewedStore} />
-                        : <span>{store.id} {store.name}</span>
-                      }
+                          store && isEmpty(store)
+                          ? <span className='margin__left-positive--20'>
+                            <Label as='span' className='text__weight--500' size='large' >
+                              <FormattedMessage {...messages.recentlyViewedStore} />
+                            </Label>
+                          </span>
+                          : <span className='margin__left-positive--20'>
+                            <Label as='span' className='text__weight--500' size='large' >
+                              {store.id} {store.name}
+                            </Label>
+                          </span>
+                        }
                       </LocationButton>
-                      <Label as='p' basic size='small' className='color__secondary'>
+                      <Label as='p' className='margin__none text__weight--400 margin__top-positive--10' size='medium'>
                         <FormattedMessage
                           {...messages.findStore}
                           values={{storeLocator: (
-                            <span onClick={_handleStoreLocator}>
+                            <span className='color__primary' onClick={_handleStoreLocator}>
                               <FormattedMessage
                                 {...messages.storeLocator}
                               />
@@ -345,7 +359,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                     </StepWrapper>
                     <Checkbox
                       radio
-                      className='margin__bottom-positive--20'
+                      className='margin__vertical--10'
                       name='cash-prepaid'
                       value='CASH'
                       label={cashLabel}
@@ -363,11 +377,12 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                       onChange={_handleChange}
                     />
                     <StepWrapper className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={pointsModifierVisibility}>
-                      <Label as='p' basic size='big' className='color__secondary'>
+                      <Label as='p' className='color__grey text__weight--500' size='large' >
                         <FormattedMessage {...messages.choosePointsTitle} />
                       </Label>
-                      <Label as='span' basic size='large' className='color__secondary'>
+                      <Label as='p' className='margin__none text__weight--400' size='medium'>
                         <FormattedMessage {...messages.currentPoints} />
+                        <Image src={PlainCliqqPlain} className='cliqq-plain-icon' alt='CLiQQ' />
                         { subtract(currentPoints, usePoints) }
                       </Label>
                       <RangeSlider
@@ -385,7 +400,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         </CustomGrid>
 
         <ButtonContainer>
-          <Button onClick={_handleProceed} primary fluid loading={orderRequesting}>
+          <Button onClick={_handleProceed} primary fluid loading={orderRequesting} className='text__weight--700'>
             <FormattedMessage {...messages.proceedNext} />
           </Button>
         </ButtonContainer>
