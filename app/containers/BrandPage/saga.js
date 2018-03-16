@@ -7,7 +7,7 @@ import {
 } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import {
-  takeLatest
+  takeLatest,
   // takeEvery
 } from 'redux-saga'
 import { isEmpty } from 'lodash'
@@ -58,7 +58,6 @@ export function * getProductByBrands (args) {
   let products = []
   let count = 0
 
-  // TODO: we need to change this to the correct url
   const token = yield getAccessToken()
   const req = yield call(getRequestData, `${API_BASE_URL}/brands/${id}?offset=${offset}&limit=${limit}&category=${category || ''}`, {
     method: 'GET',
@@ -115,12 +114,10 @@ export function * getFilterCategoriesSaga () {
 
 // Individual exports for testing
 export function * productsBrandsSagas () {
-  const watcher = yield [
+  yield [
     fork(getProductByBrandsSaga),
     fork(getFilterCategoriesSaga)
   ]
-  yield take(LOCATION_CHANGE)
-  yield watcher.map(task => cancel(task))
 }
 
 // All sagas to be loaded
