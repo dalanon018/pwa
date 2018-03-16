@@ -1,6 +1,5 @@
 import {
   call,
-  cancel,
   fork,
   put,
   take
