@@ -83,7 +83,7 @@ export function * getFilterCategories (args) {
   let categories = []
 
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/categories?brand=${brand || ''}&category=${category || ''}`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/categories?brand=${brand || ''}&parent=${category || ''}`, {
     method: 'GET',
     token: token.access_token
   })
