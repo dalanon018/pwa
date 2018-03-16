@@ -58,7 +58,7 @@ const BackGroundLay = styled.div`
 
 class FilterTrigger extends React.PureComponent {
   static propTypes = {
-    parentId: PropTypes.string.isRequired,
+    parentId: PropTypes.string,
     getFilterCategories: PropTypes.func.isRequired,
     requestFromFilter: PropTypes.func.isRequired,
     getFilterBrands: PropTypes.func.isRequired,
@@ -135,23 +135,17 @@ class FilterTrigger extends React.PureComponent {
     const { parentId, requestFromFilter, filterCategories } = this.props
     const { selectedCategory, selectedBrands } = this.state
 
-    // We need to make sure that we are not the requesting the same id
-    if (
-      selectedCategory !== parentId ||
-      !isEmpty(selectedBrands)
-    ) {
-      const foundCategory = filterCategories.find((category) => category.get('id') === selectedCategory)
-      const category = foundCategory ? foundCategory.toObject() : {}
+    const foundCategory = filterCategories.find((category) => category.get('id') === selectedCategory)
+    const category = foundCategory ? foundCategory.toObject() : {}
 
-      requestFromFilter({
-        category,
-        brands: selectedBrands
-      })
+    requestFromFilter({
+      category,
+      brands: selectedBrands
+    })
 
-      this.setState({
-        toggleDrawer: false
-      })
-    }
+    this.setState({
+      toggleDrawer: false
+    })
   }
 
   componentDidMount () {
