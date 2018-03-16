@@ -224,7 +224,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     return display(loader)
   }
 
-  _fetchCategoryFilters = ({ props = this.props, category, brand }) => {
+  _fetchFilteredCategories = ({ props = this.props, category, brand }) => {
     const { match: { params }, getFilterCategories } = props
     const brandId = brand || params.id
 
@@ -253,7 +253,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
       offset: 0
     }, () => this._fetchProductByBrands(props))
 
-    this._fetchCategoryFilters({ brand: params.id, category })
+    this._fetchFilteredCategories({ brand: params.id, category })
   }
 
   /**
@@ -390,7 +390,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     setShowActivityIcon(true)
     setRouteName(BRAND_NAME)
 
-    this._fetchCategoryFilters({ brand: params.id, category })
+    this._fetchFilteredCategories({ brand: params.id, category })
   }
 
   componentWillUnmount () {
@@ -445,7 +445,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
             <FilterTrigger
               categoryId={category}
               requestFromFilter={this._requestFromFilter}
-              getFilterCategories={this._fetchCategoryFilters}
+              getFilterCategories={this._fetchFilteredCategories}
               filterCategories={filterCategories}
               filterCategoriesLoading={filterCategoriesLoading}
             />
