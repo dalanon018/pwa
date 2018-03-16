@@ -66,14 +66,19 @@ div [data-reactroot],
 }
 
 .ui.tabular {
-  background-color: @lightGrey;
-  display: flex;
-  display: -ms-flex;
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -o-flex;
-  justify-content: space-between;
   align-items: center;
+  background: @lightGrey;
+  box-shadow: 0 0 5px rgba(120,120,120, 0.1);
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: -webkit-flex;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  top: 50px;
+  width: 100%;
+  z-index: 1;
 
   .item {
     color: @grey !important;
@@ -83,6 +88,7 @@ div [data-reactroot],
 
     &.active {
       color: @darkGrey !important;
+      border-bottom: 3px solid @primaryColor;
     }
   }
 }

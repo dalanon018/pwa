@@ -28,19 +28,19 @@ import {
 import messages from './messages'
 
 const PurchaseWrapper = styled.div`
-  width: 100%;
-  box-shadow: 0px 0px 10px rgba(174,174,174, 0.5);
+  border-radius: 3px;
   display: flex;
   height: 100%;
   margin: 0 auto;
   min-height: 114px;
+  padding: 14px;
+  width: 100%;
 `
 
 const PurchaseInfo = styled.div`
   align-content: space-between;
   display: flex;
   flex-wrap: wrap;
-  padding: 14px;
   width: 100%;
 `
 
@@ -65,32 +65,29 @@ const StatusWrapper = styled.div`
 `
 
 const OtherInfo = styled.div`
-  align-items: flex-end;
-  display: flex;
-  justify-content: space-between;
   width: 100%;
 
   .product-price {
-    font-size: 30px;
-    font-weight: 700;
-    letter-spacing: -2px;
-    line-height: 30px;
-    margin: 0;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
   }
 
   .status-info {
-    text-align: right;
+    align-items: center;
+    display: flex;
+    justify-content: space-arount;
 
-    p {
+    span {
       margin-bottom: 0;
+      margin-right: 3px;
     }
   }
 
-  @media (min-width: 375px) {
-    .product-price {
-      font-size: 35px;
-    }
-  }
+  // @media (min-width: 375px) {
+  //   .product-price {
+  //     font-size: 35px;
+  //   }
+  // }
 `
 class Purchase extends React.PureComponent {
   static propTypes = {
@@ -121,15 +118,15 @@ class Purchase extends React.PureComponent {
    */
   _getColorStatus (status) {
     return switchFn({
-      RESERVED: '#F58322',
-      UNPAID: '#F23640',
-      CONFIRMED: '#F58322',
-      INTRANSIT: '#F58322',
-      LOSTINTRANSIT: '#F23640',
-      DELIVERED: '#F58322',
-      CLAIMED: '#8DC640',
-      UNCLAIMED: '#F23640'
-    })('#F58322')(status)
+      RESERVED: '#FFB70B',
+      UNPAID: '#FF4813',
+      CONFIRMED: '#FFB70B',
+      INTRANSIT: '#FFB70B',
+      LOSTINTRANSIT: '#FF4813',
+      DELIVERED: '#FFB70B',
+      CLAIMED: '#229D90',
+      UNCLAIMED: '#FF4813'
+    })('#FFB70B')(status)
   }
 
   _handleDateString = () => {
@@ -198,7 +195,7 @@ class Purchase extends React.PureComponent {
 
     switch (true) {
       case (windowWidth >= 375 && windowWidth <= 500):
-        maxChar = 28
+        maxChar = 25
         break
       case (windowWidth >= 767):
         maxChar = 50
@@ -215,8 +212,8 @@ class Purchase extends React.PureComponent {
     const { receipt, statuses, defaultImage } = this.props
     const currentStatus = statuses[receipt.get('status')] || ''
     const imgixOptions = {
-      w: 90,
-      h: 90,
+      w: 82,
+      h: 82,
       fit: 'clamp',
       auto: 'compress',
       q: 35,
@@ -226,34 +223,34 @@ class Purchase extends React.PureComponent {
     return (
       <Grid.Row>
         <Grid.Column>
-          <PurchaseWrapper onClick={this._goToReceipt}>
+          <PurchaseWrapper onClick={this._goToReceipt} className='box__shadow--primary background__white'>
             <PurchaseInfo>
               <div>
                 {
                   receipt.getIn(['products', 'brand'])
-                  ? <Label as='span' basic size='large' className='color__secondary'>{receipt.getIn(['products', 'brand', 'name'])}</Label>
+                  ? <Label as='span' basic size='small' className='color__grey text__weight--400'>{receipt.getIn(['products', 'brand', 'name'])}</Label>
                   : null
                 }
-                <Label as='p' basic size='large' className='color__secondary'>
+                <Label as='p' basic size='medium' className='text__weight--400 margin__none'>
                   {this._productName(receipt.getIn(['products', 'name']))}
                 </Label>
               </div>
               <OtherInfo>
-                <Label className='product-price text__roboto' as='span' basic color='orange'>
+                <Label className='product-price text__weight--700 color__primary' size='big' as='span' basic>
                   <FormattedMessage {...messages.peso} />
                   {parseFloat(receipt.get('amount')).toLocaleString()}
                 </Label>
                 <div className='status-info'>
-                  <Label as='p' basic size='mini' className='color__secondary'>
+                  <Label as='span' basic size='small' className='text__weight--400'>
                     { this._handleDateString() }
                   </Label>
-                  <Label as='span' basic size='large' className='color__secondary'>
+                  <Label as='span' basic size='small' className='text__weight--700'>
                     { this._handleDateValue() }
                   </Label>
                 </div>
               </OtherInfo>
             </PurchaseInfo>
-            <PurchaseImage className='background__light-grey'>
+            <PurchaseImage>
               <div>
                 <Image
                   src={(receipt.getIn(['products', 'image']) &&
@@ -261,7 +258,7 @@ class Purchase extends React.PureComponent {
               paramsImgix(defaultImage, imgixOptions)} />
               </div>
               <StatusWrapper status={this._getColorStatus(currentStatus)}>
-                <Label as='span' basic size='medium' className='color__white'>
+                <Label as='span' basic size='small' className='color__white text__weight--500'>
                   { this._handleStatusTitle() }
                 </Label>
               </StatusWrapper>

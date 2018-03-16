@@ -335,7 +335,6 @@ export default class MainMenu extends PureComponent {
                 { this._handleUniqueHeader() }
               </Grid.Column>
               <Grid.Column
-                className='no-padding'
                 width={this._handleColumnSize(currentRoute, 'rightSide')}
                 verticalAlign='middle'>
                 <RightWrapper>
