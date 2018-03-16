@@ -8,6 +8,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Waypoint from 'react-waypoint'
+import queryString from 'query-string'
 
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
@@ -17,13 +18,16 @@ import { push } from 'react-router-redux'
 import { noop } from 'lodash'
 import {
   allPass,
+  anyPass,
   compose,
   cond,
   equals,
   ifElse,
   lt,
   partial,
-  path
+  path,
+  when,
+  complement
 } from 'ramda'
 import { Container, Grid } from 'semantic-ui-react'
 
@@ -220,8 +224,27 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     return display(loader)
   }
 
+  _fetchCategoryFilters = ({ props = this.props, category, brand }) => {
+    const { match: { params }, getFilterCategories } = props
+    const brandId = brand || params.id
+
+    getFilterCategories({ category, brand: brandId })
+  }
+
+  _requestFromFilter = ({ category: { id, name } }) => {
+    const { match: { params }, changeRoute } = this.props
+
+    this.setState({
+      pageOffset: 0,
+      offset: 0
+    })
+
+    changeRoute(`/brands/${params.id}?category=${id || ''}`)
+  }
+
   _resetValuesAndFetch = (props) => {
-    const { resetProductsByBrands } = props
+    const { match: { params }, location: { search }, resetProductsByBrands } = props
+    const { category } = queryString.parse(search)
 
     resetProductsByBrands()
 
@@ -229,6 +252,8 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
       pageOffset: 0,
       offset: 0
     }, () => this._fetchProductByBrands(props))
+
+    this._fetchCategoryFilters({ brand: params.id, category })
   }
 
   /**
@@ -236,11 +261,12 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
    * @param {*w} props
    */
   _fetchProductByBrands = (props) => {
-    const { getProductsByBrands, match: { params: { id } } } = props
+    const { getProductsByBrands, match: { params: { id } }, location: { search } } = props
     const { offset, limit } = this.state
+    const { category } = queryString.parse(search)
 
     // since this data is change and we know exactly
-    getProductsByBrands({ offset, limit, id })
+    getProductsByBrands({ offset, limit, id, category })
   }
 
   _handleBannerAnimation = (show) => () => {
@@ -353,7 +379,8 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   componentDidMount () {
-    const { match: { params }, getFilterCategories, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon } = this.props
+    const { match: { params }, location: { search }, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon } = this.props
+    const { category } = queryString.parse(search)
 
     // initial data
     this._fetchProductByBrands(this.props)
@@ -362,7 +389,8 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     setShowSearchIcon(true)
     setShowActivityIcon(true)
     setRouteName(BRAND_NAME)
-    getFilterCategories({ id: params.id })
+
+    this._fetchCategoryFilters({ brand: params.id, category })
   }
 
   componentWillUnmount () {
@@ -370,16 +398,22 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   componentWillReceiveProps (nextProps) {
-    const { match: { params } } = this.props
-
-    const isParamsEqual = (id, props) => compose(
-      equals(id),
-      path(['match', 'params', 'id'])
+    const { match: { params }, location: { search } } = this.props
+    /**
+     * we need to check if ID and Category are the same so we can trigger requesting
+     */
+    const paramsId = path(['match', 'params', 'id'])
+    const locationSearch = path(['location', 'search'])
+    const isIdNotEqual = (id, props) => compose(
+      complement(equals(id)),
+      paramsId
     )(props)
 
-    const updateFetchProduct = ifElse(
-      partial(isParamsEqual, [params.id]),
-      noop,
+    const updateFetchProduct = when(
+      anyPass([
+        partial(isIdNotEqual, [params.id]),
+        compose(complement(equals(search)), locationSearch)
+      ]),
       this._resetValuesAndFetch
     )
 
@@ -397,8 +431,9 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   render () {
-    const { productsByBrands, loader, lazyload, filterCategories } = this.props
+    const { location: { search }, productsByBrands, loader, lazyload, filterCategories, filterCategoriesLoading } = this.props
     const { brandImages, animateBanner } = this.state
+    const { category } = queryString.parse(search)
 
     return (
       <div>
@@ -407,7 +442,13 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           onLeave={this._handleBannerAnimation(false)}
         >
           <div>
-            <FilterTrigger filterCategories={filterCategories} />
+            <FilterTrigger
+              categoryId={category}
+              requestFromFilter={this._requestFromFilter}
+              getFilterCategories={this._fetchCategoryFilters}
+              filterCategories={filterCategories}
+              filterCategoriesLoading={filterCategoriesLoading}
+            />
           </div>
         </Waypoint>
         <Container>

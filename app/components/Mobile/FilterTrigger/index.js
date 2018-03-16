@@ -15,7 +15,6 @@ import {
   complement,
   compose,
   equals,
-  isEmpty,
   propOr,
   when
 } from 'ramda'
@@ -107,7 +106,6 @@ class FilterTrigger extends React.PureComponent {
       selectedBrands: []
     })
 
-
     // we only call this fn if exist
     getFilterCategories && getFilterCategories({ category: value })
     getFilterBrands && getFilterBrands({ category: value })
@@ -135,7 +133,7 @@ class FilterTrigger extends React.PureComponent {
   }
 
   _handleSubmit = () => {
-    const { categoryId, requestFromFilter, filterCategories } = this.props
+    const { requestFromFilter, filterCategories } = this.props
     const { selectedCategory, selectedBrands } = this.state
 
     const foundCategory = filterCategories.find((category) => category.get('id') === selectedCategory)

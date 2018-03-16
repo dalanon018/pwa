@@ -1,12 +1,10 @@
 import {
   call,
   fork,
-  put,
-  take
+  put
 } from 'redux-saga/effects'
-import { LOCATION_CHANGE } from 'react-router-redux'
 import {
-  takeLatest,
+  takeLatest
   // takeEvery
 } from 'redux-saga'
 import { isEmpty } from 'lodash'
