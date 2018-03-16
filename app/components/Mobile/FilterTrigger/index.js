@@ -62,7 +62,7 @@ class FilterTrigger extends React.PureComponent {
     requestFromFilter: PropTypes.func.isRequired,
     filterCategories: PropTypes.object.isRequired,
     filterCategoriesLoading: PropTypes.bool.isRequired,
-    parentId: PropTypes.string,
+    categoryId: PropTypes.string,
     getFilterBrands: PropTypes.func,
     filterBrands: PropTypes.object,
     filterBrandsLoading: PropTypes.bool
@@ -109,8 +109,8 @@ class FilterTrigger extends React.PureComponent {
 
 
     // we only call this fn if exist
-    getFilterCategories && getFilterCategories({ id: value })
-    getFilterBrands && getFilterBrands({ id: value })
+    getFilterCategories && getFilterCategories({ category: value })
+    getFilterBrands && getFilterBrands({ category: value })
   }
 
   _handleToggleBrands = value => {
@@ -122,7 +122,7 @@ class FilterTrigger extends React.PureComponent {
   }
 
   _handleToggleReset = () => {
-    const { parentId, getFilterCategories, getFilterBrands } = this.props
+    const { categoryId, getFilterCategories, getFilterBrands } = this.props
     this.setState({
       selectedBrands: [],
       selectedCategory: '',
@@ -130,12 +130,12 @@ class FilterTrigger extends React.PureComponent {
       toggleCategory: ''
     })
 
-    getFilterCategories && getFilterCategories({ id: parentId })
-    getFilterBrands && getFilterBrands({ id: parentId })
+    getFilterCategories && getFilterCategories({ category: categoryId })
+    getFilterBrands && getFilterBrands({ category: categoryId })
   }
 
   _handleSubmit = () => {
-    const { parentId, requestFromFilter, filterCategories } = this.props
+    const { categoryId, requestFromFilter, filterCategories } = this.props
     const { selectedCategory, selectedBrands } = this.state
 
     const foundCategory = filterCategories.find((category) => category.get('id') === selectedCategory)
