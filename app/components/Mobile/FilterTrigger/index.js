@@ -98,6 +98,7 @@ class FilterTrigger extends React.PureComponent {
   }
 
   _handleToggleCategory = value => {
+    const { getFilterCategories, getFilterBrands } = this.props
     // each request we have to reset our selected brand and toggle brand since we expect different data
     this.setState({
       toggleCategory: value,
@@ -106,8 +107,10 @@ class FilterTrigger extends React.PureComponent {
       selectedBrands: []
     })
 
-    this.props.getFilterCategories({ id: value })
-    this.props.getFilterBrands({ id: value })
+
+    // we only call this fn if exist
+    getFilterCategories && getFilterCategories({ id: value })
+    getFilterBrands && getFilterBrands({ id: value })
   }
 
   _handleToggleBrands = value => {
@@ -127,8 +130,8 @@ class FilterTrigger extends React.PureComponent {
       toggleCategory: ''
     })
 
-    getFilterCategories({ id: parentId })
-    getFilterBrands({ id: parentId })
+    getFilterCategories && getFilterCategories({ id: parentId })
+    getFilterBrands && getFilterBrands({ id: parentId })
   }
 
   _handleSubmit = () => {
