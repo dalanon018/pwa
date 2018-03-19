@@ -146,7 +146,7 @@ export default defineMessages({
   },
   viewActivity: {
     id: 'app.components.Receipt.viewActivity',
-    defaultMessage: 'View Your Activity'
+    defaultMessage: 'VIEW YOUR ACTIVITY'
   },
   goToHistory: {
     id: 'app.components.Receipt.goToHistory',
@@ -154,7 +154,7 @@ export default defineMessages({
   },
   rePurchase: {
     id: 'app.components.Receipt.rePurchase',
-    defaultMessage: 'Repurchase Item'
+    defaultMessage: 'REPURCHASE ITEM'
   },
   orderNumber: {
     id: 'app.components.Receipt.orderNumber',

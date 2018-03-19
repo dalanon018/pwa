@@ -109,7 +109,7 @@ export const ReceiptContent = styled.div`
   transition: all 1s ease;
 
   .product-current-price {
-    font-size: 40px;
+    font-size: 27px;
     font-weight: 700;
     letter-spacing: -2px;
     margin-right: 15px !important;
@@ -186,8 +186,8 @@ export const MatchCode = styled.div`
   text-align: center;
   
   .border-divider {
-    border-top: 2px dashed #8E8E8E;
-    border-bottom: 2px dashed #8E8E8E;
+    border-top: 2px dashed #7d868c;
+    border-bottom: 2px dashed #7d868c;
     width: 100%;
     height: 5px;
     position: absolute;
@@ -197,13 +197,16 @@ export const MatchCode = styled.div`
   }
 
   span {
-    color: #5B5B5B !important;
-    font-weight: 700 !important;
     padding: 0 5px !important;
     position: relative;
     z-index: 1;
   }
 `
+
 export const PayCode = styled.div`
   width: 100%;
+`
+
+export const Wrapper = styled.div`
+  margin: 80px 0;
 `

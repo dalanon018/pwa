@@ -8,7 +8,7 @@ const PurchaseUsecase = ({ status, storeName, modePayment }) => {
   const currentStatus = status ? `${modePayment}${status}` : 'unknownStatus'
 
   return (
-    <Label className='text__roboto--light' as='p' basic size='large'>
+    <Label as='p' basic size='medium'>
       <FormattedMessage
         {...messages[currentStatus]}
         values={{ storeName }}
