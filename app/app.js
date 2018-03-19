@@ -18,6 +18,7 @@ import createHistory from 'history/createBrowserHistory'
 import '../semantic/dist/semantic.min.css'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import 'react-rangeslider/lib/index.css'
 
 // Import root app
 import App from 'containers/App'
