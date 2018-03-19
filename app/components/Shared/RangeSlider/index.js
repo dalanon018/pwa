@@ -7,9 +7,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 // import styled from 'styled-components';
-import Slider from 'react-rangeslider'
 // To include the default styles
-import 'react-rangeslider/lib/index.css'
+import Slider from 'react-rangeslider'
 
 import {
   subtract
