@@ -219,6 +219,9 @@ input.input-field {
   &__one--light-grey {
     border-bottom: 1px solid @lightGrey !important;
   }
+  &__two--light-grey {
+    border-bottom: 2px solid @lightGrey !important;
+  }
   &__three--primary {
     border-bottom: 3px solid @primaryColor !important;
   }

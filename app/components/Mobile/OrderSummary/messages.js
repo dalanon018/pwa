@@ -18,7 +18,7 @@ export default defineMessages({
   },
   findStore: {
     id: `${idSuffix}.findStore`,
-    defaultMessage: 'Cant find the store? Check our {storeLocator}'
+    defaultMessage: `Can't find the store? Check our {storeLocator}`
   },
   defaultStore: {
     id: `${idSuffix}.defaultStore`,

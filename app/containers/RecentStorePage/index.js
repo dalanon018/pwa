@@ -9,12 +9,12 @@ import Helmet from 'react-helmet'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
-import { injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { compose } from 'redux'
 import { push } from 'react-router-redux'
-import { Grid, Container } from 'semantic-ui-react'
-import { noop } from 'lodash'
+import { Grid } from 'semantic-ui-react'
+import { noop, range } from 'lodash'
 import {
   ifElse,
   isEmpty
@@ -30,6 +30,9 @@ import {
   setPageTitleAction,
   setRouteNameAction
 } from 'containers/Buckets/actions'
+
+import RecentStore from 'components/Shared/RecentStore'
+import WindowWidth from 'components/Shared/WindowWidth'
 
 import reducer from './reducer'
 import saga from './saga'
@@ -56,7 +59,8 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
   }
 
   state = {
-    store: {}
+    store: {},
+    toggle: ''
   }
 
   _handleGoTo = (id, name) => () => {
@@ -64,6 +68,8 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
 
     changeRoute(`/products-category/${id}?name=${name}`)
   }
+
+  _handleToggle = (_, data) => this.setState({toggle: data.value})
 
   componentDidMount () {
     const { location: { search }, setPageTitle, setRouteName, intl, getVisitedStores } = this.props
@@ -84,6 +90,7 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
   }
 
   render () {
+    const { windowWidth } = this.props
     return (
       <div>
         <Helmet
@@ -92,11 +99,33 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
             { name: 'description', content: '7-eleven CLiQQ Recently Visited Page' }
           ]}
         />
-        <Container>
+        {
+          range(2).map((_, index) =>
+            <RecentStore
+              key={index}
+              dummyValue={`dummyValue${index}`}
+              toggle={this.state.toggle}
+              windowWidth={windowWidth}
+              handleToggle={this._handleToggle} />)
+        }
+        <div className='margin__top-positive--20'>
           <Grid padded>
-            <Grid.Row columns={2} stretched />
+            <Grid.Row>
+              <Grid.Column>
+                <FormattedMessage
+                  {...messages.findStore}
+                  values={{storeLocator: (
+                    <span className='color__primary' onClick={() => {}}>
+                      <FormattedMessage
+                        {...messages.storeLocator}
+                      />
+                    </span>
+                  )}}
+                />
+              </Grid.Column>
+            </Grid.Row>
           </Grid>
-        </Container>
+        </div>
       </div>
     )
   }
@@ -126,4 +155,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect
-)(injectIntl(userIsAuthenticated(RecentStorePage)))
+)(WindowWidth(injectIntl(userIsAuthenticated(RecentStorePage))))
