@@ -23,13 +23,16 @@ import {
   partial,
   path
 } from 'ramda'
-import { Container } from 'semantic-ui-react'
+import { Container, Label, Image } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
 import MobileProductView from 'components/Mobile/ProductView'
 import DesktopProductView from 'components/Desktop/ProductView'
+
+import OrderTip from 'components/Mobile/OrderTip'
+import PlainCard from 'components/Mobile/PlainCard'
 
 import MobileFooter from 'components/Mobile/Footer'
 
@@ -52,6 +55,9 @@ import {
 } from 'containers/Buckets/selectors'
 
 import { WALLET_NAME } from 'containers/Buckets/constants'
+
+import TealIcon from 'images/icons/plain-cliqq-teal-icon.svg'
+import PlainIcon from 'images/icons/plain-cliqq-icon.svg'
 
 import messages from './messages'
 import reducer from './reducer'
@@ -91,6 +97,52 @@ const DesktopTitle = styled.p`
   font-weight: 700;
   text-align: center;
   margin-bottom: 0;
+`
+
+const UserPointsWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  img {
+    width: 35px;
+  }
+
+  .my-points {
+    font-size: 45px !important;
+    line-height: inherit;
+    margin-left: 8px;
+  }
+`
+
+const PointsPreviewWrapper = styled.div`
+  padding: 30px 14px;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`
+
+const PointsHistoryWrapper = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 14px;
+  width: 100%;
+`
+
+const AdjustedPoints = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-left: 20px;
+  margin-right: 5px;
+
+  img {
+    width: 15px;
+    margin: 0 5px;
+  }
 `
 
 export class WalletPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -292,8 +344,81 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
               { this._displayEmptyLoadingIndicator() }
               { this._displayTransactionsItems() }
             </InfiniteWrapper>
+
+            {/* Static Layout */}
+            <div className='margin__bottom-positive--20'>
+              <PlainCard>
+                <PointsPreviewWrapper className='text__align--center'>
+                  <Label as='p' className='text__weight--500' size='large' >
+                    <FormattedMessage {...messages.currentPoints} />
+                  </Label>
+                  <Label as='p' className='color__grey text__weight--400' size='medium' >
+                    <FormattedMessage
+                      {...messages.asOf}
+                      values={{date: 'December 10, 2017'}} />
+                  </Label>
+                  <UserPointsWrapper>
+                    <Image src={TealIcon} alt='CLiQQ' />
+                    <Label as='span' className='my-points color__teal text__weight--700' size='massive' >
+                      123
+                    </Label>
+                  </UserPointsWrapper>
+                </PointsPreviewWrapper>
+              </PlainCard>
+            </div>
+
+            <Label as='p' className='color__grey text__weight--500 text__align--left' size='large' >
+              <FormattedMessage {...messages.walletTransactionsTitle} />
+            </Label>
+            <PlainCard>
+              <PointsHistoryWrapper className='border_bottom__one--light-grey'>
+                <div className='text__align--left'>
+                  <Label as='p' basic className='margin__none text__weight--400' size='small' >
+                    <FormattedMessage
+                      {...messages.youBought}
+                      values={{item: 'Leather Credit Card Wallet (Black)'}} />
+                  </Label>
+                  <Label as='p' basic className='color__grey text__weight--400' size='mini' >
+                    09-21-2017 1:06 PM
+                  </Label>
+                </div>
+                <AdjustedPoints className='text__align--right'>
+                  <Label as='p' basic className='color__teal margin__none text__weight--700' size='huge' >
+                    +
+                  </Label>
+                  <Image src={TealIcon} alt='CLiQQ' />
+                  <Label as='p' basic className='color__teal margin__none text__weight--700' size='huge' >
+                    30
+                  </Label>
+                </AdjustedPoints>
+              </PointsHistoryWrapper>
+              <PointsHistoryWrapper className='border_bottom__one--light-grey'>
+                <div className='text__align--left'>
+                  <Label as='p' basic className='margin__none text__weight--400' size='medium' >
+                    <FormattedMessage
+                      {...messages.youBought}
+                      values={{item: 'Leather Credit Card Wallet (Black)'}} />
+                  </Label>
+                  <Label as='p' basic className='color__grey text__weight--400' size='mini' >
+                    09-21-2017 1:06 PM
+                  </Label>
+                </div>
+                <AdjustedPoints className='text__align--right'>
+                  <Label as='p' basic className='color__primary margin__none text__weight--700' size='huge' >
+                    -
+                  </Label>
+                  <Image src={PlainIcon} alt='CLiQQ' />
+                  <Label as='p' basic className='color__primary margin__none text__weight--700' size='huge' >
+                    300
+                  </Label>
+                </AdjustedPoints>
+              </PointsHistoryWrapper>
+            </PlainCard>
           </div>
         </ContentWrapper>
+
+        <OrderTip />
+
         <AccessView
           mobileView={<MobileFooter />}
           desktopView={null}
