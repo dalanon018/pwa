@@ -162,6 +162,9 @@ input.input-field {
     &--left {
       text-align: left !important;
     }
+    &--right {
+      text-align: right !important;
+    }
   }
   &__weight {
     &--400 {

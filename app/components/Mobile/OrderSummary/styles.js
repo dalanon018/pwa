@@ -183,7 +183,7 @@ const SelectMethodWrapper = styled.div`
       width: 12px;
       height: 7px;
       position: absolute;
-      top: 43%;
+      top: 42%;
       left: 5px;
       border: 3px solid #fcfff4;
       border-top: none;

@@ -33,5 +33,17 @@ export default defineMessages({
   emptyMessage: {
     id: 'app.containers.WalletPage.emptyMessage',
     defaultMessage: 'You haven\'t used your points yet.'
+  },
+  currentPoints: {
+    id: 'app.containers.WalletPage.currentPoints',
+    defaultMessage: 'Current CLiQQ Points'
+  },
+  asOf: {
+    id: 'app.containers.WalletPage.asOf',
+    defaultMessage: 'as of {date}'
+  },
+  youBought: {
+    id: 'app.containers.WalletPage.youBought',
+    defaultMessage: 'You bought {item}'
   }
 })
