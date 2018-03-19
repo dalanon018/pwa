@@ -215,7 +215,10 @@
 
 /*---  Colors  ---*/
 @red              : #DB2828;
-@orange           : #F58322;
+/*-------------------
+  @orange           : #F58322;
+--------------------*/
+@orange           : @primaryColor;
 @yellow           : #FBBD08;
 @olive            : #B5CC18;
 @green            : #8DC640;

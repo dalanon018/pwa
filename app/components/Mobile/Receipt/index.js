@@ -48,7 +48,8 @@ import {
   ScannerWrapper,
   PushNotificationWrapper,
   MatchCode,
-  PayCode
+  PayCode,
+  Wrapper
   // InstructionsWrapper
 } from './styled'
 
@@ -170,7 +171,7 @@ class Receipt extends React.PureComponent {
 
   // simply handle the color of the status
   _handleColorStatus = cond([
-    [partialRight(contains, [COMPLETED]), always('green')],
+    [partialRight(contains, [COMPLETED]), always('teal')],
     [partialRight(contains, [EXPIRED]), always('red')],
     [T, always('orange')]
   ])
@@ -222,10 +223,10 @@ class Receipt extends React.PureComponent {
             <Grid.Row columns={2}>
               { loadingPushToggle && <LoadingIndicator /> }
               <Grid.Column width={11}>
-                <Label as='p' basic size='large'>
+                <Label as='p' basic size='medium' className='text__weight--700 color__grey'>
                   <FormattedMessage {...messages.pushNotifLabel} />
                 </Label>
-                <Label as='span' basic size='medium' className='text__roboto--light'>
+                <Label as='span' basic size='small' className='text__weight--400'>
                   <FormattedMessage {...messages.pushNotifDescription} />
                 </Label>
               </Grid.Column>
@@ -253,12 +254,12 @@ class Receipt extends React.PureComponent {
 
     return switchFn({
       UNPAID: (
-        <Button fluid onClick={goToProduct} primary>
+        <Button fluid onClick={goToProduct} className='text__weight--700 border__radius--none' primary>
           <FormattedMessage {...messages.rePurchase} />
         </Button>
       )
     })(
-      <Button fluid onClick={goReceiptPage} primary>
+      <Button fluid onClick={goReceiptPage} className='text__weight--700 border__radius--none' primary>
         <FormattedMessage {...messages.viewActivity} />
       </Button>
     )(currentStatus)
@@ -276,7 +277,7 @@ class Receipt extends React.PureComponent {
       })(
         <MatchCode>
           <div className='border-divider' />
-          <Label as='span' basic size='huge' className='color__secondary color__secondary background__light-grey'>
+          <Label as='span' basic size='huge' className='background__fade-grey text__weight--700'>
             {str && str.slice(-3)}
           </Label>
         </MatchCode>
@@ -366,41 +367,41 @@ class Receipt extends React.PureComponent {
     const { receipt, statuses } = this.props
 
     return (
-      <div>
+      <Wrapper>
         <ReceiptWrapper>
           <ReceiptContainer className='background__white'>
-            <ReceiptHeader className='background__light-grey'>
+            <ReceiptHeader className='background__fade-grey'>
               <CustomContainer>
                 <Grid>
                   <Grid.Row columns={2}>
                     <Grid.Column floated='left' width={9} className='product-status'>
-                      <Label className='weight-400 color__secondary' as='span' basic size='small'>
+                      <Label className='text__weight--400' as='span' basic size='tiny'>
                         <FormattedMessage {...messages.statusLabel} />
                       </Label>
-                      <Label as='p' basic size='huge' color={this._handleColorStatus(statuses[receipt.get('status')])}>
+                      <Label as='p' basic size='large' className='text__weight--700' color={this._handleColorStatus(statuses[receipt.get('status')])}>
                         { this._handleStatusTitle() }
                       </Label>
                     </Grid.Column>
                     <Grid.Column floated='right' textAlign='right' width={7}>
-                      <Label className='weight-400 color__secondary' as='span' basic size='small'>
+                      <Label className='text__weight--400' as='span' basic size='tiny'>
                         <FormattedMessage {...messages.paymentMethod} />
                       </Label>
-                      <Label as='p' basic size='large' className='color__secondary'>
+                      <Label as='p' basic size='large' className='text__weight--700'>
                         <FormattedMessage {...messages[`${this._handleModePayment()}methodType`]} />
                       </Label>
                     </Grid.Column>
 
                     <Grid.Column floated='left' className='order-number' width={9}>
-                      <Label className='weight-400 color__secondary' as='span' basic size='small'>
+                      <Label className='text__weight--400' as='span' basic size='tiny'>
                         <FormattedMessage {...messages.trackingNumber} />
                       </Label>
-                      <Label as='p' basic size='big' className='color__secondary'>{receipt.get('trackingNumber')}</Label>
+                      <Label as='p' basic size='large' className='text__weight--700'>{receipt.get('trackingNumber')}</Label>
                     </Grid.Column>
                     <Grid.Column floated='right' textAlign='right' width={7}>
-                      <Label className='weight-400 color__secondary' as='span' basic size='small'>
+                      <Label className='text__weight--400' as='span' basic size='tiny'>
                         { this._handleDateString() }
                       </Label>
-                      <Label as='p' basic size='large' className='color__secondary'>{ this._handleDateValue()}</Label>
+                      <Label as='p' basic size='large' className='text__weight--700'>{ this._handleDateValue()}</Label>
                     </Grid.Column>
                     <Grid.Column width={16}>
                       {this._handleMatchCode(receipt.get('trackingNumber'))}
@@ -413,15 +414,15 @@ class Receipt extends React.PureComponent {
               <Grid padded className='scan padding__14' centered textAlign='center'>
                 {
                   receipt.getIn(['products', 'brand'])
-                  ? <Label as='span' basic size='large' className='color__secondary'>{receipt.getIn(['products', 'brand', 'name'])}</Label>
+                  ? <Label as='span' basic size='large' className='color__grey text__weight--400'>{receipt.getIn(['products', 'brand', 'name'])}</Label>
                   : null
                 }
-                <Label as='p' basic size='large' className='color__secondary margin__none'>{receipt.getIn(['products', 'name'])}</Label>
-                <Label className='product-current-price text__roboto--bold' basic color='orange'>
+                <Label as='p' basic size='big' className='margin__none text__weight--400'>{receipt.getIn(['products', 'name'])}</Label>
+                <Label className='product-current-price color__primary text__weight--700' basic as='p'>
                   <FormattedMessage {...messages.peso} />
                   { parseFloat(receipt.get('amount')).toLocaleString() }
                 </Label>
-                <Label className='text__roboto--light color__secondary mobile-number' as='p' basic size='medium' >
+                <Label className='mobile-number' as='p' basic size='small' >
                   <FormattedMessage {...messages.mobileNumberLabel} />
 
                   <FormattedMessage {...messages.mobileNumberCode} />
@@ -429,7 +430,9 @@ class Receipt extends React.PureComponent {
                 </Label>
                 <BarcodeSVG id='barcode' {...{ status: statuses[receipt.get('status')] }} />
                 <PayCode>
-                  { this._displayReferenceNumber() }
+                  <Label as='p' basic size='small' >
+                    { this._displayReferenceNumber() }
+                  </Label>
                 </PayCode>
                 <Grid.Row>
                   { this._renderPurchaseBanner() }
@@ -480,7 +483,7 @@ class Receipt extends React.PureComponent {
         <ButtonContainer>
           { this._handleButtonFunctionality() }
         </ButtonContainer>
-      </div>
+      </Wrapper>
     )
   }
 }

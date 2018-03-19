@@ -213,6 +213,11 @@ input.input-field {
   &__none {
     border: 0;
   }
+  &__radius {
+    &--none {
+      border-radius: 0 !important;
+    }
+  }
 }
 
 .border_bottom {
@@ -561,6 +566,9 @@ svg#barcode {
       }
       &--10 {
         padding: 0 10px;
+      }
+      &--15 {
+        padding: 0 15px !important;
       }
       &--20 {
         padding: 0 20px;

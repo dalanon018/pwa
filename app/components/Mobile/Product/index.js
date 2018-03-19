@@ -163,7 +163,7 @@ const Product = ({
                 ? <Label className='no-margin-bottom color__grey' as='p' basic size='large'>{product.getIn(['brand', 'name'])}</Label>
                 : null
               }
-              <Label as='p' basic size='big'>{product.get('title')}</Label>
+              <Label as='p' basic size='big' className='padding__horizontal--15'>{product.get('title')}</Label>
               <ProductPriceWrapper>
                 <Label className='product-price text__weight--700 color__primary' as='b' basic size='massive'>
                   <FormattedMessage {...messages.peso} />
@@ -283,7 +283,7 @@ const Product = ({
                 onClick={onSubmit}
                 loading={loading}
                 primary
-                className='text__weight--700'
+                className='text__weight--700 border__radius--none'
                 disabled={+product.get('quantity') === 0}
                 fluid > <FormattedMessage {...messages.placeOrder} /> </Button>
             </ButtonContainer>
