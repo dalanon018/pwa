@@ -366,16 +366,18 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                       checked={modePayment === 'CASH'}
                       onChange={_handleChange}
                     />
-                    <Checkbox
-                      radio
-                      disabled={isDisabledPointsOptions}
-                      className='margin__bottom-positive--20'
-                      name='points'
-                      value='POINTS'
-                      label={pointsLabel}
-                      checked={modePayment === 'POINTS'}
-                      onChange={_handleChange}
-                    />
+                    {
+                      orderedProduct.get('points') && <Checkbox
+                        radio
+                        disabled={isDisabledPointsOptions}
+                        className='margin__bottom-positive--20'
+                        name='points'
+                        value='POINTS'
+                        label={pointsLabel}
+                        checked={modePayment === 'POINTS'}
+                        onChange={_handleChange}
+                      />
+                    }
                     <StepWrapper className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={pointsModifierVisibility}>
                       <Label as='p' className='color__grey text__weight--500' size='large' >
                         <FormattedMessage {...messages.choosePointsTitle} />

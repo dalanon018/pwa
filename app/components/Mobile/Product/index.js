@@ -185,16 +185,17 @@ const Product = ({
           <Grid padded>
             <Grid.Row>
               <Grid.Column>
+                {
+                product.get('points') &&
                 <PointsInfo className='text__align--center'>
                   <Image src={CliQQPlainLogo} alt='CLiQQ' />
                   <Label as='span' basic size='medium'>
-                    {
-                      product.get('points') && <FormattedMessage
-                        {...messages.earnPoints}
-                        values={{points: <span className='color__primary'>{getHighestPointsEarn()}</span>}} />
-                    }
+                    <FormattedMessage
+                      {...messages.earnPoints}
+                      values={{points: <span className='color__primary'>{getHighestPointsEarn()}</span>}} />
                   </Label>
                 </PointsInfo>
+               }
 
                 <SocialContainer>
                   <Label className='color__secondary text__weight--400' as='p' basic size='medium'>

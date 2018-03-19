@@ -11,10 +11,10 @@ import {
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 
-// import { getRequestData } from 'utils/offline-request'
+import { getRequestData } from 'utils/offline-request'
 import { transformProduct } from 'utils/transforms'
 import { setItem, getItem } from 'utils/localStorage'
-import productFixture from 'fixtures/product.json'
+// import productFixture from 'fixtures/product.json'
 
 import {
   GET_PRODUCT,
@@ -28,7 +28,7 @@ import {
 } from './actions'
 
 import {
-  // API_BASE_URL,
+  API_BASE_URL,
   LAST_VIEWS_KEY,
   CURRENT_PRODUCT_KEY
 } from 'containers/App/constants'
@@ -38,7 +38,7 @@ import {
 } from 'containers/Buckets/actions'
 
 import {
-  // getAccessToken
+  getAccessToken
 } from 'containers/Buckets/saga'
 
 // function * sleep (ms) {
@@ -75,13 +75,13 @@ export function * updateLastViewedItems (args) {
 }
 
 export function * getProduct (payload) {
-  const req = productFixture
-  // const { payload: { id } } = payload
-  // const token = yield getAccessToken()
-  // const req = yield call(getRequestData, `${API_BASE_URL}/products/${id}?deviceOrigin=PWA`, {
-  //   method: 'GET',
-  //   token: token.access_token
-  // })
+  // const req = productFixture
+  const { payload: { id } } = payload
+  const token = yield getAccessToken()
+  const req = yield call(getRequestData, `${API_BASE_URL}/products/${id}?deviceOrigin=PWA`, {
+    method: 'GET',
+    token: token.access_token
+  })
 
   if (!isEmpty(req)) {
     // we will use the txt file we got
