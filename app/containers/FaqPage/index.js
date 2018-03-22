@@ -18,6 +18,8 @@ import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
 import AccessView from 'components/Shared/AccessMobileDesktopView'
+import MobileFooter from 'components/Mobile/Footer'
+import OrderTip from 'components/Mobile/OrderTip'
 import H1 from 'components/Shared/H1'
 
 import { LoadingStateInfo } from 'components/Shared/LoadingBlock'
@@ -59,33 +61,40 @@ export class FaqPage extends React.PureComponent { // eslint-disable-line react/
     const html = converter.makeHtml(markdown)
     // const filteredHtml = html.replace('{{< img src="../img/device_widget.png" alt="widget" >}}', `<img src='https://cliqq.imgix.net/000CE.png?w=175&h=175&fit=clamp'>`)
     return (
-      <AccessView
-        mobileView={
-          <div className='document-helper'>
-            <Grid padded>
-              <LoadingStateInfo loading={loader} count='4'>
-                <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
-              </LoadingStateInfo>
-            </Grid>
-          </div>
-        }
-        desktopView={
-          <div className='document-helper'>
-            <Container>
-              <div className='padding__medium'>
-                <Grid padded>
-                  <LoadingStateInfo loading={loader} count='4'>
-                    <H1 className='padding__top--25 padding__none--horizontal color__secondary'>
-                      <FormattedMessage {...messages.header} />
-                    </H1>
-                    <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
-                  </LoadingStateInfo>
-                </Grid>
-              </div>
-            </Container>
-          </div>
-        }
-      />
+      <div>
+        <AccessView
+          mobileView={
+            <div className='document-helper'>
+              <Grid padded>
+                <LoadingStateInfo loading={loader} count='4'>
+                  <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
+                </LoadingStateInfo>
+              </Grid>
+            </div>
+          }
+          desktopView={
+            <div className='document-helper'>
+              <Container>
+                <div className='padding__medium'>
+                  <Grid padded>
+                    <LoadingStateInfo loading={loader} count='4'>
+                      <H1 className='padding__top--25 padding__none--horizontal color__secondary'>
+                        <FormattedMessage {...messages.header} />
+                      </H1>
+                      <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
+                    </LoadingStateInfo>
+                  </Grid>
+                </div>
+              </Container>
+            </div>
+          }
+        />
+        <OrderTip />
+        <AccessView
+          mobileView={<MobileFooter />}
+          desktopView={null}
+        />
+      </div>
     )
   }
 }

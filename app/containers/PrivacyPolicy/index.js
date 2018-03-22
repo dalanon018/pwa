@@ -17,6 +17,8 @@ import { Container, Grid } from 'semantic-ui-react'
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
+import MobileFooter from 'components/Mobile/Footer'
+import OrderTip from 'components/Mobile/OrderTip'
 import H1 from 'components/Shared/H1'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 
@@ -58,33 +60,40 @@ export class PrivacyPolicy extends React.PureComponent { // eslint-disable-line 
     const converter = new showdown.Converter()
     const html = converter.makeHtml(markdown)
     return (
-      <AccessView
-        mobileView={
-          <div className='document-helper'>
-            <Grid padded>
-              <LoadingStateInfo loading={loader} count='4'>
-                <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
-              </LoadingStateInfo>
-            </Grid>
-          </div>
-        }
-        desktopView={
-          <div className='document-helper'>
-            <Container>
-              <div className='padding__medium'>
-                <Grid padded>
-                  <LoadingStateInfo loading={loader} count='4'>
-                    <H1 className='padding__top--25 padding__none--horizontal color__secondary'>
-                      <FormattedMessage {...messages.header} />
-                    </H1>
-                    <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
-                  </LoadingStateInfo>
-                </Grid>
-              </div>
-            </Container>
-          </div>
-        }
-      />
+      <div>
+        <AccessView
+          mobileView={
+            <div className='document-helper'>
+              <Grid padded>
+                <LoadingStateInfo loading={loader} count='4'>
+                  <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
+                </LoadingStateInfo>
+              </Grid>
+            </div>
+          }
+          desktopView={
+            <div className='document-helper'>
+              <Container>
+                <div className='padding__medium'>
+                  <Grid padded>
+                    <LoadingStateInfo loading={loader} count='4'>
+                      <H1 className='padding__top--25 padding__none--horizontal color__secondary'>
+                        <FormattedMessage {...messages.header} />
+                      </H1>
+                      <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
+                    </LoadingStateInfo>
+                  </Grid>
+                </div>
+              </Container>
+            </div>
+          }
+        />
+        <OrderTip />
+        <AccessView
+          mobileView={<MobileFooter />}
+          desktopView={null}
+        />
+      </div>
     )
   }
 }
