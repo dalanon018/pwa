@@ -6,42 +6,19 @@
 
 import React from 'react'
 import styled from 'styled-components'
-import { Container, Image, Grid, Label } from 'semantic-ui-react'
+import { Container, Image, Grid } from 'semantic-ui-react'
 import { imageStock } from 'utils/image-stock'
 
-import { FormattedMessage } from 'react-intl'
 import messages from './messages'
 
 import PlainCard from 'components/Mobile/PlainCard'
 import ProductView from 'components/Mobile/ProductView'
 
 import SectionTitle from 'components/Mobile/HomeSectionTitle'
-import Timer from 'components/Shared/CountDownTimer'
+import TimerWrapper from 'components/Mobile/TimerWrapper'
 
 const BannerWrapper = styled.div`
   position: relative;
-`
-
-const TimerWrapper = styled.div`
-  border-radius: 3px 0 0 3px;
-  bottom: 12px;
-  min-width: 180px;
-  padding: 5px 10px;
-  position: absolute;
-  right: 0;
-  z-index: 1;
-`
-
-const ContentWrapper = styled.div`
-  align-items: center;
-  color: #FFFFFF;
-  display: flex;
-  justify-content: space-between;
-`
-
-const LabelWrapper = styled.div`
-  line-height: 5px !important;
-  width: 70px;
 `
 
 function FlashDeals ({
@@ -72,21 +49,7 @@ function FlashDeals ({
         <Grid.Row className='padding__none--vertical'>
           <Grid.Column>
             <BannerWrapper>
-              {
-                !promosLoading &&
-                <TimerWrapper className='background__primary'>
-                  <ContentWrapper>
-                    <LabelWrapper>
-                      <Label as='span' size='mini' className='color__white text__weight--400'>
-                        <FormattedMessage {...messages.endsIn} />
-                      </Label>
-                    </LabelWrapper>
-                    <Label as='span' size='massive' className='color__white text__weight--400'>
-                      <Timer endDate={promo.get('thruDate')} />
-                    </Label>
-                  </ContentWrapper>
-                </TimerWrapper>
-              }
+              { !promosLoading && <TimerWrapper promo={promo} /> }
               <PlainCard>
                 {
                   !promosLoading && promo.get('background')

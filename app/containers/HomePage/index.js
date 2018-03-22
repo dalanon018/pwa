@@ -373,8 +373,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         </Container>
 
         <OrderTip />
+
         {
-          promos.size > 0 && promos.map((promo) => (
+          promos.map(promo => (
             <FlashDeals
               key={promo.get('promoCode')}
               windowWidth={windowWidth}
