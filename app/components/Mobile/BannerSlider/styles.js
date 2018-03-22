@@ -8,12 +8,14 @@ const BannerSliderWrapper = styled.div`
   margin-bottom: 10px;
 
   img {
-    width: 100%;
+    ${props => props.curved && 'border-radius: 2px;'}
+    ${props => props.curved && 'box-shadow: 0 0 5px rgba(120,120,120, 0.1);'}
     margin: 0 auto;
+    width: 100%;
   }
 
   .slick-list {
-    ${props => props.curved && 'border-radius: 5px; box-shadow: 0 0 5px rgba(120,120,120, 0.1);'}
+    ${props => props.curved && 'border-radius: 5px;'}
     padding-bottom: ${props => props.isLowerdots ? '15px' : '0'};
   }
 
