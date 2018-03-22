@@ -144,17 +144,6 @@ input.input-field {
 }
 
 .text {
-  &__roboto {
-    font-family: 'Roboto' !important;
-    &--light {
-      font-family: 'Roboto' !important;
-      font-weight: 100 !important;
-    }
-    &--bold {
-      font-family: 'Roboto' !important;
-      font-weight: 700 !important;
-    }
-  }
   &__align {
     &--center {
       text-align: center;
@@ -336,8 +325,7 @@ input.input-field {
     li {
       align-items: center;
       display: flex;
-      font-family: 'Roboto';
-      font-weight: 100;
+      font-weight: 400;
       list-style-type: none;
       &:before {
         // color: #f58322;
@@ -360,13 +348,13 @@ input.input-field {
 
   #termsandconditions,
   #termsandconditions-1 {
-    color: #5B5B5B;
-    font-weight: 400;
-    font-size: 11px;
-    letter-spacing: 1px;
+    color: @grey;
+    font-weight: 700;
+    font-size: 15px;
+    // letter-spacing: 1px;
     // padding-left: 13px;
     position: relative;
-    text-transform: uppercase;
+    // text-transform: uppercase;
 
     // &:before {
     //  color: #F6A22D;
@@ -433,8 +421,7 @@ input.input-field {
   animation-duration: .5s;
 
   p {
-    font-family: 'Roboto';
-    font-weight: 100;
+    font-weight: 400;
   }
 }
 
