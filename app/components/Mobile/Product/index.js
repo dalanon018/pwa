@@ -27,7 +27,7 @@ import { fbShare } from 'utils/fb-share'
 import { paramsImgix } from 'utils/image-stock'
 import { calculateEarnPoints } from 'utils/calculation'
 
-import ProductSlider from 'components/Shared/BannerSlider'
+import ProductSlider from 'components/Mobile/BannerSlider'
 import ListCollapse from 'components/Shared/ListCollapse'
 import PromptModal from 'components/Shared/PromptModal'
 
@@ -142,12 +142,12 @@ const Product = ({
 
         <div className='background__white box__shadow--primary'>
           { loading || brandLogo }
-          <ProductImageSlider>
+          <ProductImageSlider className='margin__top-positive--20'>
             <ProductSlider
               images={productImages}
               loader={loading}
               isInfinite
-              isLowerdots
+              curved
             />
             {
               +product.get('quantity') === 0 &&

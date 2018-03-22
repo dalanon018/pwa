@@ -26,11 +26,11 @@ import {
   ProductInfo,
   ProductPriceWrapper,
   ProductWrapper,
-  ImageContent,
-  RibbonWrapper
+  ImageContent
 } from './styles'
 
 import EmptyDataBlock from 'components/Shared/EmptyDataBlock'
+import RibbonWrapper from 'components/Shared/RibbonWrapper'
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
 
 import ParagraphImage from 'images/test-images/short-paragraph.png'
@@ -98,12 +98,7 @@ function ProductView ({
 
     const togglePromoTag = () => {
       return (
-        <RibbonWrapper>
-          <div className='ribbon-tag background__gold'>
-            <Label as='b' className='color__white padding__none text__weight--500' basic size='small'>20%</Label>
-            <Label as='span' className='color__white padding__none text__weight--500' basic size='mini'>OFF</Label>
-          </div>
-        </RibbonWrapper>
+        <RibbonWrapper />
       )
     }
 

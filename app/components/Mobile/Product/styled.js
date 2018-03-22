@@ -45,7 +45,6 @@ export const ProductWrapper = styled(AnimateDiv)`
   }
 `
 export const ProductImageSlider = styled.div`
-
   img {
     width: 60%;
   }
@@ -58,7 +57,7 @@ export const ProductImageSlider = styled.div`
 `
 
 export const ProductMainContent = styled(AnimateDiv)`
-  margin: 20px 0;
+  margin: 10px 0;
   text-align: center;
 
   @media (min-width: 768px) {

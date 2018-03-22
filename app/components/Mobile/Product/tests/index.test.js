@@ -125,7 +125,7 @@ describe('<Product />', () => {
 
   it('renders one <ProductSlider/> component', () => {
     const ShallowedWrapper = shallow(<Product {...minProps} />)
-    expect(ShallowedWrapper.find(ProductSlider)).toHaveLength(1)
+    expect(ShallowedWrapper.find(ProductSlider)).toHaveLength(0)
   })
 
   it('renders one <ProductMainContent/> styled component', () => {
