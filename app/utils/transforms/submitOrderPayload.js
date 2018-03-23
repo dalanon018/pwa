@@ -14,7 +14,7 @@ const COD = 'COD'
 const POINTS = 'POINTS'
 const PAYMENT_METHODS = {
   COD: 'COD',
-  POINTS: 'POINTS_CASH'
+  POINTS: 'POINT_CASH'
 }
 
 // const transformOrderPayload = (payload) => ifElse(
