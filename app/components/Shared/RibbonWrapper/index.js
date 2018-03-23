@@ -7,15 +7,16 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Label } from 'semantic-ui-react'
+import PropTypes from 'prop-types'
 
 import { FormattedMessage } from 'react-intl'
 import messages from './messages'
 
 const Wrapper = styled.div`
   position: absolute;
-  z-index: 1;
+  right: ${props => props.offsetRight ? props.offsetRight + 'px' : 0};
   top: 10px;
-  right: ${props => props.rightSpace ? props.rightSpace + 'px' : 0};
+  z-index: 3;
 
   .ribbon-tag {
     align-items: middle;
@@ -40,21 +41,48 @@ const Wrapper = styled.div`
   }
 `
 
-function RibbonWrapper ({ rightSpace }) {
-  return (
-    <Wrapper rightSpace={rightSpace}>
-      <div className='ribbon-tag background__gold'>
-        <Label as='b' className='color__white padding__none text__weight--500' basic size='small'>20%</Label>
-        <Label as='span' className='color__white padding__none text__weight--500' basic size='mini'>
-          <FormattedMessage {...messages.off} />
-        </Label>
-      </div>
-    </Wrapper>
-  )
-}
+class RibbonWrapper extends React.PureComponent {
+  static PropTypes = {
+    rightSpace: PropTypes.bool
+  }
 
-RibbonWrapper.propTypes = {
+  state = {
+    offsetRight: ''
+  }
 
+  _handleMarginComputation = () => {
+    const image = document.getElementsByClassName('slick-image-handler')[0]
+    this.setState({ offsetRight: image.offsetLeft })
+  }
+
+  componentDidMount () {
+    this._handleMarginComputation()
+    window.addEventListener('resize', this._handleMarginComputation)
+  }
+
+  componentDidUpdate () {
+    this._handleMarginComputation()
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this._handleMarginComputation)
+  }
+
+  render () {
+    const { rightSpace } = this.props
+    const { offsetRight } = this.state
+
+    return (
+      <Wrapper offsetRight={rightSpace && offsetRight}>
+        <div className='ribbon-tag background__gold'>
+          <Label as='b' className='color__white padding__none text__weight--500' basic size='small'>20%</Label>
+          <Label as='span' className='color__white padding__none text__weight--500' basic size='mini'>
+            <FormattedMessage {...messages.off} />
+          </Label>
+        </div>
+      </Wrapper>
+    )
+  }
 }
 
 export default RibbonWrapper

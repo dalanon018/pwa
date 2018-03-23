@@ -70,6 +70,7 @@ const ProductItem = styled.div`
   text-align: center;
   width: 100%;
   margin-bottom: 20px;
+  margin-top: 50px;
 
   .image {
     margin: 0 auto;

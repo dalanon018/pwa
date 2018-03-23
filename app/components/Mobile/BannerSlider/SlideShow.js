@@ -23,10 +23,6 @@ class SlideShow extends React.PureComponent {
     settings: PropTypes.object.isRequired
   }
 
-  state = {
-    rightSpace: ''
-  }
-
   assignTimeOut
 
   _innerSliderRef = (c) => {
@@ -45,27 +41,11 @@ class SlideShow extends React.PureComponent {
     clearTimeout(this.assignTimeOut)
   }
 
-  _handleMarginComputation = () => {
-    const image = document.getElementById('slick-image-handler')
-
-    this.setState({ rightSpace: image.offsetLeft })
-  }
-
   componentDidMount () {
     const { props } = this.slider
     const shouldSlideNext = ifElse(gt(props.children.length), this._initNextSlide, noop)
 
-    this._handleMarginComputation()
-    window.addEventListener('resize', this._handleMarginComputation)
     shouldSlideNext(1)
-  }
-
-  componentDidUpdate () {
-    this._handleMarginComputation()
-  }
-
-  componentWillUnmount () {
-    window.removeEventListener('resize', this._handleMarginComputation)
   }
 
   render () {
@@ -84,8 +64,8 @@ class SlideShow extends React.PureComponent {
                 {
                   (typeof item === 'string'
                   ? <div className='position__relative'>
-                    <RibbonWrapper rightSpace={this.state.rightSpace} />
-                    <Image id='slick-image-handler' alt='CLiQQ' src={item} />
+                    <RibbonWrapper rightSpace />
+                    <Image className='slick-image-handler' alt='CLiQQ' src={item} />
                   </div>
                   : '')
                 }
