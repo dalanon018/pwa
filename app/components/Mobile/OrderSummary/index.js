@@ -29,6 +29,7 @@ import NextIcon from 'images/icons/goto-icon.svg'
 import ListCollapse from 'components/Shared/ListCollapse'
 import Modal from 'components/Shared/PromptModal'
 import RangeSlider from 'components/Shared/RangeSlider'
+import RibbonWrapper from 'components/Shared/RibbonWrapper'
 
 import { LoadingStateImage } from 'components/Shared/LoadingBlock'
 
@@ -266,135 +267,144 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
     return (
       <ProductReviewWrapper>
-        { productLoader || brandLogo }
-        <LoadingStateImage loading={productLoader} center>
-          <ProductItem>
-            <Image alt='CLiQQ' src={this._updateParamsImages(orderedProduct.get('image'))} />
-            {
-              orderedProduct.get('brand')
-              ? <Label className='no-margin-bottom color__grey' as='p' basic size='large'>{orderedProduct.getIn(['brand', 'name'])}</Label>
-              : null
-            }
-            <Label as='p' basic size='big'>{orderedProduct.get('title')}</Label>
-          </ProductItem>
-        </LoadingStateImage>
-        <ListCollapse title={
-          <Label as='p' className='margin__none color__grey text__weight--500' size='large' >
-            <FormattedMessage {...messages.viewDetails} />
-          </Label>
-        }>
-          <DetailsWrapper>
-            <Label className='padding__none text__weight--500' as='span' basic size='medium'>
-              <FormattedMessage {...messages.productDetailsTitle} />
+        <div className='background__white box__shadow--primary padding__bottom--20'>
+          { productLoader || brandLogo }
+          <LoadingStateImage loading={productLoader} center>
+            <ProductItem>
+              <div className='padding__vertical--20'>
+                <div className='position__relative'>
+                  <RibbonWrapper rightSpace />
+                  <Image className='slick-image-handler' alt='CLiQQ' src={this._updateParamsImages(orderedProduct.get('image'))} />
+                </div>
+              </div>
+              {
+                orderedProduct.get('brand')
+                ? <Label className='no-margin-bottom color__grey margin__none' as='p' basic size='large'>{orderedProduct.getIn(['brand', 'name'])}</Label>
+                : null
+              }
+              <Label className='padding__horizontal--15' as='p' basic size='big'>{orderedProduct.get('title')}</Label>
+            </ProductItem>
+          </LoadingStateImage>
+          <ListCollapse title={
+            <Label as='p' className='margin__none color__grey text__weight--500' size='large' >
+              <FormattedMessage {...messages.viewDetails} />
             </Label>
-            <div className='margin__bottom-positive--10' dangerouslySetInnerHTML={{__html: orderedProduct.get('details')}} />
-            <div className='sub-title color__secondary'>
-              <FormattedMessage {...messages.productDeliveryTitle} />
-            </div>
-            <div dangerouslySetInnerHTML={{__html: orderedProduct.get('deliveryPromiseMessage')}} />
-          </DetailsWrapper>
-        </ListCollapse>
-        <CustomGrid>
-          <Grid padded>
-            <Grid.Row>
-              <MethodTitle>
-                <Label as='p' className='color__grey text__weight--500' size='large' >
-                  <FormattedMessage {...messages.methodPayment} />
-                </Label>
-                <Label as='p' className='margin__none text__weight--400' size='medium'>
-                  <FormattedMessage {...messages.pointsTip} />
-                </Label>
-              </MethodTitle>
-            </Grid.Row>
-            <Grid.Row>
-              <SelectMethodWrapper checkHeight={orderedProduct.get('discountPrice') !== 0}>
-                <Form>
-                  <Form.Field>
-                    <ShowCodComponent
-                      radio
-                      isBlackListed={isBlackListed}
-                      name='cod'
-                      value='COD'
-                      label={codLabel}
-                      checked={modePayment === 'COD'}
-                      onChange={_handleChange}
-                      onClick={_handleToBottom}
-                    />
-                    <StepWrapper innerRef={_stepWrapperRef} className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={storeLocatorVisibility}>
-                      <Label as='p' className='color__grey text__weight--500' size='large' >
-                        <FormattedMessage {...messages.chooseStore} />
-                      </Label>
-                      <LocationButton id='scrollToAnimate' onClick={_handleRecentStore} className='color__secondary border__two--light-grey' fluid nextIcon={NextIcon} locationIcon={LocationIcon}>
-                        {
-                          store && isEmpty(store)
-                          ? <span className='margin__left-positive--20'>
-                            <Label as='span' className='text__weight--500' size='large' >
-                              <FormattedMessage {...messages.recentlyViewedStore} />
-                            </Label>
-                          </span>
-                          : <span className='margin__left-positive--20'>
-                            <Label as='span' className='text__weight--500' size='large' >
-                              {store.id} {store.name}
-                            </Label>
-                          </span>
-                        }
-                      </LocationButton>
-                      <Label as='p' className='margin__none text__weight--400 margin__top-positive--10' size='medium'>
-                        <FormattedMessage
-                          {...messages.findStore}
-                          values={{storeLocator: (
-                            <span className='color__primary' onClick={_handleStoreLocator}>
-                              <FormattedMessage
-                                {...messages.storeLocator}
-                              />
-                            </span>
-                          )}}
-                        />
-                      </Label>
-                    </StepWrapper>
-                    <Checkbox
-                      radio
-                      className='margin__vertical--10'
-                      name='cash-prepaid'
-                      value='CASH'
-                      label={cashLabel}
-                      checked={modePayment === 'CASH'}
-                      onChange={_handleChange}
-                    />
-                    {
-                      orderedProduct.get('points') && <Checkbox
+          }>
+            <DetailsWrapper>
+              <Label className='padding__none text__weight--500' as='span' basic size='medium'>
+                <FormattedMessage {...messages.productDetailsTitle} />
+              </Label>
+              <div className='margin__bottom-positive--10' dangerouslySetInnerHTML={{__html: orderedProduct.get('details')}} />
+              <div className='sub-title color__secondary'>
+                <FormattedMessage {...messages.productDeliveryTitle} />
+              </div>
+              <div dangerouslySetInnerHTML={{__html: orderedProduct.get('deliveryPromiseMessage')}} />
+            </DetailsWrapper>
+          </ListCollapse>
+        </div>
+        <div className='background__white box__shadow--primary margin__top-positive--10'>
+          <CustomGrid>
+            <Grid padded>
+              <Grid.Row>
+                <MethodTitle>
+                  <Label as='p' className='color__grey text__weight--500' size='large' >
+                    <FormattedMessage {...messages.methodPayment} />
+                  </Label>
+                  <Label as='p' className='margin__none text__weight--400' size='medium'>
+                    <FormattedMessage {...messages.pointsTip} />
+                  </Label>
+                </MethodTitle>
+              </Grid.Row>
+              <Grid.Row>
+                <SelectMethodWrapper checkHeight={orderedProduct.get('discountPrice') !== 0}>
+                  <Form>
+                    <Form.Field>
+                      <ShowCodComponent
                         radio
-                        disabled={isDisabledPointsOptions}
-                        className='margin__bottom-positive--20'
-                        name='points'
-                        value='POINTS'
-                        label={pointsLabel}
-                        checked={modePayment === 'POINTS'}
+                        isBlackListed={isBlackListed}
+                        name='cod'
+                        value='COD'
+                        label={codLabel}
+                        checked={modePayment === 'COD'}
+                        onChange={_handleChange}
+                        onClick={_handleToBottom}
+                      />
+                      <StepWrapper innerRef={_stepWrapperRef} className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={storeLocatorVisibility}>
+                        <Label as='p' className='color__grey text__weight--500' size='large' >
+                          <FormattedMessage {...messages.chooseStore} />
+                        </Label>
+                        <LocationButton id='scrollToAnimate' onClick={_handleRecentStore} className='color__secondary border__two--light-grey' fluid nextIcon={NextIcon} locationIcon={LocationIcon}>
+                          {
+                            store && isEmpty(store)
+                            ? <span className='margin__left-positive--20'>
+                              <Label as='span' className='text__weight--500' size='large' >
+                                <FormattedMessage {...messages.recentlyViewedStore} />
+                              </Label>
+                            </span>
+                            : <span className='margin__left-positive--20'>
+                              <Label as='span' className='text__weight--500' size='large' >
+                                {store.id} {store.name}
+                              </Label>
+                            </span>
+                          }
+                        </LocationButton>
+                        <Label as='p' className='margin__none text__weight--400 margin__top-positive--10' size='medium'>
+                          <FormattedMessage
+                            {...messages.findStore}
+                            values={{storeLocator: (
+                              <span className='color__primary' onClick={_handleStoreLocator}>
+                                <FormattedMessage
+                                  {...messages.storeLocator}
+                                />
+                              </span>
+                            )}}
+                          />
+                        </Label>
+                      </StepWrapper>
+                      <Checkbox
+                        radio
+                        className='margin__vertical--10'
+                        name='cash-prepaid'
+                        value='CASH'
+                        label={cashLabel}
+                        checked={modePayment === 'CASH'}
                         onChange={_handleChange}
                       />
-                    }
-                    <StepWrapper className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={pointsModifierVisibility}>
-                      <Label as='p' className='color__grey text__weight--500' size='large' >
-                        <FormattedMessage {...messages.choosePointsTitle} />
-                      </Label>
-                      <Label as='p' className='margin__none text__weight--400' size='medium'>
-                        <FormattedMessage {...messages.currentPoints} />
-                        <Image src={PlainCliqqPlain} className='cliqq-plain-icon' alt='CLiQQ' />
-                        { subtract(currentPoints, usePoints) }
-                      </Label>
-                      <RangeSlider
-                        usePoints={usePoints}
-                        maxPoints={this._computeTotalPointsPrice()}
-                        pointsModifier={_updateUsePoints}
-                        currentPoints={currentPoints}
-                      />
-                    </StepWrapper>
-                  </Form.Field>
-                </Form>
-              </SelectMethodWrapper>
-            </Grid.Row>
-          </Grid>
-        </CustomGrid>
+                      {
+                        orderedProduct.get('points') && <Checkbox
+                          radio
+                          disabled={isDisabledPointsOptions}
+                          className='margin__bottom-positive--20'
+                          name='points'
+                          value='POINTS'
+                          label={pointsLabel}
+                          checked={modePayment === 'POINTS'}
+                          onChange={_handleChange}
+                        />
+                      }
+                      <StepWrapper className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={pointsModifierVisibility}>
+                        <Label as='p' className='color__grey text__weight--500' size='large' >
+                          <FormattedMessage {...messages.choosePointsTitle} />
+                        </Label>
+                        <Label as='p' className='margin__none text__weight--400' size='medium'>
+                          <FormattedMessage {...messages.currentPoints} />
+                          <Image src={PlainCliqqPlain} className='cliqq-plain-icon' alt='CLiQQ' />
+                          { subtract(currentPoints, usePoints) }
+                        </Label>
+                        <RangeSlider
+                          usePoints={usePoints}
+                          maxPoints={this._computeTotalPointsPrice()}
+                          pointsModifier={_updateUsePoints}
+                          currentPoints={currentPoints}
+                        />
+                      </StepWrapper>
+                    </Form.Field>
+                  </Form>
+                </SelectMethodWrapper>
+              </Grid.Row>
+            </Grid>
+          </CustomGrid>
+        </div>
 
         <ButtonContainer>
           <Button onClick={_handleProceed} primary fluid loading={orderRequesting} className='text__weight--700'>

@@ -187,7 +187,7 @@ const Product = ({
               <Grid.Column>
                 {
                 product.get('points') &&
-                <PointsInfo className='text__align--center'>
+                <PointsInfo>
                   <Image src={CliQQPlainLogo} alt='CLiQQ' />
                   <Label as='span' basic size='medium'>
                     <FormattedMessage

@@ -211,14 +211,15 @@ export const SizesButton = styled.div`
 `
 
 export const PointsInfo = styled.div`
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
   margin-top: 10px;
 
   img{
-    width: 16px;
     margin-right: 10px;
+    margin-top: 2px;
+    width: 16px;
   }
 `
