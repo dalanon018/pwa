@@ -17,12 +17,6 @@ const PAYMENT_METHODS = {
   POINTS: 'POINT_CASH'
 }
 
-// const transformOrderPayload = (payload) => ifElse(
-//   equals(COD),
-//   assoc('paymentType', __, payload),
-//   () => dissoc('deliveryLocationId', payload)
-// )
-
 const removeProp = (key) => dissoc(key)
 const addPaymentType = (payload) => assoc('paymentType', __, payload)
 
