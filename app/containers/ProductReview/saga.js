@@ -11,6 +11,7 @@ import { getItem, setItem, removeItem } from 'utils/localStorage'
 import { fnSearchParams } from 'utils/http'
 import { Pad } from 'utils/string'
 import { transformSubmitOrderPayload } from 'utils/transforms'
+import { calculatePricePoints } from 'utils/product'
 
 import {
   GET_ORDER_PRODUCT,
@@ -203,18 +204,25 @@ export function * requestOrderToken (mobile) {
 }
 
 export function * submitOrder (args) {
-  const { payload: { orderedProduct, mobileNumber, modePayment, store } } = args
+  const { payload: { orderedProduct, mobileNumber, modePayment, store, usePoints } } = args
   const completeMobile = `0${mobileNumber}`
-  const postPayload = transformSubmitOrderPayload({
-    cliqqCode: orderedProduct.get('cliqqCode').first(),
-    quantity: 1,
-    deviceOrigin: 'PWA',
-    mobileNumber: completeMobile,
-    deliveryLocationId: Pad(store.id)
-  })
 
   try {
     const token = yield requestOrderToken(mobileNumber)
+    const postPayload = transformSubmitOrderPayload({
+      cliqqCode: orderedProduct.get('cliqqCode').first(),
+      multiplier: orderedProduct.getIn(['points', 'multiplier']),
+      amount: calculatePricePoints({
+        product: orderedProduct,
+        usePoints
+      }),
+      quantity: 1,
+      deviceOrigin: 'PWA',
+      mobileNumber: completeMobile,
+      deliveryLocationId: Pad(store.id),
+      loyaltyToken: token,
+      usePoints
+    })
     const order = yield call(request, `${API_BASE_URL}/orders`, {
       method: 'POST',
       body: JSON.stringify(postPayload(modePayment)),
