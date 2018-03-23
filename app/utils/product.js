@@ -24,7 +24,7 @@ export const computeTotalPointsPrice = (product) => {
 
 export const calculatePricePoints = ({
   product,
-  usePoints,
+  usePoints
 }) => {
   const pointsAmount = computeTotalPointsPrice(product)
   const pointsMultiplier = product.getIn(['points', 'multiplier'])

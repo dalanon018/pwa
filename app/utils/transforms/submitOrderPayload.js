@@ -6,7 +6,6 @@ import {
   cond,
   dissoc,
   equals,
-  ifElse,
   prop,
   partialRight
 } from 'ramda'
@@ -43,7 +42,7 @@ const transformOrderPayload = (payload) => cond([
     compose(
       addPaymentType(payload),
       partialRight(prop, [PAYMENT_METHODS])
-    ),
+    )
   )],
   [equals(POINTS), compose(
     removeProp('deliveryLocationId'),
@@ -52,7 +51,7 @@ const transformOrderPayload = (payload) => cond([
     compose(
       addPaymentType(payload),
       partialRight(prop, [PAYMENT_METHODS])
-    ),
+    )
   )],
   [T, () => compose(
     removeProp('amount'),

@@ -16,7 +16,6 @@ import {
   divide,
   identity,
   ifElse,
-  multiply,
   subtract,
   path,
   prop,

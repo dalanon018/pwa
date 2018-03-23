@@ -221,7 +221,7 @@ export function * submitOrder (args) {
       mobileNumber: completeMobile,
       deliveryLocationId: Pad(store.id),
       loyaltyToken: token,
-      usePoints,
+      usePoints
     })
     const order = yield call(request, `${API_BASE_URL}/orders`, {
       method: 'POST',
