@@ -205,24 +205,24 @@ export function * requestOrderToken (mobile) {
 
 export function * submitOrder (args) {
   const { payload: { orderedProduct, mobileNumber, modePayment, store, usePoints } } = args
+  const loyaltyToken = yield call(getItem, LOYALTY_TOKEN_KEY)
   const completeMobile = `0${mobileNumber}`
-
+  const postPayload = transformSubmitOrderPayload({
+    cliqqCode: orderedProduct.get('cliqqCode').first(),
+    multiplier: orderedProduct.getIn(['points', 'multiplier']),
+    amount: calculatePricePoints({
+      product: orderedProduct,
+      usePoints
+    }),
+    quantity: 1,
+    deviceOrigin: 'PWA',
+    mobileNumber: completeMobile,
+    deliveryLocationId: Pad(store.id),
+    loyaltyToken: loyaltyToken.token,
+    usePoints
+  })
   try {
     const token = yield requestOrderToken(mobileNumber)
-    const postPayload = transformSubmitOrderPayload({
-      cliqqCode: orderedProduct.get('cliqqCode').first(),
-      multiplier: orderedProduct.getIn(['points', 'multiplier']),
-      amount: calculatePricePoints({
-        product: orderedProduct,
-        usePoints
-      }),
-      quantity: 1,
-      deviceOrigin: 'PWA',
-      mobileNumber: completeMobile,
-      deliveryLocationId: Pad(store.id),
-      loyaltyToken: token,
-      usePoints
-    })
     const order = yield call(request, `${API_BASE_URL}/orders`, {
       method: 'POST',
       body: JSON.stringify(postPayload(modePayment)),
@@ -283,13 +283,14 @@ export function * getCurrentPoints () {
   // we will only get the last mobileNumber used
   const mobile = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
 
-  const req = yield call(request, `${API_BASE_URL}/current-points/0${mobile}`, {
+  const req = yield call(request, `${API_BASE_URL}/wallet-transactions/0${mobile}`, {
     method: 'GET',
     token: token.access_token
   })
-  // @TODO: we need to know the structure wether we need to create a transformation layer for this.
   if (!isEmpty(req)) {
-    yield put(setCurrentPointsAction(req))
+    const currentPoints = propOr(0, 'currentPoints')
+    const points = parseInt(currentPoints(req))
+    yield put(setCurrentPointsAction({ points }))
   } else {
     yield put(setCurrentPointsAction({}))
   }

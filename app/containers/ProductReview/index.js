@@ -284,7 +284,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   componentDidMount () {
-    const { location: { search }, getOrderProduct, getMobileNumber, getStore, getBlackList, setRouteName } = this.props
+    const { location: { search }, getCurrentPoints, getOrderProduct, getMobileNumber, getStore, getBlackList, setRouteName } = this.props
 
     const query = fnQueryObject(search)
     const selectQuery = compose(
@@ -303,6 +303,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
     setRouteName(PRODUCTREVIEW_NAME)
     getOrderProduct()
+    getCurrentPoints()
     getMobileNumber()
     getBlackList()
     getStore()
@@ -358,7 +359,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         mobileView={
           <MobileOrderSummary
             isDisabledPointsOptions={this._isDisabledPointsOptions()}
-            currentPoints={currentPoints.get('points')}
+            currentPoints={currentPoints.get('points') || 0}
             usePoints={usePoints}
             ShowCodComponent={ShowCodComponent}
             _handleChange={this._handleChange}
