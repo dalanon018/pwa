@@ -38,6 +38,7 @@ import LocationIcon from 'images/icons/location-icon.svg'
 
 import { paramsImgix } from 'utils/image-stock'
 import { calculateEarnPoints } from 'utils/calculation'
+import { toggleOrigDiscountPrice, computeTotalPointsPrice, calculatePricePoints } from 'utils/product'
 
 import messages from './messages'
 import {
@@ -87,9 +88,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
   _toggleOrigDiscountPrice = () => {
     const { orderedProduct } = this.props
-    const showPrice = orderedProduct.get('discountPrice') || orderedProduct.get('price')
-
-    return showPrice ? showPrice.toLocaleString() : 0
+    return toggleOrigDiscountPrice(orderedProduct)
   }
 
   _basePointsRequirementsUse = () => {
@@ -98,8 +97,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
   _computeTotalPointsPrice = () => {
     const { orderedProduct } = this.props
-    const multiplier = orderedProduct.getIn(['points', 'multiplier'])
-    return Math.ceil(multiply(this._toggleOrigDiscountPrice(), multiplier))
+    return computeTotalPointsPrice(orderedProduct)
   }
 
   _isCurrentPointsHalfPricePoints = () => {
@@ -113,12 +111,10 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       // we dont need to recompute since we disable this one.
       return this._toggleOrigDiscountPrice()
     } else {
-      const calculate = Math.floor(divide(
-        subtract(this._computeTotalPointsPrice(), usePoints),
-        orderedProduct.getIn(['points', 'multiplier'])
-      ))
-      // make sure not NAN
-      return calculate || 0
+      return calculatePricePoints({
+        product: orderedProduct,
+        usePoints
+      })
     }
   }
 
