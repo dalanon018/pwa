@@ -52,9 +52,6 @@ class RibbonWrapper extends React.PureComponent {
 
   _handleMarginComputation = () => {
     const image = document.getElementsByClassName('slick-image-handler')[0]
-
-    // console.log('image', image, document.getElementsByClassName('slick-image-handler'), image.classList.contains('slick-image-handler'))
-
     this.setState({ offsetRight: image.offsetLeft })
   }
 
