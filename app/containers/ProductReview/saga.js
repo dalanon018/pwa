@@ -221,7 +221,6 @@ export function * submitOrder (args) {
     loyaltyToken: loyaltyToken.token,
     usePoints
   })
-  console.log(postPayload(modePayment))
   try {
     const token = yield requestOrderToken(mobileNumber)
     const order = yield call(request, `${API_BASE_URL}/orders`, {
