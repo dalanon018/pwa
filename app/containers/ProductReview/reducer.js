@@ -35,7 +35,7 @@ const initialState = fromJS({
   mobileNumber: null,
   mobileLoading: false,
   storeLocation: {},
-  currentPoints: { points: 200 }, // temporary
+  currentPoints: {},
   currentPointsLoading: false,
   isBlackListed: true
 })
