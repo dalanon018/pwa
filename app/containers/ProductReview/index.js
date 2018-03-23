@@ -199,7 +199,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
   _handleProceed () {
     const { mobileNumber, orderedProduct, submitOrder } = this.props
-    const { modePayment, store } = this.state
+    const { modePayment, store, usePoints } = this.state
     const CODPayment = (mode) => equals(this.showStoreLocator)(mode) &&
     !isEmpty(store)
     const CashPayment = equals('CASH')
@@ -217,7 +217,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         modePayment,
         orderedProduct,
         mobileNumber,
-        store
+        store,
+        usePoints
       })
     }
 
