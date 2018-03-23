@@ -283,13 +283,14 @@ export function * getCurrentPoints () {
   // we will only get the last mobileNumber used
   const mobile = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
 
-  const req = yield call(request, `${API_BASE_URL}/current-points/0${mobile}`, {
+  const req = yield call(request, `${API_BASE_URL}/wallet-transactions/0${mobile}`, {
     method: 'GET',
     token: token.access_token
   })
-  // @TODO: we need to know the structure wether we need to create a transformation layer for this.
   if (!isEmpty(req)) {
-    yield put(setCurrentPointsAction(req))
+    const currentPoints = propOr(0, 'currentPoints')
+    const points = parseInt(currentPoints(req))
+    yield put(setCurrentPointsAction({ points }))
   } else {
     yield put(setCurrentPointsAction({}))
   }
