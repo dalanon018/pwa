@@ -205,24 +205,25 @@ export function * requestOrderToken (mobile) {
 
 export function * submitOrder (args) {
   const { payload: { orderedProduct, mobileNumber, modePayment, store, usePoints } } = args
+  const loyaltyToken = yield call(getItem, LOYALTY_TOKEN_KEY)
   const completeMobile = `0${mobileNumber}`
-
+  const postPayload = transformSubmitOrderPayload({
+    cliqqCode: orderedProduct.get('cliqqCode').first(),
+    multiplier: orderedProduct.getIn(['points', 'multiplier']),
+    amount: calculatePricePoints({
+      product: orderedProduct,
+      usePoints
+    }),
+    quantity: 1,
+    deviceOrigin: 'PWA',
+    mobileNumber: completeMobile,
+    deliveryLocationId: Pad(store.id),
+    loyaltyToken: loyaltyToken.token,
+    usePoints
+  })
+  console.log(postPayload(modePayment))
   try {
     const token = yield requestOrderToken(mobileNumber)
-    const postPayload = transformSubmitOrderPayload({
-      cliqqCode: orderedProduct.get('cliqqCode').first(),
-      multiplier: orderedProduct.getIn(['points', 'multiplier']),
-      amount: calculatePricePoints({
-        product: orderedProduct,
-        usePoints
-      }),
-      quantity: 1,
-      deviceOrigin: 'PWA',
-      mobileNumber: completeMobile,
-      deliveryLocationId: Pad(store.id),
-      loyaltyToken: token,
-      usePoints
-    })
     const order = yield call(request, `${API_BASE_URL}/orders`, {
       method: 'POST',
       body: JSON.stringify(postPayload(modePayment)),
