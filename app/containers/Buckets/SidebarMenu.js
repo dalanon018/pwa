@@ -13,18 +13,20 @@ import messages from './messages'
 
 import Home from 'images/icons/drawer/home.svg'
 import Barcode from 'images/icons/drawer/activity.svg'
-// import Help from 'images/icons/drawer/help.svg'
+import Brands from 'images/icons/drawer/brands.svg'
+import Categories from 'images/icons/drawer/categories.svg'
+import Points from 'images/icons/drawer/points.svg'
 import Logout from 'images/icons/drawer/signout.svg'
 import Close from 'images/icons/drawer/close.svg'
 
 const SidebarContainer = styled.div`
   height: 100vh;
-  left: 0;
+  left: ${({toggle}) => toggle ? 0 : '-100%'};
   overflow: ${({toggle}) => toggle ? 'auto' : 'hidden'};
   position: fixed;
   top: 0;
-  transition: width 0.3s;
-  width: ${({toggle}) => toggle ? '100%' : '0'};
+  transition: ease 0.3s;
+  width: 100%;
   z-index: 99;
   -webkit-overflow-scrolling: touch;
 `
@@ -39,7 +41,7 @@ const SidebarWrapper = styled.div`
 const ListWrapper = styled(List.Item)`
   padding: 25px 30px!important;
 
-  & img {
+  img {
     margin-right: 10px !important;
   }
 `
@@ -48,8 +50,8 @@ const CloseButton = styled(Image)`
   position: absolute !important;
   right: 20px;
   top: 20px;
-  height: 21px !important;
-  width: 21px !important;
+  height: 13px !important;
+  width: 13px !important;
 `
 
 class SidebarMenu extends React.PureComponent {
@@ -60,18 +62,6 @@ class SidebarMenu extends React.PureComponent {
     toggleAction: PropTypes.func.isRequired,
     isSignIn: PropTypes.bool.isRequired,
     signOut: PropTypes.func.isRequired
-  }
-
-  _handletoHome = () => {
-    const { changeRoute } = this.props
-
-    changeRoute('/')
-  }
-
-  _handletoPurchase = () => {
-    const { changeRoute } = this.props
-
-    changeRoute('/purchases')
   }
 
   _handleSignOut = () => {
@@ -87,9 +77,9 @@ class SidebarMenu extends React.PureComponent {
       identity,
       () => (
         <ListWrapper onClick={this._handleSignOut}>
-          <Image alt='help' size='mini' src={Logout} />
+          <Image alt='CLiQQ' size='mini' src={Logout} />
           <List.Content>
-            <Label as='p' className='margin__none color__secondary' size='huge'>
+            <Label as='p' className='margin__none' size='huge'>
               <FormattedMessage {...messages.menuLogout} />
             </Label>
           </List.Content>
@@ -103,26 +93,50 @@ class SidebarMenu extends React.PureComponent {
 
   render () {
     const {
-      toggleSidebar, toggleAction
+      toggleSidebar, toggleAction, changeRoute
     } = this.props
     return (
       <SidebarContainer className='background__black-transparent' toggle={toggleSidebar}>
         <SidebarWrapper className='background__white'>
           <CloseButton onClick={toggleAction} alt='close' size='mini' src={Close} />
-          <List divided verticalAlign='middle' selection>
-            <ListWrapper onClick={this._handletoHome}>
-              <Image alt='home' size='mini' src={Home} />
+          <List divided verticalAlign='middle' selection className='margin__none'>
+            <ListWrapper onClick={() => changeRoute('/')}>
+              <Image alt='CLiQQ' size='mini' src={Home} />
               <List.Content>
-                <Label as='p' className='margin__none color__secondary' size='huge'>
+                <Label as='p' className='margin__none' size='huge'>
                   <FormattedMessage {...messages.menuHome} />
                 </Label>
               </List.Content>
             </ListWrapper>
-            <ListWrapper onClick={this._handletoPurchase}>
-              <Image alt='activities' size='mini' src={Barcode} />
+            <ListWrapper onClick={() => changeRoute('/purchases')}>
+              <Image alt='CLiQQ' size='mini' src={Barcode} />
               <List.Content>
-                <Label as='p' className='margin__none color__secondary' size='huge'>
+                <Label as='p' className='margin__none' size='huge'>
                   <FormattedMessage {...messages.menuActivity} />
+                </Label>
+              </List.Content>
+            </ListWrapper>
+            <ListWrapper onClick={() => changeRoute('/wallet')}>
+              <Image alt='CLiQQ' size='mini' src={Points} />
+              <List.Content>
+                <Label as='p' className='margin__none' size='huge'>
+                  <FormattedMessage {...messages.menuPoints} />
+                </Label>
+              </List.Content>
+            </ListWrapper>
+            <ListWrapper onClick={() => changeRoute('/categories')}>
+              <Image alt='CLiQQ' size='mini' src={Categories} />
+              <List.Content>
+                <Label as='p' className='margin__none' size='huge'>
+                  <FormattedMessage {...messages.menuCategories} />
+                </Label>
+              </List.Content>
+            </ListWrapper>
+            <ListWrapper onClick={() => changeRoute('/brands')}>
+              <Image alt='CLiQQ' size='mini' src={Brands} />
+              <List.Content>
+                <Label as='p' className='margin__none' size='huge'>
+                  <FormattedMessage {...messages.menuBrands} />
                 </Label>
               </List.Content>
             </ListWrapper>
@@ -130,7 +144,7 @@ class SidebarMenu extends React.PureComponent {
               <ListWrapper>
                 <Image alt='help' size='mini' src={Help} />
                 <List.Content>
-                  <Label as='p' className='margin__none color__secondary' size='huge'>
+                  <Label as='p' className='margin__none' size='huge'>
                     <FormattedMessage {...messages.menuHelp} />
                   </Label>
                 </List.Content>
