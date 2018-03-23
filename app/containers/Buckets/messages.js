@@ -14,6 +14,10 @@ export default defineMessages({
     id: 'app.containers.Bucket.menuActivity',
     defaultMessage: 'My Activity'
   },
+  menuPoints: {
+    id: 'app.containers.Bucket.menuPoints',
+    defaultMessage: 'Points Balance'
+  },
   menuCategories: {
     id: 'app.containers.Bucket.menuCategories',
     defaultMessage: 'Categories'
