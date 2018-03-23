@@ -202,7 +202,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     const { modePayment, store, usePoints } = this.state
     const CODPayment = (mode) => equals(this.showStoreLocator)(mode) &&
     !isEmpty(store)
-    const CashPayment = equals('CASH')
+    const CashPayment = either(equals('CASH'), equals('POINTS'))
     const submissionOrder = () => {
       FbEventTracking('Purchase', {
         currency: 'PHP',
