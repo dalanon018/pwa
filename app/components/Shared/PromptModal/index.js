@@ -94,13 +94,13 @@ function PromptModal ({
   const handleColor = () => {
     switch (name) {
       case 'checkmark':
-        color = '#8DC640'
+        color = '#229D90'
         break
       case 'remove':
         color = '#EB1C24'
         break
       case 'warning':
-        color = '#F58322'
+        color = '#FF4813'
         break
     }
   }
@@ -127,7 +127,7 @@ function PromptModal ({
                 <CustomLabel className='text__roboto--light' as='p' basic size='medium'>
                   <FormattedMessage {...messages.confirm18} />
                 </CustomLabel>
-                <Button primary fluid onClick={letIn}>
+                <Button className='text__weight--700' primary fluid onClick={letIn}>
                   <FormattedMessage {...messages.im18} />
                 </Button>
                 <CustomLabel className='text__roboto--light plain-button' as='p' basic size='medium' onClick={close}>
@@ -144,16 +144,16 @@ function PromptModal ({
                 <Icon name={name} className='custom-icon' />
               </IconWrapper>
               <TitleHead>
-                <Label as='span' basic size='large'>
+                <Label as='span' basic size='large' className='text__weight--700 margin__top-positive--10'>
                   {title}
                 </Label>
               </TitleHead>
               <Content>
-                <CustomLabel className='text__roboto--light' as='p' basic size='medium'>
+                <CustomLabel className='margin__bottom-positive--20' as='p' basic size='small'>
                   {content}
                 </CustomLabel>
                 <PrimaryButtonWrapper>
-                  <Button primary fluid onClick={close}>
+                  <Button className='text__weight--700' primary fluid onClick={close}>
                     <FormattedMessage {...messages.promptOk} />
                   </Button>
                 </PrimaryButtonWrapper>

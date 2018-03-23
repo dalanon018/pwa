@@ -8,7 +8,7 @@ import { defineMessages } from 'react-intl'
 export default defineMessages({
   promptOk: {
     id: 'app.components.PromptModal.promptOk',
-    defaultMessage: 'Got it !'
+    defaultMessage: 'GOT IT!'
   },
   rated18: {
     id: 'app.components.PromptModal.rated18',
@@ -24,6 +24,6 @@ export default defineMessages({
   },
   im18: {
     id: 'app.components.PromptModal.im18',
-    defaultMessage: 'I am over 18'
+    defaultMessage: 'I AM OVER 18'
   }
 })
