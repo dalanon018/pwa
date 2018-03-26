@@ -281,7 +281,6 @@ export default class MainMenu extends PureComponent {
 
   _handleQuickLinks (a, b, c) {
     const filtered = [a, b, c].filter(el => el)
-    console.log('filtered', filtered, filtered.length > 1)
 
     if (filtered.length > 1) {
       this.setState({toggleSpace: true})
