@@ -18,7 +18,7 @@ describe('<ProductView />', () => {
     const renderedComponent = shallow(
       <ProductView {...minProps} />
     )
-    expect(renderedComponent.find('div').length).toEqual(0)
+    expect(renderedComponent.find('div').length).toEqual(1)
   })
 
   it('Expect to have unit tests specified', () => {
