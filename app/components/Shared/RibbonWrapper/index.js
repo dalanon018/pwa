@@ -46,6 +46,7 @@ class RibbonWrapper extends React.PureComponent {
     rightSpace: PropTypes.bool
   }
 
+  // TODO: Ask chino why named offsetRight where he match is offsetLeft?
   state = {
     offsetRight: ''
   }
