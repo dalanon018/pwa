@@ -80,10 +80,10 @@ const RightWrapper = styled.div`
 `
 
 const ActivitiesIcon = styled.div`
-  margin-left: ${props => props.marginLeft ? 0 : 20}px;
+  margin: ${props => props.marginLeft ? '0 2px 0' : '0 0 0 20px'};
 
   @media screen and (max-width: 767px) {
-    margin-left: 9px !important;
+    // margin-left: 9px !important;
   }
   @media screen and (max-width: 320px) {
     margin-left: 4px !important;
@@ -364,7 +364,7 @@ export default class MainMenu extends PureComponent {
               <Grid.Column
                 width={this._handleColumnSize(currentRoute, 'rightSide')}
                 verticalAlign='middle'>
-                <RightWrapper toggleSpace={toggleSpace}>
+                <RightWrapper toggleSpace={toggleSpace} marginLeft={homeRoute}>
                   { SearchToggle(showSearchIcon) }
                   { PointsToggle(showPointsIcon) }
                   { ActivitiesToggle(showActivityIcon) }

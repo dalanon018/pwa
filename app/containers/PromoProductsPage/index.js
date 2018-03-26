@@ -336,7 +336,7 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
     // we set this as text so it doesnt look
     this.props.setPageTitle('..')
     this.props.setShowSearchIcon(true)
-    this.props.setShowPointsIcon(true)
+    this.props.setShowPointsIcon(false)
     this.props.setShowActivityIcon(true)
   }
 
