@@ -12,6 +12,8 @@ import {
 
   SET_SHOW_SEARCH_ICON,
 
+  SET_SHOW_POINTS_ICON,
+
   SET_SHOW_ACTIVITY_ICON,
 
   SET_MOBILE_NUMBERS,
@@ -54,6 +56,7 @@ const initialState = fromJS({
   pageTitle: null,
   headerMenuFullScreen: false,
   searchIconShow: false,
+  pointsIconShow: false,
   activityIconShow: false,
   isRegisteredPush: false,
   loyaltyToken: null,
@@ -74,6 +77,9 @@ function bucketsReducer (state = initialState, action) {
 
     case SET_SHOW_SEARCH_ICON:
       return state.set('searchIconShow', action.payload)
+
+    case SET_SHOW_POINTS_ICON:
+      return state.set('pointsIconShow', action.payload)
 
     case SET_SHOW_ACTIVITY_ICON:
       return state.set('activityIconShow', action.payload)

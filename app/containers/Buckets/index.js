@@ -41,6 +41,7 @@ import {
   selectRouteName,
   selectFullScreenHeader,
   selectShowSearchIcon,
+  selectShowPointsIcon,
   selectShowActivityIcon,
   selectIsRegisteredPush,
   selectLoyaltyToken
@@ -269,7 +270,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   _displayHeader = () => {
-    const { pageTitle, showSearchIcon, showActivityIcon, changeRoute, location: { pathname }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen, productCategories, brands, loyaltyToken, removeLoyaltyToken } = this.props
+    const { pageTitle, showSearchIcon, showPointsIcon, showActivityIcon, changeRoute, location: { pathname }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen, productCategories, brands, loyaltyToken, removeLoyaltyToken } = this.props
     /**
      * we have to identify if we should display backbutton
      */
@@ -330,6 +331,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
               searchProduct={searchProduct}
               showActivityIcon={showActivityIcon}
               showSearchIcon={showSearchIcon}
+              showPointsIcon={showPointsIcon}
             />
           }
           desktopView={
@@ -546,6 +548,7 @@ const mapStateToProps = createStructuredSelector({
   pageTitle: selectPageTitle(),
   headerMenuFullScreen: selectFullScreenHeader(),
   showSearchIcon: selectShowSearchIcon(),
+  showPointsIcon: selectShowPointsIcon(),
   showActivityIcon: selectShowActivityIcon(),
   isRegisteredPush: selectIsRegisteredPush(),
   loyaltyToken: selectLoyaltyToken()

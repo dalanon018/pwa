@@ -25,6 +25,7 @@ describe('<Purchases />', () => {
     setPageTitle: () => {},
     setRouteName: () => {},
     setShowSearchIcon: () => {},
+    setShowPointsIcon: () => {},
     setShowActivityIcon: () => {}
   }
 

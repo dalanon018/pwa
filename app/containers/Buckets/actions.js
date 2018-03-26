@@ -13,6 +13,9 @@ import {
   GET_SHOW_SEARCH_ICON,
   SET_SHOW_SEARCH_ICON,
 
+  GET_SHOW_POINTS_ICON,
+  SET_SHOW_POINTS_ICON,
+
   GET_SHOW_ACTIVITY_ICON,
   SET_SHOW_ACTIVITY_ICON,
 
@@ -82,6 +85,19 @@ export function getShowSearchIconAction () {
 export function setShowSearchIconAction (payload) {
   return {
     type: SET_SHOW_SEARCH_ICON,
+    payload
+  }
+}
+
+export function getShowPointsIconAction () {
+  return {
+    type: GET_SHOW_POINTS_ICON
+  }
+}
+
+export function setShowPointsIconAction (payload) {
+  return {
+    type: SET_SHOW_POINTS_ICON,
     payload
   }
 }

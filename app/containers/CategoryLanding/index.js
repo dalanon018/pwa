@@ -26,7 +26,13 @@ import MobileFooter from 'components/Mobile/Footer'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 
 import { selectProductCategories } from 'containers/Buckets/selectors'
-import { setPageTitleAction, setRouteNameAction } from 'containers/Buckets/actions'
+import {
+  setPageTitleAction,
+  setRouteNameAction,
+  setShowSearchIconAction,
+  setShowPointsIconAction,
+  setShowActivityIconAction
+} from 'containers/Buckets/actions'
 import { CATEGORIES_LANDING_PAGE } from 'containers/Buckets/constants'
 
 export class CategoryLanding extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -44,9 +50,12 @@ export class CategoryLanding extends React.PureComponent { // eslint-disable-lin
   }
 
   componentDidMount () {
-    const { setPageTitle, setRouteName, intl } = this.props
+    const { setPageTitle, setRouteName, intl, setShowActivityIcon, setShowSearchIcon, setShowPointsIcon } = this.props
     setPageTitle(intl.formatMessage(messages.header))
     setRouteName(CATEGORIES_LANDING_PAGE)
+    setShowSearchIcon(true)
+    setShowPointsIcon(false)
+    setShowActivityIcon(true)
   }
 
   render () {
@@ -102,6 +111,9 @@ function mapDispatchToProps (dispatch) {
   return {
     setPageTitle: payload => dispatch(setPageTitleAction(payload)),
     setRouteName: payload => dispatch(setRouteNameAction(payload)),
+    setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
+    setShowPointsIcon: (payload) => dispatch(setShowPointsIconAction(payload)),
+    setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     changeRoute: url => dispatch(push(url)),
     dispatch
   }

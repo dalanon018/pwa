@@ -48,6 +48,7 @@ import {
   setPageTitleAction,
   setRouteNameAction,
   setShowSearchIconAction,
+  setShowPointsIconAction,
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
 import {
@@ -153,6 +154,7 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
     resetWallet: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
+    setShowPointsIcon: PropTypes.func.isRequired,
     setRouteName: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
     transactionsLoading: PropTypes.bool.isRequired,
@@ -296,13 +298,14 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
   }
 
   componentDidMount () {
-    const { setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon, intl, getMobileNumbers } = this.props
+    const { setRouteName, setPageTitle, setShowSearchIcon, setShowPointsIcon, setShowActivityIcon, intl, getMobileNumbers } = this.props
     // initial data
     this._fetchWalletTransactions(this.props)
 
     // we set this as text so it doesnt look
     setPageTitle(intl.formatMessage(messages.title))
     setShowSearchIcon(true)
+    setShowPointsIcon(false)
     setShowActivityIcon(true)
     setRouteName(WALLET_NAME)
     getMobileNumbers()
@@ -442,6 +445,7 @@ function mapDispatchToProps (dispatch) {
     setRouteName: (payload) => dispatch(setRouteNameAction(payload)),
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
+    setShowPointsIcon: (payload) => dispatch(setShowPointsIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getWallet: payload => dispatch(getWalletAction(payload)),
     getMobileNumbers: () => (dispatch(getMobileNumbersAction())),

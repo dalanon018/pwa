@@ -51,6 +51,7 @@ import {
   setPageTitleAction,
   setRouteNameAction,
   setShowSearchIconAction,
+  setShowPointsIconAction,
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
 
@@ -105,6 +106,7 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
     resetPromo: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
+    setShowPointsIcon: PropTypes.func.isRequired,
     setRouteName: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
     productsLoading: PropTypes.bool.isRequired,
@@ -334,6 +336,7 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
     // we set this as text so it doesnt look
     this.props.setPageTitle('..')
     this.props.setShowSearchIcon(true)
+    this.props.setShowPointsIcon(true)
     this.props.setShowActivityIcon(true)
   }
 
@@ -450,6 +453,7 @@ function mapDispatchToProps (dispatch) {
     setRouteName: (payload) => dispatch(setRouteNameAction(payload)),
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
+    setShowPointsIcon: (payload) => dispatch(setShowPointsIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getPromo: payload => dispatch(getPromoAction(payload)),
     resetPromo: () => dispatch(resetPromoProductsAction()),

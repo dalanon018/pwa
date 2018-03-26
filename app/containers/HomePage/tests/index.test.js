@@ -33,6 +33,7 @@ describe('<HomePage />', () => {
     },
     setPageTitle: () => {},
     setShowSearchIcon: () => {},
+    setShowPointsIcon: () => {},
     setShowActivityIcon: () => {}
   }
 

@@ -28,7 +28,8 @@ import {
   setPageTitleAction,
   setRouteNameAction,
   setShowSearchIconAction,
-  setShowActivityIconAction
+  setShowActivityIconAction,
+  setShowPointsIconAction
 } from 'containers/Buckets/actions'
 import { PURCHASES_NAME } from 'containers/Buckets/constants'
 
@@ -94,6 +95,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
     ]),
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
+    setShowPointsIcon: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
     getApiPurchases: PropTypes.func.isRequired,
     changeRoute: PropTypes.func.isRequired,
@@ -154,8 +156,9 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
 
   componentWillMount () {
     this.props.setPageTitle('My Activity')
-    this.props.setShowSearchIcon(true)
+    this.props.setShowSearchIcon(false)
     this.props.setShowActivityIcon(false)
+    this.props.setShowPointsIcon(true)
   }
 
   componentDidMount () {
@@ -218,6 +221,7 @@ function mapDispatchToProps (dispatch) {
     setRouteName: (payload) => dispatch(setRouteNameAction(payload)),
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
+    setShowPointsIcon: (payload) => dispatch(setShowPointsIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getApiPurchases: (payload) => dispatch(getApiPurchasesAction(payload)),
     getLocalPurchases: () => dispatch(getStoragePurchasesAction()),

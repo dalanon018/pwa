@@ -13,6 +13,7 @@ import { ifElse, identity, equals } from 'ramda'
 import BarcodeImage from 'images/icons/barcode-header.svg'
 import messages from './messages'
 import SearchImage from 'images/icons/search-header.svg'
+import PointsIcon from 'images/icons/points-header-icon.svg'
 import MainLogo from 'images/cliqq-logo.svg'
 
 const Wrapper = styled.div`
@@ -65,7 +66,7 @@ const ImageLogo = styled.img`
 const RightWrapper = styled.div`
   align-items: center;
   display: flex;
-  justify-content: space-between;
+  justify-content: ${props => props.toggleSpace ? 'space-between' : 'flex-end'};
 
   .mini {
     height: 18px !important;
@@ -208,6 +209,7 @@ export default class MainMenu extends PureComponent {
     pageTitle: PropTypes.string,
     headerMenuFullScreen: PropTypes.bool.isRequired,
     showSearchIcon: PropTypes.bool.isRequired,
+    showPointsIcon: PropTypes.bool.isRequired,
     showActivityIcon: PropTypes.bool.isRequired,
     hideBackButton: PropTypes.bool.isRequired,
     leftButtonAction: PropTypes.func.isRequired,
@@ -216,7 +218,8 @@ export default class MainMenu extends PureComponent {
 
   state = {
     activeItem: null,
-    windowHeightOffset: 0
+    windowHeightOffset: 0,
+    toggleSpace: false
   }
 
   _handleColumnSize = (currentRoute, place) => {
@@ -266,7 +269,7 @@ export default class MainMenu extends PureComponent {
       <SearchContainer onClick={this._handleGotoSearch}>
         <ImageLogo alt='logo' src={MainLogo} onClick={changeRoute.bind(this, '/')} />
         <SearchInput
-          className='color__light-grey'
+          // className='color__light-grey'
           placeholder={intl.formatMessage(messages.searchPlaceHolder)}
         />
       </SearchContainer>,
@@ -274,6 +277,17 @@ export default class MainMenu extends PureComponent {
     )
 
     return ShowSearchInputLogo(currentRoute === 'home')
+  }
+
+  _handleQuickLinks (a, b, c) {
+    const filtered = [a, b, c].filter(el => el)
+    console.log('filtered', filtered, filtered.length > 1)
+
+    if (filtered.length > 1) {
+      this.setState({toggleSpace: true})
+    } else {
+      this.setState({toggleSpace: false})
+    }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -287,8 +301,17 @@ export default class MainMenu extends PureComponent {
     willAddOrRemoveEvent(currentRoute)
   }
 
+  componentDidUpdate () {
+    const { showSearchIcon, showPointsIcon, showActivityIcon } = this.props
+
+    this._handleQuickLinks(showSearchIcon, showPointsIcon, showActivityIcon)
+  }
+
   componentDidMount () {
+    const { showSearchIcon, showPointsIcon, showActivityIcon } = this.props
+
     window.addEventListener('scroll', this._updateScrollPosition)
+    this._handleQuickLinks(showSearchIcon, showPointsIcon, showActivityIcon)
   }
 
   componentWillUnmount () {
@@ -296,13 +319,18 @@ export default class MainMenu extends PureComponent {
   }
 
   render () {
-    const { leftButtonAction, hideBackButton, changeRoute, showSearchIcon, showActivityIcon, currentRoute, headerMenuFullScreen } = this.props
-    const { windowHeightOffset } = this.state
+    const { leftButtonAction, hideBackButton, changeRoute, showSearchIcon, showPointsIcon, showActivityIcon, currentRoute, headerMenuFullScreen } = this.props
+    const { windowHeightOffset, toggleSpace } = this.state
 
     const homeRoute = currentRoute === 'home'
 
     const SearchToggle = toggleComponent(
       <Image alt='CLiQQ' src={SearchImage} size='small' onClick={changeRoute.bind(this, '/search')} />,
+      null
+    )
+
+    const PointsToggle = toggleComponent(
+      <Image alt='CLiQQ' src={PointsIcon} size='small' onClick={changeRoute.bind(this, '/wallet')} />,
       null
     )
 
@@ -337,8 +365,9 @@ export default class MainMenu extends PureComponent {
               <Grid.Column
                 width={this._handleColumnSize(currentRoute, 'rightSide')}
                 verticalAlign='middle'>
-                <RightWrapper>
+                <RightWrapper toggleSpace={toggleSpace}>
                   { SearchToggle(showSearchIcon) }
+                  { PointsToggle(showPointsIcon) }
                   { ActivitiesToggle(showActivityIcon) }
                 </RightWrapper>
               </Grid.Column>

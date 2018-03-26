@@ -50,6 +50,7 @@ import {
   setPageTitleAction,
   setRouteNameAction,
   setShowSearchIconAction,
+  setShowPointsIconAction,
   setShowActivityIconAction,
   registerPushAction,
   getRegisteredPushAction
@@ -99,6 +100,7 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
     changeRoute: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
+    setShowPointsIcon: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
     getRegisteredPush: PropTypes.func.isRequired,
     registerPush: PropTypes.func.isRequired,
@@ -216,6 +218,7 @@ export class ReceiptPage extends React.PureComponent { // eslint-disable-line re
   componentWillMount () {
     this.props.setPageTitle('Your Receipt')
     this.props.setShowSearchIcon(true)
+    this.props.setShowPointsIcon(false)
     this.props.setShowActivityIcon(false)
   }
 
@@ -303,6 +306,7 @@ function mapDispatchToProps (dispatch) {
   return {
     setRouteName: (payload) => dispatch(setRouteNameAction(payload)),
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
+    setShowPointsIcon: (payload) => dispatch(setShowPointsIconAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getReceipt: (payload) => dispatch(getReceiptAction(payload)),

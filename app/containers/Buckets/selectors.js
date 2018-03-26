@@ -88,6 +88,11 @@ const selectShowSearchIcon = () => createSelector(
   (substate) => substate.get('searchIconShow')
 )
 
+const selectShowPointsIcon = () => createSelector(
+  selectBucketDomain(),
+  (substate) => substate.get('pointsIconShow')
+)
+
 const selectShowActivityIcon = () => createSelector(
   selectBucketDomain(),
   (substate) => substate.get('activityIconShow')
@@ -134,6 +139,7 @@ export {
   selectPageTitle,
   selectFullScreenHeader,
   selectShowSearchIcon,
+  selectShowPointsIcon,
   selectShowActivityIcon,
   selectIsRegisteredPush,
   selectLoyaltyToken,

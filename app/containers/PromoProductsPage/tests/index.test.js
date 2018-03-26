@@ -13,6 +13,7 @@ describe('<PromoProductsPage />', () => {
     setPageTitle: () => {},
     setRouteName: () => {},
     setShowSearchIcon: () => {},
+    setShowPointsIcon: () => {},
     setShowActivityIcon: () => {},
     productsLoading: false,
     lazyload: false,

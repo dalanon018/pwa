@@ -15,6 +15,7 @@ describe('<ProductsByCategory />', () => {
     resetProductsByCategory: () => {},
     setPageTitle: () => {},
     setShowSearchIcon: () => {},
+    setShowPointsIcon: () => {},
     setShowActivityIcon: () => {},
     submitOver18: () => {},
     getOver18: () => {},

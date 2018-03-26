@@ -26,7 +26,13 @@ import AccessView from 'components/Shared/AccessMobileDesktopView'
 import BrandsGroup from 'components/Mobile/BrandsGroup'
 
 import { selectBrands } from 'containers/Buckets/selectors'
-import { setPageTitleAction, setRouteNameAction } from 'containers/Buckets/actions'
+import {
+  setPageTitleAction,
+  setRouteNameAction,
+  setShowSearchIconAction,
+  setShowPointsIconAction,
+  setShowActivityIconAction
+} from 'containers/Buckets/actions'
 import { BRANDS_LANDING_PAGE } from 'containers/Buckets/constants'
 
 const Wrapper = styled.div`
@@ -88,10 +94,14 @@ export class BrandLanding extends React.PureComponent { // eslint-disable-line r
   }
 
   componentDidMount () {
-    const { setPageTitle, setRouteName, intl } = this.props
+    const { setPageTitle, setRouteName, intl, setShowActivityIcon, setShowSearchIcon, setShowPointsIcon } = this.props
     setPageTitle(intl.formatMessage(messages.header))
     setRouteName(BRANDS_LANDING_PAGE)
     this._handleScrollBottom()
+
+    setShowSearchIcon(true)
+    setShowPointsIcon(false)
+    setShowActivityIcon(true)
   }
 
   render () {
@@ -124,6 +134,9 @@ function mapDispatchToProps (dispatch) {
   return {
     setPageTitle: payload => dispatch(setPageTitleAction(payload)),
     setRouteName: payload => dispatch(setRouteNameAction(payload)),
+    setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
+    setShowPointsIcon: (payload) => dispatch(setShowPointsIconAction(payload)),
+    setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     changeRoute: url => dispatch(push(url)),
     dispatch
   }

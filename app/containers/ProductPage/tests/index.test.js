@@ -24,6 +24,7 @@ describe('<Products />', () => {
     setHandlersDefault: () => {},
     setPageTitle: () => {},
     setShowSearchIcon: () => {},
+    setShowPointsIcon: () => {},
     setShowActivityIcon: () => {},
     setHeaderMenuFullScreen: () => {},
     product: fromJS({

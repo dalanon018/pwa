@@ -54,6 +54,7 @@ import {
   setPageTitleAction,
   setRouteNameAction,
   setShowSearchIconAction,
+  setShowPointsIconAction,
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
 
@@ -121,6 +122,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     ]).isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
+    setShowPointsIcon: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
     setRouteName: PropTypes.func.isRequired,
     promos: PropTypes.object.isRequired,
@@ -243,9 +245,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   )
 
   componentDidMount () {
-    const { setPageTitle, setShowActivityIcon, setShowSearchIcon, getPromos, getBanners, setRouteName } = this.props
+    const { setPageTitle, setShowActivityIcon, setShowSearchIcon, setShowPointsIcon, getPromos, getBanners, setRouteName } = this.props
     setPageTitle(null)
     setShowSearchIcon(false)
+    setShowPointsIcon(false)
     setShowActivityIcon(true)
 
     getBanners()
@@ -433,6 +436,7 @@ function mapDispatchToProps (dispatch) {
     setRouteName: (payload) => dispatch(setRouteNameAction(payload)),
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
+    setShowPointsIcon: (payload) => dispatch(setShowPointsIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProduct: payload => dispatch(getFeaturedProductsAction(payload)),
     getPromos: payload => dispatch(getPromosAction(payload)),
