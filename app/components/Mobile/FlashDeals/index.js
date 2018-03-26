@@ -48,7 +48,7 @@ function FlashDeals ({
       <Grid container>
         <Grid.Row className='padding__none--vertical'>
           <Grid.Column>
-            <BannerWrapper>
+            <BannerWrapper onClick={() => changeRoute(`promos/${promo.get('promoCode')}`)}>
               { !promosLoading && <TimerWrapper promo={promo} /> }
               <PlainCard>
                 {
@@ -60,7 +60,7 @@ function FlashDeals ({
             </BannerWrapper>
           </Grid.Column>
         </Grid.Row>
-        <Grid.Row columns={3}>
+        <Grid.Row columns={2}>
           <ProductView
             changeRoute={changeRoute}
             loader={promosLoading}
