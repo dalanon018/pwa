@@ -14,6 +14,7 @@ describe('<WalletPage />', () => {
     setPageTitle: () => {},
     setRouteName: () => {},
     setShowSearchIcon: () => {},
+    setShowPointsIcon: () => {},
     setShowActivityIcon: () => {},
     transactionsLoading: false,
     lazyload: false,

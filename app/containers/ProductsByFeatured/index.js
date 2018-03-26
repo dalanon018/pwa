@@ -45,6 +45,7 @@ import {
   setPageTitleAction,
   setRouteNameAction,
   setShowSearchIconAction,
+  setShowPointsIconAction,
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
 
@@ -131,6 +132,7 @@ export class ProductsByFeatured extends React.PureComponent { // eslint-disable-
     resetProductsByFeatured: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
+    setShowPointsIcon: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
     totalCount: PropTypes.number.isRequired,
     loader: PropTypes.bool.isRequired,
@@ -325,10 +327,11 @@ export class ProductsByFeatured extends React.PureComponent { // eslint-disable-
   }
 
   componentDidMount () {
-    const { getProductsViewed, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon, intl } = this.props
+    const { getProductsViewed, setRouteName, setPageTitle, setShowSearchIcon, setShowPointsIcon, setShowActivityIcon, intl } = this.props
 
     setPageTitle(intl.formatMessage(messages.headerTitle))
     setShowSearchIcon(true)
+    setShowPointsIcon(false)
     setShowActivityIcon(true)
 
     setRouteName(PRODUCTS_FEATURED_NAME)
@@ -408,6 +411,7 @@ function mapDispatchToProps (dispatch) {
     setRouteName: (payload) => dispatch(setRouteNameAction(payload)),
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
+    setShowPointsIcon: (payload) => dispatch(setShowPointsIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProducts: payload => dispatch(getProductsByFeaturedAction(payload)),
     getProductsViewed: () => dispatch(getProductsViewedAction()),

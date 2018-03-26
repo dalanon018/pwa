@@ -13,6 +13,7 @@ describe('<ProductsByFeatured />', () => {
     resetProductsByFeatured: () => {},
     setPageTitle: () => {},
     setShowSearchIcon: () => {},
+    setShowPointsIcon: () => {},
     setShowActivityIcon: () => {},
     totalCount: 0,
     loader: false,

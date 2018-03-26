@@ -14,6 +14,7 @@ describe('<BrandPage />', () => {
     setPageTitle: () => {},
     setRouteName: () => {},
     setShowSearchIcon: () => {},
+    setShowPointsIcon: () => {},
     setShowActivityIcon: () => {},
     loader: false,
     lazyload: false,

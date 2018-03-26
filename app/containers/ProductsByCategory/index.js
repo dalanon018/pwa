@@ -51,6 +51,7 @@ import {
   setPageTitleAction,
   setRouteNameAction,
   setShowSearchIconAction,
+  setShowPointsIconAction,
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
 import {
@@ -153,6 +154,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     resetProductsByCategory: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
+    setShowPointsIcon: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
     totalCount: PropTypes.number.isRequired,
     loader: PropTypes.bool.isRequired,
@@ -501,10 +503,11 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
   // TODO: We need to remove extra call for categories specially I think we dont need them anymore
   componentDidMount () {
-    const { match: { params }, getProductsViewed, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon } = this.props
+    const { match: { params }, getProductsViewed, setRouteName, setPageTitle, setShowSearchIcon, setShowPointsIcon, setShowActivityIcon } = this.props
 
     setPageTitle(this._handlePageTitle())
     setShowSearchIcon(true)
+    setShowPointsIcon(false)
     setShowActivityIcon(true)
 
     setRouteName(PRODUCTSCATEGORY_NAME)
@@ -622,6 +625,7 @@ function mapDispatchToProps (dispatch) {
     setRouteName: (payload) => dispatch(setRouteNameAction(payload)),
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
+    setShowPointsIcon: (payload) => dispatch(setShowPointsIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProductsByCategory: payload => dispatch(getProductsByCategoryAction(payload)),
     getProductsViewed: () => dispatch(getProductsViewedAction()),

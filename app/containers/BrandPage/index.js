@@ -56,6 +56,7 @@ import {
   setPageTitleAction,
   setRouteNameAction,
   setShowSearchIconAction,
+  setShowPointsIconAction,
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
 import {
@@ -114,6 +115,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     getFilterCategories: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
+    setShowPointsIcon: PropTypes.func.isRequired,
     setRouteName: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
     loader: PropTypes.bool.isRequired,
@@ -379,7 +381,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   componentDidMount () {
-    const { match: { params }, location: { search }, setRouteName, setPageTitle, setShowSearchIcon, setShowActivityIcon } = this.props
+    const { match: { params }, location: { search }, setRouteName, setPageTitle, setShowSearchIcon, setShowPointsIcon, setShowActivityIcon } = this.props
     const { category } = queryString.parse(search)
 
     // initial data
@@ -387,6 +389,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
 
     setPageTitle('..')
     setShowSearchIcon(true)
+    setShowPointsIcon(false)
     setShowActivityIcon(true)
     setRouteName(BRAND_NAME)
 
@@ -523,6 +526,7 @@ function mapDispatchToProps (dispatch) {
     setRouteName: (payload) => dispatch(setRouteNameAction(payload)),
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
+    setShowPointsIcon: (payload) => dispatch(setShowPointsIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProductsByBrands: payload => dispatch(getProductsByBrandsAction(payload)),
     resetProductsByBrands: () => dispatch(resetProductsByBrandsAction()),

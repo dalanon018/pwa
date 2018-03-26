@@ -44,6 +44,7 @@ import {
   setPageTitleAction,
   setRouteNameAction,
   setShowSearchIconAction,
+  setShowPointsIconAction,
   setShowActivityIconAction,
   setHeaderFullScreenAction,
   setLightBoxImageAction
@@ -79,6 +80,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     changeRoute: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
+    setShowPointsIcon: PropTypes.func.isRequired,
     setShowActivityIcon: PropTypes.func.isRequired,
     setHandlersDefault: PropTypes.func.isRequired,
     product: PropTypes.object.isRequired,
@@ -243,6 +245,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   componentWillMount () {
     this.props.setPageTitle('Product Details')
     this.props.setShowSearchIcon(true)
+    this.props.setShowPointsIcon(false)
     this.props.setShowActivityIcon(true)
   }
 
@@ -374,6 +377,7 @@ function mapDispatchToProps (dispatch) {
     setPageTitle: (payload) => dispatch(setPageTitleAction(payload)),
     setHeaderMenuFullScreen: (payload) => dispatch(setHeaderFullScreenAction(payload)),
     setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
+    setShowPointsIcon: (payload) => dispatch(setShowPointsIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProduct: (payload) => dispatch(getProductAction(payload)),
     setProduct: (payload) => dispatch(setProductAction(payload)),

@@ -22,6 +22,7 @@ describe('<ReceiptPage />', () => {
     setPageTitle: () => {},
     setRouteName: () => {},
     setShowSearchIcon: () => {},
+    setShowPointsIcon: () => {},
     setShowActivityIcon: () => {},
     getRegisteredPush: () => {},
     registerPush: () => {}
