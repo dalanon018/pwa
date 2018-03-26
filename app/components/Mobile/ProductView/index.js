@@ -21,7 +21,7 @@ import {
   equals,
   identity,
   ifElse,
-  range,
+  range
 } from 'ramda'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Image, Label } from 'semantic-ui-react'
@@ -147,10 +147,10 @@ const DefaultState = () => {
 
 class ProductView extends React.PureComponent {
   state = {
-    columnCount: 2 //default mobile
+    columnCount: 2 // default mobile
   }
 
-   _productEntity = ({ index, isScrolling, key, style }) => {
+  _productEntity = ({ index, isScrolling, key, style }) => {
     const { products, isMinor, over18, changeRoute } = this.props
     const { columnCount } = this.state
 
@@ -160,14 +160,14 @@ class ProductView extends React.PureComponent {
       isScrolling ? (
         <LoadingIndicator />
       ) : (
-      <Grid.Column key={rangeIndex}>
-        <ProductEntityInfo
-          entity={products.get(rangeIndex)}
-          isMinor={isMinor}
-          over18={over18}
-          changeRoute={changeRoute}
+        <Grid.Column key={rangeIndex}>
+          <ProductEntityInfo
+            entity={products.get(rangeIndex)}
+            isMinor={isMinor}
+            over18={over18}
+            changeRoute={changeRoute}
         />
-      </Grid.Column>
+        </Grid.Column>
     ))
 
     return (
@@ -228,7 +228,7 @@ class ProductView extends React.PureComponent {
                 rowRenderer={this._productEntity}
                 autoHeight
                 scrollTop={scrollTop}
-                scrollToAlignment="start"
+                scrollToAlignment='start'
                 overscanRowCount={30}
               />
             )}
@@ -238,7 +238,7 @@ class ProductView extends React.PureComponent {
     )
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const { windowWidth } = this.props
 
     this.setState({
@@ -253,11 +253,10 @@ class ProductView extends React.PureComponent {
       products
     } = this.props
 
-
     const isLoading = () => equals(true, loader)
     const recordsEmpty = () => equals(0, products.size)
     const displayLoading = both(isLoading, recordsEmpty)
-    /**isLoading
+    /** isLoading
      * we have to identify wether we will need to render it virtualized of simple product view
      * we do this since we are having problem if there are multiple virtualization on the same page.
      */
@@ -274,7 +273,6 @@ class ProductView extends React.PureComponent {
       </div>
     )
   }
-
 }
 
 export default ProductView
