@@ -62,6 +62,7 @@ function FlashDeals ({
         </Grid.Row>
         <Grid.Row columns={2}>
           <ProductView
+            virtualized={false}
             changeRoute={changeRoute}
             loader={promosLoading}
             products={promo.get('productList')}
