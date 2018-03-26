@@ -15,8 +15,8 @@ import messages from './messages'
 import { Button, Modal, Image, Label } from 'semantic-ui-react'
 import TextButton from 'components/Shared/CloseButton'
 
-import LightgreyBackground from 'images/modal-bg-lightgrey.png'
-import RedBackground from 'images/modal-bg-red.png'
+import ModalHeaderBg from 'images/modal-header-bg.png'
+// import RedBackground from 'images/modal-bg-red.png'
 
 import StoreIcon from 'images/icons/ready-icon.svg'
 import PaperBagIcon from 'images/icons/claimed-icon.svg'
@@ -44,36 +44,36 @@ const ModalImages = ({ status }) => {
   return switchFn({
     RESERVED: null,
     UNPAID: {
-      banner: RedBackground,
+      banner: ModalHeaderBg,
       icon: WarningIcon,
-      iconBg: '#EB1E25'
+      iconBg: '#229D90'
     },
     CONFIRMED: {
-      banner: LightgreyBackground,
+      banner: ModalHeaderBg,
       icon: CashierIcon
     },
     INTRANSIT: {
-      banner: LightgreyBackground,
+      banner: ModalHeaderBg,
       icon: IntransitIcon
     },
     LOSTINTRANSIT: {
-      banner: RedBackground,
+      banner: ModalHeaderBg,
       icon: IntransitIcon,
-      iconBg: '#EB1E25'
+      iconBg: '#229D90'
     },
     DELIVERED: {
-      banner: LightgreyBackground,
+      banner: ModalHeaderBg,
       icon: StoreIcon
     },
     CLAIMED: {
-      banner: LightgreyBackground,
+      banner: ModalHeaderBg,
       icon: PaperBagIcon,
-      iconBg: '#D7D7D7'
+      iconBg: '#229D90'
     },
     UNCLAIMED: {
-      banner: RedBackground,
+      banner: ModalHeaderBg,
       icon: UnclaimedIcon,
-      iconBg: '#EB1E25'
+      iconBg: '#229D90'
     }
   })(null)(status)
 }
@@ -240,16 +240,16 @@ class ModalWithHeader extends React.PureComponent {
           <BannerHeader
             background={ModalImages({ status: currentStatus }).banner}
             iconBg={ModalImages({ status: currentStatus }).iconBg} >
-            <span className='border__three-white'>
+            <span>
               <Image alt='CLiQQ' src={ModalImages({ status: currentStatus }).icon} />
             </span>
           </BannerHeader>
           <Modal.Content>
-            <Label className='weight-600 center' as='p' size='big'>
+            <Label className='text__weight--500 center' as='p' size='big'>
               <ModalTitle {...{ status: currentStatus, receipt }} />
             </Label>
             <DetailsWrapper>
-              <Label className='weight-400 font-roboto center' as='p' size='large'>
+              <Label className='weight-400 font-roboto center' as='p' size='medium'>
                 <ModalDescription {...{ status: currentStatus, receipt }} />
               </Label>
             </DetailsWrapper>
@@ -257,6 +257,7 @@ class ModalWithHeader extends React.PureComponent {
               <Button
                 onClick={onClose}
                 primary
+                className='text__weight--700'
               >
                 { primary }
               </Button>

@@ -10,7 +10,7 @@ const ButtonWrapper = styled.div`
 
 const BannerHeader = styled.div`
   background: url(${props => props.background}) no-repeat top right / cover;
-  height: 85px;
+  height: 75px;
   margin-bottom: 40px;
   position: relative;
   width: 100%;
@@ -25,29 +25,33 @@ const BannerHeader = styled.div`
 
   .image {
     height: 35px;
-    width: 30px;
+    width: 40px;
   }
 
   span {
     align-items: center;
-    background-color: ${props => props.iconBg ? props.iconBg : '#AEAEAE'};
+    background-color: ${props => props.iconBg ? props.iconBg : '#229D90'};
     border-radius: 50px;
     bottom: -35px;
     display: flex;
-    height: 75px;
+    height: 80px;
     justify-content: center;
     left: 50%;
     margin-right: -50%;
     margin: 0 auto;
     position: absolute;
     transform: translate(-50%);
-    width: 75px;
+    width: 80px;
     z-index: 1;
   }
 `
 
 const ModalContainer = styled.div`
   border-radius: 30px;
+
+  button {
+    text-transform: uppercase !important;
+  }
 
   @media (min-width: 768px) {
     .content {
