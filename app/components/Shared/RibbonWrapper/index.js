@@ -46,13 +46,14 @@ class RibbonWrapper extends React.PureComponent {
     rightSpace: PropTypes.bool
   }
 
+  // TODO: Ask chino why named offsetRight where he match is offsetLeft?
   state = {
     offsetRight: ''
   }
 
   _handleMarginComputation = () => {
     const image = document.getElementsByClassName('slick-image-handler')[0]
-    this.setState({ offsetRight: image && image.offsetLeft })
+    this.setState({ offsetRight: image ? image.offsetLeft : 0 })
   }
 
   componentDidMount () {

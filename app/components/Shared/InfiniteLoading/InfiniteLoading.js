@@ -42,28 +42,6 @@ const ScrollContent = styled.div`
 
 class InfiniteLoaderProxy extends React.Component { // eslint-disable-line react/prefer-stateless-function
   /**
-   * We need to identify if we need to show the lazy load if
-   * items are more than equal to the limit and lazyload === true
-   */
-  _displayLazyLoadIndicator = () => {
-    const { lazyload } = this.props
-    const showLoadingIndicator = ifElse(
-      // both(identity, itemsGreaterEqLimit),
-      identity,
-      () => (
-        <WrapperLoadingIndicator>
-          <LoadingIndicator />
-          <LoadMoreText>
-            <FormattedMessage {...messages.loadingText} />
-          </LoadMoreText>
-        </WrapperLoadingIndicator>
-      ),
-      () => null
-    )
-    return showLoadingIndicator(lazyload)
-  }
-
-  /**
    * we need to make sure that before we reload the page we scroll top the page due to issues that scroll is always triggered if it was refereshed on the bottom of the page
    */
   _srollTopBeforeUnload = () => {
@@ -115,7 +93,6 @@ class InfiniteLoaderProxy extends React.Component { // eslint-disable-line react
 
   render () {
     const { isLoading, loadMoreData, rowCount } = this.props
-
     const loadMoreRows = isLoading
         ? () => {}
         : loadMoreData
