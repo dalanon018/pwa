@@ -286,7 +286,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   render () {
-    const { loading, product, route, windowWidth, changeRoute, isMobile, intl, setLightBoxImage, lightBoxImage } = this.props
+    const { loading, product, route, windowWidth, changeRoute, isMobile, intl, setLightBoxImage, lightBoxImage, match } = this.props
     const { errModalToggle, errModalName, errorTitle, errorMessage, togglePrompt, hover, offset } = this.state
     const productPageTrigger = route && route
 
@@ -343,6 +343,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
                 handleMouseEnter={this._handleMouseEnter}
                 handleMouseLeave={this._handleMouseLeave}
                 offset={offset}
+                isProductPage={match && match.path === '/product/:id'}
               />
             }
           />

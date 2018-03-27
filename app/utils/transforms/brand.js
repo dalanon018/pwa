@@ -62,7 +62,8 @@ const transformBrand = (data) => {
 
     return Object.assign({}, data, {
       background: applyImageUrl('BACKGROUND')(data),
-      sliders: applyImageSliders('SLIDER')(data)
+      sliders: applyImageSliders('SLIDER')(data),
+      desktopSliders: applyImageSliders('DESKTOP_SLIDER')(data)
     })
   }
 
