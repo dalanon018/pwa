@@ -17,15 +17,18 @@ import ErrorTracking from 'utils/errorTracking'
 
 const returnDataFromCache = async (url, cache) => {
   const response = await cache.match(url)
-  const toJson = (response) => response.json()
+  //TODO: we need to handle differnt type of content here..
+  const toType = (response) => {
+    return response.json()
+  }
 
-  const convertToJson = ifElse(
+  const convertType = ifElse(
     isNil,
     identity,
-    toJson
+    toType
   )
 
-  return convertToJson(response)
+  return convertType(response)
 }
 
 const getFromCache = (url) => compose(
