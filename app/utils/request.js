@@ -12,10 +12,10 @@ function parseJSON (response) {
   const content = response.headers.get("content-type")
   const returnResponse = ifElse(
     equals(-1),
-    response.text,
+    () => response.text(),
     response.json
   )
-  return returnResponse(contentType.indexOf('application/json'))
+  return returnResponse(content.indexOf('application/json'))
 }
 
 /**
