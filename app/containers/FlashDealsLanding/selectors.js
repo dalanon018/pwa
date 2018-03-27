@@ -3,7 +3,7 @@ import { createSelector } from 'reselect'
 /**
  * Direct selector to the flashDealsLanding state domain
  */
-const selectFlashDealsLandingDomain = (state) => state.get('flashDealsLanding')
+const selectFlashDealsLandingDomain = () => state => state.get('flashDealsLanding')
 
 /**
  * Other specific selectors
@@ -13,12 +13,18 @@ const selectFlashDealsLandingDomain = (state) => state.get('flashDealsLanding')
  * Default selector used by FlashDealsLanding
  */
 
-const makeSelectFlashDealsLanding = () => createSelector(
-  selectFlashDealsLandingDomain,
-  (substate) => substate.toJS()
+const selectPromos = () => createSelector(
+  selectFlashDealsLandingDomain(),
+  substate => substate.get('promos')
 )
 
-export default makeSelectFlashDealsLanding
+const selectPromosLoading = () => createSelector(
+  selectFlashDealsLandingDomain(),
+  substate => substate.get('promosLoading')
+)
+
+// export default makeSelectFlashDealsLanding
 export {
-  selectFlashDealsLandingDomain
+  selectPromos,
+  selectPromosLoading
 }

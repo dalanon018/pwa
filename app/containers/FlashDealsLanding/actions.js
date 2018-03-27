@@ -5,11 +5,20 @@
  */
 
 import {
-  DEFAULT_ACTION
+  GET_PROMOS,
+  SET_PROMOS
 } from './constants'
 
-export function defaultAction () {
+export function getPromosAction (payload) {
   return {
-    type: DEFAULT_ACTION
+    type: GET_PROMOS,
+    payload
+  }
+}
+
+export function setPromosAction (payload) {
+  return {
+    type: SET_PROMOS,
+    payload
   }
 }
