@@ -292,13 +292,15 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       promos,
       promosLoading,
       promosCount,
-      bannersLoading
+      bannersLoading,
+      location
     } = this.props
     const { _banners } = this.state
 
     const desktopBannerImages = [
       paramsImgix('https://cliqqshop.imgix.net/banner-desktop.jpg', this._imgixOptions({ windowWidth }))
     ]
+
     return (
       <div>
         <Helmet
@@ -349,6 +351,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                   loader={bannersLoading}
                   images={_banners}
                   isInfinite
+                  isHome={location && location.pathname === '/'}
                 />
               }
               desktopView={
@@ -357,6 +360,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                   images={desktopBannerImages}
                   slidesToShow={1}
                   isInfinite
+                  isHome={location && location.pathname === '/'}
                 />
               }
             />

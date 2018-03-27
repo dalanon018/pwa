@@ -80,7 +80,7 @@ const RightWrapper = styled.div`
 `
 
 const ActivitiesIcon = styled.div`
-  margin: ${props => props.marginLeft ? '0 2px 0' : '0 0 0 20px'};
+  margin: ${props => props.marginLeft ? '0 2px 0' : 0};
 
   @media screen and (max-width: 767px) {
     // margin-left: 9px !important;

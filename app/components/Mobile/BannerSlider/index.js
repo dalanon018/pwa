@@ -24,7 +24,8 @@ function BannerSlider ({
   images,
   slidesToShow,
   autoplay,
-  curved
+  curved,
+  isHome
 }) {
   return <HandleBlock
     loader={loader}
@@ -34,6 +35,7 @@ function BannerSlider ({
     slidesToShow={slidesToShow || 1}
     autoplay={autoplay}
     curved={curved}
+    isHome={isHome}
     />
 }
 
@@ -51,6 +53,7 @@ export const HandleBlock = ({
   isInfinite,
   isLowerdots,
   images,
+  isHome,
   curved,
   slidesToShow = 1,
   autoplay = true
@@ -73,7 +76,7 @@ export const HandleBlock = ({
     block = <DefaultState loader={loader} />
   } else {
     block = <BannerSliderWrapper curved={curved} isLowerdots={isLowerdots}>
-      <SlideShow settings={settings} images={images} />
+      <SlideShow settings={settings} images={images} isHome={isHome} />
     </BannerSliderWrapper>
   }
   return block
