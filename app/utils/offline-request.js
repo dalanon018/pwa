@@ -17,7 +17,7 @@ import ErrorTracking from 'utils/errorTracking'
 
 const returnDataFromCache = async (url, cache) => {
   const response = await cache.match(url)
-  //TODO: we need to handle differnt type of content here..
+  // TODO: we need to handle differnt type of content here..
   const toType = (response) => {
     return response.json()
   }

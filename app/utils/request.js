@@ -9,7 +9,7 @@ import 'whatwg-fetch'
  * @return {object}          The parsed JSON from the request
  */
 function parseJSON (response) {
-  const content = response.headers.get("content-type")
+  const content = response.headers.get('content-type')
   const returnResponse = ifElse(
     equals(-1),
     () => response.text(),

@@ -14,7 +14,7 @@ import { createStructuredSelector } from 'reselect'
 import { compose } from 'redux'
 import { push } from 'react-router-redux'
 import { Grid } from 'semantic-ui-react'
-import { noop, range } from 'lodash'
+import { noop } from 'lodash'
 import {
   ifElse,
   isEmpty
@@ -77,7 +77,6 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
     }, () => {
       changeRoute(`/review?type=cod&storeId=${selectedStore.get('id')}&storeName=${selectedStore.get('name')}`)
     })
-
   }
 
   componentDidMount () {

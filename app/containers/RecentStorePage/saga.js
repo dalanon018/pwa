@@ -1,17 +1,16 @@
 
-import { isEmpty } from 'ramda'
 import { call, cancel, fork, put, take } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { takeLatest } from 'redux-saga'
 import {
   compose,
+  isEmpty,
   map,
   replace,
-  split,
-} from 'ramda'
+  split
+ } from 'ramda'
+
 import stores from 'fixtures/stores.json'
-import xhr from 'utils/xhr'
-import request from 'utils/request'
 import { getRequestData } from 'utils/offline-request'
 import { getItem } from 'utils/localStorage'
 
@@ -42,7 +41,7 @@ export function * getVisitedStore () {
   const req = yield call(getRequestData, `${LOYALTY_URL}/recentStores`, {
     method: 'POST',
     body: JSON.stringify({
-      mobileNumber: "09063891352", //temporary
+      mobileNumber, // temporary
       token: RECENT_STORE_TOKEN
     }),
     token: token.access_token

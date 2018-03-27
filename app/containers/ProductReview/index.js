@@ -284,7 +284,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     const { store } = this.state
 
      // handle populating store details
-     const populateFromStorage = ifElse(
+    const populateFromStorage = ifElse(
       isEmpty,
       () => this.setState({
         store: previousStore.toJSON()
@@ -315,8 +315,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   componentDidMount () {
-    const { location: { search }, getCurrentPoints, getOrderProduct, getMobileNumber, getStore, getBlackList, setRouteName } = this.props
-
+    const { getCurrentPoints, getOrderProduct, getMobileNumber, getStore, getBlackList, setRouteName } = this.props
 
     setRouteName(PRODUCTREVIEW_NAME)
     getOrderProduct()
