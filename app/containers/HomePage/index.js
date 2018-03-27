@@ -396,7 +396,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           )
         }
 
-        <PointAds />
+        <PointAds changeRoute={changeRoute} />
 
         <Container>
           <SectionTitle

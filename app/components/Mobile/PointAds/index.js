@@ -55,7 +55,7 @@ export const ImageWrapper = styled.div`
   }
 `
 
-function PointAds () {
+function PointAds ({ changeRoute }) {
   return (
     <Wrapper className='background__light-grey'>
       <Container>
@@ -72,7 +72,7 @@ function PointAds () {
                 <Label basic as='p' size='small' className='padding__none'>
                   <FormattedMessage {...messages.usePoints} />
                 </Label>
-                <Button primary>
+                <Button primary onClick={() => changeRoute('/wallet')}>
                   <FormattedMessage {...messages.checkBalance} />
                 </Button>
               </div>

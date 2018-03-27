@@ -19,32 +19,66 @@ import OrderTip from 'components/Mobile/OrderTip'
 import MobileFooter from 'components/Mobile/Footer'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 
-import { selectProductCategories } from 'containers/Buckets/selectors'
 import { setPageTitleAction, setRouteNameAction } from 'containers/Buckets/actions'
 import { FLASH_DEALS_LANDING_PAGE } from 'containers/Buckets/constants'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
+import { imageStock } from 'utils/image-stock'
 import reducer from './reducer'
 import saga from './saga'
 import messages from './messages'
+
+import { getPromosAction } from './actions'
+import {
+  selectPromos,
+  selectPromosLoading
+} from './selectors'
 
 export class FlashDealsLanding extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     setPageTitle: PropTypes.func.isRequired,
     setRouteName: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
-    brands: PropTypes.object.isRequired
+    getPromos: PropTypes.func.isRequired,
+    changeRoute: PropTypes.func.isRequired,
+    promos: PropTypes.object.isRequired,
+    promosLoading: PropTypes.bool.isRequired
+  }
+
+  _handleImgixOptions = () => {
+    return {
+      w: 335,
+      h: 120,
+      fit: 'clamp', // we need to make sure that this is clamp so it will base on the container.
+      auto: 'compress',
+      q: 35,
+      lossless: 0
+    }
+  }
+
+  _handleDefaultState = () => {
+    return (
+      <Grid.Row>
+        <Grid.Column>
+          <FlashDealItem borderRadius height={120}>
+            <Image src={imageStock('Slider-Default.jpg', this._handleImgixOptions())} alt='CLiQQ' />
+          </FlashDealItem>
+        </Grid.Column>
+      </Grid.Row>
+    )
   }
 
   componentDidMount () {
-    const { setPageTitle, setRouteName, intl } = this.props
+    const { setPageTitle, setRouteName, intl, getPromos } = this.props
     setPageTitle(intl.formatMessage(messages.header))
     setRouteName(FLASH_DEALS_LANDING_PAGE)
+    getPromos()
   }
 
   render () {
-    const { categories } = this.props
+    const { promos, promosLoading, changeRoute } = this.props
+
     return (
       <div>
         <Helmet
@@ -56,12 +90,19 @@ export class FlashDealsLanding extends React.PureComponent { // eslint-disable-l
         <Container>
           <Grid padded>
             {
-              categories.map(category => {
+              promosLoading
+              ? this._handleDefaultState()
+              : promos.map(promo => {
                 return (
-                  <Grid.Row key={category.get('id')}>
-                    <Grid.Column>
+                  <Grid.Row key={promo.get('id')}>
+                    <Grid.Column onClick={() => changeRoute(`/promos/${promo.get('promoCode')}`)}>
                       <FlashDealItem borderRadius height={120}>
-                        <Image src={category.get('background')} alt='CLiQQ' />
+                        {
+                          promo.get('background')
+                          ? <Image src={promo.get('background')} alt='CLiQQ' />
+                          : <Image src={imageStock('Slider-Default.jpg', this._handleImgixOptions())} alt='CLiQQ' />
+                        }
+
                       </FlashDealItem>
                     </Grid.Column>
                   </Grid.Row>
@@ -83,18 +124,16 @@ export class FlashDealsLanding extends React.PureComponent { // eslint-disable-l
   }
 }
 
-FlashDealsLanding.propTypes = {
-  dispatch: PropTypes.func.isRequired
-}
-
 const mapStateToProps = createStructuredSelector({
-  categories: selectProductCategories()
+  promos: selectPromos(),
+  promosLoading: selectPromosLoading()
 })
 
 function mapDispatchToProps (dispatch) {
   return {
     setPageTitle: payload => dispatch(setPageTitleAction(payload)),
     setRouteName: payload => dispatch(setRouteNameAction(payload)),
+    getPromos: payload => dispatch(getPromosAction(payload)),
     changeRoute: url => dispatch(push(url)),
     dispatch
   }

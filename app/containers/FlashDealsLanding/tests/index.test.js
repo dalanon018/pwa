@@ -16,7 +16,10 @@ describe('<FlashDealsLanding />', () => {
     setPageTitle: () => {},
     setRouteName: () => {},
     dispatch: () => {},
-    categories: fromJS({})
+    getPromos: () => {},
+    changeRoute: () => {},
+    promos: fromJS({}),
+    promosLoading: true
   }
 
   it('render without exploding', () => {
