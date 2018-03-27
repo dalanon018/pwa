@@ -17,6 +17,7 @@ describe('<RecentStorePage />', () => {
     getStore: () => {},
     setRouteName: () => {},
     getVisitedStores: () => {},
+    storeLocator: () => {},
     dispatch: () => {},
     visitedStores: fromJS({}),
     visitedStoresLoading: false
