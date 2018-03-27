@@ -58,30 +58,42 @@ const BannerSliderWrapper = styled.div`
   }
 
   .slick-dots {
-    align-content: baseline;
-    bottom: inherit;
-    display: ${props => props.active ? 'none' : 'flex'} !important;
-    flex-wrap: wrap;
-    height: 350px;
-    left: 0;
-    overflow: auto;
-    top: 0;
-    width: 90px;
-    z-index: 1;
+    ${
+      props => props.isProductPage
+      ? `
+        align-content: baseline;
+        bottom: inherit;
+        display: ${props => props.active ? 'none' : 'flex'} !important;
+        flex-wrap: wrap;
+        height: 350px;
+        left: 0;
+        overflow: auto;
+        top: 0;
+        width: 90px;
+        z-index: 1;
 
-    li {
-      height: auto;
-      margin: 0;
-      width: inherit;
-
-      img {
-        width: 60px;
-      }
-      &.slick-active {
-        img {
-          border: 2px solid #AEAEAE;
+        li {
+          height: auto;
+          margin: 0;
+          width: inherit;
+    
+          img {
+            width: 60px;
+          }
+          &.slick-active {
+            img {
+              border: 2px solid #AEAEAE;
+            }
+          }
         }
-      }
+      `
+      : `
+        bottom: 0;
+        
+        li {
+          margin: 0;
+        }
+      `
     }
   }
 `

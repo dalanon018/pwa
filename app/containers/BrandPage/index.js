@@ -38,7 +38,7 @@ import DesktopProductView from 'components/Desktop/ProductView'
 import MobileFooter from 'components/Mobile/Footer'
 
 import MobileBannerSlider from 'components/Mobile/BannerSlider'
-import SharedBannerSlider from 'components/Shared/BannerSlider'
+import DesktopBannerSlider from 'components/Desktop/BannerSlider'
 
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 import WindowWidth from 'components/Shared/WindowWidth'
@@ -120,6 +120,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   state = {
     animateBanner: true,
     brandImages: [],
+    brandDesktopSliders: [],
     pageOffset: 0,
     offset: 0,
     limit: LIMIT_ITEMS
@@ -127,8 +128,8 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
 
   _updateParamsImages = (images) => {
     const options = {
-      w: 800,
-      h: 400,
+      w: 1170,
+      h: 300,
       fit: 'clamp',
       auto: 'compress',
       q: 35,
@@ -144,9 +145,11 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     if (brands.size) {
       const brand = brands.find((entity) => entity.get('id') === id)
       const brandImages = brand.size ? brand.get('sliders').toArray().map(this._updateParamsImages) : []
+      const brandDesktopSliders = brand.size ? brand.get('desktopSliders').toArray().map(this._updateParamsImages) : []
 
       this.setState({
-        brandImages
+        brandImages,
+        brandDesktopSliders
       })
 
       return brand ? brand.get('name') : ''
@@ -216,7 +219,6 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
 
   _resetValuesAndFetch = (props) => {
     const { resetProductsByBrands } = props
-
     resetProductsByBrands()
 
     this.setState({
@@ -392,7 +394,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
 
   render () {
     const { productsByBrands, loader, lazyload } = this.props
-    const { brandImages, animateBanner } = this.state
+    const { brandImages, animateBanner, brandDesktopSliders } = this.state
     return (
       <div>
         <Waypoint
@@ -418,12 +420,12 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           <AccessView
             mobileView={null}
             desktopView={
-              <SharedBannerSlider
+              <DesktopBannerSlider
                 isInfinite
                 autoplay={animateBanner}
                 results={productsByBrands}
                 loader={loader}
-                images={brandImages}
+                images={brandDesktopSliders}
             />
             }
           />

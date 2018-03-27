@@ -29,7 +29,8 @@ function BannerSlider ({
   lightBoxImage,
   images,
   slidesToShow,
-  autoplay
+  autoplay,
+  isProductPage
 }) {
   return <HandleBlock
     loader={loader}
@@ -44,6 +45,7 @@ function BannerSlider ({
     isLowerdots={isLowerdots || false}
     slidesToShow={slidesToShow || 1}
     autoplay={autoplay}
+    isProductPage={isProductPage}
     />
 }
 
@@ -68,32 +70,36 @@ export const HandleBlock = ({
   toggleLightBox,
   images,
   slidesToShow = 1,
-  autoplay = true
+  autoplay = true,
+  isProductPage
 }) => {
   let block
   const thumbnailPagination = i => <img key={i} src={images[i]} />
 
-  const settings = {
-    autoplay: (autoplay && (toggleLightBox || active)) ? false : images.length > 1,
-    swipe: images.length > 1,
-    autoplaySpeed: 4000,
-    dots: images.length > 1,
-    infinite: active ? true : isInfinite,
-    speed: 1000,
-    fade: !!toggleLightBox,
-    arrows: !!(active && images.length > 1),
-    slidesToShow: slidesToShow,
-    slidesToScroll: slidesToShow,
-    lazyLoad: true,
-    initialSlide: active ? parseInt(active) : 0,
-    customPaging: i => thumbnailPagination(i)
-    // centerMode: true
-  }
+  const settings = Object.assign(
+    {
+      autoplay: (autoplay && (toggleLightBox || active)) ? false : images.length > 1,
+      swipe: images.length > 1,
+      autoplaySpeed: 4000,
+      dots: images.length > 1,
+      infinite: active ? true : isInfinite,
+      speed: 1000,
+      fade: !!toggleLightBox,
+      arrows: !!(active && images.length > 1),
+      slidesToShow: slidesToShow,
+      slidesToScroll: slidesToShow,
+      lazyLoad: true,
+      initialSlide: active ? parseInt(active) : 0
+
+      // centerMode: true
+    },
+    isProductPage && { customPaging: i => thumbnailPagination(i) }
+  )
 
   if (loader || images.length === 0) {
     block = <DefaultState loader={loader} />
   } else {
-    block = <BannerSliderWrapper hover={hover} toggleLightBox={toggleLightBox} active={active} isLowerdots={isLowerdots}>
+    block = <BannerSliderWrapper hover={hover} toggleLightBox={toggleLightBox} active={active} isLowerdots={isLowerdots} isProductPage={isProductPage}>
       <SlideShow
         settings={settings}
         images={images}
