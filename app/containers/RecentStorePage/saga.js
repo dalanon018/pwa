@@ -4,8 +4,10 @@ import { LOCATION_CHANGE } from 'react-router-redux'
 import { takeLatest } from 'redux-saga'
 import {
   compose,
+  filter,
   isEmpty,
   map,
+  prop,
   replace,
   split
  } from 'ramda'
@@ -49,6 +51,7 @@ export function * getVisitedStore () {
   // @TODO: we need to know the structure wether we need to create a transformation layer for this.
   if (!isEmpty(req)) {
     const storeIds = compose(
+      filter(prop('id')),
       map((id) => ({ id, name: stores[id.replace(/0/g, '')] })),
       split(','),
       replace(/{|}/g, '')
