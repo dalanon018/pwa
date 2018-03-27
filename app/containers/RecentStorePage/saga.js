@@ -3,8 +3,16 @@ import { isEmpty } from 'ramda'
 import { call, cancel, fork, put, take } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { takeLatest } from 'redux-saga'
-
+import {
+  compose,
+  map,
+  replace,
+  split,
+} from 'ramda'
+import stores from 'fixtures/stores.json'
+import xhr from 'utils/xhr'
 import request from 'utils/request'
+import { getRequestData } from 'utils/offline-request'
 import { getItem } from 'utils/localStorage'
 
 import {
@@ -31,17 +39,22 @@ export function * getVisitedStore () {
   const mobileNumber = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
 
   const token = yield getAccessToken()
-  const req = yield call(request, `${LOYALTY_URL}/recentStores`, {
+  const req = yield call(getRequestData, `${LOYALTY_URL}/recentStores`, {
     method: 'POST',
     body: JSON.stringify({
-      mobileNumber,
+      mobileNumber: "09063891352", //temporary
       token: RECENT_STORE_TOKEN
     }),
     token: token.access_token
   })
   // @TODO: we need to know the structure wether we need to create a transformation layer for this.
   if (!isEmpty(req)) {
-    yield put(setVisitedStoresAction(req))
+    const storeIds = compose(
+      map((id) => ({ id, name: stores[id.replace(/0/g, '')] })),
+      split(','),
+      replace(/{|}/g, '')
+    )
+    yield put(setVisitedStoresAction(storeIds(req)))
   } else {
     yield put(setVisitedStoresAction([]))
   }
