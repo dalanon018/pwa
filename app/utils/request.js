@@ -13,7 +13,7 @@ function parseJSON (response) {
   const returnResponse = ifElse(
     equals(-1),
     () => response.text(),
-    response.json
+    () => response.json()
   )
   return returnResponse(content.indexOf('application/json'))
 }
