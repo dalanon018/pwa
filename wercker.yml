@@ -59,11 +59,11 @@ staging:
         curl --version
         curl -X POST -d '{}' https://api.netlify.com/build_hooks/$NETLIFY_APP_ID
 
-    - heroku-deploy:
-      key: $HEROKU_KEY
-      key-name: DEPLOY_KEY
-      user: $HEROKU_USER
-      app-name: $HEROKU_APP_NAME
+    # - heroku-deploy:
+    #   key: $HEROKU_KEY
+    #   key-name: DEPLOY_KEY
+    #   user: $HEROKU_USER
+    #   app-name: $HEROKU_APP_NAME
 
     - script:
       name: Sentry Release
