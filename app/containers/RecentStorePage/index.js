@@ -8,6 +8,7 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import PropTypes from 'prop-types'
 
+import { fromJS } from 'immutable'
 import { connect } from 'react-redux'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
@@ -59,7 +60,7 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
   }
 
   state = {
-    store: {},
+    stores: fromJS([]),
     toggle: ''
   }
 
@@ -87,7 +88,7 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
       isEmpty,
       noop,
       () => this.setState({
-        store: query // we update our store
+        stores: fromJS([query]) // we update our store
       })
     )
 
@@ -99,6 +100,8 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
 
   render () {
     const { windowWidth, visitedStores } = this.props
+    const { stores } = this.state
+    const implementStore = visitedStores.size ? visitedStores : stores
     return (
       <div>
         <Helmet
@@ -108,7 +111,7 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
           ]}
         />
         {
-          visitedStores.map((visited, index) =>
+          implementStore.map((visited, index) =>
             <RecentStore
               key={index}
               value={visited}
