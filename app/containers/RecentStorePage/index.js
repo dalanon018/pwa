@@ -40,7 +40,8 @@ import saga from './saga'
 import messages from './messages'
 
 import {
-  getVisitedStoresAction
+  getVisitedStoresAction,
+  storeLocatorAction
 } from './actions'
 
 import {
@@ -55,6 +56,7 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
     setRouteName: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
     getVisitedStores: PropTypes.func.isRequired,
+    storeLocator: PropTypes.func.isRequired,
     visitedStores: PropTypes.object.isRequired,
     visitedStoresLoading: PropTypes.bool.isRequired
   }
@@ -64,10 +66,8 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
     toggle: ''
   }
 
-  _handleGoTo = (id, name) => () => {
-    const { changeRoute } = this.props
-
-    changeRoute(`/products-category/${id}?name=${name}`)
+  _handleGoToStoreLocator = () => {
+    this.props.storeLocator()
   }
 
   _handleToggle = (_, { value }) => {
@@ -126,7 +126,7 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
                 <FormattedMessage
                   {...messages.findStore}
                   values={{storeLocator: (
-                    <span className='color__primary' onClick={() => {}}>
+                    <span className='color__primary' onClick={this._handleGoToStoreLocator}>
                       <FormattedMessage
                         {...messages.storeLocator}
                       />
@@ -152,6 +152,7 @@ function mapDispatchToProps (dispatch) {
     setPageTitle: payload => dispatch(setPageTitleAction(payload)),
     setRouteName: payload => dispatch(setRouteNameAction(payload)),
     getVisitedStores: () => dispatch(getVisitedStoresAction()),
+    storeLocator: () => dispatch(storeLocatorAction()),
     changeRoute: url => dispatch(push(url)),
     dispatch
   }
