@@ -5,6 +5,7 @@
 */
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Checkbox, Label } from 'semantic-ui-react'
 
@@ -62,7 +63,7 @@ const LabelWrapper = styled.div`
 
 function RecentStore ({ windowWidth, handleToggle, toggle, value }) {
   const label = () => {
-    const storeName = (data = '449 Eastwood 2 (One Orchard)') => {
+    const storeName = (data = '') => {
       let maxChar = 18
 
       switch (true) {
@@ -83,7 +84,7 @@ function RecentStore ({ windowWidth, handleToggle, toggle, value }) {
     return (
       <label className='label-custom'>
         <Label as='p' basic size='large' className='text__weight--500 margin__none'>
-          {storeName()}
+          { storeName(value.get('name')) }
         </Label>
       </label>
     )
@@ -95,9 +96,9 @@ function RecentStore ({ windowWidth, handleToggle, toggle, value }) {
         radio
         // isBlackListed={isBlackListed}
         name='store'
-        value={value}
+        value={value.get('id')}
         label={label()}
-        checked={toggle === value}
+        checked={toggle === value.get('id')}
         onChange={handleToggle}
       />
     </LabelWrapper>
@@ -105,7 +106,8 @@ function RecentStore ({ windowWidth, handleToggle, toggle, value }) {
 }
 
 RecentStore.propTypes = {
-
+  value: PropTypes.object.isRequired,
+  handleToggle: PropTypes.func.isRequired
 }
 
 export default RecentStore
