@@ -103,7 +103,7 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
           range(2).map((_, index) =>
             <RecentStore
               key={index}
-              dummyValue={`dummyValue${index}`}
+              value={`dummyValue${index}`}
               toggle={this.state.toggle}
               windowWidth={windowWidth}
               handleToggle={this._handleToggle} />)

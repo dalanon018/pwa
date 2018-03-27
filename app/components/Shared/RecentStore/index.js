@@ -60,7 +60,7 @@ const LabelWrapper = styled.div`
   }
 `
 
-function RecentStore ({ windowWidth, handleToggle, toggle, dummyValue }) {
+function RecentStore ({ windowWidth, handleToggle, toggle, value }) {
   const label = () => {
     const storeName = (data = '449 Eastwood 2 (One Orchard)') => {
       let maxChar = 18
@@ -95,9 +95,9 @@ function RecentStore ({ windowWidth, handleToggle, toggle, dummyValue }) {
         radio
         // isBlackListed={isBlackListed}
         name='store'
-        value={dummyValue}
+        value={value}
         label={label()}
-        checked={toggle === dummyValue}
+        checked={toggle === value}
         onChange={handleToggle}
       />
     </LabelWrapper>
