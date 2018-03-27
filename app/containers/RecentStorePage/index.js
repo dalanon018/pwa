@@ -69,7 +69,16 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
     changeRoute(`/products-category/${id}?name=${name}`)
   }
 
-  _handleToggle = (_, data) => this.setState({toggle: data.value})
+  _handleToggle = (_, { value }) => {
+    const { changeRoute, visitedStores } = this.props
+    const selectedStore = visitedStores.find((entity) => entity.get('id') === value)
+    this.setState({
+      toggle: value
+    }, () => {
+      changeRoute(`/review?type=cod&storeId=${selectedStore.get('id')}&storeName=${selectedStore.get('name')}`)
+    })
+
+  }
 
   componentDidMount () {
     const { location: { search }, setPageTitle, setRouteName, intl, getVisitedStores } = this.props
@@ -90,7 +99,7 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
   }
 
   render () {
-    const { windowWidth } = this.props
+    const { windowWidth, visitedStores } = this.props
     return (
       <div>
         <Helmet
@@ -100,10 +109,10 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
           ]}
         />
         {
-          range(2).map((_, index) =>
+          visitedStores.map((visited, index) =>
             <RecentStore
               key={index}
-              value={`dummyValue${index}`}
+              value={visited}
               toggle={this.state.toggle}
               windowWidth={windowWidth}
               handleToggle={this._handleToggle} />)
