@@ -17,9 +17,6 @@ if (env === 'production') {
   console.log(`FIREBASE_MESSAGING_SENDER_ID=${process.env.FIREBASE_MESSAGING_SENDER_ID}`)
   console.log(`FIREBASE_MAIN_OBJECT=${process.env.FIREBASE_MAIN_OBJECT}`)
 
-  console.log(`FIREBASE_USERNAME=${process.env.FIREBASE_USERNAME}`)
-  console.log(`FIREBASE_PASSWORD=${process.env.FIREBASE_PASSWORD}`)
-
   console.log(`OATH_CLIENT_ID=${process.env.OATH_CLIENT_ID}`)
   console.log(`OATH_CLIENT_SECRET=${process.env.OATH_CLIENT_SECRET}`)
   console.log(`OATH_RESPONSE_TYPE=${process.env.OATH_RESPONSE_TYPE}`)
@@ -44,9 +41,6 @@ if (env === 'production') {
   console.log(`FIREBASE_STORAGE_BUCKET=realtimedb-a1d19.appspot.com`)
   console.log(`FIREBASE_MESSAGING_SENDER_ID=771793449038`)
   console.log(`FIREBASE_MAIN_OBJECT=transactions`)
-
-  console.log(`FIREBASE_USERNAME=joshuacalpuerto@gmail.com`)
-  console.log(`FIREBASE_PASSWORD=password`)
 
   console.log(`OATH_CLIENT_ID=ecms-pwa`)
   console.log(`OATH_CLIENT_SECRET=ecms-pwa-secret`)
