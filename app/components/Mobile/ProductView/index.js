@@ -5,10 +5,11 @@
 */
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import LazyLoad from 'react-lazyload'
+import Waypoint from 'react-waypoint'
 
 import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller'
-import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 import List from 'react-virtualized/dist/commonjs/List'
 
 import { CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer'
@@ -146,8 +147,20 @@ const DefaultState = () => {
 }
 
 class ProductView extends React.PureComponent {
+  static propTypes = {
+    showElement: PropTypes.bool,
+    products: PropTypes.object.isRequired
+  }
+
   state = {
-    columnCount: 2 // default mobile
+    columnCount: 2, // default mobile,
+    showElement: true
+  }
+
+  _innerWindowScrollerRef = null
+
+  _windowScrollerRef = (ref) => {
+    this._innerWindowScrollerRef = ref
   }
 
   _productEntity = ({ index, isScrolling, key, style }) => {
@@ -183,6 +196,16 @@ class ProductView extends React.PureComponent {
     )
   }
 
+  _handleShowList = (show) => () => {
+    this.setState({
+      showElement: show
+    }, () => {
+      if (this._innerWindowScrollerRef) {
+        this._innerWindowScrollerRef.updatePosition()
+      }
+    })
+  }
+
   _loadingState = () => {
     const { loader } = this.props
     const { columnCount } = this.state
@@ -210,39 +233,40 @@ class ProductView extends React.PureComponent {
   }
 
   _virtualizedElement = () => {
-    const { products, onRowsRendered, registerChild, customElement } = this.props
+    const { products, onRowsRendered, registerChild } = this.props
     const { columnCount } = this.state
     const rowCount = Math.ceil(products.size / columnCount)
     return (
-      <WindowScroller scrollElement={customElement || window} >
-        {({height, scrollTop}) => (
-          <AutoSizer disableHeight>
-            {({ width }) => (
-              <List
-                onRowsRendered={onRowsRendered}
-                ref={registerChild}
-                height={height}
-                width={width}
-                rowHeight={cache.rowHeight}
-                rowCount={rowCount}
-                rowRenderer={this._productEntity}
-                autoHeight
-                scrollTop={scrollTop}
-                scrollToAlignment='start'
-                overscanRowCount={30}
-              />
-            )}
-          </AutoSizer>
+      <WindowScroller
+        ref={this._windowScrollerRef}
+      >
+        {({height, width, scrollTop}) => (
+          <div ref={registerChild}>
+            <List
+              autoHeight
+              onRowsRendered={onRowsRendered}
+              height={height}
+              width={(width - 20)}
+              rowHeight={cache.rowHeight}
+              rowCount={rowCount}
+              rowRenderer={this._productEntity}
+              scrollToAlignment='start'
+              scrollTop={scrollTop}
+              overscanRowCount={30}
+            />
+          </div>
         )}
       </WindowScroller>
     )
   }
 
   componentDidMount () {
-    const { windowWidth } = this.props
+    // default to true
+    const { windowWidth, showElement = true } = this.props
 
     this.setState({
-      columnCount: windowWidth > 767 ? 4 : 2
+      columnCount: windowWidth > 767 ? 4 : 2,
+      showElement
     })
   }
 
@@ -252,6 +276,7 @@ class ProductView extends React.PureComponent {
       loader,
       products
     } = this.props
+    const { showElement } = this.state
 
     const isLoading = () => equals(true, loader)
     const recordsEmpty = () => equals(0, products.size)
@@ -268,9 +293,14 @@ class ProductView extends React.PureComponent {
     ])
 
     return (
-      <div>
-        { ProductRender(virtualized) }
-      </div>
+      <Waypoint
+        bottomOffset='-200px'
+        onEnter={this._handleShowList(true)}
+      >
+        <div>
+          { showElement && ProductRender(virtualized) }
+        </div>
+      </Waypoint>
     )
   }
 }
