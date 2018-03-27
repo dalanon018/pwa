@@ -210,7 +210,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           {(props) => (
             <AccessView
               mobileView={
-                <MobileProductView changeRoute={changeRoute} loader={featuredProductsLoader} products={featuredProducts} windowWidth={windowWidth} {...props} />
+                <MobileProductView showElement={false} changeRoute={changeRoute} loader={featuredProductsLoader} products={featuredProducts} windowWidth={windowWidth} {...props} />
               }
               desktopView={
                 <DesktopProductView changeRoute={changeRoute} loader={featuredProductsLoader} products={featuredProducts} windowWidth={windowWidth} {...props} />
