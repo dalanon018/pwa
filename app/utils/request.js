@@ -1,4 +1,4 @@
-import { __, assoc, compose, ifElse, prop, propOr, is, partialRight, omit } from 'ramda'
+import { __, assoc, compose, equals, ifElse, prop, propOr, is, partialRight, omit } from 'ramda'
 import 'whatwg-fetch'
 
 /**
@@ -9,7 +9,13 @@ import 'whatwg-fetch'
  * @return {object}          The parsed JSON from the request
  */
 function parseJSON (response) {
-  return response.json()
+  const content = response.headers.get("content-type")
+  const returnResponse = ifElse(
+    equals(-1),
+    response.text,
+    response.json
+  )
+  return returnResponse(contentType.indexOf('application/json'))
 }
 
 /**
