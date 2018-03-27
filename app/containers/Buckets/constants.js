@@ -52,7 +52,11 @@ export const SET_SEARCH_VALUE = 'app/Buckets/SET_SEARCH_VALUE'
 export const HIDE_BACK_BUTTON = [
   '',
   'home',
-  'purchases'
+  'purchases',
+  'flash-deals',
+  'categories',
+  'brands',
+  'wallet'
 ]
 
 export const STATUSES = {

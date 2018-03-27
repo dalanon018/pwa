@@ -19,7 +19,13 @@ import OrderTip from 'components/Mobile/OrderTip'
 import MobileFooter from 'components/Mobile/Footer'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 
-import { setPageTitleAction, setRouteNameAction } from 'containers/Buckets/actions'
+import {
+  setPageTitleAction,
+  setRouteNameAction,
+  setShowSearchIconAction,
+  setShowPointsIconAction,
+  setShowActivityIconAction
+} from 'containers/Buckets/actions'
 import { FLASH_DEALS_LANDING_PAGE } from 'containers/Buckets/constants'
 
 import injectSaga from 'utils/injectSaga'
@@ -70,10 +76,14 @@ export class FlashDealsLanding extends React.PureComponent { // eslint-disable-l
   }
 
   componentDidMount () {
-    const { setPageTitle, setRouteName, intl, getPromos } = this.props
+    const { setPageTitle, setRouteName, intl, setShowSearchIcon, setShowPointsIcon, setShowActivityIcon, getPromos } = this.props
     setPageTitle(intl.formatMessage(messages.header))
     setRouteName(FLASH_DEALS_LANDING_PAGE)
     getPromos()
+
+    setShowSearchIcon(true)
+    setShowPointsIcon(false)
+    setShowActivityIcon(true)
   }
 
   render () {
@@ -134,6 +144,9 @@ function mapDispatchToProps (dispatch) {
     setPageTitle: payload => dispatch(setPageTitleAction(payload)),
     setRouteName: payload => dispatch(setRouteNameAction(payload)),
     getPromos: payload => dispatch(getPromosAction(payload)),
+    setShowSearchIcon: (payload) => dispatch(setShowSearchIconAction(payload)),
+    setShowPointsIcon: (payload) => dispatch(setShowPointsIconAction(payload)),
+    setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     changeRoute: url => dispatch(push(url)),
     dispatch
   }
