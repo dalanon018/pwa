@@ -107,7 +107,8 @@ function RecentStore ({ windowWidth, handleToggle, toggle, value }) {
 
 RecentStore.propTypes = {
   value: PropTypes.object.isRequired,
-  handleToggle: PropTypes.func.isRequired
+  handleToggle: PropTypes.func.isRequired,
+  windowWidth: PropTypes.number.isRequired
 }
 
 export default RecentStore
