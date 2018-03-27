@@ -8,7 +8,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { noop, isEmpty } from 'lodash'
-import { ifElse, equals, both, compose, prop, propOr, either } from 'ramda'
+import { ifElse, equals, both, compose, partial, prop, propOr, either } from 'ramda'
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
 import { replace, push } from 'react-router-redux'
@@ -279,18 +279,24 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     return currentPoints.get('points') < ALLOWED_POINTS
   }
 
-  componentWillUnmount () {
-    this.props.setHandlersDefault()
-  }
+  _handleStoreVisible = (props) => {
+    const { location: { search }, previousStore } = props
+    const { store } = this.state
 
-  componentDidMount () {
-    const { location: { search }, getCurrentPoints, getOrderProduct, getMobileNumber, getStore, getBlackList, setRouteName } = this.props
+     // handle populating store details
+     const populateFromStorage = ifElse(
+      isEmpty,
+      () => this.setState({
+        store: previousStore.toJSON()
+      }),
+      noop
+    )
 
     const query = fnQueryObject(search)
     const selectQuery = compose(
       ifElse(
         isEmpty,
-        noop,
+        partial(populateFromStorage, [store]),
         async (type) => this.setState({
           modePayment: type.toUpperCase(),
           storeLocatorVisibility: type.toUpperCase() === this.showStoreLocator,
@@ -301,21 +307,33 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       propOr('', 'type')
     )
 
+    selectQuery(query)
+  }
+
+  componentWillUnmount () {
+    this.props.setHandlersDefault()
+  }
+
+  componentDidMount () {
+    const { location: { search }, getCurrentPoints, getOrderProduct, getMobileNumber, getStore, getBlackList, setRouteName } = this.props
+
+
     setRouteName(PRODUCTREVIEW_NAME)
     getOrderProduct()
     getCurrentPoints()
     getMobileNumber()
     getBlackList()
     getStore()
-    selectQuery(query)
 
     this.props.setPageTitle('Review Order')
     this.props.setShowSearchIcon(false)
     this.props.setShowActivityIcon(false)
+
+    this._handleStoreVisible(this.props)
   }
 
   componentWillReceiveProps (nextProps) {
-    const { orderedProduct, productLoader, mobileNumber, mobileLoader, orderSuccess, orderFail, previousStore } = nextProps
+    const { orderedProduct, productLoader, mobileNumber, mobileLoader, orderSuccess, orderFail } = nextProps
     const { store } = this.state
 
     if (!isEmpty(store)) {
@@ -341,14 +359,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       isEntityEmpty, noop, this._handleSubmissionError
     )(orderFail)
 
-    // handle populating store details
-    ifElse(
-      isEmpty,
-      () => this.setState({
-        store: previousStore.toJSON()
-      }),
-      noop
-    )(store)
+    this._handleStoreVisible(nextProps)
   }
 
   render () {
