@@ -8,6 +8,16 @@ import request from 'utils/request'
 import { getItem } from 'utils/localStorage'
 
 import {
+  RECENT_STORE_TOKEN,
+  LOYALTY_URL,
+  MOBILE_NUMBERS_KEY
+} from 'containers/App/constants'
+
+import {
+  getAccessToken
+} from 'containers/Buckets/saga'
+
+import {
   GET_VISITED_STORES
 } from './constants'
 
@@ -15,23 +25,19 @@ import {
   setVisitedStoresAction
 } from './actions'
 
-import {
-  RECENT_STORE_TOKEN,
-  LOYALTY_URL,
-  MOBILE_NUMBERS_KEY
-} from 'containers/App/constants'
-
 export function * getVisitedStore () {
   const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
   // we will only get the last mobileNumber used
   const mobileNumber = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
 
+  const token = yield getAccessToken()
   const req = yield call(request, `${LOYALTY_URL}/recentStores`, {
     method: 'POST',
     body: JSON.stringify({
       mobileNumber,
       token: RECENT_STORE_TOKEN
-    })
+    }),
+    token: token.access_token
   })
   // @TODO: we need to know the structure wether we need to create a transformation layer for this.
   if (!isEmpty(req)) {
