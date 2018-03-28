@@ -47,8 +47,9 @@ export const FlexContainer = styled.div`
 `
 
 export const ImageWrapper = styled.div`
-  margin-right: 40px;
   display: inline-block;
+  margin-right: 40px;
+  width: 100%;
 
   img {
     width: 100%;

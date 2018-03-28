@@ -295,10 +295,10 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                 <FormattedMessage {...messages.productDetailsTitle} />
               </Label>
               <div className='margin__bottom-positive--10' dangerouslySetInnerHTML={{__html: orderedProduct.get('details')}} />
-              <div className='sub-title color__secondary'>
+              {/* <div className='sub-title color__secondary'>
                 <FormattedMessage {...messages.productDeliveryTitle} />
               </div>
-              <div dangerouslySetInnerHTML={{__html: orderedProduct.get('deliveryPromiseMessage')}} />
+              <div dangerouslySetInnerHTML={{__html: orderedProduct.get('deliveryPromiseMessage')}} /> */}
             </DetailsWrapper>
           </ListCollapse>
         </div>
