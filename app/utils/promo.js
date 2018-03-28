@@ -1,9 +1,8 @@
-import { isEmpty } from 'lodash'
 import {
   subtract,
   multiply,
   divide,
-  lt,
+  lt
 } from 'ramda'
 
 /**

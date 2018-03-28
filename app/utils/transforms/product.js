@@ -17,7 +17,7 @@ import {
   propOr,
   ifElse,
   isNil,
-  toUpper,
+  toUpper
 } from 'ramda'
 
 import { calculateDiscountPrice } from 'utils/promo'
@@ -183,7 +183,7 @@ const applyPrices = (data) => {
       () => discount,
       compose(
         calculateDiscountPrice,
-        (points)=> ({
+        (points) => ({
           price: getRegularPrice(),
           discountPrice: propOr(0, 'amount', points),
           discountType: compose(toUpper, prop('type'))(points)
