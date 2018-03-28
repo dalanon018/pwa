@@ -44,11 +44,11 @@ describe('request', () => {
       window.fetch.mockReturnValue(Promise.resolve(res))
     })
 
-    it('should return null on 204 response', (done) => {
+    it('should return empty on 204 response', (done) => {
       request('/thisurliscorrect')
         .catch(done)
         .then((json) => {
-          expect(json).toBeNull()
+          expect(json).toEqual('')
           done()
         })
     })

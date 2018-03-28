@@ -26,6 +26,7 @@ describe('<Buckets />', () => {
     showSearchIcon: false,
     showActivityIcon: false,
     isRegisteredPush: false,
+    showPointsIcon: false,
     loyaltyToken: null,
     intl: {
       formatDate: () => {},
