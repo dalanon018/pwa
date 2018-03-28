@@ -127,9 +127,11 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   _updateParamsImages = (images) => {
+    const { windowWidth } = this.props
+
     const options = {
-      w: 1170,
-      h: 300,
+      w: windowWidth >= 1024 ? 1170 : 800,
+      h: windowWidth >= 1024 ? 300 : 400,
       fit: 'clamp',
       auto: 'compress',
       q: 35,
@@ -395,6 +397,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   render () {
     const { productsByBrands, loader, lazyload } = this.props
     const { brandImages, animateBanner, brandDesktopSliders } = this.state
+    console.log(brandImages, brandDesktopSliders)
     return (
       <div>
         <Waypoint
