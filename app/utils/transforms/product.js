@@ -14,9 +14,13 @@ import {
   pick,
   prop,
   propEq,
-  propOr
+  propOr,
+  ifElse,
+  isNil,
+  toUpper,
 } from 'ramda'
 
+import { calculateDiscountPrice } from 'utils/promo'
 import {
   ARRAY,
   BOOLEAN,
@@ -162,14 +166,54 @@ const applyChangeProductId = (data) => compose(
 // Apply prices
 const applyPrices = (data) => {
   const fetchPriceProperty = (key) => compose(
-    propOr(0, 'amount'),
     find(propEq('currency', key)),
     propOr([], 'priceList')
   )(data)
 
+  const pathAmount = compose(
+    propOr(0, 'amount'),
+    fetchPriceProperty
+  )
+
+  const identifyDiscountPrice = () => {
+    const points = fetchPriceProperty('POINTS')
+    const discount = pathAmount('DPHP')
+    const identify = ifElse(
+      isNil,
+      () => discount,
+      compose(
+        calculateDiscountPrice,
+        (points)=> ({
+          price: getRegularPrice(),
+          discountPrice: propOr(0, 'amount', points),
+          discountType: compose(toUpper, prop('type'))(points)
+        })
+      )
+    )
+    return identify(points)
+  }
+
+  const getDiscountInfo = () => {
+    const points = fetchPriceProperty('POINTS')
+    const formatDiscountInfo = ifElse(
+      isNil,
+      () => null,
+      evolve({
+        type: toUpper
+      })
+    )
+
+    return formatDiscountInfo(points)
+  }
+
+  const getRegularPrice = () => {
+    return pathAmount('PHP')
+  }
+
   return compose(
-    assoc('discountPrice', fetchPriceProperty('DPHP')),
-    assoc('price', fetchPriceProperty('PHP'))
+    assoc('discountInfo', getDiscountInfo()),
+    assoc('discountPrice', identifyDiscountPrice()),
+    assoc('price', getRegularPrice())
   )(data)
 }
 
