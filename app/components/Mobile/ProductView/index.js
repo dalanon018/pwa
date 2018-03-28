@@ -90,8 +90,10 @@ const ProductEntityInfo = ({ entity, isMinor, over18, changeRoute }) => {
   : changeRoute('/')
 
   const togglePromoTag = () => {
+    const discountInfo = entity.get('discountInfo')
+
     return (
-      <RibbonWrapper />
+      discountInfo !== null && <RibbonWrapper percentage={discountInfo && discountInfo} />
     )
   }
 
