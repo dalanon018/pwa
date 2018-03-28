@@ -1,12 +1,17 @@
-import { isEmpty } from 'lodash'
+import {
+  subtract,
+  multiply,
+  divide,
+  lt
+} from 'ramda'
 
 /**
  * Main calculation for getting the total price
  * @param {*} price
  * @param {*} discount
  */
-const getTotalPrice = (price = 0, discount = 0) => {
-  return price - (price * (discount / 100))
+const getTotalPrice = ({ price, discountPrice }) => {
+  return subtract(price, multiply(price, divide(discountPrice, 100)))
 }
 
 /**
@@ -20,30 +25,26 @@ const identifyCalculation = cases => dafultFn => key =>
   * Gettting amount percentage
   * @param {*} product
   */
-export const calculatePercentage = (product) =>
-  getTotalPrice(
-    parseFloat(product.get('price')),
-    parseFloat(product.get('discountPrice'))
-  )
+export const calculatePercentage = getTotalPrice
 
 /**
   * Gettting amount amount
   * @param {*} product
   */
-const calculateAmount = (product) =>
-    parseFloat(product.get('price')) - parseFloat(product.getIn(['discount', 'value']))
+const calculateAmount = ({ price, discountPrice }) =>
+   subtract(price, discountPrice)
 
 /**
  * Main component for getting the price
  * @param {*} param0
  */
-export const calculateProductPrice = (product) => {
-  if (isEmpty(product.get('discount'))) {
-    return (parseFloat(product.get('price')).toLocaleString())
+export const calculateDiscountPrice = ({ price, discountPrice, discountType }) => {
+  if (lt(discountPrice, 0)) {
+    return (parseFloat(price).toLocaleString())
   }
 
   return identifyCalculation({
     PERCENTAGE: calculatePercentage,
     AMOUNT: calculateAmount
-  })(calculatePercentage)(product.getIn(['discount', 'discountType']))(product)
+  })(calculatePercentage)(discountType)({ price, discountPrice })
 }
