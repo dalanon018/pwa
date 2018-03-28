@@ -17,9 +17,6 @@ if (env === 'production') {
   console.log(`FIREBASE_MESSAGING_SENDER_ID=${process.env.FIREBASE_MESSAGING_SENDER_ID}`)
   console.log(`FIREBASE_MAIN_OBJECT=${process.env.FIREBASE_MAIN_OBJECT}`)
 
-  console.log(`FIREBASE_USERNAME=${process.env.FIREBASE_USERNAME}`)
-  console.log(`FIREBASE_PASSWORD=${process.env.FIREBASE_PASSWORD}`)
-
   console.log(`OATH_CLIENT_ID=${process.env.OATH_CLIENT_ID}`)
   console.log(`OATH_CLIENT_SECRET=${process.env.OATH_CLIENT_SECRET}`)
   console.log(`OATH_RESPONSE_TYPE=${process.env.OATH_RESPONSE_TYPE}`)
@@ -34,7 +31,7 @@ if (env === 'production') {
   console.log(`APP_BASE_URL=https://cliqqshop.com`)
   console.log(`MOBILE_REGISTRATION_URL=https://gw.cliqq.net:8443`)
   console.log(`STORE_LOCATOR_URL=https://mapservice.cliqq.net/ajax/`)
-  console.log(`LOYALTY_URL=http://test.apollo.com.ph:8084/RedemptionHost/ecmsApi`)
+  console.log(`LOYALTY_URL=https://apidemo.cliqq.net:8443/loyalty/ecmsApi`)
   console.log(`RECENT_STORE_TOKEN=MmsxN1N0b3JlTG9jYXRvclBhc3N3b3JkRm9yRTE=`)
 
   console.log(`FIREBASE_API_KEY=AIzaSyDYGxDAGSC8Tf6KY7bgyOx-ZFWQy3s1cn4`)
@@ -44,9 +41,6 @@ if (env === 'production') {
   console.log(`FIREBASE_STORAGE_BUCKET=cliqqshop.appspot.com`)
   console.log(`FIREBASE_MESSAGING_SENDER_ID=656457472840`)
   console.log(`FIREBASE_MAIN_OBJECT=transactions`)
-
-  console.log(`FIREBASE_USERNAME=joshuacalpuerto@gmail.com`)
-  console.log(`FIREBASE_PASSWORD=password`)
 
   console.log(`OATH_CLIENT_ID=ecms-pwa`)
   console.log(`OATH_CLIENT_SECRET=ecms-pwa-secret`)

@@ -8,13 +8,14 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import PropTypes from 'prop-types'
 
+import { fromJS } from 'immutable'
 import { connect } from 'react-redux'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { compose } from 'redux'
 import { push } from 'react-router-redux'
 import { Grid } from 'semantic-ui-react'
-import { noop, range } from 'lodash'
+import { noop } from 'lodash'
 import {
   ifElse,
   isEmpty
@@ -39,7 +40,8 @@ import saga from './saga'
 import messages from './messages'
 
 import {
-  getVisitedStoresAction
+  getVisitedStoresAction,
+  storeLocatorAction
 } from './actions'
 
 import {
@@ -54,22 +56,29 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
     setRouteName: PropTypes.func.isRequired,
     dispatch: PropTypes.func.isRequired,
     getVisitedStores: PropTypes.func.isRequired,
+    storeLocator: PropTypes.func.isRequired,
     visitedStores: PropTypes.object.isRequired,
     visitedStoresLoading: PropTypes.bool.isRequired
   }
 
   state = {
-    store: {},
+    stores: fromJS([]),
     toggle: ''
   }
 
-  _handleGoTo = (id, name) => () => {
-    const { changeRoute } = this.props
-
-    changeRoute(`/products-category/${id}?name=${name}`)
+  _handleGoToStoreLocator = () => {
+    this.props.storeLocator()
   }
 
-  _handleToggle = (_, data) => this.setState({toggle: data.value})
+  _handleToggle = (_, { value }) => {
+    const { changeRoute, visitedStores } = this.props
+    const selectedStore = visitedStores.find((entity) => entity.get('id') === value)
+    this.setState({
+      toggle: value
+    }, () => {
+      changeRoute(`/review?type=cod&storeId=${selectedStore.get('id')}&storeName=${selectedStore.get('name')}`)
+    })
+  }
 
   componentDidMount () {
     const { location: { search }, setPageTitle, setRouteName, intl, getVisitedStores } = this.props
@@ -79,7 +88,7 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
       isEmpty,
       noop,
       () => this.setState({
-        store: query // we update our store
+        stores: fromJS([query]) // we update our store
       })
     )
 
@@ -90,7 +99,9 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
   }
 
   render () {
-    const { windowWidth } = this.props
+    const { windowWidth, visitedStores } = this.props
+    const { stores } = this.state
+    const implementStore = visitedStores.size ? visitedStores : stores
     return (
       <div>
         <Helmet
@@ -100,10 +111,10 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
           ]}
         />
         {
-          range(2).map((_, index) =>
+          implementStore.map((visited, index) =>
             <RecentStore
               key={index}
-              dummyValue={`dummyValue${index}`}
+              value={visited}
               toggle={this.state.toggle}
               windowWidth={windowWidth}
               handleToggle={this._handleToggle} />)
@@ -115,7 +126,7 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
                 <FormattedMessage
                   {...messages.findStore}
                   values={{storeLocator: (
-                    <span className='color__primary' onClick={() => {}}>
+                    <span className='color__primary' onClick={this._handleGoToStoreLocator}>
                       <FormattedMessage
                         {...messages.storeLocator}
                       />
@@ -141,6 +152,7 @@ function mapDispatchToProps (dispatch) {
     setPageTitle: payload => dispatch(setPageTitleAction(payload)),
     setRouteName: payload => dispatch(setRouteNameAction(payload)),
     getVisitedStores: () => dispatch(getVisitedStoresAction()),
+    storeLocator: () => dispatch(storeLocatorAction()),
     changeRoute: url => dispatch(push(url)),
     dispatch
   }
