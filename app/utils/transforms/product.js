@@ -2,12 +2,16 @@
 import {
   __,
   assoc,
+  both,
   compose,
   concat,
   evolve,
   filter,
   find,
+  has,
   head,
+  ifElse,
+  isNil,
   map,
   omit,
   path,
@@ -15,8 +19,6 @@ import {
   prop,
   propEq,
   propOr,
-  ifElse,
-  isNil,
   toUpper
 } from 'ramda'
 
@@ -165,10 +167,17 @@ const applyChangeProductId = (data) => compose(
 
 // Apply prices
 const applyPrices = (data) => {
-  const fetchPriceProperty = (key) => compose(
-    find(propEq('currency', key)),
-    propOr([], 'priceList')
-  )(data)
+  const fetchPriceProperty = ({ key, type = false }) => {
+    // @TODO: this is a monkey patch since they cannot change the 'currency' to PROMO
+    const typeExist = (entity) => {
+      console.log(entity)
+      return type ? has('type', entity) : true
+    }
+    return compose(
+      find(both(propEq('currency', key), typeExist)),
+      propOr([], 'priceList')
+    )(data)
+  }
 
   const pathAmount = compose(
     propOr(0, 'amount'),
@@ -176,25 +185,27 @@ const applyPrices = (data) => {
   )
 
   const identifyDiscountPrice = () => {
-    const points = fetchPriceProperty('POINTS')
-    const discount = pathAmount('DPHP')
+    // TODO:change this to PROMO once available
+    const promo = fetchPriceProperty({key: 'PHP', type: true})
+    const discount = pathAmount({key: 'DPHP'})
     const identify = ifElse(
       isNil,
       () => discount,
       compose(
         calculateDiscountPrice,
-        (points) => ({
+        (promo) => ({
           price: getRegularPrice(),
-          discountPrice: propOr(0, 'amount', points),
-          discountType: compose(toUpper, prop('type'))(points)
+          discountPrice: propOr(0, 'amount', promo),
+          discountType: compose(toUpper, prop('type'))(promo)
         })
       )
     )
-    return identify(points)
+    return identify(promo)
   }
 
   const getDiscountInfo = () => {
-    const points = fetchPriceProperty('POINTS')
+    // TODO:change this to PROMO once available
+    const promo = fetchPriceProperty({key: 'PHP', type: true})
     const formatDiscountInfo = ifElse(
       isNil,
       () => null,
@@ -203,11 +214,11 @@ const applyPrices = (data) => {
       })
     )
 
-    return formatDiscountInfo(points)
+    return formatDiscountInfo(promo)
   }
 
   const getRegularPrice = () => {
-    return pathAmount('PHP')
+    return pathAmount({key: 'PHP'})
   }
 
   return compose(
