@@ -147,7 +147,7 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
   _handlePageBanners = (nextProps) => {
     const { promo } = nextProps
 
-    if (promo.size) {
+    if (promo.get('sliders')) {
       const promoImages = promo.size ? promo.get('sliders').toArray().map(this._updateParamsImages) : []
 
       this.setState({
