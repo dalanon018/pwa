@@ -72,36 +72,36 @@ export class BrandLanding extends React.PureComponent { // eslint-disable-line r
     )
   }
 
-  _handleScrollBottom = () => {
-    // function to detect when scroollbar reaches the bottom of page
-    const whenScrlBottom = () => {
-      // http://coursesweb.net/javascript/
-      let windowHeight = (this.innerHeight) ? this.innerHeight : document.body.clientHeight    // gets window height
+  // function to detect when scroollbar reaches the bottom of page
+  _whenScrlBottom = () => {
+    // http://coursesweb.net/javascript/
+    let windowHeight = (this.innerHeight) ? this.innerHeight : document.body.clientHeight    // gets window height
 
-      // gets current vertical scrollbar position
-      let scrollPosition = window.pageYOffset ? window.pageYOffset : document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop
+    // gets current vertical scrollbar position
+    let scrollPosition = window.pageYOffset ? window.pageYOffset : document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop
 
-      // if scrollbar reaces to bottom
-      if (document.body.scrollHeight <= (scrollPosition + windowHeight)) {
-        this.setState({isBottomScrolled: true})
-      } else {
-        this.setState({isBottomScrolled: false})
-      }
+    // if scrollbar reaces to bottom
+    if (document.body.scrollHeight <= (scrollPosition + windowHeight)) {
+      this.setState({isBottomScrolled: true})
+    } else {
+      this.setState({isBottomScrolled: false})
     }
+  }
 
-    // register event on scrollbar
-    window.onscroll = whenScrlBottom
+  componentWillUnmount () {
+    window.removeEventListener('scroll', this._whenScrlBottom, false)
   }
 
   componentDidMount () {
     const { setPageTitle, setRouteName, intl, setShowActivityIcon, setShowSearchIcon, setShowPointsIcon } = this.props
     setPageTitle(intl.formatMessage(messages.header))
     setRouteName(BRANDS_LANDING_PAGE)
-    this._handleScrollBottom()
 
     setShowSearchIcon(true)
     setShowPointsIcon(false)
     setShowActivityIcon(true)
+
+    window.addEventListener('scroll', this._whenScrlBottom, false)
   }
 
   render () {
