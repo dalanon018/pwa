@@ -67,7 +67,6 @@ export function * getWallet (args) {
     const walletEntity = omit(['transactions', 'totalCount'])
     const transactionsEntity = propOr([], 'transactions')
     const countEntity = propOr(0, 'totalCount')
-
     wallet = walletEntity(walletClean)
     transactions = transactionsEntity(walletClean)
     count = countEntity(walletClean)

@@ -7,13 +7,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import moment from 'moment'
 
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
-import { noop } from 'lodash'
+import { noop, isEmpty } from 'lodash'
 import {
   allPass,
   compose,
@@ -23,26 +24,25 @@ import {
   partial,
   path
 } from 'ramda'
-import { Container, Label, Image } from 'semantic-ui-react'
+import { Container, Label, Image, Grid } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
-import MobileProductView from 'components/Mobile/ProductView'
-import DesktopProductView from 'components/Desktop/ProductView'
-
 import OrderTip from 'components/Mobile/OrderTip'
 import PlainCard from 'components/Mobile/PlainCard'
+import MobileTransactions from 'components/Mobile/PointsHistory'
 
 import MobileFooter from 'components/Mobile/Footer'
 
 import AccessView from 'components/Shared/AccessMobileDesktopView'
-import WindowWidth from 'components/Shared/WindowWidth'
-import H3 from 'components/Shared/H3'
 import EmptyProducts from 'components/Shared/EmptyProductsBlock'
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
-import { InfiniteLoading, InfiniteWrapper } from 'components/Shared/InfiniteLoading'
+import { InfiniteWrapper } from 'components/Shared/InfiniteLoading'
 import { userIsAuthenticated } from 'containers/App/auth'
+
+import TealIcon from 'images/icons/plain-cliqq-teal-icon.svg'
+
 import {
   getMobileNumbersAction,
   setPageTitleAction,
@@ -56,9 +56,6 @@ import {
 } from 'containers/Buckets/selectors'
 
 import { WALLET_NAME } from 'containers/Buckets/constants'
-
-import TealIcon from 'images/icons/plain-cliqq-teal-icon.svg'
-import PlainIcon from 'images/icons/plain-cliqq-icon.svg'
 
 import messages from './messages'
 import reducer from './reducer'
@@ -100,6 +97,14 @@ const DesktopTitle = styled.p`
   margin-bottom: 0;
 `
 
+const PointsPreviewWrapper = styled.div`
+  padding: 30px 14px;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`
+
 const UserPointsWrapper = styled.div`
   align-items: center;
   display: flex;
@@ -114,35 +119,6 @@ const UserPointsWrapper = styled.div`
     font-size: 45px !important;
     line-height: inherit;
     margin-left: 8px;
-  }
-`
-
-const PointsPreviewWrapper = styled.div`
-  padding: 30px 14px;
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-`
-
-const PointsHistoryWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  padding: 14px;
-  width: 100%;
-`
-
-const AdjustedPoints = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin-left: 20px;
-  margin-right: 5px;
-
-  img {
-    width: 15px;
-    margin: 0 5px;
   }
 `
 
@@ -250,9 +226,7 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
     return (
       <AccessView
         mobileView={
-          <H3>
-            <FormattedMessage {...messages.walletTransactionsTitle} />
-          </H3>
+          null
         }
         desktopView={
           <div className='margin__vertical--30'>
@@ -270,27 +244,41 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
   }
 
   _displayTransactionsItems = () => {
-    const { transactions, changeRoute, transactionsLoading, lazyload, windowWidth, transactionsCount } = this.props
+    const { transactions, changeRoute, transactionsLoading, lazyload, wallet } = this.props
     if (transactions.size > 0 || lazyload === false) {
+      const getLatestTransaction = transactions.first() && transactions.first().get('datetime')
+
       return (
-        <InfiniteLoading
-          results={transactions}
-          hasMoreData={lazyload}
-          loadMoreData={this._displayMoreProducts}
-          isLoading={transactionsLoading}
-          rowCount={transactionsCount}
-        >
-          {(props) => (
-            <AccessView
-              mobileView={
-                <MobileProductView changeRoute={changeRoute} loader={transactionsLoading} products={transactions} windowWidth={windowWidth} {...props} />
-              }
-              desktopView={
-                <DesktopProductView changeRoute={changeRoute} loader={transactionsLoading} products={transactions} windowWidth={windowWidth} {...props} />
-              }
-            />
-          )}
-        </InfiniteLoading>
+        <div>
+          <Container className='padding__none--vertical'>
+            <Grid padded>
+              <Grid.Row className='padding__none--vertical'>
+                <div>
+                  <PlainCard>
+                    <PointsPreviewWrapper className='text__align--center'>
+                      <Label as='p' className='text__weight--500' size='large' >
+                        <FormattedMessage {...messages.currentPoints} />
+                      </Label>
+                      <Label as='p' className='color__grey text__weight--400' size='medium' >
+                        <FormattedMessage
+                          {...messages.asOf}
+                          values={{date: moment(getLatestTransaction).format('LL')}} />
+                      </Label>
+                      <UserPointsWrapper>
+                        <Image src={TealIcon} alt='CLiQQ' />
+                        <Label as='span' className='my-points color__teal text__weight--700' size='massive' >
+                          {!isEmpty(wallet) ? wallet.get('currentPoints') : '---'}
+                        </Label>
+                      </UserPointsWrapper>
+                    </PointsPreviewWrapper>
+                  </PlainCard>
+                </div>
+              </Grid.Row>
+            </Grid>
+          </Container>
+
+          <MobileTransactions changeRoute={changeRoute} loader={transactionsLoading} wallet={wallet} transactions={transactions} />
+        </div>
       )
     }
 
@@ -334,10 +322,11 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
 
   render () {
     const { transactionsLoading, lazyload } = this.props
+
     return (
       <div>
         <ContentWrapper>
-          <div className='margin__top-positive--30'>
+          <div>
             <InfiniteWrapper
               hasMoreData={lazyload}
               isLoading={transactionsLoading}
@@ -347,76 +336,6 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
               { this._displayEmptyLoadingIndicator() }
               { this._displayTransactionsItems() }
             </InfiniteWrapper>
-
-            {/* Static Layout */}
-            <div className='margin__bottom-positive--20'>
-              <PlainCard>
-                <PointsPreviewWrapper className='text__align--center'>
-                  <Label as='p' className='text__weight--500' size='large' >
-                    <FormattedMessage {...messages.currentPoints} />
-                  </Label>
-                  <Label as='p' className='color__grey text__weight--400' size='medium' >
-                    <FormattedMessage
-                      {...messages.asOf}
-                      values={{date: 'December 10, 2017'}} />
-                  </Label>
-                  <UserPointsWrapper>
-                    <Image src={TealIcon} alt='CLiQQ' />
-                    <Label as='span' className='my-points color__teal text__weight--700' size='massive' >
-                      123
-                    </Label>
-                  </UserPointsWrapper>
-                </PointsPreviewWrapper>
-              </PlainCard>
-            </div>
-
-            <Label as='p' className='color__grey text__weight--500 text__align--left' size='large' >
-              <FormattedMessage {...messages.walletTransactionsTitle} />
-            </Label>
-            <PlainCard>
-              <PointsHistoryWrapper className='border_bottom__one--light-grey'>
-                <div className='text__align--left'>
-                  <Label as='p' basic className='margin__none text__weight--400' size='small' >
-                    <FormattedMessage
-                      {...messages.youBought}
-                      values={{item: 'Leather Credit Card Wallet (Black)'}} />
-                  </Label>
-                  <Label as='p' basic className='color__grey text__weight--400' size='mini' >
-                    09-21-2017 1:06 PM
-                  </Label>
-                </div>
-                <AdjustedPoints className='text__align--right'>
-                  <Label as='p' basic className='color__teal margin__none text__weight--700' size='huge' >
-                    +
-                  </Label>
-                  <Image src={TealIcon} alt='CLiQQ' />
-                  <Label as='p' basic className='color__teal margin__none text__weight--700' size='huge' >
-                    30
-                  </Label>
-                </AdjustedPoints>
-              </PointsHistoryWrapper>
-              <PointsHistoryWrapper className='border_bottom__one--light-grey'>
-                <div className='text__align--left'>
-                  <Label as='p' basic className='margin__none text__weight--400' size='medium' >
-                    <FormattedMessage
-                      {...messages.youBought}
-                      values={{item: 'Leather Credit Card Wallet (Black)'}} />
-                  </Label>
-                  <Label as='p' basic className='color__grey text__weight--400' size='mini' >
-                    09-21-2017 1:06 PM
-                  </Label>
-                </div>
-                <AdjustedPoints className='text__align--right'>
-                  <Label as='p' basic className='color__primary margin__none text__weight--700' size='huge' >
-                    -
-                  </Label>
-                  <Image src={PlainIcon} alt='CLiQQ' />
-                  <Label as='p' basic className='color__primary margin__none text__weight--700' size='huge' >
-                    300
-                  </Label>
-                </AdjustedPoints>
-              </PointsHistoryWrapper>
-            </PlainCard>
           </div>
         </ContentWrapper>
 
@@ -463,4 +382,4 @@ export default ReduxCompose(
   withReducer,
   withSaga,
   withConnect
-)(WindowWidth(injectIntl(userIsAuthenticated(WalletPage))))
+)(injectIntl(userIsAuthenticated(WalletPage)))
