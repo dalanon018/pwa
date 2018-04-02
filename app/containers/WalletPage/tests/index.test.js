@@ -42,6 +42,6 @@ describe('<WalletPage />', () => {
     const renderedComponent = shallow(
       <WalletPage {...minProps} />
     )
-    expect(renderedComponent.find('div').length).toEqual(5)
+    expect(renderedComponent.find('div').length).toEqual(4)
   })
 })

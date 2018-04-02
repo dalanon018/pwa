@@ -11,4 +11,4 @@ export const SET_WALLET_TRANSACTIONS = 'app/PromoProductsPage/SET_WALLET_TRANSAC
 export const SET_WALLET_TRANSACTIONS_COUNT = 'app/PromoProductsPage/SET_WALLET_TRANSACTIONS_COUNT'
 export const RESET_WALLET_TRANSACTIONS = 'app/PromoProductsPage/RESET_WALLET_TRANSACTIONS'
 
-export const LIMIT_ITEMS = 12
+export const LIMIT_ITEMS = 999
