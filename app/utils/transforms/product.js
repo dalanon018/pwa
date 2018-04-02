@@ -170,7 +170,6 @@ const applyPrices = (data) => {
   const fetchPriceProperty = ({ key, type = false }) => {
     // @TODO: this is a monkey patch since they cannot change the 'currency' to PROMO
     const typeExist = (entity) => {
-      console.log(entity)
       return type ? has('type', entity) : true
     }
     return compose(
