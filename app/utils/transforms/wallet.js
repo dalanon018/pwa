@@ -1,10 +1,9 @@
 import {
-  __,
+  assoc,
   compose,
   map,
   partial,
-  evolve,
-  partialRight
+  propOr
 } from 'ramda'
 
 import {
@@ -50,23 +49,31 @@ const updateObject = (data, schema) => {
   return mapKeys(changeKey, data)
 }
 
-const transformWallet = async (data) => {
+const applyTransactions = async (data) => {
   // we need to clean our employee data first
   const awaitValidateSchema = await ValidateSchema
 
-  const transform = {
-    transactions: map(compose(
-      updateObject(__, TransactionSchema),
-      partial(awaitValidateSchema, [TransactionSchema])
-    ))(__)
-  }
+  const transformer = compose(
+    async (mapData) => {
+      const promiseArray = await Promise.all(mapData)
+      return promiseArray
+    },
+    map(partial(awaitValidateSchema, [TransactionSchema]))
+  )
+  const transactions = await transformer(data)
+  return transactions
+}
 
-  const transpile = await compose(
-    evolve(transform),
-    partialRight(updateObject, [WalletSchema])
+const transformWallet = async (data) => {
+  const applySchemaName = updateObject(data, WalletSchema)
+
+  const transform = await compose(
+    applyTransactions,
+    propOr([], 'transactions')
   )
 
-  return transpile(data)
+  const transactions = await transform(applySchemaName)
+  return assoc('transactions', transactions, data)
 }
 
 const Wallet = async (response) => {
