@@ -139,6 +139,8 @@ class FilterTrigger extends React.PureComponent {
     const foundCategory = filterCategories.find((category) => category.get('id') === selectedCategory)
     const category = foundCategory ? foundCategory.toObject() : {}
 
+    document.getElementsByTagName('body')[0].classList.remove('custom__body')
+
     requestFromFilter({
       category,
       brands: selectedBrands
