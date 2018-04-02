@@ -73,7 +73,7 @@ function PointsHistory ({
                         </Label>
                         <Image src={TealIcon} alt='CLiQQ' />
                         <Label as='p' basic className='color__teal margin__none text__weight--700' size='huge' >
-                          {transaction.get('points')}
+                          {transaction.get('points') && parseFloat(transaction.get('points')).toLocaleString()}
                         </Label>
                       </AdjustedPoints>
                       : <AdjustedPoints className='text__align--right'>
@@ -82,7 +82,7 @@ function PointsHistory ({
                         </Label>
                         <Image src={PlainIcon} alt='CLiQQ' />
                         <Label as='p' basic className='color__primary margin__none text__weight--700' size='huge' >
-                          {transaction.get('points')}
+                          {transaction.get('points') && parseFloat(transaction.get('points')).toLocaleString()}
                         </Label>
                       </AdjustedPoints>
                     }

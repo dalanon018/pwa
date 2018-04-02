@@ -146,6 +146,7 @@ const Product = ({
             <ProductSlider
               images={productImages}
               loader={loading}
+              percentage={product.get('discountInfo') && product.get('discountInfo')}
               isInfinite
               curved
             />

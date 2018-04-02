@@ -264,7 +264,6 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         className='brand-logo'
         alt='CLiQQ'
         src={this._updateParamsImages(orderedProduct.get('brandLogo'), { w: 200, h: 30 })} />) : ''
-
     return (
       <ProductReviewWrapper>
         <div className='background__white box__shadow--primary padding__bottom--20'>
@@ -273,7 +272,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
             <ProductItem>
               <div className='padding__vertical--20'>
                 <div className='position__relative'>
-                  <RibbonWrapper rightSpace />
+                  <RibbonWrapper rightSpace percentage={orderedProduct.get('discountInfo') && orderedProduct.get('discountInfo')} />
                   <Image className='slick-image-handler' alt='CLiQQ' src={this._updateParamsImages(orderedProduct.get('image'))} />
                 </div>
               </div>

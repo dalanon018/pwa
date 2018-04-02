@@ -8,6 +8,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Label } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
+import { isEmpty } from 'lodash'
 
 import { FormattedMessage } from 'react-intl'
 import messages from './messages'
@@ -71,14 +72,17 @@ class RibbonWrapper extends React.PureComponent {
   }
 
   render () {
-    const { rightSpace } = this.props
+    const { rightSpace, percentage } = this.props
     const { offsetRight } = this.state
 
     return (
       <Wrapper offsetRight={rightSpace && offsetRight}>
         <div className='ribbon-tag background__gold'>
-          <Label as='b' className='color__white padding__none text__weight--500' basic size='small'>20%</Label>
-          <Label as='span' className='color__white padding__none text__weight--500' basic size='mini'>
+          <Label as='b' className='color__white padding__none text__weight--500' basic size='small'>
+            {!isEmpty(percentage) && percentage.get('amount')}
+            {!isEmpty(percentage) && percentage.get('type') === 'PERCENTAGE' ? '%' : ''}
+          </Label>
+          <Label as='p' className='color__white margin__top-negative--2 margin__bottom--none padding__none text__weight--500' basic size='mini'>
             <FormattedMessage {...messages.off} />
           </Label>
         </div>

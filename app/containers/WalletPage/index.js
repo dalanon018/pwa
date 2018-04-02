@@ -267,7 +267,7 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
                       <UserPointsWrapper>
                         <Image src={TealIcon} alt='CLiQQ' />
                         <Label as='span' className='my-points color__teal text__weight--700' size='massive' >
-                          {!isEmpty(wallet) ? wallet.get('currentPoints') : '---'}
+                          {!isEmpty(wallet) && wallet.get('currentPoints') ? parseFloat(wallet.get('currentPoints')).toLocaleString() : '---'}
                         </Label>
                       </UserPointsWrapper>
                     </PointsPreviewWrapper>
