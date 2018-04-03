@@ -50,13 +50,13 @@ export const REMOVE_LOYALTY_TOKEN = 'app/Container/REMOVE_LOYALTY_TOKEN'
 export const SET_SEARCH_VALUE = 'app/Buckets/SET_SEARCH_VALUE'
 
 export const HIDE_BACK_BUTTON = [
-  '',
-  'home',
-  'purchases',
-  'flash-deals',
-  'categories',
-  'brands',
-  'wallet'
+  '/',
+  '/home',
+  '/purchases',
+  '/flash-deals',
+  '/categories',
+  '/brands',
+  '/wallet'
 ]
 
 export const STATUSES = {

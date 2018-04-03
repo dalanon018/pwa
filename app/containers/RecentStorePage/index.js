@@ -70,9 +70,17 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
     this.props.storeLocator()
   }
 
+  _implementStore = () => {
+    const { visitedStores } = this.props
+    const { stores } = this.state
+
+    return visitedStores.size ? visitedStores : stores
+  }
+
   _handleToggle = (_, { value }) => {
-    const { changeRoute, visitedStores } = this.props
-    const selectedStore = visitedStores.find((entity) => entity.get('id') === value)
+    const { changeRoute } = this.props
+    const implementStore = this._implementStore()
+    const selectedStore = implementStore.find((entity) => entity.get('id') === value)
     this.setState({
       toggle: value
     }, () => {
@@ -99,9 +107,8 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
   }
 
   render () {
-    const { windowWidth, visitedStores } = this.props
-    const { stores } = this.state
-    const implementStore = visitedStores.size ? visitedStores : stores
+    const { windowWidth } = this.props
+    const implementStore = this._implementStore()
     return (
       <div>
         <Helmet

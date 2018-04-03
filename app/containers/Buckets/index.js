@@ -2,14 +2,23 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import ReactNotification from 'react-notification-system'
+import PathToRegexp from 'path-to-regexp'
 
 import {
+  both,
+  complement,
+  compose as RCompose,
+  equals,
+  filter,
   identity,
   ifElse,
   is,
-  both,
-  equals,
-  partial
+  isEmpty,
+  isNil,
+  map,
+  match,
+  partial,
+  partialRight
 } from 'ramda'
 import { noop } from 'lodash'
 import { push } from 'react-router-redux'
@@ -265,8 +274,16 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
    */
   _hideBackButton = () => {
     const { location: { pathname } } = this.props
+    const shouldHide = RCompose(
+      complement(isEmpty),
+      filter(both(complement(isNil), complement(isEmpty))),
+      map(RCompose(
+        partialRight(match, [pathname]),
+        PathToRegexp
+      ))
+    )
 
-    return HIDE_BACK_BUTTON.includes(pathname.split('/')[1])
+    return shouldHide(HIDE_BACK_BUTTON)
   }
 
   _displayHeader = () => {
