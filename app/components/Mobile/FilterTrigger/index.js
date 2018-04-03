@@ -61,7 +61,7 @@ class FilterTrigger extends React.PureComponent {
     requestFromFilter: PropTypes.func.isRequired,
     filterCategories: PropTypes.object.isRequired,
     filterCategoriesLoading: PropTypes.bool.isRequired,
-    categoryId: PropTypes.string,
+    parentId: PropTypes.string,
     getFilterBrands: PropTypes.func,
     filterBrands: PropTypes.object,
     filterBrandsLoading: PropTypes.bool
@@ -120,16 +120,16 @@ class FilterTrigger extends React.PureComponent {
   }
 
   _handleToggleReset = () => {
-    const { categoryId, getFilterCategories, getFilterBrands } = this.props
+    const { parentId, getFilterCategories, getFilterBrands } = this.props
     this.setState({
       selectedBrands: [],
       selectedCategory: '',
       toggleBrands: [],
       toggleCategory: ''
     })
-
-    getFilterCategories && getFilterCategories({ category: categoryId })
-    getFilterBrands && getFilterBrands({ category: categoryId })
+    console.log(parentId)
+    getFilterCategories && getFilterCategories({ category: parentId })
+    getFilterBrands && getFilterBrands({ category: parentId })
   }
 
   _handleSubmit = () => {
