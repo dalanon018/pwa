@@ -13,6 +13,7 @@ import { compose } from 'redux'
 import { push } from 'react-router-redux'
 import Helmet from 'react-helmet'
 
+import { imageStock } from 'utils/image-stock'
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 import { Grid, Container, Image, Label } from 'semantic-ui-react'
@@ -61,6 +62,15 @@ export class CategoryLanding extends React.PureComponent { // eslint-disable-lin
   render () {
     const { categories } = this.props
 
+    const imgixOptions = {
+      w: 138,
+      h: 40,
+      fit: 'clamp', // we need to make sure that this is clamp so it will base on the container.
+      auto: 'compress',
+      q: 35,
+      lossless: 0
+    }
+
     return (
       <div>
         <Helmet
@@ -76,9 +86,13 @@ export class CategoryLanding extends React.PureComponent { // eslint-disable-lin
                 categories.map(category => {
                   return (
                     <Grid.Column className='padding__bottom--10' key={category.get('id')} onClick={this._handleGoTo(category.get('id'), category.get('name'))}>
-                      <CategoryItem borderRadius height={90}>
+                      <CategoryItem borderRadius height={95}>
                         <div className='text__align--center padding__10'>
-                          <Image src={category.get('background')} alt='CLiQQ' />
+                          {
+                            category.get('background')
+                            ? <Image src={category.get('background')} alt='CLiQQ' />
+                            : <Image src={imageStock('Slider-Default.jpg', imgixOptions)} />
+                          }
                           <Label basic as='span' size='medium' className='text__weight--400 margin__top-positive--10'>
                             {category.get('name')}
                           </Label>

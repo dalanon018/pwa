@@ -31,6 +31,7 @@ describe('<ProductsByCategory />', () => {
     filterCategoriesLoading: false,
     filterBrands: fromJS([]),
     filterBrandsLoading: false,
+    filtered: false,
     match: {
       params: {
         id: '01'

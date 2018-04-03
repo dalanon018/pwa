@@ -134,6 +134,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     brandImages: [],
     pageOffset: 0,
     offset: 0,
+    filtered: false,
     limit: LIMIT_ITEMS
   }
 
@@ -380,6 +381,13 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     return null
   }
 
+  _handleCheckParameter (props) {
+    const { location: { search } } = props
+    const parameter = queryString.parse(search)
+
+    this.setState({filtered: !!parameter.category})
+  }
+
   componentDidMount () {
     const { match: { params }, location: { search }, setRouteName, setPageTitle, setShowSearchIcon, setShowPointsIcon, setShowActivityIcon } = this.props
     const { category } = queryString.parse(search)
@@ -431,11 +439,13 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
 
     updateFetchProduct(nextProps)
     updatePageTitle(nextProps)
+
+    this._handleCheckParameter(nextProps)
   }
 
   render () {
     const { location: { search }, productsByBrands, loader, lazyload, filterCategories, filterCategoriesLoading } = this.props
-    const { brandImages, animateBanner } = this.state
+    const { brandImages, animateBanner, filtered } = this.state
     const { category } = queryString.parse(search)
 
     return (
@@ -451,6 +461,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
               getFilterCategories={this._fetchFilteredCategories}
               filterCategories={filterCategories}
               filterCategoriesLoading={filterCategoriesLoading}
+              filtered={filtered}
             />
           </div>
         </Waypoint>

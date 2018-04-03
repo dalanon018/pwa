@@ -272,7 +272,10 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
             <ProductItem>
               <div className='padding__vertical--20'>
                 <div className='position__relative'>
-                  <RibbonWrapper rightSpace percentage={orderedProduct.get('discountInfo') && orderedProduct.get('discountInfo')} />
+                  {
+                    orderedProduct.get('discountInfo') &&
+                    <RibbonWrapper rightSpace percentage={orderedProduct.get('discountInfo')} />
+                  }
                   <Image className='slick-image-handler' alt='CLiQQ' src={this._updateParamsImages(orderedProduct.get('image'))} />
                 </div>
               </div>
