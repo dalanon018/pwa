@@ -8,7 +8,6 @@ const ProductWrapper = styled.div`
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(120,120,120, 0.1);
 
-
   // not included on sorting
   animation:fadeIn ease-in 1;
   animation-duration: .5s;
@@ -19,10 +18,13 @@ const ImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   min-height: 175px;
+  max-height: 175px;
   width: 100%;
+
 
   .image {
     width: 100%;
+    height: 100%;
   }
 
   @media (min-width: 1024px) {
@@ -36,6 +38,8 @@ const ImageWrapper = styled.div`
 const ImageContent = styled.div`
   position: relative;
   min-height: 175px;
+  height: 175px;
+  max-height: 175px;
 `
 
 const ProductInfo = styled.div`
