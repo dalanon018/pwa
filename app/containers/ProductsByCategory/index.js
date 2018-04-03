@@ -178,6 +178,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     pageOffset: 0,
     offset: 0,
     togglePrompt: false,
+    filtered: false,
     limit: LIMIT_ITEMS // we need this since we are including the feature items.
   }
 
@@ -460,6 +461,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     const locationSearch = queryString.parse(search)
     // if category prop is undefined meaning that we didn't found the category
     // it's because we only choose the brands so we have to use the existing
+
     const useId = id || params.id
     const useName = name || locationSearch.name
 
@@ -501,6 +503,14 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
     return adult
   }
+
+  _handleCheckParameter (props) {
+    const { location: { search } } = props
+    const parameter = queryString.parse(search)
+
+    this.setState({filtered: !!parameter.brands})
+  }
+
   // TODO: We need to remove extra call for categories specially I think we dont need them anymore
   componentDidMount () {
     const { match: { params }, getProductsViewed, setRouteName, setPageTitle, setShowSearchIcon, setShowPointsIcon, setShowActivityIcon } = this.props
@@ -545,12 +555,14 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     )
 
     updateFetchProduct(nextProps)
+
+    this._handleCheckParameter(nextProps)
   }
 
   render () {
     const isCategory = window.location.pathname.split('/')[1] === 'products-category'
     const { match: { params: { id } }, loader, lazyload, over18, windowWidth, filterCategories, filterBrands, filterCategoriesLoading, filterBrandsLoading } = this.props
-    const { togglePrompt } = this.state
+    const { togglePrompt, filtered } = this.state
 
     return (
       <div>
@@ -563,6 +575,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
           filterBrands={filterBrands}
           filterCategoriesLoading={filterCategoriesLoading}
           filterBrandsLoading={filterBrandsLoading}
+          filtered={filtered}
         />
 
         <ContentWrapper>

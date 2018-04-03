@@ -20,6 +20,7 @@ import {
 } from 'ramda'
 
 import FilterIcon from 'images/icons/filter-icon.svg'
+import FilteredIcon from 'images/icons/filtered-icon.svg'
 
 import { getToggledOptions } from 'utils/multiSelect.js'
 
@@ -165,14 +166,18 @@ class FilterTrigger extends React.PureComponent {
   }
 
   render () {
-    const { filterCategories, filterBrands, filterCategoriesLoading, filterBrandsLoading } = this.props
+    const { filterCategories, filterBrands, filterCategoriesLoading, filterBrandsLoading, filtered } = this.props
     const { toggleDrawer, toggleBrands, toggleCategory, selectedBrands, selectedCategory } = this.state
 
     return (
       <div>
         { toggleDrawer && <BackGroundLay onClick={this._handleToggleDrawer} /> }
         <Wrapper className='background__fade-grey' onClick={this._handleToggleDrawer}>
-          <Image src={FilterIcon} alt='CLiQQ' />
+          {
+            filtered
+            ? <Image src={FilteredIcon} alt='CLiQQ' />
+            : <Image src={FilterIcon} alt='CLiQQ' />
+          }
           <Label basic as='span' size='medium' className='color__primary text__weight--400'>
             <FormattedMessage {...messages.header} />
           </Label>

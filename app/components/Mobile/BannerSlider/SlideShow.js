@@ -64,7 +64,7 @@ class SlideShow extends React.PureComponent {
                 {
                   (typeof item === 'string'
                   ? <div className='position__relative'>
-                    { !isHome && <RibbonWrapper rightSpace percentage={percentage} /> }
+                    { !isHome && percentage && <RibbonWrapper rightSpace percentage={percentage} /> }
                     <Image className='slick-image-handler' alt='CLiQQ' src={item} />
                   </div>
                   : '')

@@ -30,6 +30,7 @@ describe('<BrandPage />', () => {
     productsByBrands: fromJS([]),
     productsFeatured: fromJS([]),
     filterCategories: fromJS([]),
+    filtered: false,
     filterCategoriesLoading: false,
     brands: fromJS([])
   }
