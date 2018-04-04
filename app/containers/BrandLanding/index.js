@@ -24,6 +24,7 @@ import OrderTip from 'components/Mobile/OrderTip'
 import MobileFooter from 'components/Mobile/Footer'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 import BrandsGroup from 'components/Mobile/BrandsGroup'
+import WindowWidth from 'components/Shared/WindowWidth'
 
 import { selectBrands } from 'containers/Buckets/selectors'
 import {
@@ -53,7 +54,7 @@ export class BrandLanding extends React.PureComponent { // eslint-disable-line r
   }
 
   _handleGrouping = () => {
-    const { brands, changeRoute } = this.props
+    const { brands, changeRoute, windowWidth } = this.props
     const { isBottomScrolled } = this.state
     const goToBrand = (id) => () => changeRoute(`/brands/${id}`)
 
@@ -63,6 +64,7 @@ export class BrandLanding extends React.PureComponent { // eslint-disable-line r
           mobileView={
             <BrandsGroup
               brands={brands}
+              windowWidth={windowWidth}
               bottomScroll={isBottomScrolled}
               goToBrand={goToBrand} />
           }
@@ -151,4 +153,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect
-)(injectIntl(BrandLanding))
+)(WindowWidth(injectIntl(BrandLanding)))

@@ -50,11 +50,11 @@ function FlashDeals ({
           <Grid.Column>
             <BannerWrapper onClick={() => changeRoute(`promos/${promo.get('promoCode')}`)}>
               { !promosLoading && <TimerWrapper promo={promo} /> }
-              <PlainCard>
+              <PlainCard height='160'>
                 {
                   !promosLoading && promo.get('background')
-                  ? <Image src={promo.get('background')} />
-                  : <Image src={imageStock('Slider-Default.jpg', imgixOptions)} />
+                  ? <Image className='height__inherit' src={promo.get('background')} />
+                  : <Image className='height__inherit' src={imageStock('Slider-Default.jpg', imgixOptions)} />
                 }
               </PlainCard>
             </BannerWrapper>

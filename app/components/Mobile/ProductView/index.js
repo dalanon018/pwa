@@ -265,7 +265,6 @@ class ProductView extends React.PureComponent {
   componentDidMount () {
     // default to true
     const { windowWidth, showElement = true } = this.props
-
     this.setState({
       columnCount: windowWidth > 767 ? 4 : 2,
       showElement
