@@ -7,6 +7,7 @@ import { ProductsByCategory } from '../index'
 describe('<ProductsByCategory />', () => {
   const minProps = {
     changeRoute: () => {},
+    replaceRoute: () => {},
     setRouteName: () => {},
     getProductsByCategory: () => {},
     getFilterCategories: () => {},

@@ -13,7 +13,7 @@ import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
-import { push } from 'react-router-redux'
+import { push, replace } from 'react-router-redux'
 import {
   __,
   allPass,
@@ -147,6 +147,7 @@ const DesktopItemCount = styled.p`
 export class ProductsByCategory extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     changeRoute: PropTypes.func.isRequired,
+    replaceRoute: PropTypes.func.isRequired,
     getProductsByCategory: PropTypes.func.isRequired,
     getProductsViewed: PropTypes.func.isRequired,
     getFilterCategories: PropTypes.func.isRequired,
@@ -457,7 +458,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _requestFromFilter = ({ brands, category: { id, name } }) => {
-    const { location: { search }, match: { params }, changeRoute } = this.props
+    const { location: { search }, match: { params }, replaceRoute } = this.props
     const locationSearch = queryString.parse(search)
     // if category prop is undefined meaning that we didn't found the category
     // it's because we only choose the brands so we have to use the existing
@@ -470,7 +471,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
       offset: 0
     })
 
-    changeRoute(`/products-category/${useId}?brands=${brands.join(',')}&name=${useName}`)
+    replaceRoute(`/products-category/${useId}?brands=${brands.join(',')}&name=${useName}`)
   }
 
   _handleOver18 () {
@@ -648,6 +649,7 @@ function mapDispatchToProps (dispatch) {
     submitOver18: payload => dispatch(submitOver18Action(payload)),
     getOver18: () => dispatch(getOver18Action()),
     changeRoute: (url) => dispatch(push(url)),
+    replaceRoute: (url) => dispatch(replace(url)),
     dispatch
   }
 }

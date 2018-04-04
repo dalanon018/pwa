@@ -8,6 +8,7 @@ import { BrandPage } from '../index'
 describe('<BrandPage />', () => {
   const minProps = {
     changeRoute: () => {},
+    replaceRoute: () => {},
     getProductsByBrands: () => {},
     resetProductsByBrands: () => {},
     getFilterCategories: () => {},

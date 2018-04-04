@@ -14,7 +14,7 @@ import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
 import { FormattedMessage } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
-import { push } from 'react-router-redux'
+import { push, replace } from 'react-router-redux'
 import { noop } from 'lodash'
 import {
   allPass,
@@ -110,6 +110,7 @@ const DesktopTitle = styled.p`
 export class BrandPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     changeRoute: PropTypes.func.isRequired,
+    replaceRoute: PropTypes.func.isRequired,
     getProductsByBrands: PropTypes.func.isRequired,
     resetProductsByBrands: PropTypes.func.isRequired,
     getFilterCategories: PropTypes.func.isRequired,
@@ -235,14 +236,14 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   _requestFromFilter = ({ category: { id, name } }) => {
-    const { match: { params }, changeRoute } = this.props
+    const { match: { params }, replaceRoute } = this.props
 
     this.setState({
       pageOffset: 0,
       offset: 0
     })
 
-    changeRoute(`/brands/${params.id}?category=${id || ''}`)
+    replaceRoute(`/brands/${params.id}?category=${id || ''}`)
   }
 
   _resetValuesAndFetch = (props) => {
@@ -543,6 +544,7 @@ function mapDispatchToProps (dispatch) {
     resetProductsByBrands: () => dispatch(resetProductsByBrandsAction()),
     getFilterCategories: (payload) => dispatch(getFilterCategoriesAction(payload)),
     changeRoute: (url) => dispatch(push(url)),
+    replaceRoute: (url) => dispatch(replace(url)),
     dispatch
   }
 }
