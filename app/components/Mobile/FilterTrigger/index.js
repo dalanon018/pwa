@@ -77,7 +77,7 @@ class FilterTrigger extends React.PureComponent {
 
   state = {
     selectedBrands: [],
-    selectedCategory: '',
+    selectedCategory: {},
     toggleDrawer: false,
     toggleBrands: [],
     toggleCategory: ''
@@ -97,18 +97,21 @@ class FilterTrigger extends React.PureComponent {
     document.getElementsByTagName('body')[0].classList.toggle('custom__body')
   }
 
-  _handleToggleCategory = value => {
-    const { getFilterCategories, getFilterBrands } = this.props
+  _handleToggleCategory = (value) => {
+    const { getFilterCategories, getFilterBrands, filterCategories } = this.props
     // each request we have to reset our selected brand and toggle brand since we expect different data
+    const foundCategory = filterCategories.find((category) => category.get('id') === value)
+    const selectedCategory = foundCategory ? foundCategory.toObject() : {}
+
     this.setState({
+      selectedCategory,
       toggleCategory: value,
-      selectedCategory: value,
       toggleBrands: [],
       selectedBrands: []
     })
 
     // we only call this fn if exist
-    getFilterCategories && getFilterCategories({ category: value })
+    getFilterCategories && getFilterCategories({ category: value, allowEmpty: false })
     getFilterBrands && getFilterBrands({ category: value })
   }
 
@@ -124,26 +127,22 @@ class FilterTrigger extends React.PureComponent {
     const { parentId, getFilterCategories, getFilterBrands } = this.props
     this.setState({
       selectedBrands: [],
-      selectedCategory: '',
+      selectedCategory: {},
       toggleBrands: [],
       toggleCategory: ''
     })
-    console.log(parentId)
     getFilterCategories && getFilterCategories({ category: parentId })
     getFilterBrands && getFilterBrands({ category: parentId })
   }
 
   _handleSubmit = () => {
-    const { requestFromFilter, filterCategories } = this.props
+    const { requestFromFilter } = this.props
     const { selectedCategory, selectedBrands } = this.state
-
-    const foundCategory = filterCategories.find((category) => category.get('id') === selectedCategory)
-    const category = foundCategory ? foundCategory.toObject() : {}
 
     document.getElementsByTagName('body')[0].classList.remove('custom__body')
 
     requestFromFilter({
-      category,
+      category: selectedCategory,
       brands: selectedBrands
     })
 

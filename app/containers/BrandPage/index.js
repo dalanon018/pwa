@@ -228,11 +228,15 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     return display(loader)
   }
 
-  _fetchFilteredCategories = ({ props = this.props, category, brand }) => {
+  /**
+   * allowEmpty if the response from filtered categories is empty then we its okay to
+   * overwrite the values.
+   */
+  _fetchFilteredCategories = ({ props = this.props, category, brand, allowEmpty = true }) => {
     const { match: { params }, getFilterCategories } = props
     const brandId = brand || params.id
 
-    getFilterCategories({ category, brand: brandId })
+    getFilterCategories({ category, brand: brandId, allowEmpty })
   }
 
   _requestFromFilter = ({ category: { id, name } }) => {
