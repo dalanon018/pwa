@@ -44,7 +44,8 @@ const GroupWrapper = styled.div`
 function BrandsGroup ({
   brands,
   bottomScroll,
-  goToBrand
+  goToBrand,
+  windowWidth
 }) {
   const imgixOptions = {
     w: 80,
@@ -104,8 +105,8 @@ function BrandsGroup ({
                   return (
                     <Grid.Column key={index} className='padding__bottom--15'>
                       <div>
-                        <BrandItem borderRadius height={90}>
-                          <Image alt='CLiQQ' src={imageStock('Brands-Default.jpg', imgixOptions)} />
+                        <BrandItem borderRadius height={windowWidth >= 767 ? 200 : 90}>
+                          <Image className='height__inherit' alt='CLiQQ' src={imageStock('Brands-Default.jpg', imgixOptions)} />
                         </BrandItem>
                       </div>
                     </Grid.Column>
@@ -148,8 +149,8 @@ function BrandsGroup ({
                         entity.map((data, index) => (
                           <Grid.Column key={index} className='padding__bottom--15'>
                             <div onClick={goToBrand(data.get('id'))}>
-                              <BrandItem borderRadius height={90}>
-                                <Image src={data.get('background') ? data.get('background') : imageStock('Brands-Default.jpg', imgixOptions)} alt={data.get('name')} />
+                              <BrandItem borderRadius height={windowWidth >= 767 ? 200 : 90}>
+                                <Image className='height__inherit' src={data.get('logo') ? data.get('logo') : imageStock('Brands-Default.jpg', imgixOptions)} alt={data.get('name')} />
                               </BrandItem>
                               <Label as='p' basic size='medium' className='margin__top-positive--10 text__weight--400'>{data.get('name')}</Label>
                             </div>

@@ -25,6 +25,7 @@ import CategoryItem from 'components/Mobile/PlainCard'
 import OrderTip from 'components/Mobile/OrderTip'
 import MobileFooter from 'components/Mobile/Footer'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
+import WindowWidth from 'components/Shared/WindowWidth'
 
 import { selectProductCategories } from 'containers/Buckets/selectors'
 import {
@@ -60,7 +61,7 @@ export class CategoryLanding extends React.PureComponent { // eslint-disable-lin
   }
 
   render () {
-    const { categories } = this.props
+    const { categories, windowWidth } = this.props
 
     const imgixOptions = {
       w: 138,
@@ -86,7 +87,7 @@ export class CategoryLanding extends React.PureComponent { // eslint-disable-lin
                 categories.map(category => {
                   return (
                     <Grid.Column className='padding__bottom--10' key={category.get('id')} onClick={this._handleGoTo(category.get('id'), category.get('name'))}>
-                      <CategoryItem borderRadius height={95}>
+                      <CategoryItem borderRadius height={windowWidth >= 767 ? 150 : 95}>
                         <div className='text__align--center padding__10'>
                           {
                             category.get('background')
@@ -142,4 +143,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect
-)(injectIntl(CategoryLanding))
+)(WindowWidth(injectIntl(CategoryLanding)))

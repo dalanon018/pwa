@@ -25,7 +25,8 @@ const BodyWrapper = styled.div`
   display: flex;
   height: 100%;
   flex-direction: column;
-  @media (min-width: 1024px) {
+  
+  @media (min-width: 767px) {
     max-width: inherit;
   }
 `

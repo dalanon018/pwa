@@ -61,6 +61,18 @@ div [data-reactroot],
   padding: 0;
 }
 
+@media only screen and (max-width: 991px) and (min-width: 768px) {
+  .ui.container, .ui.grid.container {
+    width: inherit !important;
+  }    
+}
+
+@media only screen and (max-width: 1199px) and (min-width: 992px) {
+  .ui.grid.container {
+    width: inherit !important;
+  }  
+}
+
 .grecaptcha-badge {
   margin: 0 auto !important;
 }
@@ -176,7 +188,7 @@ input.input-field {
 
 .width {
   &__full {
-    width: 100%;
+    width: 100% !important;
   }
 }
 
@@ -652,6 +664,15 @@ svg#barcode {
       &--primary {
         box-shadow: 0 0 5px rgba(120,120,120, 0.1);
       }
+    }
+  }
+
+  .height {
+    &__full {
+      height: 100% !important;
+    }
+    &__inherit {
+      height: inherit !important;
     }
   }
 

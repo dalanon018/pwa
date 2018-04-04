@@ -44,7 +44,8 @@ const ImageContent = styled.div`
 
 const ProductInfo = styled.div`
   display: block;
-  padding: 0 15px;
+  margin-top: 10px;
+  padding: 0 15px 10px;
 
   .brand-name {
     display: block;

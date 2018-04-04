@@ -68,7 +68,7 @@ export class FlashDealsLanding extends React.PureComponent { // eslint-disable-l
       <Grid.Row>
         <Grid.Column>
           <FlashDealItem borderRadius height={120}>
-            <Image src={imageStock('Slider-Default.jpg', this._handleImgixOptions())} alt='CLiQQ' />
+            <Image className='height__inherit' src={imageStock('Slider-Default.jpg', this._handleImgixOptions())} alt='CLiQQ' />
           </FlashDealItem>
         </Grid.Column>
       </Grid.Row>
@@ -109,8 +109,8 @@ export class FlashDealsLanding extends React.PureComponent { // eslint-disable-l
                       <FlashDealItem borderRadius height={120}>
                         {
                           promo.get('background')
-                          ? <Image src={promo.get('background')} alt='CLiQQ' />
-                          : <Image src={imageStock('Slider-Default.jpg', this._handleImgixOptions())} alt='CLiQQ' />
+                          ? <Image className='height__inherit' src={promo.get('background')} alt='CLiQQ' />
+                          : <Image className='height__inherit' src={imageStock('Slider-Default.jpg', this._handleImgixOptions())} alt='CLiQQ' />
                         }
 
                       </FlashDealItem>

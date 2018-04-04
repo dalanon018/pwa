@@ -98,11 +98,30 @@ const DesktopTitle = styled.p`
 `
 
 const PointsPreviewWrapper = styled.div`
-  padding: 30px 14px;
   align-items: center;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  overflow: hidden;
+  padding: 30px 14px;
+  position: relative;
+  width: 100%;
+  z-index: 2;
+
+  &:before {
+    border-color: transparent transparent transparent #F9F9F9;
+    border-style: solid;
+    border-width: 170px 0 0 335px;
+    bottom: 0;
+    content: '';
+    height: 0;
+    height: 100%;
+    left: 0;
+    opacity: 0.7;
+    position: absolute;
+    width: 0;
+    z-index: -1;
+  }
 `
 
 const UserPointsWrapper = styled.div`
@@ -116,7 +135,7 @@ const UserPointsWrapper = styled.div`
   }
 
   .my-points {
-    font-size: 45px !important;
+    font-size: 36px !important;
     line-height: inherit;
     margin-left: 8px;
   }
@@ -253,26 +272,24 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
           <Container className='padding__none--vertical'>
             <Grid padded>
               <Grid.Row className='padding__none--vertical'>
-                <div>
-                  <PlainCard>
-                    <PointsPreviewWrapper className='text__align--center'>
-                      <Label as='p' className='text__weight--500' size='large' >
-                        <FormattedMessage {...messages.currentPoints} />
+                <PlainCard>
+                  <PointsPreviewWrapper className='text__align--center'>
+                    <Label as='p' className='text__weight--500' size='large' >
+                      <FormattedMessage {...messages.currentPoints} />
+                    </Label>
+                    <Label as='p' className='color__grey text__weight--400' size='medium' >
+                      <FormattedMessage
+                        {...messages.asOf}
+                        values={{date: moment(getLatestTransaction).format('LL')}} />
+                    </Label>
+                    <UserPointsWrapper>
+                      <Image src={TealIcon} alt='CLiQQ' />
+                      <Label as='span' className='my-points color__teal text__weight--700' size='massive' >
+                        {!isEmpty(wallet) && wallet.get('currentPoints') ? parseFloat(wallet.get('currentPoints')).toLocaleString() : '---'}
                       </Label>
-                      <Label as='p' className='color__grey text__weight--400' size='medium' >
-                        <FormattedMessage
-                          {...messages.asOf}
-                          values={{date: moment(getLatestTransaction).format('LL')}} />
-                      </Label>
-                      <UserPointsWrapper>
-                        <Image src={TealIcon} alt='CLiQQ' />
-                        <Label as='span' className='my-points color__teal text__weight--700' size='massive' >
-                          {!isEmpty(wallet) && wallet.get('currentPoints') ? parseFloat(wallet.get('currentPoints')).toLocaleString() : '---'}
-                        </Label>
-                      </UserPointsWrapper>
-                    </PointsPreviewWrapper>
-                  </PlainCard>
-                </div>
+                    </UserPointsWrapper>
+                  </PointsPreviewWrapper>
+                </PlainCard>
               </Grid.Row>
             </Grid>
           </Container>
