@@ -445,10 +445,14 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     }, () => this._fetchProductByCategory(props))
   }
 
-  _fetchFilteredCategories = ({ props = this.props, category }) => {
+  /**
+   * allowEmpty if the response from filtered categories is empty then we its okay to
+   * overwrite the values.
+   */
+  _fetchFilteredCategories = ({ props = this.props, category, allowEmpty = true }) => {
     const { getFilterCategories } = props
 
-    getFilterCategories({ category })
+    getFilterCategories({ category, allowEmpty })
   }
 
   _fetchFilteredBrands = ({ props = this.props, category }) => {

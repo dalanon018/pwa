@@ -111,7 +111,7 @@ class FilterTrigger extends React.PureComponent {
     })
 
     // we only call this fn if exist
-    getFilterCategories && getFilterCategories({ category: value })
+    getFilterCategories && getFilterCategories({ category: value, allowEmpty: false })
     getFilterBrands && getFilterBrands({ category: value })
   }
 

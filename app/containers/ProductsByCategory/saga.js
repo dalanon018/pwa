@@ -1,7 +1,8 @@
 import {
   call,
   fork,
-  put
+  put,
+  select
 } from 'redux-saga/effects'
 import { takeLatest, takeEvery } from 'redux-saga'
 import { isEmpty } from 'lodash'
@@ -37,6 +38,10 @@ import {
 
   setOver18Action
 } from './actions'
+
+import {
+  selectFilterCategories
+} from './selectors'
 
 import {
   API_BASE_URL,
@@ -127,9 +132,10 @@ export function * getProductsViewed () {
 }
 
 export function * getFilterCategories (args) {
-  const { payload: { category } } = args
-  let categories = []
+  const { payload: { category, allowEmpty } } = args
+  let categories
 
+  const prevSelector = yield (select(selectFilterCategories()))
   const token = yield getAccessToken()
   const req = yield call(getRequestData, `${API_BASE_URL}/categories?parent=${category || ''}`, {
     method: 'GET',
@@ -140,8 +146,9 @@ export function * getFilterCategories (args) {
       map(partial(transformEachEntity, [transformCategory])),
       propOr([], 'categoryList')
     )
-
     categories = yield transform(req)
+    // we need to check if empty category since if not empty then we still have to get the categories.
+    categories = (!isEmpty(categories) || allowEmpty) ? categories : prevSelector
   } else {
     yield put(setNetworkErrorAction(500))
   }

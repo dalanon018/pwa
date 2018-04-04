@@ -1,7 +1,8 @@
 import {
   call,
   fork,
-  put
+  put,
+  select
 } from 'redux-saga/effects'
 import {
   takeLatest
@@ -28,6 +29,10 @@ import {
   setProductsCountsAction,
   setFilterCategoriesAction
 } from './actions'
+
+import {
+  selectFilterCategories
+} from './selectors'
 
 import {
   API_BASE_URL
@@ -79,9 +84,10 @@ export function * getProductByBrands (args) {
 }
 
 export function * getFilterCategories (args) {
-  const { payload: { category, brand } } = args
+  const { payload: { category, brand, allowEmpty } } = args
   let categories = []
 
+  const prevSelector = yield (select(selectFilterCategories()))
   const token = yield getAccessToken()
   const req = yield call(getRequestData, `${API_BASE_URL}/categories?brand=${brand || ''}&parent=${category || ''}`, {
     method: 'GET',
@@ -94,6 +100,8 @@ export function * getFilterCategories (args) {
     )
 
     categories = yield transform(req)
+    // we need to check if empty category since if not empty then we still have to get the categories.
+    categories = (!isEmpty(categories) || allowEmpty) ? categories : prevSelector
   } else {
     yield put(setNetworkErrorAction(500))
   }
