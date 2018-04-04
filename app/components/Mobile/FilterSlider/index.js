@@ -13,9 +13,10 @@ import { FormattedMessage } from 'react-intl'
 import {
   anyPass,
   compose,
+  complement,
   ifElse,
-  lt,
-  path
+  isEmpty,
+  prop
 } from 'ramda'
 
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
@@ -85,7 +86,7 @@ class FilterSlider extends React.PureComponent {
     toggleDrawer: PropTypes.bool.isRequired,
     toggleCategory: PropTypes.string.isRequired,
     toggleBrands: PropTypes.array.isRequired,
-    selectedCategory: PropTypes.string.isRequired,
+    selectedCategory: PropTypes.object.isRequired,
     selectedBrands: PropTypes.array.isRequired,
     categoriesLoading: PropTypes.bool.isRequired,
     brandsLoading: PropTypes.bool
@@ -189,8 +190,8 @@ class FilterSlider extends React.PureComponent {
   }
 
   _notEmpty = (key) => compose(
-    lt(0),
-    path([key, 'length'])
+    complement(isEmpty),
+    prop(key)
   )
 
   componentWillReceiveProps (nextProps) {
