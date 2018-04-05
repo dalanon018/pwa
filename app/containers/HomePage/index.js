@@ -318,7 +318,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                 return (
                   <CategoryItem key={index} onClick={() => changeRoute(`/products-category/${category.get('id')}?name=${category.get('name')}`)}>
                     <Image src={category.get('icon') !== '' ? category.get('icon') : imageStock('mobile-category-icon-default.png')} alt='CLiQQ' />
-                    <Label basic size='tiny' className='item-label'>
+                    <Label basic size='tiny' className='item-label text__weight--400'>
                       {category.get('name')}
                     </Label>
                   </CategoryItem>
@@ -330,7 +330,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                 !categoryNavLoader
                 ? <span>
                   <Image src={MoreCategoriesIcon} alt='CLiQQ' />
-                  <Label basic size='tiny' className='item-label'>
+                  <Label basic size='tiny' className='item-label text__weight--400'>
                     More
                   </Label>
                 </span>
@@ -380,6 +380,14 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         </Container>
 
         <OrderTip />
+
+        <Container>
+          <div className='margin__bottom-positive--5 margin__top-positive--10'>
+            <SectionTitle
+              title={intl.formatMessage(messages.flashDeals)}
+              link={`/flash-deals`} />
+          </div>
+        </Container>
 
         {
           promos.map(promo => (

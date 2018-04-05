@@ -190,7 +190,7 @@ const Product = ({
                 product.get('points') &&
                 <PointsInfo>
                   <Image src={CliQQPlainLogo} alt='CLiQQ' />
-                  <Label as='span' basic size='medium'>
+                  <Label as='span' basic size='medium' className='text__weight--400'>
                     <FormattedMessage
                       {...messages.earnPoints}
                       values={{points: <span className='color__primary'>{getHighestPointsEarn()}</span>}} />
@@ -232,7 +232,7 @@ const Product = ({
                 <FormattedMessage {...messages.productDetailsTitle} />
               </Label>
               <LoadingStateInfo loading={loading} className='color__light-grey' >
-                <div className='product-details' dangerouslySetInnerHTML={{__html: product.get('details')}} />
+                <div className='product-details text__weight--400' dangerouslySetInnerHTML={{__html: product.get('details')}} />
               </LoadingStateInfo>
             </ProductDetails>
             <ListCollapse title={

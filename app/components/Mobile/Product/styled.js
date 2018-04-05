@@ -9,7 +9,7 @@ export const ProductWrapper = styled(AnimateDiv)`
   display: flex;
   flex-direction: column;
   flex: 1 0 auto;
-  margin-bottom: 58px;
+  padding-bottom: 58px;
   margin-top: 20px;
   position: relative;
 

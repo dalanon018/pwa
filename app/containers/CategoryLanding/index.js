@@ -12,6 +12,7 @@ import { createStructuredSelector } from 'reselect'
 import { compose } from 'redux'
 import { push } from 'react-router-redux'
 import Helmet from 'react-helmet'
+import styled from 'styled-components'
 
 import { imageStock } from 'utils/image-stock'
 import injectSaga from 'utils/injectSaga'
@@ -36,6 +37,13 @@ import {
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
 import { CATEGORIES_LANDING_PAGE } from 'containers/Buckets/constants'
+
+const ImageWrapper = styled.div`
+  img {
+    margin: 0 auto;
+    width: 40px;
+  }
+`
 
 export class CategoryLanding extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
@@ -64,7 +72,7 @@ export class CategoryLanding extends React.PureComponent { // eslint-disable-lin
     const { categories, windowWidth } = this.props
 
     const imgixOptions = {
-      w: 138,
+      w: 40,
       h: 40,
       fit: 'clamp', // we need to make sure that this is clamp so it will base on the container.
       auto: 'compress',
@@ -89,11 +97,13 @@ export class CategoryLanding extends React.PureComponent { // eslint-disable-lin
                     <Grid.Column className='padding__bottom--10' key={category.get('id')} onClick={this._handleGoTo(category.get('id'), category.get('name'))}>
                       <CategoryItem borderRadius height={windowWidth >= 767 ? 150 : 95}>
                         <div className='text__align--center padding__10'>
-                          {
-                            category.get('background')
-                            ? <Image src={category.get('background')} alt='CLiQQ' />
-                            : <Image src={imageStock('Slider-Default.jpg', imgixOptions)} />
-                          }
+                          <ImageWrapper>
+                            {
+                              category.get('background')
+                              ? <Image src={category.get('background')} alt='CLiQQ' />
+                              : <Image src={imageStock('Brands-Default.jpg', imgixOptions)} />
+                            }
+                          </ImageWrapper>
                           <Label basic as='span' size='medium' className='text__weight--400 margin__top-positive--10'>
                             {category.get('name')}
                           </Label>

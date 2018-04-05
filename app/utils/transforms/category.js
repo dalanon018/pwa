@@ -50,8 +50,8 @@ const applyImage = (data) => {
     propOr({}, 'images')
   )
   return Object.assign({}, data, {
-    icon: applyImageUrl('NAV_ICON')(data),
-    background: applyImageUrl('BACKGROUND')(data),
+    icon: applyImageUrl('E3-NAV_ICON')(data),
+    background: applyImageUrl('E3-BACKGROUND')(data),
     main: applyImageUrl('MAIN')(data)
   })
 }

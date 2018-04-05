@@ -9,12 +9,12 @@ import styled from 'styled-components'
 import { Container, Image, Grid } from 'semantic-ui-react'
 import { imageStock } from 'utils/image-stock'
 
-import messages from './messages'
+// import messages from './messages'
 
 import PlainCard from 'components/Mobile/PlainCard'
 import ProductView from 'components/Mobile/ProductView'
 
-import SectionTitle from 'components/Mobile/HomeSectionTitle'
+// import SectionTitle from 'components/Mobile/HomeSectionTitle'
 import TimerWrapper from 'components/Mobile/TimerWrapper'
 
 const BannerWrapper = styled.div`
@@ -40,11 +40,6 @@ function FlashDeals ({
 
   return (
     <Container>
-      <div className='margin__bottom-positive--20'>
-        <SectionTitle
-          title={intl.formatMessage(messages.header)}
-          link={`/flash-deals`} />
-      </div>
       <Grid container>
         <Grid.Row className='padding__none--vertical'>
           <Grid.Column>
