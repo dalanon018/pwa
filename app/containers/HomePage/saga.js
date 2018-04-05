@@ -85,7 +85,7 @@ export function * getPromos () {
   let count = 0
 
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/promos/?offset=0&limit=3&productOffset=0&productLimit=3`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/promos/?offset=0&limit=1&productOffset=0&productLimit=2`, {
     method: 'GET',
     token: token.access_token
   })
