@@ -46,7 +46,8 @@ import {
 } from 'containers/Buckets/actions'
 
 import {
-  getAccessToken
+  getAccessToken,
+  getCategories
 } from 'containers/Buckets/saga'
 
 import {
@@ -91,6 +92,8 @@ export function * getProductByBrands (args) {
 }
 
 function * getCategory ({ data, category }) {
+  //we need to fetch categories to make sure categories are loaded
+  yield * getCategories()
   const categories = yield (select(selectProductCategories()))
   const flattenCategories = flattenChildrenArray(categories.toJS())
   const foundCategory = flattenCategories.find(({ id }) => id === category)

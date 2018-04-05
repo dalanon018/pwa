@@ -240,14 +240,14 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   _requestFromFilter = ({ category: { id, name } }) => {
-    const { match: { params }, replaceRoute } = this.props
+    const { match: { params }, changeRoute } = this.props
 
     this.setState({
       pageOffset: 0,
       offset: 0
     })
 
-    replaceRoute(`/brands/${params.id}?category=${id || ''}`)
+    changeRoute(`/brands/${params.id}?category=${id || ''}`)
   }
 
   _resetValuesAndFetch = (props) => {
@@ -461,7 +461,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
         >
           <div>
             <FilterTrigger
-              categoryId={category}
+              parentId={category}
               requestFromFilter={this._requestFromFilter}
               getFilterCategories={this._fetchFilteredCategories}
               filterCategories={filterCategories}

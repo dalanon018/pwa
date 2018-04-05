@@ -462,7 +462,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _requestFromFilter = ({ brands, category: { id, name } }) => {
-    const { location: { search }, match: { params }, replaceRoute } = this.props
+    const { location: { search }, match: { params }, changeRoute } = this.props
     const locationSearch = queryString.parse(search)
     // if category prop is undefined meaning that we didn't found the category
     // it's because we only choose the brands so we have to use the existing
@@ -475,7 +475,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
       offset: 0
     })
 
-    replaceRoute(`/products-category/${useId}?brands=${brands.join(',')}&name=${useName}`)
+    changeRoute(`/products-category/${useId}?brands=${brands.join(',')}&name=${useName}`)
   }
 
   _handleOver18 () {

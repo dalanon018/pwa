@@ -56,7 +56,8 @@ import {
 } from 'containers/Buckets/actions'
 
 import {
-  getAccessToken
+  getAccessToken,
+  getCategories
 } from 'containers/Buckets/saga'
 
 import {
@@ -138,6 +139,8 @@ export function * getProductsViewed () {
 }
 
 function * getCategory ({ data, category }) {
+  //we need to fetch categories to make sure categories are loaded
+  yield * getCategories()
   const categories = yield (select(selectProductCategories()))
   const flattenCategories = flattenChildrenArray(categories.toJS())
   const foundCategory = flattenCategories.find(({ id }) => id === category)
@@ -174,7 +177,6 @@ export function * getFilterCategories (args) {
   } else {
     yield put(setNetworkErrorAction(500))
   }
-
   yield put(setFilterCategoriesAction(categories))
 }
 
