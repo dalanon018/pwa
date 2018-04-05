@@ -9,7 +9,6 @@ import { isEmpty } from 'lodash'
 import {
   always,
   compose,
-  equals,
   ifElse,
   map,
   partial,
@@ -142,9 +141,8 @@ function * getCategory ({ data, category }) {
   const categories = yield (select(selectProductCategories()))
   const flattenCategories = flattenChildrenArray(categories.toJS())
   const foundCategory = flattenCategories.find(({ id }) => id === category)
-
   const passEntity = ifElse(
-    compose(equals(0), propOr(0, 'length')),
+    isEmpty,
     () => [],
     (data) => [data]
   )
