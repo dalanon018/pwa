@@ -12,11 +12,16 @@ import queryString from 'query-string'
 import { Image, Label } from 'semantic-ui-react'
 import { FormattedMessage } from 'react-intl'
 import {
+  allPass,
+  isNil,
   complement,
   compose,
   equals,
   propOr,
-  when
+  when,
+  prop,
+  isEmpty,
+  both,
 } from 'ramda'
 
 import FilterIcon from 'images/icons/filter-icon.svg'
@@ -129,7 +134,7 @@ class FilterTrigger extends React.PureComponent {
       selectedBrands: [],
       selectedCategory: {},
       toggleBrands: [],
-      toggleCategory: ''
+      toggleCategory: parentId
     })
     getFilterCategories && getFilterCategories({ category: parentId })
     getFilterBrands && getFilterBrands({ category: parentId })
@@ -164,10 +169,22 @@ class FilterTrigger extends React.PureComponent {
     shouldUpdateSelectedBrands(brands)
   }
 
-  render () {
-    const { filterCategories, filterBrands, filterCategoriesLoading, filterBrandsLoading, filtered } = this.props
-    const { toggleDrawer, toggleBrands, toggleCategory, selectedBrands, selectedCategory } = this.state
+  componentWillReceiveProps(nextProps) {
+    const { parentId } = this.props
+    const shouldUpdateToggleCategory = when(
+      compose(complement(equals(parentId)), prop('parentId')),
+      (param) =>
+        this.setState(() => ({
+          toggleCategory: param.parentId || ''
+        }))
+    )
 
+    shouldUpdateToggleCategory(nextProps)
+  }
+
+  render () {
+    const { parentId, filterCategories, filterBrands, filterCategoriesLoading, filterBrandsLoading, filtered } = this.props
+    const { toggleDrawer, toggleBrands, toggleCategory, selectedBrands, selectedCategory } = this.state
     return (
       <div>
         { toggleDrawer && <BackGroundLay onClick={this._handleToggleDrawer} /> }
@@ -182,6 +199,7 @@ class FilterTrigger extends React.PureComponent {
           </Label>
         </Wrapper>
         <FilterSlider
+          parentId={parentId}
           selectedBrands={selectedBrands}
           selectedCategory={selectedCategory}
           toggleDrawer={toggleDrawer}
