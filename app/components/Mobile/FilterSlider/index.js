@@ -18,7 +18,7 @@ import {
   isEmpty,
   prop,
   both,
-  equals,
+  equals
 } from 'ramda'
 
 import LoadingIndicator from 'components/Shared/LoadingIndicator'

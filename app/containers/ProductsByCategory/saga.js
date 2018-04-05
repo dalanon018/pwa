@@ -139,7 +139,7 @@ export function * getProductsViewed () {
 }
 
 function * getCategory ({ data, category }) {
-  //we need to fetch categories to make sure categories are loaded
+  // we need to fetch categories to make sure categories are loaded
   yield * getCategories()
   const categories = yield (select(selectProductCategories()))
   const flattenCategories = flattenChildrenArray(categories.toJS())

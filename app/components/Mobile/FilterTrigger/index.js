@@ -12,16 +12,12 @@ import queryString from 'query-string'
 import { Image, Label } from 'semantic-ui-react'
 import { FormattedMessage } from 'react-intl'
 import {
-  allPass,
-  isNil,
   complement,
   compose,
   equals,
-  propOr,
-  when,
   prop,
-  isEmpty,
-  both,
+  propOr,
+  when
 } from 'ramda'
 
 import FilterIcon from 'images/icons/filter-icon.svg'
@@ -169,7 +165,7 @@ class FilterTrigger extends React.PureComponent {
     shouldUpdateSelectedBrands(brands)
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     const { parentId } = this.props
     const shouldUpdateToggleCategory = when(
       compose(complement(equals(parentId)), prop('parentId')),
