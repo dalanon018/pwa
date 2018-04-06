@@ -109,6 +109,10 @@ const Schema = {
   points: {
     name: 'points',
     type: OBJECT
+  },
+  promo: {
+    name: 'promo',
+    type: OBJECT
   }
 }
 

@@ -16,13 +16,26 @@ import Timer from 'components/Shared/CountDownTimer'
 import messages from './messages'
 
 const Wrapper = styled.div`
-  border-radius: 3px 0 0 3px;
-  bottom: 12px;
   min-width: 180px;
   padding: 5px 10px;
-  position: absolute;
-  right: 0;
-  z-index: 1;
+
+  ${
+    props => props.centered
+    ? `
+      border-radius: 3px;
+      display: flex;
+      justify-content: center;
+      margin: 20px auto;
+      width: 240px;
+    `
+    : `
+    border-radius: 3px 0 0 3px;
+    bottom: 12px;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    `
+  }
 `
 
 const ContentWrapper = styled.div`
@@ -40,9 +53,9 @@ const LabelWrapper = styled.div`
   }
 `
 
-function TimerWrapper ({ promo }) {
+function TimerWrapper ({ promo, centered }) {
   return (
-    <Wrapper className='background__primary'>
+    <Wrapper className='background__primary' centered={centered}>
       <ContentWrapper>
         <LabelWrapper>
           <Label as='span' size='mini' className='color__white text__weight--400'>

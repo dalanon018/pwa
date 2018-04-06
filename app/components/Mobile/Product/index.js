@@ -19,6 +19,8 @@ import {
 import { FormattedMessage } from 'react-intl'
 import { Image, Label, Button, Icon, Grid } from 'semantic-ui-react'
 
+import TimerWrapper from 'components/Mobile/TimerWrapper'
+
 import DeliveryIcon from 'images/icons/delivery-icon.svg'
 import ReturnIcon from 'images/icons/return-icon.svg'
 import CliQQPlainLogo from 'images/icons/plain-cliqq-icon.svg'
@@ -157,6 +159,10 @@ const Product = ({
               </Label>
             }
           </ProductImageSlider>
+          {
+            product.get('promo') &&
+            <TimerWrapper promo={product.get('promo')} centered />
+          }
           <ProductMainContent>
             <LoadingStateInfo loading={loading} center>
               {
