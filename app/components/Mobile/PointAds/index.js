@@ -89,10 +89,10 @@ class PointAds extends React.PureComponent {
                   <Image src={Badge} alt='CLiQQ' />
                 </ImageWrapper>
                 <div>
-                  <Label basic as='span' size='massive' className='padding__none pay-point'>
+                  <Label basic as='span' size='massive' className='padding__none pay-point text__weight--400'>
                     <FormattedMessage {...messages.payPoints} />
                   </Label>
-                  <Label basic as='p' size='small' className='padding__none'>
+                  <Label basic as='p' size='small' className='padding__none text__weight--400'>
                     <FormattedMessage {...messages.usePoints} />
                   </Label>
                   <Button primary onClick={() => changeRoute('/wallet')}>
@@ -119,10 +119,10 @@ class PointAds extends React.PureComponent {
             </ImageWrapper>
           </div>
           <div>
-            <Label basic as='span' size='massive' className='padding__none pay-point'>
+            <Label basic as='span' size='massive' className='padding__none pay-point text__weight--400'>
               <FormattedMessage {...messages.payPoints} />
             </Label>
-            <Label basic as='p' size='small' className='padding__none description-content'>
+            <Label basic as='p' size='small' className='padding__none description-content text__weight--400'>
               <FormattedMessage {...messages.usePoints} />
             </Label>
             <Button primary onClick={() => changeRoute('/wallet')}>

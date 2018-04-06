@@ -116,21 +116,21 @@ function PromptModal ({
                 <Icon name={name} className='custom-icon' />
               </IconWrapper>
               <TitleHead>
-                <Label as='span' basic size='large'>
+                <Label as='span' basic size='large' className='text__weight--700'>
                   WARNING
                 </Label>
               </TitleHead>
               <Content>
-                <CustomLabel className='text__roboto--light' as='p' basic size='medium'>
+                <CustomLabel className='text__weight--400' as='p' basic size='medium'>
                   <FormattedMessage {...messages.rated18} />
                 </CustomLabel>
-                <CustomLabel className='text__roboto--light' as='p' basic size='medium'>
+                <CustomLabel className='text__weight--400' as='p' basic size='medium'>
                   <FormattedMessage {...messages.confirm18} />
                 </CustomLabel>
                 <Button className='text__weight--700' primary fluid onClick={letIn}>
                   <FormattedMessage {...messages.im18} />
                 </Button>
-                <CustomLabel className='text__roboto--light plain-button' as='p' basic size='medium' onClick={close}>
+                <CustomLabel className='text__weight--700 plain-button' as='p' basic size='medium' onClick={close}>
                   <FormattedMessage {...messages.not18} />
                 </CustomLabel>
               </Content>
@@ -149,7 +149,7 @@ function PromptModal ({
                 </Label>
               </TitleHead>
               <Content>
-                <CustomLabel className='margin__bottom-positive--20' as='p' basic size='small'>
+                <CustomLabel className='margin__bottom-positive--20 text__weight--400' as='p' basic size='small'>
                   {content}
                 </CustomLabel>
                 <PrimaryButtonWrapper>

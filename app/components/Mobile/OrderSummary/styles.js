@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import { Button } from 'semantic-ui-react'
 
 const ProductReviewWrapper = styled.div`
-  margin: 20px 0 60px;
+  margin: 20px 0 0;
+  padding-bottom: 60px;
 
   .brand-logo {
     width: 200px;

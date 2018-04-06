@@ -33,8 +33,11 @@ const ContentWrapper = styled.div`
 `
 
 const LabelWrapper = styled.div`
-  line-height: 5px !important;
   width: 70px;
+
+  span.label {
+    line-height: 12px;
+  }
 `
 
 function TimerWrapper ({ promo }) {
@@ -46,7 +49,7 @@ function TimerWrapper ({ promo }) {
             <FormattedMessage {...messages.endsIn} />
           </Label>
         </LabelWrapper>
-        <Label as='span' size='massive' className='color__white text__weight--400'>
+        <Label as='span' size='massive' className='color__white text__weight--500'>
           <Timer endDate={promo.get('thruDate')} />
         </Label>
       </ContentWrapper>

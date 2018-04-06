@@ -79,7 +79,7 @@ class SidebarMenu extends React.PureComponent {
         <ListWrapper onClick={this._handleSignOut}>
           <Image alt='CLiQQ' size='mini' src={Logout} />
           <List.Content>
-            <Label as='p' className='margin__none' size='huge'>
+            <Label as='p' className='margin__none text__weight--500' size='huge'>
               <FormattedMessage {...messages.menuLogout} />
             </Label>
           </List.Content>
@@ -103,7 +103,7 @@ class SidebarMenu extends React.PureComponent {
             <ListWrapper onClick={() => changeRoute('/')}>
               <Image alt='CLiQQ' size='mini' src={Home} />
               <List.Content>
-                <Label as='p' className='margin__none' size='huge'>
+                <Label as='p' className='margin__none text__weight--500' size='huge'>
                   <FormattedMessage {...messages.menuHome} />
                 </Label>
               </List.Content>
@@ -111,7 +111,7 @@ class SidebarMenu extends React.PureComponent {
             <ListWrapper onClick={() => changeRoute('/purchases')}>
               <Image alt='CLiQQ' size='mini' src={Barcode} />
               <List.Content>
-                <Label as='p' className='margin__none' size='huge'>
+                <Label as='p' className='margin__none text__weight--500' size='huge'>
                   <FormattedMessage {...messages.menuActivity} />
                 </Label>
               </List.Content>
@@ -119,7 +119,7 @@ class SidebarMenu extends React.PureComponent {
             <ListWrapper onClick={() => changeRoute('/wallet')}>
               <Image alt='CLiQQ' size='mini' src={Points} />
               <List.Content>
-                <Label as='p' className='margin__none' size='huge'>
+                <Label as='p' className='margin__none text__weight--500' size='huge'>
                   <FormattedMessage {...messages.menuPoints} />
                 </Label>
               </List.Content>
@@ -127,7 +127,7 @@ class SidebarMenu extends React.PureComponent {
             <ListWrapper onClick={() => changeRoute('/categories')}>
               <Image alt='CLiQQ' size='mini' src={Categories} />
               <List.Content>
-                <Label as='p' className='margin__none' size='huge'>
+                <Label as='p' className='margin__none text__weight--500' size='huge'>
                   <FormattedMessage {...messages.menuCategories} />
                 </Label>
               </List.Content>
@@ -135,7 +135,7 @@ class SidebarMenu extends React.PureComponent {
             <ListWrapper onClick={() => changeRoute('/brands')}>
               <Image alt='CLiQQ' size='mini' src={Brands} />
               <List.Content>
-                <Label as='p' className='margin__none' size='huge'>
+                <Label as='p' className='margin__none text__weight--500' size='huge'>
                   <FormattedMessage {...messages.menuBrands} />
                 </Label>
               </List.Content>
@@ -144,7 +144,7 @@ class SidebarMenu extends React.PureComponent {
               <ListWrapper>
                 <Image alt='help' size='mini' src={Help} />
                 <List.Content>
-                  <Label as='p' className='margin__none' size='huge'>
+                  <Label as='p' className='margin__none text__weight--500' size='huge'>
                     <FormattedMessage {...messages.menuHelp} />
                   </Label>
                 </List.Content>

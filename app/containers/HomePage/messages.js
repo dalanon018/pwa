@@ -35,5 +35,9 @@ export default defineMessages({
   moreBrands: {
     id: `${idSuffix}.moreBrands`,
     defaultMessage: 'More Brands'
+  },
+  flashDeals: {
+    id: `${idSuffix}.flashDeals`,
+    defaultMessage: 'Flash Deals'
   }
 })
