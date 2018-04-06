@@ -461,7 +461,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
         >
           <div>
             <FilterTrigger
-              parentId={category}
+              queryCategory={category}
               requestFromFilter={this._requestFromFilter}
               getFilterCategories={this._fetchFilteredCategories}
               filterCategories={filterCategories}
