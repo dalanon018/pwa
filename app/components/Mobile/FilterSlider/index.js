@@ -202,7 +202,7 @@ class FilterSlider extends React.PureComponent {
         both(
           this._notEmpty('selectedCategory'),
           compose(
-            complement(equals(nextProps.parentId)),
+            complement(equals(nextProps.queryCategory)),
             prop('toggleCategory')
           )),
         this._notEmpty('selectedBrands')
