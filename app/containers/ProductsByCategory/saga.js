@@ -7,7 +7,9 @@ import {
 import { takeLatest, takeEvery } from 'redux-saga'
 import { isEmpty } from 'lodash'
 import {
+  always,
   compose,
+  ifElse,
   map,
   partial,
   propOr
@@ -15,7 +17,7 @@ import {
 
 // import request from 'utils/request'
 import { getRequestData } from 'utils/offline-request'
-
+import { flattenChildrenArray } from 'utils/array'
 import { transformProduct, transformCategory, transformBrand } from 'utils/transforms'
 import { getItem, setItem } from 'utils/localStorage'
 
@@ -39,9 +41,9 @@ import {
   setOver18Action
 } from './actions'
 
-import {
-  selectFilterCategories
-} from './selectors'
+// import {
+//   selectFilterCategories
+// } from './selectors'
 
 import {
   API_BASE_URL,
@@ -54,8 +56,13 @@ import {
 } from 'containers/Buckets/actions'
 
 import {
-  getAccessToken
+  getAccessToken,
+  getCategories
 } from 'containers/Buckets/saga'
+
+import {
+  selectProductCategories
+} from 'containers/Buckets/selectors'
 
 // function * sleep (ms) {
 //   yield new Promise(resolve => setTimeout(resolve, ms))
@@ -131,11 +138,30 @@ export function * getProductsViewed () {
   yield put(setProductsViewedAction(response))
 }
 
-export function * getFilterCategories (args) {
-  const { payload: { category, allowEmpty } } = args
-  let categories
+function * getCategory ({ data, category }) {
+  // we need to fetch categories to make sure categories are loaded
+  yield * getCategories()
+  const categories = yield (select(selectProductCategories()))
+  const flattenCategories = flattenChildrenArray(categories.toJS())
+  const foundCategory = flattenCategories.find(({ id }) => id === category)
+  const passEntity = ifElse(
+    isEmpty,
+    () => [],
+    (data) => [data]
+  )
 
-  const prevSelector = yield (select(selectFilterCategories()))
+  const dataPass = ifElse(
+    isEmpty,
+    partial(passEntity, [foundCategory]),
+    always(data)
+  )
+  return dataPass(data)
+}
+
+export function * getFilterCategories (args) {
+  const { payload: { category } } = args
+  let categories = []
+
   const token = yield getAccessToken()
   const req = yield call(getRequestData, `${API_BASE_URL}/categories?parent=${category || ''}`, {
     method: 'GET',
@@ -147,12 +173,10 @@ export function * getFilterCategories (args) {
       propOr([], 'categoryList')
     )
     categories = yield transform(req)
-    // we need to check if empty category since if not empty then we still have to get the categories.
-    categories = (!isEmpty(categories) || allowEmpty) ? categories : prevSelector
+    categories = yield getCategory({ data: categories, category })
   } else {
     yield put(setNetworkErrorAction(500))
   }
-
   yield put(setFilterCategoriesAction(categories))
 }
 

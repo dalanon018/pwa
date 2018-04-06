@@ -14,7 +14,7 @@ describe('<FilterSlider />', () => {
     toggleDrawer: false,
     toggleCategory: '',
     toggleBrands: [],
-    selectedCategory: '',
+    selectedCategory: {},
     selectedBrands: [],
     categoriesLoading: false,
     brandsLoading: false

@@ -462,7 +462,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _requestFromFilter = ({ brands, category: { id, name } }) => {
-    const { location: { search }, match: { params }, replaceRoute } = this.props
+    const { location: { search }, match: { params }, changeRoute } = this.props
     const locationSearch = queryString.parse(search)
     // if category prop is undefined meaning that we didn't found the category
     // it's because we only choose the brands so we have to use the existing
@@ -475,7 +475,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
       offset: 0
     })
 
-    replaceRoute(`/products-category/${useId}?brands=${brands.join(',')}&name=${useName}`)
+    changeRoute(`/products-category/${useId}?brands=${brands.join(',')}&name=${useName}`)
   }
 
   _handleOver18 () {
@@ -514,6 +514,12 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     const parameter = queryString.parse(search)
 
     this.setState({filtered: !!parameter.brands})
+  }
+
+  _getQueryBrands = () => {
+    const { location: { search } } = this.props
+    const parameter = queryString.parse(search)
+    return parameter.brands ? parameter.brands.split(',') : []
   }
 
   // TODO: We need to remove extra call for categories specially I think we dont need them anymore
@@ -572,7 +578,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     return (
       <div>
         <FilterTrigger
-          parentId={id}
+          queryCategory={id}
+          queryBrands={this._getQueryBrands()}
           requestFromFilter={this._requestFromFilter}
           getFilterCategories={this._fetchFilteredCategories}
           getFilterBrands={this._fetchFilteredBrands}

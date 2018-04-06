@@ -12,9 +12,11 @@ import queryString from 'query-string'
 import { Image, Label } from 'semantic-ui-react'
 import { FormattedMessage } from 'react-intl'
 import {
+  anyPass,
   complement,
   compose,
   equals,
+  prop,
   propOr,
   when
 } from 'ramda'
@@ -62,7 +64,7 @@ class FilterTrigger extends React.PureComponent {
     requestFromFilter: PropTypes.func.isRequired,
     filterCategories: PropTypes.object.isRequired,
     filterCategoriesLoading: PropTypes.bool.isRequired,
-    parentId: PropTypes.string,
+    queryCategory: PropTypes.string,
     getFilterBrands: PropTypes.func,
     filterBrands: PropTypes.object,
     filterBrandsLoading: PropTypes.bool
@@ -97,14 +99,18 @@ class FilterTrigger extends React.PureComponent {
     document.getElementsByTagName('body')[0].classList.toggle('custom__body')
   }
 
-  _handleToggleCategory = (value) => {
-    const { getFilterCategories, getFilterBrands, filterCategories } = this.props
-    // each request we have to reset our selected brand and toggle brand since we expect different data
+  _findCategory = ({ value, props = this.props }) => {
+    const { filterCategories } = props
+     // each request we have to reset our selected brand and toggle brand since we expect different data
     const foundCategory = filterCategories.find((category) => category.get('id') === value)
-    const selectedCategory = foundCategory ? foundCategory.toObject() : {}
+    return foundCategory ? foundCategory.toObject() : {}
+  }
+
+  _handleToggleCategory = (value) => {
+    const { getFilterCategories, getFilterBrands } = this.props
 
     this.setState({
-      selectedCategory,
+      selectedCategory: this._findCategory({ value }),
       toggleCategory: value,
       toggleBrands: [],
       selectedBrands: []
@@ -124,15 +130,15 @@ class FilterTrigger extends React.PureComponent {
   }
 
   _handleToggleReset = () => {
-    const { parentId, getFilterCategories, getFilterBrands } = this.props
+    const { queryCategory, getFilterCategories, getFilterBrands } = this.props
     this.setState({
       selectedBrands: [],
       selectedCategory: {},
       toggleBrands: [],
-      toggleCategory: ''
+      toggleCategory: queryCategory
     })
-    getFilterCategories && getFilterCategories({ category: parentId })
-    getFilterBrands && getFilterBrands({ category: parentId })
+    getFilterCategories && getFilterCategories({ category: queryCategory })
+    getFilterBrands && getFilterBrands({ category: queryCategory })
   }
 
   _handleSubmit = () => {
@@ -164,10 +170,28 @@ class FilterTrigger extends React.PureComponent {
     shouldUpdateSelectedBrands(brands)
   }
 
-  render () {
-    const { filterCategories, filterBrands, filterCategoriesLoading, filterBrandsLoading, filtered } = this.props
-    const { toggleDrawer, toggleBrands, toggleCategory, selectedBrands, selectedCategory } = this.state
+  componentWillReceiveProps (nextProps) {
+    const { queryCategory, queryBrands } = this.props
+    const shouldUpdateSelectionState = when(
+      anyPass([
+        compose(complement(equals(queryCategory)), prop('queryCategory')),
+        compose(complement(equals(queryBrands)), prop('queryBrands'))
+      ]),
+      (props) =>
+        this.setState(() => ({
+          toggleCategory: props.queryCategory || '',
+          selectedCategory: this._findCategory({ props, value: props.queryCategory }),
+          toggleBrands: props.queryBrands || [],
+          selectedBrands: props.queryBrands || []
+        }))
+    )
 
+    shouldUpdateSelectionState(nextProps)
+  }
+
+  render () {
+    const { queryCategory, filterCategories, filterBrands, filterCategoriesLoading, filterBrandsLoading, filtered } = this.props
+    const { toggleDrawer, toggleBrands, toggleCategory, selectedBrands, selectedCategory } = this.state
     return (
       <div>
         { toggleDrawer && <BackGroundLay onClick={this._handleToggleDrawer} /> }
@@ -182,6 +206,7 @@ class FilterTrigger extends React.PureComponent {
           </Label>
         </Wrapper>
         <FilterSlider
+          queryCategory={queryCategory}
           selectedBrands={selectedBrands}
           selectedCategory={selectedCategory}
           toggleDrawer={toggleDrawer}

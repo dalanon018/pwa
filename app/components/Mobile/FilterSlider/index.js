@@ -16,7 +16,9 @@ import {
   complement,
   ifElse,
   isEmpty,
-  prop
+  prop,
+  both,
+  equals
 } from 'ramda'
 
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
@@ -197,7 +199,12 @@ class FilterSlider extends React.PureComponent {
   componentWillReceiveProps (nextProps) {
     const shouldDisableReset = ifElse(
       anyPass([
-        this._notEmpty('selectedCategory'),
+        both(
+          this._notEmpty('selectedCategory'),
+          compose(
+            complement(equals(nextProps.queryCategory)),
+            prop('toggleCategory')
+          )),
         this._notEmpty('selectedBrands')
       ]),
       this._handleDisabledReset(false),

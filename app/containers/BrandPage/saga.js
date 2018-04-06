@@ -10,13 +10,16 @@ import {
 } from 'redux-saga'
 import { isEmpty } from 'lodash'
 import {
+  always,
   compose,
+  ifElse,
   map,
   partial,
   propOr
 } from 'ramda'
 
 // import request from 'utils/request'
+import { flattenChildrenArray } from 'utils/array'
 import { getRequestData } from 'utils/offline-request'
 import { transformProduct, transformCategory } from 'utils/transforms'
 
@@ -30,9 +33,9 @@ import {
   setFilterCategoriesAction
 } from './actions'
 
-import {
-  selectFilterCategories
-} from './selectors'
+// import {
+//   selectFilterCategories
+// } from './selectors'
 
 import {
   API_BASE_URL
@@ -43,8 +46,13 @@ import {
 } from 'containers/Buckets/actions'
 
 import {
-  getAccessToken
+  getAccessToken,
+  getCategories
 } from 'containers/Buckets/saga'
+
+import {
+  selectProductCategories
+} from 'containers/Buckets/selectors'
 
 // function * sleep (ms) {
 //   yield new Promise(resolve => setTimeout(resolve, ms))
@@ -83,11 +91,31 @@ export function * getProductByBrands (args) {
   yield put(setProductsCountsAction(count))
 }
 
+function * getCategory ({ data, category }) {
+  // we need to fetch categories to make sure categories are loaded
+  yield * getCategories()
+  const categories = yield (select(selectProductCategories()))
+  const flattenCategories = flattenChildrenArray(categories.toJS())
+  const foundCategory = flattenCategories.find(({ id }) => id === category)
+
+  const passEntity = ifElse(
+    isEmpty,
+    () => [],
+    (data) => [data]
+  )
+
+  const dataPass = ifElse(
+    isEmpty,
+    partial(passEntity, [foundCategory]),
+    always(data)
+  )
+  return dataPass(data)
+}
+
 export function * getFilterCategories (args) {
-  const { payload: { category, brand, allowEmpty } } = args
+  const { payload: { category, brand } } = args
   let categories = []
 
-  const prevSelector = yield (select(selectFilterCategories()))
   const token = yield getAccessToken()
   const req = yield call(getRequestData, `${API_BASE_URL}/categories?brand=${brand || ''}&parent=${category || ''}`, {
     method: 'GET',
@@ -100,8 +128,7 @@ export function * getFilterCategories (args) {
     )
 
     categories = yield transform(req)
-    // we need to check if empty category since if not empty then we still have to get the categories.
-    categories = (!isEmpty(categories) || allowEmpty) ? categories : prevSelector
+    categories = yield getCategory({ data: categories, category })
   } else {
     yield put(setNetworkErrorAction(500))
   }
