@@ -71,6 +71,7 @@ function productReviewReducer (state = initialState, action) {
 
     case SET_ORDER_HANDLER_DEFAULT:
       return state
+        .set('orderProduct', fromJS({}))
         .set('submissionSuccess', fromJS({}))
         .set('submissionError', fromJS({}))
 
