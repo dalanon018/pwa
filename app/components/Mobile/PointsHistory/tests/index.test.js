@@ -9,6 +9,6 @@ describe('<PointsHistory />', () => {
     const renderedComponent = shallow(
       <PointsHistory />
     )
-    expect(renderedComponent.find('div').length).toEqual(0)
+    expect(renderedComponent.find('div').length).toEqual(1)
   })
 })

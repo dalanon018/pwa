@@ -14,7 +14,7 @@ import { compose as ReduxCompose } from 'redux'
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
-import { noop, isEmpty } from 'lodash'
+import { noop } from 'lodash'
 import {
   allPass,
   compose,
@@ -265,35 +265,50 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
   _displayTransactionsItems = () => {
     const { transactions, changeRoute, transactionsLoading, lazyload, wallet } = this.props
     if (transactions.size > 0 || lazyload === false) {
-      const getLatestTransaction = transactions.first() && transactions.first().get('datetime')
+      // const getLatestTransaction = transactions.first() && transactions.first().get('datetime')
 
       return (
         <div>
           <Container className='padding__none--vertical'>
             <Grid padded>
               <Grid.Row className='padding__none--vertical'>
-                <PlainCard>
-                  <PointsPreviewWrapper className='text__align--center'>
-                    <Label as='p' className='text__weight--500' size='large' >
-                      <FormattedMessage {...messages.currentPoints} />
-                    </Label>
-                    <Label as='p' className='color__grey text__weight--400' size='medium' >
-                      <FormattedMessage
-                        {...messages.asOf}
-                        values={{date: moment(getLatestTransaction).format('LL')}} />
-                    </Label>
-                    <UserPointsWrapper>
-                      <Image src={TealIcon} alt='CLiQQ' />
-                      <Label as='span' className='my-points color__teal text__weight--700' size='massive' >
-                        {!isEmpty(wallet) && wallet.get('currentPoints') ? parseFloat(wallet.get('currentPoints')).toLocaleString() : '---'}
+                {
+                  transactions.size >= 1 && !transactionsLoading
+                  ? <PlainCard>
+                    <PointsPreviewWrapper className='text__align--center'>
+                      <Label as='p' className='text__weight--500' size='large' >
+                        <FormattedMessage {...messages.currentPoints} />
                       </Label>
-                    </UserPointsWrapper>
-                  </PointsPreviewWrapper>
-                </PlainCard>
+                      <Label as='p' className='color__grey text__weight--400' size='medium' >
+                        <FormattedMessage
+                          {...messages.asOf}
+                          values={{date: moment().format('LL')}} />
+                      </Label>
+                      <UserPointsWrapper>
+                        <Image src={TealIcon} alt='CLiQQ' />
+                        <Label as='span' className='my-points color__teal text__weight--700' size='massive' >
+                          {parseFloat(wallet.get('currentPoints')).toLocaleString()}
+                        </Label>
+                      </UserPointsWrapper>
+                    </PointsPreviewWrapper>
+                  </PlainCard>
+                  : <PlainCard>
+                    <PointsPreviewWrapper className='text__align--center'>
+                      <Label as='p' className='text__weight--500' size='large' >
+                        <FormattedMessage {...messages.currentPoints} />
+                      </Label>
+                      <UserPointsWrapper>
+                        <Image src={TealIcon} alt='CLiQQ' />
+                        <Label as='span' className='my-points color__teal text__weight--700' size='massive' >
+                          ---
+                        </Label>
+                      </UserPointsWrapper>
+                    </PointsPreviewWrapper>
+                  </PlainCard>
+                }
               </Grid.Row>
             </Grid>
           </Container>
-
           <MobileTransactions changeRoute={changeRoute} loader={transactionsLoading} wallet={wallet} transactions={transactions} />
         </div>
       )

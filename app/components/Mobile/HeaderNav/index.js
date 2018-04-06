@@ -253,7 +253,7 @@ export default class MainMenu extends PureComponent {
 
     const pageTitleParsed = () => {
       if (pageTitle && pageTitle.length > 17) {
-        return <Header className='color__white margin__top-positive--3 long-title' as='h1'> { pageTitle } </Header>
+        return <Header className='color__white margin__top-positive--3 long-title text__align--left' as='h1'> { pageTitle } </Header>
       }
 
       return <Header className='color__white margin__top-positive--3 text__align--left' as='h1'> { pageTitle } </Header>
