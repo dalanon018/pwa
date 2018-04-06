@@ -7,7 +7,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import queryString from 'query-string'
 
 import { Image, Label } from 'semantic-ui-react'
 import { FormattedMessage } from 'react-intl'
@@ -158,16 +157,26 @@ class FilterTrigger extends React.PureComponent {
   }
 
   componentDidMount () {
-    const { brands } = queryString.parse(window.location.search)
+    const { queryBrands, queryCategory } = this.props
     const shouldUpdateSelectedBrands = when(
       compose(complement(equals(0)), propOr(0, 'length')),
-      (param) => this.setState(() => ({
-        selectedBrands: param.split(','),
-        toggleBrands: param.split(',')
+      (brands) => this.setState(() => ({
+        selectedBrands: brands,
+        toggleBrands: brands
       }))
     )
 
-    shouldUpdateSelectedBrands(brands)
+    const shouldUpdateSelectedCategory = when(
+      compose(complement(equals(0)), propOr(0, 'length')),
+      (category) =>
+        this.setState(() => ({
+          toggleCategory: category || '',
+          selectedCategory: this._findCategory({ value: category })
+        }))
+    )
+
+    shouldUpdateSelectedCategory(queryCategory)
+    shouldUpdateSelectedBrands(queryBrands)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -185,7 +194,6 @@ class FilterTrigger extends React.PureComponent {
           selectedBrands: props.queryBrands || []
         }))
     )
-
     shouldUpdateSelectionState(nextProps)
   }
 
