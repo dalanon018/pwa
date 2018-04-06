@@ -11,7 +11,7 @@ import { getItem, setItem, removeItem } from 'utils/localStorage'
 import { fnSearchParams } from 'utils/http'
 import { Pad } from 'utils/string'
 import { transformSubmitOrderPayload } from 'utils/transforms'
-import { calculatePricePoints } from 'utils/product'
+import { calculatePricePoints, toggleOrigDiscountPrice } from 'utils/product'
 
 import {
   GET_ORDER_PRODUCT,
@@ -203,11 +203,22 @@ export function * requestOrderToken (mobile) {
   return getPropAccessToken(getOrderToken)
 }
 
+// Special case for promo paylaod
+function promoPayload (orderedProduct) {
+  const promoCode = orderedProduct.getIn(['promo', 'promoCode'])
+
+  return promoCode ? {
+    totalPrice: toggleOrigDiscountPrice(orderedProduct),
+    promoCode
+  } : {}
+}
+
 export function * submitOrder (args) {
   const { payload: { orderedProduct, mobileNumber, modePayment, store, usePoints } } = args
   const loyaltyToken = yield call(getItem, LOYALTY_TOKEN_KEY)
   const completeMobile = `0${mobileNumber}`
   const postPayload = transformSubmitOrderPayload({
+    ...promoPayload(orderedProduct),
     cliqqCode: orderedProduct.get('cliqqCode').first(),
     multiplier: orderedProduct.getIn(['points', 'multiplier']),
     amount: calculatePricePoints({
