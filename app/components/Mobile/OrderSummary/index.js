@@ -331,38 +331,6 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                         onChange={_handleChange}
                         onClick={_handleToBottom}
                       />
-                      <StepWrapper innerRef={_stepWrapperRef} className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={storeLocatorVisibility}>
-                        <Label as='p' className='color__grey text__weight--500' size='large' >
-                          <FormattedMessage {...messages.chooseStore} />
-                        </Label>
-                        <LocationButton id='scrollToAnimate' onClick={_handleRecentStore} className='color__secondary border__two--light-grey' fluid nextIcon={NextIcon} locationIcon={LocationIcon}>
-                          {
-                            store && isEmpty(store)
-                            ? <span className='margin__left-positive--20'>
-                              <Label as='span' className='text__weight--500' size='large' >
-                                <FormattedMessage {...messages.recentlyViewedStore} />
-                              </Label>
-                            </span>
-                            : <span className='margin__left-positive--20'>
-                              <Label as='span' className='text__weight--500' size='large' >
-                                {store.id} {store.name}
-                              </Label>
-                            </span>
-                          }
-                        </LocationButton>
-                        <Label as='p' className='margin__none text__weight--400 margin__top-positive--10' size='medium'>
-                          <FormattedMessage
-                            {...messages.findStore}
-                            values={{storeLocator: (
-                              <span className='color__primary' onClick={_handleStoreLocator}>
-                                <FormattedMessage
-                                  {...messages.storeLocator}
-                                />
-                              </span>
-                            )}}
-                          />
-                        </Label>
-                      </StepWrapper>
                       <Checkbox
                         radio
                         className='margin__vertical--10'
@@ -399,6 +367,38 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                           pointsModifier={_updateUsePoints}
                           currentPoints={currentPoints}
                         />
+                      </StepWrapper>
+                      <StepWrapper innerRef={_stepWrapperRef} className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={storeLocatorVisibility}>
+                        <Label as='p' className='color__grey text__weight--500' size='large' >
+                          <FormattedMessage {...messages.chooseStore} />
+                        </Label>
+                        <LocationButton id='scrollToAnimate' onClick={_handleRecentStore} className='color__secondary border__two--light-grey' fluid nextIcon={NextIcon} locationIcon={LocationIcon}>
+                          {
+                            store && isEmpty(store)
+                            ? <span className='margin__left-positive--20'>
+                              <Label as='span' className='text__weight--500' size='large' >
+                                <FormattedMessage {...messages.recentlyViewedStore} />
+                              </Label>
+                            </span>
+                            : <span className='margin__left-positive--20'>
+                              <Label as='span' className='text__weight--500' size='large' >
+                                {store.id} {store.name}
+                              </Label>
+                            </span>
+                          }
+                        </LocationButton>
+                        <Label as='p' className='margin__none text__weight--400 margin__top-positive--10' size='medium'>
+                          <FormattedMessage
+                            {...messages.findStore}
+                            values={{storeLocator: (
+                              <span className='color__primary' onClick={_handleStoreLocator}>
+                                <FormattedMessage
+                                  {...messages.storeLocator}
+                                />
+                              </span>
+                            )}}
+                          />
+                        </Label>
                       </StepWrapper>
                     </Form.Field>
                   </Form>

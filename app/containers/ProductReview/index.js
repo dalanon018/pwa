@@ -8,7 +8,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { noop, isEmpty } from 'lodash'
-import { ifElse, equals, both, compose, partial, prop, propOr, either } from 'ramda'
+import {
+  both,
+  compose,
+  either,
+  equals,
+  ifElse,
+  partial,
+  prop,
+  propOr,
+  toLower
+ } from 'ramda'
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
 import { replace, push } from 'react-router-redux'
@@ -177,7 +187,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   _handleChange = (e, { value }) => {
     this.setState({
       modePayment: value,
-      storeLocatorVisibility: value === this.showStoreLocator,
+      storeLocatorVisibility: (value === this.showStoreLocator || value === this.showPointsModifier),
       pointsModifierVisibility: value === this.showPointsModifier
     })
   }
@@ -240,8 +250,12 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   _handleRecentStore = () => {
-    const { store } = this.state
-    this.props.pushRoute(`/recent-store${fnSearchParams(store)}`)
+    const { store, modePayment } = this.state
+    const queryParams = {
+      ...store,
+      type: toLower(modePayment)
+    }
+    this.props.pushRoute(`/recent-store${fnSearchParams(queryParams)}`)
   }
 
   _handleDoneFetchOrderNoProductNorMobile () {
