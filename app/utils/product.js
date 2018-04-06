@@ -11,9 +11,8 @@ import {
  * @param {*} product
  */
 export const toggleOrigDiscountPrice = (product) => {
-  const showPrice = product.get('discountPrice') || product.get('price')
-
-  return showPrice ? showPrice.toLocaleString() : 0
+  const price = product.get('discountPrice') || product.get('price')
+  return price || 0
 }
 
 export const computeTotalPointsPrice = (product) => {

@@ -82,7 +82,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     return `${calculateEarnPoints({
       multiplier: parseFloat(orderedProduct.getIn(['points', 'multiplier'])),
       percentage: parseFloat(orderedProduct.getIn(['points', 'method', mode])),
-      amount: parseFloat(amount)
+      amount: amount
     })}`
   }
 
@@ -221,7 +221,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       <LabelPrice length={this._toggleOrigDiscountPrice().length}>
         <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
           <FormattedMessage {...messages.peso} />
-          { this._toggleOrigDiscountPrice() }
+          { this._toggleOrigDiscountPrice().toLocaleString() }
         </Label>
         { toggleDiscount(orderedProduct.get('discountPrice')) }
       </LabelPrice>
@@ -237,7 +237,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       <LabelPrice length={this._toggleOrigDiscountPrice().length}>
         <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
           <FormattedMessage {...messages.peso} />
-          { this._toggleOrigDiscountPrice() }
+          { this._toggleOrigDiscountPrice().toLocaleString() }
         </Label>
         { toggleDiscount(orderedProduct.get('discountPrice')) }
       </LabelPrice>
@@ -253,7 +253,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
         <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
           <FormattedMessage {...messages.peso} />
-          { this._computePricePoints() }
+          { this._computePricePoints().toLocaleString() }
         </Label>
         { toggleDiscount(orderedProduct.get('discountPrice')) }
       </LabelPrice>
