@@ -34,6 +34,9 @@ const Wrapper = styled.div`
   width: 75%;
   z-index: 999;
   transition: ease 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 `
 
 const OptionWrapper = styled.div`
@@ -49,17 +52,15 @@ const OptionWrapper = styled.div`
 `
 
 const ButtonWrapper = styled.div`
-  align-items: center;
+  flex: 1;
+  align-items: flex-end;
   background-color: #FFFFFF;
-  bottom: 0;
   display: flex;
   justify-content: space-between;
   padding: 14px;
-  position: fixed;
   right: ${props => props.toggleDrawer ? 0 : '-100%'};
   transition: ease 0.3s;
-  width: 75%;
-  z-index: 999;
+  width: 100%;
 `
 
 const FormWrapper = styled(Form)`
