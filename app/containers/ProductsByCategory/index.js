@@ -516,6 +516,12 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     this.setState({filtered: !!parameter.brands})
   }
 
+  _getQueryBrands = () => {
+    const { location: { search } } = this.props
+    const parameter = queryString.parse(search)
+    return parameter.brands ? parameter.brands.split(',') : []
+  }
+
   // TODO: We need to remove extra call for categories specially I think we dont need them anymore
   componentDidMount () {
     const { match: { params }, getProductsViewed, setRouteName, setPageTitle, setShowSearchIcon, setShowPointsIcon, setShowActivityIcon } = this.props
@@ -572,7 +578,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     return (
       <div>
         <FilterTrigger
-          parentId={id}
+          queryCategory={id}
+          queryBrands={this._getQueryBrands()}
           requestFromFilter={this._requestFromFilter}
           getFilterCategories={this._fetchFilteredCategories}
           getFilterBrands={this._fetchFilteredBrands}
