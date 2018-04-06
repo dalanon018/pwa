@@ -18,7 +18,9 @@ import { Grid } from 'semantic-ui-react'
 import { noop } from 'lodash'
 import {
   ifElse,
-  isEmpty
+  isEmpty,
+  compose as RCompose,
+  propOr
 } from 'ramda'
 
 import injectSaga from 'utils/injectSaga'
@@ -73,7 +75,6 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
   _implementStore = () => {
     const { visitedStores } = this.props
     const { stores } = this.state
-
     return visitedStores.size ? visitedStores : stores
   }
 
@@ -93,13 +94,12 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
 
     const query = fnQueryObject(search)
     const selectQuery = ifElse(
-      isEmpty,
+      RCompose(isEmpty, propOr('', 'id')),
       noop,
       () => this.setState({
         stores: fromJS([query]) // we update our store
       })
     )
-
     selectQuery(query)
     setPageTitle(intl.formatMessage(messages.header))
     setRouteName(RECENT_STORE_NAME)
