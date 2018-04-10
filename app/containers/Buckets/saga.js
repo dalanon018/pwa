@@ -41,48 +41,24 @@ import { getRequestData } from 'utils/offline-request'
 import { transformCategory, transformBrand, transformOrder } from 'utils/transforms'
 import { getItem, setItem, removeItem } from 'utils/localStorage'
 import { DateDifferece, AddDate } from 'utils/date'
-import { getBrowserInfo } from 'utils/http'
+import { getBrowserInfo, fnSearchParams } from 'utils/http'
 
 import {
-  GET_PRODUCT_CATEGORIES,
-  GET_BRANDS,
-  GET_MOBILE_NUMBERS,
-  GET_RECEIPT_UPDATED,
-  STATUSES,
-  REGISTER_PUSH,
-  GET_REGISTED_PUSH,
-  GET_LOYALTY_TOKEN,
-  REMOVE_LOYALTY_TOKEN,
-
-  COD_PAYMENT
-} from './constants'
-
-import {
-  setProductCategoriesAction,
-  setBrandsAction,
-  setMobileNumbersAction,
-  setUpdatedReceiptsAction,
-  setNetworkErrorAction,
-  setRegisteredPushAction,
-  setLoyaltyTokenAction
-} from './actions'
-
-import {
+  ACCESS_TOKEN_KEY,
   API_BASE_URL,
-
-  TOKEN_URL,
+  APP_BASE_URL,
+  BRANDS_KEY,
+  CATEGORIES_KEY,
+  LOYALTY_TOKEN_KEY,
+  MOBILE_NUMBERS_KEY,
   OATH_CLIENT_ID,
   OATH_CLIENT_SECRET,
-  OATH_RESPONSE_TYPE,
   OATH_GRANT_TYPE,
-  REGISTERED_PUSH,
-
-  ACCESS_TOKEN_KEY,
-  MOBILE_NUMBERS_KEY,
+  OATH_RESPONSE_TYPE,
   ORDERED_LIST_KEY,
-  CATEGORIES_KEY,
-  BRANDS_KEY,
-  LOYALTY_TOKEN_KEY
+  REGISTERED_PUSH,
+  STORE_LOCATOR_URL,
+  TOKEN_URL
 } from 'containers/App/constants'
 
 import {
@@ -96,6 +72,31 @@ import {
 import {
   setReceiptAction
 } from 'containers/ReceiptPage/actions'
+
+import {
+  GET_PRODUCT_CATEGORIES,
+  GET_BRANDS,
+  GET_MOBILE_NUMBERS,
+  GET_RECEIPT_UPDATED,
+  STATUSES,
+  REGISTER_PUSH,
+  GET_REGISTED_PUSH,
+  GET_LOYALTY_TOKEN,
+  REMOVE_LOYALTY_TOKEN,
+  STORE_LOCATOR,
+
+  COD_PAYMENT
+} from './constants'
+
+import {
+  setProductCategoriesAction,
+  setBrandsAction,
+  setMobileNumbersAction,
+  setUpdatedReceiptsAction,
+  setNetworkErrorAction,
+  setRegisteredPushAction,
+  setLoyaltyTokenAction
+} from './actions'
 
 function * transformEachEntity (transform, entity) {
   const response = yield call(transform, entity)
@@ -426,6 +427,21 @@ export function * getIsRegisteredPush () {
   yield put(setRegisteredPushAction(isRegistered || false))
 }
 
+export function * storeLocator (args) {
+  const { payload: { modePayment } } = args
+  const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
+  // we will only get the last mobileNumber used
+  const mobileNumber = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
+  const params = {
+    callbackUrl: encodeURI(`${APP_BASE_URL}/review`),
+    callbackMethod: 'GET',
+    mobileNumber: `0${mobileNumber}`,
+    modePayment
+  }
+
+  yield window.location.replace(`${STORE_LOCATOR_URL}${fnSearchParams(params)}`)
+}
+
 export function * getCategoriesSaga () {
   yield * takeLatest(GET_PRODUCT_CATEGORIES, getCategories)
 }
@@ -458,6 +474,10 @@ export function * removeLoyaltyTokenSaga () {
   yield * takeLatest(REMOVE_LOYALTY_TOKEN, removeLoyaltyToken)
 }
 
+export function * storeLocatorSaga () {
+  yield * takeLatest(STORE_LOCATOR, storeLocator)
+}
+
 // All sagas to be loaded
 export function * bucketsSagas () {
   const watcher = yield [
@@ -472,7 +492,9 @@ export function * bucketsSagas () {
     fork(getIsRegisteredPushSaga),
 
     // get loyaltyToken
-    fork(getLoyaltyTokenSaga)
+    fork(getLoyaltyTokenSaga),
+
+    fork(storeLocatorSaga)
     // remove loyaltyToken / sign out
   ]
   // remember no to cancel this action on change of locations since it wont trigger anymore
