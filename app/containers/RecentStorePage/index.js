@@ -29,29 +29,32 @@ import injectReducer from 'utils/injectReducer'
 
 import { fnQueryObject } from 'utils/http'
 
+import RecentStore from 'components/Shared/RecentStore'
+import WindowWidth from 'components/Shared/WindowWidth'
+
 import { userIsAuthenticated } from 'containers/App/auth'
 import {
   setPageTitleAction,
-  setRouteNameAction
+  setRouteNameAction,
+  storeLocatorAction
 } from 'containers/Buckets/actions'
 
-import RecentStore from 'components/Shared/RecentStore'
-import WindowWidth from 'components/Shared/WindowWidth'
+import {
+  RECENT_STORE_NAME
+} from 'containers/Buckets/constants'
 
 import reducer from './reducer'
 import saga from './saga'
 import messages from './messages'
 
 import {
-  getVisitedStoresAction,
-  storeLocatorAction
+  getVisitedStoresAction
 } from './actions'
 
 import {
   selectVisitedStores,
   selectVisitedStoresLoading
 } from './selectors'
-import { RECENT_STORE_NAME } from 'containers/Buckets/constants'
 
 export class RecentStorePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
