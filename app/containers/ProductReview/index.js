@@ -8,7 +8,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { noop, isEmpty } from 'lodash'
-import { ifElse, equals, both, compose, partial, prop, propOr, either } from 'ramda'
+import {
+  anyPass,
+  both,
+  compose,
+  either,
+  equals,
+  ifElse,
+  partial,
+  prop,
+  propOr,
+  toLower
+ } from 'ramda'
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
 import { replace, push } from 'react-router-redux'
@@ -177,7 +188,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   _handleChange = (e, { value }) => {
     this.setState({
       modePayment: value,
-      storeLocatorVisibility: value === this.showStoreLocator,
+      storeLocatorVisibility: (value === this.showStoreLocator || value === this.showPointsModifier),
       pointsModifierVisibility: value === this.showPointsModifier
     })
   }
@@ -200,9 +211,15 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   _handleProceed () {
     const { mobileNumber, orderedProduct, submitOrder } = this.props
     const { modePayment, store, usePoints } = this.state
-    const CODPayment = (mode) => equals(this.showStoreLocator)(mode) &&
-    !isEmpty(store)
-    const CashPayment = either(equals('CASH'), equals('POINTS'))
+    const CODPayment = both(
+      anyPass([
+        equals(this.showStoreLocator),
+        equals(this.showPointsModifier)
+      ]),
+      () => !isEmpty(store)
+    )
+
+    const CashPayment = equals('CASH')
     const submissionOrder = () => {
       FbEventTracking('Purchase', {
         currency: 'PHP',
@@ -236,12 +253,17 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   _handleStoreLocator = () => {
-    this.props.storeLocator()
+    const { modePayment } = this.state
+    this.props.storeLocator({ modePayment })
   }
 
   _handleRecentStore = () => {
-    const { store } = this.state
-    this.props.pushRoute(`/recent-store${fnSearchParams(store)}`)
+    const { store, modePayment } = this.state
+    const queryParams = {
+      ...store,
+      type: toLower(modePayment)
+    }
+    this.props.pushRoute(`/recent-store${fnSearchParams(queryParams)}`)
   }
 
   _handleDoneFetchOrderNoProductNorMobile () {
@@ -299,7 +321,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         partial(populateFromStorage, [store]),
         async (type) => this.setState({
           modePayment: type.toUpperCase(),
-          storeLocatorVisibility: type.toUpperCase() === this.showStoreLocator,
+          storeLocatorVisibility: (type.toUpperCase() === this.showStoreLocator || type.toUpperCase() === this.showPointsModifier),
           pointsModifierVisibility: type.toUpperCase() === this.showPointsModifier,
           store: await transformStore(query) // we update our store
         })

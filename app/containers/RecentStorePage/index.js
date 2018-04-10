@@ -19,6 +19,7 @@ import { noop } from 'lodash'
 import {
   ifElse,
   isEmpty,
+  both,
   compose as RCompose,
   propOr
 } from 'ramda'
@@ -64,12 +65,14 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
   }
 
   state = {
+    type: '',
     stores: fromJS([]),
     toggle: ''
   }
 
   _handleGoToStoreLocator = () => {
-    this.props.storeLocator()
+    const { type } = this.state
+    this.props.storeLocator({ modePayment: type })
   }
 
   _implementStore = () => {
@@ -80,12 +83,13 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
 
   _handleToggle = (_, { value }) => {
     const { changeRoute } = this.props
+    const { type } = this.state
     const implementStore = this._implementStore()
     const selectedStore = implementStore.find((entity) => entity.get('id') === value)
     this.setState({
       toggle: value
     }, () => {
-      changeRoute(`/review?type=cod&storeId=${selectedStore.get('id')}&storeName=${selectedStore.get('name')}`)
+      changeRoute(`/review?type=${type}&storeId=${selectedStore.get('id')}&storeName=${selectedStore.get('name')}`)
     })
   }
 
@@ -94,11 +98,18 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
 
     const query = fnQueryObject(search)
     const selectQuery = ifElse(
-      RCompose(isEmpty, propOr('', 'id')),
+      both(
+        RCompose(isEmpty, propOr('', 'id')),
+        RCompose(isEmpty, propOr('', 'type'))
+      ),
       noop,
-      () => this.setState({
-        stores: fromJS([query]) // we update our store
-      })
+      ({type, ...rest}) => {
+        const stores = !isEmpty(rest) ? [rest] : []
+        this.setState({
+          type,
+          stores: fromJS(stores) // we update our store
+        })
+      }
     )
     selectQuery(query)
     setPageTitle(intl.formatMessage(messages.header))
@@ -159,7 +170,7 @@ function mapDispatchToProps (dispatch) {
     setPageTitle: payload => dispatch(setPageTitleAction(payload)),
     setRouteName: payload => dispatch(setRouteNameAction(payload)),
     getVisitedStores: () => dispatch(getVisitedStoresAction()),
-    storeLocator: () => dispatch(storeLocatorAction()),
+    storeLocator: (payload) => dispatch(storeLocatorAction(payload)),
     changeRoute: url => dispatch(push(url)),
     dispatch
   }

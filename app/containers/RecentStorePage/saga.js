@@ -44,13 +44,15 @@ function * getMobileNumber () {
   return Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
 }
 
-export function * storeLocator () {
+export function * storeLocator (args) {
+  const { payload: { modePayment } } = args
   const mobileNumber = yield getMobileNumber()
   // ${fnSearchParams({ type: 'cod' })}`)
   const params = {
     callbackUrl: encodeURI(`${APP_BASE_URL}/review`),
     callbackMethod: 'GET',
-    mobileNumber: `0${mobileNumber}`
+    mobileNumber: `0${mobileNumber}`,
+    modePayment
   }
 
   yield window.location.replace(`${STORE_LOCATOR_URL}${fnSearchParams(params)}`)

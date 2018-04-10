@@ -11,7 +11,7 @@ import { getItem, setItem, removeItem } from 'utils/localStorage'
 import { fnSearchParams } from 'utils/http'
 import { Pad } from 'utils/string'
 import { transformSubmitOrderPayload } from 'utils/transforms'
-import { calculatePricePoints } from 'utils/product'
+import { calculatePricePoints, toggleOrigDiscountPrice } from 'utils/product'
 
 import {
   GET_ORDER_PRODUCT,
@@ -121,13 +121,15 @@ function * setOrderList (order) {
   return yield call(setItem, ORDERED_LIST_KEY, setOrders)
 }
 
-export function * storeLocator () {
+export function * storeLocator (args) {
+  const { payload: { modePayment } } = args
   const mobileNumber = yield select(selectMobileNumber())
-  // ${fnSearchParams({ type: 'cod' })}`)
+  // ${fnSearchParams({ modePayment: 'cod' })}`)
   const params = {
     callbackUrl: encodeURI(`${APP_BASE_URL}/review`),
     callbackMethod: 'GET',
-    mobileNumber: `0${mobileNumber}`
+    mobileNumber: `0${mobileNumber}`,
+    modePayment
   }
 
   yield window.location.replace(`${STORE_LOCATOR_URL}${fnSearchParams(params)}`)
@@ -203,11 +205,22 @@ export function * requestOrderToken (mobile) {
   return getPropAccessToken(getOrderToken)
 }
 
+// Special case for promo paylaod
+function promoPayload (orderedProduct) {
+  const promoCode = orderedProduct.getIn(['promo', 'promoCode'])
+
+  return promoCode ? {
+    totalPrice: toggleOrigDiscountPrice(orderedProduct),
+    promoCode
+  } : {}
+}
+
 export function * submitOrder (args) {
   const { payload: { orderedProduct, mobileNumber, modePayment, store, usePoints } } = args
   const loyaltyToken = yield call(getItem, LOYALTY_TOKEN_KEY)
   const completeMobile = `0${mobileNumber}`
   const postPayload = transformSubmitOrderPayload({
+    ...promoPayload(orderedProduct),
     cliqqCode: orderedProduct.get('cliqqCode').first(),
     multiplier: orderedProduct.getIn(['points', 'multiplier']),
     amount: calculatePricePoints({
