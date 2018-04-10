@@ -214,7 +214,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     const CODPayment = both(
       anyPass([
         equals(this.showStoreLocator),
-        equals(this.showPointsModifier),
+        equals(this.showPointsModifier)
       ]),
       () => !isEmpty(store)
     )
