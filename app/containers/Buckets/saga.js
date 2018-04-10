@@ -470,14 +470,6 @@ export function * getLoyaltyTokenSaga () {
   yield * takeLatest(GET_LOYALTY_TOKEN, getLoyaltyToken)
 }
 
-export function * removeLoyaltyTokenSaga () {
-  yield * takeLatest(REMOVE_LOYALTY_TOKEN, removeLoyaltyToken)
-}
-
-export function * storeLocatorSaga () {
-  yield * takeLatest(STORE_LOCATOR, storeLocator)
-}
-
 // All sagas to be loaded
 export function * bucketsSagas () {
   const watcher = yield [
@@ -490,15 +482,13 @@ export function * bucketsSagas () {
     fork(registerPushNotificationSaga),
 
     fork(getIsRegisteredPushSaga),
-
     // get loyaltyToken
-    fork(getLoyaltyTokenSaga),
-
-    fork(storeLocatorSaga)
-    // remove loyaltyToken / sign out
+    fork(getLoyaltyTokenSaga)
   ]
-  // remember no to cancel this action on change of locations since it wont trigger anymore
+  // remember not to cancel this actions on change of locations since it wont trigger anymore
   yield takeLatest(REMOVE_LOYALTY_TOKEN, removeLoyaltyToken)
+  yield takeLatest(STORE_LOCATOR, storeLocator)
+
   // Suspend execution until location changes
   yield take(LOCATION_CHANGE)
   yield watcher.map((task) => cancel(task))
