@@ -121,13 +121,15 @@ function * setOrderList (order) {
   return yield call(setItem, ORDERED_LIST_KEY, setOrders)
 }
 
-export function * storeLocator () {
+export function * storeLocator (args) {
+  const { payload: { modePayment } } = args
   const mobileNumber = yield select(selectMobileNumber())
-  // ${fnSearchParams({ type: 'cod' })}`)
+  // ${fnSearchParams({ modePayment: 'cod' })}`)
   const params = {
     callbackUrl: encodeURI(`${APP_BASE_URL}/review`),
     callbackMethod: 'GET',
-    mobileNumber: `0${mobileNumber}`
+    mobileNumber: `0${mobileNumber}`,
+    modePayment
   }
 
   yield window.location.replace(`${STORE_LOCATOR_URL}${fnSearchParams(params)}`)

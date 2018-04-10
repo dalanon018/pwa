@@ -246,7 +246,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   _handleStoreLocator = () => {
-    this.props.storeLocator()
+    const { modePayment } = this.state
+    this.props.storeLocator({ modePayment })
   }
 
   _handleRecentStore = () => {
