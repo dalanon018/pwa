@@ -31,7 +31,9 @@ import {
 
   getLoyaltyTokenAction,
   setLoyaltyTokenAction,
-  removeLoyaltyTokenAction
+  removeLoyaltyTokenAction,
+
+  storeLocatorAction
 } from '../actions'
 
 import {
@@ -66,7 +68,9 @@ import {
 
   GET_LOYALTY_TOKEN,
   SET_LOYALTY_TOKEN,
-  REMOVE_LOYALTY_TOKEN
+  REMOVE_LOYALTY_TOKEN,
+
+  STORE_LOCATOR
 } from '../constants'
 
 describe('Buckets actions', () => {
@@ -312,6 +316,21 @@ describe('Buckets actions', () => {
       }
 
       expect(removeLoyaltyTokenAction()).toEqual(expectedResult)
+    })
+  })
+
+  describe('storeLocatorAction', () => {
+    const payload = {
+      location: 'test'
+    }
+
+    it('get Previous Store', () => {
+      const expectedResult = {
+        type: STORE_LOCATOR,
+        payload
+      }
+
+      expect(storeLocatorAction(payload)).toEqual(expectedResult)
     })
   })
 })
