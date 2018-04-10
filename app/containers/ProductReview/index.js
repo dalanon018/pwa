@@ -9,6 +9,7 @@ import PropTypes from 'prop-types'
 
 import { noop, isEmpty } from 'lodash'
 import {
+  anyPass,
   both,
   compose,
   either,
@@ -210,9 +211,15 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   _handleProceed () {
     const { mobileNumber, orderedProduct, submitOrder } = this.props
     const { modePayment, store, usePoints } = this.state
-    const CODPayment = (mode) => equals(this.showStoreLocator)(mode) &&
-    !isEmpty(store)
-    const CashPayment = either(equals('CASH'), equals('POINTS'))
+    const CODPayment = both(
+      anyPass([
+        equals(this.showStoreLocator),
+        equals(this.showPointsModifier),
+      ]),
+      () => !isEmpty(store)
+    )
+
+    const CashPayment = equals('CASH')
     const submissionOrder = () => {
       FbEventTracking('Purchase', {
         currency: 'PHP',
@@ -314,7 +321,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         partial(populateFromStorage, [store]),
         async (type) => this.setState({
           modePayment: type.toUpperCase(),
-          storeLocatorVisibility: type.toUpperCase() === this.showStoreLocator,
+          storeLocatorVisibility: (type.toUpperCase() === this.showStoreLocator || type.toUpperCase() === this.showPointsModifier),
           pointsModifierVisibility: type.toUpperCase() === this.showPointsModifier,
           store: await transformStore(query) // we update our store
         })
