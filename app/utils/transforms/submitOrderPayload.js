@@ -40,7 +40,6 @@ const transformOrderPayload = (payload) => cond([
   )],
   [equals(POINTS), compose(
     removeProp('amount'),
-    removeProp('deliveryLocationId'),
     removeProp('usePoints'),
     addPayments,
     compose(
