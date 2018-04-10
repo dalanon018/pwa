@@ -17,7 +17,6 @@ import {
 
   GET_STORE,
   SET_STORE,
-  STORE_LOCATOR,
 
   GET_CURRENT_POINTS,
   SET_CURRENT_POINTS,
@@ -103,13 +102,6 @@ export function getCurrentPointsAction () {
 export function setCurrentPointsAction (payload) {
   return {
     type: SET_CURRENT_POINTS,
-    payload
-  }
-}
-
-export function storeLocatorAction (payload) {
-  return {
-    type: STORE_LOCATOR,
     payload
   }
 }

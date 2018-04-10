@@ -64,7 +64,6 @@ import {
   submitOrderAction,
   setOrderHandlersDefaultAction,
   getStoreAction,
-  // storeLocatorAction,
   getBlackListAction,
   getCurrentPointsAction
 } from './actions'
