@@ -1,7 +1,20 @@
 import moment from 'moment'
 // import Firebase from 'utils/firebase-realtime'
 
-import { compose, is, ifElse, identity, map, uniq, isEmpty, propOr, prop } from 'ramda'
+import {
+  always,
+  compose,
+  gt,
+  identity,
+  ifElse,
+  is,
+  isEmpty,
+  map,
+  prop,
+  propOr,
+  uniq,
+  when
+} from 'ramda'
 import { call, cancel, fork, put, take } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { takeLatest } from 'redux-saga'
@@ -279,7 +292,10 @@ export function * getCurrentPoints () {
     token: token.access_token
   })
   if (!isEmpty(req)) {
-    const currentPoints = propOr(0, 'currentPoints')
+    const currentPoints = compose(
+      when(gt(0), always(0)),
+      propOr(0, 'currentPoints')
+    )
     const points = parseInt(currentPoints(req))
     yield put(setCurrentPointsAction({ points }))
   } else {
