@@ -64,12 +64,14 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
   }
 
   state = {
+    type: '',
     stores: fromJS([]),
     toggle: ''
   }
 
   _handleGoToStoreLocator = () => {
-    this.props.storeLocator()
+    const { type } = this.state
+    this.props.storeLocator({ modePayment: type })
   }
 
   _implementStore = () => {
@@ -96,8 +98,9 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
     const selectQuery = ifElse(
       RCompose(isEmpty, propOr('', 'id')),
       noop,
-      () => this.setState({
-        stores: fromJS([query]) // we update our store
+      ({type, ...rest}) => this.setState({
+        type,
+        stores: fromJS([rest]) // we update our store
       })
     )
     selectQuery(query)
