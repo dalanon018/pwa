@@ -9,6 +9,7 @@ import PropTypes from 'prop-types'
 
 import { noop, isEmpty } from 'lodash'
 import {
+  always,
   anyPass,
   both,
   compose,
@@ -18,7 +19,9 @@ import {
   partial,
   prop,
   propOr,
-  toLower
+  toLower,
+  toUpper,
+  identity
  } from 'ramda'
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
@@ -65,7 +68,8 @@ import {
   setOrderHandlersDefaultAction,
   getStoreAction,
   getBlackListAction,
-  getCurrentPointsAction
+  getCurrentPointsAction,
+  getLastSelectedMethodAction
 } from './actions'
 
 import {
@@ -79,7 +83,8 @@ import {
   selectStoreLocation,
   selectBlackListed,
   selectCurrentPoints,
-  selectCurrentPointsLoading
+  selectCurrentPointsLoading,
+  selectLastSelectedMethod
 } from './selectors'
 
 import {
@@ -99,6 +104,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   static propTypes = {
     getOrderProduct: PropTypes.func.isRequired,
     getStore: PropTypes.func.isRequired,
+    getLastSelectedMethod: PropTypes.func.isRequired,
     storeLocator: PropTypes.func.isRequired,
     getCurrentPoints: PropTypes.func.isRequired,
     productLoader: PropTypes.bool.isRequired,
@@ -302,7 +308,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   _handleStoreVisible = (props) => {
-    const { location: { search }, previousStore } = props
+    const { location: { search }, previousStore, lastSelectedMethod } = props
     const { store } = this.state
 
      // handle populating store details
@@ -319,12 +325,23 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       ifElse(
         isEmpty,
         partial(populateFromStorage, [store]),
-        async (type) => this.setState({
-          modePayment: type.toUpperCase(),
-          storeLocatorVisibility: (type.toUpperCase() === this.showStoreLocator || type.toUpperCase() === this.showPointsModifier),
-          pointsModifierVisibility: type.toUpperCase() === this.showPointsModifier,
-          store: await transformStore(query) // we update our store
-        })
+        async (type) => {
+          const modePayment = compose(
+            toUpper,
+            ifElse(
+              isEmpty,
+              always(type),
+              identity
+            )
+          )(lastSelectedMethod)
+
+          this.setState({
+            modePayment,
+            storeLocatorVisibility: (modePayment === this.showStoreLocator || modePayment === this.showPointsModifier),
+            pointsModifierVisibility: modePayment === this.showPointsModifier,
+            store: await transformStore(query) // we update our store
+          })
+        }
       ),
       propOr('', 'type')
     )
@@ -337,7 +354,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   componentDidMount () {
-    const { getCurrentPoints, getOrderProduct, getMobileNumber, getStore, getBlackList, setRouteName } = this.props
+    const { getLastSelectedMethod, getCurrentPoints, getOrderProduct, getMobileNumber, getStore, getBlackList, setRouteName } = this.props
 
     setRouteName(PRODUCTREVIEW_NAME)
     getOrderProduct()
@@ -345,6 +362,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     getMobileNumber()
     getBlackList()
     getStore()
+    getLastSelectedMethod()
 
     this.props.setPageTitle('Review Order')
     this.props.setShowSearchIcon(false)
@@ -453,6 +471,7 @@ const mapStateToProps = createStructuredSelector({
   orderRequesting: selectSubmitting(),
   orderSuccess: selectSubmissionSuccess(),
   orderFail: selectSubmissionError(),
+  lastSelectedMethod: selectLastSelectedMethod(),
   previousStore: selectStoreLocation(),
   isBlackListed: selectBlackListed(),
   currentPoints: selectCurrentPoints(),
@@ -470,6 +489,7 @@ function mapDispatchToProps (dispatch) {
     getMobileNumber: () => dispatch(getMobileNumberAction()),
     submitOrder: (payload) => dispatch(submitOrderAction(payload)),
     getStore: () => dispatch(getStoreAction()),
+    getLastSelectedMethod: () => dispatch(getLastSelectedMethodAction()),
     storeLocator: (payload) => dispatch(storeLocatorAction(payload)),
     getCurrentPoints: () => dispatch(getCurrentPointsAction()),
     setHandlersDefault: () => dispatch(setOrderHandlersDefaultAction()),

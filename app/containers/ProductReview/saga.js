@@ -31,7 +31,8 @@ import {
   ORDER_SUBMIT,
   GET_STORE,
   GET_BLACKLIST,
-  GET_CURRENT_POINTS
+  GET_CURRENT_POINTS,
+  GET_LAST_SELECTED_METHOD
 } from './constants'
 
 import {
@@ -41,7 +42,8 @@ import {
   setStoreAction,
   errorOrderAction,
   setBlackListAction,
-  setCurrentPointsAction
+  setCurrentPointsAction,
+  setLastSelectedMethodAction
 } from './actions'
 
 import {
@@ -51,7 +53,8 @@ import {
   CURRENT_PRODUCT_KEY,
   MOBILE_NUMBERS_KEY,
   ORDERED_LIST_KEY,
-  STORE_LOCATIONS_KEY
+  STORE_LOCATIONS_KEY,
+  LAST_SELECTED_METHOD
 } from 'containers/App/constants'
 
 import {
@@ -177,6 +180,11 @@ export function * getMobileNumber () {
 
   const mobile = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
   yield put(setMobileNumberAction(mobile))
+}
+
+export function * getLastSelectedMethod () {
+  const lastMethod = yield call(getItem, LAST_SELECTED_METHOD)
+  yield put(setLastSelectedMethodAction(lastMethod))
 }
 
 export function * requestOrderToken (mobile) {
@@ -326,6 +334,10 @@ export function * getCurrentPointsSaga () {
   yield * takeLatest(GET_CURRENT_POINTS, getCurrentPoints)
 }
 
+export function * getLastSelectedMethodSaga () {
+  yield * takeLatest(GET_LAST_SELECTED_METHOD, getLastSelectedMethod)
+}
+
 export function * productReviewSagas () {
   const watcher = yield [
     fork(getOrderProductSaga),
@@ -335,6 +347,7 @@ export function * productReviewSagas () {
 
     fork(getStoreLocationSaga),
     fork(getCurrentPointsSaga),
+    fork(getLastSelectedMethodSaga),
 
     fork(submitOrderSaga)
   ]
