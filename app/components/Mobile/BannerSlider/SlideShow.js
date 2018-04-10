@@ -13,6 +13,7 @@ import { ifElse, gt } from 'ramda'
 import { noop } from 'lodash'
 
 import RibbonWrapper from 'components/Shared/RibbonWrapper'
+import TimerWrapper from 'components/Mobile/TimerWrapper'
 
 class SlideShow extends React.PureComponent {
   static propTypes = {
@@ -49,7 +50,7 @@ class SlideShow extends React.PureComponent {
   }
 
   render () {
-    const { settings, images, isHome, percentage } = this.props
+    const { settings, images, isHome, percentage, isPromo, promo } = this.props
 
     return (
       <Slider
@@ -65,6 +66,7 @@ class SlideShow extends React.PureComponent {
                   (typeof item === 'string'
                   ? <div className='position__relative'>
                     { !isHome && percentage && <RibbonWrapper rightSpace percentage={percentage} /> }
+                    { isPromo && <TimerWrapper promo={promo} /> }
                     <Image className='slick-image-handler' alt='CLiQQ' src={item} />
                   </div>
                   : '')

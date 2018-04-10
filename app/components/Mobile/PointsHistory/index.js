@@ -33,8 +33,9 @@ const AdjustedPoints = styled.div`
   margin-right: 5px;
 
   img {
-    width: 15px;
     margin: 0 5px;
+    min-width: 15px;
+    width: 15px;
   }
 `
 

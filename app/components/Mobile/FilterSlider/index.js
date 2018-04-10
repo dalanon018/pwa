@@ -42,7 +42,8 @@ const Wrapper = styled.div`
 const OptionWrapper = styled.div`
   height: 100vh;
   overflow-y: auto;
-  padding-bottom: 66px;
+  // padding-bottom: 66px;
+  padding-bottom: 130px;
 
   &::-webkit-scrollbar {
     width: 0;
@@ -52,15 +53,19 @@ const OptionWrapper = styled.div`
 `
 
 const ButtonWrapper = styled.div`
-  flex: 1;
   align-items: flex-end;
   background-color: #FFFFFF;
+  bottom: 0;
   display: flex;
+  flex: 1;
   justify-content: space-between;
   padding: 14px;
+  position: fixed;
   right: ${props => props.toggleDrawer ? 0 : '-100%'};
   transition: ease 0.3s;
   width: 100%;
+  z-index: 2;
+  width: 75%;
 `
 
 const FormWrapper = styled(Form)`
