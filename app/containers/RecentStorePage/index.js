@@ -82,12 +82,13 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
 
   _handleToggle = (_, { value }) => {
     const { changeRoute } = this.props
+    const { type } = this.state
     const implementStore = this._implementStore()
     const selectedStore = implementStore.find((entity) => entity.get('id') === value)
     this.setState({
       toggle: value
     }, () => {
-      changeRoute(`/review?type=cod&storeId=${selectedStore.get('id')}&storeName=${selectedStore.get('name')}`)
+      changeRoute(`/review?type=${type}&storeId=${selectedStore.get('id')}&storeName=${selectedStore.get('name')}`)
     })
   }
 
