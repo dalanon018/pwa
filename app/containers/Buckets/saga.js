@@ -24,6 +24,7 @@ import {
   prop,
   propOr,
   sortBy,
+  toLower,
   toPairs,
   uniq,
   view
@@ -58,6 +59,7 @@ import {
   ORDERED_LIST_KEY,
   REGISTERED_PUSH,
   STORE_LOCATOR_URL,
+  LAST_SELECTED_METHOD,
   TOKEN_URL
 } from 'containers/App/constants'
 
@@ -439,6 +441,8 @@ export function * storeLocator (args) {
     modePayment
   }
 
+  // save the last selected option
+  yield call(setItem, LAST_SELECTED_METHOD, toLower(modePayment))
   yield window.location.replace(`${STORE_LOCATOR_URL}${fnSearchParams(params)}`)
 }
 
