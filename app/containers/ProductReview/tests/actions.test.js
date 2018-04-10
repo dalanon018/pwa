@@ -9,7 +9,6 @@ import {
   errorOrderAction,
   getStoreAction,
   setStoreAction,
-  storeLocatorAction,
   getBlackListAction,
   setBlackListAction,
   getCurrentPointsAction,
@@ -29,7 +28,6 @@ import {
 
   GET_STORE,
   SET_STORE,
-  STORE_LOCATOR,
 
   GET_CURRENT_POINTS,
   SET_CURRENT_POINTS,
@@ -156,21 +154,6 @@ describe('ProductsReview actions', () => {
       }
 
       expect(setStoreAction(payload)).toEqual(expectedResult)
-    })
-  })
-
-  describe('storeLocatorAction', () => {
-    const payload = {
-      location: 'test'
-    }
-
-    it('get Previous Store', () => {
-      const expectedResult = {
-        type: STORE_LOCATOR,
-        payload
-      }
-
-      expect(storeLocatorAction(payload)).toEqual(expectedResult)
     })
   })
 

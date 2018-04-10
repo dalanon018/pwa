@@ -46,6 +46,13 @@ export const CATEGORIES_KEY = 'boilerplate/App/CATEGORIES_KEY'
 export const BRANDS_KEY = 'boilerplate/App/BRANDS_KEY'
 export const STORE_LOCATIONS_KEY = 'boilerplate/App/STORE_LOCATIONS_KEY'
 export const LOYALTY_TOKEN_KEY = 'boilerplate/App/LOYALTY_TOKEN_KEY'
+/**
+ * this key is for us to save the last selected method before going to map
+ * since we dont have holder for what payment they selected going back to
+ * review. We can submit through url however it requires changes to their
+ * code.
+ */
+export const LAST_SELECTED_METHOD = 'boilerplate/App/LAST_SELECTED_METHOD'
 
 // ONCE REGISTERED THIS IS THE KEY NAME
 export const REGISTERED_PUSH = 'boilerplate/App/REGISTERED_PUSH'

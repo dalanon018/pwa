@@ -15,14 +15,11 @@ import {
 import stores from 'fixtures/stores.json'
 import { getRequestData } from 'utils/offline-request'
 import { getItem } from 'utils/localStorage'
-import { fnSearchParams } from 'utils/http'
 
 import {
-  APP_BASE_URL,
   LOYALTY_URL,
   MOBILE_NUMBERS_KEY,
-  RECENT_STORE_TOKEN,
-  STORE_LOCATOR_URL
+  RECENT_STORE_TOKEN
 } from 'containers/App/constants'
 
 import {
@@ -30,8 +27,7 @@ import {
 } from 'containers/Buckets/saga'
 
 import {
-  GET_VISITED_STORES,
-  STORE_LOCATOR
+  GET_VISITED_STORES
 } from './constants'
 
 import {
@@ -42,20 +38,6 @@ function * getMobileNumber () {
   const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
   // we will only get the last mobileNumber used
   return Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
-}
-
-export function * storeLocator (args) {
-  const { payload: { modePayment } } = args
-  const mobileNumber = yield getMobileNumber()
-  // ${fnSearchParams({ type: 'cod' })}`)
-  const params = {
-    callbackUrl: encodeURI(`${APP_BASE_URL}/review`),
-    callbackMethod: 'GET',
-    mobileNumber: `0${mobileNumber}`,
-    modePayment
-  }
-
-  yield window.location.replace(`${STORE_LOCATOR_URL}${fnSearchParams(params)}`)
 }
 
 export function * getVisitedStore () {
@@ -88,14 +70,9 @@ export function * getVisitedStoreSaga () {
   yield * takeLatest(GET_VISITED_STORES, getVisitedStore)
 }
 
-export function * storeLocatorSaga () {
-  yield * takeLatest(STORE_LOCATOR, storeLocator)
-}
-
 export function * recentStorePageSagas () {
   const watcher = yield [
-    fork(getVisitedStoreSaga),
-    fork(storeLocatorSaga)
+    fork(getVisitedStoreSaga)
   ]
   yield take(LOCATION_CHANGE)
   yield watcher.map(task => cancel(task))

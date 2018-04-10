@@ -2,13 +2,12 @@ import moment from 'moment'
 // import Firebase from 'utils/firebase-realtime'
 
 import { compose, is, ifElse, identity, map, uniq, isEmpty, propOr, prop } from 'ramda'
-import { call, cancel, fork, put, take, select } from 'redux-saga/effects'
+import { call, cancel, fork, put, take } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux'
 import { takeLatest } from 'redux-saga'
 
 import request from 'utils/request'
 import { getItem, setItem, removeItem } from 'utils/localStorage'
-import { fnSearchParams } from 'utils/http'
 import { Pad } from 'utils/string'
 import { transformSubmitOrderPayload } from 'utils/transforms'
 import { calculatePricePoints, toggleOrigDiscountPrice } from 'utils/product'
@@ -18,7 +17,6 @@ import {
   GET_MOBILE_NUMBER,
   ORDER_SUBMIT,
   GET_STORE,
-  STORE_LOCATOR,
   GET_BLACKLIST,
   GET_CURRENT_POINTS
 } from './constants'
@@ -34,15 +32,9 @@ import {
 } from './actions'
 
 import {
-  selectMobileNumber
-} from './selectors'
-
-import {
   API_BASE_URL,
-  APP_BASE_URL,
   MOBILE_REGISTRATION_URL,
   LOYALTY_TOKEN_KEY,
-  STORE_LOCATOR_URL,
   CURRENT_PRODUCT_KEY,
   MOBILE_NUMBERS_KEY,
   ORDERED_LIST_KEY,
@@ -119,20 +111,6 @@ function * setOrderList (order) {
   let setOrders = orders.concat(order)
 
   return yield call(setItem, ORDERED_LIST_KEY, setOrders)
-}
-
-export function * storeLocator (args) {
-  const { payload: { modePayment } } = args
-  const mobileNumber = yield select(selectMobileNumber())
-  // ${fnSearchParams({ modePayment: 'cod' })}`)
-  const params = {
-    callbackUrl: encodeURI(`${APP_BASE_URL}/review`),
-    callbackMethod: 'GET',
-    mobileNumber: `0${mobileNumber}`,
-    modePayment
-  }
-
-  yield window.location.replace(`${STORE_LOCATOR_URL}${fnSearchParams(params)}`)
 }
 
 /**
@@ -320,11 +298,6 @@ export function * getMobileNumberSaga () {
 export function * getStoreLocationSaga () {
   yield * takeLatest(GET_STORE, getStoreLocation)
 }
-
-export function * storeLocatorSaga () {
-  yield * takeLatest(STORE_LOCATOR, storeLocator)
-}
-
 export function * submitOrderSaga () {
   yield * takeLatest(ORDER_SUBMIT, submitOrder)
 }
@@ -345,8 +318,6 @@ export function * productReviewSagas () {
     fork(getIsBlackListSaga),
 
     fork(getStoreLocationSaga),
-    fork(storeLocatorSaga),
-
     fork(getCurrentPointsSaga),
 
     fork(submitOrderSaga)

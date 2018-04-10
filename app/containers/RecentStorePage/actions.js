@@ -6,8 +6,7 @@
 
 import {
   GET_VISITED_STORES,
-  SET_VISITED_STORES,
-  STORE_LOCATOR
+  SET_VISITED_STORES
 } from './constants'
 
 export function getVisitedStoresAction () {
@@ -19,13 +18,6 @@ export function getVisitedStoresAction () {
 export function setVisitedStoresAction (payload) {
   return {
     type: SET_VISITED_STORES,
-    payload
-  }
-}
-
-export function storeLocatorAction (payload) {
-  return {
-    type: STORE_LOCATOR,
     payload
   }
 }

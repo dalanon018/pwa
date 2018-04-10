@@ -50,7 +50,8 @@ import {
   setPageTitleAction,
   setRouteNameAction,
   setShowSearchIconAction,
-  setShowActivityIconAction
+  setShowActivityIconAction,
+  storeLocatorAction
 } from 'containers/Buckets/actions'
 
 import messages from './messages'
@@ -63,7 +64,6 @@ import {
   submitOrderAction,
   setOrderHandlersDefaultAction,
   getStoreAction,
-  storeLocatorAction,
   getBlackListAction,
   getCurrentPointsAction
 } from './actions'

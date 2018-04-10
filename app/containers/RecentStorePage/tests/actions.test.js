@@ -1,14 +1,12 @@
 
 import {
   getVisitedStoresAction,
-  setVisitedStoresAction,
-  storeLocatorAction
+  setVisitedStoresAction
 } from '../actions'
 
 import {
   GET_VISITED_STORES,
-  SET_VISITED_STORES,
-  STORE_LOCATOR
+  SET_VISITED_STORES
 } from '../constants'
 
 describe('Recent Store Page  actions', () => {
@@ -27,15 +25,6 @@ describe('Recent Store Page  actions', () => {
         payload
       }
       expect(setVisitedStoresAction(payload)).toEqual(expectedResult)
-    })
-  })
-
-  describe('StoreLocator Actions', () => {
-    it('should STORE_LOCATOR', () => {
-      const expectedResult = {
-        type: STORE_LOCATOR
-      }
-      expect(storeLocatorAction()).toEqual(expectedResult)
     })
   })
 })

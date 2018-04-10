@@ -49,6 +49,9 @@ export const REMOVE_LOYALTY_TOKEN = 'app/Container/REMOVE_LOYALTY_TOKEN'
 
 export const SET_SEARCH_VALUE = 'app/Buckets/SET_SEARCH_VALUE'
 
+// REDIRECTING TO MAP LOCATION
+export const STORE_LOCATOR = 'app/Buckets/STORE_LOCATOR'
+
 export const HIDE_BACK_BUTTON = [
   '/',
   '/home',

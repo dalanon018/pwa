@@ -46,7 +46,9 @@ import {
   SET_HEADER_FULL_SCREEN,
 
   SET_LIGHTBOX_IMAGE,
-  SET_SEARCH_VALUE
+  SET_SEARCH_VALUE,
+
+  STORE_LOCATOR
 } from './constants'
 
 export function setRouteNameAction (payload) {
@@ -231,6 +233,13 @@ export function setLightBoxImageAction (payload) {
 export function setSearchValueAction (payload) {
   return {
     type: SET_SEARCH_VALUE,
+    payload
+  }
+}
+
+export function storeLocatorAction (payload) {
+  return {
+    type: STORE_LOCATOR,
     payload
   }
 }

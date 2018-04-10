@@ -15,7 +15,6 @@ export const ORDER_ERROR = 'app/ProductReview/ORDER_ERROR'
 
 export const GET_STORE = 'app/ProductReview/GET_STORE'
 export const SET_STORE = 'app/ProductReview/SET_STORE'
-export const STORE_LOCATOR = 'app/ProductReview/STORE_LOCATOR'
 
 export const GET_CURRENT_POINTS = 'app/ProductReview/GET_CURRENT_POINTS'
 export const SET_CURRENT_POINTS = 'app/ProductReview/SET_CURRENT_POINTS'
