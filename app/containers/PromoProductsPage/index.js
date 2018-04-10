@@ -17,15 +17,17 @@ import { push } from 'react-router-redux'
 import { noop } from 'lodash'
 import {
   allPass,
+  complement,
   compose,
   cond,
   equals,
   ifElse,
   lt,
   partial,
-  path
+  path,
+  prop
 } from 'ramda'
-import { Container } from 'semantic-ui-react'
+import { Container, Grid } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
@@ -147,12 +149,13 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
   _handlePageBanners = (nextProps) => {
     const { promo } = nextProps
 
-    if (promo.get('sliders')) {
-      const promoImages = promo.size ? promo.get('sliders').toArray().map(this._updateParamsImages) : []
+    if (promo.get('background')) {
+      // const promoImages = promo.size ? promo.get('background').toArray().map(this._updateParamsImages) : []
+      // const images = this.state.promoImages.push(promo.get('background'))
 
-      this.setState({
-        promoImages
-      })
+      this.setState(prevState => ({
+        promoImages: prevState.promoImages.concat([promo.get('background')])
+      }))
     }
     return []
   }
@@ -351,7 +354,7 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
   }
 
   componentWillReceiveProps (nextProps) {
-    const { match: { params } } = this.props
+    const { match: { params }, promo } = this.props
 
     const isParamsEqual = (id, props) => compose(
       equals(id),
@@ -365,7 +368,10 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
     )
 
     const updatePageTitle = ifElse(
-      compose(lt(0), path(['promo', 'size'])),
+      compose(
+        complement(equals(promo)),
+        prop('promo')
+      ),
       compose(
         this.props.setPageTitle,
         (nextProps) => {
@@ -381,7 +387,7 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
   }
 
   render () {
-    const { productsLoading, lazyload } = this.props
+    const { productsLoading, lazyload, promo } = this.props
     const { promoImages, animateBanner } = this.state
     return (
       <div>
@@ -392,12 +398,22 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
           <div>
             <AccessView
               mobileView={
-                <MobileBannerSlider
-                  isInfinite
-                  autoplay={animateBanner}
-                  loader={productsLoading}
-                  images={promoImages}
-                />
+                <Container>
+                  <Grid padded>
+                    <Grid.Row>
+                      <Grid.Column>
+                        <MobileBannerSlider
+                          isInfinite
+                          autoplay={animateBanner}
+                          loader={productsLoading}
+                          images={promoImages}
+                          promo={promo}
+                          isPromo
+                        />
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+                </Container>
               }
               desktopView={null}
             />

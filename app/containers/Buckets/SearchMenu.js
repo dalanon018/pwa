@@ -144,6 +144,15 @@ const InputContainer = styled.div`
       top: 9.5px !important;
     }
   }
+
+  @media (max-width: 767px) {
+    input {
+      height: 41px;
+    }
+    .magnifier {
+      top: 11px;
+    }
+  }
 `
 
 class SearchMenu extends PureComponent {
@@ -219,14 +228,15 @@ class SearchMenu extends PureComponent {
     const { clearSearch } = this.props
     this._searchInput.value = ''
     this.setState({
-      dirty: false
+      dirty: false,
+      searchValue: ''
     })
     clearSearch({})
   }
 
   render () {
     const { leftButtonAction, hideBackButton, intl } = this.props
-    const { dirty } = this.state
+    const { dirty, searchValue } = this.state
 
     return (
       <AccessView
@@ -245,9 +255,10 @@ class SearchMenu extends PureComponent {
                   <SearchContainer>
                     <InputContainer>
                       <SearchInput
-                        className='color__secondary border__none'
+                        className='border__none'
                         ref={this._inputReference}
                         onChange={this._handleOnchange}
+                        value={searchValue}
                         onKeyPress={this._handleKeyPress}
                         placeholder={intl.formatMessage(messages.searchPlaceHolder)}
                       />
