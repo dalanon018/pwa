@@ -19,6 +19,7 @@ import { noop } from 'lodash'
 import {
   ifElse,
   isEmpty,
+  both,
   compose as RCompose,
   propOr
 } from 'ramda'
@@ -97,12 +98,18 @@ export class RecentStorePage extends React.PureComponent { // eslint-disable-lin
 
     const query = fnQueryObject(search)
     const selectQuery = ifElse(
-      RCompose(isEmpty, propOr('', 'id')),
+      both(
+        RCompose(isEmpty, propOr('', 'id')),
+        RCompose(isEmpty, propOr('', 'type'))
+      ),
       noop,
-      ({type, ...rest}) => this.setState({
-        type,
-        stores: fromJS([rest]) // we update our store
-      })
+      ({type, ...rest}) => {
+        const stores = !isEmpty(rest) ? [rest] : []
+        this.setState({
+          type,
+          stores: fromJS(stores) // we update our store
+        })
+      }
     )
     selectQuery(query)
     setPageTitle(intl.formatMessage(messages.header))
@@ -163,7 +170,7 @@ function mapDispatchToProps (dispatch) {
     setPageTitle: payload => dispatch(setPageTitleAction(payload)),
     setRouteName: payload => dispatch(setRouteNameAction(payload)),
     getVisitedStores: () => dispatch(getVisitedStoresAction()),
-    storeLocator: () => dispatch(storeLocatorAction()),
+    storeLocator: (payload) => dispatch(storeLocatorAction(payload)),
     changeRoute: url => dispatch(push(url)),
     dispatch
   }
