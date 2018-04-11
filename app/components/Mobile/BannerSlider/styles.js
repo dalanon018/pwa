@@ -5,7 +5,7 @@ const BannerSliderWrapper = styled.div`
   position: relative;
   width: 100%;
   display: block;
-  margin-bottom: 10px;
+  ${props => props.toggleLightBox && 'margin-bottom: 10px;'}
 
   img {
     ${props => props.curved && 'border-radius: 2px;'}

@@ -317,6 +317,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
                 toggleClick={this._handleSocialToggle}
                 togglePrompt={togglePrompt}
                 windowWidth={windowWidth}
+                lightBoxImage={lightBoxImage}
+                toggleLightBox={setLightBoxImage}
               />
             }
             desktopView={

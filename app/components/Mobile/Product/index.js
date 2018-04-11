@@ -24,6 +24,7 @@ import TimerWrapper from 'components/Mobile/TimerWrapper'
 import DeliveryIcon from 'images/icons/delivery-icon.svg'
 import ReturnIcon from 'images/icons/return-icon.svg'
 import CliQQPlainLogo from 'images/icons/cliqq.png'
+import LightBox from 'components/Shared/LightBox'
 
 import { fbShare } from 'utils/fb-share'
 import { paramsImgix } from 'utils/image-stock'
@@ -90,7 +91,9 @@ const Product = ({
   togglePrompt,
   productPageTrigger,
   windowWidth,
-  onSizeChange
+  onSizeChange,
+  lightBoxImage,
+  toggleLightBox
 }) => {
   const FacebookIcon = generateShareIcon('facebook')
   const TwitterIcon = generateShareIcon('twitter')
@@ -148,6 +151,8 @@ const Product = ({
             <ProductSlider
               images={productImages}
               loader={loading}
+              toggleLightBox={toggleLightBox}
+              lightBoxImage={lightBoxImage}
               percentage={product.get('discountInfo') && product.get('discountInfo')}
               isInfinite
               curved
@@ -298,6 +303,16 @@ const Product = ({
         </div>
 
       </ProductWrapper>
+
+      {
+        lightBoxImage &&
+        <LightBox
+          images={productImages}
+          active={lightBoxImage}
+          close={toggleLightBox}
+          loader={loading} />
+      }
+
       <PromptModal
         title={intl.formatMessage(messages.emailWarningTitle)}
         name='warning'

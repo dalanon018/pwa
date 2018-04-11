@@ -42,6 +42,8 @@ class SlideShow extends React.PureComponent {
     clearTimeout(this.assignTimeOut)
   }
 
+  _handleLightBox = imageIndex => () => this.props.toggleLightBox(imageIndex.toString())
+
   componentDidMount () {
     const { props } = this.slider
     const shouldSlideNext = ifElse(gt(props.children.length), this._initNextSlide, noop)
@@ -61,7 +63,7 @@ class SlideShow extends React.PureComponent {
           images &&
           images.map((item, index) => {
             return (
-              <div key={index}>
+              <div key={index} onClick={this._handleLightBox(index)}>
                 {
                   (typeof item === 'string'
                   ? <div className='position__relative'>
