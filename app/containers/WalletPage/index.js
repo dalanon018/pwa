@@ -41,7 +41,7 @@ import LoadingIndicator from 'components/Shared/LoadingIndicator'
 import { InfiniteWrapper } from 'components/Shared/InfiniteLoading'
 import { userIsAuthenticated } from 'containers/App/auth'
 
-import TealIcon from 'images/icons/plain-cliqq-teal-icon.svg'
+import CliqqIcon from 'images/icons/cliqq.png'
 
 import {
   getMobileNumbersAction,
@@ -285,7 +285,7 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
                           values={{date: moment().format('LL')}} />
                       </Label>
                       <UserPointsWrapper>
-                        <Image src={TealIcon} alt='CLiQQ' />
+                        <Image src={CliqqIcon} alt='CLiQQ' />
                         <Label as='span' className='my-points color__teal text__weight--700' size='massive' >
                           {parseFloat(wallet.get('currentPoints')).toLocaleString()}
                         </Label>
@@ -298,7 +298,7 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
                         <FormattedMessage {...messages.currentPoints} />
                       </Label>
                       <UserPointsWrapper>
-                        <Image src={TealIcon} alt='CLiQQ' />
+                        <Image src={CliqqIcon} alt='CLiQQ' />
                         <Label as='span' className='my-points color__teal text__weight--700' size='massive' >
                           ---
                         </Label>

@@ -33,7 +33,7 @@ import RibbonWrapper from 'components/Shared/RibbonWrapper'
 
 import { LoadingStateImage } from 'components/Shared/LoadingBlock'
 
-import PlainCliqqPlain from 'images/icons/plain-cliqq-icon.svg'
+import CliqqIcon from 'images/icons/cliqq.png'
 import LocationIcon from 'images/icons/location-icon.svg'
 
 import { paramsImgix } from 'utils/image-stock'
@@ -127,7 +127,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
             {...messages.earnedPoints}
             values={{
               points: <b>{this._getPointsEarn(mode, amount)}</b>,
-              icon: <Image src={PlainCliqqPlain} className='cliqq-plain-icon' alt='CLiQQ' />
+              icon: <Image src={CliqqIcon} className='cliqq-plain-icon' alt='CLiQQ' />
             }}
           />
         </Label>
@@ -358,7 +358,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                         </Label>
                         <Label as='p' className='margin__none text__weight--400' size='medium'>
                           <FormattedMessage {...messages.currentPoints} />
-                          <Image src={PlainCliqqPlain} className='cliqq-plain-icon' alt='CLiQQ' />
+                          <Image src={CliqqIcon} className='cliqq-plain-icon' alt='CLiQQ' />
                           { subtract(currentPoints, usePoints) }
                         </Label>
                         <RangeSlider

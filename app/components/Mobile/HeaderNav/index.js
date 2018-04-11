@@ -13,7 +13,7 @@ import { ifElse, identity, equals } from 'ramda'
 import BarcodeImage from 'images/icons/barcode-header.svg'
 import messages from './messages'
 import SearchImage from 'images/icons/search-header.svg'
-import PointsIcon from 'images/icons/points-header-icon.svg'
+import CliqqIcon from 'images/icons/cliqq.png'
 import MainLogo from 'images/cliqq-logo.svg'
 
 const Wrapper = styled.div`
@@ -74,7 +74,7 @@ const RightWrapper = styled.div`
   }
   
   .small {
-    height: 21px !important;
+    // height: 21px !important;
     width: 17px !important;
   }
 `
@@ -329,7 +329,7 @@ export default class MainMenu extends PureComponent {
     )
 
     const PointsToggle = toggleComponent(
-      <Image alt='CLiQQ' src={PointsIcon} size='small' onClick={changeRoute.bind(this, '/wallet')} />,
+      <Image alt='CLiQQ' src={CliqqIcon} size='small' onClick={changeRoute.bind(this, '/wallet')} />,
       null
     )
 
