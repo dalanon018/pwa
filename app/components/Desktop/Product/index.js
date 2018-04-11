@@ -28,7 +28,7 @@ import { paramsImgix } from 'utils/image-stock'
 import ProductSlider from 'components/Desktop/BannerSlider'
 // import ListCollapse from 'components/Shared/ListCollapse'
 import PromptModal from 'components/Shared/PromptModal'
-import LightBox from 'components/Desktop/LightBox'
+import LightBox from 'components/Shared/LightBox'
 
 import { LoadingStateInfo } from 'components/Shared/LoadingBlock'
 import AffixWrapper from 'components/Shared/Affix'
