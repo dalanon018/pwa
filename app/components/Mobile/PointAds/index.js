@@ -24,6 +24,13 @@ export const Wrapper = styled.div`
   @media (min-width: 767px) {
     padding: 0;
   }
+
+
+  @media (max-width: 359px) {
+   .massive.label {
+     font-size: 22px !important;
+   }
+  }
 `
 
 export const FlexContainer = styled.div`
@@ -62,7 +69,7 @@ export const FlexContainer = styled.div`
 
 export const ImageWrapper = styled.div`
   display: inline-block;
-  margin-right: 40px;
+  margin-right: 25px;
   width: 100%;
 
   img {
@@ -72,6 +79,10 @@ export const ImageWrapper = styled.div`
 
   @media (min-width: 767px) {
     // width: inherit;
+  }
+
+  @media (max-width: 359px) {
+    margin-right: 20px;
   }
 `
 
