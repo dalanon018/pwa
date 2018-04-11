@@ -14,8 +14,7 @@ import PlainCard from 'components/Mobile/PlainCard'
 import { FormattedMessage } from 'react-intl'
 import messages from './messages'
 
-import TealIcon from 'images/icons/plain-cliqq-teal-icon.svg'
-import PlainIcon from 'images/icons/plain-cliqq-icon.svg'
+import CliqqIcon from 'images/icons/cliqq.png'
 
 const PointsHistoryWrapper = styled.div`
   align-items: center;
@@ -75,7 +74,7 @@ function PointsHistory ({
                             <Label as='p' basic className='color__teal margin__none text__weight--700' size='huge' >
                               +
                             </Label>
-                            <Image src={TealIcon} alt='CLiQQ' />
+                            <Image src={CliqqIcon} alt='CLiQQ' />
                             <Label as='p' basic className='color__teal margin__none text__weight--700' size='huge' >
                               {transaction.get('points') && parseFloat(transaction.get('points')).toLocaleString()}
                             </Label>
@@ -84,7 +83,7 @@ function PointsHistory ({
                             <Label as='p' basic className='color__primary margin__none text__weight--700' size='huge' >
                               -
                             </Label>
-                            <Image src={PlainIcon} alt='CLiQQ' />
+                            <Image src={CliqqIcon} alt='CLiQQ' />
                             <Label as='p' basic className='color__primary margin__none text__weight--700' size='huge' >
                               {transaction.get('points') && parseFloat(transaction.get('points')).toLocaleString()}
                             </Label>

@@ -326,6 +326,10 @@ const LabelTitle = styled.div`
   font-size: 14px;
   margin: 0;
 
+  img {
+    width: 28px;
+  }
+
   @media (min-width: 768px) {
     font-size: 16px;
     letter-spacing: 5px;

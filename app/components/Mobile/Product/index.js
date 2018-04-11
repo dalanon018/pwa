@@ -23,7 +23,7 @@ import TimerWrapper from 'components/Mobile/TimerWrapper'
 
 import DeliveryIcon from 'images/icons/delivery-icon.svg'
 import ReturnIcon from 'images/icons/return-icon.svg'
-import CliQQPlainLogo from 'images/icons/plain-cliqq-icon.svg'
+import CliQQPlainLogo from 'images/icons/cliqq.png'
 
 import { fbShare } from 'utils/fb-share'
 import { paramsImgix } from 'utils/image-stock'
