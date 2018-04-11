@@ -21,5 +21,9 @@ export default defineMessages({
   youBought: {
     id: 'app.containers.WalletPage.youBought',
     defaultMessage: 'You bought {item}'
+  },
+  youRefund: {
+    id: 'app.containers.WalletPage.youRefund',
+    defaultMessage: '{item} refunded'
   }
 })
