@@ -34,10 +34,7 @@ export const Wrapper = styled.div`
 `
 
 export const FlexContainer = styled.div`
-  align-items: center;
-  display: flex;
   padding: 10px 0;
-  justify-content: center;
 
   img {
     width: 40px;
@@ -63,13 +60,14 @@ export const FlexContainer = styled.div`
   }
 
   @media (min-width: 767px) {
+    align-items: center;
+    display: flex;
     justify-content: center;
   }
 `
 
 export const ImageWrapper = styled.div`
   display: inline-block;
-  margin-right: 25px;
   width: 100%;
 
   img {
@@ -79,6 +77,7 @@ export const ImageWrapper = styled.div`
 
   @media (min-width: 767px) {
     // width: inherit;
+    margin-right: 25px;
   }
 
   @media (max-width: 359px) {
@@ -96,20 +95,28 @@ class PointAds extends React.PureComponent {
           <Grid container>
             <Grid.Row>
               <FlexContainer>
-                <ImageWrapper>
-                  <Image src={Badge} alt='CLiQQ' />
-                </ImageWrapper>
-                <div>
-                  <Label basic as='span' size='massive' className='padding__none pay-point text__weight--400'>
-                    <FormattedMessage {...messages.payPoints} />
-                  </Label>
-                  <Label basic as='p' size='small' className='padding__none text__weight--400'>
-                    <FormattedMessage {...messages.usePoints} />
-                  </Label>
-                  <Button primary onClick={() => changeRoute('/wallet')}>
-                    <FormattedMessage {...messages.checkBalance} />
-                  </Button>
-                </div>
+                <Grid>
+                  <Grid.Row columns={2} verticalAlign='middle' stretched>
+                    <Grid.Column width={6} verticalAlign='middle'>
+                      <ImageWrapper>
+                        <Image src={Badge} alt='CLiQQ' />
+                      </ImageWrapper>
+                    </Grid.Column>
+                    <Grid.Column width={10}>
+                      <div>
+                        <Label basic as='span' size='massive' className='padding__none pay-point text__weight--400'>
+                          <FormattedMessage {...messages.payPoints} />
+                        </Label>
+                        <Label basic as='p' size='small' className='padding__none text__weight--400'>
+                          <FormattedMessage {...messages.usePoints} />
+                        </Label>
+                        <Button primary onClick={() => changeRoute('/wallet')}>
+                          <FormattedMessage {...messages.checkBalance} />
+                        </Button>
+                      </div>
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
               </FlexContainer>
             </Grid.Row>
           </Grid>
