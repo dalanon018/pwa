@@ -12,7 +12,7 @@ import WindowWidth from 'components/Shared/WindowWidth'
 import { FormattedMessage } from 'react-intl'
 import messages from './messages'
 
-import Badge from 'images/7-11-badge.png'
+import Badge from 'images/cliqq-badge.png'
 
 export const Wrapper = styled.div`
   padding: 0 10px;
