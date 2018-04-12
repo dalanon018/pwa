@@ -251,7 +251,7 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
     const displayFeatured = ifElse(
       lt(0),
       () => (
-        <div className='margin__top-positive--30'>
+        <div>
           <InfiniteLoading
             results={productsFeatured}
             hasMoreData={lazyload}
