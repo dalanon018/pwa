@@ -18,12 +18,12 @@ export default defineMessages({
     id: 'app.containers.WalletPage.asOf',
     defaultMessage: 'as of {date}'
   },
+  youClaimed: {
+    id: 'app.containers.WalletPage.youClaimed',
+    defaultMessage: 'You claimed {item}'
+  },
   youBought: {
     id: 'app.containers.WalletPage.youBought',
     defaultMessage: 'You bought {item}'
-  },
-  youRefund: {
-    id: 'app.containers.WalletPage.youRefund',
-    defaultMessage: '{item} refunded'
   }
 })

@@ -60,9 +60,15 @@ function PointsHistory ({
                       <PointsHistoryWrapper key={index} className='border_bottom__one--light-grey'>
                         <div className='text__align--left'>
                           <Label as='p' basic className='margin__none text__weight--400' size='small' >
-                            <FormattedMessage
-                              {...messages.youBought}
-                              values={{item: transaction.getIn(['product', 'name'])}} />
+                            {
+                              transaction.get('type') === 'plus'
+                              ? <FormattedMessage
+                                {...messages.youClaimed}
+                                values={{item: transaction.getIn(['product', 'name'])}} />
+                              : <FormattedMessage
+                                {...messages.youBought}
+                                values={{item: transaction.getIn(['product', 'name'])}} />
+                            }
                           </Label>
                           <Label as='p' basic className='color__grey text__weight--400 margin__top-positive--10' size='mini' >
                             {`${moment(transaction.get('datetime')).format('L')} ${moment(transaction.get('datetime')).format('LT')}`}
