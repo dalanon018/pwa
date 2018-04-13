@@ -462,10 +462,6 @@ export function * getUpdatedReceiptsSaga () {
   yield * takeLatest(GET_RECEIPT_UPDATED, getUpdatedReceipts)
 }
 
-export function * registerPushNotificationSaga () {
-  yield * takeLatest(REGISTER_PUSH, registerPushNotification)
-}
-
 export function * getIsRegisteredPushSaga () {
   yield * takeLatest(GET_REGISTED_PUSH, getIsRegisteredPush)
 }
@@ -483,14 +479,13 @@ export function * bucketsSagas () {
 
     fork(getUpdatedReceiptsSaga),
 
-    fork(registerPushNotificationSaga),
-
     fork(getIsRegisteredPushSaga),
     // get loyaltyToken
     fork(getLoyaltyTokenSaga)
   ]
   // remember not to cancel this actions on change of locations since it wont trigger anymore
   yield takeLatest(REMOVE_LOYALTY_TOKEN, removeLoyaltyToken)
+  yield takeLatest(REGISTER_PUSH, registerPushNotification)
   yield takeLatest(STORE_LOCATOR, storeLocator)
 
   // Suspend execution until location changes
