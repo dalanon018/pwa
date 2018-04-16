@@ -28,7 +28,7 @@ if (env === 'production') {
 } else {
   console.log(`TOKEN_URL=https://gw.cliqq.net:8443/accounts/oauth2/token`)
   console.log(`API_BASE_URL=https://gw.cliqq.net:8443/ecms/api/v1`)
-  console.log(`APP_BASE_URL=https://cliqqshop.com`)
+  console.log(`APP_BASE_URL=https://m.cliqqshop.com`)
   console.log(`MOBILE_REGISTRATION_URL=https://gw.cliqq.net:8443`)
   console.log(`STORE_LOCATOR_URL=https://mapservice.cliqq.net/ajax/`)
   console.log(`LOYALTY_URL=https://apidemo.cliqq.net:8443/loyalty/ecmsApi`)
