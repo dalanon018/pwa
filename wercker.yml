@@ -113,3 +113,36 @@ production:
       code: |
         yarn global add firebase-tools
         firebase deploy --project $FIREBASE_PROJECT_NAME --token $FIREBASE_TOKEN
+
+mobile-production:
+  steps:
+    - script:
+      name: install yarn
+      code: |
+        npm install -g yarn@0.27.5
+
+    - script:
+      name: set yarn cache
+      code: yarn config set cache-folder $WERCKER_CACHE_DIR/yarn
+
+    - script:
+      name: clean dependencies
+      code: |
+        rm -rf node_modules
+        npm cache clean --force
+
+    - script:
+      name: install dependencies
+      code: |
+        yarn
+
+    - script:
+      name: build-production
+      code: |
+        npm run build:prod
+
+    - script:
+      name: firebase-deploy
+      code: |
+        yarn global add firebase-tools
+        firebase deploy --project $FIREBASE_PROJECT_NAME --token $FIREBASE_TOKEN
