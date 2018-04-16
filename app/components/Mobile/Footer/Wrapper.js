@@ -54,21 +54,26 @@ const SocialIcons = styled.div`
 
 const IconItem = styled.div`
   &.fb-icon {
-    width: 46px;
-    height: 44px;
     background: url(${props => props.icon})no-repeat 2px 0 / cover;
+    height: 44px;
+    width: 46px;
   }
 
   &.twitter-icon {
-    width: 46px;
-    height: 44px;
     background: url(${props => props.icon})no-repeat -69px 0 / cover;
+    height: 44px;
+    margin-left: 5px;
+    width: 47px;
+
+    @media (min-width: 375px) {
+      margin-left: 0;
+    }
   }
 
   &.mail-icon {
-    width: 46px;
-    height: 44px;
     background: url(${props => props.icon})no-repeat -139px 0 / cover;
+    height: 44px;
+    width: 50px;
   }
 `
 
