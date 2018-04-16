@@ -13,6 +13,7 @@ import { Switch, Route } from 'react-router-dom'
 
 import Buckets from 'containers/Buckets/Loadable'
 import LoginPage from 'containers/LoginPage/Loadable'
+import UserAgentRouter from 'components/Shared/UserAgentRouter'
 
 const AppWrapper = styled.div`
   display: block;
@@ -31,7 +32,7 @@ const BodyWrapper = styled.div`
   }
 `
 
-export default function App () {
+function App () {
   return (
     <AppWrapper>
       <BodyWrapper>
@@ -50,3 +51,5 @@ export default function App () {
     </AppWrapper>
   )
 }
+
+export default UserAgentRouter(App)
