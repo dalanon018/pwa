@@ -21,6 +21,10 @@ import {
   subtract
 } from 'ramda'
 
+import {
+  ALLOWED_POINTS
+} from 'containers/ProductReview/constants'
+
 // import { FormattedMessage } from 'react-intl'
 // import messages from './messages'
 
@@ -51,7 +55,8 @@ class RangeSlider extends React.PureComponent { // eslint-disable-line react/pre
 
   _handleDecrementButton = () => {
     const { usePoints } = this.props
-    const enable = !!(usePoints > 0)
+    console.log(ALLOWED_POINTS)
+    const enable = !!(usePoints > ALLOWED_POINTS)
     return {
       image: enable ? ActiveDecrementButton : DisabledDecrementButton,
       fn: enable ? () => this._handlePointsModifier(usePoints - 1) : () => {}
@@ -82,6 +87,7 @@ class RangeSlider extends React.PureComponent { // eslint-disable-line react/pre
           <Slider
             value={usePoints}
             onChange={this._handlePointsModifier}
+            min={ALLOWED_POINTS}
             max={maxPoints}
           />
           <Image src={IncrementButton.image} alt='CLiQQ' onClick={() => IncrementButton.fn()} />
