@@ -4,23 +4,23 @@
 *
 */
 import { isMobileDevice } from 'utils/http'
+import { DESKTOP_URL, MOBILE_URL } from 'containers/App/constants'
 
 export default function UserAgentRouter (Component) {
-  const baseUrl = process.env.APP_BASE_URL && process.env.APP_BASE_URL.split('/')[2]
-
   const location = window.location
-  const host = location.host
-  const mainUri = location.host + location.pathname + location.search
+  const host = location.protocol + '//' + location.host
+  const mainUri = location.pathname + location.search
 
-  const isMobile = location.protocol + '//m.' + mainUri
+  const urlRedirect = url => { window.location = url + mainUri }
+  const triggerUserAgent = url => url && url.indexOf(host) !== -1
 
   if (isMobileDevice()) {
-    if (host === baseUrl) {
-      window.location = isMobile
+    if (triggerUserAgent(DESKTOP_URL)) {
+      urlRedirect(MOBILE_URL)
     }
   } else {
-    if (host === 'm.' + baseUrl) {
-      window.location = location.protocol + '//' + mainUri.split('.')[1]
+    if (triggerUserAgent(MOBILE_URL)) {
+      urlRedirect(DESKTOP_URL)
     }
   }
 

@@ -7,6 +7,9 @@ if (env === 'production') {
   console.log(`MOBILE_REGISTRATION_URL=${process.env.MOBILE_REGISTRATION_URL}`)
   console.log(`STORE_LOCATOR_URL=${process.env.STORE_LOCATOR_URL}`)
 
+  console.log(`DESKTOP_URL=${process.env.DESKTOP_URL}`)
+  console.log(`MOBILE_URL=${process.env.MOBILE_URL}`)
+
   console.log(`FIREBASE_API_KEY=${process.env.FIREBASE_API_KEY}`)
   console.log(`FIREBASE_AUTH_DOMAIN=${process.env.FIREBASE_AUTH_DOMAIN}`)
   console.log(`FIREBASE_DATABASE_URL=${process.env.FIREBASE_DATABASE_URL}`)
@@ -32,6 +35,9 @@ if (env === 'production') {
   console.log(`APP_BASE_URL=http://localhost:3000`)
   console.log(`MOBILE_REGISTRATION_URL=https://apidemo.cliqq.net:8443`)
   console.log(`STORE_LOCATOR_URL=https://mapservice.cliqq.net/ajax/`)
+
+  console.log(`DESKTOP_URL=https://seven-eleven.netlify.com`)
+  console.log(`MOBILE_URL=https://e3-cliqq-shop.herokuapp.com`)
 
   console.log(`FIREBASE_API_KEY=AIzaSyBaKhRjF4feFUsPyezk8Hmu0u_PCbNb2oI`)
   console.log(`FIREBASE_AUTH_DOMAIN=realtimedb-a1d19.firebaseapp.com`)
