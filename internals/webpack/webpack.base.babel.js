@@ -122,6 +122,8 @@ module.exports = (options) => ({
         MOBILE_REGISTRATION_URL: JSON.stringify(process.env.MOBILE_REGISTRATION_URL),
         LOYALTY_URL: JSON.stringify(process.env.LOYALTY_URL),
         RECENT_STORE_TOKEN: JSON.stringify(process.env.RECENT_STORE_TOKEN),
+        DESKTOP_URL: JSON.stringify(process.env.DESKTOP_URL),
+        MOBILE_URL: JSON.stringify(process.env.MOBILE_URL),
         STORE_LOCATOR_URL: JSON.stringify(process.env.STORE_LOCATOR_URL),
         FIREBASE_API_KEY: JSON.stringify(process.env.FIREBASE_API_KEY),
         FIREBASE_AUTH_DOMAIN: JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN),
