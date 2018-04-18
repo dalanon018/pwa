@@ -9,6 +9,9 @@ if (env === 'production') {
   console.log(`LOYALTY_URL=${process.env.LOYALTY_URL}`)
   console.log(`RECENT_STORE_TOKEN=${process.env.RECENT_STORE_TOKEN}`)
 
+  console.log(`DESKTOP_URL=${process.env.DESKTOP_URL}`)
+  console.log(`MOBILE_URL=${process.env.MOBILE_URL}`)
+
   console.log(`FIREBASE_API_KEY=${process.env.FIREBASE_API_KEY}`)
   console.log(`FIREBASE_AUTH_DOMAIN=${process.env.FIREBASE_AUTH_DOMAIN}`)
   console.log(`FIREBASE_DATABASE_URL=${process.env.FIREBASE_DATABASE_URL}`)
@@ -33,6 +36,9 @@ if (env === 'production') {
   console.log(`STORE_LOCATOR_URL=https://mapservice.cliqq.net/ajax/`)
   console.log(`LOYALTY_URL=https://apidemo.cliqq.net:8443/loyalty/ecmsApi`)
   console.log(`RECENT_STORE_TOKEN=MmsxN1N0b3JlTG9jYXRvclBhc3N3b3JkRm9yRTE=`)
+
+  console.log(`DESKTOP_URL=https://cliqqshop.com`)
+  console.log(`MOBILE_URL=https://m.cliqqshop.com`)
 
   console.log(`FIREBASE_API_KEY=AIzaSyDYGxDAGSC8Tf6KY7bgyOx-ZFWQy3s1cn4`)
   console.log(`FIREBASE_AUTH_DOMAIN=cliqqshop.firebaseapp.com`)
