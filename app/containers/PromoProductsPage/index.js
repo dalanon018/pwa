@@ -22,7 +22,6 @@ import {
   cond,
   equals,
   ifElse,
-  lt,
   partial,
   path,
   prop
@@ -232,56 +231,10 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
     })
   }
 
-  _displayHeaderFeaturesProduct () {
-    const { productsFeatured } = this.props
-    if (productsFeatured.size) {
-      return (
-        <H3>
-          <FormattedMessage {...messages.feature} />
-        </H3>
-      )
-    }
+  _displayHeaderProduct () {
+    const { lazyload, allProducts, productsCount } = this.props
 
-    return null
-  }
-
-  _displayFeaturedProducts = () => {
-    const { productsFeatured, productsLoading, changeRoute, windowWidth, lazyload, productsCount } = this.props
-
-    const displayFeatured = ifElse(
-      lt(0),
-      () => (
-        <div>
-          <InfiniteLoading
-            results={productsFeatured}
-            hasMoreData={lazyload}
-            loadMoreData={this._displayMoreProducts}
-            isLoading={productsLoading}
-            rowCount={productsCount}
-          >
-            {(props) => (
-              <AccessView
-                mobileView={
-                  <MobileProductView changeRoute={changeRoute} loader={productsLoading} products={productsFeatured} windowWidth={windowWidth} {...props} />
-                }
-                desktopView={
-                  <DesktopProductView changeRoute={changeRoute} loader={productsLoading} products={productsFeatured} windowWidth={windowWidth} {...props} />
-                }
-              />
-            )}
-          </InfiniteLoading>
-        </div>
-      ),
-      noop
-    )
-
-    return displayFeatured(productsFeatured.size)
-  }
-
-  _displayHeaderRegularProduct () {
-    const { lazyload, productsRegular, productsCount } = this.props
-
-    if (lazyload && productsRegular.size === 0) {
+    if (lazyload && allProducts.size === 0) {
       return null
     }
 
@@ -307,12 +260,12 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
     )
   }
 
-  _displayRegularItems = () => {
-    const { productsRegular, changeRoute, productsLoading, lazyload, windowWidth, productsCount } = this.props
-    if (productsRegular.size > 1 || lazyload === false) {
+  _displayItems = () => {
+    const { allProducts, changeRoute, productsLoading, lazyload, windowWidth, productsCount } = this.props
+    if (lazyload === false) {
       return (
         <InfiniteLoading
-          results={productsRegular}
+          results={allProducts}
           hasMoreData={lazyload}
           loadMoreData={this._displayMoreProducts}
           isLoading={productsLoading}
@@ -321,10 +274,10 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
           {(props) => (
             <AccessView
               mobileView={
-                <MobileProductView changeRoute={changeRoute} loader={productsLoading} products={productsRegular} windowWidth={windowWidth} {...props} />
+                <MobileProductView changeRoute={changeRoute} loader={productsLoading} products={allProducts} windowWidth={windowWidth} {...props} />
               }
               desktopView={
-                <DesktopProductView changeRoute={changeRoute} loader={productsLoading} products={productsRegular} windowWidth={windowWidth} {...props} />
+                <DesktopProductView changeRoute={changeRoute} loader={productsLoading} products={allProducts} windowWidth={windowWidth} {...props} />
               }
             />
           )}
@@ -436,12 +389,9 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
               hasMoreData={lazyload}
               isLoading={productsLoading}
             >
-              { this._displayHeaderFeaturesProduct() }
-              { this._displayFeaturedProducts() }
-
-              { this._displayHeaderRegularProduct() }
+              { this._displayHeaderProduct() }
               { this._displayEmptyLoadingIndicator() }
-              { this._displayRegularItems() }
+              { this._displayItems() }
             </InfiniteWrapper>
           </div>
         </ContentWrapper>
