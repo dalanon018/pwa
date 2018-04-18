@@ -55,7 +55,6 @@ class RangeSlider extends React.PureComponent { // eslint-disable-line react/pre
 
   _handleDecrementButton = () => {
     const { usePoints } = this.props
-    console.log(ALLOWED_POINTS)
     const enable = !!(usePoints > ALLOWED_POINTS)
     return {
       image: enable ? ActiveDecrementButton : DisabledDecrementButton,
