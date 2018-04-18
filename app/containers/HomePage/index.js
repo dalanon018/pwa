@@ -183,7 +183,15 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     ]
 
     const desktopBannerImages = [
-      paramsImgix('https://cliqqshop.imgix.net/banner-desktop.jpg', imgixOptions)
+      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/E3-banner1.jpg', imgixOptions),
+      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/E3-banner2.jpg', imgixOptions),
+      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/E3-banner3.jpg', imgixOptions),
+      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/E3-banner4.jpg', imgixOptions),
+      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/E3-banner5.jpg', imgixOptions),
+      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/E3-banner6.jpg', imgixOptions),
+      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/E3-banner7.jpg', imgixOptions),
+      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/E3-banner8.jpg', imgixOptions),
+      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/E3-banner9.jpg', imgixOptions)
     ]
 
     return (
