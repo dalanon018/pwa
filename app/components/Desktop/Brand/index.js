@@ -22,7 +22,10 @@ const BrandContainer = styled.div`
 `
 
 export const BrandWrapper = styled.div`
+  align-items: center;
   cursor: pointer;
+  display: flex;
+  height: 100%;
   min-height: 160px;
 
   .image {
@@ -49,7 +52,7 @@ function Brand ({ brands, loader, changeRoute }) {
   const goToBrand = (id) => () => changeRoute(`/brands/${id}`)
   return (
     <BrandContainer>
-      <Grid padded columns='4'>
+      <Grid padded columns='4' verticalAlign='middle'>
         {
           loader ? range(4).map((_, index) => <DefaultState key={index} />)
           : brands.valueSeq().map((brand) => (

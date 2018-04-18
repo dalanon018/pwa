@@ -397,7 +397,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   render () {
     const { productsByBrands, loader, lazyload } = this.props
     const { brandImages, animateBanner, brandDesktopSliders } = this.state
-    console.log(brandImages, brandDesktopSliders)
+
     return (
       <div>
         <Waypoint

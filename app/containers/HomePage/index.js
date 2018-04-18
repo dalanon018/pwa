@@ -13,7 +13,7 @@ import { compose } from 'redux'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
-import { gt, ifElse, identity } from 'ramda'
+import { gt, ifElse, identity, range } from 'ramda'
 import { Container, Grid, Button, Input } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
@@ -175,16 +175,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       lossless: 0
     }
 
-    const bannerImages = [
-      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner1.png', imgixOptions),
-      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner2.png', imgixOptions),
-      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner3.png', imgixOptions),
-      paramsImgix('https://cliqqshop.imgix.net/PWA/banners/banner4.png', imgixOptions)
-    ]
-
-    const desktopBannerImages = [
-      paramsImgix('https://cliqqshop.imgix.net/banner-desktop.jpg', imgixOptions)
-    ]
+    const bannerImages = range(1, 5).map(i => paramsImgix(`https://cliqqshop.imgix.net/PWA/banners/banner${i}.png`, imgixOptions))
+    const desktopBannerImages = range(1, 10).map(i => paramsImgix(`https://cliqqshop.imgix.net/PWA/banners/E3-banner${i}.jpg`, imgixOptions))
 
     return (
       <div>
