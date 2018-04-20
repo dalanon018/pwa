@@ -23,12 +23,12 @@ import TimerWrapper from 'components/Mobile/TimerWrapper'
 
 import DeliveryIcon from 'images/icons/delivery-icon.svg'
 import ReturnIcon from 'images/icons/return-icon.svg'
-import CliQQPlainLogo from 'images/icons/cliqq.png'
+// import CliQQPlainLogo from 'images/icons/cliqq.png'
 import LightBox from 'components/Shared/LightBox'
 
 import { fbShare } from 'utils/fb-share'
 import { paramsImgix } from 'utils/image-stock'
-import { calculateEarnPoints } from 'utils/calculation'
+// import { calculateEarnPoints } from 'utils/calculation'
 
 import ProductSlider from 'components/Mobile/BannerSlider'
 import ListCollapse from 'components/Shared/ListCollapse'
@@ -49,8 +49,8 @@ import {
   SocialContainer,
   ShareWrapper,
   ProductImageSlider,
-  CollapseContent,
-  PointsInfo
+  CollapseContent
+  // PointsInfo
 } from './styled'
 
 const showDiscountPrice = (component1, component2) => (condition) => ifElse(
@@ -131,15 +131,15 @@ const Product = ({
     return fbShare(product)
   }
 
-  const getHighestPointsEarn = () => {
-    const amount = product.get('discountPrice') || product.get('price')
+  // const getHighestPointsEarn = () => {
+  //   const amount = product.get('discountPrice') || product.get('price')
 
-    return `${calculateEarnPoints({
-      multiplier: parseFloat(product.getIn(['points', 'multiplier'])),
-      percentage: parseFloat(product.getIn(['points', 'method', 'cash'])),
-      amount: parseFloat(amount)
-    })} CLiQQ Points`
-  }
+  //   return `${calculateEarnPoints({
+  //     multiplier: parseFloat(product.getIn(['points', 'multiplier'])),
+  //     percentage: parseFloat(product.getIn(['points', 'method', 'cash'])),
+  //     amount: parseFloat(amount)
+  //   })} CLiQQ Points`
+  // }
 
   return (
     <div>
@@ -198,8 +198,8 @@ const Product = ({
           <Grid padded>
             <Grid.Row>
               <Grid.Column>
-                {
-                product.get('points') &&
+                {/* // Points temp
+                  { product.get('points') &&
                 <PointsInfo>
                   <Image src={CliQQPlainLogo} alt='CLiQQ' />
                   <Label as='span' basic size='medium' className='text__weight--400'>
@@ -207,8 +207,8 @@ const Product = ({
                       {...messages.earnPoints}
                       values={{points: <span className='color__primary'>{getHighestPointsEarn()}</span>}} />
                   </Label>
-                </PointsInfo>
-               }
+                </PointsInfo> }
+                */}
 
                 <SocialContainer>
                   <Label className='color__secondary text__weight--400' as='p' basic size='medium'>
