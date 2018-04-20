@@ -152,7 +152,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
   state = {
     toggleSidebar: false,
-    maintenance: true
+    maintenance: false
   }
 
   _lastY
@@ -462,63 +462,61 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     const { productCategories, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken, windowWidth } = this.props
     const { toggleSidebar, maintenance } = this.state
 
-    return (
-      <div>
-        {
-          maintenance
-          ? <MaintenanceMode />
-          : <Wrapper toggleSidebar={toggleSidebar}>
-            { this._displayHeader() }
-            <MainContent
-              media={windowWidth}
-              toggleSidebar={toggleSidebar} >
-              <Switch>
-                <Route exact path='/' component={HomePage} />
-                <Route path='/product/:id' component={ProductPage} />
-                <Route path='/review' component={ReviewPage} />
-                <Route exact path='/purchases' component={PurchaseListPage} />
-                <Route exact path='/purchases/:trackingNumber' component={ReceiptPage} />
-                <Route exact path='/products-category/:id' component={ProductsByCategoryPage} />
-                <Route exact path='/brands/:id' component={BrandsPage} />
-                <Route exact path='/search' component={SearchPage} />
+    const mainView = () => {
+      return (
+        <Wrapper toggleSidebar={toggleSidebar}>
+          { this._displayHeader() }
+          <MainContent
+            media={windowWidth}
+            toggleSidebar={toggleSidebar} >
+            <Switch>
+              <Route exact path='/' component={HomePage} />
+              <Route path='/product/:id' component={ProductPage} />
+              <Route path='/review' component={ReviewPage} />
+              <Route exact path='/purchases' component={PurchaseListPage} />
+              <Route exact path='/purchases/:trackingNumber' component={ReceiptPage} />
+              <Route exact path='/products-category/:id' component={ProductsByCategoryPage} />
+              <Route exact path='/brands/:id' component={BrandsPage} />
+              <Route exact path='/search' component={SearchPage} />
 
-                <Route exact path='/terms-conditions' component={TermsPage} />
-                <Route exact path='/privacy-policy' component={PrivacyPage} />
-                <Route exact path='/faq' component={FaqPage} />
+              <Route exact path='/terms-conditions' component={TermsPage} />
+              <Route exact path='/privacy-policy' component={PrivacyPage} />
+              <Route exact path='/faq' component={FaqPage} />
 
-                <Route path='/offline' component={OfflinePage} />
-                <Route path='' component={NotFound} />
-              </Switch>
-              <AccessView
-                mobileView={null}
-                desktopView={<DesktopFooter />}
-              />
-            </MainContent>
-            <div
-              className='sidebar-wrapper' >
-              <SidebarMenu
-                isSignIn={!!loyaltyToken}
-                signOut={removeLoyaltyToken}
-                changeRoute={this._handleChangeRouteFromSideBar}
-                categories={productCategories}
-                brands={brands}
-                toggleSidebar={toggleSidebar}
-                toggleAction={this._handleCloseSidebarClickPusher}
-              />
-            </div>
-            { this._handleShownModal() }
-            <Modal
-              open={toggleError}
-              name='warning'
-              title={<FormattedMessage {...messages.errorHeader} />}
-              content={this._toggleErrorMessage(toggleMessage)}
-              close={this._handleNetworkErrorMessage}
+              <Route path='/offline' component={OfflinePage} />
+              <Route path='' component={NotFound} />
+            </Switch>
+            <AccessView
+              mobileView={null}
+              desktopView={<DesktopFooter />}
             />
-            <ReactNotification ref={this._reactNotificationRef} />
-          </Wrapper>
-        }
-      </div>
-    )
+          </MainContent>
+          <div
+            className='sidebar-wrapper' >
+            <SidebarMenu
+              isSignIn={!!loyaltyToken}
+              signOut={removeLoyaltyToken}
+              changeRoute={this._handleChangeRouteFromSideBar}
+              categories={productCategories}
+              brands={brands}
+              toggleSidebar={toggleSidebar}
+              toggleAction={this._handleCloseSidebarClickPusher}
+            />
+          </div>
+          { this._handleShownModal() }
+          <Modal
+            open={toggleError}
+            name='warning'
+            title={<FormattedMessage {...messages.errorHeader} />}
+            content={this._toggleErrorMessage(toggleMessage)}
+            close={this._handleNetworkErrorMessage}
+          />
+          <ReactNotification ref={this._reactNotificationRef} />
+        </Wrapper>
+      )
+    }
+
+    return maintenance ? <MaintenanceMode /> : mainView()
   }
 }
 
