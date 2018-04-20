@@ -88,6 +88,6 @@ export default defineMessages({
   },
   earnPoints: {
     id: 'app.containers.ProductPage.earnPoints',
-    defaultMessage: 'Earn up to {points} when you claim this!'
+    defaultMessage: 'Earn {points} when you claim this!'
   }
 })
