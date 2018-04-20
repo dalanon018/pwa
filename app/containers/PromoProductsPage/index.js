@@ -240,11 +240,7 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
 
     return (
       <AccessView
-        mobileView={
-          <H3>
-            <FormattedMessage {...messages.promoProductsTitle} />
-          </H3>
-        }
+        mobileView={null}
         desktopView={
           <div className='margin__vertical--30'>
             <DesktopTitle>
@@ -260,10 +256,50 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
     )
   }
 
+  _displayFeaturedItems = () => { // TODO: For refactor
+    const { changeRoute, productsLoading, lazyload, windowWidth, productsCount, productsFeatured } = this.props
+
+    return (
+      <div>
+        <H3>
+          <FormattedMessage {...messages.feature} />
+        </H3>
+        <InfiniteLoading
+          results={productsFeatured}
+          hasMoreData={lazyload}
+          loadMoreData={this._displayMoreProducts}
+          isLoading={productsLoading}
+          rowCount={productsCount}
+        >
+          {(props) => (
+            <AccessView
+              mobileView={
+                <MobileProductView changeRoute={changeRoute} loader={productsLoading} products={productsFeatured} windowWidth={windowWidth} {...props} />
+              }
+              desktopView={
+                <DesktopProductView changeRoute={changeRoute} loader={productsLoading} products={productsFeatured} windowWidth={windowWidth} {...props} />
+              }
+            />
+          )}
+        </InfiniteLoading>
+      </div>
+    )
+
+    // if (lazyload === true) { // TODO: For refactor
+
+    // }
+
+    // return null
+  }
+
   _displayItems = () => {
     const { allProducts, changeRoute, productsLoading, lazyload, windowWidth, productsCount } = this.props
-    if (lazyload === false) {
-      return (
+
+    return (
+      <div className='margin__top-positive--30'>
+        <H3>
+          <FormattedMessage {...messages.promoProductsTitle} />
+        </H3>
         <InfiniteLoading
           results={allProducts}
           hasMoreData={lazyload}
@@ -282,10 +318,14 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
             />
           )}
         </InfiniteLoading>
-      )
-    }
+      </div>
+    )
 
-    return null
+    // if (lazyload === true) { // TODO: For refactor
+
+    // }
+
+    // return null
   }
 
   componentWillMount () {
@@ -384,13 +424,14 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
             />
             }
           />
-          <div className='margin__top-positive--30'>
+          <div>
             <InfiniteWrapper
               hasMoreData={lazyload}
               isLoading={productsLoading}
             >
               { this._displayHeaderProduct() }
               { this._displayEmptyLoadingIndicator() }
+              { this._displayFeaturedItems() }
               { this._displayItems() }
             </InfiniteWrapper>
           </div>
