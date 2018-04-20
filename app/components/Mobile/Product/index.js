@@ -156,6 +156,7 @@ const Product = ({
               percentage={product.get('discountInfo') && product.get('discountInfo')}
               isInfinite
               curved
+              isProductPage
             />
             {
               +product.get('quantity') === 0 &&

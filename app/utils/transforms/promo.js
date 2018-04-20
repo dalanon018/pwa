@@ -59,8 +59,8 @@ const applyImage = (data) => {
   )
   return Object.assign({}, data, {
     icon: applyImageUrl('NAV_ICON')(data),
-    background: applyImageUrl('BACKGROUND')(data),
-    main: applyImageUrl('MAIN')(data)
+    background: applyImageUrl('E3-BACKGROUND')(data),
+    main: applyImageUrl('PRIMARY')(data)
   })
 }
 

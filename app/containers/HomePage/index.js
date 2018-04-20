@@ -244,6 +244,33 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     map((items) => paramsImgix(items, this._imgixOptions(props)))
   )
 
+  _handleCategoryName = (data) => {
+    // const { windowWidth } = this.props
+    const format = /[&]/
+
+    if (!format.test(data)) {
+      return data.replace(/ /g, '\n')
+    } else {
+      return data
+    }
+
+    // let maxChar = 15
+
+    // switch (true) {
+    //   case (windowWidth >= 375 && windowWidth <= 600):
+    //     maxChar = 8
+    //     break
+    //   case (windowWidth >= 767):
+    //     maxChar = 100
+    //     break
+    // }
+
+    // if (data && data.length > maxChar) {
+    //   return `${data.slice(0, maxChar)}...`
+    // }
+    // return data.replace(/ /g, '\n')
+  }
+
   componentDidMount () {
     const { setPageTitle, setShowActivityIcon, setShowSearchIcon, setShowPointsIcon, getPromos, getBanners, setRouteName } = this.props
     setPageTitle(null)
@@ -329,7 +356,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                   <CategoryItem key={index} onClick={() => changeRoute(`/products-category/${category.get('id')}?name=${category.get('name')}`)}>
                     <Image src={category.get('icon') !== '' ? category.get('icon') : imageStock('mobile-category-icon-default.png')} alt='CLiQQ' />
                     <Label basic size='tiny' className='item-label text__weight--400'>
-                      {category.get('name')}
+                      {this._handleCategoryName(category.get('name'))}
                     </Label>
                   </CategoryItem>
                 )
