@@ -278,22 +278,15 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
                       <Label as='p' className='text__weight--500' size='large' >
                         <FormattedMessage {...messages.currentPoints} />
                       </Label>
-                      {
-                        transactions.size >= 1 && !transactionsLoading &&
-                        <Label as='p' className='color__grey text__weight--400' size='medium' >
-                          <FormattedMessage
-                            {...messages.asOf}
-                            values={{date: moment().format('LL')}} />
-                        </Label>
-                      }
+                      <Label as='p' className='color__grey text__weight--400' size='medium' >
+                        <FormattedMessage
+                          {...messages.asOf}
+                          values={{date: moment().format('LL')}} />
+                      </Label>
                       <UserPointsWrapper>
                         <Image src={CliqqIcon} alt='CLiQQ' />
                         <Label as='span' className='my-points color__teal text__weight--700' size='massive' >
-                          {
-                            transactions.size >= 1 && !transactionsLoading
-                            ? parseFloat(wallet.get('currentPoints')).toLocaleString()
-                            : '---'
-                          }
+                          {wallet ? parseFloat(wallet.get('currentPoints')).toLocaleString() : '---'}
                         </Label>
                       </UserPointsWrapper>
                     </PointsPreviewWrapper>
