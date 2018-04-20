@@ -264,7 +264,7 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
 
   _displayTransactionsItems = () => {
     const { transactions, changeRoute, transactionsLoading, lazyload, wallet } = this.props
-    if (transactions.size > 0 || lazyload === false) {
+    if (lazyload === false) {
       // const getLatestTransaction = transactions.first() && transactions.first().get('datetime')
 
       return (
@@ -273,34 +273,27 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
             <Grid padded>
               <Grid.Row className='padding__none--vertical'>
                 {
-                  transactions.size >= 1 && !transactionsLoading
-                  ? <PlainCard>
+                  <PlainCard>
                     <PointsPreviewWrapper className='text__align--center'>
                       <Label as='p' className='text__weight--500' size='large' >
                         <FormattedMessage {...messages.currentPoints} />
                       </Label>
-                      <Label as='p' className='color__grey text__weight--400' size='medium' >
-                        <FormattedMessage
-                          {...messages.asOf}
-                          values={{date: moment().format('LL')}} />
-                      </Label>
-                      <UserPointsWrapper>
-                        <Image src={CliqqIcon} alt='CLiQQ' />
-                        <Label as='span' className='my-points color__teal text__weight--700' size='massive' >
-                          {parseFloat(wallet.get('currentPoints')).toLocaleString()}
+                      {
+                        transactions.size >= 1 && !transactionsLoading &&
+                        <Label as='p' className='color__grey text__weight--400' size='medium' >
+                          <FormattedMessage
+                            {...messages.asOf}
+                            values={{date: moment().format('LL')}} />
                         </Label>
-                      </UserPointsWrapper>
-                    </PointsPreviewWrapper>
-                  </PlainCard>
-                  : <PlainCard>
-                    <PointsPreviewWrapper className='text__align--center'>
-                      <Label as='p' className='text__weight--500' size='large' >
-                        <FormattedMessage {...messages.currentPoints} />
-                      </Label>
+                      }
                       <UserPointsWrapper>
                         <Image src={CliqqIcon} alt='CLiQQ' />
                         <Label as='span' className='my-points color__teal text__weight--700' size='massive' >
-                          ---
+                          {
+                            transactions.size >= 1 && !transactionsLoading
+                            ? parseFloat(wallet.get('currentPoints')).toLocaleString()
+                            : '---'
+                          }
                         </Label>
                       </UserPointsWrapper>
                     </PointsPreviewWrapper>
