@@ -22,6 +22,7 @@ function BannerSlider ({
   isInfinite,
   isLowerdots,
   toggleLightBox,
+  isProductPage,
   lightBoxImage,
   percentage,
   images,
@@ -46,6 +47,7 @@ function BannerSlider ({
     isHome={isHome}
     isPromo={isPromo}
     promo={promo}
+    isProductPage={isProductPage}
     />
 }
 
@@ -66,6 +68,7 @@ export const HandleBlock = ({
   images,
   isHome,
   isPromo,
+  isProductPage,
   toggleLightBox,
   lightBoxImage,
   promo,
@@ -98,6 +101,7 @@ export const HandleBlock = ({
         isHome={isHome}
         percentage={percentage}
         isPromo={isPromo}
+        isProductPage={isProductPage}
         promo={promo} />
     </BannerSliderWrapper>
   }

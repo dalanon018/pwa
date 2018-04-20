@@ -42,7 +42,10 @@ class SlideShow extends React.PureComponent {
     clearTimeout(this.assignTimeOut)
   }
 
-  _handleLightBox = imageIndex => () => this.props.toggleLightBox(imageIndex.toString())
+  _handleLightBox = imageIndex => () => {
+    const {toggleLightBox, isProductPage} = this.props
+    return isProductPage && toggleLightBox(imageIndex.toString())
+  }
 
   componentDidMount () {
     const { props } = this.slider

@@ -38,6 +38,11 @@ const CategoryItem = styled.div`
 
   .item-label {
     padding: 0;
+    white-space: pre;
+
+    &:first-child {
+      white-space: normal;
+    }
 
     @media (max-width: 375px) {
       font-size: 2.5vw !important;
