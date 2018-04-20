@@ -44,7 +44,7 @@ import BrandSlider from 'components/Mobile/BrandSlider'
 import SectionTitle from 'components/Mobile/HomeSectionTitle'
 import OrderTip from 'components/Mobile/OrderTip'
 import PointAds from 'components/Mobile/PointAds'
-import FlashDeals from 'components/Mobile/FlashDeals'
+// import FlashDeals from 'components/Mobile/FlashDeals'
 
 import WindowWidth from 'components/Shared/WindowWidth'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
@@ -316,9 +316,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       lazyload,
       intl,
       categoryNavLoader,
-      promos,
-      promosLoading,
-      promosCount,
+      // promos,
+      // promosLoading,
+      // promosCount,
       bannersLoading,
       location
     } = this.props
@@ -416,9 +416,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
         </Container>
 
-        <OrderTip />
+        <div className='margin__bottom-positive--10'>
+          <OrderTip />
+        </div>
 
-        <Container>
+        {/*
+          <Container>
           <div className='margin__bottom-positive--5 margin__top-positive--10'>
             <SectionTitle
               title={intl.formatMessage(messages.flashDeals)}
@@ -440,6 +443,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             )
           )
         }
+        */}
 
         <PointAds changeRoute={changeRoute} />
 
