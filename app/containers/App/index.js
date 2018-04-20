@@ -13,7 +13,7 @@ import { Switch, Route } from 'react-router-dom'
 
 import Buckets from 'containers/Buckets/Loadable'
 // import LoginPage from 'containers/LoginPage/Loadable'
-import UserAgentRouter from 'components/Shared/UserAgentRouter'
+// import UserAgentRouter from 'components/Shared/UserAgentRouter'
 
 const AppWrapper = styled.div`
   display: block;
@@ -51,4 +51,5 @@ function App () {
   )
 }
 
-export default UserAgentRouter(App)
+// remove temporary UserAgentRouter
+export default App
