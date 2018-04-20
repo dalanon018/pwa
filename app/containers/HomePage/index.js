@@ -295,7 +295,17 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       bannersLoading,
       location
     } = this.props
-    const { _banners } = this.state
+    // const { _banners } = this.state
+
+    const imgixOptions = {
+      w: 800,
+      h: 300,
+      auto: 'compress',
+      q: 35,
+      lossless: 0
+    }
+
+    const mobileBannerImages = range(1, 10).map(i => paramsImgix(`https://cliqqshop.imgix.net/PWA/banners/E3-banner${i}.jpg`, imgixOptions))
 
     const desktopBannerImages = [
       paramsImgix('https://cliqqshop.imgix.net/banner-desktop.jpg', this._imgixOptions({ windowWidth }))
@@ -349,7 +359,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                 <MobileSlider
                   curved
                   loader={bannersLoading}
-                  images={_banners}
+                  images={mobileBannerImages}
                   isInfinite
                   isHome={location && location.pathname === '/'}
                 />

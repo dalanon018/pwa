@@ -2,7 +2,8 @@ import styled from 'styled-components'
 
 const BannerWrapper = styled.div`
   display: block;
-  min-height: 200px;
+  // min-height: 200px;
+  min-height: 140px;
   padding: 0 10px;
 `
 const SearchWrapper = styled.div`
