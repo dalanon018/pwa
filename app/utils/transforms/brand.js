@@ -61,7 +61,7 @@ const transformBrand = (data) => {
     )
 
     return Object.assign({}, data, {
-      background: applyImageUrl('BACKGROUND')(data),
+      background: applyImageUrl('E3-BRAND_LOGO')(data),
       sliders: applyImageSliders('SLIDER')(data),
       desktopSliders: applyImageSliders('DESKTOP_SLIDER')(data)
     })
