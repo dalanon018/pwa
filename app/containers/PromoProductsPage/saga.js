@@ -56,7 +56,6 @@ export function * getPromoProducts (args) {
   let products = []
   let count = 0
 
-  // TODO: we need to change this to the correct url
   const token = yield getAccessToken()
   const req = yield call(getRequestData, `${API_BASE_URL}/promos/${id}?offset=${offset}&limit=${limit}`, {
     method: 'GET',
@@ -65,7 +64,6 @@ export function * getPromoProducts (args) {
 
   if (!isEmpty(req)) {
     const promoClean = yield transformEachEntity(req)
-    console.log(promoClean)
     const promoEntity = omit(['productList', 'totalCount'])
     const productsEntity = propOr([], 'productList')
     const countEntity = propOr(0, 'totalCount')
