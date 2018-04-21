@@ -43,7 +43,7 @@ import MobileFooter from 'components/Mobile/Footer'
 import BrandSlider from 'components/Mobile/BrandSlider'
 import SectionTitle from 'components/Mobile/HomeSectionTitle'
 import OrderTip from 'components/Mobile/OrderTip'
-// import PointAds from 'components/Mobile/PointAds'
+import PointAds from 'components/Mobile/PointAds'
 import FlashDeals from 'components/Mobile/FlashDeals'
 
 import WindowWidth from 'components/Shared/WindowWidth'
@@ -322,7 +322,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       bannersLoading,
       location
     } = this.props
-    // const { _banners } = this.state
+    const { _banners } = this.state
 
     const imgixOptions = {
       w: 800,
@@ -332,11 +332,11 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       lossless: 0
     }
 
-    const mobileBannerImages = range(1, 10).map(i => paramsImgix(`https://cliqqshop.imgix.net/PWA/banners/E3-banner${i}.jpg`, imgixOptions))
+    // const mobileBannerImages = range(1, 10).map(i => paramsImgix(`https://cliqqshop.imgix.net/PWA/banners/E3-banner${i}.jpg`, imgixOptions))
 
-    const desktopBannerImages = [
-      paramsImgix('https://cliqqshop.imgix.net/banner-desktop.jpg', this._imgixOptions({ windowWidth }))
-    ]
+    // const desktopBannerImages = [
+    //   paramsImgix('https://cliqqshop.imgix.net/banner-desktop.jpg', this._imgixOptions({ windowWidth }))
+    // ]
 
     return (
       <div>
@@ -386,7 +386,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                 <MobileSlider
                   curved
                   loader={bannersLoading}
-                  images={mobileBannerImages}
+                  images={_banners}
                   isInfinite
                   isHome={location && location.pathname === '/'}
                 />
@@ -394,7 +394,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               desktopView={
                 <DesktopSlider
                   loader={false}
-                  images={desktopBannerImages}
+                  images={_banners}
                   slidesToShow={1}
                   isInfinite
                   isHome={location && location.pathname === '/'}
@@ -441,7 +441,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           )
         }
 
-        {/* <PointAds changeRoute={changeRoute} /> // Points temp */}
+        <PointAds changeRoute={changeRoute} />
 
         <Container>
           <SectionTitle
