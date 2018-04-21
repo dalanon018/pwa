@@ -30,7 +30,7 @@ import {
   view
 } from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
-import { LOCATION_CHANGE, replace, push } from 'react-router-redux'
+import { LOCATION_CHANGE, push } from 'react-router-redux'
 
 import request from 'utils/request'
 import { getRequestData } from 'utils/offline-request'
@@ -444,7 +444,7 @@ export function * storeLocator (args) {
 
   // save the last selected option
   yield call(setItem, LAST_SELECTED_METHOD, toLower(modePayment))
-  yield put(replace(`${STORE_LOCATOR_URL}${fnSearchParams(params)}`))
+  yield window.location.replace(`${STORE_LOCATOR_URL}${fnSearchParams(params)}`)
 }
 
 export function * recentStoreLocation (args) {
