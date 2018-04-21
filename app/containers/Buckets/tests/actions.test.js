@@ -33,7 +33,8 @@ import {
   setLoyaltyTokenAction,
   removeLoyaltyTokenAction,
 
-  storeLocatorAction
+  storeLocatorAction,
+  recentStoreLocationAction
 } from '../actions'
 
 import {
@@ -70,7 +71,8 @@ import {
   SET_LOYALTY_TOKEN,
   REMOVE_LOYALTY_TOKEN,
 
-  STORE_LOCATOR
+  STORE_LOCATOR,
+  RECENT_STORE_LOCATION
 } from '../constants'
 
 describe('Buckets actions', () => {
@@ -324,13 +326,28 @@ describe('Buckets actions', () => {
       location: 'test'
     }
 
-    it('get Previous Store', () => {
+    it('redirect map services', () => {
       const expectedResult = {
         type: STORE_LOCATOR,
         payload
       }
 
       expect(storeLocatorAction(payload)).toEqual(expectedResult)
+    })
+  })
+
+  describe('recentStoreLocationAction', () => {
+    const payload = {
+      type: 'COD'
+    }
+
+    it('handling map services', () => {
+      const expectedResult = {
+        type: RECENT_STORE_LOCATION,
+        payload
+      }
+
+      expect(recentStoreLocationAction(payload)).toEqual(expectedResult)
     })
   })
 })
