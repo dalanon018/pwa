@@ -16,6 +16,9 @@ export const ORDER_ERROR = 'app/ProductReview/ORDER_ERROR'
 export const GET_STORE = 'app/ProductReview/GET_STORE'
 export const SET_STORE = 'app/ProductReview/SET_STORE'
 
+export const GET_LAST_SELECTED_METHOD = 'app/ProductReview/GET_LAST_SELECTED_METHOD'
+export const SET_LAST_SELECTED_METHOD = 'app/ProductReview/SET_LAST_SELECTED_METHOD'
+
 export const GET_CURRENT_POINTS = 'app/ProductReview/GET_CURRENT_POINTS'
 export const SET_CURRENT_POINTS = 'app/ProductReview/SET_CURRENT_POINTS'
 

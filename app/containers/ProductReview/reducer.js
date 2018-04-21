@@ -23,7 +23,9 @@ import {
 
   SET_ORDER_HANDLER_DEFAULT,
 
-  SET_BLACKLIST
+  SET_BLACKLIST,
+
+  SET_LAST_SELECTED_METHOD
 } from './constants'
 
 const initialState = fromJS({
@@ -34,6 +36,7 @@ const initialState = fromJS({
   productLoading: false,
   mobileNumber: null,
   mobileLoading: false,
+  lastSelectedMethod: null,
   storeLocation: {},
   currentPoints: {},
   currentPointsLoading: false,
@@ -77,6 +80,9 @@ function productReviewReducer (state = initialState, action) {
 
     case SET_STORE:
       return state.set('storeLocation', fromJS(action.payload))
+
+    case SET_LAST_SELECTED_METHOD:
+      return state.set('lastSelectedMethod', fromJS(action.payload))
 
     case GET_CURRENT_POINTS:
       return state.set('currentPointsLoading', true)

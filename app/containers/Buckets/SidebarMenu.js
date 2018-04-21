@@ -15,7 +15,7 @@ import Home from 'images/icons/drawer/home.svg'
 import Barcode from 'images/icons/drawer/activity.svg'
 import Brands from 'images/icons/drawer/brands.svg'
 import Categories from 'images/icons/drawer/categories.svg'
-// import Points from 'images/icons/drawer/points.svg'
+import Points from 'images/icons/drawer/points.svg'
 import Logout from 'images/icons/drawer/signout.svg'
 import Close from 'images/icons/drawer/close.svg'
 
@@ -116,8 +116,7 @@ class SidebarMenu extends React.PureComponent {
                 </Label>
               </List.Content>
             </ListWrapper>
-            {/* // Points temp
-              <ListWrapper onClick={() => changeRoute('/wallet')}>
+            <ListWrapper onClick={() => changeRoute('/wallet')}>
               <Image alt='CLiQQ' size='mini' src={Points} />
               <List.Content>
                 <Label as='p' className='margin__none text__weight--500' size='huge'>
@@ -125,7 +124,6 @@ class SidebarMenu extends React.PureComponent {
                 </Label>
               </List.Content>
             </ListWrapper>
-            */}
             <ListWrapper onClick={() => changeRoute('/categories')}>
               <Image alt='CLiQQ' size='mini' src={Categories} />
               <List.Content>

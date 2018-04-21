@@ -30,7 +30,7 @@ import {
   view
 } from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
-import { LOCATION_CHANGE } from 'react-router-redux'
+import { LOCATION_CHANGE, push } from 'react-router-redux'
 
 import request from 'utils/request'
 import { getRequestData } from 'utils/offline-request'
@@ -86,6 +86,7 @@ import {
   GET_LOYALTY_TOKEN,
   REMOVE_LOYALTY_TOKEN,
   STORE_LOCATOR,
+  RECENT_STORE_LOCATION,
 
   COD_PAYMENT
 } from './constants'
@@ -446,6 +447,13 @@ export function * storeLocator (args) {
   yield window.location.replace(`${STORE_LOCATOR_URL}${fnSearchParams(params)}`)
 }
 
+export function * recentStoreLocation (args) {
+  const { payload: { type, ...rest } } = args
+  // save the last selected option
+  yield call(setItem, LAST_SELECTED_METHOD, toLower(type))
+  yield put(push(`/recent-store${fnSearchParams({ type, ...rest })}`))
+}
+
 export function * getCategoriesSaga () {
   yield * takeLatest(GET_PRODUCT_CATEGORIES, getCategories)
 }
@@ -487,6 +495,7 @@ export function * bucketsSagas () {
   yield takeLatest(REMOVE_LOYALTY_TOKEN, removeLoyaltyToken)
   yield takeLatest(REGISTER_PUSH, registerPushNotification)
   yield takeLatest(STORE_LOCATOR, storeLocator)
+  yield takeLatest(RECENT_STORE_LOCATION, recentStoreLocation)
 
   // Suspend execution until location changes
   yield take(LOCATION_CHANGE)

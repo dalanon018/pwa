@@ -43,7 +43,7 @@ import MobileFooter from 'components/Mobile/Footer'
 import BrandSlider from 'components/Mobile/BrandSlider'
 import SectionTitle from 'components/Mobile/HomeSectionTitle'
 import OrderTip from 'components/Mobile/OrderTip'
-// import PointAds from 'components/Mobile/PointAds'
+import PointAds from 'components/Mobile/PointAds'
 import FlashDeals from 'components/Mobile/FlashDeals'
 
 import WindowWidth from 'components/Shared/WindowWidth'
@@ -441,7 +441,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           )
         }
 
-        {/* <PointAds changeRoute={changeRoute} /> // Points temp */}
+        <PointAds changeRoute={changeRoute} />
 
         <Container>
           <SectionTitle

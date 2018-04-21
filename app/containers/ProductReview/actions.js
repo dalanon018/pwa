@@ -24,7 +24,10 @@ import {
   SET_ORDER_HANDLER_DEFAULT,
 
   GET_BLACKLIST,
-  SET_BLACKLIST
+  SET_BLACKLIST,
+
+  GET_LAST_SELECTED_METHOD,
+  SET_LAST_SELECTED_METHOD
 } from './constants'
 
 export function getOrderProductAction () {
@@ -89,6 +92,19 @@ export function getStoreAction () {
 export function setStoreAction (payload) {
   return {
     type: SET_STORE,
+    payload
+  }
+}
+
+export function getLastSelectedMethodAction () {
+  return {
+    type: GET_LAST_SELECTED_METHOD
+  }
+}
+
+export function setLastSelectedMethodAction (payload) {
+  return {
+    type: SET_LAST_SELECTED_METHOD,
     payload
   }
 }

@@ -14,6 +14,7 @@ describe('productReviewReducer', () => {
       orderProduct: {},
       submitting: false,
       submissionSuccess: {},
+      lastSelectedMethod: null,
       submissionError: {},
       productLoading: false,
       mobileNumber: null,

@@ -53,6 +53,11 @@ const selectStoreLocation = () => createSelector(
   (substate) => substate.get('storeLocation')
 )
 
+const selectLastSelectedMethod = () => createSelector(
+  selectProductReviewDomain(),
+  (substate) => substate.get('lastSelectedMethod')
+)
+
 const selectBlackListed = () => createSelector(
   selectProductReviewDomain(),
   (substate) => substate.get('isBlackListed')
@@ -79,5 +84,6 @@ export {
   selectStoreLocation,
   selectBlackListed,
   selectCurrentPoints,
-  selectCurrentPointsLoading
+  selectCurrentPointsLoading,
+  selectLastSelectedMethod
 }

@@ -48,7 +48,8 @@ import {
   SET_LIGHTBOX_IMAGE,
   SET_SEARCH_VALUE,
 
-  STORE_LOCATOR
+  STORE_LOCATOR,
+  RECENT_STORE_LOCATION
 } from './constants'
 
 export function setRouteNameAction (payload) {
@@ -240,6 +241,13 @@ export function setSearchValueAction (payload) {
 export function storeLocatorAction (payload) {
   return {
     type: STORE_LOCATOR,
+    payload
+  }
+}
+
+export function recentStoreLocationAction (payload) {
+  return {
+    type: RECENT_STORE_LOCATION,
     payload
   }
 }
