@@ -18,14 +18,17 @@ import { noop } from 'lodash'
 import {
   allPass,
   always,
+  complement,
   compose,
   cond,
   equals,
   ifElse,
+  isEmpty,
   multiply,
   partial,
   path,
-  propOr
+  prop,
+  propOr,
 } from 'ramda'
 import { Container, Label, Image, Grid } from 'semantic-ui-react'
 
@@ -47,16 +50,12 @@ import { userIsAuthenticated } from 'containers/App/auth'
 import CliqqIcon from 'images/icons/cliqq.png'
 
 import {
-  getMobileNumbersAction,
   setPageTitleAction,
   setRouteNameAction,
   setShowSearchIconAction,
   setShowPointsIconAction,
   setShowActivityIconAction
 } from 'containers/Buckets/actions'
-import {
-  selectMobileNumbers
-} from 'containers/Buckets/selectors'
 
 import { WALLET_NAME } from 'containers/Buckets/constants'
 
@@ -66,14 +65,17 @@ import saga from './saga'
 
 import {
   getWalletAction,
+  getMobileNumberAction,
   resetWalletTransactionsAction
 } from './actions'
+
 import {
   selectWallet,
   selectTransactions,
   selectTransactionsCount,
   selectTransactionsLoading,
-  selectLazyload
+  selectLazyload,
+  selectMobileNumber
 } from './selectors'
 
 import {
@@ -148,7 +150,7 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
   static propTypes = {
     changeRoute: PropTypes.func.isRequired,
     getWallet: PropTypes.func.isRequired,
-    getMobileNumbers: PropTypes.func.isRequired,
+    getMobileNumber: PropTypes.func.isRequired,
     resetWallet: PropTypes.func.isRequired,
     setPageTitle: PropTypes.func.isRequired,
     setShowSearchIcon: PropTypes.func.isRequired,
@@ -157,7 +159,7 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
     setShowActivityIcon: PropTypes.func.isRequired,
     transactionsLoading: PropTypes.bool.isRequired,
     lazyload: PropTypes.bool.isRequired,
-    mobileNumbers: PropTypes.object.isRequired,
+    mobileNumber: PropTypes.string,
     transactions: PropTypes.object.isRequired,
     transactionsCount: PropTypes.number.isRequired,
     match: PropTypes.object.isRequired,
@@ -229,12 +231,12 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
    * @param {*w} props
    */
   _fetchWalletTransactions = (props) => {
-    const { getWallet, mobileNumbers } = props
+    const { getWallet, mobileNumber } = props
     const { offset, limit } = this.state
     // only request if mobile number is available
-    if (mobileNumbers.size > 0) {
+    if (mobileNumber) {
       // since this data is change and we know exactly
-      getWallet({ offset, limit, mobileNumber: mobileNumbers.last() })
+      getWallet({ offset, limit, mobileNumber })
     }
   }
 
@@ -312,9 +314,9 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
   }
 
   componentDidMount () {
-    const { setRouteName, setPageTitle, setShowSearchIcon, setShowPointsIcon, setShowActivityIcon, intl, getMobileNumbers } = this.props
+    const { setRouteName, setPageTitle, setShowSearchIcon, setShowPointsIcon, setShowActivityIcon, intl, getMobileNumber } = this.props
     // initial data
-    this._fetchWalletTransactions(this.props)
+    // this._fetchWalletTransactions(this.props)
 
     // we set this as text so it doesnt look
     setPageTitle(intl.formatMessage(messages.title))
@@ -322,7 +324,7 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
     setShowPointsIcon(false)
     setShowActivityIcon(true)
     setRouteName(WALLET_NAME)
-    getMobileNumbers()
+    getMobileNumber()
   }
 
   componentWillUnmount () {
@@ -330,17 +332,11 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
   }
 
   componentWillReceiveProps (nextProps) {
-    const { match: { params } } = this.props
-
-    const isParamsEqual = (id, props) => compose(
-      equals(id),
-      path(['match', 'params', 'id'])
-    )(props)
-
+    const { mobileNumber } = this.props
     const updateWalletTransactions = ifElse(
-      partial(isParamsEqual, [params.id]),
-      noop,
-      this._resetValuesAndFetch
+      compose(complement(equals(mobileNumber)), propOr(null, 'mobileNumber')),
+      this._fetchWalletTransactions,
+      noop
     )
 
     updateWalletTransactions(nextProps)
@@ -381,7 +377,7 @@ const mapStateToProps = createStructuredSelector({
   transactions: selectTransactions(),
   transactionsCount: selectTransactionsCount(),
   transactionsLoading: selectTransactionsLoading(),
-  mobileNumbers: selectMobileNumbers(),
+  mobileNumber: selectMobileNumber(),
   lazyload: selectLazyload()
 })
 
@@ -393,7 +389,7 @@ function mapDispatchToProps (dispatch) {
     setShowPointsIcon: (payload) => dispatch(setShowPointsIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getWallet: payload => dispatch(getWalletAction(payload)),
-    getMobileNumbers: () => (dispatch(getMobileNumbersAction())),
+    getMobileNumber: () => (dispatch(getMobileNumberAction())),
     resetWallet: () => dispatch(resetWalletTransactionsAction()),
     changeRoute: (url) => dispatch(push(url)),
     dispatch
