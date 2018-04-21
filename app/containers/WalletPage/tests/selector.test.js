@@ -4,7 +4,8 @@ import {
   selectTransactions,
   selectTransactionsCount,
   selectTransactionsLoading,
-  selectLazyload
+  selectLazyload,
+  selectMobileNumber
 } from '../selectors'
 
 describe('selectWalletPageDomain', () => {
@@ -75,6 +76,20 @@ describe('selectWalletPageDomain', () => {
         }
       })
       expect(selector(mockedState)).toEqual(transactionsLoading)
+    })
+  })
+
+  describe('selectMobileNumber', () => {
+    const selector = selectMobileNumber()
+
+    it('should get mobile numbers', () => {
+      const mobileNumber = '9999999'
+      const mockedState = fromJS({
+        walletPage: {
+          mobileNumber
+        }
+      })
+      expect(selector(mockedState)).toEqual(mobileNumber)
     })
   })
 })

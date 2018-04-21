@@ -13,7 +13,8 @@ describe('walletPageReducer', () => {
       transactions: [],
       transactionsCount: 0,
       transactionsLoading: false,
-      lazyload: false
+      lazyload: false,
+      mobileNumber: null
     })
   })
 
