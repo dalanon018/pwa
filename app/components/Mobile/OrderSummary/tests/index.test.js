@@ -4,17 +4,6 @@ import { fromJS } from 'immutable'
 
 import OrderSummary from '../index'
 
-// DetailsWrapper,
-// ButtonContainer,
-// SelectMethodWrapper,
-// ProductItem,
-// ProductReviewWrapper,
-// MethodTitle,
-// StepWrapper,
-// StepHead,
-// LocationButton,
-// CustomGrid
-
 import {
   ProductReviewWrapper,
   DetailsWrapper,
@@ -23,7 +12,6 @@ import {
   ProductItem,
   MethodTitle,
   StepWrapper,
-  StepHead,
   LocationButton,
   CustomGrid
 } from '../styles'
@@ -82,6 +70,7 @@ describe('<OrderSummary />', () => {
     orderRequesting: false,
     store: { name: 'Quezon City', id: 1 }
   }
+
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(true)
   })
@@ -126,11 +115,6 @@ describe('<OrderSummary />', () => {
   it('renders one <StepWrapper/> styled component', () => {
     const ShallowedWrapper = shallow(<OrderSummary {...minProps} />)
     expect(ShallowedWrapper.find(StepWrapper)).toHaveLength(2)
-  })
-
-  it('renders one <StepHead/> styled component', () => {
-    const ShallowedWrapper = shallow(<OrderSummary {...minProps} />)
-    expect(ShallowedWrapper.find(StepHead)).toHaveLength(1)
   })
 
   it('renders one <LocationButton/> styled component', () => {
