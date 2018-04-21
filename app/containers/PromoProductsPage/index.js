@@ -431,7 +431,6 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
             >
               { this._displayHeaderProduct() }
               { this._displayEmptyLoadingIndicator() }
-              { this._displayFeaturedItems() }
               { this._displayItems() }
             </InfiniteWrapper>
           </div>

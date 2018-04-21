@@ -46,6 +46,10 @@ const Schema = {
   productList: {
     name: 'productList',
     type: ARRAY
+  },
+  totalCount: {
+    name: 'totalCount',
+    type: NUMBER
   }
 }
 
