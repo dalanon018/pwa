@@ -9,8 +9,24 @@ import {
   SET_WALLET,
   SET_WALLET_TRANSACTIONS,
   SET_WALLET_TRANSACTIONS_COUNT,
-  RESET_WALLET_TRANSACTIONS
+  RESET_WALLET_TRANSACTIONS,
+
+  GET_MOBILE_NUMBER,
+  SET_MOBILE_NUMBER
 } from './constants'
+
+export function getMobileNumberAction () {
+  return {
+    type: GET_MOBILE_NUMBER
+  }
+}
+
+export function setMobileNumberAction (payload) {
+  return {
+    type: SET_MOBILE_NUMBER,
+    payload
+  }
+}
 
 export function getWalletAction (payload) {
   return {
