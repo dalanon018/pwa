@@ -16,7 +16,7 @@ import {
   divide,
   identity,
   ifElse,
-  // subtract,
+  subtract,
   path,
   prop,
   when,
@@ -28,7 +28,7 @@ import { Grid, Label, Form, Checkbox, Image, Button } from 'semantic-ui-react'
 import NextIcon from 'images/icons/goto-icon.svg'
 import ListCollapse from 'components/Shared/ListCollapse'
 import Modal from 'components/Shared/PromptModal'
-// import RangeSlider from 'components/Shared/RangeSlider'
+import RangeSlider from 'components/Shared/RangeSlider'
 import RibbonWrapper from 'components/Shared/RibbonWrapper'
 
 import { LoadingStateImage } from 'components/Shared/LoadingBlock'
@@ -178,9 +178,9 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
   render () {
     const {
-      // usePoints,
-      // currentPoints,
-      // isDisabledPointsOptions,
+      usePoints,
+      currentPoints,
+      isDisabledPointsOptions,
       orderedProduct,
       orderRequesting,
       isBlackListed,
@@ -190,10 +190,10 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       modePayment,
       modalToggle,
       storeLocatorVisibility,
-      // pointsModifierVisibility,
+      pointsModifierVisibility,
       store,
 
-      // _updateUsePoints,
+      _updateUsePoints,
       _handleModalClose,
       _handleProceed,
       _handleStoreLocator,
@@ -243,21 +243,21 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       </LabelPrice>
     </label>
 
-    // const pointsLabel = <label className='label-custom'>
-    //   <LabelTitle>
-    //     <Label as='p' basic size='large' className='text__weight--500 margin__bottom-positive--5'>
-    //       <FormattedMessage {...messages.cashPoints} />
-    //     </Label>
-    //     { this._displayEarnPoints('poc', this._computePricePoints()) }
-    //   </LabelTitle>
-    //   <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
-    //     <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
-    //       <FormattedMessage {...messages.peso} />
-    //       { this._computePricePoints().toLocaleString() }
-    //     </Label>
-    //     { toggleDiscount(orderedProduct.get('discountPrice')) }
-    //   </LabelPrice>
-    // </label>
+    const pointsLabel = <label className='label-custom'>
+      <LabelTitle>
+        <Label as='p' basic size='large' className='text__weight--500 margin__bottom-positive--5'>
+          <FormattedMessage {...messages.cashPoints} />
+        </Label>
+        { this._displayEarnPoints('poc', this._computePricePoints()) }
+      </LabelTitle>
+      <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
+        <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
+          <FormattedMessage {...messages.peso} />
+          { this._computePricePoints().toLocaleString() }
+        </Label>
+        { toggleDiscount(orderedProduct.get('discountPrice')) }
+      </LabelPrice>
+    </label>
 
     const brandLogo = orderedProduct.get('brandLogo') ? (
       <Image
@@ -341,7 +341,6 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                         onChange={_handleChange}
                       />
 
-                      {/* // Points temp
                       {
                         orderedProduct.get('points') && <Checkbox
                           radio
@@ -355,7 +354,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                         />
                       }
 
-                        <StepWrapper className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={pointsModifierVisibility}>
+                      <StepWrapper className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={pointsModifierVisibility}>
                         <Label as='p' className='color__grey text__weight--500' size='large' >
                           <FormattedMessage {...messages.choosePointsTitle} />
                         </Label>
@@ -371,7 +370,6 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                           currentPoints={currentPoints}
                         />
                       </StepWrapper>
-                      */}
 
                       <StepWrapper innerRef={_stepWrapperRef} className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={storeLocatorVisibility}>
                         <Label as='p' className='color__grey text__weight--500' size='large' >
