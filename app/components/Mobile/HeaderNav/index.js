@@ -13,7 +13,7 @@ import { ifElse, identity, equals } from 'ramda'
 import BarcodeImage from 'images/icons/barcode-header.svg'
 import messages from './messages'
 import SearchImage from 'images/icons/search-header.svg'
-// import CliqqIcon from 'images/icons/cliqq.png'
+import CliqqIcon from 'images/icons/cliqq.png'
 import MainLogo from 'images/cliqq-logo.svg'
 
 const Wrapper = styled.div`
@@ -72,7 +72,7 @@ const RightWrapper = styled.div`
     height: 18px !important;
     width: 14px !important;
   }
-  
+
   .small {
     // height: 21px !important;
     width: 17px !important;
@@ -164,7 +164,7 @@ const SearchInput = styled(Input)`
   letter-spacing: 1px;
   margin: 0 5px;
   width: 100%;
-  
+
   input {
     border-radius: 4.5px !important;
     border: 0 !important;
@@ -318,7 +318,7 @@ export default class MainMenu extends PureComponent {
   }
 
   render () {
-    const { leftButtonAction, hideBackButton, changeRoute, showSearchIcon, showActivityIcon, currentRoute, headerMenuFullScreen } = this.props
+    const { leftButtonAction, hideBackButton, changeRoute, showSearchIcon, showPointsIcon, showActivityIcon, currentRoute, headerMenuFullScreen } = this.props
     const { windowHeightOffset, toggleSpace } = this.state
 
     const homeRoute = currentRoute === 'home'
@@ -328,10 +328,10 @@ export default class MainMenu extends PureComponent {
       null
     )
 
-    // const PointsToggle = toggleComponent(
-    //   <Image alt='CLiQQ' src={CliqqIcon} size='small' onClick={changeRoute.bind(this, '/wallet')} />,
-    //   null
-    // )
+    const PointsToggle = toggleComponent(
+      <Image alt='CLiQQ' src={CliqqIcon} size='small' onClick={changeRoute.bind(this, '/wallet')} />,
+      null
+    )
 
     const ActivitiesToggle = toggleComponent(
       <ActivitiesIcon marginLeft={homeRoute}>
@@ -366,7 +366,7 @@ export default class MainMenu extends PureComponent {
                 verticalAlign='middle'>
                 <RightWrapper toggleSpace={toggleSpace} marginLeft={homeRoute}>
                   { SearchToggle(showSearchIcon) }
-                  { /* PointsToggle(showPointsIcon) // Points temp */ }
+                  { PointsToggle(showPointsIcon) }
                   { ActivitiesToggle(showActivityIcon) }
                 </RightWrapper>
               </Grid.Column>
