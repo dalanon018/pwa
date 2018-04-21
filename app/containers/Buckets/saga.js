@@ -30,8 +30,7 @@ import {
   view
 } from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
-import { replace, push } from 'react-router-redux'
-import { LOCATION_CHANGE } from 'react-router-redux'
+import { LOCATION_CHANGE, replace, push } from 'react-router-redux'
 
 import request from 'utils/request'
 import { getRequestData } from 'utils/offline-request'

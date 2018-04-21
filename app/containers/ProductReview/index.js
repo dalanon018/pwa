@@ -38,7 +38,7 @@ import injectReducer from 'utils/injectReducer'
 import { transformStore } from 'utils/transforms'
 import { FbEventTracking } from 'utils/seo'
 import { switchFn } from 'utils/logicHelper'
-import { fnQueryObject, fnSearchParams } from 'utils/http'
+import { fnQueryObject } from 'utils/http'
 
 import WindowWidth from 'components/Shared/WindowWidth'
 
@@ -54,7 +54,8 @@ import {
   setRouteNameAction,
   setShowSearchIconAction,
   setShowActivityIconAction,
-  storeLocatorAction
+  storeLocatorAction,
+  recentStoreLocationAction
 } from 'containers/Buckets/actions'
 
 import messages from './messages'
@@ -106,6 +107,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     getStore: PropTypes.func.isRequired,
     getLastSelectedMethod: PropTypes.func.isRequired,
     storeLocator: PropTypes.func.isRequired,
+    recentStoreLocation: PropTypes.func.isRequired,
     getCurrentPoints: PropTypes.func.isRequired,
     productLoader: PropTypes.bool.isRequired,
     mobileLoader: PropTypes.bool.isRequired,
@@ -269,7 +271,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       ...store,
       type: toLower(modePayment)
     }
-    this.props.pushRoute(`/recent-store${fnSearchParams(queryParams)}`)
+    // this.props.pushRoute(`/recent-store${fnSearchParams(queryParams)}`)
+    this.props.recentStoreLocation(queryParams)
   }
 
   _handleDoneFetchOrderNoProductNorMobile () {
@@ -491,6 +494,7 @@ function mapDispatchToProps (dispatch) {
     getStore: () => dispatch(getStoreAction()),
     getLastSelectedMethod: () => dispatch(getLastSelectedMethodAction()),
     storeLocator: (payload) => dispatch(storeLocatorAction(payload)),
+    recentStoreLocation: (payload) => dispatch(recentStoreLocationAction(payload)),
     getCurrentPoints: () => dispatch(getCurrentPointsAction()),
     setHandlersDefault: () => dispatch(setOrderHandlersDefaultAction()),
     changeRoute: (url) => dispatch(replace(url)),
