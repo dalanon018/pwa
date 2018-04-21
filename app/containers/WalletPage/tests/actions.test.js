@@ -4,7 +4,9 @@ import {
   setWalletAction,
   setWalletTransactionsAction,
   resetWalletTransactionsAction,
-  setWalletTransactionsCountsAction
+  setWalletTransactionsCountsAction,
+  getMobileNumberAction,
+  setMobileNumberAction
 } from '../actions'
 
 import {
@@ -12,7 +14,9 @@ import {
   SET_WALLET,
   SET_WALLET_TRANSACTIONS,
   SET_WALLET_TRANSACTIONS_COUNT,
-  RESET_WALLET_TRANSACTIONS
+  RESET_WALLET_TRANSACTIONS,
+  GET_MOBILE_NUMBER,
+  SET_MOBILE_NUMBER
 } from '../constants'
 
 describe('WalletPage actions', () => {
@@ -32,6 +36,25 @@ describe('WalletPage actions', () => {
       payload
     }
     expect(setWalletAction(payload)).toEqual(expected)
+  })
+
+  describe('getMobileNumberAction', () => {
+    it('should get mobile number', () => {
+      const expectedResult = {
+        type: GET_MOBILE_NUMBER
+      }
+      expect(getMobileNumberAction()).toEqual(expectedResult)
+    })
+
+    it('should set mobile number', () => {
+      const payload = '99999999'
+      const expectedResult = {
+        type: SET_MOBILE_NUMBER,
+        payload
+      }
+
+      expect(setMobileNumberAction(payload)).toEqual(expectedResult)
+    })
   })
 
   it('has a type of SET_WALLET_TRANSACTIONS', () => {

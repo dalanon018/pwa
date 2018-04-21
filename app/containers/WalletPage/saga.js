@@ -1,14 +1,10 @@
 import {
   call,
-  cancel,
   fork,
-  put,
-  take
+  put
 } from 'redux-saga/effects'
-import { LOCATION_CHANGE } from 'react-router-redux'
 import {
-  // takeLatest,
-  takeEvery
+  takeLatest
 } from 'redux-saga'
 import { isEmpty } from 'lodash'
 import {
@@ -19,18 +15,23 @@ import {
 // import request from 'utils/request'
 import { getRequestData } from 'utils/offline-request'
 import { transformWallet } from 'utils/transforms'
+import { getItem } from 'utils/localStorage'
 
 import {
-  GET_WALLET
+  GET_WALLET,
+  GET_MOBILE_NUMBER
 } from './constants'
+
 import {
   setWalletAction,
   setWalletTransactionsAction,
-  setWalletTransactionsCountsAction
+  setWalletTransactionsCountsAction,
+  setMobileNumberAction
 } from './actions'
 
 import {
-  API_BASE_URL
+  API_BASE_URL,
+  MOBILE_NUMBERS_KEY
 } from 'containers/App/constants'
 
 import {
@@ -79,17 +80,28 @@ export function * getWallet (args) {
   yield put(setWalletTransactionsCountsAction(count))
 }
 
+export function * getMobileNumber () {
+  // first we have to update our bucket list of what number we already have
+  const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
+
+  const mobile = Array.isArray(mobileNumbers) ? `0${mobileNumbers.pop()}` : null
+  yield put(setMobileNumberAction(mobile))
+}
+
 export function * getWalletSaga () {
-  yield * takeEvery(GET_WALLET, getWallet)
+  yield * takeLatest(GET_WALLET, getWallet)
+}
+
+export function * getMobileNumberSaga () {
+  yield * takeLatest(GET_MOBILE_NUMBER, getMobileNumber)
 }
 
 // Individual exports for testing
 export function * WalletPageSagas () {
-  const watcher = yield [
-    fork(getWalletSaga)
+  yield [
+    fork(getWalletSaga),
+    fork(getMobileNumberSaga)
   ]
-  yield take(LOCATION_CHANGE)
-  yield watcher.map(task => cancel(task))
 }
 
 // All sagas to be loaded

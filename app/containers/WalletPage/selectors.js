@@ -38,10 +38,15 @@ const selectLazyload = () => createSelector(
   subState => subState.get('lazyload')
 )
 
+const selectMobileNumber = () => createSelector(
+  selectWalletPageDomain(),
+  (substate) => substate.get('mobileNumber')
+)
 export {
   selectWallet,
   selectTransactions,
   selectTransactionsCount,
   selectTransactionsLoading,
-  selectLazyload
+  selectLazyload,
+  selectMobileNumber
 }

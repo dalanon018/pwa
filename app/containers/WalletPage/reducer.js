@@ -15,7 +15,9 @@ import {
 
   RESET_WALLET_TRANSACTIONS,
 
-  LIMIT_ITEMS
+  LIMIT_ITEMS,
+
+  SET_MOBILE_NUMBER
 } from './constants'
 
 const initialState = fromJS({
@@ -23,7 +25,8 @@ const initialState = fromJS({
   transactions: [],
   transactionsCount: 0,
   transactionsLoading: false,
-  lazyload: false
+  lazyload: false,
+  mobileNumber: null
 })
 
 function walletPageReducer (state = initialState, action) {
@@ -52,6 +55,10 @@ function walletPageReducer (state = initialState, action) {
         .set('transactions', fromJS([]))
         .set('transactionsLoading', false)
         .set('transactionsCount', 0)
+        .set('mobileNumber', null)
+
+    case SET_MOBILE_NUMBER:
+      return state.set('mobileNumber', action.payload)
 
     default:
       return state

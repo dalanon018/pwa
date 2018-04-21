@@ -9,7 +9,7 @@ describe('<WalletPage />', () => {
   const minProps = {
     changeRoute: () => {},
     getWallet: () => {},
-    getMobileNumbers: () => {},
+    getMobileNumber: () => {},
     resetWallet: () => {},
     setPageTitle: () => {},
     setRouteName: () => {},
@@ -25,7 +25,7 @@ describe('<WalletPage />', () => {
     },
     transactionsCount: 0,
     transactions: fromJS([]),
-    mobileNumbers: fromJS([]),
+    mobileNumber: null,
     intl: {
       formatDate: () => {},
       formatTime: () => {},
