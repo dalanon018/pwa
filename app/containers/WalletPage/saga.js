@@ -1,11 +1,8 @@
 import {
   call,
-  cancel,
   fork,
-  put,
-  take
+  put
 } from 'redux-saga/effects'
-import { LOCATION_CHANGE } from 'react-router-redux'
 import {
   takeLatest
 } from 'redux-saga'
@@ -101,9 +98,9 @@ export function * getMobileNumberSaga () {
 
 // Individual exports for testing
 export function * WalletPageSagas () {
-  const watcher = yield [
+  yield [
     fork(getWalletSaga),
-    fork(getMobileNumberSaga),
+    fork(getMobileNumberSaga)
   ]
 }
 

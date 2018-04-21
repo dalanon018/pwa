@@ -23,12 +23,9 @@ import {
   cond,
   equals,
   ifElse,
-  isEmpty,
   multiply,
   partial,
-  path,
-  prop,
-  propOr,
+  propOr
 } from 'ramda'
 import { Container, Label, Image, Grid } from 'semantic-ui-react'
 
