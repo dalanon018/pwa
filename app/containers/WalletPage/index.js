@@ -17,12 +17,15 @@ import { push } from 'react-router-redux'
 import { noop } from 'lodash'
 import {
   allPass,
+  always,
   compose,
   cond,
   equals,
   ifElse,
+  multiply,
   partial,
-  path
+  path,
+  propOr
 } from 'ramda'
 import { Container, Label, Image, Grid } from 'semantic-ui-react'
 
@@ -264,9 +267,14 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
 
   _displayTransactionsItems = () => {
     const { transactions, changeRoute, transactionsLoading, lazyload, wallet } = this.props
+    const currentPoints = ifElse(
+      compose(equals(0), propOr(0, 'size')),
+      always(0),
+      (wallet) => multiply(1, wallet.get('currentPoints')) // multiply to convert automatically to parseFloat
+    )(wallet)
+
     if (lazyload === false) {
       // const getLatestTransaction = transactions.first() && transactions.first().get('datetime')
-
       return (
         <div>
           <Container className='padding__none--vertical'>
@@ -286,12 +294,7 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
                       <UserPointsWrapper>
                         <Image src={CliqqIcon} alt='CLiQQ' />
                         <Label as='span' className='my-points color__teal text__weight--700' size='massive' >
-                          {
-                            wallet
-                            ? !isNaN(parseFloat(wallet.get('currentPoints')).toLocaleString())
-                            ? parseFloat(wallet.get('currentPoints')).toLocaleString() : '0'
-                            : '---'
-                          }
+                          { currentPoints.toLocaleString() }
                         </Label>
                       </UserPointsWrapper>
                     </PointsPreviewWrapper>
