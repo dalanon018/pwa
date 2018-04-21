@@ -51,6 +51,8 @@ export const SET_SEARCH_VALUE = 'app/Buckets/SET_SEARCH_VALUE'
 
 // REDIRECTING TO MAP LOCATION
 export const STORE_LOCATOR = 'app/Buckets/STORE_LOCATOR'
+// REDIRECTING TO RECENT STORE
+export const RECENT_STORE_LOCATION = 'app/Buckets/RECENT_STORE_LOCATION'
 
 export const HIDE_BACK_BUTTON = [
   '/',
