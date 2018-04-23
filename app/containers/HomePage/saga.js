@@ -80,12 +80,13 @@ export function * getProduct (args) {
   }
 }
 
-export function * getPromos () {
+export function * getPromos (args) {
+  const { payload: {tabletColumnCount} } = args
   let promos = []
   let count = 0
 
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}/promos/?offset=0&limit=1&productOffset=0&productLimit=2`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/promos/?offset=0&limit=1&productOffset=0&productLimit=${tabletColumnCount}`, {
     method: 'GET',
     token: token.access_token
   })

@@ -272,14 +272,16 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   componentDidMount () {
-    const { setPageTitle, setShowActivityIcon, setShowSearchIcon, setShowPointsIcon, getPromos, getBanners, setRouteName } = this.props
+    const { setPageTitle, setShowActivityIcon, setShowSearchIcon, setShowPointsIcon, getPromos, getBanners, windowWidth, setRouteName } = this.props
+    const tabletColumnCount = {tabletColumnCount: windowWidth >= 767 ? 4 : 2}
+
     setPageTitle(null)
     setShowSearchIcon(false)
     setShowPointsIcon(false)
     setShowActivityIcon(true)
 
     getBanners()
-    getPromos()
+    getPromos(tabletColumnCount)
     setRouteName(HOME_NAME)
     this._fetchFeaturedProducts(this.props)
   }
