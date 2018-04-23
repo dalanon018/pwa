@@ -30,7 +30,7 @@ const selectFeaturedCategories = () => createSelector(
 
 const selectFeaturedBrands = () => createSelector(
   selectBrands(),
-  (substate) => substate.filter((state) => state.get('isFeatured')).slice(0, 4)
+  (substate) => substate.filter((state) => state.get('isFeatured')).slice(0, 8)
 )
 
 const selectToggle = () => createSelector(

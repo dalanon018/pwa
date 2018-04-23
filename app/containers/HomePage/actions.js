@@ -46,9 +46,10 @@ export function setProductsCountsAction (payload) {
   }
 }
 
-export function getPromosAction () {
+export function getPromosAction (payload) {
   return {
-    type: GET_PROMOS
+    type: GET_PROMOS,
+    payload
   }
 }
 
