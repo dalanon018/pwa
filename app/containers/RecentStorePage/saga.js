@@ -12,7 +12,7 @@ import {
   split
  } from 'ramda'
 
-import stores from 'fixtures/stores.json'
+// import stores from 'fixtures/stores.json'
 import { getRequestData } from 'utils/offline-request'
 import { getItem } from 'utils/localStorage'
 
@@ -52,13 +52,16 @@ export function * getVisitedStore () {
     }),
     token: token.access_token
   })
-  // @TODO: we need to know the structure wether we need to create a transformation layer for this.
   if (!isEmpty(req)) {
     const storeIds = compose(
       filter(prop('id')),
-      map((id) => ({ id, name: stores[id.replace(/0/g, '')] })),
-      split(','),
-      replace(/{|}/g, '')
+      map(
+        compose(
+          ([ id, ...rest ]) => ({ id, name: rest.join(', ') || '' }),
+          split(','),
+          replace(/{|}/g, '')
+        )
+      )
     )
     yield put(setVisitedStoresAction(storeIds(req)))
   } else {
