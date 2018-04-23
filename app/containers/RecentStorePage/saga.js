@@ -37,7 +37,7 @@ import {
 function * getMobileNumber () {
   const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
   // we will only get the last mobileNumber used
-  return Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
+  return Array.isArray(mobileNumbers) ? `0${mobileNumbers.pop()}` : null
 }
 
 export function * getVisitedStore () {
