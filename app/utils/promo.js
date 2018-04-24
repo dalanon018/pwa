@@ -11,7 +11,7 @@ import {
  * @param {*} discount
  */
 const getTotalPrice = ({ price, discountPrice }) => {
-  return subtract(price, multiply(price, divide(discountPrice, 100)))
+  return Math.round(subtract(price, multiply(price, divide(discountPrice, 100))))
 }
 
 /**
