@@ -11,7 +11,7 @@ import {
   FULL_POINTS_IDENTIFIER
 } from 'containers/Buckets/constants'
 
-export const isFullPointOnly = ({ identifier }) => compose(
+export const isFullPointsOnly = ({ identifier = '' }) => compose(
   head,
   partial(
     map(
