@@ -156,6 +156,60 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     return _updateUsePoints(Math.ceil(points))
   }
 
+  _toggleDiscount = (discountPrice) => {
+    const { orderedProduct } = this.props
+    return this._showDiscountPrice(
+      <span className='strike color__grey'>
+        <FormattedMessage {...messages.peso} />
+        { orderedProduct.get('price') &&
+          parseFloat(orderedProduct.get('price')).toLocaleString() }
+      </span>,
+      null
+    )(discountPrice)
+  }
+
+  _renderRegularPaymentOptions = ({ mode }) => {
+    const { orderedProduct } = this.props
+    return (
+      <label className='label-custom'>
+        <LabelTitle>
+          <Label as='p' basic size='large' className='text__weight--500 margin__bottom-positive--5'>
+            <FormattedMessage {...messages.cashPrepaid} />
+          </Label>
+          { this._displayEarnPoints(mode, this._toggleOrigDiscountPrice()) }
+        </LabelTitle>
+        <LabelPrice length={this._toggleOrigDiscountPrice().length}>
+          <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
+            <FormattedMessage {...messages.peso} />
+            { this._toggleOrigDiscountPrice().toLocaleString() }
+          </Label>
+          { this._toggleDiscount(orderedProduct.get('discountPrice')) }
+        </LabelPrice>
+      </label>
+    )
+  }
+
+  _renderPointsCashPaymentOptions = ({ mode = 'poc' } = {}) => {
+    const { orderedProduct } = this.props
+    return (
+      <label className='label-custom'>
+        <LabelTitle>
+          <Label as='p' basic size='large' className='text__weight--500 margin__bottom-positive--5'>
+            <FormattedMessage {...messages.cashPoints} />
+          </Label>
+          { this._displayEarnPoints(mode, this._computePricePoints()) }
+        </LabelTitle>
+        <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
+          <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
+            <FormattedMessage {...messages.peso} />
+            { this._computePricePoints().toLocaleString() }
+          </Label>
+          { this._toggleDiscount(orderedProduct.get('discountPrice')) }
+        </LabelPrice>
+      </label>
+    )
+  }
+
   componentWillReceiveProps (nextProps) {
     // when not yet initialize
     const initializeStartingUsePoints = when(
@@ -193,6 +247,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       pointsModifierVisibility,
       store,
 
+      _isFullPointsOnly,
       _updateUsePoints,
       _handleModalClose,
       _handleProceed,
@@ -202,62 +257,6 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       _handleToBottom,
       _handleChange
     } = this.props
-    const toggleDiscount = this._showDiscountPrice(
-      <span className='strike color__grey'>
-        <FormattedMessage {...messages.peso} />
-        { orderedProduct.get('price') &&
-          parseFloat(orderedProduct.get('price')).toLocaleString() }
-      </span>,
-      null
-    )
-
-    const cashLabel = <label className='label-custom'>
-      <LabelTitle>
-        <Label as='p' basic size='large' className='text__weight--500 margin__bottom-positive--5'>
-          <FormattedMessage {...messages.cashPrepaid} />
-        </Label>
-        { this._displayEarnPoints('cash', this._toggleOrigDiscountPrice()) }
-      </LabelTitle>
-      <LabelPrice length={this._toggleOrigDiscountPrice().length}>
-        <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
-          <FormattedMessage {...messages.peso} />
-          { this._toggleOrigDiscountPrice().toLocaleString() }
-        </Label>
-        { toggleDiscount(orderedProduct.get('discountPrice')) }
-      </LabelPrice>
-    </label>
-
-    const codLabel = <label className='label-custom'>
-      <LabelTitle>
-        <Label as='p' basic size='large' className='text__weight--500 margin__bottom-positive--5'>
-          <FormattedMessage {...messages.cashDelivery} />
-        </Label>
-        { this._displayEarnPoints('cod', this._toggleOrigDiscountPrice()) }
-      </LabelTitle>
-      <LabelPrice length={this._toggleOrigDiscountPrice().length}>
-        <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
-          <FormattedMessage {...messages.peso} />
-          { this._toggleOrigDiscountPrice().toLocaleString() }
-        </Label>
-        { toggleDiscount(orderedProduct.get('discountPrice')) }
-      </LabelPrice>
-    </label>
-
-    const pointsLabel = <label className='label-custom'>
-      <LabelTitle>
-        <Label as='p' basic size='large' className='text__weight--500 margin__bottom-positive--5'>
-          <FormattedMessage {...messages.cashPoints} />
-        </Label>
-        { this._displayEarnPoints('poc', this._computePricePoints()) }
-      </LabelTitle>
-      <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
-        <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
-          <FormattedMessage {...messages.peso} />
-          { this._computePricePoints().toLocaleString() }
-        </Label>
-        { toggleDiscount(orderedProduct.get('discountPrice')) }
-      </LabelPrice>
-    </label>
 
     const brandLogo = orderedProduct.get('brandLogo') ? (
       <Image
@@ -326,7 +325,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                         isBlackListed={isBlackListed}
                         name='cod'
                         value='COD'
-                        label={codLabel}
+                        label={this._renderRegularPaymentOptions({ mode: 'cod' })}
                         checked={modePayment === 'COD'}
                         onChange={_handleChange}
                         onClick={_handleToBottom}
@@ -336,7 +335,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                         className='margin__vertical--10'
                         name='cash-prepaid'
                         value='CASH'
-                        label={cashLabel}
+                        label={this._renderRegularPaymentOptions({ mode: 'cash' })}
                         checked={modePayment === 'CASH'}
                         onChange={_handleChange}
                       />
@@ -348,7 +347,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                           className='margin__bottom-positive--20'
                           name='points'
                           value='POINTS'
-                          label={pointsLabel}
+                          label={this._renderPointsCashPaymentOptions()}
                           checked={modePayment === 'POINTS'}
                           onChange={_handleChange}
                         />
