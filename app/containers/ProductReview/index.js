@@ -39,6 +39,7 @@ import { transformStore } from 'utils/transforms'
 import { FbEventTracking } from 'utils/seo'
 import { switchFn } from 'utils/logicHelper'
 import { fnQueryObject } from 'utils/http'
+import { isFullPointsOnly } from 'utils/payment'
 
 import WindowWidth from 'components/Shared/WindowWidth'
 
@@ -423,6 +424,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             _handleToBottom={this._handleToBottom}
             _stepWrapperRef={this._stepWrapperRef}
             _updateUsePoints={this._updateUsePoints}
+            _isFullPointsOnly={isFullPointsOnly({ identifier: orderedProduct.get('title') })}
 
             errorMessage={errorMessage}
             isBlackListed={isBlackListed}
