@@ -64,6 +64,12 @@ export const HIDE_BACK_BUTTON = [
   '/wallet'
 ]
 
+export const PAYMENTS_OPTIONS = {
+  COD: 'COD',
+  CASH: 'CASH',
+  POINTS: 'POINTS',
+  FULL_POINTS: 'FULL_POINTS'
+}
 export const FULL_POINTS_IDENTIFIER = ['**']
 
 export const STATUSES = {
