@@ -11,6 +11,8 @@ import {
   T,
   allPass,
   always,
+  both,
+  complement,
   compose,
   cond,
   divide,
@@ -346,8 +348,14 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       ]),
       this._initialUpdateProps
     )
+
+    const shouldSelectFullPoints = when(
+      compose(both(complement(this._disabledFullPointsOption), prop('_isFullPointsOnly'))),
+      (props) => props._handleChange(null, { value: PAYMENTS_OPTIONS.FULL_POINTS })
+    )
     // we will be using this.props since we are having issue with other deps that use the this.props
     initializeStartingUsePoints(this.props)
+    shouldSelectFullPoints(nextProps)
   }
 
   render () {
