@@ -16,11 +16,11 @@ import {
   divide,
   identity,
   ifElse,
-  subtract,
+  lt,
   path,
   prop,
-  when,
-  lt
+  subtract,
+  when
  } from 'ramda'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Label, Form, Checkbox, Image, Button } from 'semantic-ui-react'
@@ -281,13 +281,18 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     )(!_isFullPointsOnly)
   }
 
+  _disabledFullPointsOption = () => {
+    const { currentPoints } = this.props
+    return lt(currentPoints, this._computeTotalPointsPrice())
+  }
+
   _fullPointsCheckOptionFactory = () => {
-    const { isDisabledPointsOptions, modePayment, _handleChange, _isFullPointsOnly } = this.props
+    const { modePayment, _handleChange, _isFullPointsOnly } = this.props
 
     return toggleComponent(
       <Checkbox
         radio
-        disabled={isDisabledPointsOptions}
+        disabled={this._disabledFullPointsOption()}
         className='margin__bottom-positive--20'
         name='fullPoints'
         value='FULL_POINTS'
