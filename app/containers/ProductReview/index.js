@@ -235,6 +235,12 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     })
   }
 
+  _handleNotEnoughFullPointsCloseModal = () => {
+    this.setState({
+      modalToggle: false
+    })
+  }
+
   _handleProceed () {
     const { mobileNumber, orderedProduct, submitOrder } = this.props
     const { modePayment, store, usePoints } = this.state
@@ -441,6 +447,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             _handleModalClose={this._handleModalClose}
             _handleProceed={this._handleProceed}
             _handleNotEnoughFullPointsProceed={this._handleNotEnoughFullPointsProceed}
+            _handleNotEnoughFullPointsCloseModal={this._handleNotEnoughFullPointsCloseModal}
             _handleStoreLocator={this._handleStoreLocator}
             _handleRecentStore={this._handleRecentStore}
             _handleToBottom={this._handleToBottom}

@@ -332,15 +332,29 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     )
   }
 
-  _handleProccedFactory = () => {
-    const { _handleProceed, _handleNotEnoughFullPointsProceed, _isFullPointsOnly } = this.props
+  _handleFullPointsFunctionTrigger = (trueFn, falseFn) => ifElse(
+    both(identity, () => this.props._isFullPointsOnly),
+    trueFn,
+    falseFn
+  )
 
-    const handleSubmission = ifElse(
-      both(identity, () => _isFullPointsOnly),
+  _handleProccedFactory = () => {
+    const { _handleProceed, _handleNotEnoughFullPointsProceed } = this.props
+
+    const handleSubmission = this._handleFullPointsFunctionTrigger(
       _handleNotEnoughFullPointsProceed,
       _handleProceed
     )
 
+    return handleSubmission(this._disabledFullPointsOption())
+  }
+
+  _handleCloseModalFactory = () => {
+    const { _handleModalClose, _handleNotEnoughFullPointsCloseModal } = this.props
+    const handleSubmission = this._handleFullPointsFunctionTrigger(
+      _handleNotEnoughFullPointsCloseModal,
+      _handleModalClose
+    )
     return handleSubmission(this._disabledFullPointsOption())
   }
 
@@ -386,7 +400,6 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
       _isFullPointsOnly,
       _updateUsePoints,
-      _handleModalClose,
       _handleStoreLocator,
       _handleRecentStore,
       _stepWrapperRef
@@ -531,7 +544,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
           name='warning'
           title={errorMessage}
           content={errorContent}
-          close={_handleModalClose}
+          close={this._handleCloseModalFactory}
         />
       </ProductReviewWrapper>
     )
@@ -566,6 +579,7 @@ OrderSummary.propTypes = {
   _handleModalClose: PropTypes.func.isRequired,
   _handleProceed: PropTypes.func.isRequired,
   _handleNotEnoughFullPointsProceed: PropTypes.func.isRequired,
+  _handleNotEnoughFullPointsCloseModal: PropTypes.func.isRequired,
   _handleStoreLocator: PropTypes.func.isRequired,
   _handleRecentStore: PropTypes.func.isRequired,
   _stepWrapperRef: PropTypes.func.isRequired,
