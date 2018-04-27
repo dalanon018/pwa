@@ -187,17 +187,21 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     this._innerStepRef = ref
   }
 
+  _shouldRedirectAccessFromURL = () => {
+    const { orderFail, changeRoute } = this.props
+    // if orderFail size === 0  || submitting == false then means its not submission error
+    // its safe to redirect the user.
+    if (orderFail.size === 0 && Boolean(this.submitting) === false) {
+      changeRoute('/')
+    }
+  }
+
   _handleModalClose () {
-    const { orderFail } = this.props
     this.setState({
       modalToggle: false
     })
 
-    // if orderFail size === 0  || submitting == false then means its not submission error
-    // its safe to redirect the user.
-    if (orderFail.size === 0 && Boolean(this.submitting) === false) {
-      this.props.changeRoute('/')
-    }
+    this._shouldRedirectAccessFromURL()
   }
 
   _handleChange = (e, { value }) => {
