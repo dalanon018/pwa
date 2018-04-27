@@ -262,7 +262,6 @@ const transformProduct = (data) => {
   const removeKeys = ['images', 'discount']
   const adjustmentObject = compose(
     omit(removeKeys),
-    (entity) => assoc('title', `**${entity.title}`, entity), // temp data
     applyParentCliqqCode,
     associationProducts,
     applySize,
