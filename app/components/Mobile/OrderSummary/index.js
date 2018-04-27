@@ -56,6 +56,12 @@ import {
   LabelTitle
 } from './styles'
 
+const toggleComponent = (component1, component2) => ifElse(
+  identity,
+  () => component1,
+  () => component2
+)
+
 class OrderSummary extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
    * we need to find a way if we already initialize our points else
@@ -137,12 +143,6 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     return null
   }
 
-  _showDiscountPrice = (component1, component2) => (condition) => ifElse(
-    identity,
-    () => component1,
-    () => component2
-  )(condition)
-
   // Make sure we accept that the current props has the values.
   // TODO: Make sure that we refactor this one and find a way that functions are not bind to this class
   _initialUpdateProps = () => {
@@ -158,7 +158,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
   _toggleDiscount = (discountPrice) => {
     const { orderedProduct } = this.props
-    return this._showDiscountPrice(
+    return toggleComponent(
       <span className='strike color__grey'>
         <FormattedMessage {...messages.peso} />
         { orderedProduct.get('price') &&
@@ -168,13 +168,13 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     )(discountPrice)
   }
 
-  _renderRegularPaymentOptions = ({ mode }) => {
+  _renderRegularPaymentOptions = ({ mode, label }) => {
     const { orderedProduct } = this.props
     return (
       <label className='label-custom'>
         <LabelTitle>
           <Label as='p' basic size='large' className='text__weight--500 margin__bottom-positive--5'>
-            <FormattedMessage {...messages.cashPrepaid} />
+            <FormattedMessage {...messages[label]} />
           </Label>
           { this._displayEarnPoints(mode, this._toggleOrigDiscountPrice()) }
         </LabelTitle>
@@ -210,6 +210,57 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     )
   }
 
+  _codCheckOptionFactory = () => {
+    const { ShowCodComponent, isBlackListed, modePayment, _handleChange, _handleToBottom, _isFullPointsOnly } = this.props
+    return toggleComponent(
+      <ShowCodComponent
+        radio
+        isBlackListed={isBlackListed}
+        name='cod'
+        value='COD'
+        label={this._renderRegularPaymentOptions({ mode: 'cod', label: 'cashDelivery' })}
+        checked={modePayment === 'COD'}
+        onChange={_handleChange}
+        onClick={_handleToBottom}
+      />,
+      null
+    )(!_isFullPointsOnly)
+  }
+
+  _cashCheckOptionFactory = () => {
+    const { modePayment, _handleChange, _isFullPointsOnly } = this.props
+    return toggleComponent(
+      <Checkbox
+        radio
+        className='margin__vertical--10'
+        name='cash-prepaid'
+        value='CASH'
+        label={this._renderRegularPaymentOptions({ mode: 'cash', label: 'cashPrepaid' })}
+        checked={modePayment === 'CASH'}
+        onChange={_handleChange}
+      />,
+      null
+    )(!_isFullPointsOnly)
+  }
+
+  _pointsCashCheckOptionFactory = () => {
+    const { isDisabledPointsOptions, modePayment, _handleChange, _isFullPointsOnly } = this.props
+
+    return toggleComponent(
+      <Checkbox
+        radio
+        disabled={isDisabledPointsOptions}
+        className='margin__bottom-positive--20'
+        name='points'
+        value='POINTS'
+        label={this._renderPointsCashPaymentOptions()}
+        checked={modePayment === 'POINTS'}
+        onChange={_handleChange}
+      />,
+      null
+    )(!_isFullPointsOnly)
+  }
+
   componentWillReceiveProps (nextProps) {
     // when not yet initialize
     const initializeStartingUsePoints = when(
@@ -234,28 +285,21 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     const {
       usePoints,
       currentPoints,
-      isDisabledPointsOptions,
       orderedProduct,
       orderRequesting,
-      isBlackListed,
       productLoader,
-      ShowCodComponent,
       errorMessage,
-      modePayment,
       modalToggle,
       storeLocatorVisibility,
       pointsModifierVisibility,
       store,
 
-      _isFullPointsOnly,
       _updateUsePoints,
       _handleModalClose,
       _handleProceed,
       _handleStoreLocator,
       _handleRecentStore,
-      _stepWrapperRef,
-      _handleToBottom,
-      _handleChange
+      _stepWrapperRef
     } = this.props
 
     const brandLogo = orderedProduct.get('brandLogo') ? (
@@ -320,38 +364,9 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                 <SelectMethodWrapper checkHeight={orderedProduct.get('discountPrice') !== 0}>
                   <Form>
                     <Form.Field>
-                      <ShowCodComponent
-                        radio
-                        isBlackListed={isBlackListed}
-                        name='cod'
-                        value='COD'
-                        label={this._renderRegularPaymentOptions({ mode: 'cod' })}
-                        checked={modePayment === 'COD'}
-                        onChange={_handleChange}
-                        onClick={_handleToBottom}
-                      />
-                      <Checkbox
-                        radio
-                        className='margin__vertical--10'
-                        name='cash-prepaid'
-                        value='CASH'
-                        label={this._renderRegularPaymentOptions({ mode: 'cash' })}
-                        checked={modePayment === 'CASH'}
-                        onChange={_handleChange}
-                      />
-
-                      {
-                        orderedProduct.get('points') && <Checkbox
-                          radio
-                          disabled={isDisabledPointsOptions}
-                          className='margin__bottom-positive--20'
-                          name='points'
-                          value='POINTS'
-                          label={this._renderPointsCashPaymentOptions()}
-                          checked={modePayment === 'POINTS'}
-                          onChange={_handleChange}
-                        />
-                      }
+                      { this._codCheckOptionFactory() }
+                      { this._cashCheckOptionFactory() }
+                      { this._pointsCashCheckOptionFactory() }
 
                       <StepWrapper className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={pointsModifierVisibility}>
                         <Label as='p' className='color__grey text__weight--500' size='large' >
