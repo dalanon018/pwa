@@ -338,7 +338,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     falseFn
   )
 
-  _handleProccedFactory = () => {
+  _handleProceedFactory = () => {
     const { _handleProceed, _handleNotEnoughFullPointsProceed } = this.props
 
     const handleSubmission = this._handleFullPointsFunctionTrigger(
@@ -534,7 +534,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         </div>
 
         <ButtonContainer>
-          <Button onClick={this._handleProccedFactory} primary fluid loading={orderRequesting} className='text__weight--700'>
+          <Button onClick={this._handleProceedFactory} primary fluid loading={orderRequesting} className='text__weight--700'>
             <FormattedMessage {...messages.proceedNext} />
           </Button>
         </ButtonContainer>
