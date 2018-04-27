@@ -17,7 +17,7 @@ export const toggleOrigDiscountPrice = (product) => {
 
 export const computeTotalPointsPrice = (product) => {
   const amount = toggleOrigDiscountPrice(product)
-  const multiplier = product.getIn(['points', 'multiplier'])
+  const multiplier = product.getIn(['points', 'multiplier']) || 0
   return Math.ceil(multiply(amount, multiplier))
 }
 
@@ -26,7 +26,7 @@ export const calculatePricePoints = ({
   usePoints
 }) => {
   const pointsAmount = computeTotalPointsPrice(product)
-  const pointsMultiplier = product.getIn(['points', 'multiplier'])
+  const pointsMultiplier = product.getIn(['points', 'multiplier']) || 0
   const calculate = Math.floor(divide(
     subtract(pointsAmount, usePoints),
     pointsMultiplier
