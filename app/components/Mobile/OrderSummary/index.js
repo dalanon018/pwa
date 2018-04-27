@@ -466,7 +466,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                   <Label as='p' className='margin__none text__weight--400' size='medium'>
                     <FormattedMessage {...messages.currentPoints} />
                     <Image src={CliqqIcon} className='cliqq-plain-icon' alt='CLiQQ' />
-                    { subtract(currentPoints, usePoints) }
+                    { subtract(currentPoints, this._computeTotalPointsPrice()) }
                   </Label>
                 </MethodTitle>
               </Grid.Row>
