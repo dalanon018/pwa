@@ -99,5 +99,10 @@ export default defineMessages({
   pointsTip: {
     id: `${idSuffix}.pointsTip`,
     defaultMessage: `Points will be earned once claimed.`
+  },
+  pointsOnlyTip: {
+    id: `${idSuffix}.pointsTip`,
+    defaultMessage: `This item can only be purchased using CLiQQ points.`
   }
+
 })

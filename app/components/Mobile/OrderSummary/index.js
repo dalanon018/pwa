@@ -30,7 +30,7 @@ import ListCollapse from 'components/Shared/ListCollapse'
 import Modal from 'components/Shared/PromptModal'
 import RangeSlider from 'components/Shared/RangeSlider'
 import RibbonWrapper from 'components/Shared/RibbonWrapper'
-
+import LoadingIndicator from 'components/Shared/LoadingIndicator'
 import { LoadingStateImage } from 'components/Shared/LoadingBlock'
 
 import CliqqIcon from 'images/icons/cliqq.png'
@@ -55,6 +55,7 @@ import {
   LabelPrice,
   LabelTitle
 } from './styles'
+import { isFullPointsOnly } from '../../../utils/payment'
 
 const toggleComponent = (component1, component2) => ifElse(
   identity,
@@ -261,6 +262,46 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     )(!_isFullPointsOnly)
   }
 
+  _fullPointsCheckOptionFactory = () => {
+    const { isDisabledPointsOptions, modePayment, _handleChange, _isFullPointsOnly } = this.props
+
+    return toggleComponent(
+      <Checkbox
+        radio
+        disabled={isDisabledPointsOptions}
+        className='margin__bottom-positive--20'
+        name='points'
+        value='POINTS'
+        label={this._renderPointsCashPaymentOptions()}
+        checked={modePayment === 'POINTS'}
+        onChange={_handleChange}
+      />,
+      null
+    )(_isFullPointsOnly)
+  }
+
+  /**
+   * for better UX we will only display payment options if order product is already available
+   */
+  _displayPaymentOptions = () => {
+    const { orderedProduct } = this.props
+    return toggleComponent(
+      <div>
+        { this._codCheckOptionFactory() }
+        { this._cashCheckOptionFactory() }
+        { this._pointsCashCheckOptionFactory() }
+        { this._fullPointsCheckOptionFactory() }
+      </div>,
+      this._displayLoader()
+    )(!!orderedProduct.size)
+  }
+
+  _displayLoader = () => {
+    return (
+      <LoadingIndicator />
+    )
+  }
+
   componentWillReceiveProps (nextProps) {
     // when not yet initialize
     const initializeStartingUsePoints = when(
@@ -356,7 +397,14 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                     <FormattedMessage {...messages.methodPayment} />
                   </Label>
                   <Label as='p' className='margin__none text__weight--400' size='medium'>
-                    <FormattedMessage {...messages.pointsTip} />
+                    <FormattedMessage {...messages[isFullPointsOnly ? 'pointsOnlyTip' : 'pointsTip']} />
+                  </Label>
+                </MethodTitle>
+                <MethodTitle>
+                  <Label as='p' className='margin__none text__weight--400' size='medium'>
+                    <FormattedMessage {...messages.currentPoints} />
+                    <Image src={CliqqIcon} className='cliqq-plain-icon' alt='CLiQQ' />
+                    { subtract(currentPoints, usePoints) }
                   </Label>
                 </MethodTitle>
               </Grid.Row>
@@ -364,18 +412,11 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                 <SelectMethodWrapper checkHeight={orderedProduct.get('discountPrice') !== 0}>
                   <Form>
                     <Form.Field>
-                      { this._codCheckOptionFactory() }
-                      { this._cashCheckOptionFactory() }
-                      { this._pointsCashCheckOptionFactory() }
+                      { this._displayPaymentOptions() }
 
                       <StepWrapper className='visibility border_top__one--light-grey border_bottom__one--light-grey' visibility={pointsModifierVisibility}>
                         <Label as='p' className='color__grey text__weight--500' size='large' >
                           <FormattedMessage {...messages.choosePointsTitle} />
-                        </Label>
-                        <Label as='p' className='margin__none text__weight--400' size='medium'>
-                          <FormattedMessage {...messages.currentPoints} />
-                          <Image src={CliqqIcon} className='cliqq-plain-icon' alt='CLiQQ' />
-                          { subtract(currentPoints, usePoints) }
                         </Label>
                         <RangeSlider
                           usePoints={usePoints}
