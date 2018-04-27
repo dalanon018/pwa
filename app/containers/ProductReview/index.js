@@ -9,19 +9,20 @@ import PropTypes from 'prop-types'
 
 import { noop, isEmpty } from 'lodash'
 import {
+  __,
   always,
-  anyPass,
   both,
   compose,
+  contains,
   either,
   equals,
+  identity,
   ifElse,
   partial,
   prop,
   propOr,
   toLower,
-  toUpper,
-  identity
+  toUpper
  } from 'ramda'
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
@@ -241,14 +242,18 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     })
   }
 
+  /**
+   * We have to modify since FULL_POINTS is actually a points and cash
+   */
+  _modifyModePaymentValue = (modePayment) => switchFn({
+    [PAYMENTS_OPTIONS.FULL_POINTS]: PAYMENTS_OPTIONS.POINTS
+  })(modePayment)(modePayment)
+
   _handleProceed () {
     const { mobileNumber, orderedProduct, submitOrder } = this.props
     const { modePayment, store, usePoints } = this.state
-    const CODPayment = both(
-      anyPass([
-        equals(this.showStoreLocator),
-        equals(this.showPointsModifier)
-      ]),
+    const isShouldHaveStore = both(
+      contains(__, this.showStoreLocator),
       () => !isEmpty(store)
     )
 
@@ -263,8 +268,10 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         content_type: 'product'
       })
 
+      // we have to modify the mode of payment here.
+
       return submitOrder({
-        modePayment,
+        modePayment: this._modifyModePaymentValue(modePayment),
         orderedProduct,
         mobileNumber,
         store,
@@ -273,7 +280,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     }
 
     const proceedOrder = ifElse(
-      either(CODPayment, CashPayment),
+      either(isShouldHaveStore, CashPayment),
       submissionOrder,
       () => this.setState({
         modalToggle: true,

@@ -378,7 +378,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     const shouldSelectFullPoints = when(
       compose(both(complement(this._disabledFullPointsOption), prop('_isFullPointsOnly'))),
       (props) => {
-        //if enabled need to make sure that usePoints should be update
+        // if enabled need to make sure that usePoints should be update
         props._handleChange(null, { value: PAYMENTS_OPTIONS.FULL_POINTS })
         props._updateUsePoints(this._computeTotalPointsPrice(props))
       }
