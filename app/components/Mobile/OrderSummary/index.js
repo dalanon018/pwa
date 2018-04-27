@@ -377,7 +377,11 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
     const shouldSelectFullPoints = when(
       compose(both(complement(this._disabledFullPointsOption), prop('_isFullPointsOnly'))),
-      (props) => props._handleChange(null, { value: PAYMENTS_OPTIONS.FULL_POINTS })
+      (props) => {
+        //if enabled need to make sure that usePoints should be update
+        props._handleChange(null, { value: PAYMENTS_OPTIONS.FULL_POINTS })
+        props._updateUsePoints(this._computeTotalPointsPrice(props))
+      }
     )
     // we will be using this.props since we are having issue with other deps that use the this.props
     initializeStartingUsePoints(this.props)
@@ -466,7 +470,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                   <Label as='p' className='margin__none text__weight--400' size='medium'>
                     <FormattedMessage {...messages.currentPoints} />
                     <Image src={CliqqIcon} className='cliqq-plain-icon' alt='CLiQQ' />
-                    { subtract(currentPoints, this._computeTotalPointsPrice()) }
+                    { subtract(currentPoints, usePoints) }
                   </Label>
                 </MethodTitle>
               </Grid.Row>
