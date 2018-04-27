@@ -144,7 +144,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     storeLocatorVisibility: true,
     pointsModifierVisibility: false,
     modalToggle: false,
-    errorMessage: ''
+    errorMessage: '',
+    errorContent: ''
   }
 
   /**
@@ -175,6 +176,11 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     this.setState(() => ({
       usePoints: value
     }))
+  }
+
+  _isFullPointsOnly = () => {
+    const { orderedProduct } = this.props
+    return isFullPointsOnly({ identifier: orderedProduct.get('title') })
   }
 
   _stepWrapperRef = (ref) => {
@@ -217,6 +223,14 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     }, 100)
   }
 
+  _handleNotEnoughFullPointsProceed = () => {
+    this.setState({
+      modalToggle: true,
+      errorMessage: <FormattedMessage {...messages.notEnoughFullPointsTitle} />,
+      errorContent: <FormattedMessage {...messages.notEnoughFullPointsContent} />
+    })
+  }
+
   _handleProceed () {
     const { mobileNumber, orderedProduct, submitOrder } = this.props
     const { modePayment, store, usePoints } = this.state
@@ -253,7 +267,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       submissionOrder,
       () => this.setState({
         modalToggle: true,
-        errorMessage: <FormattedMessage {...messages.storeEmpty} />
+        errorMessage: <FormattedMessage {...messages.storeEmpty} />,
+        errorContent: ''
       })
     )
 
@@ -279,7 +294,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   _handleDoneFetchOrderNoProductNorMobile () {
     this.setState({
       modalToggle: true,
-      errorMessage: <FormattedMessage {...messages.errorHeader} />
+      errorMessage: <FormattedMessage {...messages.errorHeader} />,
+      errorContent: ''
     })
   }
 
@@ -300,7 +316,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     if (this.submitting) {
       this.setState({
         modalToggle: true,
-        errorMessage: this._handleErrorMessage(code)
+        errorMessage: this._handleErrorMessage(code),
+        errorContent: ''
       })
       this.submitting = false
     }
@@ -407,7 +424,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
   render () {
     const { currentPoints, orderedProduct, orderRequesting, isBlackListed, productLoader } = this.props
-    const { errorMessage, modePayment, modalToggle, storeLocatorVisibility, pointsModifierVisibility, store, usePoints } = this.state
+    const { errorMessage, errorContent, modePayment, modalToggle, storeLocatorVisibility, pointsModifierVisibility, store, usePoints } = this.state
     return (
       <AccessView
         mobileView={
@@ -419,14 +436,16 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             _handleChange={this._handleChange}
             _handleModalClose={this._handleModalClose}
             _handleProceed={this._handleProceed}
+            _handleNotEnoughFullPointsProceed={this._handleNotEnoughFullPointsProceed}
             _handleStoreLocator={this._handleStoreLocator}
             _handleRecentStore={this._handleRecentStore}
             _handleToBottom={this._handleToBottom}
             _stepWrapperRef={this._stepWrapperRef}
             _updateUsePoints={this._updateUsePoints}
-            _isFullPointsOnly={isFullPointsOnly({ identifier: orderedProduct.get('title') })}
+            _isFullPointsOnly={this._isFullPointsOnly()}
 
             errorMessage={errorMessage}
+            errorContent={errorContent}
             isBlackListed={isBlackListed}
 
             modalToggle={modalToggle}

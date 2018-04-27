@@ -332,6 +332,18 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     )
   }
 
+  _handleProccedFactory = () => {
+    const { _handleProceed, _handleNotEnoughFullPointsProceed, _isFullPointsOnly } = this.props
+
+    const handleSubmission = ifElse(
+      both(identity, () => _isFullPointsOnly),
+      _handleNotEnoughFullPointsProceed,
+      _handleProceed
+    )
+
+    return handleSubmission(this._disabledFullPointsOption())
+  }
+
   componentWillReceiveProps (nextProps) {
     // when not yet initialize
     const initializeStartingUsePoints = when(
@@ -366,6 +378,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       orderRequesting,
       productLoader,
       errorMessage,
+      errorContent,
       modalToggle,
       storeLocatorVisibility,
       pointsModifierVisibility,
@@ -374,7 +387,6 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       _isFullPointsOnly,
       _updateUsePoints,
       _handleModalClose,
-      _handleProceed,
       _handleStoreLocator,
       _handleRecentStore,
       _stepWrapperRef
@@ -509,7 +521,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         </div>
 
         <ButtonContainer>
-          <Button onClick={_handleProceed} primary fluid loading={orderRequesting} className='text__weight--700'>
+          <Button onClick={this._handleProccedFactory} primary fluid loading={orderRequesting} className='text__weight--700'>
             <FormattedMessage {...messages.proceedNext} />
           </Button>
         </ButtonContainer>
@@ -518,7 +530,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
           open={modalToggle}
           name='warning'
           title={errorMessage}
-          content=''
+          content={errorContent}
           close={_handleModalClose}
         />
       </ProductReviewWrapper>
@@ -539,15 +551,21 @@ OrderSummary.propTypes = {
     PropTypes.object,
     PropTypes.string
   ]).isRequired,
+  errorContent: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.string
+  ]).isRequired,
   modePayment: PropTypes.string.isRequired,
   modalToggle: PropTypes.bool.isRequired,
   storeLocatorVisibility: PropTypes.bool.isRequired,
   pointsModifierVisibility: PropTypes.bool.isRequired,
   store: PropTypes.object.isRequired,
 
+  _isFullPointsOnly: PropTypes.bool.isRequired,
   _updateUsePoints: PropTypes.func.isRequired,
   _handleModalClose: PropTypes.func.isRequired,
   _handleProceed: PropTypes.func.isRequired,
+  _handleNotEnoughFullPointsProceed: PropTypes.func.isRequired,
   _handleStoreLocator: PropTypes.func.isRequired,
   _handleRecentStore: PropTypes.func.isRequired,
   _stepWrapperRef: PropTypes.func.isRequired,
