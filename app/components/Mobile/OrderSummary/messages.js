@@ -64,6 +64,10 @@ export default defineMessages({
     id: `${idSuffix}.cashPoints`,
     defaultMessage: 'Points & Cash'
   },
+  fullPoints: {
+    id: `${idSuffix}.fullPoints`,
+    defaultMessage: 'Full Points'
+  },
   proceedNext: {
     id: `${idSuffix}.proceedNext`,
     defaultMessage: 'PLACE ORDER'

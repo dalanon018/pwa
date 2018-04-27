@@ -211,6 +211,25 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     )
   }
 
+  _renderFullPointsPaymentOptions = () => {
+    const { orderedProduct } = this.props
+    return (
+      <label className='label-custom'>
+        <LabelTitle>
+          <Label as='p' basic size='large' className='text__weight--500 margin__bottom-positive--5'>
+            <FormattedMessage {...messages.fullPoints} />
+          </Label>
+        </LabelTitle>
+        <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
+          <Image src={CliqqIcon} className='cliqq-plain-icon' alt='CLiQQ' />
+          <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
+            { this._computeTotalPointsPrice().toLocaleString() }
+          </Label>
+        </LabelPrice>
+      </label>
+    )
+  }
+
   _codCheckOptionFactory = () => {
     const { ShowCodComponent, isBlackListed, modePayment, _handleChange, _handleToBottom, _isFullPointsOnly } = this.props
     return toggleComponent(
@@ -270,10 +289,10 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         radio
         disabled={isDisabledPointsOptions}
         className='margin__bottom-positive--20'
-        name='points'
-        value='POINTS'
-        label={this._renderPointsCashPaymentOptions()}
-        checked={modePayment === 'POINTS'}
+        name='fullPoints'
+        value='FULL_POINTS'
+        label={this._renderFullPointsPaymentOptions()}
+        checked={modePayment === 'FULL_POINTS'}
         onChange={_handleChange}
       />,
       null
