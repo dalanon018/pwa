@@ -53,6 +53,7 @@ import {
   LocationButton,
   CustomGrid,
   LabelPrice,
+  LabelFullPointsPrice,
   LabelTitle
 } from './styles'
 import { isFullPointsOnly } from '../../../utils/payment'
@@ -220,12 +221,12 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
             <FormattedMessage {...messages.fullPoints} />
           </Label>
         </LabelTitle>
-        <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
+        <LabelFullPointsPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
           <Image src={CliqqIcon} className='cliqq-plain-icon' alt='CLiQQ' />
           <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
             { this._computeTotalPointsPrice().toLocaleString() }
           </Label>
-        </LabelPrice>
+        </LabelFullPointsPrice>
       </label>
     )
   }

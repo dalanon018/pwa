@@ -346,7 +346,7 @@ const LabelPrice = styled.div`
   .total {
     letter-spacing: -2px;
     width: 100%;
-    
+
     // font-size: 35px;
     // font-weight: 700;
     // margin-right: 10px;
@@ -367,11 +367,17 @@ const LabelPrice = styled.div`
   }
 `
 
+const LabelFullPointsPrice = styled(LabelPrice)`
+  flex-wrap: initial;
+  align-items: center;
+`
+
 export {
   ButtonContainer,
   CustomGrid,
   DetailsWrapper,
   LabelPrice,
+  LabelFullPointsPrice,
   LabelTitle,
   LocationButton,
   MethodTitle,
