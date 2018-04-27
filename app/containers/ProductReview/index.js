@@ -134,7 +134,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     changeRoute: PropTypes.func.isRequired
   }
 
-  showStoreLocator = PAYMENTS_OPTIONS.COD
+  showStoreLocator = [PAYMENTS_OPTIONS.COD, PAYMENTS_OPTIONS.POINTS, PAYMENTS_OPTIONS.FULL_POINTS]
   showPointsModifier = PAYMENTS_OPTIONS.POINTS
 
   state = {
@@ -207,7 +207,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   _handleChange = (e, { value }) => {
     this.setState({
       modePayment: value,
-      storeLocatorVisibility: (value === this.showStoreLocator || value === this.showPointsModifier),
+      storeLocatorVisibility: (this.showStoreLocator.indexOf(value)) !== -1,
       pointsModifierVisibility: value === this.showPointsModifier
     })
   }
