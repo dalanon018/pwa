@@ -106,8 +106,8 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     return divide(this._computeTotalPointsPrice(), 2)
   }
 
-  _computeTotalPointsPrice = () => {
-    const { orderedProduct } = this.props
+  _computeTotalPointsPrice = (props = this.props) => {
+    const { orderedProduct } = props
     return computeTotalPointsPrice(orderedProduct)
   }
 
@@ -285,9 +285,9 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     )(!_isFullPointsOnly)
   }
 
-  _disabledFullPointsOption = () => {
-    const { currentPoints } = this.props
-    return lt(currentPoints, this._computeTotalPointsPrice())
+  _disabledFullPointsOption = (props = this.props) => {
+    const { currentPoints } = props
+    return lt(currentPoints, this._computeTotalPointsPrice(props))
   }
 
   _fullPointsCheckOptionFactory = () => {
