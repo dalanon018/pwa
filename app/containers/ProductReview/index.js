@@ -49,7 +49,7 @@ import DesktopOrderSummary from 'components/Desktop/OrderSummary'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 
 import { userIsAuthenticated } from 'containers/App/auth'
-import { PRODUCTREVIEW_NAME, RAW_PAYMENT_METHODS } from 'containers/Buckets/constants'
+import { PRODUCTREVIEW_NAME, RAW_PAYMENT_METHODS, PAYMENTS_OPTIONS } from 'containers/Buckets/constants'
 import {
   setPageTitleAction,
   setRouteNameAction,
@@ -134,12 +134,12 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     changeRoute: PropTypes.func.isRequired
   }
 
-  showStoreLocator = 'COD'
-  showPointsModifier = 'POINTS'
+  showStoreLocator = PAYMENTS_OPTIONS.COD
+  showPointsModifier = PAYMENTS_OPTIONS.POINTS
 
   state = {
     store: {},
-    modePayment: 'COD',
+    modePayment: PAYMENTS_OPTIONS.COD,
     usePoints: 0,
     storeLocatorVisibility: true,
     pointsModifierVisibility: false,

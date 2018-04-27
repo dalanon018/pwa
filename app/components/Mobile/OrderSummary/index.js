@@ -40,6 +40,10 @@ import { paramsImgix } from 'utils/image-stock'
 import { calculateEarnPoints } from 'utils/calculation'
 import { toggleOrigDiscountPrice, computeTotalPointsPrice, calculatePricePoints } from 'utils/product'
 
+import {
+  PAYMENTS_OPTIONS
+} from 'containers/Buckets/constants'
+
 import messages from './messages'
 import {
   DetailsWrapper,
@@ -56,7 +60,6 @@ import {
   LabelFullPointsPrice,
   LabelTitle
 } from './styles'
-import { isFullPointsOnly } from '../../../utils/payment'
 
 const toggleComponent = (component1, component2) => ifElse(
   identity,
@@ -238,9 +241,9 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         radio
         isBlackListed={isBlackListed}
         name='cod'
-        value='COD'
+        value={PAYMENTS_OPTIONS.COD}
         label={this._renderRegularPaymentOptions({ mode: 'cod', label: 'cashDelivery' })}
-        checked={modePayment === 'COD'}
+        checked={modePayment === PAYMENTS_OPTIONS.COD}
         onChange={_handleChange}
         onClick={_handleToBottom}
       />,
@@ -255,9 +258,9 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         radio
         className='margin__vertical--10'
         name='cash-prepaid'
-        value='CASH'
+        value={PAYMENTS_OPTIONS.CASH}
         label={this._renderRegularPaymentOptions({ mode: 'cash', label: 'cashPrepaid' })}
-        checked={modePayment === 'CASH'}
+        checked={modePayment === PAYMENTS_OPTIONS.CASH}
         onChange={_handleChange}
       />,
       null
@@ -273,9 +276,9 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         disabled={isDisabledPointsOptions}
         className='margin__bottom-positive--20'
         name='points'
-        value='POINTS'
+        value={PAYMENTS_OPTIONS.POINTS}
         label={this._renderPointsCashPaymentOptions()}
-        checked={modePayment === 'POINTS'}
+        checked={modePayment === PAYMENTS_OPTIONS.POINTS}
         onChange={_handleChange}
       />,
       null
@@ -296,9 +299,9 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         disabled={this._disabledFullPointsOption()}
         className='margin__bottom-positive--20'
         name='fullPoints'
-        value='FULL_POINTS'
+        value={PAYMENTS_OPTIONS.FULL_POINTS}
         label={this._renderFullPointsPaymentOptions()}
-        checked={modePayment === 'FULL_POINTS'}
+        checked={modePayment === PAYMENTS_OPTIONS.FULL_POINTS}
         onChange={_handleChange}
       />,
       null
@@ -360,6 +363,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       pointsModifierVisibility,
       store,
 
+      _isFullPointsOnly,
       _updateUsePoints,
       _handleModalClose,
       _handleProceed,
@@ -422,7 +426,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                     <FormattedMessage {...messages.methodPayment} />
                   </Label>
                   <Label as='p' className='margin__none text__weight--400' size='medium'>
-                    <FormattedMessage {...messages[isFullPointsOnly ? 'pointsOnlyTip' : 'pointsTip']} />
+                    <FormattedMessage {...messages[_isFullPointsOnly ? 'pointsOnlyTip' : 'pointsTip']} />
                   </Label>
                 </MethodTitle>
                 <MethodTitle>
