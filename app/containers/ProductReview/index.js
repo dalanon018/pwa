@@ -9,19 +9,20 @@ import PropTypes from 'prop-types'
 
 import { noop, isEmpty } from 'lodash'
 import {
+  __,
   always,
-  anyPass,
   both,
   compose,
+  contains,
   either,
   equals,
+  identity,
   ifElse,
   partial,
   prop,
   propOr,
   toLower,
-  toUpper,
-  identity
+  toUpper
  } from 'ramda'
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
@@ -39,6 +40,7 @@ import { transformStore } from 'utils/transforms'
 import { FbEventTracking } from 'utils/seo'
 import { switchFn } from 'utils/logicHelper'
 import { fnQueryObject } from 'utils/http'
+import { isFullPointsOnly } from 'utils/payment'
 
 import WindowWidth from 'components/Shared/WindowWidth'
 
@@ -48,7 +50,7 @@ import DesktopOrderSummary from 'components/Desktop/OrderSummary'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 
 import { userIsAuthenticated } from 'containers/App/auth'
-import { PRODUCTREVIEW_NAME, RAW_PAYMENT_METHODS } from 'containers/Buckets/constants'
+import { PRODUCTREVIEW_NAME, RAW_PAYMENT_METHODS, PAYMENTS_OPTIONS } from 'containers/Buckets/constants'
 import {
   setPageTitleAction,
   setRouteNameAction,
@@ -133,17 +135,18 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     changeRoute: PropTypes.func.isRequired
   }
 
-  showStoreLocator = 'COD'
-  showPointsModifier = 'POINTS'
+  showStoreLocator = [PAYMENTS_OPTIONS.COD, PAYMENTS_OPTIONS.POINTS, PAYMENTS_OPTIONS.FULL_POINTS]
+  showPointsModifier = PAYMENTS_OPTIONS.POINTS
 
   state = {
     store: {},
-    modePayment: 'COD',
+    modePayment: PAYMENTS_OPTIONS.COD,
     usePoints: 0,
     storeLocatorVisibility: true,
     pointsModifierVisibility: false,
     modalToggle: false,
-    errorMessage: ''
+    errorMessage: '',
+    errorContent: ''
   }
 
   /**
@@ -176,27 +179,36 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     }))
   }
 
+  _isFullPointsOnly = () => {
+    const { orderedProduct } = this.props
+    return isFullPointsOnly({ identifier: orderedProduct.get('title') })
+  }
+
   _stepWrapperRef = (ref) => {
     this._innerStepRef = ref
   }
 
+  _shouldRedirectAccessFromURL = () => {
+    const { orderFail, changeRoute } = this.props
+    // if orderFail size === 0  || submitting == false then means its not submission error
+    // its safe to redirect the user.
+    if (orderFail.size === 0 && Boolean(this.submitting) === false) {
+      changeRoute('/')
+    }
+  }
+
   _handleModalClose () {
-    const { orderFail } = this.props
     this.setState({
       modalToggle: false
     })
 
-    // if orderFail size === 0  || submitting == false then means its not submission error
-    // its safe to redirect the user.
-    if (orderFail.size === 0 && Boolean(this.submitting) === false) {
-      this.props.changeRoute('/')
-    }
+    this._shouldRedirectAccessFromURL()
   }
 
   _handleChange = (e, { value }) => {
     this.setState({
       modePayment: value,
-      storeLocatorVisibility: (value === this.showStoreLocator || value === this.showPointsModifier),
+      storeLocatorVisibility: (this.showStoreLocator.indexOf(value)) !== -1,
       pointsModifierVisibility: value === this.showPointsModifier
     })
   }
@@ -216,14 +228,32 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     }, 100)
   }
 
+  _handleNotEnoughFullPointsProceed = () => {
+    this.setState({
+      modalToggle: true,
+      errorMessage: <FormattedMessage {...messages.notEnoughFullPointsTitle} />,
+      errorContent: <FormattedMessage {...messages.notEnoughFullPointsContent} />
+    })
+  }
+
+  _handleNotEnoughFullPointsCloseModal = () => {
+    this.setState({
+      modalToggle: false
+    })
+  }
+
+  /**
+   * We have to modify since FULL_POINTS is actually a points and cash
+   */
+  _modifyModePaymentValue = (modePayment) => switchFn({
+    [PAYMENTS_OPTIONS.FULL_POINTS]: PAYMENTS_OPTIONS.POINTS
+  })(modePayment)(modePayment)
+
   _handleProceed () {
     const { mobileNumber, orderedProduct, submitOrder } = this.props
     const { modePayment, store, usePoints } = this.state
-    const CODPayment = both(
-      anyPass([
-        equals(this.showStoreLocator),
-        equals(this.showPointsModifier)
-      ]),
+    const isShouldHaveStore = both(
+      contains(__, this.showStoreLocator),
       () => !isEmpty(store)
     )
 
@@ -238,8 +268,10 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         content_type: 'product'
       })
 
+      // we have to modify the mode of payment here.
+
       return submitOrder({
-        modePayment,
+        modePayment: this._modifyModePaymentValue(modePayment),
         orderedProduct,
         mobileNumber,
         store,
@@ -248,11 +280,12 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     }
 
     const proceedOrder = ifElse(
-      either(CODPayment, CashPayment),
+      either(isShouldHaveStore, CashPayment),
       submissionOrder,
       () => this.setState({
         modalToggle: true,
-        errorMessage: <FormattedMessage {...messages.storeEmpty} />
+        errorMessage: <FormattedMessage {...messages.storeEmpty} />,
+        errorContent: ''
       })
     )
 
@@ -278,7 +311,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   _handleDoneFetchOrderNoProductNorMobile () {
     this.setState({
       modalToggle: true,
-      errorMessage: <FormattedMessage {...messages.errorHeader} />
+      errorMessage: <FormattedMessage {...messages.errorHeader} />,
+      errorContent: ''
     })
   }
 
@@ -299,7 +333,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     if (this.submitting) {
       this.setState({
         modalToggle: true,
-        errorMessage: this._handleErrorMessage(code)
+        errorMessage: this._handleErrorMessage(code),
+        errorContent: ''
       })
       this.submitting = false
     }
@@ -406,7 +441,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
   render () {
     const { currentPoints, orderedProduct, orderRequesting, isBlackListed, productLoader } = this.props
-    const { errorMessage, modePayment, modalToggle, storeLocatorVisibility, pointsModifierVisibility, store, usePoints } = this.state
+    const { errorMessage, errorContent, modePayment, modalToggle, storeLocatorVisibility, pointsModifierVisibility, store, usePoints } = this.state
     return (
       <AccessView
         mobileView={
@@ -418,13 +453,17 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
             _handleChange={this._handleChange}
             _handleModalClose={this._handleModalClose}
             _handleProceed={this._handleProceed}
+            _handleNotEnoughFullPointsProceed={this._handleNotEnoughFullPointsProceed}
+            _handleNotEnoughFullPointsCloseModal={this._handleNotEnoughFullPointsCloseModal}
             _handleStoreLocator={this._handleStoreLocator}
             _handleRecentStore={this._handleRecentStore}
             _handleToBottom={this._handleToBottom}
             _stepWrapperRef={this._stepWrapperRef}
             _updateUsePoints={this._updateUsePoints}
+            _isFullPointsOnly={this._isFullPointsOnly()}
 
             errorMessage={errorMessage}
+            errorContent={errorContent}
             isBlackListed={isBlackListed}
 
             modalToggle={modalToggle}

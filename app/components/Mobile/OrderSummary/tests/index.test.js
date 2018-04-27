@@ -34,6 +34,8 @@ describe('<OrderSummary />', () => {
     _handleToBottom: () => {},
     _handleChange: () => {},
     _updateUsePoints: () => {},
+    _handleNotEnoughFullPointsProceed: () => {},
+    _handleNotEnoughFullPointsCloseModal: () => {},
     ShowCodComponent: () => <div />,
     currentPoints: 0,
     usePoints: 0,
@@ -67,6 +69,8 @@ describe('<OrderSummary />', () => {
     orderFail: fromJS({}),
     mobileNumber: '999999999',
     errorMessage: '',
+    errorContent: '',
+    _isFullPointsOnly: false,
     orderRequesting: false,
     store: { name: 'Quezon City', id: 1 }
   }
@@ -109,7 +113,7 @@ describe('<OrderSummary />', () => {
 
   it('renders one <MethodTitle/> styled component', () => {
     const ShallowedWrapper = shallow(<OrderSummary {...minProps} />)
-    expect(ShallowedWrapper.find(MethodTitle)).toHaveLength(1)
+    expect(ShallowedWrapper.find(MethodTitle)).toHaveLength(2)
   })
 
   it('renders one <StepWrapper/> styled component', () => {

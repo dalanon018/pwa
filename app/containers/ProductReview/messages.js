@@ -68,6 +68,14 @@ export default defineMessages({
     id: `${idSuffix}.storeEmpty`,
     defaultMessage: 'Please select a store location.'
   },
+  notEnoughFullPointsTitle: {
+    id: `${idSuffix}.notEnoughFullPointsTitle`,
+    defaultMessage: 'Not Enough Points'
+  },
+  notEnoughFullPointsContent: {
+    id: `${idSuffix}.notEnoughFullPointsContent`,
+    defaultMessage: 'You do not have enough CLiQQ points to purchase this product. Keep on shopping to earn more points!'
+  },
   peso: {
     id: `${idSuffix}.peso`,
     defaultMessage: '₱ '

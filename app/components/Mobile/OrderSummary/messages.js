@@ -64,6 +64,10 @@ export default defineMessages({
     id: `${idSuffix}.cashPoints`,
     defaultMessage: 'Points & Cash'
   },
+  fullPoints: {
+    id: `${idSuffix}.fullPoints`,
+    defaultMessage: 'Full Points'
+  },
   proceedNext: {
     id: `${idSuffix}.proceedNext`,
     defaultMessage: 'PLACE ORDER'
@@ -99,5 +103,10 @@ export default defineMessages({
   pointsTip: {
     id: `${idSuffix}.pointsTip`,
     defaultMessage: `Points will be earned once claimed.`
+  },
+  pointsOnlyTip: {
+    id: `${idSuffix}.pointsTip`,
+    defaultMessage: `This item can only be purchased using CLiQQ points.`
   }
+
 })
