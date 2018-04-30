@@ -142,6 +142,10 @@ export const SocialContainer = styled.div`
   width: 100%;
   padding: 10px 0;
   text-align: center;
+
+  img {
+    width: 35px;
+  }
 `
 
 export const ShareWrapper = styled.div`
