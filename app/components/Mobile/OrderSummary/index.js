@@ -222,7 +222,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     return (
       <label className='label-custom'>
         <LabelTitle>
-          <Label as='p' basic size='large' className='text__weight--500 margin__bottom-positive--5'>
+          <Label as='p' basic size='large' className='text__weight--500 margin__none'>
             <FormattedMessage {...messages.fullPoints} />
           </Label>
         </LabelTitle>
