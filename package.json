@@ -282,6 +282,7 @@
     "sanitize.css": "4.1.0",
     "semantic-ui-react": "0.74.2",
     "showdown": "1.8.5",
+    "simple-social-share": "^1.0.6",
     "styled-components": "2.0.0",
     "warning": "3.0.0",
     "whatwg-fetch": "2.0.3"
