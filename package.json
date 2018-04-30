@@ -361,8 +361,7 @@
       "/app/utils/firebase-messaging-sw.js",
       "/app/utils/scrollPolyfill.js",
       "/app/sw-handler.js",
-      "/cypress",
-      "/node_modules/simple-social-share"
+      "/cypress"
     ],
     "globals": [
       "Blob",
