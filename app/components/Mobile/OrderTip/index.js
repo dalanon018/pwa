@@ -6,13 +6,17 @@
 
 import React from 'react'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+import { push } from 'react-router-redux'
 import { Container, Grid, Image, Label } from 'semantic-ui-react'
 import DeliveryIcon from 'images/icons/delivery-icon.svg'
 import ReturnIcon from 'images/icons/return-icon.svg'
 
+import Modal from 'components/Mobile/OrderTipModal'
 import WindowWidth from 'components/Shared/WindowWidth'
 
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import messages from './messages'
 
 export const Wrapper = styled.div`
@@ -48,6 +52,17 @@ export const FlexContainer = styled.div`
 `
 
 class OrderTip extends React.PureComponent {
+  state = {
+    toggle: false,
+    bannerMap: false
+  }
+
+  _handleOpenMap = () => this.setState({ toggle: true, bannerMap: true })
+
+  _handleOpen = () => this.setState({ toggle: true })
+
+  _handleClose = () => this.setState({ toggle: false, bannerMap: false })
+
   _handleMobile = () => {
     return (
       <Wrapper className='background__light-grey'>
@@ -55,7 +70,7 @@ class OrderTip extends React.PureComponent {
           <Grid container>
             <Grid.Row columns={2}>
               <Grid.Column>
-                <FlexContainer>
+                <FlexContainer onClick={this._handleOpen}>
                   <Image alt='CLiQQ' src={DeliveryIcon} />
                   <Label as='span' size='medium' className='color__secondary text__weight--500 custom-label'>
                     1 Day In-Store<br />Delivery
@@ -66,7 +81,7 @@ class OrderTip extends React.PureComponent {
                 </Label>
               </Grid.Column>
               <Grid.Column>
-                <FlexContainer>
+                <FlexContainer onClick={this._handleOpenMap}>
                   <Image alt='CLiQQ' className='return-icon' src={ReturnIcon} />
                   <Label as='span' size='medium' className='color__secondary text__weight--500 custom-label'>
                     CLiQQ Return<br />Policy
@@ -90,7 +105,7 @@ class OrderTip extends React.PureComponent {
           <Grid container>
             <Grid.Row columns={2}>
               <Grid.Column>
-                <FlexContainer>
+                <FlexContainer onClick={this._handleOpen}>
                   <div>
                     <Image alt='CLiQQ' src={DeliveryIcon} />
                   </div>
@@ -127,10 +142,19 @@ class OrderTip extends React.PureComponent {
   }
 
   render () {
-    const { windowWidth } = this.props
+    const { windowWidth, intl, changeRoute } = this.props
+    const { toggle, bannerMap } = this.state
 
     return (
-      windowWidth < 767 ? this._handleMobile() : this._handleTablet()
+      <div>
+        {windowWidth < 767 ? this._handleMobile() : this._handleTablet()}
+        <Modal
+          toggle={toggle}
+          close={this._handleClose}
+          bannerMap={bannerMap}
+          changeRoute={changeRoute}
+          intl={intl} />
+      </div>
     )
   }
 }
@@ -139,4 +163,12 @@ OrderTip.propTypes = {
 
 }
 
-export default WindowWidth(OrderTip)
+function mapDispatchToProps (dispatch) {
+  return {
+    changeRoute: url => dispatch(push(url)),
+    dispatch
+  }
+}
+const withConnect = connect(null, mapDispatchToProps)
+
+export default compose(withConnect)(WindowWidth(injectIntl(OrderTip)))
