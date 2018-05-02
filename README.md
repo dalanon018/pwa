@@ -1,7 +1,9 @@
 ![7eleven-banner](https://offshorly.com/7-eleven/images/cliqq.png)
 
 # 7 Eleven CliQQ Documentation
-[![wercker status](https://app.wercker.com/status/2eddcfd2b122ba5a06ef9f0b28140cb6/s/master "wercker status")](https://app.wercker.com/project/byKey/2eddcfd2b122ba5a06ef9f0b28140cb6)
+<!-- change badge since we move repo -->
+<!-- [![wercker status](https://app.wercker.com/status/2eddcfd2b122ba5a06ef9f0b28140cb6/s/master "wercker status")](https://app.wercker.com/project/byKey/2eddcfd2b122ba5a06ef9f0b28140cb6) -->
+[![wercker status](https://app.wercker.com/status/4299f1a48f0697acdef25ed820aad605/s/master "wercker status")](https://app.wercker.com/project/byKey/4299f1a48f0697acdef25ed820aad605)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Development Environment Setup
