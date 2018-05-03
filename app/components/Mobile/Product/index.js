@@ -24,9 +24,13 @@ import TimerWrapper from 'components/Mobile/TimerWrapper'
 import DeliveryIcon from 'images/icons/delivery-icon.svg'
 import ReturnIcon from 'images/icons/return-icon.svg'
 import CliQQPlainLogo from 'images/icons/cliqq.png'
+import MessengerIcon from 'images/icons/messenger-icon.svg'
+import WhatsAppIcon from 'images/icons/whatsapp-icon.svg'
+import ViberIcon from 'images/icons/viber-icon.svg'
+
 import LightBox from 'components/Shared/LightBox'
 
-import { fbShare } from 'utils/fb-share'
+import { fbShare, viberShare, whatsAppShare, fbMessengerShare } from 'simple-social-share'
 import { paramsImgix } from 'utils/image-stock'
 import { calculateEarnPoints } from 'utils/calculation'
 
@@ -35,6 +39,10 @@ import ListCollapse from 'components/Shared/ListCollapse'
 import PromptModal from 'components/Shared/PromptModal'
 
 import { LoadingStateInfo } from 'components/Shared/LoadingBlock'
+
+import {
+  FB_SHARE_ID
+} from 'containers/App/constants'
 
 import messages from './messages'
 import SizeSelector from './SizeSelector'
@@ -128,7 +136,13 @@ const Product = ({
   }
 
   const fbShareAction = () => {
-    return fbShare(product)
+    const itemData = {
+      title: product.get('title'),
+      description: product.get('details'),
+      image: product.get('image')
+    }
+
+    return fbShare(itemData, FB_SHARE_ID)
   }
 
   const getHighestPointsEarn = () => {
@@ -230,6 +244,18 @@ const Product = ({
                     <a onClick={_handleMailTo} className='share-button'>
                       <Icon circular inverted name='mail' color='orange' />
                     </a>
+
+                    <button className='unstyle-button share-button' onClick={() => fbMessengerShare(FB_SHARE_ID)}>
+                      <Image src={MessengerIcon} alt='CLiQQ' />
+                    </button>
+
+                    <button className='unstyle-button share-button' onClick={(e) => viberShare(e, 'Check this out:')}>
+                      <Image src={ViberIcon} alt='CLiQQ' />
+                    </button>
+
+                    <button className='unstyle-button share-button' onClick={() => whatsAppShare('Check this out:')}>
+                      <Image src={WhatsAppIcon} alt='CLiQQ' />
+                    </button>
                   </ShareWrapper>
                 </SocialContainer>
               </Grid.Column>

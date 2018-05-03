@@ -8906,6 +8906,10 @@ simple-get@^1.4.2:
     unzip-response "^1.0.0"
     xtend "^4.0.0"
 
+simple-social-share@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/simple-social-share/-/simple-social-share-1.0.7.tgz#842e020a1a3db8b312c9f048b58cf847d0e14e6c"
+
 slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
