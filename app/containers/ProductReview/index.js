@@ -348,7 +348,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   _handleStoreVisible = (props) => {
     const { location: { search }, previousStore, lastSelectedMethod } = props
     const { store } = this.state
-
+    console.log(lastSelectedMethod)
      // handle populating store details
     const populateFromStorage = ifElse(
       isEmpty,
@@ -375,7 +375,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
           this.setState({
             modePayment,
-            storeLocatorVisibility: (modePayment === this.showStoreLocator || modePayment === this.showPointsModifier),
+            storeLocatorVisibility: (this.showStoreLocator.indexOf(modePayment)) !== -1,
             pointsModifierVisibility: modePayment === this.showPointsModifier,
             store: await transformStore(query) // we update our store
           })
