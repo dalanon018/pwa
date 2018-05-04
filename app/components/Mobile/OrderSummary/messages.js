@@ -26,7 +26,7 @@ export default defineMessages({
   },
   methodPayment: {
     id: `${idSuffix}.methodPayment`,
-    defaultMessage: 'Select Payment Mehod'
+    defaultMessage: 'Select Payment Method'
   },
   chooseStore: {
     id: `${idSuffix}.chooseStore`,
