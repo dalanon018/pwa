@@ -33,19 +33,19 @@ export const LinkWrapper = styled.div`
 `
 
 export class HomeSectionTitle extends React.PureComponent {
-  _handleGoTo = () => () => {
+  _handleGoTo = () => {
     const { link } = this.props
     this.props.changeRoute(link)
   }
 
   render () {
-    const { title, linkLabel } = this.props
+    const { title, linkLabel, dataCy } = this.props
 
     return (
-      <Container className='padding__none--vertical'>
+      <Container className='padding__none--vertical' data-cy={dataCy} >
         <Wrapper>
           <Label basic size='large' className='color__grey text__weight--500 padding__none'>{title}</Label>
-          <Label basic size='small' className='color__primary text__weight--400 padding__none' onClick={this._handleGoTo()}>
+          <Label data-cy='on-click' basic size='small' className='color__primary text__weight--400 padding__none' onClick={this._handleGoTo}>
             <LinkWrapper>
               <span>{linkLabel || 'See All'}</span>
               <Image src={ArrowIcon} alt='CLiQQ' />

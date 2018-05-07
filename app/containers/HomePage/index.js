@@ -408,6 +408,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           </BannerWrapper>
 
           <SectionTitle
+            dataCy='feature-brands'
             title={intl.formatMessage(messages.browseBrands)}
             linkLabel={intl.formatMessage(messages.moreBrands)}
             link='/brands/' />

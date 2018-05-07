@@ -68,8 +68,30 @@ describe('Should render home', () => {
     })
   })
 
-  it('Homepage should have Brand Carousel featured atleast 8', () => {
-    cy.get('[data-cy^="brand-carousel"]').should('to.have.lengthOf', 8)
+  describe('Homepage Brands', () => {
+    it('Homepage should have Brand Carousel featured atleast 8', () => {
+      cy.get('[data-cy^="brand-carousel"]').should('to.have.lengthOf', 8)
+    })
+
+    describe('Homepage Brands', () => {
+      it('should have text "More Brands"', () => {
+        cy.contains('More Brands')
+      })
+
+      describe('should link to brands landing page', () => {
+        afterEach(() => {
+          cy.visit('/')
+        })
+
+        it('should link correctly', () => {
+          cy.get('[data-cy="feature-brands"]')
+            .find('[data-cy="on-click"]')
+            .click({ force: true })
+            .url()
+            .should('include', 'brands')
+        })
+      })
+    })
   })
 
   it('Homepage should have text "Featured Items"', () => {
