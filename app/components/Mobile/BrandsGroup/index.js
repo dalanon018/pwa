@@ -41,6 +41,21 @@ const GroupWrapper = styled.div`
   box-shadow: 0 0 5px rgba(120,120,120, 0.1);
 `
 
+const scroll = (id) => () => {
+  let el = document.getElementById(id)
+  const headerHeight = 60
+
+ // scroll to your element
+  el.scrollIntoView(true)
+
+ // now account for fixed header
+  let scrolledY = window.scrollY
+
+  if (scrolledY) {
+    window.scroll({top: scrolledY - headerHeight, left: 0, behavior: 'smooth'})
+  }
+}
+
 function BrandsGroup ({
   brands,
   bottomScroll,
@@ -65,21 +80,6 @@ function BrandsGroup ({
       <NavWrapper className='background__white' bottomScroll={bottomScroll}>
         {
          toPairs(groupBrands).map(([title, item], key) => {
-           const scroll = (id) => () => {
-             let el = document.getElementById(id)
-             let headerHeight = 60
-
-            // scroll to your element
-             el.scrollIntoView(true)
-
-            // now account for fixed header
-             let scrolledY = window.scrollY
-
-             if (scrolledY) {
-               window.scroll({top: scrolledY - headerHeight, left: 0, behavior: 'smooth'})
-             }
-           }
-
            return (
              <div key={key}>
                <Label as='a' onClick={scroll(`${title + key}`)} basic size='mini' className='padding__none text__weight--500'>
