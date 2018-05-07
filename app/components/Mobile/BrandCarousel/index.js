@@ -60,7 +60,7 @@ function BrandCarousel ({brands, loader, changeRoute}) {
           loader ? range(8).map((_, index) => <SliderItem key={index}><DefaultState /></SliderItem>)
           : brands && brands.map((brand, index) => {
             return (
-              <SliderItem key={index} onClick={goToBrand(brand.get('id'))}>
+              <SliderItem data-cy={`brand-carousel-${index}`} key={index} onClick={goToBrand(brand.get('id'))}>
                 <PlainCard width={94} height={94}>
                   <Image src={brand.get('logo') !== '' ? brand.get('logo') : imageStock('Brands-Default.jpg', imgixOptions)} alt='CLiQQ' />
                 </PlainCard>
