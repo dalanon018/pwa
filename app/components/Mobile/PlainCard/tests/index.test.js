@@ -1,10 +1,22 @@
-// import React from 'react';
-// import { shallow } from 'enzyme';
+import React from 'react'
+import { shallow } from 'enzyme'
 
-// import PlainCard from '../index';
+import PlainCard from '../index'
+
+const wrapper = (Component = PlainCard, props = {}, enzyme = shallow) => enzyme(
+  <Component {...props} />
+)
 
 describe('<PlainCard />', () => {
-  it('Expect to have unit tests specified', () => {
-    expect(true).toEqual(true)
+  const minProps = {
+    children: {},
+    borderRadius: false
+  }
+
+  it('render without exploding', () => {
+    const renderComponent = wrapper(PlainCard, minProps)
+    expect(
+      renderComponent.length
+    ).toEqual(1)
   })
 })

@@ -375,33 +375,33 @@ class Receipt extends React.PureComponent {
                 <Grid>
                   <Grid.Row columns={2}>
                     <Grid.Column floated='left' width={9} className='product-status'>
-                      <Label className='text__weight--400' as='span' basic size='tiny'>
+                      <Label className='text__weight--400 label-key' as='span' basic size='tiny'>
                         <FormattedMessage {...messages.statusLabel} />
                       </Label>
-                      <Label as='p' basic size='large' className='text__weight--700' color={this._handleColorStatus(statuses[receipt.get('status')])}>
+                      <Label as='p' basic size='large' className='text__weight--700 label-value' color={this._handleColorStatus(statuses[receipt.get('status')])}>
                         { this._handleStatusTitle() }
                       </Label>
                     </Grid.Column>
                     <Grid.Column floated='right' textAlign='right' width={7}>
-                      <Label className='text__weight--400' as='span' basic size='tiny'>
+                      <Label className='text__weight--400 label-key' as='span' basic size='tiny'>
                         <FormattedMessage {...messages.paymentMethod} />
                       </Label>
-                      <Label as='p' basic size='large' className='text__weight--700'>
+                      <Label as='p' basic size='large' className='text__weight--700 label-value'>
                         <FormattedMessage {...messages[`${this._handleModePayment()}methodType`]} />
                       </Label>
                     </Grid.Column>
 
                     <Grid.Column floated='left' className='order-number' width={9}>
-                      <Label className='text__weight--400' as='span' basic size='tiny'>
+                      <Label className='text__weight--400 label-key' as='span' basic size='tiny'>
                         <FormattedMessage {...messages.trackingNumber} />
                       </Label>
-                      <Label as='p' basic size='large' className='text__weight--700'>{receipt.get('trackingNumber')}</Label>
+                      <Label as='p' basic size='large' className='text__weight--700 label-value'>{receipt.get('trackingNumber')}</Label>
                     </Grid.Column>
                     <Grid.Column floated='right' textAlign='right' width={7}>
-                      <Label className='text__weight--400' as='span' basic size='tiny'>
+                      <Label className='text__weight--400 label-key' as='span' basic size='tiny'>
                         { this._handleDateString() }
                       </Label>
-                      <Label as='p' basic size='large' className='text__weight--700'>{ this._handleDateValue()}</Label>
+                      <Label as='p' basic size='large' className='text__weight--700 label-value'>{ this._handleDateValue()}</Label>
                     </Grid.Column>
                     <Grid.Column width={16}>
                       {this._handleMatchCode(receipt.get('trackingNumber'))}

@@ -79,21 +79,17 @@ export const ReceiptHeader = styled.div`
   @media (min-width: 320px) and (max-width:374px) {
     .order-number {
       p {
-        font-size: 15px !important;
+        font-size: 14px !important;
         span {
-          font-size: 17px;
+          font-size: 16px;
         }
       }
     }
     .product-status {
       p {
-        font-size: 15px !important;
+        font-size: 14px !important;
       }
     }
-  }
-
-  @media (min-width: 1024px) {
-
   }
 `
 
@@ -167,6 +163,21 @@ export const CustomContainer = styled.div`
   @media (min-width: 1024px) {
     margin: 0 auto;
     width: 500px;
+  }
+
+  @media (max-width: 375px) {
+    .label-value {
+      font-size: 14px !important;
+    }
+  }
+
+  @media (max-width: 320px) {
+    .label-key {
+      font-size: 10px !important;
+    }
+    .label-value {
+      font-size: 12px !important;
+    }
   }
 `
 
