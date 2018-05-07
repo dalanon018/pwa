@@ -58,12 +58,8 @@ describe('Should render home', () => {
   })
 
   describe('Homepage Slider', () => {
-    it('should have the .slick-slider container', () => {
+    it('should have the .slick-slider container and children .slick-slide elements', () => {
       cy.get('.slick-slider').should('exist')
-    })
-
-    it('should have the .slick-slide elements', () => {
-      // cy.visit('/')
       cy.get('.slick-slide').should('to.have.length.above', 1)
     })
   })
@@ -74,22 +70,17 @@ describe('Should render home', () => {
     })
 
     describe('Homepage Brands', () => {
-      it('should have text "More Brands"', () => {
-        cy.contains('More Brands')
+      afterEach(() => {
+        cy.visit('/')
       })
 
-      describe('should link to brands landing page', () => {
-        afterEach(() => {
-          cy.visit('/')
-        })
-
-        it('should link correctly', () => {
-          cy.get('[data-cy="feature-brands"]')
-            .find('[data-cy="on-click"]')
-            .click({ force: true })
-            .url()
-            .should('include', 'brands')
-        })
+      it('should have text "More Brands" should link correctly', () => {
+        cy.contains('More Brands')
+        cy.get('[data-cy="feature-brands"]')
+          .find('[data-cy="on-click"]')
+          .click({ force: true })
+          .url()
+          .should('include', 'brands')
       })
     })
   })
