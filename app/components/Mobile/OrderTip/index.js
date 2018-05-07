@@ -8,6 +8,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import PropTypes from 'prop-types'
 import { push } from 'react-router-redux'
 import { Container, Grid, Image, Label } from 'semantic-ui-react'
 import DeliveryIcon from 'images/icons/delivery-icon.svg'
@@ -51,7 +52,7 @@ export const FlexContainer = styled.div`
   }
 `
 
-class OrderTip extends React.PureComponent {
+export class OrderTip extends React.PureComponent {
   state = {
     toggle: false,
     bannerMap: false
@@ -160,7 +161,12 @@ class OrderTip extends React.PureComponent {
 }
 
 OrderTip.propTypes = {
-
+  toggle: PropTypes.bool,
+  bannerMap: PropTypes.bool,
+  _handleOpenMap: PropTypes.func,
+  _handleOpen: PropTypes.func,
+  _handleClose: PropTypes.func,
+  changeRoute: PropTypes.func.isRequired
 }
 
 function mapDispatchToProps (dispatch) {

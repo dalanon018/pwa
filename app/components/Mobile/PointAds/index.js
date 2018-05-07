@@ -8,6 +8,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Container, Grid, Image, Label, Button } from 'semantic-ui-react'
 import WindowWidth from 'components/Shared/WindowWidth'
+import PropTypes from 'prop-types'
 
 import { FormattedMessage } from 'react-intl'
 import messages from './messages'
@@ -162,7 +163,7 @@ class PointAds extends React.PureComponent {
 }
 
 PointAds.propTypes = {
-
+  changeRoute: PropTypes.func.isRequired
 }
 
 export default WindowWidth(PointAds)

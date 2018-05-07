@@ -7,6 +7,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Button, Modal, Image, Label } from 'semantic-ui-react'
+import PropTypes from 'prop-types'
 
 import { FormattedMessage } from 'react-intl'
 import messages from './messages'
@@ -146,7 +147,11 @@ function OrderTipModal ({intl, toggle, close, bannerMap, changeRoute}) { // esli
 }
 
 OrderTipModal.propTypes = {
-
+  bannerMap: PropTypes.bool.isRequired,
+  toggle: PropTypes.bool.isRequired,
+  intl: PropTypes.object.isRequired,
+  close: PropTypes.func.isRequired,
+  changeRoute: PropTypes.func.isRequired
 }
 
 export default OrderTipModal

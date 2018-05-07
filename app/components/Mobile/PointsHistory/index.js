@@ -8,6 +8,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Container, Label, Image, Grid } from 'semantic-ui-react'
 import moment from 'moment'
+import PropTypes from 'prop-types'
 
 import PlainCard from 'components/Mobile/PlainCard'
 
@@ -109,7 +110,9 @@ function PointsHistory ({
 }
 
 PointsHistory.propTypes = {
-
+  changeRoute: PropTypes.func,
+  loader: PropTypes.bool,
+  transactions: PropTypes.object
 }
 
 export default PointsHistory

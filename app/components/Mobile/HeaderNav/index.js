@@ -213,7 +213,8 @@ export default class MainMenu extends PureComponent {
     showActivityIcon: PropTypes.bool.isRequired,
     hideBackButton: PropTypes.bool.isRequired,
     leftButtonAction: PropTypes.func.isRequired,
-    changeRoute: PropTypes.func.isRequired
+    changeRoute: PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired
   }
 
   state = {

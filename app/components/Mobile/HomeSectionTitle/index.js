@@ -7,6 +7,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 // import H3 from 'components/Shared/H3'
 import { Label, Image, Container } from 'semantic-ui-react'
 import ArrowIcon from 'images/icons/goto-icon.svg'
@@ -64,7 +65,9 @@ function mapDispatchToProps (dispatch) {
 }
 
 HomeSectionTitle.propTypes = {
-
+  changeRoute: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  linkLabel: PropTypes.string
 }
 
 export default connect(null, mapDispatchToProps)(HomeSectionTitle)

@@ -342,6 +342,7 @@ const LabelPrice = styled.div`
   margin-top: 5px;
   text-align: right;
   line-height: normal;
+  width: 50%;
 
   .total {
     letter-spacing: -2px;

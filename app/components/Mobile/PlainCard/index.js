@@ -6,6 +6,7 @@
 
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 const Wrapper = styled.div`
   align-items: center;
@@ -32,6 +33,11 @@ function PlainCard ({ children, borderRadius, width, height }) {
       {children}
     </Wrapper>
   )
+}
+
+PlainCard.propTypes = {
+  children: PropTypes.object.isRequired,
+  borderRadius: PropTypes.bool
 }
 
 export default PlainCard

@@ -8,6 +8,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Container, Image, Grid } from 'semantic-ui-react'
 import { imageStock } from 'utils/image-stock'
+import PropTypes from 'prop-types'
 
 // import messages from './messages'
 
@@ -69,7 +70,9 @@ function FlashDeals ({
 }
 
 FlashDeals.propTypes = {
-
+  promo: PropTypes.object.isRequired,
+  promosLoading: PropTypes.bool.isRequired,
+  promosCount: PropTypes.number
 }
 
 export default FlashDeals
