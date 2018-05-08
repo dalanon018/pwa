@@ -27,7 +27,7 @@ import {
 
 import messages from './messages'
 
-const PurchaseWrapper = styled.div`
+export const PurchaseWrapper = styled.div`
   border-radius: 3px;
   display: flex;
   height: 100%;
@@ -37,14 +37,14 @@ const PurchaseWrapper = styled.div`
   width: 100%;
 `
 
-const PurchaseInfo = styled.div`
+export const PurchaseInfo = styled.div`
   align-content: space-between;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
 `
 
-const PurchaseImage = styled.div`
+export const PurchaseImage = styled.div`
   max-width: 110px;
   position: relative;
 
@@ -54,7 +54,7 @@ const PurchaseImage = styled.div`
   align-items: flex-end;
 `
 
-const StatusWrapper = styled.div`
+export const StatusWrapper = styled.div`
   background-color: ${({status}) => status};
   // bottom: 0;
   // left: 0;
@@ -64,7 +64,7 @@ const StatusWrapper = styled.div`
   width: 100%;
 `
 
-const OtherInfo = styled.div`
+export const OtherInfo = styled.div`
   width: 100%;
 
   .product-price {
