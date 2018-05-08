@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import { Footer } from '../index'
 
-import { 
+import {
   Wrapper,
   HelperLinks,
   CopyRight,
