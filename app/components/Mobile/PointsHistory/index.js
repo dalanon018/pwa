@@ -17,7 +17,7 @@ import messages from './messages'
 
 import CliqqIcon from 'images/icons/cliqq.png'
 
-const PointsHistoryWrapper = styled.div`
+export const PointsHistoryWrapper = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
@@ -25,7 +25,7 @@ const PointsHistoryWrapper = styled.div`
   width: 100%;
 `
 
-const AdjustedPoints = styled.div`
+export const AdjustedPoints = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;

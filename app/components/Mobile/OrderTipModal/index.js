@@ -18,15 +18,15 @@ import PopupIconOne from 'images/icons/truck-icon.png'
 import ModalHeaderBg from 'images/modal-bg-lightgrey.png'
 import BannerMap from 'images/map-banner.jpg'
 
-const DetailsWrapper = styled.div`
+export const DetailsWrapper = styled.div`
   margin: 10px;
 `
 
-const ButtonWrapper = styled.div`
+export const ButtonWrapper = styled.div`
   text-align: center;
 `
 
-const BannerHeader = styled.div`
+export const BannerHeader = styled.div`
   background: url(${props => props.background}) no-repeat top right / cover;
   height: ${props => props.bannerMap ? '150px' : '75px'};
   margin-bottom: 40px;
@@ -82,7 +82,7 @@ const BannerHeader = styled.div`
   }
 `
 
-const ModalContainer = styled.div`
+export const ModalContainer = styled.div`
   border-radius: 30px;
 
   button {

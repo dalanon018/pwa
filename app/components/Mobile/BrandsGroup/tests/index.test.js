@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { fromJS } from 'immutable'
 
-import BrandsGroup from '../index'
+import BrandsGroup, { NavWrapper } from '../index'
 
 const wrapper = (Component = BrandsGroup, props = {}, enzyme = shallow) => enzyme(
   <Component {...props} />
@@ -17,6 +17,13 @@ describe('<BrandsGroup />', () => {
 
   it('render without exploding', () => {
     const renderComponent = wrapper(BrandsGroup, minProps)
+    expect(
+      renderComponent.length
+    ).toEqual(1)
+  })
+
+  it('NavWrapper should render', () => {
+    const renderComponent = shallow(<NavWrapper />)
     expect(
       renderComponent.length
     ).toEqual(1)

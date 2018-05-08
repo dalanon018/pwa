@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { fromJS } from 'immutable'
 
-import PointsHistory from '../index'
+import PointsHistory, { PointsHistoryWrapper, AdjustedPoints } from '../index'
 
 const wrapper = (Component = PointsHistory, props = {}, enzyme = shallow) => enzyme(
   <Component {...props} />
@@ -36,5 +36,19 @@ describe('<PointsHistory />', () => {
       <PointsHistory />
     )
     expect(renderedComponent.find('div').length).toEqual(1)
+  })
+
+  it('should render PointsHistoryWrapper', () => {
+    const renderComponent = shallow(<PointsHistoryWrapper />)
+    expect(
+      renderComponent.length
+    ).toEqual(1)
+  })
+
+  it('should render AdjustedPoints', () => {
+    const renderComponent = shallow(<AdjustedPoints />)
+    expect(
+      renderComponent.length
+    ).toEqual(1)
   })
 })

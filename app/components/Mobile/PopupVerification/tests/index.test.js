@@ -79,4 +79,11 @@ describe('<PopupVerification />', () => {
     const renderComponent = wrapper(minProps)
     expect(renderComponent.find(Input)).toHaveLength(1)
   })
+
+  it('should render a div', () => {
+    const renderedComponent = shallow(
+      <PopupVerification {...minProps} />
+    )
+    expect(renderedComponent.find('div').length).toEqual(1)
+  })
 })

@@ -13,13 +13,13 @@ import { Label, Image, Container } from 'semantic-ui-react'
 import ArrowIcon from 'images/icons/goto-icon.svg'
 import { push } from 'react-router-redux'
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
 `
 
-const LinkWrapper = styled.div`
+export const LinkWrapper = styled.div`
   text-transform: uppercase;
 
   img {

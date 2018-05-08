@@ -229,4 +229,18 @@ describe('<Product />', () => {
     const ShallowedWrapper = shallow(<Product {...props} />)
     expect(ShallowedWrapper.find(SizeSelector)).toHaveLength(0)
   })
+
+  it('should render a div', () => {
+    const renderedComponent = shallow(
+      <SizeSelector {...minProps} />
+    )
+    expect(renderedComponent.find('div').length).toEqual(1)
+  })
+
+  it('should render a div', () => {
+    const renderedComponent = shallow(
+      <Product {...minProps} />
+    )
+    expect(renderedComponent.find('div').length).toEqual(6)
+  })
 })

@@ -15,7 +15,7 @@ import Timer from 'components/Shared/CountDownTimer'
 
 import messages from './messages'
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   min-width: 180px;
   padding: 5px 10px;
 
@@ -38,14 +38,14 @@ const Wrapper = styled.div`
   }
 `
 
-const ContentWrapper = styled.div`
+export const ContentWrapper = styled.div`
   align-items: center;
   color: #FFFFFF;
   display: flex;
   justify-content: space-between;
 `
 
-const LabelWrapper = styled.div`
+export const LabelWrapper = styled.div`
   width: 70px;
 
   span.label {

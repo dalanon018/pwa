@@ -17,7 +17,7 @@ import { categoriesGroup } from 'utils/categories-group'
 
 import BrandItem from 'components/Mobile/PlainCard'
 
-const NavWrapper = styled.div`
+export const NavWrapper = styled.div`
   border-left: 1px solid #E8E8E8;
   height: ${props => props.bottomScroll ? window.innerHeight - 362 + 'px' : '100%'};
   overflow-y: auto;

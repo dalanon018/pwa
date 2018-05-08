@@ -25,7 +25,7 @@ import LoadingIndicator from 'components/Shared/LoadingIndicator'
 
 import messages from './messages'
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   position: fixed;
   height: 100vh;
   top: 0;
@@ -39,7 +39,7 @@ const Wrapper = styled.div`
   align-items: stretch;
 `
 
-const OptionWrapper = styled.div`
+export const OptionWrapper = styled.div`
   height: 100vh;
   overflow-y: auto;
   // padding-bottom: 66px;
@@ -52,7 +52,7 @@ const OptionWrapper = styled.div`
   }
 `
 
-const ButtonWrapper = styled.div`
+export const ButtonWrapper = styled.div`
   align-items: flex-end;
   background-color: #FFFFFF;
   bottom: 0;
@@ -68,7 +68,7 @@ const ButtonWrapper = styled.div`
   width: 75%;
 `
 
-const FormWrapper = styled(Form)`
+export const FormWrapper = styled(Form)`
   display: flex;
   flex-wrap: wrap;
 
@@ -77,7 +77,7 @@ const FormWrapper = styled(Form)`
   }
 `
 
-const BlockWrapper = styled.div`
+export const BlockWrapper = styled.div`
   border-bottom: 1px solid #F4F4F4;
   padding: 10px 0;
 `
