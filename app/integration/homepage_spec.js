@@ -3,7 +3,7 @@ describe('Should render home', () => {
     cy.visit('/')
   })
 
-  describe('Should request data for home page', () => {
+  describe('Should request expected data from API', () => {
     let accessToken
 
     before(() => {
@@ -93,19 +93,31 @@ describe('Should render home', () => {
     cy.contains('Flash Deals').should('to.have.lengthOf', 1)
   })
 
-  // describe('spying', function () {
-  //   beforeEach(function () {
-  //     // We use cy.visit({onBeforeLoad: ...}) to spy on
-  //     // window.fetch before any app code runs
-  //     cy.visit('http://localhost:3000', {
-  //       onBeforeLoad (win) {
-  //         cy.spy(win, 'fetch')
-  //       }
-  //     })
-  //   })
+  describe('Fetch API needed', function () {
+    beforeEach(function () {
+      // We use cy.visit({onBeforeLoad: ...}) to spy on
+      // window.fetch before any app code runs
+      cy.visit('/', {
+        onBeforeLoad (win) {
+          cy.spy(win, 'fetch').as('winFetch')
+        }
+      })
+    })
 
-  //   it('requests for featured items', function () {
-  //     cy.window().its('fetch').should('be.calledWith', `${Cypress.env('API_BASE_URL')}/productList/featured?deviceOrigin=PWA&offset=0&limit=5`)
-  //   })
-  // })
+    it('requests for featured items', function () {
+      cy.get('@winFetch').should('to.be.calledWith', `${Cypress.env('API_BASE_URL')}/productList/featured?offset=0&limit=8`)
+    })
+
+    it('requests for categories', function () {
+      cy.get('@winFetch').should('to.be.calledWith', `${Cypress.env('API_BASE_URL')}/categories`)
+    })
+
+    it('requests for brands', function () {
+      cy.get('@winFetch').should('to.be.calledWith', `${Cypress.env('API_BASE_URL')}/brands`)
+    })
+
+    it('requests for promos', function () {
+      cy.get('@winFetch').should('to.be.calledWith', `${Cypress.env('API_BASE_URL')}/promos/?offset=0&limit=1&productOffset=0&productLimit=2`)
+    })
+  })
 })
