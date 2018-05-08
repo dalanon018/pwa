@@ -18,7 +18,7 @@ import ProductView from 'components/Mobile/ProductView'
 // import SectionTitle from 'components/Mobile/HomeSectionTitle'
 import TimerWrapper from 'components/Mobile/TimerWrapper'
 
-const BannerWrapper = styled.div`
+export const BannerWrapper = styled.div`
   position: relative;
 `
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { fromJS } from 'immutable'
 import { shallow } from 'enzyme'
 
-import FlashDeals from '../index'
+import FlashDeals, { BannerWrapper } from '../index'
 
 const wrapper = (Component = FlashDeals, props = {}, enzyme = shallow) => enzyme(
   <Component {...props} />
@@ -28,6 +28,13 @@ describe('<FlashDeals />', () => {
 
   it('render without exploding', () => {
     const renderComponent = wrapper(FlashDeals, minProps)
+    expect(
+      renderComponent.length
+    ).toEqual(1)
+  })
+
+  it('should render BannerWrapper', () => {
+    const renderComponent = shallow(<BannerWrapper />)
     expect(
       renderComponent.length
     ).toEqual(1)
