@@ -16,7 +16,7 @@ import SearchImage from 'images/icons/search-header.svg'
 import CliqqIcon from 'images/icons/cliqq.png'
 import MainLogo from 'images/cliqq-logo.svg'
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   display: block;
   position: relative;
 
@@ -40,7 +40,7 @@ const Wrapper = styled.div`
   }
 `
 
-const LeftWrapper = styled.div`
+export const LeftWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
 
@@ -48,12 +48,12 @@ const LeftWrapper = styled.div`
   animation-duration: .5s;
 `
 
-// const CenterWrapper = styled.div`
+// export const CenterWrapper = styled.div`
 //   display: flex;
 //   justify-content: center;
 // `
 
-const ImageLogo = styled.img`
+export const ImageLogo = styled.img`
   height: 35px;
   left: 34px;
   position: absolute;
@@ -63,7 +63,7 @@ const ImageLogo = styled.img`
   z-index: 1;
 `
 
-const RightWrapper = styled.div`
+export const RightWrapper = styled.div`
   align-items: center;
   display: flex;
   justify-content: ${props => props.toggleSpace ? 'space-between' : 'flex-end'};
@@ -79,7 +79,7 @@ const RightWrapper = styled.div`
   }
 `
 
-const ActivitiesIcon = styled.div`
+export const ActivitiesIcon = styled.div`
   margin: ${props => props.marginLeft ? '0 2px 0' : 0};
 
   @media screen and (max-width: 767px) {
@@ -90,7 +90,7 @@ const ActivitiesIcon = styled.div`
   }
 `
 
-const Hamburger = styled.div`
+export const Hamburger = styled.div`
   display: block;
   position: relative;
   overflow: hidden;
@@ -112,7 +112,7 @@ const Hamburger = styled.div`
   }
 `
 
-const HamburgerSpan = styled.span`
+export const HamburgerSpan = styled.span`
   display: block;
   position: absolute;
   top: 12px;
@@ -147,7 +147,7 @@ const HamburgerSpan = styled.span`
   }
 `
 
-const MobileMenu = styled.div`
+export const MobileMenu = styled.div`
   ${props => props.shadow && 'box-shadow: 1px 1px 5px rgba(120,120,120, 0.7);'}
   padding-right: 10px;
   padding-left: 10px;
@@ -159,7 +159,7 @@ const MobileMenu = styled.div`
   z-index: 99;
 `
 
-const SearchInput = styled(Input)`
+export const SearchInput = styled(Input)`
   font-size: 18px;
   letter-spacing: 1px;
   margin: 0 5px;
@@ -178,7 +178,7 @@ const SearchInput = styled(Input)`
   }
 `
 
-const PageTitle = styled.div`
+export const PageTitle = styled.div`
   h1 {
     &.long-title {
       font-size: 18px;
@@ -187,12 +187,12 @@ const PageTitle = styled.div`
   }
 `
 
-const SearchContainer = styled.div`
+export const SearchContainer = styled.div`
   position: relative;
   width: 100%;
 `
 
-const CustomRow = styled(Grid.Row)`
+export const CustomRow = styled(Grid.Row)`
   padding: 5px 0 !important;
 `
 
