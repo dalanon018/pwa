@@ -43,36 +43,6 @@ import {
   Wrapper
 } from './styles'
 
-// const RegistrationWrapper = styled.div`
-//   background-color: #F7F7F7;
-//   height: 100vh;
-//   left: 0;
-//   position: fixed;
-//   top: 0;
-//   width: 100%;
-//   z-index: 9;
-// `
-
-// const ContentWrapper = styled.div`
-//   align-items: center;
-//   display: flex;
-//   flex-wrap: wrap;
-//   justify-content: center;
-//   left: 50%;
-//   position: absolute;
-//   top: 50%;
-//   transform: translate(-50%, -50%);
-//   width: 100%;
-//   padding: 0 150px;
-// `
-
-// const BoxWrapper = styled.div`
-//   background-color: #FFFFFF;
-//   border: 2px solid #EBEBEB;
-//   padding: 30px;
-//   width: 100%;
-// `
-
 function Registration ({
   loadingMarkdown,
   submissionLoader,
@@ -102,16 +72,6 @@ function Registration ({
   _agreeAction
 }) {
   return (
-    // <RegistrationWrapper>
-    //   <Container className='position__relative'>
-    //     <ContentWrapper>
-    //       <BoxWrapper>
-    //         <FormattedMessage {...messages.header} />
-    //       </BoxWrapper>
-    //     </ContentWrapper>
-    //   </Container>
-    // </RegistrationWrapper>
-
     <Wrapper className='background__white'>
       <PopupWrapper>
         <BannerHeader background={BannerBg}>
