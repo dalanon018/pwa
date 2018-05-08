@@ -8,7 +8,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   align-items: center;
   background-color: #FFFFFF;
   border-radius: 4px;
