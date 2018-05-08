@@ -29,7 +29,7 @@ import FilterSlider from 'components/Mobile/FilterSlider'
 
 import messages from './messages'
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   align-items: center;
   box-shadow: 0 0 5px rgba(120,120,120, 0.1);
   display: flex;
@@ -47,7 +47,7 @@ const Wrapper = styled.div`
   }
 `
 
-const BackGroundLay = styled.div`
+export const BackGroundLay = styled.div`
   background-color: rgba(0, 0, 0, 0.7);
   height: 100vh;
   left: 0;
