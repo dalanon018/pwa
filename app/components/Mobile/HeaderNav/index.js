@@ -267,7 +267,7 @@ export default class MainMenu extends PureComponent {
     )
 
     const ShowSearchInputLogo = toggleComponent(
-      <SearchContainer onClick={this._handleGotoSearch}>
+      <SearchContainer data-cy='search-button' onClick={this._handleGotoSearch}>
         <ImageLogo alt='logo' src={MainLogo} onClick={changeRoute.bind(this, '/')} />
         <SearchInput
           // className='color__light-grey'
