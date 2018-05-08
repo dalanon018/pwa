@@ -3,6 +3,12 @@ import { fromJS } from 'immutable'
 import { shallow } from 'enzyme'
 import Category, { DefaultState } from '../index'
 
+import {
+  CategoryBlock,
+  CategoryWrapper,
+  BackgroundLay
+} from '../styles'
+
 const wrapper = (Component = Category, props = {}, enzyme = shallow) => enzyme(
   <Component {...props} />
 )
@@ -33,5 +39,26 @@ describe('<Category />', () => {
     expect(
       renderComponent.find(DefaultState).length
     ).toBeGreaterThan(0)
+  })
+
+  it('CategoryBlock should render', () => {
+    const renderComponent = shallow(<CategoryBlock />)
+    expect(
+      renderComponent.length
+    ).toEqual(1)
+  })
+
+  it('CategoryWrapper should render', () => {
+    const renderComponent = shallow(<CategoryWrapper />)
+    expect(
+      renderComponent.length
+    ).toEqual(1)
+  })
+
+  it('BackgroundLay should render', () => {
+    const renderComponent = shallow(<BackgroundLay />)
+    expect(
+      renderComponent.length
+    ).toEqual(1)
   })
 })
