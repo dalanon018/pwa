@@ -2,7 +2,12 @@ import React from 'react'
 import { fromJS } from 'immutable'
 import { shallow } from 'enzyme'
 
-import ModalWithHeader from '../index'
+import ModalWithHeader, {
+  BannerHeader,
+  DetailsWrapper,
+  ModalContainer,
+  ButtonWrapper
+} from '../index'
 
 const wrapper = (props = {}, enzyme = shallow) => shallow(
   <ModalWithHeader {...props} />
@@ -61,5 +66,33 @@ describe('<ModalWithHeader />', () => {
   it('should render a modal', () => {
     const renderedComponent = wrapper(minProps)
     expect(renderedComponent.find('Modal').length).toEqual(1)
+  })
+
+  it('should render BannerHeader', () => {
+    const renderComponent = shallow(<BannerHeader />)
+    expect(
+      renderComponent.length
+    ).toEqual(1)
+  })
+
+  it('should render DetailsWrapper', () => {
+    const renderComponent = shallow(<DetailsWrapper />)
+    expect(
+      renderComponent.length
+    ).toEqual(1)
+  })
+
+  it('should render ModalContainer', () => {
+    const renderComponent = shallow(<ModalContainer />)
+    expect(
+      renderComponent.length
+    ).toEqual(1)
+  })
+
+  it('should render ButtonWrapper', () => {
+    const renderComponent = shallow(<ButtonWrapper />)
+    expect(
+      renderComponent.length
+    ).toEqual(1)
   })
 })
