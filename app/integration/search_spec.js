@@ -1,7 +1,7 @@
 describe('Search Page', () => {
   beforeEach(() => {
     cy.visit('/')
-    cy.get('[data-attribute="search"] input').click()
+    cy.get('[data-cy="search-button"] input').click({ force: true })
   })
 
   it('It should visit search page', () => {
@@ -12,16 +12,15 @@ describe('Search Page', () => {
     beforeEach(function () {
       cy.visit('http://localhost:3000/search', {
         onBeforeLoad (win) {
-          cy.spy(win, 'fetch')
+          cy.spy(win, 'fetch').as('winFetch')
         }
       })
     })
 
     it('It should search product bag', () => {
       const searchItem = 'bag'
-
       cy.get('input').type(`${searchItem}{enter}`)
-      cy.window().its('fetch').should('be.calledWith', `https://apidemo.cliqq.net:8443/ecms/api/v1/search/${searchItem}?deviceOrigin=PWA`)
+      cy.get('@winFetch').should('to.be.calledWith', `${Cypress.env('API_BASE_URL')}/search/${searchItem}?deviceOrigin=PWA`)
     })
   })
 })

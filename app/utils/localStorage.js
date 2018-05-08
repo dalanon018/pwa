@@ -15,3 +15,7 @@ export async function getItem (key) {
 export async function removeItem (key) {
   return await localForage.removeItem(key) // eslint-disable-line
 }
+
+export function clear () {
+  return localForage.clear()
+}

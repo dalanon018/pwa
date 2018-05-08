@@ -1,10 +1,12 @@
 describe('Should render home', () => {
-  describe('Should request data for home page', () => {
+  before(() => {
+    cy.visit('/')
+  })
+
+  describe('Should request expected data from API', () => {
     let accessToken
 
-    beforeEach(() => {
-      cy.visit('/')
-
+    before(() => {
       const params = {
         client_id: Cypress.env('OATH_CLIENT_ID'),
         client_secret: Cypress.env('OATH_CLIENT_SECRET'),
@@ -42,7 +44,7 @@ describe('Should render home', () => {
 
     it('it should request for products by Featured', () => {
       cy.request({
-        url: `${Cypress.env('API_BASE_URL')}/tags/FEATURED?deviceOrigin=PWA`,
+        url: `${Cypress.env('API_BASE_URL')}/productList/featured?deviceOrigin=PWA`,
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }
@@ -55,29 +57,67 @@ describe('Should render home', () => {
     })
   })
 
-  it('Homepage should have slider', () => {
-    cy.visit('/')
-    cy.get('.slick-slider').should('exist')
+  describe('Homepage Slider', () => {
+    it('should have the .slick-slider container and children .slick-slide elements', () => {
+      cy.get('.slick-slider').should('exist')
+      cy.get('.slick-slide').should('to.have.length.above', 1)
+    })
   })
 
-  it('Homepage should Featured Items', () => {
-    cy.visit('/')
+  describe('Homepage Brands', () => {
+    it('Homepage should have Brand Carousel featured atleast 8', () => {
+      cy.get('[data-cy^="brand-carousel"]').should('to.have.lengthOf', 8)
+    })
+
+    describe('Homepage Brands', () => {
+      afterEach(() => {
+        cy.visit('/')
+      })
+
+      it('should have text "More Brands" should link correctly', () => {
+        cy.contains('More Brands')
+        cy.get('[data-cy="feature-brands"]')
+          .find('[data-cy="on-click"]')
+          .click({ force: true })
+          .url()
+          .should('include', 'brands')
+      })
+    })
+  })
+
+  it('Homepage should have text "Featured Items"', () => {
     cy.contains('Featured Items')
   })
 
-  describe('spying', function () {
+  it('Homepage should should have text "Flash Deals" and length of 1', () => {
+    cy.contains('Flash Deals').should('to.have.lengthOf', 1)
+  })
+
+  describe('Fetch API needed', function () {
     beforeEach(function () {
       // We use cy.visit({onBeforeLoad: ...}) to spy on
       // window.fetch before any app code runs
-      cy.visit('http://localhost:3000', {
+      cy.visit('/', {
         onBeforeLoad (win) {
-          cy.spy(win, 'fetch')
+          cy.spy(win, 'fetch').as('winFetch')
         }
       })
     })
 
     it('requests for featured items', function () {
-      cy.window().its('fetch').should('be.calledWith', 'https://apidemo.cliqq.net:8443/ecms/api/v1/tags/FEATURED?deviceOrigin=PWA&offset=0&limit=5')
+      cy.get('@winFetch').should('to.be.calledWith', `${Cypress.env('API_BASE_URL')}/productList/featured?offset=0&limit=8`)
+    })
+
+    it('requests for categories', function () {
+      cy.get('@winFetch').should('to.be.calledWith', `${Cypress.env('API_BASE_URL')}/categories`)
+    })
+
+    it('requests for brands', function () {
+      cy.get('@winFetch').should('to.be.calledWith', `${Cypress.env('API_BASE_URL')}/brands`)
+    })
+
+    it('requests for promos', function () {
+      cy.get('@winFetch').should('to.be.calledWith', `${Cypress.env('API_BASE_URL')}/promos/?offset=0&limit=1&productOffset=0&productLimit=2`)
     })
   })
 })
