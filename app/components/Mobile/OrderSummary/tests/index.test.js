@@ -113,6 +113,15 @@ describe('<OrderSummary />', () => {
 
   it('renders one <MethodTitle/> styled component', () => {
     const ShallowedWrapper = shallow(<OrderSummary {...minProps} />)
+    expect(ShallowedWrapper.find(MethodTitle)).toHaveLength(1)
+  })
+
+  it('renders two <MethodTitle/> styled component if _isFullPointsOnly is "TRUE"', () => {
+    const props = {
+      ...minProps,
+      _isFullPointsOnly: true
+    }
+    const ShallowedWrapper = shallow(<OrderSummary {...props} />)
     expect(ShallowedWrapper.find(MethodTitle)).toHaveLength(2)
   })
 
