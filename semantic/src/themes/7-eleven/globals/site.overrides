@@ -64,13 +64,13 @@ div [data-reactroot],
 @media only screen and (max-width: 991px) and (min-width: 768px) {
   .ui.container, .ui.grid.container {
     width: inherit !important;
-  }    
+  }
 }
 
 @media only screen and (max-width: 1199px) and (min-width: 992px) {
   .ui.grid.container {
     width: inherit !important;
-  }  
+  }
 }
 
 .grecaptcha-badge {
@@ -627,7 +627,7 @@ svg#barcode {
           margin-top: 10px !important;
         }
         &--20 {
-          margin-top: 20px;
+          margin-top: 20px !important;
         }
         &--30 {
           margin-top: 30px !important;
