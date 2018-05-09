@@ -325,6 +325,7 @@ const CustomGrid = styled.div`
 const LabelTitle = styled.div`
   font-size: 14px;
   margin: 0;
+  flex: 1;
 
   img {
     width: 28px;
@@ -342,7 +343,7 @@ const LabelPrice = styled.div`
   margin-top: 5px;
   text-align: right;
   line-height: normal;
-  width: 50%;
+  flex: 1;
 
   .total {
     letter-spacing: -2px;
@@ -369,8 +370,14 @@ const LabelPrice = styled.div`
 `
 
 const LabelFullPointsPrice = styled(LabelPrice)`
-  flex-wrap: initial;
   align-items: center;
+  flex-wrap: initial;
+  justify-content: flex-end;
+`
+
+const FullPointsWrapper = styled.div`
+  align-items: center;
+  display: flex;
 `
 
 export {
@@ -379,6 +386,7 @@ export {
   DetailsWrapper,
   LabelPrice,
   LabelFullPointsPrice,
+  FullPointsWrapper,
   LabelTitle,
   LocationButton,
   MethodTitle,

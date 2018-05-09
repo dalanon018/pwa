@@ -60,6 +60,7 @@ import {
   CustomGrid,
   LabelPrice,
   LabelFullPointsPrice,
+  FullPointsWrapper,
   LabelTitle
 } from './styles'
 
@@ -227,10 +228,12 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
           </Label>
         </LabelTitle>
         <LabelFullPointsPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
-          <Image src={CliqqIcon} className='cliqq-plain-icon' alt='CLiQQ' />
-          <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
-            { this._computeTotalPointsPrice().toLocaleString() }
-          </Label>
+          <FullPointsWrapper>
+            <Image src={CliqqIcon} className='cliqq-plain-icon' alt='CLiQQ' />
+            <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
+              { this._computeTotalPointsPrice().toLocaleString() }
+            </Label>
+          </FullPointsWrapper>
         </LabelFullPointsPrice>
       </label>
     )
