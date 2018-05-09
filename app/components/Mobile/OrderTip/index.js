@@ -71,7 +71,7 @@ export class OrderTip extends React.PureComponent {
           <Grid container>
             <Grid.Row columns={2}>
               <Grid.Column>
-                <FlexContainer onClick={this._handleOpen}>
+                <FlexContainer>
                   <Image alt='CLiQQ' src={DeliveryIcon} />
                   <Label as='span' size='medium' className='color__secondary text__weight--500 custom-label'>
                     1 Day In-Store<br />Delivery
@@ -82,7 +82,7 @@ export class OrderTip extends React.PureComponent {
                 </Label>
               </Grid.Column>
               <Grid.Column>
-                <FlexContainer onClick={this._handleOpenMap}>
+                <FlexContainer>
                   <Image alt='CLiQQ' className='return-icon' src={ReturnIcon} />
                   <Label as='span' size='medium' className='color__secondary text__weight--500 custom-label'>
                     CLiQQ Return<br />Policy
