@@ -358,6 +358,20 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     return handleSubmission(this._disabledFullPointsOption())
   }
 
+  _displayCurrentPointsFullPoints = () => {
+    const { currentPoints, _isFullPointsOnly } = this.props
+    return toggleComponent(
+      <MethodTitle>
+        <Label as='p' className='margin__none text__weight--400' size='medium'>
+          <FormattedMessage {...messages.currentPoints} />
+          <Image src={CliqqIcon} className='cliqq-plain-icon' alt='CLiQQ' />
+          { currentPoints }
+        </Label>
+      </MethodTitle>,
+      null
+    )(_isFullPointsOnly)
+  }
+
   componentWillReceiveProps (nextProps) {
     // when not yet initialize
     const initializeStartingUsePoints = when(
@@ -466,13 +480,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                     <FormattedMessage {...messages[_isFullPointsOnly ? 'pointsOnlyTip' : 'pointsTip']} />
                   </Label>
                 </MethodTitle>
-                <MethodTitle>
-                  <Label as='p' className='margin__none text__weight--400' size='medium'>
-                    <FormattedMessage {...messages.currentPoints} />
-                    <Image src={CliqqIcon} className='cliqq-plain-icon' alt='CLiQQ' />
-                    { subtract(currentPoints, usePoints) }
-                  </Label>
-                </MethodTitle>
+                { this._displayCurrentPointsFullPoints() }
               </Grid.Row>
               <Grid.Row>
                 <SelectMethodWrapper checkHeight={orderedProduct.get('discountPrice') !== 0}>
