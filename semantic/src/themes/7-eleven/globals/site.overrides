@@ -77,6 +77,10 @@ div [data-reactroot],
   margin: 0 auto !important;
 }
 
+.header__custom-padding {
+  padding: 10px 20px !important;
+}
+
 .ui.tabular {
   align-items: center;
   background: @lightGrey;
@@ -242,6 +246,12 @@ input.input-field {
   }
   &__three--grey {
     border-top: 3px solid #ECECEC !important;
+  }
+}
+
+.border_right {
+  &__one--light-grey {
+    border-right: 1px solid @lightGrey !important;
   }
 }
 
@@ -580,6 +590,9 @@ svg#barcode {
       &--none {
         padding-bottom: 0 !important;
         padding-top: 0 !important;
+      }
+      &--10 {
+        padding: 10px 0 !important;
       }
       &--20 {
         padding: 20px 0;

@@ -125,10 +125,18 @@ const Wrapper = styled.div`
 
 const MainContent = styled.div`
   margin-top: ${
-    props => props.media >= 1024 ? '120px'
+    props => props.media >= 1024 ? '20px'
     : props.routeName ? '89px' : '50px'
   };
   width: 100%;
+`
+
+const BackgroundLay = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0,0,0,.7);
+  z-index: 1;
 `
 
 export class Buckets extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -169,11 +177,20 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   state = {
-    toggleSidebar: false
+    toggleSidebar: false,
+    categoryToggle: false
   }
 
   _lastY
   _parentElement
+
+  _toggleCategoryDrop = () => {
+    this.setState(prevState => (
+      {
+        categoryToggle: !prevState.categoryToggle
+      }
+    ))
+  }
 
   _reactNotificationRef = (ref) => {
     this._notificationRef = ref
@@ -287,7 +304,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   _displayHeader = () => {
-    const { pageTitle, showSearchIcon, showPointsIcon, showActivityIcon, changeRoute, location: { pathname }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen, productCategories, brands, loyaltyToken, removeLoyaltyToken } = this.props
+    const { pageTitle, showSearchIcon, showPointsIcon, showActivityIcon, changeRoute, location: { pathname }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen, productCategories, brands, loyaltyToken, removeLoyaltyToken, mobileNumbers } = this.props
     /**
      * we have to identify if we should display backbutton
      */
@@ -321,12 +338,15 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
               showSearchIcon={showSearchIcon}
               isSignIn={!!loyaltyToken}
               signOut={removeLoyaltyToken}
+              mobileNumbers={mobileNumbers}
 
               clearSearchNav={setProductSearchList}
               searchProductNav={searchProduct}
               hideBackButtonNav={hideBackButton}
               _handleSearchInputValueNav={this._handleSearchInputValue}
               leftButtonActionNav={this._handleLeftButtonAction}
+              _toggleCategoryDrop={this._toggleCategoryDrop}
+              categoryToggle={this.state.categoryToggle}
             />
           }
         />
@@ -367,6 +387,9 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
               showSearchIcon={showSearchIcon}
               isSignIn={!!loyaltyToken}
               signOut={removeLoyaltyToken}
+              mobileNumbers={mobileNumbers}
+              _toggleCategoryDrop={this._toggleCategoryDrop}
+              categoryToggle={this.state.categoryToggle}
             />
           }
         />
@@ -486,12 +509,13 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
   render () {
     const { productCategories, toggleError, toggleMessage, brands, loyaltyToken, removeLoyaltyToken, windowWidth, routeName } = this.props
-    const { toggleSidebar } = this.state
+    const { toggleSidebar, categoryToggle } = this.state
 
     const mobileFilterMargin = routeName === 'productsByCategory' || routeName === 'brandPage' || routeName === 'purchases'
 
     return (
       <Wrapper toggleSidebar={toggleSidebar}>
+        {categoryToggle && <BackgroundLay onClick={this._toggleCategoryDrop} />}
         { this._displayHeader() }
         <MainContent
           routeName={mobileFilterMargin}
