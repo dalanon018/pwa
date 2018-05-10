@@ -3,13 +3,28 @@
 *******************************/
 
 .ui.input {
-  input {
-    border-radius: 0;
-    color: @grey;
-    font-family: 'Roboto', sans-serif;
+  &.search-textfield {
+    input {
+      border-color: @lightGrey;
+      border-radius: 10px;
+      color: @grey;
+      cursor: pointer;
+      padding: 16px;
+    }
+    .search {
+      &.icon {
+        background-color: @primaryColor;
+        border-radius: 0 10px 10px 0;
+        color: @white;
+        font-size: 22px;
+        padding: 0px 26px !important;
+      }
+    }
+  }
 
+  input {
     &:focus {
-      border-color: @darkGrey;
+      border-color: @grey;
     }
 
     &::-webkit-input-placeholder { /* Chrome/Opera/Safari */

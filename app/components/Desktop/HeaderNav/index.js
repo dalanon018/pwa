@@ -1,11 +1,9 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { injectIntl } from 'react-intl'
-import { chunk } from 'lodash'
+import { injectIntl, FormattedMessage } from 'react-intl'
 
 import {
-  Dropdown,
   Image,
   Grid,
   Header,
@@ -15,24 +13,25 @@ import {
   Label
 } from 'semantic-ui-react'
 
-import { categoriesGroup } from 'utils/categories-group'
-
-import { ifElse, identity, equals, toPairs } from 'ramda'
+import { ifElse, identity, equals } from 'ramda'
 import BarcodeImage from 'images/icons/barcode-header.svg'
 import messages from './messages'
 import MainLogo from 'images/cliqq-logo.svg'
-// import Label from 'semantic-ui-react/dist/commonjs/elements/Label/Label';
+import CliqqLogo from 'images/icons/cliqq.png'
+import CategoryDock from 'images/icons/category-dock.svg'
 
 import Logout from 'images/icons/drawer/signout.svg'
 
 import SearchMenu from 'containers/Buckets/SearchMenu'
+// import { FLASH_DEALS_LANDING_PAGE } from '../../../containers/Buckets/constants'
 
 const Wrapper = styled.div`
+  background-color: #FFFFFF;
   display: block;
   position: fixed;
+  top: 0;
   width: 100%;
   z-index: 10;
-  background-color: #FFFFFF;
 
   .no-padding {
     @media screen and (max-width: 767px) {
@@ -104,93 +103,31 @@ const LogoWrapper = styled.div`
 `
 
 const MainNav = styled.div`
-  padding: 0 15px;
+  // margin-top: 83px;
+  padding: 83px 15px 0;
   position: relative;
+  z-index: 2;
+
+  .label {
+    cursor: pointer;
+  }
 `
 
 const MenuWrapper = styled.div`
   font-family: 'Roboto', sans-serif;
   font-weight: 600;
 
-  .list {
-    &>.item {
-      cursor: pointer;
-      height: 46px;
-      margin-left: 30px !important;
-      overflow: visible;
-      padding: 15px 0 !important;
-  
-      &:hover {
-        border-bottom: 2px solid #8DC640;
-      }
-    }
+  .list-wrapper {
+    display: flex !important;
+    justify-content: space-between;
+    width: 500px !important;
   }
-
-  .float-right {
-    float: right;
-  }
-`
-
-const BrandLists = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-`
-
-const BrandsMenuWrapper = styled.div`
-  box-shadow: 2px 11px 13px -5px rgba(0,0,0,0.14);
-  height: ${props => props.toggle ? '425px' : 0};
-  left: 0;
-  overflow: hidden;
-  position: absolute;
-  top: 46px;
-  transition: height 0.3s ease-in;
-  width: 100%;
-  z-index: 10;
-`
-
-const BrandGroup = styled.div`
-  align-items: top;
-  border-top: 2px solid #ebebeb;
-  display: flex;
-  margin: 0 10px 50px;
-  // padding: 0 10px;
-
-  .brand-name {
-    color: #057A5F !important;
-    font-size: 16px !important;
-    margin-right: 10px;
-    margin-top: 7px;
-  }
-
-  .list-margin {
-    margin: 0 10px;
-    padding-top: 10px;
-  }
-
-  .sub-brands {
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all .3s ease;
-  
-    &:hover {
-      color: #f58322;
-      text-decoration: underline;
-    }
-  }
-`
-
-const BrandsContainer = styled.div`
-  height: 415px;
-  margin-left: -10px;
-  overflow: auto;
-  padding: 20px 0;
-  width: 100%;
 `
 
 const SignOutWrapper = styled.div`
   display: inline-block;
   margin-left: 40px;
+  position: relative;
 
   img {
     cursor: pointer;
@@ -212,6 +149,142 @@ const MagicBlock = styled.div`
   z-index: 1;
 `
 
+const MenusContainer = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+
+  .category-menu {
+    display: flex;
+    align-items: center;
+
+    &:after {
+      content: '';
+      width: 3px;
+      height: 3px;
+      border: solid #FFFFFF;
+      border-width: 0 2px 2px 0;
+      display: inline-block;
+      padding: 3px;
+      margin-left: 10px;
+
+      ${
+        props => props.arrowToggle
+        ? 'transform: rotate(-135deg);margin-top: 3px;'
+        : 'transform: rotate(45deg);'
+      }
+    }
+  }
+`
+
+const CategoryDrop = styled.div`
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+
+  img {
+    margin-right: 10px;
+  }
+`
+
+const CategoryListsWrapper = styled.div`
+  display: flex;
+  height: ${props => props.toggle ? '500px' : '0'};
+  left: 0;
+  overflow: ${props => props.toggle ? 'visible' : 'hidden'};
+  position: absolute;
+  top: 36px;
+  transition: .3s ease;
+  z-index: 1;
+
+  .list {
+    .item {
+      cursor: pointer;
+      margin-bottom: 20px;
+      padding: 0 22px;
+      position: relative;
+
+      &:hover {
+        p {
+          color: #FF4813;
+        }
+      }
+
+      // don't sort this
+      &.category-nav {
+        &:after {
+          content: '';
+          width: 8px;
+          height: 8px;
+          border: solid #FF4813;
+          border-width: 0 2px 2px 0;
+          display: inline-block;
+          right: 20px;
+          transform: rotate(-45deg);
+          position: absolute;
+          visibility: visible;
+          top: 5px;
+        }
+      }
+    }
+  }
+`
+
+const CategoryList = styled.div`
+  border-right: 1px solid #e8e8e8;
+  direction: rtl;
+  overflow-y: auto;
+  padding: 22px 0;
+  text-align: left;
+  width: 250px;
+  z-index: 3;
+`
+
+const SubCategoryList = styled.div`
+  direction: rtl;
+  height: 100%;
+  left: ${props => props.toggle ? '250px' : '0'};
+  overflow-y: auto;
+  padding: 22px 0;
+  position: absolute;
+  text-align: left;
+  transition: .3s ease;
+  width: 250px;
+  z-index: 2;
+`
+
+const CurrentPointsContainer = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  
+  .label {
+    flex-grow: 1;
+  }
+
+  img {
+    margin: 0 5px 0 10px;
+    width: 15px;
+  }
+`
+
+const LogoutWrapper = styled.div`
+  align-items: center;
+  background: #FFFFFF;
+  display: flex;
+  float: right;
+  justify-content: flex-start;
+  padding: 5px 10px;
+  position: absolute;
+  right: 0;
+  top: 25px;
+  width: 100%;
+
+  img {
+    margin-right: 10px;
+  }
+`
+
 const toggleComponent = (componentA, componentB) => (condition) => {
   return ifElse(
     identity,
@@ -230,17 +303,37 @@ class HeaderNav extends PureComponent {
   state = {
     activeItem: null,
     windowHeightOffset: 0,
-    brandsMenu: false
+    subCategoryToggle: false,
+    logout: false,
+    subCategory: [],
+    categoryId: ''
   }
 
   _handleShowLogoutButton = () => {
-    const { isSignIn } = this.props
+    const { isSignIn, mobileNumbers } = this.props
+
+    const toggleLogout = () => {
+      this.setState(prevState => ({logout: !prevState.logout}))
+    }
 
     const toggleComponent = ifElse(
       identity,
       () => (
         <SignOutWrapper>
-          <Image alt='help' size='mini' onClick={this._handleSignOut} src={Logout} />
+          <Label as='p' className='margin__none text__weight--500' basic size='large'>
+            Signed in: <span className='color__primary cursor__pointer' onClick={toggleLogout}>{mobileNumbers.toJS().pop()}</span>
+          </Label>
+          {
+              this.state.logout &&
+              <LogoutWrapper className='box__shadow--primary cursor__pointer' onClick={this._handleSignOut}>
+                <div>
+                  <Image alt='help' size='mini' src={Logout} />
+                </div>
+                <div>
+                  <Label as='p' className='margin__none text__weight--500' basic size='large'>Logout</Label>
+                </div>
+              </LogoutWrapper>
+          }
         </SignOutWrapper>
       ),
       () => null
@@ -261,53 +354,6 @@ class HeaderNav extends PureComponent {
   }
 
   _handleCloseBrands = () => this.setState({ brandsMenu: false })
-
-  _handleBrandLists = () => {
-    const { brands, changeRoute } = this.props
-    const groupBrands = categoriesGroup(brands)
-    const gotToBrands = (id) => () => {
-      this.setState({
-        brandsMenu: false
-      })
-      changeRoute(`/brands/${id}`)
-    }
-
-    return (
-      <BrandLists>
-        {
-          toPairs(groupBrands).map(([title, item], key) => {
-            // const isNumber = parseInt(title)
-            const chunkItem = chunk(item, 5)
-
-            return (
-              <BrandGroup key={key}>
-                {/* <Label as='span' className='brand-name' basic size='large'>{ !isNaN(isNumber) ? '#' : title }</Label> */}
-                <Label as='span' className='brand-name' basic size='large'>{ title }</Label>
-                {
-                    chunkItem.map((entity, key) => {
-                      return (
-                        <List key={key} className='list-margin'>
-                          {
-                            entity.map((data, index) => {
-                              return (
-                                <List.Item key={index} onClick={gotToBrands(data.get('id'))} className='sub-brands'>
-                                  { data.get('name') }
-                                </List.Item>
-                              )
-                            })
-                          }
-                        </List>
-                      )
-                    })
-                  }
-
-              </BrandGroup>
-            )
-          })
-        }
-      </BrandLists>
-    )
-  }
 
   _handleColumnSize = (currentRoute, place) => {
     const pageSetWidth = {
@@ -359,47 +405,138 @@ class HeaderNav extends PureComponent {
     return ShowSearchInputLogo((currentRoute === 'home' && windowHeightOffset >= 53))
   }
 
-  _filteredCategoryMenu = () => {
-    const { categories, changeRoute } = this.props
-    const gotToProduct = (id) => () => {
+  _handleEnterChildren = (e, children, isChildren, id) => {
+    const getId = () => {
+      let classes = e.target.className.split(' ')
+      return classes[classes.length - 1]
+    }
+
+    if (isChildren) {
       this.setState({
-        brandsMenu: false
+        subCategory: children,
+        subCategoryToggle: true,
+        categoryId: getId()
       })
+    }
+  }
+
+  _handleLeaveChildren = () => this.setState({subCategoryToggle: false})
+
+  _handleStayChildren = () => this.setState({subCategoryToggle: true})
+
+  _handleHasArrow = (children, id) => {
+    const { subCategoryToggle, categoryId } = this.state
+
+    if (subCategoryToggle && children && categoryId === id) {
+      return 'category-nav'
+    }
+  }
+
+  _mainNavHeader = () => {
+    const { categories, changeRoute, categoryToggle, _toggleCategoryDrop } = this.props
+    const { subCategoryToggle, subCategory } = this.state
+
+    const gotToProduct = (id) => () => {
       changeRoute(`/products-category/${id}`)
+      _toggleCategoryDrop()
+    }
+
+    const goToPage = (slug) => () => {
+      changeRoute(`/${slug}`)
     }
 
     return (
-      <MenuWrapper>
-        <List horizontal className='width__full'>
-          {
-            categories && categories.splice(8).map((item, index) => {
-              return (
-                <List.Item key={index} onClick={gotToProduct(item.get('id'))}>
-                  { item.get('name') }
-                </List.Item>
-              )
-            })
-          }
-
-          <List.Item>
-            <Dropdown text='More'>
-              <Dropdown.Menu>
+      <MenuWrapper className='position__relative'>
+        <MenusContainer arrowToggle={categoryToggle}>
+          <CategoryDrop onClick={_toggleCategoryDrop}>
+            <Image src={CategoryDock} alt='CLiQQ' />
+            <Label as='p' className='margin__none text__weight--500 color__white category-menu' basic size='large'>
+              <FormattedMessage {...messages.categoriesMenu} />
+            </Label>
+          </CategoryDrop>
+          <div>
+            <List horizontal className='width__full list-wrapper'>
+              <List.Item onClick={goToPage('flash-deals')}>
+                <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
+                  <FormattedMessage {...messages.flashDealsMenu} />
+                </Label>
+              </List.Item>
+              <List.Item onClick={goToPage('purchases')}>
+                <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
+                  <FormattedMessage {...messages.myActivitiesMenu} />
+                </Label>
+              </List.Item>
+              <List.Item onClick={goToPage('wallet')}>
+                <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
+                  <FormattedMessage {...messages.pointsBalanceMenu} />
+                </Label>
+              </List.Item>
+              <List.Item onClick={goToPage('brands')}>
+                <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
+                  <FormattedMessage {...messages.brandsMenu} />
+                </Label>
+              </List.Item>
+            </List>
+          </div>
+          <CurrentPointsContainer>
+            <div>
+              <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
+                <FormattedMessage {...messages.currentCliqqPointsLabel} />
+              </Label>
+            </div>
+            <div>
+              <Image src={CliqqLogo} alt='CLiQQ' />
+            </div>
+            <div>
+              <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
+                10
+              </Label>
+            </div>
+          </CurrentPointsContainer>
+        </MenusContainer>
+        {
+          <CategoryListsWrapper toggle={categoryToggle} className='box__shadow--primary'>
+            <CategoryList className='border_right__one--light-grey background__white'>
+              <List className='width__full'>
                 {
-                  categories && categories.slice(8, -1).map((item, index) => {
+                  categories && categories.map((category, index) => {
+                    const isChildren = category.get('children').size !== 0
+
                     return (
-                      <Dropdown.Item key={index} text={item.get('name')} onClick={gotToProduct(item.get('id'))} />
+                      <List.Item
+                        key={index}
+                        onClick={gotToProduct(category.get('id'))}
+                        onMouseEnter={e => this._handleEnterChildren(e, category.get('children'), isChildren, category.get('id'))}
+                        onMouseLeave={this._handleLeaveChildren}
+                        className={`${this._handleHasArrow(isChildren, category.get('id'))} ${category.get('id')}`}>
+                        <Label as='p' className={`margin__none text__weight--400 margin__none ${category.get('id')}`} basic size='large'>
+                          {category.get('name')}
+                        </Label>
+                      </List.Item>
                     )
                   })
                 }
-              </Dropdown.Menu>
-            </Dropdown>
-
-          </List.Item>
-
-          <List.Item className='float-right' onClick={this._handleBrandsMenu}>
-            Brands
-          </List.Item>
-        </List>
+              </List>
+            </CategoryList>
+            {
+              <SubCategoryList toggle={subCategoryToggle} onMouseEnter={() => this._handleStayChildren()} onMouseLeave={() => this._handleLeaveChildren()} className='background__white'>
+                <List className='width__full'>
+                  {
+                    subCategory.map(category => {
+                      return (
+                        <List.Item key={category.get('id')} onClick={gotToProduct(category.get('id'))}>
+                          <Label as='p' className='margin__none text__weight--400 margin__none' basic size='large'>
+                            {category.get('name')}
+                          </Label>
+                        </List.Item>
+                      )
+                    })
+                  }
+                </List>
+              </SubCategoryList>
+            }
+          </CategoryListsWrapper>
+        }
       </MenuWrapper>
     )
   }
@@ -440,58 +577,56 @@ class HeaderNav extends PureComponent {
       <div>
         { this.state.brandsMenu && <MagicBlock onClick={this._handleCloseBrands} /> }
         <Wrapper>
-          <Container>
-            <Grid>
-              <Grid.Row columns={3} verticalAlign='middle'>
-                <Grid.Column width={3}>
-                  <LogoWrapper>
-                    <Image alt='CLiQQ' src={MainLogo} onClick={changeRoute.bind(this, '/')} />
-                  </LogoWrapper>
-                </Grid.Column>
-                <Grid.Column width={10}>
-                  <SearchWrapper>
-                    {
-                      pathname
-                      ? <SearchMenu
-                        clearSearch={clearSearchNav}
-                        searchProduct={searchProductNav}
-                        hideBackButton={hideBackButtonNav}
-                        _handleSearchInputValue={_handleSearchInputValueNav}
-                        leftButtonAction={leftButtonActionNav}
-                      />
-                      : <Input
-                        aria-label='search'
-                        name='search'
-                        fluid
-                        onClick={changeRoute.bind(this, '/search')}
-                        placeholder={this.props.intl.formatMessage(messages.searchPlaceHolder)}
-                        icon='search'
-                      />
-                    }
-                  </SearchWrapper>
-                </Grid.Column>
-                <Grid.Column width={3} textAlign='right'>
-                  <OptionsWrapper>
-                    { ActivitiesToggle(showActivityIcon) }
-                    { this._handleShowLogoutButton() }
-                  </OptionsWrapper>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Container>
-          <MainNav className='background__light-grey'>
-            <Container className='padding__none--vertical'>
-              { this._filteredCategoryMenu() }
+          <div className='padding__vertical--10'>
+            <Container className='header__custom-padding'>
+              <Grid>
+                <Grid.Row columns={4} verticalAlign='middle'>
+                  <Grid.Column width={4}>
+                    <LogoWrapper>
+                      <Image alt='CLiQQ' src={MainLogo} onClick={changeRoute.bind(this, '/')} />
+                    </LogoWrapper>
+                  </Grid.Column>
+                  <Grid.Column width={8}>
+                    <SearchWrapper>
+                      {
+                        pathname
+                        ? <SearchMenu
+                          clearSearch={clearSearchNav}
+                          searchProduct={searchProductNav}
+                          hideBackButton={hideBackButtonNav}
+                          _handleSearchInputValue={_handleSearchInputValueNav}
+                          leftButtonAction={leftButtonActionNav}
+                          className='search-textfield'
+                        />
+                        : <Input
+                          aria-label='search'
+                          name='search'
+                          fluid
+                          onClick={changeRoute.bind(this, '/search')}
+                          placeholder={this.props.intl.formatMessage(messages.searchPlaceHolder)}
+                          icon='search'
+                          className='search-textfield'
+                        />
+                      }
+                    </SearchWrapper>
+                  </Grid.Column>
+                  <Grid.Column width={4} textAlign='right'>
+                    <OptionsWrapper>
+                      { ActivitiesToggle(showActivityIcon) }
+                      { this._handleShowLogoutButton() }
+                    </OptionsWrapper>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
             </Container>
-            <BrandsMenuWrapper className='background__white' toggle={this.state.brandsMenu}>
-              <Container>
-                <BrandsContainer>
-                  { this._handleBrandLists() }
-                </BrandsContainer>
-              </Container>
-            </BrandsMenuWrapper>
-          </MainNav>
+          </div>
         </Wrapper>
+
+        <MainNav className='background__primary'>
+          <Container className='header__custom-padding'>
+            { this._mainNavHeader() }
+          </Container>
+        </MainNav>
       </div>
     )
   }

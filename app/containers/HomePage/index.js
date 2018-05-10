@@ -352,37 +352,42 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       />
 
         <Container>
-          <CategoryIconsWrapper>
-            {
-              categoryNavLoader ? range(4).map((_, index) => this._handleDefaultCategoryIcon(index))
-              : featuredCategories.map((category, index) => {
-                return (
-                  <CategoryItem key={index} onClick={() => changeRoute(`/products-category/${category.get('id')}?name=${category.get('name')}`)}>
-                    <Image src={category.get('icon') !== '' ? category.get('icon') : imageStock('mobile-category-icon-default.png')} alt='CLiQQ' />
-                    <Label basic size='tiny' className='item-label text__weight--400'>
-                      {this._handleCategoryName(category.get('name'))}
-                    </Label>
-                  </CategoryItem>
-                )
-              })
-            }
-            <CategoryItem onClick={() => changeRoute(`/categories/`)}>
-              {
-                !categoryNavLoader
-                ? <span>
-                  <Image src={MoreCategoriesIcon} alt='CLiQQ' />
-                  <Label basic size='tiny' className='item-label text__weight--400'>
-                    More
-                  </Label>
-                </span>
-                : <span>
-                  <Image src={imageStock('mobile-category-icon-default.png')} alt='CLiQQ' />
-                  <CustomHr />
-                </span>
-              }
+          <AccessView
+            mobileView={
+              <CategoryIconsWrapper>
+                {
+                  categoryNavLoader ? range(4).map((_, index) => this._handleDefaultCategoryIcon(index))
+                  : featuredCategories.map((category, index) => {
+                    return (
+                      <CategoryItem key={index} onClick={() => changeRoute(`/products-category/${category.get('id')}?name=${category.get('name')}`)}>
+                        <Image src={category.get('icon') !== '' ? category.get('icon') : imageStock('mobile-category-icon-default.png')} alt='CLiQQ' />
+                        <Label basic size='tiny' className='item-label text__weight--400'>
+                          {this._handleCategoryName(category.get('name'))}
+                        </Label>
+                      </CategoryItem>
+                    )
+                  })
+                }
+                <CategoryItem onClick={() => changeRoute(`/categories/`)}>
+                  {
+                    !categoryNavLoader
+                    ? <span>
+                      <Image src={MoreCategoriesIcon} alt='CLiQQ' />
+                      <Label basic size='tiny' className='item-label text__weight--400'>
+                        More
+                      </Label>
+                    </span>
+                    : <span>
+                      <Image src={imageStock('mobile-category-icon-default.png')} alt='CLiQQ' />
+                      <CustomHr />
+                    </span>
+                  }
 
-            </CategoryItem>
-          </CategoryIconsWrapper>
+                </CategoryItem>
+              </CategoryIconsWrapper>
+            }
+            desktopView={null}
+          />
 
           <BannerWrapper>
             <AccessView
