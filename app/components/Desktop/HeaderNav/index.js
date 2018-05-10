@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { injectIntl, FormattedMessage } from 'react-intl'
-import { chunk } from 'lodash'
 
 import {
   Image,
@@ -14,9 +13,7 @@ import {
   Label
 } from 'semantic-ui-react'
 
-import { categoriesGroup } from 'utils/categories-group'
-
-import { ifElse, identity, equals, toPairs } from 'ramda'
+import { ifElse, identity, equals } from 'ramda'
 import BarcodeImage from 'images/icons/barcode-header.svg'
 import messages from './messages'
 import MainLogo from 'images/cliqq-logo.svg'
@@ -106,10 +103,10 @@ const LogoWrapper = styled.div`
 `
 
 const MainNav = styled.div`
-  margin-top: 83px;
-  padding: 0 15px;
+  // margin-top: 83px;
+  padding: 83px 15px 0;
   position: relative;
-  z-index: 9;
+  z-index: 2;
 
   .label {
     cursor: pointer;
@@ -126,63 +123,6 @@ const MenuWrapper = styled.div`
     width: 500px !important;
   }
 `
-
-const BrandLists = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-`
-
-// const BrandsMenuWrapper = styled.div`
-//   box-shadow: 2px 11px 13px -5px rgba(0,0,0,0.14);
-//   height: ${props => props.toggle ? '425px' : 0};
-//   left: 0;
-//   overflow: hidden;
-//   position: absolute;
-//   top: 46px;
-//   transition: height 0.3s ease-in;
-//   width: 100%;
-//   z-index: 10;
-// `
-
-const BrandGroup = styled.div`
-  align-items: top;
-  border-top: 2px solid #ebebeb;
-  display: flex;
-  margin: 0 10px 50px;
-  // padding: 0 10px;
-
-  .brand-name {
-    color: #057A5F !important;
-    font-size: 16px !important;
-    margin-right: 10px;
-    margin-top: 7px;
-  }
-
-  .list-margin {
-    margin: 0 10px;
-    padding-top: 10px;
-  }
-
-  .sub-brands {
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all .3s ease;
-  
-    &:hover {
-      color: #f58322;
-      text-decoration: underline;
-    }
-  }
-`
-
-// const BrandsContainer = styled.div`
-//   height: 415px;
-//   margin-left: -10px;
-//   overflow: auto;
-//   padding: 20px 0;
-//   width: 100%;
-// `
 
 const SignOutWrapper = styled.div`
   display: inline-block;
@@ -210,8 +150,8 @@ const MagicBlock = styled.div`
 `
 
 const MenusContainer = styled.div`
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: space-between;
 
   .category-menu {
@@ -249,10 +189,12 @@ const CategoryDrop = styled.div`
 
 const CategoryListsWrapper = styled.div`
   display: flex;
-  height: 500px;
+  height: ${props => props.toggle ? '500px' : '0'};
   left: 0;
+  overflow: ${props => props.toggle ? 'visible' : 'hidden'};
   position: absolute;
   top: 36px;
+  transition: .3s ease;
   z-index: 1;
 
   .list {
@@ -290,14 +232,25 @@ const CategoryListsWrapper = styled.div`
 
 const CategoryList = styled.div`
   border-right: 1px solid #e8e8e8;
-  padding: 22px 0;
-  width: 250px;
+  direction: rtl;
   overflow-y: auto;
+  padding: 22px 0;
+  text-align: left;
+  width: 250px;
+  z-index: 3;
 `
 
 const SubCategoryList = styled.div`
+  direction: rtl;
+  height: 100%;
+  left: ${props => props.toggle ? '250px' : '0'};
+  overflow-y: auto;
   padding: 22px 0;
+  position: absolute;
+  text-align: left;
+  transition: .3s ease;
   width: 250px;
+  z-index: 2;
 `
 
 const CurrentPointsContainer = styled.div`
@@ -402,53 +355,6 @@ class HeaderNav extends PureComponent {
 
   _handleCloseBrands = () => this.setState({ brandsMenu: false })
 
-  _handleBrandLists = () => {
-    const { brands, changeRoute } = this.props
-    const groupBrands = categoriesGroup(brands)
-    const gotToBrands = (id) => () => {
-      this.setState({
-        brandsMenu: false
-      })
-      changeRoute(`/brands/${id}`)
-    }
-
-    return (
-      <BrandLists>
-        {
-          toPairs(groupBrands).map(([title, item], key) => {
-            // const isNumber = parseInt(title)
-            const chunkItem = chunk(item, 5)
-
-            return (
-              <BrandGroup key={key}>
-                {/* <Label as='span' className='brand-name' basic size='large'>{ !isNaN(isNumber) ? '#' : title }</Label> */}
-                <Label as='span' className='brand-name' basic size='large'>{ title }</Label>
-                {
-                    chunkItem.map((entity, key) => {
-                      return (
-                        <List key={key} className='list-margin'>
-                          {
-                            entity.map((data, index) => {
-                              return (
-                                <List.Item key={index} onClick={gotToBrands(data.get('id'))} className='sub-brands'>
-                                  { data.get('name') }
-                                </List.Item>
-                              )
-                            })
-                          }
-                        </List>
-                      )
-                    })
-                  }
-                  arrow
-              </BrandGroup>
-            )
-          })
-        }
-      </BrandLists>
-    )
-  }
-
   _handleColumnSize = (currentRoute, place) => {
     const pageSetWidth = {
       home: {side: 2, middle: 12},
@@ -531,10 +437,8 @@ class HeaderNav extends PureComponent {
     const { subCategoryToggle, subCategory } = this.state
 
     const gotToProduct = (id) => () => {
-      this.setState({
-        brandsMenu: false
-      })
       changeRoute(`/products-category/${id}`)
+      _toggleCategoryDrop()
     }
 
     const goToPage = (slug) => () => {
@@ -591,9 +495,8 @@ class HeaderNav extends PureComponent {
           </CurrentPointsContainer>
         </MenusContainer>
         {
-          categoryToggle &&
-          <CategoryListsWrapper className='background__white box__shadow--primary'>
-            <CategoryList className='border_right__one--light-grey'>
+          <CategoryListsWrapper toggle={categoryToggle} className='box__shadow--primary'>
+            <CategoryList className='border_right__one--light-grey background__white'>
               <List className='width__full'>
                 {
                   categories && categories.map((category, index) => {
@@ -616,13 +519,12 @@ class HeaderNav extends PureComponent {
               </List>
             </CategoryList>
             {
-              subCategoryToggle &&
-              <SubCategoryList onMouseEnter={() => this._handleStayChildren()}>
+              <SubCategoryList toggle={subCategoryToggle} onMouseEnter={() => this._handleStayChildren()} onMouseLeave={() => this._handleLeaveChildren()} className='background__white'>
                 <List className='width__full'>
                   {
                     subCategory.map(category => {
                       return (
-                        <List.Item key={category.get('id')} onClick={this._handleBrandsMenu}>
+                        <List.Item key={category.get('id')} onClick={gotToProduct(category.get('id'))}>
                           <Label as='p' className='margin__none text__weight--400 margin__none' basic size='large'>
                             {category.get('name')}
                           </Label>

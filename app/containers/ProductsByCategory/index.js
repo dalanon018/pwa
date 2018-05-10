@@ -577,17 +577,22 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
 
     return (
       <div>
-        <FilterTrigger
-          queryCategory={id}
-          queryBrands={this._getQueryBrands()}
-          requestFromFilter={this._requestFromFilter}
-          getFilterCategories={this._fetchFilteredCategories}
-          getFilterBrands={this._fetchFilteredBrands}
-          filterCategories={filterCategories}
-          filterBrands={filterBrands}
-          filterCategoriesLoading={filterCategoriesLoading}
-          filterBrandsLoading={filterBrandsLoading}
-          filtered={filtered}
+        <AccessView
+          mobileView={
+            <FilterTrigger
+              queryCategory={id}
+              queryBrands={this._getQueryBrands()}
+              requestFromFilter={this._requestFromFilter}
+              getFilterCategories={this._fetchFilteredCategories}
+              getFilterBrands={this._fetchFilteredBrands}
+              filterCategories={filterCategories}
+              filterBrands={filterBrands}
+              filterCategoriesLoading={filterCategoriesLoading}
+              filterBrandsLoading={filterBrandsLoading}
+              filtered={filtered}
+            />
+          }
+          desktopView={null}
         />
 
         <ContentWrapper>

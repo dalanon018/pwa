@@ -132,10 +132,13 @@ const MainContent = styled.div`
 `
 
 const BackgroundLay = styled.div`
-  position: fixed;
-  width: 100%;
-  height: 100vh;
+  // background-color: ${props => props.toggle ? 'rgba(0,0,0,.7)' : 'transparent'};
   background-color: rgba(0,0,0,.7);
+  display: ${props => props.toggle ? 'block' : 'none'};
+  height: 100vh;
+  position: fixed;
+  transition: .1s ease;
+  width: 100%;
   z-index: 1;
 `
 
@@ -515,7 +518,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
     return (
       <Wrapper toggleSidebar={toggleSidebar}>
-        {categoryToggle && <BackgroundLay onClick={this._toggleCategoryDrop} />}
+        <BackgroundLay toggle={categoryToggle} onClick={this._toggleCategoryDrop} />
         { this._displayHeader() }
         <MainContent
           routeName={mobileFilterMargin}
