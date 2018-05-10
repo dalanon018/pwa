@@ -12,7 +12,7 @@ import PropTypes from 'prop-types'
 
 // import messages from './messages'
 
-import PlainCard from 'components/Mobile/PlainCard'
+import PlainCard from 'components/Shared/PlainCard'
 import ProductView from 'components/Mobile/ProductView'
 
 // import SectionTitle from 'components/Mobile/HomeSectionTitle'

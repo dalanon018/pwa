@@ -13,7 +13,7 @@ import styled from 'styled-components'
 import { Container, Image } from 'semantic-ui-react'
 import { range } from 'lodash'
 
-import PlainCard from 'components/Mobile/PlainCard'
+import PlainCard from 'components/Shared/PlainCard'
 
 import { imageStock } from 'utils/image-stock'
 

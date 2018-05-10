@@ -15,7 +15,7 @@ import { imageStock } from 'utils/image-stock'
 import { Grid, Container, Image, Label } from 'semantic-ui-react'
 import { categoriesGroup } from 'utils/categories-group'
 
-import BrandItem from 'components/Mobile/PlainCard'
+import BrandItem from 'components/Shared/PlainCard'
 
 export const NavWrapper = styled.div`
   border-left: 1px solid #E8E8E8;

@@ -8,7 +8,7 @@ import React from 'react'
 import Slider from 'react-slick'
 import PropTypes from 'prop-types'
 import { Container, Image } from 'semantic-ui-react'
-import PlainCard from 'components/Mobile/PlainCard'
+import PlainCard from 'components/Shared/PlainCard'
 import styled from 'styled-components'
 
 import { range } from 'lodash'
