@@ -33,7 +33,7 @@ import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
 import OrderTip from 'components/Mobile/OrderTip'
-import PlainCard from 'components/Mobile/PlainCard'
+import PlainCard from 'components/Shared/PlainCard'
 import MobileTransactions from 'components/Mobile/PointsHistory'
 
 import MobileFooter from 'components/Mobile/Footer'

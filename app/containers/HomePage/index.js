@@ -26,7 +26,7 @@ import {
   when
 } from 'ramda'
 import { range } from 'lodash'
-import { Container, Image, Label } from 'semantic-ui-react'
+import { Container, Image, Label, Grid } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
@@ -46,6 +46,7 @@ import OrderTip from 'components/Mobile/OrderTip'
 import PointAds from 'components/Mobile/PointAds'
 import FlashDeals from 'components/Mobile/FlashDeals'
 import BrandCarousel from 'components/Mobile/BrandCarousel'
+import FlashDealBanner from 'components/Shared/FlashDealBanner'
 
 import WindowWidth from 'components/Shared/WindowWidth'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
@@ -272,6 +273,18 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     // return data.replace(/ /g, '\n')
   }
 
+  _handleDesktopPromoCount = () => {
+    const { promos } = this.props
+
+    switch (promos.length) {
+      case 2:
+        return 2
+
+      case 3:
+        return 3
+    }
+  }
+
   componentDidMount () {
     const { setPageTitle, setShowActivityIcon, setShowSearchIcon, setShowPointsIcon, getPromos, getBanners, windowWidth, setRouteName } = this.props
 
@@ -408,6 +421,32 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               }
             />
           </BannerWrapper>
+
+          <AccessView
+            mobileView={null}
+            desktopView={
+              promos.size > 1
+              ? <Container>
+                <Grid>
+                  <Grid.Row columns={this._handleDesktopPromoCount()}>
+                    <Grid.Column>
+                      {
+                        promos.slice(0, 3).map(promo => (
+                          <FlashDealBanner
+                            key={promo.get('promoCode')}
+                            image={promo.get('background')}
+                            promosLoading={promosLoading}
+                            width={null}
+                            height={130}
+                          />
+                        ))
+                      }
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </Container> : null
+            }
+          />
 
           <SectionTitle
             dataCy='feature-brands'

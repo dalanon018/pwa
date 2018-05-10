@@ -14,7 +14,7 @@ import { compose } from 'redux'
 import { push } from 'react-router-redux'
 import { Grid, Container, Image } from 'semantic-ui-react'
 
-import FlashDealItem from 'components/Mobile/PlainCard'
+import FlashDealItem from 'components/Shared/PlainCard'
 import OrderTip from 'components/Mobile/OrderTip'
 import MobileFooter from 'components/Mobile/Footer'
 import AccessView from 'components/Shared/AccessMobileDesktopView'

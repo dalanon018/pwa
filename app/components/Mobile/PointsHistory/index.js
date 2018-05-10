@@ -10,7 +10,7 @@ import { Container, Label, Image, Grid } from 'semantic-ui-react'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 
-import PlainCard from 'components/Mobile/PlainCard'
+import PlainCard from 'components/Shared/PlainCard'
 
 import { FormattedMessage } from 'react-intl'
 import messages from './messages'

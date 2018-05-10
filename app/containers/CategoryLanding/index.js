@@ -22,7 +22,7 @@ import reducer from './reducer'
 import saga from './saga'
 import messages from './messages'
 
-import CategoryItem from 'components/Mobile/PlainCard'
+import CategoryItem from 'components/Shared/PlainCard'
 import OrderTip from 'components/Mobile/OrderTip'
 import MobileFooter from 'components/Mobile/Footer'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
