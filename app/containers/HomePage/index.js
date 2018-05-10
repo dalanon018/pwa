@@ -47,6 +47,7 @@ import PointAds from 'components/Mobile/PointAds'
 import FlashDeals from 'components/Mobile/FlashDeals'
 import BrandCarousel from 'components/Mobile/BrandCarousel'
 import FlashDealBanner from 'components/Shared/FlashDealBanner'
+import FeaturedBrands from 'components/Desktop/FeaturedBrands'
 
 import WindowWidth from 'components/Shared/WindowWidth'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
@@ -462,10 +463,22 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             />
           */}
 
-          <BrandCarousel
-            brands={featuredBrands}
-            loader={brandLoader}
-            changeRoute={changeRoute}
+          <AccessView
+            mobileView={
+              <BrandCarousel
+                brands={featuredBrands}
+                loader={brandLoader}
+                changeRoute={changeRoute}
+              />
+            }
+            desktopView={
+              <Container>
+                <FeaturedBrands
+                  brands={featuredBrands}
+                  loader={brandLoader}
+                  changeRoute={changeRoute} />
+              </Container>
+            }
           />
 
         </Container>
