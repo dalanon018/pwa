@@ -8,11 +8,13 @@ const BannerSliderWrapper = styled.div`
   margin-bottom: 10px;
 
   img {
+    border-radius: 10px;
     width: 100%;
     margin: 0 auto;
   }
 
   .slick-list {
+    border-radius: 10px;
     padding-bottom: ${props => props.isLowerdots ? '15px' : '0'};
     overflow: ${props => props.hover && 'inherit'};
     ${
@@ -24,6 +26,7 @@ const BannerSliderWrapper = styled.div`
   }
 
   .slick-slide {
+    box-shadow: 0 0 5px rgba(120,120,120, 0.1);
     opacity: ${props => props.hover && 0};
   }
 
@@ -58,30 +61,53 @@ const BannerSliderWrapper = styled.div`
   }
 
   .slick-dots {
-    align-content: baseline;
-    bottom: inherit;
-    display: ${props => props.active ? 'none' : 'flex'} !important;
-    flex-wrap: wrap;
-    height: 350px;
-    left: 0;
-    overflow: auto;
-    top: 0;
-    width: 90px;
-    z-index: 1;
+    ${
+      props => props.isProductPage
+      ? `
+        align-content: baseline;
+        bottom: inherit;
+        display: ${props => props.active ? 'none' : 'flex'} !important;
+        flex-wrap: wrap;
+        height: 350px;
+        left: 0;
+        overflow: auto;
+        top: 0;
+        width: 90px;
+        z-index: 1;
 
-    li {
-      height: auto;
-      margin: 0;
-      width: inherit;
-
-      img {
-        width: 60px;
-      }
-      &.slick-active {
-        img {
-          border: 2px solid #AEAEAE;
+        li {
+          height: auto;
+          margin: 0;
+          width: inherit;
+    
+          img {
+            width: 60px;
+          }
+          &.slick-active {
+            img {
+              border: 2px solid #AEAEAE;
+            }
+          }
         }
-      }
+      `
+      : `
+        bottom: 10px;
+        
+        li {
+          margin: 0;
+          width: 30px;
+
+          button {
+            top: 3px;
+            left: 3px;
+
+            &:before {
+              color: #2F2F2F;
+              font-size: 12px;
+            }
+          }
+        }
+      `
     }
   }
 `
@@ -91,34 +117,6 @@ const ImageWrapper = styled.div`
   height: 200px;
   width: 100%;
 `
-
-// const BrandLogo = styled.div`
-//   height: 45px;
-//   position: absolute;
-//   top: 15px;
-//   width: 100%;
-
-//   &:before {
-//     background: url(${props => props.brand}) no-repeat center center / contain;
-//     content: '';
-//     height: 100%;
-//     left: 50%;
-//     margin-right: -50%;
-//     position: absolute;
-//     top: 0;
-//     transform: translate(-50%);
-//     width: 60%;
-//   }
-
-//   @media (min-width: 768px) {
-//     height: 80px;
-//     top: 10px;
-
-//     &:before {
-//       width: 80%;
-//     }
-//   }
-// `
 
 export {
   BannerSliderWrapper,

@@ -96,7 +96,8 @@ const Product = ({
   windowWidth,
   onSizeChange,
   hover,
-  offset
+  offset,
+  isProductPage
 }) => {
   const FacebookIcon = generateShareIcon('facebook')
   const TwitterIcon = generateShareIcon('twitter')
@@ -147,6 +148,7 @@ const Product = ({
                       handleMouseLeave={handleMouseLeave}
                       isInfinite
                       isLowerdots
+                      isProductPage={isProductPage}
                     />
                     {
                       +product.get('quantity') === 0 &&
