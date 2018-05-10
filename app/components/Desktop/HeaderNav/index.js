@@ -103,8 +103,8 @@ const LogoWrapper = styled.div`
 `
 
 const MainNav = styled.div`
-  // margin-top: 83px;
-  padding: 83px 15px 0;
+  // margin-top: 87px;
+  padding: 87px 15px 0;
   position: relative;
   z-index: 2;
 
@@ -193,7 +193,7 @@ const CategoryListsWrapper = styled.div`
   left: 0;
   overflow: ${props => props.toggle ? 'visible' : 'hidden'};
   position: absolute;
-  top: 36px;
+  top: 38px;
   transition: .3s ease;
   z-index: 1;
 

@@ -78,7 +78,7 @@ div [data-reactroot],
 }
 
 .header__custom-padding {
-  padding: 10px 20px !important;
+  padding: 12px 20px !important;
 }
 
 .ui.tabular {
@@ -221,6 +221,9 @@ input.input-field {
   &__radius {
     &--none {
       border-radius: 0 !important;
+    }
+    &--10 {
+      border-radius: 10px !important;
     }
   }
 }

@@ -23,24 +23,6 @@ class SlideShow extends React.PureComponent {
     settings: PropTypes.object.isRequired
   }
 
-  // assignTimeOut
-
-  // _innerSliderRef = (c) => {
-  //   this.slider = c
-  // }
-
-  // _initNextSlide = () => {
-  //   const { innerSlider } = this.slider
-
-  //   this.assignTimeOut = setTimeout(() => {
-  //     innerSlider.__isMounted && innerSlider.slickNext()
-  //   }, 3500)
-  // }
-
-  // _clearTimeOut = () => {
-  //   clearTimeout(this.assignTimeOut)
-  // }
-
   _handleLightBox = imageIndex => () => this.props.toggleLightBox(imageIndex.toString())
 
   _handleSlides = (images) => {
@@ -92,21 +74,12 @@ class SlideShow extends React.PureComponent {
     return block
   }
 
-  // componentDidMount () {
-  //   const { props } = this.slider
-  //   const shouldSlideNext = ifElse(gt(props.children.length), this._initNextSlide, noop)
-
-  //   shouldSlideNext(1)
-  // }
-
   render () {
     const { settings, images } = this.props
 
     return (
       <Slider
-        // ref={this._innerSliderRef}
         {...settings}
-        // afterChange={this._clearTimeOut}
         >
         { images && this._handleSlides(images) }
       </Slider>

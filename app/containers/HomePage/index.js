@@ -337,10 +337,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     }
 
     const mobileBannerImages = range(1, 10).map(i => paramsImgix(`https://cliqqshop.imgix.net/PWA/banners/E3-banner${i}.jpg`, imgixOptions))
-
-    const desktopBannerImages = [
-      paramsImgix('https://cliqqshop.imgix.net/banner-desktop.jpg', this._imgixOptions({ windowWidth }))
-    ]
+    const desktopBannerImages = range(1, 10).map(i => paramsImgix(`https://cliqqshop.imgix.net/PWA/banners/E3-banner${i}.jpg`, imgixOptions))
 
     return (
       <div>
@@ -444,20 +441,23 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           </div>
         </Container>
 
-        {
-          promos.map(promo => (
-            <FlashDeals
-              key={promo.get('promoCode')}
-              windowWidth={windowWidth}
-              changeRoute={changeRoute}
-              promo={promo}
-              promosLoading={promosLoading}
-              promosCount={promosCount}
-              intl={intl}
-            />
+        <AccessView
+          mobileView={
+            promos.map(promo => (
+              <FlashDeals
+                key={promo.get('promoCode')}
+                windowWidth={windowWidth}
+                changeRoute={changeRoute}
+                promo={promo}
+                promosLoading={promosLoading}
+                promosCount={promosCount}
+                intl={intl}
+              />
+              )
             )
-          )
-        }
+          }
+          desktopView={null}
+        />
 
         <PointAds changeRoute={changeRoute} />
 
