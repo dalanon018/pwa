@@ -257,7 +257,7 @@ const CurrentPointsContainer = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
-  
+
   .label {
     flex-grow: 1;
   }
@@ -297,7 +297,9 @@ class HeaderNav extends PureComponent {
   static propTypes= {
     pageTitle: PropTypes.string,
     showActivityIcon: PropTypes.bool.isRequired,
-    changeRoute: PropTypes.func.isRequired
+    changeRoute: PropTypes.func.isRequired,
+    loyaltyToken: PropTypes.string,
+    currentPoints: PropTypes.number
   }
 
   state = {
@@ -432,6 +434,28 @@ class HeaderNav extends PureComponent {
     }
   }
 
+  _toggleDisplayCurrentPoints = () => {
+    const { isSignIn, currentPoints } = this.props
+    return toggleComponent(
+      <CurrentPointsContainer>
+        <div>
+          <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
+            <FormattedMessage {...messages.currentCliqqPointsLabel} />
+          </Label>
+        </div>
+        <div>
+          <Image src={CliqqLogo} alt='CLiQQ' />
+        </div>
+        <div>
+          <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
+            {currentPoints}
+          </Label>
+        </div>
+      </CurrentPointsContainer>,
+      null
+    )(isSignIn)
+  }
+
   _mainNavHeader = () => {
     const { categories, changeRoute, categoryToggle, _toggleCategoryDrop } = this.props
     const { subCategoryToggle, subCategory } = this.state
@@ -478,21 +502,7 @@ class HeaderNav extends PureComponent {
               </List.Item>
             </List>
           </div>
-          <CurrentPointsContainer>
-            <div>
-              <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
-                <FormattedMessage {...messages.currentCliqqPointsLabel} />
-              </Label>
-            </div>
-            <div>
-              <Image src={CliqqLogo} alt='CLiQQ' />
-            </div>
-            <div>
-              <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
-                10
-              </Label>
-            </div>
-          </CurrentPointsContainer>
+          { this._toggleDisplayCurrentPoints() }
         </MenusContainer>
         {
           <CategoryListsWrapper toggle={categoryToggle} className='box__shadow--primary'>

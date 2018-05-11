@@ -312,7 +312,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   _displayHeader = () => {
-    const { pageTitle, showSearchIcon, showPointsIcon, showActivityIcon, changeRoute, location: { pathname }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen, productCategories, brands, loyaltyToken, removeLoyaltyToken, mobileNumbers } = this.props
+    const { pageTitle, showSearchIcon, showPointsIcon, showActivityIcon, changeRoute, location: { pathname }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen, productCategories, brands, loyaltyToken, currentPoints, removeLoyaltyToken, mobileNumbers } = this.props
     /**
      * we have to identify if we should display backbutton
      */
@@ -347,6 +347,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
               isSignIn={!!loyaltyToken}
               signOut={removeLoyaltyToken}
               mobileNumbers={mobileNumbers}
+              currentPoints={currentPoints}
 
               clearSearchNav={setProductSearchList}
               searchProductNav={searchProduct}
@@ -396,6 +397,8 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
               isSignIn={!!loyaltyToken}
               signOut={removeLoyaltyToken}
               mobileNumbers={mobileNumbers}
+              currentPoints={currentPoints}
+
               _toggleCategoryDrop={this._toggleCategoryDrop}
               categoryToggle={this.state.categoryToggle}
             />
