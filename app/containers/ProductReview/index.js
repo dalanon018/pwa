@@ -348,7 +348,6 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   _handleStoreVisible = (props) => {
     const { location: { search }, previousStore, lastSelectedMethod } = props
     const { store } = this.state
-    console.log(lastSelectedMethod)
      // handle populating store details
     const populateFromStorage = ifElse(
       isEmpty,
