@@ -258,6 +258,11 @@ input.input-field {
   }
 }
 
+.border_left {
+  &__one--light-grey {
+    border-right: 1px solid @lightGrey !important;
+  }
+}
 
 .background {
   &__primary {
