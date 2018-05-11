@@ -21,5 +21,9 @@ export default defineMessages({
   errorProductQuantity: {
     id: 'app.containers.ProductPage.errorProductQuantity',
     defaultMessage: 'Product is NOT Available at the moment. Please check back again later.'
+  },
+  fullPointsOnly: {
+    id: 'app.components.Product.fullPointsOnly',
+    defaultMessage: 'This product can only order using mobile site.'
   }
 })
