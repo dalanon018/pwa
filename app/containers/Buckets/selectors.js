@@ -28,9 +28,14 @@ const selectFeaturedCategories = () => createSelector(
   (substate) => substate.filter((state) => state.get('isFeatured')).slice(0, 4)
 )
 
-const selectFeaturedBrands = () => createSelector(
+const selectFeaturedBrandsMobile = () => createSelector(
   selectBrands(),
   (substate) => substate.filter((state) => state.get('isFeatured')).slice(0, 8)
+)
+
+const selectFeaturedBrandsDesktop = () => createSelector(
+  selectBrands(),
+  (substate) => substate.filter((state) => state.get('isFeatured')).slice(0, 6)
 )
 
 const selectToggle = () => createSelector(
@@ -129,7 +134,8 @@ export {
   selectBrands,
   selectProductCategories,
   selectFeaturedCategories,
-  selectFeaturedBrands,
+  selectFeaturedBrandsMobile,
+  selectFeaturedBrandsDesktop,
   selectMobileNumbers,
   selectReceiptsUpdated,
   selectToggleError,

@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   display: flex;
 
   img {
-    width: 150px;
+    // width: 150px;
   }
 `
 
@@ -31,10 +31,10 @@ const ImageWrapper = styled.div`
 `
 
 const imgixOptions = {
-  w: 100,
-  h: 100,
+  w: 200,
+  h: 200,
   auto: 'compress',
-  q: 100,
+  q: 50,
   lossless: 0
 }
 
@@ -42,14 +42,14 @@ function FeaturedBrands ({ brands, loader, changeRoute }) {
   const goToBrand = (id) => () => changeRoute(`/brands/${id}`)
 
   return (
-    <BrandsContainer borderRadius height={140} >
+    <BrandsContainer borderRadius height={200} >
       <Wrapper>
         {
-          loader ? range(8).map((_, index) => <ImageWrapper className='border_left__one--light-grey cursor__pointer'><DefaultState /></ImageWrapper>)
+          loader ? range(8).map((_, index) => <ImageWrapper key={index} className='border_left__one--light-grey cursor__pointer'><DefaultState /></ImageWrapper>)
           : brands.map(brand => {
             return (
               <ImageWrapper key={brand.get('id')} className='border_left__one--light-grey cursor__pointer' onClick={goToBrand(brand.get('id'))}>
-                <Image src={brand.get('logo') ? brand.get('logo') : imageStock('Brands-Default.jpg', imgixOptions)} alt='CLiQQ' />
+                <Image src={brand.get('logo') ? brand.get('logo') : imageStock('Brands-Default.jpg', imgixOptions)} alt='CLiQQ' className='height__inherit' />
               </ImageWrapper>
             )
           })

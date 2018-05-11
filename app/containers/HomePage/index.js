@@ -41,10 +41,10 @@ import DesktopProductView from 'components/Desktop/ProductView'
 
 import MobileFooter from 'components/Mobile/Footer'
 // import BrandSlider from 'components/Mobile/BrandSlider'
-import SectionTitle from 'components/Mobile/HomeSectionTitle'
+import SectionTitle from 'components/Shared/SectionTitle'
 import OrderTip from 'components/Mobile/OrderTip'
 import PointAds from 'components/Mobile/PointAds'
-import FlashDeals from 'components/Mobile/FlashDeals'
+import FlashDeals from 'components/Shared/FlashDeals'
 import BrandCarousel from 'components/Mobile/BrandCarousel'
 import FlashDealBanner from 'components/Shared/FlashDealBanner'
 import FeaturedBrands from 'components/Desktop/FeaturedBrands'
@@ -63,7 +63,8 @@ import {
 
 import {
   selectFeaturedCategories,
-  selectFeaturedBrands,
+  selectFeaturedBrandsMobile,
+  selectFeaturedBrandsDesktop,
   selectBrandLoader,
   selectCategoryNavLoader
 } from 'containers/Buckets/selectors'
@@ -115,7 +116,11 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       PropTypes.array,
       PropTypes.object
     ]).isRequired,
-    featuredBrands: PropTypes.oneOfType([
+    mobileFeaturedBrands: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.object
+    ]).isRequired,
+    desktopFeaturedBrands: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.object
     ]).isRequired,
@@ -326,7 +331,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   render () {
     const {
       featuredCategories,
-      featuredBrands,
+      mobileFeaturedBrands,
+      desktopFeaturedBrands,
       changeRoute,
       windowWidth,
       brandLoader,
@@ -466,7 +472,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           <AccessView
             mobileView={
               <BrandCarousel
-                brands={featuredBrands}
+                brands={mobileFeaturedBrands}
                 loader={brandLoader}
                 changeRoute={changeRoute}
               />
@@ -474,7 +480,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             desktopView={
               <Container>
                 <FeaturedBrands
-                  brands={featuredBrands}
+                  brands={desktopFeaturedBrands}
                   loader={brandLoader}
                   changeRoute={changeRoute} />
               </Container>
@@ -483,18 +489,23 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
         </Container>
 
-        <OrderTip />
+        <AccessView
+          mobileView={<OrderTip />}
+          desktopView={null}
+        />
 
         <Container>
           <div className='margin__bottom-positive--5 margin__top-positive--10'>
             <SectionTitle
+              promo={promos.first()}
+              promosLoading={promosLoading}
               title={intl.formatMessage(messages.flashDeals)}
               link={`/flash-deals`} />
           </div>
         </Container>
 
-        <AccessView
-          mobileView={
+        <div>
+          {
             promos.map(promo => (
               <FlashDeals
                 key={promo.get('promoCode')}
@@ -508,10 +519,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               )
             )
           }
+        </div>
+
+        <AccessView
+          mobileView={<PointAds changeRoute={changeRoute} />}
           desktopView={null}
         />
-
-        <PointAds changeRoute={changeRoute} />
 
         <Container>
           <SectionTitle
@@ -539,7 +552,8 @@ const mapStateToProps = createStructuredSelector({
   brandLoader: selectBrandLoader(),
   featuredProducts: selectFeaturedProducts(),
   featuredCategories: selectFeaturedCategories(),
-  featuredBrands: selectFeaturedBrands(),
+  mobileFeaturedBrands: selectFeaturedBrandsMobile(),
+  desktopFeaturedBrands: selectFeaturedBrandsDesktop(),
   totalFeaturedProductCount: selectTotalCount(),
   promos: selectPromos(),
   promosLoading: selectPromosLoading(),

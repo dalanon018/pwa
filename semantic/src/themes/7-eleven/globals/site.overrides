@@ -566,6 +566,9 @@ svg#barcode {
       }
     }
     &__bottom {
+      &--none {
+        padding: 0 !important;
+      }
       &--5 {
         padding-bottom: 5px !important;
       }

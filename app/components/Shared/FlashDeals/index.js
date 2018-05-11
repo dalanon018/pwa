@@ -13,7 +13,7 @@ import PropTypes from 'prop-types'
 // import messages from './messages'
 
 import PlainCard from 'components/Shared/PlainCard'
-import ProductView from 'components/Mobile/ProductView'
+import ProductView from 'components/Desktop/ProductView'
 
 // import SectionTitle from 'components/Mobile/HomeSectionTitle'
 import TimerWrapper from 'components/Mobile/TimerWrapper'
@@ -42,21 +42,24 @@ function FlashDeals ({
   return (
     <Container>
       <Grid container>
-        <Grid.Row className='padding__none--vertical'>
-          <Grid.Column>
-            <BannerWrapper onClick={() => changeRoute(`promos/${promo.get('promoCode')}`)}>
-              { !promosLoading && <TimerWrapper promo={promo} /> }
-              <PlainCard height='160'>
-                {
-                  !promosLoading && promo.get('background')
-                  ? <Image className='height__inherit' src={promo.get('background')} />
-                  : <Image className='height__inherit' src={imageStock('Slider-Default.jpg', imgixOptions)} />
-                }
-              </PlainCard>
-            </BannerWrapper>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row columns={2}>
+        {
+          windowWidth < 1024 &&
+          <Grid.Row className='padding__none--vertical'>
+            <Grid.Column>
+              <BannerWrapper onClick={() => changeRoute(`promos/${promo.get('promoCode')}`)}>
+                { !promosLoading && <TimerWrapper promo={promo} /> }
+                <PlainCard height='160'>
+                  {
+                    !promosLoading && promo.get('background')
+                    ? <Image className='height__inherit' src={promo.get('background')} />
+                    : <Image className='height__inherit' src={imageStock('Slider-Default.jpg', imgixOptions)} />
+                  }
+                </PlainCard>
+              </BannerWrapper>
+            </Grid.Column>
+          </Grid.Row>
+        }
+        <Grid.Row>
           <ProductView
             virtualized={false}
             changeRoute={changeRoute}
