@@ -18,7 +18,8 @@ import {
   map,
   match,
   partial,
-  partialRight
+  partialRight,
+  when
 } from 'ramda'
 import { noop } from 'lodash'
 import { push } from 'react-router-redux'
@@ -53,7 +54,8 @@ import {
   selectShowPointsIcon,
   selectShowActivityIcon,
   selectIsRegisteredPush,
-  selectLoyaltyToken
+  selectLoyaltyToken,
+  selectCurrentPoints
 } from './selectors'
 
 import {
@@ -67,6 +69,7 @@ import {
   getRegisteredPushAction,
   getLoyaltyTokenAction,
   removeLoyaltyTokenAction,
+  getCurrentPointsAction,
   setSearchValueAction
 } from './actions'
 
@@ -175,8 +178,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     registerPush: PropTypes.func.isRequired,
     getRegisteredPush: PropTypes.func.isRequired,
     loyaltyToken: PropTypes.string,
+    currentPoints: PropTypes.number,
     getLoyaltyToken: PropTypes.func.isRequired,
-    removeLoyaltyToken: PropTypes.func.isRequired
+    removeLoyaltyToken: PropTypes.func.isRequired,
+    getCurrentPoints: PropTypes.func.isRequired
   }
 
   state = {
@@ -498,7 +503,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   componentWillReceiveProps (nextProps) {
-    const { mobileNumbers, isRegisteredPush } = nextProps
+    const { mobileNumbers, isRegisteredPush, loyaltyToken } = nextProps
     /**
      * whenever theres new mobile number we have to listen for all the order
      */
@@ -508,6 +513,14 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     this._firebaseHandleRefreshToken(isRegisteredPush)
 
     this._handleRemoveStickyFooter()
+
+    // we have to call our current points if mobile number if theres change on the mobile number
+    const getCurrentPoints = when(
+      complement(equals(this.props.loyaltyToken)),
+      () => this.props.getCurrentPoints()
+    )
+
+    getCurrentPoints(loyaltyToken)
   }
 
   render () {
@@ -595,7 +608,8 @@ const mapStateToProps = createStructuredSelector({
   showPointsIcon: selectShowPointsIcon(),
   showActivityIcon: selectShowActivityIcon(),
   isRegisteredPush: selectIsRegisteredPush(),
-  loyaltyToken: selectLoyaltyToken()
+  loyaltyToken: selectLoyaltyToken(),
+  currentPoints: selectCurrentPoints()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -604,6 +618,7 @@ function mapDispatchToProps (dispatch) {
     getBrands: () => dispatch(getBrandsAction()),
     getMobileNumbers: () => dispatch(getMobileNumbersAction()),
     getLoyaltyToken: () => dispatch(getLoyaltyTokenAction()),
+    getCurrentPoints: () => dispatch(getCurrentPointsAction()),
     removeLoyaltyToken: () => dispatch(removeLoyaltyTokenAction()),
     getUpdatedReceipts: (payload) => dispatch(getUpdatedReceiptsAction(payload)),
     setUpdatedReceipts: (payload) => dispatch(setUpdatedReceiptsAction(payload)),

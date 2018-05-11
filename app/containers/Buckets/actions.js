@@ -43,6 +43,9 @@ import {
   SET_LOYALTY_TOKEN,
   REMOVE_LOYALTY_TOKEN,
 
+  GET_CURRENT_POINTS,
+  SET_CURRENT_POINTS,
+
   SET_HEADER_FULL_SCREEN,
 
   SET_LIGHTBOX_IMAGE,
@@ -221,6 +224,19 @@ export function setLoyaltyTokenAction (payload) {
 export function removeLoyaltyTokenAction () {
   return {
     type: REMOVE_LOYALTY_TOKEN
+  }
+}
+
+export function getCurrentPointsAction () {
+  return {
+    type: GET_CURRENT_POINTS
+  }
+}
+
+export function setCurrentPointsAction (payload) {
+  return {
+    type: SET_CURRENT_POINTS,
+    payload
   }
 }
 
