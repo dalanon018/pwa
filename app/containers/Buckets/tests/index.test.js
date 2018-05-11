@@ -55,6 +55,7 @@ describe('<Buckets />', () => {
     getRegisteredPush: () => {},
     registerPush: () => {},
     getLoyaltyToken: () => {},
+    getCurrentPoints: () => {},
     removeLoyaltyToken: () => {},
     headerMenuFullScreen: false
   }
