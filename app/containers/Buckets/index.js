@@ -519,7 +519,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
     // we have to call our current points if mobile number if theres change on the mobile number
     const getCurrentPoints = when(
-      complement(equals(this.props.loyaltyToken)),
+      both(complement(equals(this.props.loyaltyToken)), (token) => token),
       () => this.props.getCurrentPoints()
     )
 
