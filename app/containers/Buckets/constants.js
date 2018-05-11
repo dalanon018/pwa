@@ -47,8 +47,8 @@ export const SET_LOYALTY_TOKEN = 'app/Container/SET_LOYALTY_TOKEN'
 // TECHNICALLY SIGN OUT IS WHEN WE REMOVE THE LOYALTY TOKEN
 export const REMOVE_LOYALTY_TOKEN = 'app/Container/REMOVE_LOYALTY_TOKEN'
 
-export const GET_CURRENT_POINTS = 'app/ProductReview/GET_CURRENT_POINTS'
-export const SET_CURRENT_POINTS = 'app/ProductReview/SET_CURRENT_POINTS'
+export const GET_CURRENT_POINTS = 'app/Container/GET_CURRENT_POINTS'
+export const SET_CURRENT_POINTS = 'app/Container/SET_CURRENT_POINTS'
 
 export const SET_SEARCH_VALUE = 'app/Buckets/SET_SEARCH_VALUE'
 
