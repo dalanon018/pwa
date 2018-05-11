@@ -58,7 +58,8 @@ import {
 } from 'containers/App/constants'
 
 import {
-  setMobileNumbersAction
+  setMobileNumbersAction,
+  setCurrentPointsAction as HeaderPointsAction
 } from 'containers/Buckets/actions'
 
 import {
@@ -305,6 +306,7 @@ export function * getCurrentPoints () {
       propOr(0, 'currentPoints')
     )
     const points = parseInt(currentPoints(req))
+    yield put(HeaderPointsAction(points))
     yield put(setCurrentPointsAction({ points }))
   } else {
     yield put(setCurrentPointsAction({}))
