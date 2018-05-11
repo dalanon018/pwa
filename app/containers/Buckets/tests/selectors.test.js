@@ -16,6 +16,7 @@ import {
   selectShowActivityIcon,
   selectIsRegisteredPush,
   selectLoyaltyToken,
+  selectCurrentPoints,
   selectRouteName,
   selectLoader,
   selectBrandLoader
@@ -246,6 +247,20 @@ describe('Buckets Selectors', () => {
         }
       })
       expect(selectLoyaltyTokenSelectors(mockedState)).toEqual(loyaltyToken)
+    })
+  })
+
+  describe('selectCurrentPoints', () => {
+    const selectCurrentPointsSelectors = selectCurrentPoints()
+
+    it('should get error submission', () => {
+      const currentPoints = 0
+      const mockedState = fromJS({
+        buckets: {
+          currentPoints
+        }
+      })
+      expect(selectCurrentPointsSelectors(mockedState)).toEqual(currentPoints)
     })
   })
 

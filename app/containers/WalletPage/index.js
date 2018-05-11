@@ -31,6 +31,7 @@ import { Container, Label, Image, Grid } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
+// import { calculateConversionPointsToCash } from 'utils/calculation'
 
 import OrderTip from 'components/Mobile/OrderTip'
 import PlainCard from 'components/Shared/PlainCard'
@@ -296,6 +297,23 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
                           { currentPoints.toLocaleString() }
                         </Label>
                       </UserPointsWrapper>
+                      {
+                        // currentPoints ? (
+                        //   <div>
+                        //     <Label as='div' className='text__weight--500 margin__top-positive--20 padding__none' size='large' >
+                        //       <FormattedMessage
+                        //         {...messages.worthPointsCash}
+                        //         values={{
+                        //           amount: calculateConversionPointsToCash({points: currentPoints})
+                        //         }}
+                        //       />
+                        //     </Label>
+                        //     <Label as='div' className='text__weight--500 padding__none' size='large' >
+                        //       <FormattedMessage {...messages.worthPointsCashSub} />
+                        //     </Label>
+                        //   </div>
+                        // ) : null
+                      }
                     </PointsPreviewWrapper>
                   </PlainCard>
                 }

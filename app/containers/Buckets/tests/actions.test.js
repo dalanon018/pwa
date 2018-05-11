@@ -33,6 +33,9 @@ import {
   setLoyaltyTokenAction,
   removeLoyaltyTokenAction,
 
+  getCurrentPointsAction,
+  setCurrentPointsAction,
+
   storeLocatorAction,
   recentStoreLocationAction
 } from '../actions'
@@ -70,6 +73,9 @@ import {
   GET_LOYALTY_TOKEN,
   SET_LOYALTY_TOKEN,
   REMOVE_LOYALTY_TOKEN,
+
+  GET_CURRENT_POINTS,
+  SET_CURRENT_POINTS,
 
   STORE_LOCATOR,
   RECENT_STORE_LOCATION
@@ -318,6 +324,26 @@ describe('Buckets actions', () => {
       }
 
       expect(removeLoyaltyTokenAction()).toEqual(expectedResult)
+    })
+  })
+
+  describe('CurrenPoints', () => {
+    it('should get currentPoints', () => {
+      const expectedResult = {
+        type: GET_CURRENT_POINTS
+      }
+
+      expect(getCurrentPointsAction()).toEqual(expectedResult)
+    })
+
+    it('should set currentPoints', () => {
+      const payload = 0
+      const expectedResult = {
+        type: SET_CURRENT_POINTS,
+        payload
+      }
+
+      expect(setCurrentPointsAction(payload)).toEqual(expectedResult)
     })
   })
 

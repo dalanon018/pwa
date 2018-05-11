@@ -35,6 +35,9 @@ import {
   SET_REGISTED_PUSH,
 
   SET_LOYALTY_TOKEN,
+
+  SET_CURRENT_POINTS,
+
   SET_HEADER_FULL_SCREEN,
 
   SET_LIGHTBOX_IMAGE,
@@ -60,6 +63,7 @@ const initialState = fromJS({
   activityIconShow: false,
   isRegisteredPush: false,
   loyaltyToken: null,
+  currentPoints: 0,
   lightBoxImage: null,
   searchValue: ''
 })
@@ -124,6 +128,10 @@ function bucketsReducer (state = initialState, action) {
     case SET_LOYALTY_TOKEN:
       return state
         .set('loyaltyToken', action.payload)
+
+    case SET_CURRENT_POINTS:
+      return state
+          .set('currentPoints', action.payload)
 
     case SET_LIGHTBOX_IMAGE:
       return state

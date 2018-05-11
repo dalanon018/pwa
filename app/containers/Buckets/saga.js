@@ -4,6 +4,7 @@ import { find, isEmpty, isEqual, noop } from 'lodash'
 import {
   F,
   T,
+  always,
   both,
   complement,
   compose,
@@ -12,6 +13,7 @@ import {
   filter,
   flatten,
   fromPairs,
+  gt,
   gte,
   head,
   ifElse,
@@ -27,7 +29,8 @@ import {
   toLower,
   toPairs,
   uniq,
-  view
+  view,
+  when
 } from 'ramda'
 import { call, take, put, fork, cancel } from 'redux-saga/effects'
 import { LOCATION_CHANGE, push } from 'react-router-redux'
@@ -84,6 +87,7 @@ import {
   REGISTER_PUSH,
   GET_REGISTED_PUSH,
   GET_LOYALTY_TOKEN,
+  GET_CURRENT_POINTS,
   REMOVE_LOYALTY_TOKEN,
   STORE_LOCATOR,
   RECENT_STORE_LOCATION,
@@ -98,7 +102,8 @@ import {
   setUpdatedReceiptsAction,
   setNetworkErrorAction,
   setRegisteredPushAction,
-  setLoyaltyTokenAction
+  setLoyaltyTokenAction,
+  setCurrentPointsAction
 } from './actions'
 
 function * transformEachEntity (transform, entity) {
@@ -390,6 +395,28 @@ export function * registerPushNotification (payload) {
   }
 }
 
+export function * getCurrentPoints () {
+  const token = yield getAccessToken()
+  const mobileNumbers = yield call(getItem, MOBILE_NUMBERS_KEY)
+  // we will only get the last mobileNumber used
+  const mobile = Array.isArray(mobileNumbers) ? mobileNumbers.pop() : null
+
+  const req = yield call(request, `${API_BASE_URL}/wallet-transactions/0${mobile}`, {
+    method: 'GET',
+    token: token.access_token
+  })
+  if (!isEmpty(req)) {
+    const currentPoints = compose(
+      when(gt(0), always(0)),
+      propOr(0, 'currentPoints')
+    )
+    const points = parseInt(currentPoints(req))
+    yield put(setCurrentPointsAction(points))
+  } else {
+    yield put(setCurrentPointsAction({}))
+  }
+}
+
 function * getLoyaltyToken () {
   const loyaltyToken = yield call(getItem, LOYALTY_TOKEN_KEY)
   const isExpired = compose(
@@ -496,6 +523,7 @@ export function * bucketsSagas () {
   yield takeLatest(REGISTER_PUSH, registerPushNotification)
   yield takeLatest(STORE_LOCATOR, storeLocator)
   yield takeLatest(RECENT_STORE_LOCATION, recentStoreLocation)
+  yield takeLatest(GET_CURRENT_POINTS, getCurrentPoints)
 
   // Suspend execution until location changes
   yield take(LOCATION_CHANGE)

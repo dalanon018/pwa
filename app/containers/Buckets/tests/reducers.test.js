@@ -31,6 +31,7 @@ describe('Buckets Reducer', () => {
       activityIconShow: false,
       isRegisteredPush: false,
       loyaltyToken: null,
+      currentPoints: 0,
       searchValue: '',
       categoryNavLoader: false
     })

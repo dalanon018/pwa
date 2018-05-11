@@ -8,8 +8,7 @@ import {
   partial,
   prop
 } from 'ramda'
-import { call, take, put, fork, cancel } from 'redux-saga/effects'
-import { LOCATION_CHANGE } from 'react-router-redux'
+import { call, put, fork } from 'redux-saga/effects'
 import xhr from 'utils/xhr'
 
 import request from 'utils/request'
@@ -52,7 +51,8 @@ import {
 } from 'containers/Buckets/actions'
 
 import {
-  getAccessToken
+  getAccessToken,
+  getCurrentPoints
 } from 'containers/Buckets/saga'
 
 export function * isLogin () {
@@ -162,6 +162,8 @@ export function * verificationCode (args) {
     yield put(setLoyaltyTokenAction(getLoyaltyToken(req)))
     // set up a login
     yield put(setCurrentSessionAction(getLoyaltyToken(req)))
+    // we need to fetch the current points
+    yield getCurrentPoints()
   } catch (e) {
     yield put(errorVerificationCodeAction('Please check if you input the verification code correctly.'))
   }
@@ -193,7 +195,7 @@ export function * verificationCodeSaga () {
 
 // All sagas to be loaded
 export function * loginPageSagas () {
-  const watcher = yield [
+  yield [
     fork(isLoginSaga),
 
     // Getter and Setter for mobile numbers
@@ -207,10 +209,6 @@ export function * loginPageSagas () {
 
     fork(verificationCodeSaga)
   ]
-
-  // Suspend execution until location changes
-  yield take(LOCATION_CHANGE)
-  yield watcher.map((task) => cancel(task))
 }
 
 // All sagas to be loaded

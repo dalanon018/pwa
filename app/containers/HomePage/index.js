@@ -503,23 +503,20 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               link={`/flash-deals`} />
           </div>
         </Container>
-
-        <div>
-          {
-            promos.map(promo => (
-              <FlashDeals
-                key={promo.get('promoCode')}
-                windowWidth={windowWidth}
-                changeRoute={changeRoute}
-                promo={promo}
-                promosLoading={promosLoading}
-                promosCount={promosCount}
-                intl={intl}
-              />
-              )
+        {
+          promos.map(promo => (
+            <FlashDeals
+              key={promo.get('promoCode')}
+              windowWidth={windowWidth}
+              changeRoute={changeRoute}
+              promo={promo}
+              promosLoading={promosLoading}
+              promosCount={promosCount}
+              intl={intl}
+            />
             )
-          }
-        </div>
+          )
+        }
 
         <AccessView
           mobileView={<PointAds changeRoute={changeRoute} />}

@@ -35,7 +35,8 @@ import {
 } from 'containers/App/constants'
 
 import {
-  setNetworkErrorAction
+  setNetworkErrorAction,
+  setCurrentPointsAction as HeaderPointsAction
 } from 'containers/Buckets/actions'
 
 import {
@@ -56,6 +57,7 @@ export function * getWallet (args) {
   let wallet = {}
   let transactions = []
   let count = 0
+  let currentPoints = 0
   // TODO: we need to change this to the correct url
   const token = yield getAccessToken()
   const req = yield call(getRequestData, `${API_BASE_URL}/wallet-transactions/${mobileNumber}?offset=${offset}&limit=${limit}`, {
@@ -67,14 +69,17 @@ export function * getWallet (args) {
     const walletClean = yield transformEachEntity(req)
     const walletEntity = omit(['transactions', 'totalCount'])
     const transactionsEntity = propOr([], 'transactions')
+    const currentPointsEntity = propOr(0, 'currentPoints')
     const countEntity = propOr(0, 'totalCount')
     wallet = walletEntity(walletClean)
     transactions = transactionsEntity(walletClean)
     count = countEntity(walletClean)
+    currentPoints = currentPointsEntity(wallet)
   } else {
     yield put(setNetworkErrorAction(500))
   }
 
+  yield put(HeaderPointsAction(currentPoints))
   yield put(setWalletAction(wallet))
   yield put(setWalletTransactionsAction(transactions))
   yield put(setWalletTransactionsCountsAction(count))

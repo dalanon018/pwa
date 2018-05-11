@@ -38,6 +38,14 @@ export default defineMessages({
     id: 'app.containers.WalletPage.currentPoints',
     defaultMessage: 'Current CLiQQ Points'
   },
+  worthPointsCash: {
+    id: 'app.containers.WalletPage.worthPointsCash',
+    defaultMessage: 'Use this to buy Php {amount} worth of items!'
+  },
+  worthPointsCashSub: {
+    id: 'app.containers.WalletPage.worthPointsCash',
+    defaultMessage: 'Don\'t have enough points? Try Points + Cash!'
+  },
   asOf: {
     id: 'app.containers.WalletPage.asOf',
     defaultMessage: 'as of {date}'
