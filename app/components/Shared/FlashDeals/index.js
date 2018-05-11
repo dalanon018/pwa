@@ -13,7 +13,7 @@ import PropTypes from 'prop-types'
 // import messages from './messages'
 
 import PlainCard from 'components/Shared/PlainCard'
-import ProductView from 'components/Mobile/ProductView'
+import ProductView from 'components/Shared/ProductView'
 
 // import SectionTitle from 'components/Mobile/HomeSectionTitle'
 import TimerWrapper from 'components/Mobile/TimerWrapper'

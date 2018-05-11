@@ -18,30 +18,38 @@ describe('<ProductView />', () => {
     const renderedComponent = shallow(
       <ProductView {...minProps} />
     )
-    expect(renderedComponent.find('div').length).toEqual(0)
+    expect(renderedComponent.find('div').length).toEqual(1)
   })
 
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(true)
   })
 
-  it('renders zero <ImageWrapper/> styled component', () => {
-    const ShallowedWrapper = shallow(<ProductView {...minProps} />)
-    expect(ShallowedWrapper.find(ImageWrapper)).toHaveLength(0)
+  it('should render ImageWrapper', () => {
+    const renderComponent = shallow(<ImageWrapper {...minProps} />)
+    expect(
+      renderComponent.length
+    ).toEqual(1)
   })
 
-  it('renders zero <ProductInfo/> styled component', () => {
-    const ShallowedWrapper = shallow(<ProductView {...minProps} />)
-    expect(ShallowedWrapper.find(ProductInfo)).toHaveLength(0)
+  it('should render ProductInfo', () => {
+    const renderComponent = shallow(<ProductInfo {...minProps} />)
+    expect(
+      renderComponent.length
+    ).toEqual(1)
   })
 
-  it('renders zero <ProductWrapper/> styled component', () => {
-    const ShallowedWrapper = shallow(<ProductView {...minProps} />)
-    expect(ShallowedWrapper.find(ProductWrapper)).toHaveLength(0)
+  it('should render ProductPriceWrapper', () => {
+    const renderComponent = shallow(<ProductPriceWrapper {...minProps} />)
+    expect(
+      renderComponent.length
+    ).toEqual(1)
   })
 
-  it('renders zero <ProductPriceWrapper/> styled component', () => {
-    const ShallowedWrapper = shallow(<ProductView {...minProps} />)
-    expect(ShallowedWrapper.find(ProductPriceWrapper)).toHaveLength(0)
+  it('should render ProductWrapper', () => {
+    const renderComponent = shallow(<ProductWrapper {...minProps} />)
+    expect(
+      renderComponent.length
+    ).toEqual(1)
   })
 })

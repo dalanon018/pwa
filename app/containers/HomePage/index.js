@@ -36,8 +36,7 @@ import { paramsImgix, imageStock } from 'utils/image-stock'
 import MobileSlider from 'components/Mobile/BannerSlider'
 import DesktopSlider from 'components/Desktop/BannerSlider'
 
-import MobileProductView from 'components/Mobile/ProductView'
-import DesktopProductView from 'components/Desktop/ProductView'
+import ProductView from 'components/Shared/ProductView'
 
 import MobileFooter from 'components/Mobile/Footer'
 // import BrandSlider from 'components/Mobile/BrandSlider'
@@ -215,16 +214,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           isLoading={featuredProductsLoader}
           rowCount={totalFeaturedProductCount}
         >
-          {(props) => (
-            <AccessView
-              mobileView={
-                <MobileProductView showElement={false} changeRoute={changeRoute} loader={featuredProductsLoader} products={featuredProducts} windowWidth={windowWidth} {...props} />
-              }
-              desktopView={
-                <DesktopProductView changeRoute={changeRoute} loader={featuredProductsLoader} products={featuredProducts} windowWidth={windowWidth} {...props} />
-              }
-            />
-          )}
+          {(props) => <ProductView showElement={false} changeRoute={changeRoute} loader={featuredProductsLoader} products={featuredProducts} windowWidth={windowWidth} {...props} />}
         </InfiniteLoading>
       )
     }
