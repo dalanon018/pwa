@@ -52,6 +52,8 @@ export const HIDE_BACK_BUTTON = [
   'purchases'
 ]
 
+export const FULL_POINTS_IDENTIFIER = ['**']
+
 export const STATUSES = {
   'DELIVERED TO WAREHOUSE': 'RESERVED',
   'CREATED': 'RESERVED',
