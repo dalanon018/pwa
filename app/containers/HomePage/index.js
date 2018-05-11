@@ -63,7 +63,8 @@ import {
 
 import {
   selectFeaturedCategories,
-  selectFeaturedBrands,
+  selectFeaturedBrandsMobile,
+  selectFeaturedBrandsDesktop,
   selectBrandLoader,
   selectCategoryNavLoader
 } from 'containers/Buckets/selectors'
@@ -115,7 +116,11 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
       PropTypes.array,
       PropTypes.object
     ]).isRequired,
-    featuredBrands: PropTypes.oneOfType([
+    mobileFeaturedBrands: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.object
+    ]).isRequired,
+    desktopFeaturedBrands: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.object
     ]).isRequired,
@@ -326,7 +331,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   render () {
     const {
       featuredCategories,
-      featuredBrands,
+      mobileFeaturedBrands,
+      desktopFeaturedBrands,
       changeRoute,
       windowWidth,
       brandLoader,
@@ -466,7 +472,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           <AccessView
             mobileView={
               <BrandCarousel
-                brands={featuredBrands}
+                brands={mobileFeaturedBrands}
                 loader={brandLoader}
                 changeRoute={changeRoute}
               />
@@ -474,7 +480,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             desktopView={
               <Container>
                 <FeaturedBrands
-                  brands={featuredBrands}
+                  brands={desktopFeaturedBrands}
                   loader={brandLoader}
                   changeRoute={changeRoute} />
               </Container>
@@ -498,20 +504,22 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           </div>
         </Container>
 
-        {
-          promos.map(promo => (
-            <FlashDeals
-              key={promo.get('promoCode')}
-              windowWidth={windowWidth}
-              changeRoute={changeRoute}
-              promo={promo}
-              promosLoading={promosLoading}
-              promosCount={promosCount}
-              intl={intl}
-            />
+        <div>
+          {
+            promos.map(promo => (
+              <FlashDeals
+                key={promo.get('promoCode')}
+                windowWidth={windowWidth}
+                changeRoute={changeRoute}
+                promo={promo}
+                promosLoading={promosLoading}
+                promosCount={promosCount}
+                intl={intl}
+              />
+              )
             )
-          )
-        }
+          }
+        </div>
 
         <AccessView
           mobileView={<PointAds changeRoute={changeRoute} />}
@@ -544,7 +552,8 @@ const mapStateToProps = createStructuredSelector({
   brandLoader: selectBrandLoader(),
   featuredProducts: selectFeaturedProducts(),
   featuredCategories: selectFeaturedCategories(),
-  featuredBrands: selectFeaturedBrands(),
+  mobileFeaturedBrands: selectFeaturedBrandsMobile(),
+  desktopFeaturedBrands: selectFeaturedBrandsDesktop(),
   totalFeaturedProductCount: selectTotalCount(),
   promos: selectPromos(),
   promosLoading: selectPromosLoading(),

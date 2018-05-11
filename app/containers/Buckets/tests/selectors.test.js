@@ -4,7 +4,8 @@ import {
   selectProductCategories,
   selectBrands,
   selectFeaturedCategories,
-  selectFeaturedBrands,
+  selectFeaturedBrandsMobile,
+  selectFeaturedBrandsDesktop,
   selectToggle,
   selectMobileNumbers,
   selectReceiptsUpdated,
@@ -63,8 +64,8 @@ describe('Buckets Selectors', () => {
     })
   })
 
-  describe('selectFeaturedBrands', () => {
-    const selectFeaturedBrandsSelectors = selectFeaturedBrands()
+  describe('selectFeaturedBrandsMobile', () => {
+    const selectFeaturedBrandsMobileSelectors = selectFeaturedBrandsMobile()
 
     it('should get brands', () => {
       const brands = fromJS([{ isFeatured: true, name: 1 }])
@@ -73,7 +74,21 @@ describe('Buckets Selectors', () => {
           brands
         }
       })
-      expect(selectFeaturedBrandsSelectors(mockedState)).toEqual(brands)
+      expect(selectFeaturedBrandsMobileSelectors(mockedState)).toEqual(brands)
+    })
+  })
+
+  describe('selectFeaturedBrandsDesktop', () => {
+    const selectFeaturedBrandsDesktopSelectors = selectFeaturedBrandsDesktop()
+
+    it('should get brands', () => {
+      const brands = fromJS([{ isFeatured: true, name: 1 }])
+      const mockedState = fromJS({
+        buckets: {
+          brands
+        }
+      })
+      expect(selectFeaturedBrandsDesktopSelectors(mockedState)).toEqual(brands)
     })
   })
 
