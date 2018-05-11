@@ -45,7 +45,7 @@ function FeaturedBrands ({ brands, loader, changeRoute }) {
     <BrandsContainer borderRadius height={140} >
       <Wrapper>
         {
-          loader ? range(8).map((_, index) => <ImageWrapper className='border_left__one--light-grey cursor__pointer'><DefaultState /></ImageWrapper>)
+          loader ? range(8).map((_, index) => <ImageWrapper key={index} className='border_left__one--light-grey cursor__pointer'><DefaultState /></ImageWrapper>)
           : brands.map(brand => {
             return (
               <ImageWrapper key={brand.get('id')} className='border_left__one--light-grey cursor__pointer' onClick={goToBrand(brand.get('id'))}>

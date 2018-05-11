@@ -41,10 +41,10 @@ import DesktopProductView from 'components/Desktop/ProductView'
 
 import MobileFooter from 'components/Mobile/Footer'
 // import BrandSlider from 'components/Mobile/BrandSlider'
-import SectionTitle from 'components/Mobile/HomeSectionTitle'
+import SectionTitle from 'components/Shared/SectionTitle'
 import OrderTip from 'components/Mobile/OrderTip'
 import PointAds from 'components/Mobile/PointAds'
-import FlashDeals from 'components/Mobile/FlashDeals'
+import FlashDeals from 'components/Shared/FlashDeals'
 import BrandCarousel from 'components/Mobile/BrandCarousel'
 import FlashDealBanner from 'components/Shared/FlashDealBanner'
 import FeaturedBrands from 'components/Desktop/FeaturedBrands'
@@ -483,35 +483,40 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
         </Container>
 
-        <OrderTip />
+        <AccessView
+          mobileView={<OrderTip />}
+          desktopView={null}
+        />
 
         <Container>
           <div className='margin__bottom-positive--5 margin__top-positive--10'>
             <SectionTitle
+              promo={promos.first()}
+              promosLoading={promosLoading}
               title={intl.formatMessage(messages.flashDeals)}
               link={`/flash-deals`} />
           </div>
         </Container>
 
-        <AccessView
-          mobileView={
-            promos.map(promo => (
-              <FlashDeals
-                key={promo.get('promoCode')}
-                windowWidth={windowWidth}
-                changeRoute={changeRoute}
-                promo={promo}
-                promosLoading={promosLoading}
-                promosCount={promosCount}
-                intl={intl}
-              />
-              )
+        {
+          promos.map(promo => (
+            <FlashDeals
+              key={promo.get('promoCode')}
+              windowWidth={windowWidth}
+              changeRoute={changeRoute}
+              promo={promo}
+              promosLoading={promosLoading}
+              promosCount={promosCount}
+              intl={intl}
+            />
             )
-          }
+          )
+        }
+
+        <AccessView
+          mobileView={<PointAds changeRoute={changeRoute} />}
           desktopView={null}
         />
-
-        <PointAds changeRoute={changeRoute} />
 
         <Container>
           <SectionTitle
