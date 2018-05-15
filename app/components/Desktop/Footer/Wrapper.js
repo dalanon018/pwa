@@ -23,34 +23,34 @@ const Wrapper = styled.footer`
     padding: 7px 0 !important;
   }
 
-  &:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 300px;
-    height: 74px;
+  // &:before {
+  //   content: '';
+  //   position: absolute;
+  //   left: 0;
+  //   bottom: 0;
+  //   width: 300px;
+  //   height: 74px;
 
-    background-image: url(${({ backgroundImage }) => backgroundImage});
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: left bottom;
-  }
+  //   background-image: url(${({ backgroundImage }) => backgroundImage});
+  //   background-repeat: no-repeat;
+  //   background-size: contain;
+  //   background-position: left bottom;
+  // }
 
-  &:after {
-    content: '';
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 300px;
-    height: 74px;
+  // &:after {
+  //   content: '';
+  //   position: absolute;
+  //   right: 0;
+  //   bottom: 0;
+  //   width: 300px;
+  //   height: 74px;
 
-    background-image: url(${({ backgroundImage }) => backgroundImage});
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: left bottom;
-    transform: scaleX(-1);
-  }
+  //   background-image: url(${({ backgroundImage }) => backgroundImage});
+  //   background-repeat: no-repeat;
+  //   background-size: contain;
+  //   background-position: left bottom;
+  //   transform: scaleX(-1);
+  // }
 `
 
 const HelperLinks = styled.div`
@@ -99,7 +99,8 @@ const AppInfo = styled.div`
   text-align: left;
   margin-bottom: 10px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  // justify-content: space-around;
 
   section {
     margin-left: 20px;
@@ -109,6 +110,14 @@ const AppInfo = styled.div`
   img {
     width: 40px;
     margin-right: 3px;
+
+    &.delivery-icon {
+      width: 55px;
+    }
+
+    &.return-icon {
+      margin: 0 10px 0 8px;
+    }
   }
 `
 

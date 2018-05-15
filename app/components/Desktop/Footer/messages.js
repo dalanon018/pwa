@@ -42,7 +42,7 @@ export default defineMessages({
   },
   storeDelivery: {
     id: `${idSuffix}.storeDelivery`,
-    defaultMessage: `In-Store Delivery`
+    defaultMessage: `1 Day In-Store Delivery`
   },
   freeShippingDelivery: {
     id: `${idSuffix}.freeShippingDelivery`,
@@ -54,7 +54,7 @@ export default defineMessages({
   },
   changeMind: {
     id: `${idSuffix}.returnPolicy`,
-    defaultMessage: `Change of Mind is Applicable`
+    defaultMessage: `No Questions Asked`
   },
   columnCliqqShopHeader: {
     id: `${idSuffix}.columnCliqqShopHeader`,
