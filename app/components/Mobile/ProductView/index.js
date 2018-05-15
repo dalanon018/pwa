@@ -27,22 +27,26 @@ import {
 import { FormattedMessage } from 'react-intl'
 import { Grid, Image, Label } from 'semantic-ui-react'
 
-import messages from './messages'
-import {
-  ImageWrapper,
-  ProductInfo,
-  ProductPriceWrapper,
-  ProductWrapper,
-  ImageContent
-} from './styles'
+import CliqqIcon from 'images/icons/cliqq.png'
+import ParagraphImage from 'images/test-images/short-paragraph.png'
+
+import { imageStock, paramsImgix } from 'utils/image-stock'
+import { toggleOrigDiscountPrice } from 'utils/product'
+import { isFullPointsOnly } from 'utils/payment'
 
 import EmptyDataBlock from 'components/Shared/EmptyDataBlock'
 import RibbonWrapper from 'components/Shared/RibbonWrapper'
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
 
-import ParagraphImage from 'images/test-images/short-paragraph.png'
-
-import { imageStock, paramsImgix } from 'utils/image-stock'
+import messages from './messages'
+import {
+  ImageWrapper,
+  ProductInfo,
+  ProductPriceWrapper,
+  FullPointsWrapper,
+  ProductWrapper,
+  ImageContent
+} from './styles'
 
 const imgixOptions = {
   w: 300,
@@ -59,10 +63,10 @@ const cache = new CellMeasurerCache({
   fixedHeight: true
 })
 
-const toggleOrigDiscountPrice = (product) => {
-  const showPrice = product.get('discountPrice') || product.get('price')
+const _toggleOrigDiscountPrice = (product) => {
+  const showPrice = toggleOrigDiscountPrice(product)
 
-  return showPrice ? showPrice.toLocaleString() : 0
+  return showPrice.toLocaleString()
 }
 
 const showDiscountPrice = (component1, component2) => (condition) => ifElse(
@@ -71,12 +75,19 @@ const showDiscountPrice = (component1, component2) => (condition) => ifElse(
   () => component2
 )(condition)
 
-const ProductEntityInfo = ({ entity, isMinor, over18, changeRoute }) => {
-  // make sure not to display if undefined
-  if (!entity) {
-    return null
-  }
+const _displayFullPointsPrice = (entity) => {
+  const pointsPrice = entity.get('pointsPrice') ? entity.get('pointsPrice') : 0
+  return (
+    <FullPointsWrapper>
+      <Image src={CliqqIcon} className='cliqq-plain-icon' alt='CLiQQ' />
+      <Label as='b' basic size='big' className='product-price color__primary text__weight--700'>
+        { pointsPrice.toLocaleString() }
+      </Label>
+    </FullPointsWrapper>
+  )
+}
 
+const _displayProductPrice = (entity) => {
   const toggleDiscountLabel = showDiscountPrice(
     <FormattedMessage {...messages.peso} />,
     null
@@ -85,6 +96,37 @@ const ProductEntityInfo = ({ entity, isMinor, over18, changeRoute }) => {
     parseFloat(entity.get('price')).toLocaleString(),
     null
   )
+
+  return (
+    <ProductPriceWrapper>
+      <Label className='product-price color__primary text__weight--700' as='b' basic size='big'>
+        <FormattedMessage {...messages.peso} />
+        { _toggleOrigDiscountPrice(entity) }
+      </Label>
+      <Label className='product-discount text__weight--500 color__grey' as='span' basic size='small'>
+        { toggleDiscountLabel(entity.get('discountPrice') !== 0) }
+        { toggleDiscountValue(entity.get('discountPrice') !== 0) }
+      </Label>
+    </ProductPriceWrapper>
+  )
+}
+
+const _toggleFullPointsOnly = (entity) => {
+  const toggleComponent = ifElse(
+    (product) => isFullPointsOnly({ identifier: product.get('title') }),
+    _displayFullPointsPrice,
+    _displayProductPrice
+  )
+
+  return toggleComponent(entity)
+}
+
+const ProductEntityInfo = ({ entity, isMinor, over18, changeRoute }) => {
+  // make sure not to display if undefined
+  if (!entity) {
+    return null
+  }
+
   const goToProduct = () => !isMinor || over18
   ? changeRoute(`/product/${entity.get('cliqqCode').first()}`)
   : changeRoute('/')
@@ -118,16 +160,7 @@ const ProductEntityInfo = ({ entity, isMinor, over18, changeRoute }) => {
       <ProductInfo brandName={entity.get('brand')}>
         <Label as='span' className='brand-name text__weight--400 color__grey' basic size='small'>{entity.getIn(['brand', 'name'])}</Label>
         <Label className='no-bottom-margin text__weight--400 product-name color__secondary margin__none' as='p' basic size='medium'>{entity.get('title')}</Label>
-        <ProductPriceWrapper>
-          <Label className='product-price color__primary text__weight--700' as='b' basic size='big'>
-            <FormattedMessage {...messages.peso} />
-            { toggleOrigDiscountPrice(entity) }
-          </Label>
-          <Label className='product-discount text__weight--500 color__grey' as='span' basic size='small'>
-            { toggleDiscountLabel(entity.get('discountPrice') !== 0) }
-            { toggleDiscountValue(entity.get('discountPrice') !== 0) }
-          </Label>
-        </ProductPriceWrapper>
+        { _toggleFullPointsOnly(entity) }
       </ProductInfo>
     </ProductWrapper>
   )

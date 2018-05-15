@@ -86,10 +86,28 @@ const ProductPriceWrapper = styled.div`
   }
 `
 
+const FullPointsWrapper = styled.div`
+  align-items: flex-end;
+  display: flex;
+  justify-content: flex-start;
+
+  img {
+    width: 24px !important;
+    margin-right: 5px!important;
+  }
+
+  .product-price {
+    letter-spacing: -1.5px;
+    line-height: 22px;
+    padding: 0;
+  }
+`
+
 export {
   ImageWrapper,
   ProductInfo,
   ProductPriceWrapper,
+  FullPointsWrapper,
   ProductWrapper,
   ImageContent
 }

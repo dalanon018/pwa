@@ -18,6 +18,14 @@
         "key" : "Cache-Control",
         "value" : "max-age=30672000"
       }]
+    }, {
+      "source" : "/sw.js",
+      "headers" : [
+        {
+          "key" : "Cache-Control",
+          "value" : "no-store"
+        }
+      ]
     }],
     "rewrites": [
       {

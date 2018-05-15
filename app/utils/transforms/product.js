@@ -224,7 +224,12 @@ const applyPrices = (data) => {
     return pathAmount({key: 'PHP'})
   }
 
+  const getPointsPrice = () => {
+    return pathAmount({key: 'LPTS'})
+  }
+
   return compose(
+    assoc('pointsPrice', getPointsPrice()),
     assoc('discountInfo', getDiscountInfo()),
     assoc('discountPrice', identifyDiscountPrice()),
     assoc('price', getRegularPrice())

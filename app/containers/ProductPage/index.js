@@ -32,6 +32,7 @@ import injectReducer from 'utils/injectReducer'
 import { isMobileDevice } from 'utils/http'
 import { FbEventTracking } from 'utils/seo'
 import { imageStock } from 'utils/image-stock'
+import { isFullPointsOnly } from 'utils/payment'
 
 import MobileProduct from 'components/Mobile/Product'
 import DesktopProduct from 'components/Desktop/Product'
@@ -242,6 +243,11 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
     }
   }
 
+  _isFullPointsOnly = () => {
+    const { product } = this.props
+    return isFullPointsOnly({ identifier: product.get('title') })
+  }
+
   componentWillMount () {
     this.props.setPageTitle('Product Details')
     this.props.setShowSearchIcon(true)
@@ -319,6 +325,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
                 windowWidth={windowWidth}
                 lightBoxImage={lightBoxImage}
                 toggleLightBox={setLightBoxImage}
+                _isFullPointsOnly={this._isFullPointsOnly()}
               />
             }
             desktopView={
@@ -347,6 +354,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
                 handleMouseLeave={this._handleMouseLeave}
                 offset={offset}
                 isProductPage
+                _isFullPointsOnly={this._isFullPointsOnly()}
               />
             }
           />
