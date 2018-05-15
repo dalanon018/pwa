@@ -65,54 +65,54 @@ export class Footer extends React.PureComponent {
     return (
       <Wrapper
         backgroundImage={FooterBackground}
-        className='border_top__one--light-grey background__light-grey'
+        className='border_top__one--light-grey background__fade-grey'
       >
         <Container>
           <Grid columns='4'>
-            <FooterColumnAdjusterFlex>
+            <FooterColumnAdjusterFlex width={6}>
               <FooterColumnWrapper>
                 <AppInfo>
-                  <Image alt='CLiQQ' src={DeliveryIcon} />
+                  <Image alt='CLiQQ' className='delivery-icon' src={DeliveryIcon} />
                   <section>
-                    <Label as='span' size='medium' className='color__secondary'> <FormattedMessage {...messages.storeDelivery} /></Label>
+                    <Label as='span' size='massive' className='text__weight--400'> <FormattedMessage {...messages.storeDelivery} /></Label>
                     <br />
-                    <Label as='span' size='small' className='color__grey'>
+                    <Label as='span' size='large' className='text__weight--400 color__grey'>
                       <FormattedMessage {...messages.freeShippingDelivery} /></Label>
                   </section>
                 </AppInfo>
                 <AppInfo>
-                  <Image alt='CLiQQ' src={ReturnIcon} />
+                  <Image alt='CLiQQ' className='return-icon' src={ReturnIcon} />
                   <section>
-                    <Label as='span' size='medium' className='color__secondary'><FormattedMessage {...messages.returnPolicy} /></Label>
+                    <Label as='span' size='massive' className='text__weight--400'><FormattedMessage {...messages.returnPolicy} /></Label>
                     <br />
-                    <Label as='span' size='small' className='color__grey'>
+                    <Label as='span' size='large' className='text__weight--400 color__grey'>
                       <FormattedMessage {...messages.changeMind} /></Label>
                   </section>
                 </AppInfo>
               </FooterColumnWrapper>
             </FooterColumnAdjusterFlex>
-            <Grid.Column>
+            <Grid.Column width={3}>
               <FooterColumnWrapper>
-                <Label as='span' size='large' className='color__secondary'>
+                <Label as='span' size='massive' className='text__weight--400'>
                   <div className='margin__bottom-positive--10'>
                     <FormattedMessage {...messages.columnCliqqShopHeader} />
                   </div>
                 </Label>
                 <HelperLinks>
                   <List>
-                    <List.Item className='color__grey' onClick={this._handleActivitiesRoute}>
-                      <Label as='span' size='medium' className='color__secondary'>
+                    <List.Item onClick={this._handleActivitiesRoute}>
+                      <Label as='span' size='large' className='text__weight--400'>
                         <FormattedMessage {...messages.activities} />
                       </Label>
 
                     </List.Item>
-                    <List.Item className='color__grey' onClick={this._handleWalletRoute}>
-                      <Label as='span' size='medium' className='color__secondary'>
+                    <List.Item onClick={this._handleWalletRoute}>
+                      <Label as='span' size='large' className='text__weight--400'>
                         <FormattedMessage {...messages.pointsWallet} />
                       </Label>
                     </List.Item>
-                    <List.Item className='color__grey' onClick={this._handleLoginRoute}>
-                      <Label as='span' size='medium' className='color__secondary'>
+                    <List.Item onClick={this._handleLoginRoute}>
+                      <Label as='span' size='large' className='text__weight--400'>
                         <FormattedMessage {...messages.login} />
                       </Label>
                     </List.Item>
@@ -120,28 +120,28 @@ export class Footer extends React.PureComponent {
                 </HelperLinks>
               </FooterColumnWrapper>
             </Grid.Column>
-            <Grid.Column>
+            <Grid.Column width={3}>
               <FooterColumnWrapper>
-                <Label as='span' size='large' className='color__secondary'>
+                <Label as='span' size='massive' className='text__weight--400'>
                   <div className='margin__bottom-positive--10'>
                     <FormattedMessage {...messages.columnHelpHeader} />
                   </div>
                 </Label>
                 <HelperLinks>
                   <List>
-                    <List.Item className='color__grey' onClick={this._handleFaqRoute}>
-                      <Label as='span' size='medium' className='color__secondary'>
+                    <List.Item onClick={this._handleFaqRoute}>
+                      <Label as='span' size='large' className='text__weight--400'>
                         <FormattedMessage {...messages.returnPolicy} />
                       </Label>
 
                     </List.Item>
-                    <List.Item className='color__grey' onClick={this._handleTermsConditionsRoute}>
-                      <Label as='span' size='medium' className='color__secondary'>
+                    <List.Item onClick={this._handleTermsConditionsRoute}>
+                      <Label as='span' size='large' className='text__weight--400'>
                         <FormattedMessage {...messages.termsConditions} />
                       </Label>
                     </List.Item>
-                    <List.Item className='color__grey' onClick={this._handlePrivacyPolicy}>
-                      <Label as='span' size='medium' className='color__secondary'>
+                    <List.Item onClick={this._handlePrivacyPolicy}>
+                      <Label as='span' size='large' className='text__weight--400'>
                         <FormattedMessage {...messages.privacyPolicy} />
                       </Label>
                     </List.Item>
@@ -149,10 +149,10 @@ export class Footer extends React.PureComponent {
                 </HelperLinks>
               </FooterColumnWrapper>
             </Grid.Column>
-            <Grid.Column>
+            <Grid.Column width={4}>
               <FooterColumnWrapper>
                 <FooterSocialMediaWrapper>
-                  <Label as='span' size='large' className='color__secondary'>
+                  <Label as='span' size='massive' className='text__weight--400'>
                     <FormattedMessage {...messages.stayConnected} />
                   </Label>
                   <SocialIcons>
