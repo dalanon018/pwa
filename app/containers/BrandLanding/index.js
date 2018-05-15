@@ -23,7 +23,8 @@ import messages from './messages'
 import OrderTip from 'components/Mobile/OrderTip'
 import MobileFooter from 'components/Mobile/Footer'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
-import BrandsGroup from 'components/Mobile/BrandsGroup'
+import MobileBrandsGroup from 'components/Mobile/BrandsGroup'
+import DesktopBrandsGroup from 'components/Desktop/BrandsGroup'
 import WindowWidth from 'components/Shared/WindowWidth'
 
 import { selectBrands } from 'containers/Buckets/selectors'
@@ -54,7 +55,7 @@ export class BrandLanding extends React.PureComponent { // eslint-disable-line r
   }
 
   _handleGrouping = () => {
-    const { brands, changeRoute, windowWidth } = this.props
+    const { brands, changeRoute, windowWidth, intl } = this.props
     const { isBottomScrolled } = this.state
     const goToBrand = (id) => () => changeRoute(`/brands/${id}`)
 
@@ -62,13 +63,20 @@ export class BrandLanding extends React.PureComponent { // eslint-disable-line r
       <Wrapper className='brands-landing-wrapper'>
         <AccessView
           mobileView={
-            <BrandsGroup
+            <MobileBrandsGroup
               brands={brands}
               windowWidth={windowWidth}
               bottomScroll={isBottomScrolled}
               goToBrand={goToBrand} />
           }
-          desktopView={null}
+          desktopView={
+            <DesktopBrandsGroup
+              brands={brands}
+              windowWidth={windowWidth}
+              intl={intl}
+              bottomScroll={isBottomScrolled}
+              goToBrand={goToBrand} />
+          }
         />
       </Wrapper>
     )
@@ -116,9 +124,14 @@ export class BrandLanding extends React.PureComponent { // eslint-disable-line r
           ]}
         />
         {this._handleGrouping()}
-        <div className='margin__bottom-positive--20'>
-          <OrderTip />
-        </div>
+        <AccessView
+          mobileView={
+            <div className='margin__bottom-positive--20'>
+              <OrderTip />
+            </div>
+          }
+          desktopView={null}
+        />
         <AccessView
           mobileView={<MobileFooter />}
           desktopView={null}

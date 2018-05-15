@@ -20,6 +20,10 @@ export const Wrapper = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
+
+  @media (min-width: 1024px) {
+    margin-bottom: 20px;
+  }
 `
 
 export const TitleContainer = styled.div`
@@ -64,7 +68,7 @@ export class SectionTitle extends React.PureComponent {
     const { isDesktop } = this.state
 
     if (isDesktop) {
-      return 'big'
+      return 'massive'
     }
 
     return 'large'
@@ -99,7 +103,7 @@ export class SectionTitle extends React.PureComponent {
     const { isDesktop } = this.state
 
     return (
-      <Container className='padding__none--vertical' data-cy={dataCy} >
+      <Container className={isDesktop ? 'padding__none' : 'padding__none--vertical'} data-cy={dataCy} >
         <Wrapper>
           <TitleContainer>
             <div className='title'>
@@ -112,12 +116,16 @@ export class SectionTitle extends React.PureComponent {
             </div>
           </TitleContainer>
 
-          <Label data-cy='on-click' basic size={this._handleCustomText()} className='color__primary text__weight--400 padding__none' onClick={this._handleGoTo}>
-            <LinkWrapper>
-              <span>{linkLabel || 'See All'}</span>
-              <Image src={ArrowIcon} alt='CLiQQ' />
-            </LinkWrapper>
-          </Label>
+          {
+            linkLabel &&
+            <Label data-cy='on-click' basic size={this._handleCustomText()} className='color__primary text__weight--400 padding__none' onClick={this._handleGoTo}>
+              <LinkWrapper>
+                <span>{linkLabel || 'See All'}</span>
+                <Image src={ArrowIcon} alt='CLiQQ' />
+              </LinkWrapper>
+            </Label>
+          }
+
         </Wrapper>
       </Container>
     )
