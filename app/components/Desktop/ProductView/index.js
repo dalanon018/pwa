@@ -7,10 +7,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import LazyLoad from 'react-lazyload'
-import Waypoint from 'react-waypoint'
 
 import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller'
 import List from 'react-virtualized/dist/commonjs/List'
+import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 
 import { CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer'
 import {
@@ -27,27 +27,30 @@ import {
 import { FormattedMessage } from 'react-intl'
 import { Grid, Image, Label } from 'semantic-ui-react'
 
-import messages from './messages'
-import {
-  ImageWrapper,
-  ProductInfo,
-  ProductPriceWrapper,
-  ProductWrapper,
-  ImageContent
-} from './styles'
+import CliqqIcon from 'images/icons/cliqq.png'
+import ParagraphImage from 'images/test-images/short-paragraph.png'
+
+import { imageStock, paramsImgix } from 'utils/image-stock'
+import { toggleOrigDiscountPrice } from 'utils/product'
+import { isFullPointsOnly } from 'utils/payment'
 
 import EmptyDataBlock from 'components/Shared/EmptyDataBlock'
 import RibbonWrapper from 'components/Shared/RibbonWrapper'
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
 
-import ParagraphImage from 'images/test-images/short-paragraph.png'
-
-import { imageStock, paramsImgix } from 'utils/image-stock'
+import messages from './messages'
+import {
+  ImageWrapper,
+  ProductInfo,
+  ProductPriceWrapper,
+  FullPointsWrapper,
+  ProductWrapper,
+  ImageContent
+} from './styles'
 
 const imgixOptions = {
   w: 300,
   h: 300,
-  fit: 'clamp',
   auto: 'compress',
   q: 35,
   lossless: 0
@@ -59,10 +62,10 @@ const cache = new CellMeasurerCache({
   fixedHeight: true
 })
 
-const toggleOrigDiscountPrice = (product) => {
-  const showPrice = product.get('discountPrice') || product.get('price')
+const _toggleOrigDiscountPrice = (product) => {
+  const showPrice = toggleOrigDiscountPrice(product)
 
-  return showPrice ? showPrice.toLocaleString() : 0
+  return showPrice.toLocaleString()
 }
 
 const showDiscountPrice = (component1, component2) => (condition) => ifElse(
@@ -71,12 +74,19 @@ const showDiscountPrice = (component1, component2) => (condition) => ifElse(
   () => component2
 )(condition)
 
-const ProductEntityInfo = ({ entity, isMinor, over18, changeRoute }) => {
-  // make sure not to display if undefined
-  if (!entity) {
-    return null
-  }
+const _displayFullPointsPrice = (entity) => {
+  const pointsPrice = entity.get('pointsPrice') ? entity.get('pointsPrice') : 0
+  return (
+    <FullPointsWrapper>
+      <Image src={CliqqIcon} className='cliqq-plain-icon' alt='CLiQQ' />
+      <Label as='b' basic size='big' className='product-price color__primary text__weight--700'>
+        { pointsPrice.toLocaleString() }
+      </Label>
+    </FullPointsWrapper>
+  )
+}
 
+const _displayProductPrice = (entity) => {
   const toggleDiscountLabel = showDiscountPrice(
     <FormattedMessage {...messages.peso} />,
     null
@@ -85,6 +95,37 @@ const ProductEntityInfo = ({ entity, isMinor, over18, changeRoute }) => {
     parseFloat(entity.get('price')).toLocaleString(),
     null
   )
+
+  return (
+    <ProductPriceWrapper>
+      <Label className='product-price color__primary text__weight--700' as='b' basic size='big'>
+        <FormattedMessage {...messages.peso} />
+        { _toggleOrigDiscountPrice(entity) }
+      </Label>
+      <Label className='product-discount text__weight--500 color__grey' as='span' basic size='small'>
+        { toggleDiscountLabel(entity.get('discountPrice') !== 0) }
+        { toggleDiscountValue(entity.get('discountPrice') !== 0) }
+      </Label>
+    </ProductPriceWrapper>
+  )
+}
+
+const _toggleFullPointsOnly = (entity) => {
+  const toggleComponent = ifElse(
+    (product) => isFullPointsOnly({ identifier: product.get('title') }),
+    _displayFullPointsPrice,
+    _displayProductPrice
+  )
+
+  return toggleComponent(entity)
+}
+
+const ProductEntityInfo = ({ entity, isMinor, over18, changeRoute }) => {
+  // make sure not to display if undefined
+  if (!entity) {
+    return null
+  }
+
   const goToProduct = () => !isMinor || over18
   ? changeRoute(`/product/${entity.get('cliqqCode').first()}`)
   : changeRoute('/')
@@ -118,16 +159,7 @@ const ProductEntityInfo = ({ entity, isMinor, over18, changeRoute }) => {
       <ProductInfo brandName={entity.get('brand')}>
         <Label as='span' className='brand-name text__weight--400 color__grey' basic size='small'>{entity.getIn(['brand', 'name'])}</Label>
         <Label className='no-bottom-margin text__weight--400 product-name color__secondary margin__none' as='p' basic size='medium'>{entity.get('title')}</Label>
-        <ProductPriceWrapper>
-          <Label className='product-price color__primary text__weight--700' as='b' basic size='big'>
-            <FormattedMessage {...messages.peso} />
-            { toggleOrigDiscountPrice(entity) }
-          </Label>
-          <Label className='product-discount text__weight--500 color__grey' as='span' basic size='small'>
-            { toggleDiscountLabel(entity.get('discountPrice') !== 0) }
-            { toggleDiscountValue(entity.get('discountPrice') !== 0) }
-          </Label>
-        </ProductPriceWrapper>
+        { _toggleFullPointsOnly(entity) }
       </ProductInfo>
     </ProductWrapper>
   )
@@ -155,7 +187,6 @@ class ProductView extends React.PureComponent {
   }
 
   state = {
-    columnCount: 2, // default mobile,
     showElement: true
   }
 
@@ -165,9 +196,14 @@ class ProductView extends React.PureComponent {
     this._innerWindowScrollerRef = ref
   }
 
+  _identifyColumnCount = () => {
+    const { windowWidth } = this.props
+    return windowWidth > 991 ? 6 : 4
+  }
+
   _productEntity = ({ index, isScrolling, key, style }) => {
     const { products, isMinor, over18, changeRoute } = this.props
-    const { columnCount } = this.state
+    const columnCount = this._identifyColumnCount()
 
     const fromIndex = index * columnCount
     const toIndex = fromIndex + columnCount
@@ -210,7 +246,7 @@ class ProductView extends React.PureComponent {
 
   _loadingState = () => {
     const { loader } = this.props
-    const { columnCount } = this.state
+    const columnCount = this._identifyColumnCount()
     return (
       <Grid
         padded
@@ -236,27 +272,34 @@ class ProductView extends React.PureComponent {
 
   _virtualizedElement = () => {
     const { products, onRowsRendered, registerChild } = this.props
-    const { columnCount } = this.state
+    const columnCount = this._identifyColumnCount()
     const rowCount = Math.ceil(products.size / columnCount)
+
     return (
       <WindowScroller
         ref={this._windowScrollerRef}
       >
-        {({height, width, scrollTop}) => (
-          <div ref={registerChild}>
-            <List
-              autoHeight
-              onRowsRendered={onRowsRendered}
-              height={height}
-              width={(width - 20)}
-              rowHeight={cache.rowHeight}
-              rowCount={rowCount}
-              rowRenderer={this._productEntity}
-              scrollToAlignment='start'
-              scrollTop={scrollTop}
-              overscanRowCount={2}
-            />
-          </div>
+        {({height, scrollTop}) => (
+          <AutoSizer disableHeight>
+            {({ width }) => {
+              return (
+                <div ref={registerChild}>
+                  <List
+                    autoHeight
+                    onRowsRendered={onRowsRendered}
+                    height={height}
+                    width={width}
+                    rowHeight={cache.rowHeight}
+                    rowCount={rowCount}
+                    rowRenderer={this._productEntity}
+                    scrollToAlignment='start'
+                    scrollTop={scrollTop}
+                    overscanRowCount={2}
+                />
+                </div>
+              )
+            }}
+          </AutoSizer>
         )}
       </WindowScroller>
     )
@@ -264,9 +307,8 @@ class ProductView extends React.PureComponent {
 
   componentDidMount () {
     // default to true
-    const { windowWidth, showElement = true } = this.props
+    const { showElement = true } = this.props
     this.setState({
-      columnCount: windowWidth > 767 ? 6 : 2,
       showElement
     })
   }
@@ -277,7 +319,6 @@ class ProductView extends React.PureComponent {
       loader,
       products
     } = this.props
-    const { showElement } = this.state
 
     const isLoading = () => equals(true, loader)
     const recordsEmpty = () => equals(0, products.size)
@@ -294,14 +335,9 @@ class ProductView extends React.PureComponent {
     ])
 
     return (
-      <Waypoint
-        bottomOffset='-200px'
-        onEnter={this._handleShowList(true)}
-      >
-        <div>
-          { showElement && ProductRender(virtualized) }
-        </div>
-      </Waypoint>
+      <div>
+        { ProductRender(virtualized) }
+      </div>
     )
   }
 }
