@@ -36,14 +36,16 @@ import { paramsImgix, imageStock } from 'utils/image-stock'
 import MobileSlider from 'components/Mobile/BannerSlider'
 import DesktopSlider from 'components/Desktop/BannerSlider'
 
-import ProductView from 'components/Shared/ProductView'
+import MobileProductView from 'components/Mobile/ProductView'
+import DesktopProductView from 'components/Desktop/ProductView'
 
 import MobileFooter from 'components/Mobile/Footer'
 // import BrandSlider from 'components/Mobile/BrandSlider'
 import SectionTitle from 'components/Shared/SectionTitle'
 import OrderTip from 'components/Mobile/OrderTip'
 import PointAds from 'components/Mobile/PointAds'
-import FlashDeals from 'components/Shared/FlashDeals'
+import MobileFlashDeals from 'components/Mobile/FlashDeals'
+import DesktopFlashDeals from 'components/Desktop/FlashDeals'
 import BrandCarousel from 'components/Mobile/BrandCarousel'
 import FlashDealBanner from 'components/Shared/FlashDealBanner'
 import FeaturedBrands from 'components/Desktop/FeaturedBrands'
@@ -214,7 +216,13 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           isLoading={featuredProductsLoader}
           rowCount={totalFeaturedProductCount}
         >
-          {(props) => <ProductView showElement={false} changeRoute={changeRoute} loader={featuredProductsLoader} products={featuredProducts} windowWidth={windowWidth} {...props} />}
+          {(props) =>
+            <AccessView
+              mobileView={<MobileProductView showElement={false} changeRoute={changeRoute} loader={featuredProductsLoader} products={featuredProducts} windowWidth={windowWidth} {...props} />}
+              desktopView={<DesktopProductView showElement={false} changeRoute={changeRoute} loader={featuredProductsLoader} products={featuredProducts} windowWidth={windowWidth} {...props} />}
+            />
+
+        }
         </InfiniteLoading>
       )
     }
@@ -493,20 +501,45 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               link={`/flash-deals`} />
           </div>
         </Container>
-        {
-          promos.map(promo => (
-            <FlashDeals
-              key={promo.get('promoCode')}
-              windowWidth={windowWidth}
-              changeRoute={changeRoute}
-              promo={promo}
-              promosLoading={promosLoading}
-              promosCount={promosCount}
-              intl={intl}
-            />
-            )
-          )
-        }
+
+        <AccessView
+          mobileView={
+            <div>
+              {
+                promos.map(promo => (
+                  <MobileFlashDeals
+                    key={promo.get('promoCode')}
+                    windowWidth={windowWidth}
+                    changeRoute={changeRoute}
+                    promo={promo}
+                    promosLoading={promosLoading}
+                    promosCount={promosCount}
+                    intl={intl}
+                  />
+                  )
+                )
+              }
+            </div>
+          }
+          desktopView={
+            <div>
+              {
+                promos.map(promo => (
+                  <DesktopFlashDeals
+                    key={promo.get('promoCode')}
+                    windowWidth={windowWidth}
+                    changeRoute={changeRoute}
+                    promo={promo}
+                    promosLoading={promosLoading}
+                    promosCount={promosCount}
+                    intl={intl}
+                  />
+                  )
+                )
+              }
+            </div>
+          }
+        />
 
         <AccessView
           mobileView={<PointAds changeRoute={changeRoute} />}

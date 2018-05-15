@@ -5,7 +5,7 @@ const ProductWrapper = styled.div`
   display: block;
   position: relative;
   background-color: #FFFFFF;
-  border-radius: 4px;
+  border-radius: 10px;
   box-shadow: 0 0 5px rgba(120,120,120, 0.1);
 
   // not included on sorting
@@ -23,8 +23,9 @@ const ImageWrapper = styled.div`
 
 
   .image {
-    width: 100%;
+    border-radius: 10px 10px 0 0;
     height: 100%;
+    width: 100%;
   }
 
   @media (min-width: 1024px) {
