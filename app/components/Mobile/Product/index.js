@@ -33,13 +33,13 @@ import LightBox from 'components/Shared/LightBox'
 import { fbShare, viberShare, whatsAppShare, fbMessengerShare } from 'simple-social-share'
 import { paramsImgix } from 'utils/image-stock'
 import { calculateEarnPoints } from 'utils/calculation'
+import { toggleOrigDiscountPrice, computeTotalPointsPrice } from 'utils/product'
 
 import ProductSlider from 'components/Mobile/BannerSlider'
 import ListCollapse from 'components/Shared/ListCollapse'
 import PromptModal from 'components/Shared/PromptModal'
 
 import { LoadingStateInfo } from 'components/Shared/LoadingBlock'
-
 import {
   FB_SHARE_ID
 } from 'containers/App/constants'
@@ -53,6 +53,7 @@ import {
   ProductDetails,
   ProductMainContent,
   ProductPriceWrapper,
+  FullPointsWrapper,
   ProductWrapper,
   SocialContainer,
   ShareWrapper,
@@ -61,7 +62,7 @@ import {
   PointsInfo
 } from './styled'
 
-const showDiscountPrice = (component1, component2) => (condition) => ifElse(
+const toggleComponent = (component1, component2) => (condition) => ifElse(
   identity,
   () => component1,
   () => component2
@@ -81,6 +82,68 @@ const updateParamsImages = (images, opt = {}) => {
   return images ? paramsImgix(images, options) : ''
 }
 
+const getHighestPointsEarn = (product) => {
+  const amount = product.get('discountPrice') || product.get('price')
+
+  return `${calculateEarnPoints({
+    multiplier: parseFloat(product.getIn(['points', 'multiplier'])),
+    percentage: parseFloat(product.getIn(['points', 'method', 'cash'])),
+    amount: parseFloat(amount)
+  })} CLiQQ Points`
+}
+
+const DisplayProductPointsPrice = ({ entity }) => {
+  return (
+    <FullPointsWrapper>
+      <Image src={CliQQPlainLogo} className='cliqq-plain-icon' alt='CLiQQ' />
+      <Label as='b' basic size='big' className='product-price color__primary text__weight--700'>
+        { computeTotalPointsPrice(entity) }
+      </Label>
+    </FullPointsWrapper>
+  )
+}
+
+const DisplayProductPrice = ({ entity }) => {
+  const toggleDiscount = toggleComponent(
+    <Label className='product-discount' as='span' basic size='huge' color='grey'>
+      <FormattedMessage {...messages.peso} />
+      { entity.get('price') &&
+        parseFloat(entity.get('price')).toLocaleString() }
+    </Label>,
+    null
+  )
+
+  return (
+    <ProductPriceWrapper>
+      <Label className='product-price text__weight--700 color__primary' as='b' basic size='massive'>
+        <FormattedMessage {...messages.peso} />
+        { toggleOrigDiscountPrice(entity) }
+      </Label>
+      { toggleDiscount(entity.get('discountPrice')) }
+    </ProductPriceWrapper>
+  )
+}
+
+export const ToggleFullPoints = ({ isFullPointsOnly, ...rest }) => {
+  return toggleComponent(
+    <DisplayProductPointsPrice {...rest} />,
+    <DisplayProductPrice {...rest} />
+  )(isFullPointsOnly)
+}
+
+export const ToggleEarnPoints = ({ entity, isFullPointsOnly }) => {
+  return toggleComponent(
+    <PointsInfo>
+      <Image src={CliQQPlainLogo} alt='CLiQQ' />
+      <Label as='span' basic size='medium' className='text__weight--400'>
+        <FormattedMessage
+          {...messages.earnPoints}
+          values={{points: <span className='color__primary'>{getHighestPointsEarn(entity)}</span>}} />
+      </Label>
+    </PointsInfo>
+  , null)(!isFullPointsOnly && !!entity.get('points'))
+}
+
 const Product = ({
   product,
   loading,
@@ -92,7 +155,6 @@ const Product = ({
   closeEmailPrompt,
   defaultImage,
   intl,
-  origPrice,
   isMobile,
   copied,
   productSlider,
@@ -101,7 +163,8 @@ const Product = ({
   windowWidth,
   onSizeChange,
   lightBoxImage,
-  toggleLightBox
+  toggleLightBox,
+  _isFullPointsOnly
 }) => {
   const FacebookIcon = generateShareIcon('facebook')
   const TwitterIcon = generateShareIcon('twitter')
@@ -118,20 +181,11 @@ const Product = ({
       src={updateParamsImages(product.get('brandLogo'), { w: 200, h: 30 })}
       onClick={changeRoute.bind(this, `/brands/${product.getIn(['brand', 'code'])}`)} />) : ''
 
-  const toggleDiscount = showDiscountPrice(
-    <Label className='product-discount' as='span' basic size='huge' color='grey'>
-      <FormattedMessage {...messages.peso} />
-      { product.get('price') &&
-        parseFloat(product.get('price')).toLocaleString() }
-    </Label>,
-    null
-  )
-
   const _handleMailTo = () => {
     if (!isMobile) {
       openEmailPrompt()
     } else {
-      window.location.href = `mailto:?subject=₱${origPrice(product)} ${product.get('title')}&body=Click this link to see the product: ${window.location.href}`
+      window.location.href = `mailto:?subject=₱${toggleOrigDiscountPrice(product)} ${product.get('title')}&body=Click this link to see the product: ${window.location.href}`
     }
   }
 
@@ -143,16 +197,6 @@ const Product = ({
     }
 
     return fbShare(itemData, FB_SHARE_ID)
-  }
-
-  const getHighestPointsEarn = () => {
-    const amount = product.get('discountPrice') || product.get('price')
-
-    return `${calculateEarnPoints({
-      multiplier: parseFloat(product.getIn(['points', 'multiplier'])),
-      percentage: parseFloat(product.getIn(['points', 'method', 'cash'])),
-      amount: parseFloat(amount)
-    })} CLiQQ Points`
   }
 
   return (
@@ -191,13 +235,10 @@ const Product = ({
                 : null
               }
               <Label as='p' basic size='big' className='padding__horizontal--15'>{product.get('title')}</Label>
-              <ProductPriceWrapper>
-                <Label className='product-price text__weight--700 color__primary' as='b' basic size='massive'>
-                  <FormattedMessage {...messages.peso} />
-                  { origPrice(product) }
-                </Label>
-                { toggleDiscount(product.get('discountPrice')) }
-              </ProductPriceWrapper>
+              <ToggleFullPoints
+                isFullPointsOnly={_isFullPointsOnly}
+                entity={product}
+              />
             </LoadingStateInfo>
           </ProductMainContent>
 
@@ -212,17 +253,10 @@ const Product = ({
           <Grid padded>
             <Grid.Row>
               <Grid.Column>
-                {
-                  product.get('points') &&
-                  <PointsInfo>
-                    <Image src={CliQQPlainLogo} alt='CLiQQ' />
-                    <Label as='span' basic size='medium' className='text__weight--400'>
-                      <FormattedMessage
-                        {...messages.earnPoints}
-                        values={{points: <span className='color__primary'>{getHighestPointsEarn()}</span>}} />
-                    </Label>
-                  </PointsInfo>
-                }
+                <ToggleEarnPoints
+                  entity={product}
+                  isFullPointsOnly={_isFullPointsOnly}
+                />
 
                 <SocialContainer>
                   <Label className='color__secondary text__weight--400' as='p' basic size='medium'>
@@ -355,9 +389,9 @@ Product.propTypes = {
   product: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  origPrice: PropTypes.func.isRequired,
   onSizeChange: PropTypes.func.isRequired,
-  changeRoute: PropTypes.func.isRequired
+  changeRoute: PropTypes.func.isRequired,
+  _isFullPointsOnly: PropTypes.bool.isRequired
 }
 
 export default Product
