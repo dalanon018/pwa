@@ -157,7 +157,7 @@ const SelectMethodWrapper = styled.div`
     width: 100%;
 
     &.checked {
-      border: 2px solid #8DC640;
+      border: 2px solid #FF4813;
     }
 
     input:checked~label:after {

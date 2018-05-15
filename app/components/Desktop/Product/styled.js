@@ -60,7 +60,6 @@ export const ProductImageSlider = styled.div`
 
 export const ProductMainContent = styled(AnimateDiv)`
   margin: 20px 0;
-  text-align: center;
 
   @media (min-width: 768px) {
     h3 {
@@ -81,14 +80,12 @@ export const ProductPriceWrapper = styled(AnimateDiv)`
   flex-direction: column;
 
   .product-price {
-    font-family: 'Roboto';
     letter-spacing: -2px;
     padding: 0;
-    font-size: 2.714286rem !important;
+    font-size: 2rem !important;
   }
 
   .product-discount {
-    font-family: 'Roboto';
     letter-spacing: -2px;
     text-decoration: line-through;
     margin-left: 10px;
@@ -108,17 +105,17 @@ export const DetailsWrapper = styled(AnimateDiv)`
 `
 
 export const DeliveryPolicy = styled(AnimateDiv)`
-  padding: 35px 0;
+  // padding: 20px 0;
 `
 
 export const ProductDetailsContainer = styled(AnimateDiv)`
   padding: 20px 0 35px 0;
   font-weight: 100;
 
-  // @media (min-width: 1366px) {
-  //   margin: 0 auto;
-  //   width: 700px;
-  // }
+  .dangerous-html {
+    font-size: 15px;
+    font-weight: 400;
+  }
 `
 
 export const ProductDetails = styled(ProductDetailsContainer)`
@@ -135,7 +132,7 @@ export const ProductDetails = styled(ProductDetailsContainer)`
 
 export const ButtonContainer = styled(AnimateDiv)`
   .ui.button.primary {
-    padding: 20px 40px !important;
+    padding: 16px 40px !important;
   }
 `
 
@@ -163,21 +160,27 @@ export const ShareWrapper = styled.div`
   }
 
   .mail.icon {
-    font-size: 15px;
-    line-height: 13px !important;
+    font-size: 20px;
+    line-height: 18px !important;
   }
 `
 
 export const DetailsContent = styled.div`
   display: flex;
+  align-items: flex-start;
   padding: 5px 0 !important;
 
   img {
-    width: auto;
-    height: 30px;
-    min-width: 45px;
-    flex: 0.1;
+    width: 40px;
     margin-top: 8px;
+
+    &.deliver-icon {
+      width: 55px;
+    }
+
+    &.return-icon {
+      margin: 0 8px 0 7px;
+    }
   }
 
   div.collapse-description {
@@ -195,10 +198,15 @@ export const EmailDesktopWarning = styled.div`
 `
 
 export const SizesWrapper = styled.div`
-  text-align: center;
+  display: flex;
+  align-items: center;
   padding: 10px 0;
 
   .no-margin {
+    margin: 0 !important;
+  }
+
+  .ui.radio.checkbox {
     margin: 0 !important;
   }
 `
@@ -212,12 +220,12 @@ export const SizesButton = styled.div`
     background: transparent;
     border-radius: 5px;
     border: 2px solid #F0F0F0;
-    height: 50px;
+    height: 45px;
     margin: 5px;
-    width: 50px;
+    width: 45px;
 
     &:focus, &:active, &:visited {
-      border: 2px solid #8DC640;
+      border: 2px solid #FF4813;
     }
   }
 `
@@ -232,4 +240,22 @@ export const LeftColumnWrapper = styled.div`
   height: 100%;
   position: relative;
   width: 100%;
+`
+
+export const CustomRow = styled(Grid.Row)`
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding: 50px 0 !important;
+`
+
+export const PointsInfo = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 30px;
+
+  img{
+    margin-right: 12px;
+    width: 25px;
+  }
 `

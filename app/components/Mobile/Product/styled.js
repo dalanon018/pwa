@@ -209,7 +209,7 @@ export const SizesButton = styled.div`
     width: 50px;
 
     &:focus, &:active, &:visited {
-      border: 2px solid #8DC640;
+      border: 2px solid #FF4813;
     }
   }
 `

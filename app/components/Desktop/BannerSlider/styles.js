@@ -85,7 +85,7 @@ const BannerSliderWrapper = styled.div`
           }
           &.slick-active {
             img {
-              border: 2px solid #AEAEAE;
+              border: 2px solid #E8E8E8;
             }
           }
         }

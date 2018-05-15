@@ -45,7 +45,7 @@ const StyledCheckBox = styled(Checkbox)`
   }
 
   & input[type=checkbox]:checked + label {
-    border: 2px solid #8DC640;
+    border: 2px solid #FF4813;
   }
 `
 
