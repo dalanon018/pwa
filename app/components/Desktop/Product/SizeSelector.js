@@ -11,8 +11,9 @@ import {
 
 const FormWrapper = styled(Form)`
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: center;
+  margin-left: 10px;
 
   > field {
     flex: 1;
@@ -36,16 +37,17 @@ const StyledCheckBox = styled(Checkbox)`
     background: transparent;
     border-radius: 5px;
     border: 2px solid #F0F0F0;
-    height: 50px;
+    height: 45px;
     line-height: 3;
     margin: 5px;
     padding: 0 !important;
-    width: 50px;
+    width: 45px;
     text-align: center;
   }
 
   & input[type=checkbox]:checked + label {
-    border: 2px solid #8DC640;
+    border: 2px solid #FF4813;
+    font-weight: 500;
   }
 `
 
@@ -54,7 +56,7 @@ function SizeSelector ({ product, onSizeChange }) {
   return (
     <SizesWrapper>
       <div>
-        <Label className='color__secondary center' as='p' basic size='big'>
+        <Label className='text__weight--400' as='span' basic size='big'>
           <FormattedMessage {...messages.selectSize} />
         </Label>
       </div>

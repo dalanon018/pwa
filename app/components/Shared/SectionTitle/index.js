@@ -68,7 +68,7 @@ export class SectionTitle extends React.PureComponent {
     const { isDesktop } = this.state
 
     if (isDesktop) {
-      return 'massive'
+      return 'huge'
     }
 
     return 'large'

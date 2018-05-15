@@ -20,7 +20,7 @@ export default defineMessages({
   },
   orderNow: {
     id: 'app.components.Product.orderNow',
-    defaultMessage: 'Order Now!'
+    defaultMessage: 'PLACE ORDER'
   },
   peso: {
     id: 'app.components.Product.peso',
@@ -80,10 +80,14 @@ export default defineMessages({
   },
   selectSize: {
     id: 'app.components.Product.selectSize',
-    defaultMessage: 'Select Size'
+    defaultMessage: 'Select Size:'
   },
   noStock: {
     id: 'app.components.Product.noStock',
     defaultMessage: 'OUT OF STOCK'
+  },
+  earnPoints: {
+    id: 'app.containers.ProductPage.earnPoints',
+    defaultMessage: 'Earn {points} when you claim this!'
   }
 })

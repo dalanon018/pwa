@@ -19,11 +19,13 @@ import {
 import { FormattedMessage } from 'react-intl'
 import { Image, Label, Button, Icon, Grid, Container } from 'semantic-ui-react'
 
-import DeliveryIcon from 'images/test-images/v2/delivery-icon.svg'
-import ReturnIcon from 'images/test-images/v2/return-icon.svg'
+import DeliveryIcon from 'images/icons/delivery-icon.svg'
+import ReturnIcon from 'images/icons/return-icon.svg'
+import CliQQPlainLogo from 'images/icons/cliqq.png'
 
 import { fbShare } from 'utils/fb-share'
 import { paramsImgix } from 'utils/image-stock'
+import { calculateEarnPoints } from 'utils/calculation'
 
 import ProductSlider from 'components/Desktop/BannerSlider'
 // import ListCollapse from 'components/Shared/ListCollapse'
@@ -49,7 +51,9 @@ import {
   DetailsContent,
   DeliveryPolicy,
   CustomGrid,
-  LeftColumnWrapper
+  LeftColumnWrapper,
+  CustomRow,
+  PointsInfo
 } from './styled'
 
 const showDiscountPrice = (component1, component2) => (condition) => ifElse(
@@ -129,11 +133,21 @@ const Product = ({
     return fbShare(product)
   }
 
+  const getHighestPointsEarn = () => {
+    const amount = product.get('discountPrice') || product.get('price')
+
+    return `${calculateEarnPoints({
+      multiplier: parseFloat(product.getIn(['points', 'multiplier'])),
+      percentage: parseFloat(product.getIn(['points', 'method', 'cash'])),
+      amount: parseFloat(amount)
+    })} CLiQQ Points`
+  }
+
   return (
     <div>
       <Container>
-        <Grid>
-          <Grid.Row columns={2}>
+        <Grid padded>
+          <CustomRow columns={2}>
             <Grid.Column>
               <LeftColumnWrapper>
                 <AffixWrapper offset={offset} top={offset}>
@@ -152,37 +166,20 @@ const Product = ({
                     />
                     {
                       +product.get('quantity') === 0 &&
-                      <Label className='text__align--center' as='p' basic size='huge' color='red'>
+                      <Label className='text__align--center' as='p' basic size='large' color='red'>
                         <FormattedMessage {...messages.noStock} />
                       </Label>
                     }
                   </ProductImageSlider>
-                  <ProductMainContent>
-                    <LoadingStateInfo loading={loading} center>
-                      <ButtonContainer className='background__white'>
-                        <Button
-                          onClick={onSubmit}
-                          loading={loading}
-                          primary
-                          disabled={+product.get('quantity') === 0} > <FormattedMessage {...messages.orderNow} /> </Button>
-                      </ButtonContainer>
-                    </LoadingStateInfo>
-                  </ProductMainContent>
-
-                  {
-                    product.get('association') &&
-                    <SizeSelector
-                      product={product}
-                      onSizeChange={onSizeChange}
-                    />
-                  }
 
                   <SocialContainer>
-                    <p className='share-item ui big basic label color__secondary'><FormattedMessage {...messages.shareItem} /></p>
+                    <Label className='share-item text__weight--500' as='p' basic size='large'>
+                      <FormattedMessage {...messages.shareItem} />
+                    </Label>
                     <ShareWrapper>
 
                       <button className='unstyle-button share-button' onClick={fbShareAction}>
-                        <FacebookIcon round size={30} />
+                        <FacebookIcon round size={40} />
                       </button>
 
                       <TwitterShareButton
@@ -190,7 +187,7 @@ const Product = ({
                         title={product.get('title')}
                         via='711philippines'
                         url={window.location.href} >
-                        <TwitterIcon size={30} round />
+                        <TwitterIcon size={40} round />
                       </TwitterShareButton>
 
                       <a onClick={_handleMailTo} className='share-button'>
@@ -206,10 +203,10 @@ const Product = ({
                 <LoadingStateInfo>
                   {
                     product.get('brand')
-                    ? <Label onClick={changeRoute.bind(this, `/brands/${product.getIn(['brand', 'code'])}`)} className='no-margin-bottom color__secondary margin__none brand-title' as='span' basic size='big'>{product.getIn(['brand', 'name'])}</Label>
+                    ? <Label onClick={changeRoute.bind(this, `/brands/${product.getIn(['brand', 'code'])}`)} className='color__grey no-margin-bottom brand-title' as='p' basic size='large'>{product.getIn(['brand', 'name'])}</Label>
                     : null
                   }
-                  <Label as='p' className='margin__none' basic size='big'>{product.get('title')}</Label>
+                  <Label as='p' className='text__weight--500' basic size='huge'>{product.get('title')}</Label>
                   <ProductPriceWrapper>
                     <Label className='product-price' as='b' basic size='massive' color='orange'>
                       <FormattedMessage {...messages.peso} />
@@ -218,33 +215,74 @@ const Product = ({
                     { toggleDiscount(product.get('discountPrice')) }
                   </ProductPriceWrapper>
                 </LoadingStateInfo>
+
+                <div>
+                  {
+                    product.get('association') &&
+                    <SizeSelector
+                      product={product}
+                      onSizeChange={onSizeChange}
+                    />
+                  }
+                </div>
+
+                <ProductMainContent>
+                  <LoadingStateInfo loading={loading} center>
+                    <ButtonContainer>
+                      <Button
+                        onClick={onSubmit}
+                        loading={loading}
+                        primary
+                        disabled={+product.get('quantity') === 0} > <FormattedMessage {...messages.orderNow} /> </Button>
+                    </ButtonContainer>
+                  </LoadingStateInfo>
+
+                  {
+                    product.get('points') &&
+                    <PointsInfo>
+                      <Image src={CliQQPlainLogo} alt='CLiQQ' />
+                      <Label as='span' basic size='large' className='text__weight--400'>
+                        <FormattedMessage
+                          {...messages.earnPoints}
+                          values={{points: <span className='color__primary'>{getHighestPointsEarn()}</span>}} />
+                      </Label>
+                    </PointsInfo>
+                  }
+                </ProductMainContent>
+
                 <ProductDetails>
-                  <Label as='p' basic size='big' className='color__secondary border_bottom__one--light-grey padding__bottom--5'> <FormattedMessage {...messages.productDetailsTitle} /> </Label>
-                  <LoadingStateInfo loading={loading} className='color__light-grey' >
-                    <div className='product-details text__roboto--light color__dark-grey' dangerouslySetInnerHTML={{__html: product.get('details')}} />
+                  <Label as='p' basic size='huge' className='color__grey border_bottom__two--light-grey padding__bottom--5 text__weight--500'>
+                    <FormattedMessage {...messages.productDetailsTitle} />
+                  </Label>
+                  <LoadingStateInfo loading={loading}>
+                    <div className='dangerous-html' dangerouslySetInnerHTML={{__html: product.get('details')}} />
                   </LoadingStateInfo>
                 </ProductDetails>
 
                 <DeliveryPolicy>
-                  <Label as='p' className='margin__none color__secondary border_bottom__one--light-grey padding__bottom--5' size='large' >
+                  <Label as='p' basic size='huge' className='color__grey border_bottom__two--light-grey padding__bottom--5 text__weight--500'>
                     <FormattedMessage {...messages.deliveryReturnsPolicy} />
                   </Label>
 
                   <div className='margin__top-positive--20'>
                     <DetailsContent>
-                      <Image src={DeliveryIcon} alt='CLiQQ' />
+                      <Image className='deliver-icon' src={DeliveryIcon} alt='CLiQQ' />
                       <div className='collapse-description'>
-                        <Label className='description-title color__secondary' as='p' basic size='large'><FormattedMessage {...messages.deliveryTitle} /></Label>
-                        <Label className='text__roboto--light color__dark-grey' as='p' basic size='medium'>
+                        <Label className='description-title text__weight--500' as='p' basic size='big'>
+                          <FormattedMessage {...messages.deliveryTitle} />
+                        </Label>
+                        <Label className='text__weight--400' as='p' basic size='large'>
                           <span dangerouslySetInnerHTML={{__html: product.get('deliveryPromiseMessage')}} />
                         </Label>
                       </div>
                     </DetailsContent>
                     <DetailsContent>
-                      <Image src={ReturnIcon} alt='CLiQQ' />
+                      <Image className='return-icon' src={ReturnIcon} alt='CLiQQ' />
                       <div className='collapse-description'>
-                        <Label className='description-title primary__secondary' as='p' basic size='large'><FormattedMessage {...messages.returnPolicy} /></Label>
-                        <Label className='text__roboto--light color__dark-grey' as='p' basic size='medium'>
+                        <Label className='description-title text__weight--500' as='p' basic size='big'>
+                          <FormattedMessage {...messages.returnPolicy} />
+                        </Label>
+                        <Label className='text__weight--400' as='p' basic size='large'>
                           <span dangerouslySetInnerHTML={{__html: product.get('returnPolicy')}} />
                         </Label>
                       </div>
@@ -254,11 +292,11 @@ const Product = ({
                 {
                   product.get('additionalDetails')
                   ? <div>
-                    <Label as='p' className='margin__none' size='large' >
+                    <Label as='p' className='margin__none text__weight--500' size='big' >
                       <FormattedMessage {...messages.additionalInfo} />
                     </Label>
                     <div>
-                      <Label as='p' color='grey' basic size='medium'>
+                      <Label className='text__weight--400 color__grey' as='p' basic size='large'>
                         <span dangerouslySetInnerHTML={{__html: product.get('additionalDetails')}} />
                       </Label>
                     </div>
@@ -267,7 +305,7 @@ const Product = ({
                 }
               </DetailsWrapper>
             </CustomGrid>
-          </Grid.Row>
+          </CustomRow>
         </Grid>
       </Container>
 

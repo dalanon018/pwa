@@ -35,6 +35,12 @@
       margin-right: 10px;
     }
 
+    @media (min-width: 1024px) {
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
     // &:after {
     //   -moz-osx-font-smoothing: grayscale;
     //   -webkit-backface-visibility: hidden;
