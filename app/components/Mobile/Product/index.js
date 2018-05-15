@@ -124,14 +124,14 @@ const DisplayProductPrice = ({ entity }) => {
   )
 }
 
-const ToggleFullPoints = ({ isFullPointsOnly, ...rest }) => {
+export const ToggleFullPoints = ({ isFullPointsOnly, ...rest }) => {
   return toggleComponent(
     <DisplayProductPointsPrice {...rest} />,
     <DisplayProductPrice {...rest} />
   )(isFullPointsOnly)
 }
 
-const ToggleEarnPoints = ({ entity, isFullPointsOnly }) => {
+export const ToggleEarnPoints = ({ entity, isFullPointsOnly }) => {
   return toggleComponent(
     <PointsInfo>
       <Image src={CliQQPlainLogo} alt='CLiQQ' />
