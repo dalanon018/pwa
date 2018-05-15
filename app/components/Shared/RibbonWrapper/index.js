@@ -13,6 +13,8 @@ import { isEmpty } from 'lodash'
 import { FormattedMessage } from 'react-intl'
 import messages from './messages'
 
+import WindowWidth from 'components/Shared/WindowWidth'
+
 const Wrapper = styled.div`
   position: absolute;
   right: ${props => props.offsetRight ? props.offsetRight + 'px' : 0};
@@ -38,6 +40,11 @@ const Wrapper = styled.div`
     span {
       line-height: 8px;
       margin-top: -5px;
+    }
+
+    @media (min-width: 1024px) {
+      height: 44px;
+      width: 44px;
     }
   }
 `
@@ -72,17 +79,19 @@ class RibbonWrapper extends React.PureComponent {
   }
 
   render () {
-    const { rightSpace, percentage } = this.props
+    const { rightSpace, percentage, windowWidth } = this.props
     const { offsetRight } = this.state
+
+    const isDesktop = windowWidth >= 1024
 
     return (
       <Wrapper offsetRight={rightSpace && offsetRight}>
         <div className='ribbon-tag background__gold'>
-          <Label as='b' className='color__white padding__none text__weight--500' basic size='small'>
+          <Label as='b' className={`color__white padding__none text__weight--${isDesktop ? '700' : '500'}`} basic size={`${isDesktop ? 'large' : 'small'}`}>
             {!isEmpty(percentage) && percentage.get('amount')}
             {!isEmpty(percentage) && percentage.get('type') === 'PERCENTAGE' ? '%' : ''}
           </Label>
-          <Label as='p' className='color__white margin__top-negative--2 margin__bottom--none padding__none text__weight--500' basic size='mini'>
+          <Label as='p' className={`color__white margin__top-negative--2 margin__bottom--none padding__none text__weight--${isDesktop ? '700' : '500'}`} basic size={`${isDesktop ? 'small' : 'mini'}`}>
             <FormattedMessage {...messages.off} />
           </Label>
         </div>
@@ -91,4 +100,4 @@ class RibbonWrapper extends React.PureComponent {
   }
 }
 
-export default RibbonWrapper
+export default WindowWidth(RibbonWrapper)

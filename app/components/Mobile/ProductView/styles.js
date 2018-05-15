@@ -21,10 +21,10 @@ const ImageWrapper = styled.div`
   max-height: 175px;
   width: 100%;
 
-
   .image {
-    width: 100%;
+    border-radius: 4px 4px 0 0;
     height: 100%;
+    width: 100%;
   }
 
   @media (min-width: 1024px) {
