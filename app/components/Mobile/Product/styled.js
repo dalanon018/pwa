@@ -93,6 +93,26 @@ export const ProductPriceWrapper = styled(AnimateDiv)`
   }
 `
 
+export const FullPointsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+
+  img {
+    width: 32px !important;
+    height: 32px !important;
+    margin-right: 5px!important;
+  }
+
+  .product-price {
+    // font-size: 2.714286rem !important;
+    font-size: 30px !important;
+    letter-spacing: -2px;
+    padding: 0;
+  }
+`
+
 export const DetailsWrapper = styled(AnimateDiv)`
   align-self: stretch;
 
