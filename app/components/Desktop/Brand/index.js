@@ -40,7 +40,7 @@ const imgixOptions = {
   w: 300,
   h: 300,
   auto: 'compress',
-  q: 35,
+  q: 100,
   lossless: 0
 }
 
