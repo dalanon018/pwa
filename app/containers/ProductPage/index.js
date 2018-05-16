@@ -15,15 +15,16 @@ import { compose as ReduxCompose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 import { noop } from 'lodash'
 import {
+  T,
   both,
   complement,
   compose,
   cond,
   equals,
+  identity,
   ifElse,
   prop,
-  when,
-  T
+  when
 } from 'ramda'
 
 import injectSaga from 'utils/injectSaga'
@@ -32,6 +33,7 @@ import injectReducer from 'utils/injectReducer'
 import { isMobileDevice } from 'utils/http'
 import { FbEventTracking } from 'utils/seo'
 import { imageStock } from 'utils/image-stock'
+import { isFullPointsOnly } from 'utils/payment'
 
 import MobileProduct from 'components/Mobile/Product'
 import DesktopProduct from 'components/Desktop/Product'
@@ -107,6 +109,31 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
       hover: false,
       offset: 0
     }
+  }
+
+  _isFullPointsOnly = () => {
+    const { product } = this.props
+    return isFullPointsOnly({ identifier: product.get('title') })
+  }
+
+  /**
+   * we need to trigger modal if the item is for full points only
+   */
+  _conditionalFullPointsImplementation = () => {
+    const fullPointsSubmission = ifElse(
+      identity,
+      () => {
+        this.setState({
+          errModalToggle: true,
+          errorTitle: <FormattedMessage {...messages.fullPointsOnly} />,
+          errModalName: 'warning',
+          errorMessage: ''
+        })
+      },
+      this._setCurrentProduct
+    )
+
+    return fullPointsSubmission(this._isFullPointsOnly())
   }
 
   _setCurrentProduct = () => {
@@ -307,7 +334,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
                 isMobile={isMobile}
                 loading={loading}
                 onSizeChange={this._handleSizeChange}
-                onSubmit={this._setCurrentProduct}
+                onSubmit={this._conditionalFullPointsImplementation}
                 openEmailPrompt={this._handleOpenEmailWarning}
                 origPrice={this._handletoggleOrigDiscountPrice}
                 product={product}
@@ -330,7 +357,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
                 lightBoxImage={lightBoxImage}
                 loading={loading}
                 onSizeChange={this._handleSizeChange}
-                onSubmit={this._setCurrentProduct}
+                onSubmit={this._conditionalFullPointsImplementation}
                 openEmailPrompt={this._handleOpenEmailWarning}
                 origPrice={this._handletoggleOrigDiscountPrice}
                 product={product}

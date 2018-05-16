@@ -21,5 +21,9 @@ export default defineMessages({
   errorProductQuantity: {
     id: 'app.containers.ProductPage.errorProductQuantity',
     defaultMessage: 'Product is NOT Available at the moment. Please check back again later.'
+  },
+  fullPointsOnly: {
+    id: 'app.components.Product.fullPointsOnly',
+    defaultMessage: 'Ooops! Sorry, bruh! This item can only be ordered with CLiQQ points via the mobile site.'
   }
 })
