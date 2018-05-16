@@ -36,7 +36,7 @@ export default defineMessages({
   },
   currentPoints: {
     id: 'app.containers.WalletPage.currentPoints',
-    defaultMessage: 'Current CLiQQ Points'
+    defaultMessage: 'You currently have'
   },
   worthPointsCash: {
     id: 'app.containers.WalletPage.worthPointsCash',

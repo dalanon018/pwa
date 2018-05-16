@@ -131,7 +131,7 @@ const UserPointsWrapper = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-bottom: 20px;
 
   img {
     width: 35px;
@@ -286,17 +286,17 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
                       <Label as='p' className='text__weight--500' size='large' >
                         <FormattedMessage {...messages.currentPoints} />
                       </Label>
-                      <Label as='p' className='color__grey text__weight--400' size='medium' >
-                        <FormattedMessage
-                          {...messages.asOf}
-                          values={{date: moment().format('LL')}} />
-                      </Label>
                       <UserPointsWrapper>
                         <Image src={CliqqIcon} alt='CLiQQ' />
                         <Label as='span' className='my-points color__teal text__weight--700' size='massive' >
                           { currentPoints.toLocaleString() }
                         </Label>
                       </UserPointsWrapper>
+                      <Label as='p' className='color__grey text__weight--400' size='medium' >
+                        <FormattedMessage
+                          {...messages.asOf}
+                          values={{date: moment().format('LL')}} />
+                      </Label>
                       {
                         currentPoints ? (
                           <div>
