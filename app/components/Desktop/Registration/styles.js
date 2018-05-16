@@ -95,7 +95,7 @@ const ButtonWrapper = styled.div`
   padding: 0 !important;
 
   .ui.button.primary {
-    padding: 20px 40px !important;
+    padding: 16px 40px !important;
   }
 `
 
@@ -140,7 +140,7 @@ const RegistrationWrapper = styled.div`
 
   .ui.primary.button {
     margin: 0 auto;
-    padding: 20px 40px !important;
+    padding: 16px 40px !important;
     width: 200px;
   }
 `
