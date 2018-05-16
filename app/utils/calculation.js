@@ -15,7 +15,7 @@ export const calculateEarnPoints = ({ method, multiplier, percentage, amount }) 
   )
 }
 
-export const calculateConversionPointsToCash = ({ points, multiplier = '0.25' }) => {
+export const calculateConversionPointsToCash = ({ points, multiplier = '0.20' }) => {
   return Math.floor(
     divide(points, multiplier)
   )
