@@ -33,7 +33,7 @@ if (env === 'production') {
   console.log(`API_BASE_URL=https://apidemo.cliqq.net:8443/ecms/api/v1`)
   console.log(`APP_BASE_URL=http://localhost:3000`)
   console.log(`MOBILE_REGISTRATION_URL=https://apidemo.cliqq.net:8443`)
-  console.log(`STORE_LOCATOR_URL=https://mapservice.cliqq.net/ajax/`)
+  console.log(`STORE_LOCATOR_URL=https://cliqqshop-storelocator.netlify.com/`)
   console.log(`LOYALTY_URL=https://apidemo.cliqq.net:8443/loyalty/ecmsApi/v2`)
   console.log(`RECENT_STORE_TOKEN=MmsxN1N0b3JlTG9jYXRvclBhc3N3b3JkRm9yRTE=`)
 
