@@ -4,17 +4,17 @@ import { fromJS } from 'immutable'
 
 import OrderSummary from '../index'
 
-import {
-  ProductReviewWrapper,
-  DetailsWrapper,
-  ButtonContainer,
-  SelectMethodWrapper,
-  ProductItem,
-  MethodTitle,
-  StepWrapper,
-  StepHead,
-  LocationButton
-} from '../styles'
+// import {
+//   ProductReviewWrapper,
+//   DetailsWrapper,
+//   ButtonContainer,
+//   SelectMethodWrapper,
+//   ProductItem,
+//   MethodTitle,
+//   StepWrapper,
+//   StepHead,
+//   LocationButton
+// } from '../styles'
 
 const children = 'Test'
 const wrapper = (props = {}, enzyme = shallow) => enzyme(
@@ -62,7 +62,11 @@ describe('<OrderSummary />', () => {
     mobileNumber: '999999999',
     errorMessage: '',
     orderRequesting: false,
-    store: { name: 'Quezon City', id: 1 }
+    store: { name: 'Quezon City', id: 1 },
+    intl: {
+      formatMessage: () => {}
+    },
+    mobileNumbers: fromJS([])
   }
 
   it('Expect to have unit tests specified', () => {
@@ -74,50 +78,5 @@ describe('<OrderSummary />', () => {
     expect(
       renderComponent.length
     ).toEqual(1)
-  })
-
-  it('renders one <ProductReviewWrapper/> styled component', () => {
-    const ShallowedWrapper = shallow(<OrderSummary {...minProps} />)
-    expect(ShallowedWrapper.find(ProductReviewWrapper)).toHaveLength(1)
-  })
-
-  it('renders one <DetailsWrapper/> styled component', () => {
-    const ShallowedWrapper = shallow(<OrderSummary {...minProps} />)
-    expect(ShallowedWrapper.find(DetailsWrapper)).toHaveLength(1)
-  })
-
-  it('renders one <ButtonContainer/> styled component', () => {
-    const ShallowedWrapper = shallow(<OrderSummary {...minProps} />)
-    expect(ShallowedWrapper.find(ButtonContainer)).toHaveLength(1)
-  })
-
-  it('renders one <SelectMethodWrapper/> styled component', () => {
-    const ShallowedWrapper = shallow(<OrderSummary {...minProps} />)
-    expect(ShallowedWrapper.find(SelectMethodWrapper)).toHaveLength(1)
-  })
-
-  it('renders one <ProductItem/> styled component', () => {
-    const ShallowedWrapper = shallow(<OrderSummary {...minProps} />)
-    expect(ShallowedWrapper.find(ProductItem)).toHaveLength(1)
-  })
-
-  it('renders one <MethodTitle/> styled component', () => {
-    const ShallowedWrapper = shallow(<OrderSummary {...minProps} />)
-    expect(ShallowedWrapper.find(MethodTitle)).toHaveLength(1)
-  })
-
-  it('renders one <StepWrapper/> styled component', () => {
-    const ShallowedWrapper = shallow(<OrderSummary {...minProps} />)
-    expect(ShallowedWrapper.find(StepWrapper)).toHaveLength(1)
-  })
-
-  it('renders one <StepHead/> styled component', () => {
-    const ShallowedWrapper = shallow(<OrderSummary {...minProps} />)
-    expect(ShallowedWrapper.find(StepHead)).toHaveLength(1)
-  })
-
-  it('renders one <LocationButton/> styled component', () => {
-    const ShallowedWrapper = shallow(<OrderSummary {...minProps} />)
-    expect(ShallowedWrapper.find(LocationButton)).toHaveLength(1)
   })
 })

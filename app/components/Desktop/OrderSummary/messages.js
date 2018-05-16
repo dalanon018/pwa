@@ -12,21 +12,29 @@ export default defineMessages({
     id: `${idSuffix}.findStore`,
     defaultMessage: 'Find Store Nearby'
   },
+  cantFindStore: {
+    id: `${idSuffix}.cantFindStore`,
+    defaultMessage: `Can't find the store? Check our {storeLocator}`
+  },
+  storeLocator: {
+    id: `${idSuffix}.storeLocator`,
+    defaultMessage: 'Store Locator'
+  },
   defaultStore: {
     id: `${idSuffix}.defaultStore`,
-    defaultMessage: 'Your Default Store will be the last store you visited'
+    defaultMessage: 'Recently visited stores will become your default stores.'
   },
   orderSummary: {
     id: `${idSuffix}.methodPayment`,
-    defaultMessage: 'Order Summary'
+    defaultMessage: 'Review Order'
   },
   methodPayment: {
     id: `${idSuffix}.methodPayment`,
-    defaultMessage: 'Method of Payment'
+    defaultMessage: 'Select Payment Method'
   },
   chooseStore: {
     id: `${idSuffix}.chooseStore`,
-    defaultMessage: 'Choose a 7-Eleven store!'
+    defaultMessage: 'Select a 7-Eleven store for pick up'
   },
   viewDetails: {
     id: `${idSuffix}.viewDetails`,
@@ -50,7 +58,7 @@ export default defineMessages({
   },
   proceedNext: {
     id: `${idSuffix}.proceedNext`,
-    defaultMessage: 'Purchase your Product'
+    defaultMessage: 'PLACE ORDER'
   },
   errorHeader: {
     id: `${idSuffix}.errorHeader`,
@@ -79,5 +87,21 @@ export default defineMessages({
   discountText: {
     id: `${idSuffix}.discountText`,
     defaultMessage: '*Discounts are automatically discounted at Method of Payment'
+  },
+  earnPoints: {
+    id: `${idSuffix}.earnPoints`,
+    defaultMessage: 'Points will be earned once claimed. How do I earn points?'
+  },
+  registeredMobile: {
+    id: `${idSuffix}.registeredMobile`,
+    defaultMessage: 'Registered Mobile Number'
+  },
+  signedAs: {
+    id: `${idSuffix}.signedAs`,
+    defaultMessage: 'Signed in as: '
+  },
+  size: {
+    id: `${idSuffix}.size`,
+    defaultMessage: 'Size: '
   }
 })
