@@ -4,14 +4,14 @@
 *
 */
 
-import React from 'react'
+import React, { PureComponent } from 'react'
 
 export default function WindowWidth (WrapperComponent) {
-  class WindowWidthComponent extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  class WindowWidthComponent extends PureComponent { // eslint-disable-line react/prefer-stateless-function
     constructor (props) {
       super(props)
       this.state = {
-        width: window.innerWidth
+        width: document.documentElement.clientWidth
       }
       this._handleWidthResize = this._handleWidthResize.bind(this)
     }
@@ -22,13 +22,13 @@ export default function WindowWidth (WrapperComponent) {
       })
     }
 
-    componentDidMount () {
-      window.addEventListener('resize', this._handleWidthResize)
-    }
+    // componentDidMount () {
+    //   window.addEventListener('resize', this._handleWidthResize)
+    // }
 
-    componentWillUnmount () {
-      window.removeEventListener('resize', this._handleWidthResize)
-    }
+    // componentWillUnmount () {
+    //   window.removeEventListener('resize', this._handleWidthResize)
+    // }
 
     render () {
       const { width } = this.state
