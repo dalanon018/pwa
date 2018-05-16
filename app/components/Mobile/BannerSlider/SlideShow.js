@@ -9,8 +9,8 @@ import PropTypes from 'prop-types'
 import Slider from 'react-slick'
 import { Image } from 'semantic-ui-react'
 
-import { ifElse, gt } from 'ramda'
-import { noop } from 'lodash'
+// import { ifElse, gt } from 'ramda'
+// import { noop } from 'lodash'
 
 import RibbonWrapper from 'components/Shared/RibbonWrapper'
 import TimerWrapper from 'components/Mobile/TimerWrapper'
@@ -47,12 +47,12 @@ class SlideShow extends React.PureComponent {
     return isProductPage && toggleLightBox(imageIndex.toString())
   }
 
-  componentDidMount () {
-    const { props } = this.slider
-    const shouldSlideNext = ifElse(gt(props.children.length), this._initNextSlide, noop)
+  // componentDidMount () {
+  //   const { props } = this.slider
+  //   const shouldSlideNext = ifElse(gt(props.children.length), this._initNextSlide, noop)
 
-    shouldSlideNext(1)
-  }
+  //   shouldSlideNext(1)
+  // }
 
   render () {
     const { settings, images, isHome, percentage, isPromo, promo } = this.props
