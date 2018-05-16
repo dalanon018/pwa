@@ -24,6 +24,6 @@ export default defineMessages({
   },
   fullPointsOnly: {
     id: 'app.components.Product.fullPointsOnly',
-    defaultMessage: 'This product can only order using mobile site.'
+    defaultMessage: 'Ooops! Sorry, bruh! This item can only be ordered with CLiQQ points via the mobile site.'
   }
 })
