@@ -190,6 +190,8 @@ class ProductView extends React.PureComponent {
     showElement: true
   }
 
+  _COLUMN_COUNT = 6
+
   _innerWindowScrollerRef = null
 
   _windowScrollerRef = (ref) => {
@@ -203,7 +205,7 @@ class ProductView extends React.PureComponent {
 
   _productEntity = ({ index, isScrolling, key, style }) => {
     const { products, isMinor, over18, changeRoute } = this.props
-    const columnCount = this._identifyColumnCount()
+    const columnCount = this._COLUMN_COUNT
 
     const fromIndex = index * columnCount
     const toIndex = fromIndex + columnCount
@@ -246,7 +248,7 @@ class ProductView extends React.PureComponent {
 
   _loadingState = () => {
     const { loader } = this.props
-    const columnCount = this._identifyColumnCount()
+    const columnCount = this._COLUMN_COUNT
     return (
       <Grid
         padded
@@ -272,7 +274,7 @@ class ProductView extends React.PureComponent {
 
   _virtualizedElement = () => {
     const { products, onRowsRendered, registerChild } = this.props
-    const columnCount = this._identifyColumnCount()
+    const columnCount = this._COLUMN_COUNT
     const rowCount = Math.ceil(products.size / columnCount)
 
     return (
