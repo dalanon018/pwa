@@ -24,7 +24,7 @@ import 'react-rangeslider/lib/index.css'
 import App from 'containers/App'
 
 // Error Tracking
-import ErrorTracking from 'utils/errorTracking'
+// import ErrorTracking from 'utils/errorTracking'
 
 // Import Language Provider
 import LanguageProvider from 'containers/LanguageProvider'
@@ -59,7 +59,8 @@ import { translationMessages } from './i18n'
 import './global-styles'
 
 // We need to install our sentryJS
-ErrorTracking.install()
+// we have to temporary remove this since it's causing performance impact
+// ErrorTracking.install()
 
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
