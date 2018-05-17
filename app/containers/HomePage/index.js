@@ -95,7 +95,9 @@ import {
   selectBannersLoading
 } from './selectors'
 import {
-  LIMIT_ITEMS
+  LIMIT_ITEMS,
+  MOBILE_LIMIT_ITEMS,
+  DESKTOP_LIMIT_ITEMS
 } from './constants'
 
 import {
@@ -165,6 +167,11 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     }
   }
 
+  _limitIdentifier = () => {
+    const { isMobileDevice } = this.props
+    return isMobileDevice() ? MOBILE_LIMIT_ITEMS : DESKTOP_LIMIT_ITEMS
+  }
+
   _shouldDisplayHeader = (component) => ifElse(
       identity,
       () => component,
@@ -189,19 +196,19 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
    */
   _fetchFeaturedProducts = (props) => {
     const { getProduct } = props
-    const { offset, limit } = this.state
+    const { offset } = this.state
 
     // since this data is change and we know exactly
-    getProduct({ offset, limit })
+    getProduct({ offset, limit: this._limitIdentifier() })
   }
 
   _displayMoreProducts = () => {
-    const { pageOffset, limit } = this.state
+    const { pageOffset } = this.state
     const incrementOffset = pageOffset + 1
 
     this.setState({
       pageOffset: incrementOffset,
-      offset: (incrementOffset * limit)
+      offset: (incrementOffset * this._limitIdentifier())
     }, () => this._fetchFeaturedProducts(this.props))
   }
 
