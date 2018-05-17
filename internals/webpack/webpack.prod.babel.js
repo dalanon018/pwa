@@ -79,6 +79,8 @@ module.exports = require('./webpack.base.babel')({
         additional: ['*.chunk.js']
       },
 
+      autoUpdate: 1000 * 60 * 60 * 1,
+
       // Removes warning for about `additional` section usage
       safeToUseOptionalCaches: true,
 

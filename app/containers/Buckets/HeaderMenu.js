@@ -9,7 +9,7 @@ import {
   Input
 } from 'semantic-ui-react'
 
-import { ifElse, identity, equals } from 'ramda'
+import { ifElse, identity } from 'ramda'
 import BarcodeImage from 'images/icons/barcode-header.svg'
 import messages from './messages'
 import SearchImage from 'images/icons/search-header.svg'
@@ -238,24 +238,24 @@ export default class MainMenu extends PureComponent {
     return ShowSearchInputLogo((currentRoute === 'home' && windowHeightOffset >= 53))
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { currentRoute } = nextProps
-    const willAddOrRemoveEvent = ifElse(
-      equals('home'),
-      () => window.addEventListener('scroll', this._updateScrollPosition),
-      () => window.removeEventListener('scroll', this._updateScrollPosition)
-    )
+  // componentWillReceiveProps (nextProps) {
+  //   const { currentRoute } = nextProps
+  //   const willAddOrRemoveEvent = ifElse(
+  //     equals('home'),
+  //     () => window.addEventListener('scroll', this._updateScrollPosition),
+  //     () => window.removeEventListener('scroll', this._updateScrollPosition)
+  //   )
 
-    willAddOrRemoveEvent(currentRoute)
-  }
+  //   willAddOrRemoveEvent(currentRoute)
+  // }
 
-  componentDidMount () {
-    window.addEventListener('scroll', this._updateScrollPosition)
-  }
+  // componentDidMount () {
+  //   window.addEventListener('scroll', this._updateScrollPosition)
+  // }
 
-  componentWillUnmount () {
-    window.removeEventListener('scroll', this._updateScrollPosition)
-  }
+  // componentWillUnmount () {
+  //   window.removeEventListener('scroll', this._updateScrollPosition)
+  // }
 
   render () {
     const { leftButtonAction, hideBackButton, changeRoute, showSearchIcon, showActivityIcon, currentRoute, headerMenuFullScreen } = this.props

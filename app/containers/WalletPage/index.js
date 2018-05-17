@@ -31,7 +31,7 @@ import { Container, Label, Image, Grid } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
-// import { calculateConversionPointsToCash } from 'utils/calculation'
+import { calculateConversionPointsToCash } from 'utils/calculation'
 
 import OrderTip from 'components/Mobile/OrderTip'
 import PlainCard from 'components/Shared/PlainCard'
@@ -131,7 +131,7 @@ const UserPointsWrapper = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-bottom: 20px;
 
   img {
     width: 35px;
@@ -286,33 +286,33 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
                       <Label as='p' className='text__weight--500' size='large' >
                         <FormattedMessage {...messages.currentPoints} />
                       </Label>
-                      <Label as='p' className='color__grey text__weight--400' size='medium' >
-                        <FormattedMessage
-                          {...messages.asOf}
-                          values={{date: moment().format('LL')}} />
-                      </Label>
                       <UserPointsWrapper>
                         <Image src={CliqqIcon} alt='CLiQQ' />
                         <Label as='span' className='my-points color__teal text__weight--700' size='massive' >
                           { currentPoints.toLocaleString() }
                         </Label>
                       </UserPointsWrapper>
+                      <Label as='p' className='color__grey text__weight--400' size='medium' >
+                        <FormattedMessage
+                          {...messages.asOf}
+                          values={{date: moment().format('LL')}} />
+                      </Label>
                       {
-                        // currentPoints ? (
-                        //   <div>
-                        //     <Label as='div' className='text__weight--500 margin__top-positive--20 padding__none' size='large' >
-                        //       <FormattedMessage
-                        //         {...messages.worthPointsCash}
-                        //         values={{
-                        //           amount: calculateConversionPointsToCash({points: currentPoints})
-                        //         }}
-                        //       />
-                        //     </Label>
-                        //     <Label as='div' className='text__weight--500 padding__none' size='large' >
-                        //       <FormattedMessage {...messages.worthPointsCashSub} />
-                        //     </Label>
-                        //   </div>
-                        // ) : null
+                        currentPoints ? (
+                          <div>
+                            <Label as='div' className='text__weight--500 margin__top-positive--20 padding__none' size='large' >
+                              <FormattedMessage
+                                {...messages.worthPointsCash}
+                                values={{
+                                  amount: calculateConversionPointsToCash({points: currentPoints})
+                                }}
+                              />
+                            </Label>
+                            <Label as='div' className='text__weight--500 padding__none' size='large' >
+                              <FormattedMessage {...messages.worthPointsCashSub} />
+                            </Label>
+                          </div>
+                        ) : null
                       }
                     </PointsPreviewWrapper>
                   </PlainCard>

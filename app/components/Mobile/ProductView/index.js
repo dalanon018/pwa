@@ -7,7 +7,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import LazyLoad from 'react-lazyload'
-import Waypoint from 'react-waypoint'
 
 import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller'
 import List from 'react-virtualized/dist/commonjs/List'
@@ -310,7 +309,7 @@ class ProductView extends React.PureComponent {
       loader,
       products
     } = this.props
-    const { showElement } = this.state
+    // const { showElement } = this.state
 
     const isLoading = () => equals(true, loader)
     const recordsEmpty = () => equals(0, products.size)
@@ -327,14 +326,9 @@ class ProductView extends React.PureComponent {
     ])
 
     return (
-      <Waypoint
-        bottomOffset='-200px'
-        onEnter={this._handleShowList(true)}
-      >
-        <div>
-          { showElement && ProductRender(virtualized) }
-        </div>
-      </Waypoint>
+      <div>
+        { ProductRender(virtualized) }
+      </div>
     )
   }
 }

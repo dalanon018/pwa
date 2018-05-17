@@ -9,7 +9,7 @@ import {
   Input
 } from 'semantic-ui-react'
 
-import { ifElse, identity, equals } from 'ramda'
+import { ifElse, identity } from 'ramda'
 import BarcodeImage from 'images/icons/barcode-header.svg'
 import messages from './messages'
 import SearchImage from 'images/icons/search-header.svg'
@@ -290,33 +290,33 @@ export default class MainMenu extends PureComponent {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { currentRoute } = nextProps
-    const willAddOrRemoveEvent = ifElse(
-      equals('home'),
-      () => window.addEventListener('scroll', this._updateScrollPosition),
-      () => window.removeEventListener('scroll', this._updateScrollPosition)
-    )
-
-    willAddOrRemoveEvent(currentRoute)
-  }
-
   componentDidUpdate () {
     const { showSearchIcon, showPointsIcon, showActivityIcon } = this.props
 
     this._handleQuickLinks(showSearchIcon, showPointsIcon, showActivityIcon)
   }
 
-  componentDidMount () {
-    const { showSearchIcon, showPointsIcon, showActivityIcon } = this.props
+  // componentWillReceiveProps (nextProps) {
+  //   const { currentRoute } = nextProps
+  //   const willAddOrRemoveEvent = ifElse(
+  //     equals('home'),
+  //     () => window.addEventListener('scroll', this._updateScrollPosition),
+  //     () => window.removeEventListener('scroll', this._updateScrollPosition)
+  //   )
 
-    window.addEventListener('scroll', this._updateScrollPosition)
-    this._handleQuickLinks(showSearchIcon, showPointsIcon, showActivityIcon)
-  }
+  //   willAddOrRemoveEvent(currentRoute)
+  // }
 
-  componentWillUnmount () {
-    window.removeEventListener('scroll', this._updateScrollPosition)
-  }
+  // componentDidMount () {
+  //   const { showSearchIcon, showPointsIcon, showActivityIcon } = this.props
+
+  //   window.addEventListener('scroll', this._updateScrollPosition)
+  //   this._handleQuickLinks(showSearchIcon, showPointsIcon, showActivityIcon)
+  // }
+
+  // componentWillUnmount () {
+  //   window.removeEventListener('scroll', this._updateScrollPosition)
+  // }
 
   render () {
     const { leftButtonAction, hideBackButton, changeRoute, showSearchIcon, showPointsIcon, showActivityIcon, currentRoute, headerMenuFullScreen } = this.props

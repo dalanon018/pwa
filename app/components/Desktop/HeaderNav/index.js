@@ -13,7 +13,7 @@ import {
   Label
 } from 'semantic-ui-react'
 
-import { ifElse, identity, equals } from 'ramda'
+import { ifElse, identity } from 'ramda'
 import BarcodeImage from 'images/icons/barcode-header.svg'
 import messages from './messages'
 import MainLogo from 'images/cliqq-logo.svg'
@@ -551,24 +551,24 @@ class HeaderNav extends PureComponent {
     )
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { currentRoute } = nextProps
-    const willAddOrRemoveEvent = ifElse(
-      equals('home'),
-      () => window.addEventListener('scroll', this._updateScrollPosition),
-      () => window.removeEventListener('scroll', this._updateScrollPosition)
-    )
+  // componentWillReceiveProps (nextProps) {
+  //   const { currentRoute } = nextProps
+  //   const willAddOrRemoveEvent = ifElse(
+  //     equals('home'),
+  //     () => window.addEventListener('scroll', this._updateScrollPosition),
+  //     () => window.removeEventListener('scroll', this._updateScrollPosition)
+  //   )
 
-    willAddOrRemoveEvent(currentRoute)
-  }
+  //   willAddOrRemoveEvent(currentRoute)
+  // }
 
-  componentDidMount () {
-    window.addEventListener('scroll', this._updateScrollPosition)
-  }
+  // componentDidMount () {
+  //   window.addEventListener('scroll', this._updateScrollPosition)
+  // }
 
-  componentWillUnmount () {
-    window.removeEventListener('scroll', this._updateScrollPosition)
-  }
+  // componentWillUnmount () {
+  //   window.removeEventListener('scroll', this._updateScrollPosition)
+  // }
 
   render () {
     const { changeRoute, showActivityIcon, currentRoute, clearSearchNav, searchProductNav, hideBackButtonNav, _handleSearchInputValueNav, leftButtonActionNav } = this.props

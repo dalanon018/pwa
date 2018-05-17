@@ -1,3 +1,4 @@
+
 /*
  *
  * HomePage constants
@@ -19,3 +20,5 @@ export const GET_BANNERS = 'app/HomePage/GET_BANNERS'
 export const SET_BANNERS = 'app/HomePage/SET_BANNERS'
 
 export const LIMIT_ITEMS = 12
+export const MOBILE_LIMIT_ITEMS = 12
+export const DESKTOP_LIMIT_ITEMS = 24
