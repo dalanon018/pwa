@@ -5,6 +5,7 @@
 */
 
 import React, { PureComponent } from 'react'
+import { isMobileDevice } from 'utils/http'
 
 export default function WindowWidth (WrapperComponent) {
   class WindowWidthComponent extends PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -22,6 +23,10 @@ export default function WindowWidth (WrapperComponent) {
       })
     }
 
+    _isMobileDevice = () => {
+      return isMobileDevice()
+    }
+
     // componentDidMount () {
     //   window.addEventListener('resize', this._handleWidthResize)
     // }
@@ -35,6 +40,7 @@ export default function WindowWidth (WrapperComponent) {
       return (
         <WrapperComponent
           windowWidth={width}
+          isMobileDevice={this._isMobileDevice}
           {...this.props}
         />
       )
