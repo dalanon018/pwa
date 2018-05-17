@@ -114,7 +114,6 @@ const MainNav = styled.div`
 `
 
 const MenuWrapper = styled.div`
-  font-family: 'Roboto', sans-serif;
   font-weight: 600;
 
   .list-wrapper {

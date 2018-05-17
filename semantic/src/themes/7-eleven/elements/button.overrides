@@ -39,6 +39,7 @@
       border-radius: 6px;
       font-size: 15px;
       font-weight: 700;
+      padding: 16px 40px !important;
     }
 
     // &:after {

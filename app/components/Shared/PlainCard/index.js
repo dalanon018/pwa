@@ -17,22 +17,38 @@ export const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   height: ${props => props.height}px;
-  justify-content: center;
+  justify-content: ${props => props.alignLeft ? 'flex-start' : 'center'};
   width: ${props => props.width ? props.width + 'px' : '100%'};
 
   img {
-    border-radius: ${props => props.borderRadius && props.isDesktop ? '10px' : '4px'};
+    ${
+      props => props.noImageRadius &&
+      `border-radius: ${props => props.borderRadius && props.isDesktop ? '10px' : '4px'};`
+    }
     height: inherit;
   }
 `
 
 class PlainCard extends React.PureComponent {
   render () {
-    const { children, borderRadius, width, height, windowWidth } = this.props
+    const {
+      children,
+      borderRadius,
+      width,
+      height,
+      windowWidth,
+      noImageRadius,
+      alignLeft } = this.props
     const isDesktop = windowWidth >= 1024
 
     return (
-      <Wrapper borderRadius={borderRadius} width={width} height={height} isDesktop={isDesktop}>
+      <Wrapper
+        borderRadius={borderRadius}
+        width={width}
+        height={height}
+        isDesktop={isDesktop}
+        noImageRadius={noImageRadius}
+        alignLeft={alignLeft}>
         {children}
       </Wrapper>
     )

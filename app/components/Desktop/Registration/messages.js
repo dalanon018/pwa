@@ -30,7 +30,7 @@ export default defineMessages({
   },
   submitButton: {
     id: `${idSuffix}.submitButton`,
-    defaultMessage: 'Submit'
+    defaultMessage: 'SUBMIT'
   },
   checkTermsLabel: {
     id: `${idSuffix}.checkTermsLabel`,

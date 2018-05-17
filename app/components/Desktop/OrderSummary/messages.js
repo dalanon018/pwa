@@ -12,21 +12,29 @@ export default defineMessages({
     id: `${idSuffix}.findStore`,
     defaultMessage: 'Find Store Nearby'
   },
+  cantFindStore: {
+    id: `${idSuffix}.cantFindStore`,
+    defaultMessage: `Can't find the store? Check our {storeLocator}`
+  },
+  storeLocator: {
+    id: `${idSuffix}.storeLocator`,
+    defaultMessage: 'Store Locator'
+  },
   defaultStore: {
     id: `${idSuffix}.defaultStore`,
-    defaultMessage: 'Your Default Store will be the last store you visited'
+    defaultMessage: 'Recently visited stores will become your default stores.'
   },
   orderSummary: {
     id: `${idSuffix}.methodPayment`,
-    defaultMessage: 'Order Summary'
+    defaultMessage: 'Review Order'
   },
   methodPayment: {
     id: `${idSuffix}.methodPayment`,
-    defaultMessage: 'Method of Payment'
+    defaultMessage: 'Select Payment Method'
   },
   chooseStore: {
     id: `${idSuffix}.chooseStore`,
-    defaultMessage: 'Choose a 7-Eleven store!'
+    defaultMessage: 'Select a 7-Eleven store for pick up'
   },
   viewDetails: {
     id: `${idSuffix}.viewDetails`,
@@ -50,7 +58,7 @@ export default defineMessages({
   },
   proceedNext: {
     id: `${idSuffix}.proceedNext`,
-    defaultMessage: 'Purchase your Product'
+    defaultMessage: 'PLACE ORDER'
   },
   errorHeader: {
     id: `${idSuffix}.errorHeader`,
@@ -79,5 +87,66 @@ export default defineMessages({
   discountText: {
     id: `${idSuffix}.discountText`,
     defaultMessage: '*Discounts are automatically discounted at Method of Payment'
+  },
+  earnPoints: {
+    id: `${idSuffix}.earnPoints`,
+    defaultMessage: 'Points will be earned once claimed. How do I earn points?'
+  },
+  registeredMobile: {
+    id: `${idSuffix}.registeredMobile`,
+    defaultMessage: 'Registered Mobile Number'
+  },
+  signedAs: {
+    id: `${idSuffix}.signedAs`,
+    defaultMessage: 'Signed in as: '
+  },
+  size: {
+    id: `${idSuffix}.size`,
+    defaultMessage: 'Size: '
+  },
+
+  recentlyViewedStore: {
+    id: `${idSuffix}.recentlyViewedStore`,
+    defaultMessage: 'Recently Visited Store'
+  },
+  choosePointsTitle: {
+    id: `${idSuffix}.choosePointsTitle`,
+    defaultMessage: 'Choose how many points to use:'
+  },
+  currentPoints: {
+    id: `${idSuffix}.currentPoints`,
+    defaultMessage: 'Current Points: '
+  },
+  cashPoints: {
+    id: `${idSuffix}.cashPoints`,
+    defaultMessage: 'Points & Cash'
+  },
+  fullPoints: {
+    id: `${idSuffix}.fullPoints`,
+    defaultMessage: 'Full Points'
+  },
+  earnedPoints: {
+    id: `${idSuffix}.earnedPoints`,
+    defaultMessage: `Earn: {icon} {points}`
+  },
+  pointsTip: {
+    id: `${idSuffix}.pointsTip`,
+    defaultMessage: `Points will be earned once claimed.`
+  },
+  pointsOnlyTip: {
+    id: `${idSuffix}.pointsTip`,
+    defaultMessage: `This item can only be purchased using CLiQQ points.`
+  },
+  payAtAny: {
+    id: `${idSuffix}.payAtAny`,
+    defaultMessage: 'Pay at any 7-Eleven store near you! Once paid, you can claim the item after 24 hours at the same store.'
+  },
+  whatIs: {
+    id: `${idSuffix}.whatIs`,
+    defaultMessage: 'What is {title}?'
+  },
+  infoDescription: {
+    id: `${idSuffix}.infoDescription`,
+    defaultMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae augue sed lorem tincidunt ultrices. Proin purus elit, volutpat in nibh ut, mollis malesuada eros.'
   }
 })

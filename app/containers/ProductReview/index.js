@@ -60,6 +60,10 @@ import {
   recentStoreLocationAction
 } from 'containers/Buckets/actions'
 
+import {
+  selectMobileNumbers
+} from 'containers/Buckets/selectors'
+
 import messages from './messages'
 import reducer from './reducer'
 import saga from './saga'
@@ -439,7 +443,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   render () {
-    const { currentPoints, orderedProduct, orderRequesting, isBlackListed, productLoader } = this.props
+    const { currentPoints, orderedProduct, orderRequesting, isBlackListed, productLoader, intl, mobileNumbers } = this.props
     const { errorMessage, errorContent, modePayment, modalToggle, storeLocatorVisibility, pointsModifierVisibility, store, usePoints } = this.state
     return (
       <AccessView
@@ -496,6 +500,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
               productLoader={productLoader}
               store={store}
               storeLocatorVisibility={storeLocatorVisibility}
+              intl={intl}
+              mobileNumbers={mobileNumbers}
             />
           </div>
         }
@@ -516,7 +522,8 @@ const mapStateToProps = createStructuredSelector({
   previousStore: selectStoreLocation(),
   isBlackListed: selectBlackListed(),
   currentPoints: selectCurrentPoints(),
-  currentPointsLoading: selectCurrentPointsLoading()
+  currentPointsLoading: selectCurrentPointsLoading(),
+  mobileNumbers: selectMobileNumbers()
 })
 
 function mapDispatchToProps (dispatch) {

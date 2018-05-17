@@ -2,42 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { Button } from 'semantic-ui-react'
 
-const ProductReviewWrapper = styled.div`
-  margin: 20px 0 60px;
-
-  .brand-logo {
-    width: 200px;
-    height: auto;
-    margin: 0 auto;
-  }
-`
-
-const StepHead = styled.div`
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  font-size: 13px;
-  letter-spacing: 3px;
-  margin-bottom: 15px;
-  text-transform: uppercase;
-
-  p {
-    font-family: 'Roboto';
-    font-size: 14px;
-    letter-spacing: initial;
-    font-weight: 100;
-    text-transform: none;
-  }
-
-  span {
-    margin: 0 auto;
-  }
-`
-
 const ProductItem = styled.div`
-  flex-grow: 1;
-  text-align: center;
-
+  margin-bottom: 20px;
+  
   .image {
     margin: 0 auto;
     width: 200px;
@@ -60,68 +27,77 @@ const StepWrapper = styled.div`
   }
 `
 
-const DetailsWrapper = styled.div`
-  padding: 15px;
+const CashPrepaidInfo = styled.div`
+  &.visibility {
+    display: ${({ visibility }) => !visibility ? 'block' : 'none'};
+    transition: all .3s ease;
 
-  .sub-title {
-    margin-bottom: 10px;
     span {
-      font-size: 14px;
-      text-transform: capitalize;
+      align-self: flex-start;
+      flex: none;
     }
   }
 
-  p {
-    margin-bottom: 7px;
+  &:first-child {
+    border-top: 0;
+    margin-bottom: 0;
   }
 `
 
-const SelectMethodWrapper = styled.div`
-  .payment-wrapper {
-    display: flex;
-  }
+const DetailsWrapper = styled.div`
+  padding: 0 15px;
+`
 
-  .label {
-    letter-spacing: 2px;
+const SelectMethodWrapper = styled.div`
+  width: 100%;
+
+  .cliqq-plain-icon {
+    // width: 11px !important;
+    display: inline-block !important;
+    margin: -2px -5px 0;
+    transform: scale(0.45);
   }
 
   .checkbox {
     border-radius: 5px;
-    border: 2px solid #F0F0F0;
-    margin-right: 20px;
-    padding: 15px 10px;
+    border: 1px solid #E8E8E8;
+    height: 100%;
+    padding: 18px 15px;
     position: relative;
-    width: 335px;
+    // width: 100%;
+    min-width: 335px;
 
     &.checked {
-      border: 2px solid #FF4813;
+      border: 1px solid #FF4813;
     }
 
     input:checked~label:after {
-      // Don't sort this block
       content: '';
-      background-color: #8DC640 !important;
-      left: 6px;
-      top: ${props => props.checkHeight ? '29px' : '18px'};
-      display: block;
-      width: 5px;
-      height: 9px;
-      border: solid #FFFFFF;
-      border-width: 0 2px 2px 0;
-      transform: rotate(45deg) !important;
+      width: 12px;
+      height: 7px;
+      position: absolute;
+      top: 42%;
+      left: 5px;
+      border: 3px solid #fcfff4;
+      border-top: none;
+      border-right: none;
+      background: transparent !important;
+      transform: rotate(-45deg);
     }
 
     input:checked~label:before {
-      background-color: #8DC640 !important;
-      border-color: #8DC640 !important;
-      height: 18px;
-      width: 18px;
+      background-color: #229D90 !important;
+      border-color: #229D90 !important;
+      height: 24px;
+      position: absolute;
+      width: 24px;
     }
 
     .label-custom {
       align-items: center;
       display: flex;
       justify-content: space-between;
+      padding-left: 35px !important;
       position: relative;
     }
   }
@@ -137,7 +113,8 @@ const LocationButton = styled(({iconBg, ...props}) => <Button {...props} />)`
   background: transparent !important;
   border-radius: 5px !important;
   letter-spacing: 2px;
-  padding: 20px 100px !important;
+  padding: 20px !important;
+  min-width: 320px;
   position: relative;
   text-align: left !important;
 
@@ -154,12 +131,8 @@ const LocationButton = styled(({iconBg, ...props}) => <Button {...props} />)`
 `
 
 const BottomWrapper = styled.div`
-  align-items: center;
-  border-top: 2px solid #ebebeb;
-  display: flex;
-  justify-content: space-between;
+  float-right;
   margin-top: 30px;
-  padding-top: 30px;
 `
 
 const ButtonContainer = styled.div`
@@ -174,50 +147,63 @@ const ReviewContainer = styled.div`
   margin-bottom: 65px;
 `
 
-const MethodTitle = styled.div`
-  margin-top: 10px;
-`
-
 const ProductContainer = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  margin: 20px 0;
-  padding: 15px;
-`
-
-const ProductMain = styled.div`
-  border-radius: 3px;
-  border: 2px solid #ebebeb;
+  // align-items: center;
+  // display: flex;
+  // justify-content: space-between;
+  // margin: 20px 0;
+  padding: 20px 30px;
 `
 
 const ProductDetails = styled.div`
   flex-grow: 2;
+  text-align: center;
 
   .base-price {
-    font-family: 'Roboto';
-    font-size: 35px !important;
+    // font-size: 2.714286rem !important;
+    font-size: 30px !important;
     letter-spacing: -2px;
-    margin-right: 10px;
+    padding: 0;
   }
 
   .orig-price {
-    font-family: 'Roboto';
-    font-size: 20px !important;
     letter-spacing: -2px;
     text-decoration: line-through;
+    margin-left: 10px;
   }
+
+  // .base-price {
+  //   font-family: 'Roboto';
+  //   font-size: 35px !important;
+  //   letter-spacing: -2px;
+  //   margin-right: 10px;
+  // }
+
+  // .orig-price {
+  //   font-family: 'Roboto';
+  //   font-size: 20px !important;
+  //   letter-spacing: -2px;
+  //   text-decoration: line-through;
+  // }
 `
 
-const LabelTitle = styled.p`
-  font-family: 'Cabin';
+// const LabelTitle = styled.p`
+//   font-size: 14px;
+//   margin: 0;
+
+//   @media (min-width: 768px) {
+//     font-size: 16px;
+//     letter-spacing: 5px;
+//   }
+// `
+
+const LabelTitle = styled.div`
   font-size: 14px;
   margin: 0;
+  flex: 1;
 
-  @media (min-width: 768px) {
-    font-family: 'Cabin';
-    font-size: 16px;
-    letter-spacing: 5px;
+  img {
+    width: 28px;
   }
 `
 
@@ -230,7 +216,6 @@ const LabelPrice = styled.div`
 
   .total {
     width: 100%;
-    font-family: 'Roboto';
     font-size: 35px;
     font-weight: 700;
     letter-spacing: -2px;
@@ -246,28 +231,63 @@ const LabelPrice = styled.div`
     align-self: flex-end;
     font-size: 20px;
     width: 100%;
-    font-family: 'Roboto';
     font-weight: 700;
     line-height: initial;
     text-decoration: line-through;
   }
 `
 
+const BlockWrapper = styled.div`
+  display: flex;
+  padding: 20px 30px;
+  align-items: ${props => props.verticalCentered ? 'center' : 'flex-start'};
+
+  .icon {
+    margin-right: 20px;
+  }
+`
+
+const LabelFullPointsPrice = styled(LabelPrice)`
+  align-items: center;
+  flex-wrap: initial;
+  justify-content: flex-end;
+`
+
+const FullPointsWrapper = styled.div`
+  align-items: center;
+  display: flex;
+`
+
+const MethodTitle = styled.div`
+  margin-top: 10px;
+  padding: 0 14px;
+`
+
+const InfoBlock = styled.div`
+  position: absolute;
+  z-index: 1;
+  width: 300px;
+  top: 0;
+  right: -10px;
+`
+
 export {
+  MethodTitle,
   BottomWrapper,
   ButtonContainer,
   DetailsWrapper,
   LabelPrice,
   LabelTitle,
   LocationButton,
-  MethodTitle,
   ProductContainer,
   ProductDetails,
   ProductItem,
-  ProductMain,
-  ProductReviewWrapper,
   ReviewContainer,
   SelectMethodWrapper,
-  StepHead,
-  StepWrapper
+  StepWrapper,
+  BlockWrapper,
+  LabelFullPointsPrice,
+  FullPointsWrapper,
+  InfoBlock,
+  CashPrepaidInfo
 }
