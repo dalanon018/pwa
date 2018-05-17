@@ -8,7 +8,23 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { isEmpty } from 'lodash'
-import { ifElse, identity } from 'ramda'
+import {
+  T,
+  allPass,
+  always,
+  both,
+  complement,
+  compose,
+  cond,
+  divide,
+  identity,
+  ifElse,
+  lt,
+  path,
+  prop,
+  // subtract,
+  when
+ } from 'ramda'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Label, Form, Checkbox, Image, Button, Container } from 'semantic-ui-react'
 
@@ -16,14 +32,22 @@ import NextIcon from 'images/icons/greater-than-icon.svg'
 import MobileIcon from 'images/icons/order-summary/register.png'
 import WalletIcon from 'images/icons/order-summary/payment-method.png'
 import LocationIcon from 'images/icons/order-summary/select-store.png'
+import CliqqIcon from 'images/icons/cliqq.png'
 
 import Modal from 'components/Shared/PromptModal'
 import ListCollapse from 'components/Shared/ListCollapse'
 import PlainCard from 'components/Shared/PlainCard'
 import SectionTitle from 'components/Shared/SectionTitle'
+import LoadingIndicator from 'components/Shared/LoadingIndicator'
 // import { LoadingStateImage } from 'components/Shared/LoadingBlock'
 
 import { paramsImgix } from 'utils/image-stock'
+import { toggleOrigDiscountPrice, computeTotalPointsPrice, calculatePricePoints } from 'utils/product'
+import { calculateEarnPoints } from 'utils/calculation'
+
+import {
+  PAYMENTS_OPTIONS
+} from 'containers/Buckets/constants'
 
 import messages from './messages'
 import {
@@ -31,17 +55,38 @@ import {
   ButtonContainer,
   SelectMethodWrapper,
   ProductItem,
+  MethodTitle,
   StepWrapper,
   LocationButton,
+  CashPrepaidInfo,
+  FullPointsWrapper,
   ProductContainer,
   ProductDetails,
+  LabelFullPointsPrice,
   BottomWrapper,
   LabelPrice,
   LabelTitle,
-  BlockWrapper
+  BlockWrapper,
+  InfoBlock
 } from './styles'
 
+const toggleComponent = (component1, component2) => ifElse(
+  identity,
+  () => component1,
+  () => component2
+)
+
 class OrderSummary extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function+
+  state = {
+    toggleInfo: false,
+    toggleTitle: ''
+  }
+  /**
+   * we need to find a way if we already initialize our points else
+   * we will be stuck on circular initialization
+   */
+  _pointsInitialized = false
+
   _updateParamsImages = (images, opt = {}) => {
     const options = {
       w: 414,
@@ -56,10 +101,89 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     return images ? paramsImgix(images, options) : ''
   }
 
-  _toggleOrigDiscountPrice = (product) => {
-    const showPrice = product.get('discountPrice') || product.get('price')
+  _getPointsEarn = (mode, amount) => {
+    const { orderedProduct } = this.props
+    return `${calculateEarnPoints({
+      multiplier: parseFloat(orderedProduct.getIn(['points', 'multiplier'])),
+      percentage: parseFloat(orderedProduct.getIn(['points', 'method', mode])),
+      amount: amount
+    })}`
+  }
 
-    return showPrice ? showPrice.toLocaleString() : 0
+  _toggleOrigDiscountPrice = () => {
+    const { orderedProduct } = this.props
+    return toggleOrigDiscountPrice(orderedProduct)
+  }
+
+  _basePointsRequirementsUse = () => {
+    return divide(this._computeTotalPointsPrice(), 2)
+  }
+
+  _computeTotalPointsPrice = (props = this.props) => {
+    const { orderedProduct } = props
+    return computeTotalPointsPrice(orderedProduct)
+  }
+
+  _isCurrentPointsHalfPricePoints = () => {
+    const { currentPoints } = this.props
+    return currentPoints >= this._basePointsRequirementsUse()
+  }
+
+  _computePricePoints = () => {
+    const { orderedProduct, isDisabledPointsOptions, usePoints } = this.props
+    if (isDisabledPointsOptions) {
+      // we dont need to recompute since we disable this one.
+      return this._toggleOrigDiscountPrice()
+    } else {
+      return calculatePricePoints({
+        product: orderedProduct,
+        usePoints
+      })
+    }
+  }
+
+  _displayEarnPoints = (mode, amount) => {
+    const { orderedProduct } = this.props
+    if (orderedProduct.get('points')) {
+      return (
+        <Label as='p' basic size='medium' className='text__weight--400 margin__none'>
+          <FormattedMessage
+            {...messages.earnedPoints}
+            values={{
+              points: <b>{this._getPointsEarn(mode, amount)}</b>,
+              icon: <Image src={CliqqIcon} className='cliqq-plain-icon' alt='CLiQQ' />
+            }}
+          />
+        </Label>
+      )
+    }
+
+    return null
+  }
+
+  // Make sure we accept that the current props has the values.
+  // TODO: Make sure that we refactor this one and find a way that functions are not bind to this class
+  _initialUpdateProps = () => {
+    const { _updateUsePoints, isDisabledPointsOptions, currentPoints } = this.props
+    const points = cond([
+      [this._isCurrentPointsHalfPricePoints, this._basePointsRequirementsUse],
+      [always(isDisabledPointsOptions), always(0)],
+      [T, always(currentPoints)]
+    ])()
+    this._pointsInitialized = true
+    return _updateUsePoints(Math.ceil(points))
+  }
+
+  _toggleDiscount = (discountPrice) => {
+    const { orderedProduct } = this.props
+    return toggleComponent(
+      <span className='strike color__grey'>
+        <FormattedMessage {...messages.peso} />
+        { orderedProduct.get('price') &&
+          parseFloat(orderedProduct.get('price')).toLocaleString() }
+      </span>,
+      null
+    )(discountPrice)
   }
 
   _showDiscountPrice = (component1, component2) => (condition) => ifElse(
@@ -68,16 +192,281 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     () => component2
   )(condition)
 
+  _handleShowMethodInfo = e => {
+    const title = e.target.closest('div > .method-title > span') && e.target.closest('div > .method-title > span').innerText
+
+    this.setState({
+      toggleInfo: true,
+      toggleTitle: title
+    })
+  }
+
+  _handleHideMethodInfo = () => this.setState({toggleInfo: false})
+
+  _handleMethodInfoBlock = (title, description) => {
+    const { toggleInfo, toggleTitle } = this.state
+    // return false
+    if (toggleInfo && toggleTitle) {
+      return (
+        <InfoBlock>
+          <Label as='p' basic size='large' className='text__weight--700 margin__bottom-positive--5'>
+            <FormattedMessage
+              {...messages.whatIs}
+              values={{title: toggleTitle}}
+            />
+          </Label>
+          <Label as='p' basic size='large' className='text__weight--400 margin__bottom-positive--5'>
+            <FormattedMessage {...messages.infoDescription} />
+          </Label>
+        </InfoBlock>
+      )
+    }
+  }
+
+  _renderRegularPaymentOptions = ({ mode, label }) => {
+    const { orderedProduct } = this.props
+    return (
+      <label
+        className='label-custom'
+        onMouseOver={e => this._handleShowMethodInfo(e)}
+        onMouseOut={this._handleHideMethodInfo}>
+        <LabelTitle>
+          <Label as='p' basic size='large' className='text__weight--500 margin__bottom-positive--5 method-title'>
+            <FormattedMessage {...messages[label]} />
+          </Label>
+          { this._displayEarnPoints(mode, this._toggleOrigDiscountPrice()) }
+        </LabelTitle>
+        <LabelPrice length={this._toggleOrigDiscountPrice().length}>
+          <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
+            <FormattedMessage {...messages.peso} />
+            { this._toggleOrigDiscountPrice().toLocaleString() }
+          </Label>
+          { this._toggleDiscount(orderedProduct.get('discountPrice')) }
+        </LabelPrice>
+      </label>
+    )
+  }
+
+  _renderPointsCashPaymentOptions = ({ mode = 'poc' } = {}) => {
+    const { orderedProduct } = this.props
+    return (
+      <label
+        className='label-custom'
+        onMouseOver={e => this._handleShowMethodInfo(e)}
+        onMouseOut={this._handleHideMethodInfo}>
+        <LabelTitle>
+          <Label as='p' basic size='large' className='text__weight--500 margin__bottom-positive--5 method-title'>
+            <FormattedMessage {...messages.cashPoints} />
+          </Label>
+          { this._displayEarnPoints(mode, this._computePricePoints()) }
+        </LabelTitle>
+        <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
+          <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
+            <FormattedMessage {...messages.peso} />
+            { this._computePricePoints().toLocaleString() }
+          </Label>
+          { this._toggleDiscount(orderedProduct.get('discountPrice')) }
+        </LabelPrice>
+      </label>
+    )
+  }
+
+  _renderFullPointsPaymentOptions = () => {
+    const { orderedProduct } = this.props
+    return (
+      <label
+        className='label-custom'
+        onMouseOver={e => this._handleShowMethodInfo(e)}
+        onMouseOut={this._handleHideMethodInfo}>
+        <LabelTitle>
+          <Label as='p' basic size='large' className='text__weight--500 margin__none method-title'>
+            <FormattedMessage {...messages.fullPoints} />
+          </Label>
+        </LabelTitle>
+        <LabelFullPointsPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
+          <FullPointsWrapper>
+            <Image src={CliqqIcon} className='cliqq-plain-icon' alt='CLiQQ' />
+            <Label as='p' basic size='massive' className='text__weight--700 margin__none color__primary total'>
+              { this._computeTotalPointsPrice().toLocaleString() }
+            </Label>
+          </FullPointsWrapper>
+        </LabelFullPointsPrice>
+      </label>
+    )
+  }
+
+  _codCheckOptionFactory = () => {
+    const { ShowCodComponent, isBlackListed, modePayment, _handleChange, _handleToBottom, _isFullPointsOnly } = this.props
+    return toggleComponent(
+      <ShowCodComponent
+        radio
+        isBlackListed={isBlackListed}
+        name='cod'
+        value={PAYMENTS_OPTIONS.COD}
+        label={this._renderRegularPaymentOptions({ mode: 'cod', label: 'cashDelivery' })}
+        checked={modePayment === PAYMENTS_OPTIONS.COD}
+        onChange={_handleChange}
+        onClick={_handleToBottom}
+      />,
+      null
+    )(!_isFullPointsOnly)
+  }
+
+  _cashCheckOptionFactory = () => {
+    const { modePayment, _handleChange, _isFullPointsOnly } = this.props
+    return toggleComponent(
+      <Checkbox
+        radio
+        className='margin__vertical--10'
+        name='cash-prepaid'
+        value={PAYMENTS_OPTIONS.CASH}
+        label={this._renderRegularPaymentOptions({ mode: 'cash', label: 'cashPrepaid' })}
+        checked={modePayment === PAYMENTS_OPTIONS.CASH}
+        onChange={_handleChange}
+      />,
+      null
+    )(!_isFullPointsOnly)
+  }
+
+  _pointsCashCheckOptionFactory = () => {
+    const { isDisabledPointsOptions, modePayment, _handleChange, _isFullPointsOnly } = this.props
+
+    return toggleComponent(
+      <Checkbox
+        radio
+        disabled={isDisabledPointsOptions}
+        className='margin__bottom-positive--20'
+        name='points'
+        value={PAYMENTS_OPTIONS.POINTS}
+        label={this._renderPointsCashPaymentOptions()}
+        checked={modePayment === PAYMENTS_OPTIONS.POINTS}
+        onChange={_handleChange}
+      />,
+      null
+    )(!_isFullPointsOnly)
+  }
+
+  _disabledFullPointsOption = (props = this.props) => {
+    const { currentPoints } = props
+    return lt(currentPoints, this._computeTotalPointsPrice(props))
+  }
+
+  _fullPointsCheckOptionFactory = () => {
+    const { modePayment, _handleChange, _isFullPointsOnly } = this.props
+
+    return toggleComponent(
+      <Checkbox
+        radio
+        disabled={this._disabledFullPointsOption()}
+        className='margin__bottom-positive--20'
+        name='fullPoints'
+        value={PAYMENTS_OPTIONS.FULL_POINTS}
+        label={this._renderFullPointsPaymentOptions()}
+        checked={modePayment === PAYMENTS_OPTIONS.FULL_POINTS}
+        onChange={_handleChange}
+      />,
+      null
+    )(_isFullPointsOnly)
+  }
+
+  /**
+   * for better UX we will only display payment options if order product is already available
+   */
+  _displayPaymentOptions = () => {
+    const { orderedProduct } = this.props
+    return toggleComponent(
+      <div>
+        { this._codCheckOptionFactory() }
+        { this._cashCheckOptionFactory() }
+        { this._pointsCashCheckOptionFactory() }
+        { this._fullPointsCheckOptionFactory() }
+      </div>,
+      this._displayLoader()
+    )(!!orderedProduct.size)
+  }
+
+  _displayLoader = () => {
+    return (
+      <LoadingIndicator />
+    )
+  }
+
+  _handleFullPointsFunctionTrigger = (trueFn, falseFn) => ifElse(
+    both(identity, () => this.props._isFullPointsOnly),
+    trueFn,
+    falseFn
+  )
+
+  _handleProceedFactory = () => {
+    const { _handleProceed, _handleNotEnoughFullPointsProceed } = this.props
+
+    const handleSubmission = this._handleFullPointsFunctionTrigger(
+      _handleNotEnoughFullPointsProceed,
+      _handleProceed
+    )
+
+    return handleSubmission(this._disabledFullPointsOption())
+  }
+
+  _handleCloseModalFactory = () => {
+    const { _handleModalClose, _handleNotEnoughFullPointsCloseModal } = this.props
+    const handleSubmission = this._handleFullPointsFunctionTrigger(
+      _handleNotEnoughFullPointsCloseModal,
+      _handleModalClose
+    )
+    return handleSubmission(this._disabledFullPointsOption())
+  }
+
+  _displayCurrentPointsFullPoints = () => {
+    const { currentPoints, _isFullPointsOnly } = this.props
+    return toggleComponent(
+      <MethodTitle>
+        <Label as='p' className='margin__none text__weight--400' size='medium'>
+          <FormattedMessage {...messages.currentPoints} />
+          <Image src={CliqqIcon} className='cliqq-plain-icon' alt='CLiQQ' />
+          { currentPoints }
+        </Label>
+      </MethodTitle>,
+      null
+    )(_isFullPointsOnly)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    // when not yet initialize
+    const initializeStartingUsePoints = when(
+      allPass([
+        () => !this._pointsInitialized,
+        compose(
+          lt(0),
+          prop('currentPoints')
+        ),
+        compose(
+          lt(0),
+          path(['orderedProduct', 'size'])
+        )
+      ]),
+      this._initialUpdateProps
+    )
+
+    const shouldSelectFullPoints = when(
+      compose(both(complement(this._disabledFullPointsOption), prop('_isFullPointsOnly'))),
+      (props) => {
+        // if enabled need to make sure that usePoints should be update
+        props._handleChange(null, { value: PAYMENTS_OPTIONS.FULL_POINTS })
+        props._updateUsePoints(this._computeTotalPointsPrice(props))
+      }
+    )
+    // we will be using this.props since we are having issue with other deps that use the this.props
+    initializeStartingUsePoints(this.props)
+    shouldSelectFullPoints(nextProps)
+  }
+
   render () {
     const {
-      ShowCodComponent,
       errorMessage,
-      isBlackListed,
-      modalToggle,
-      modePayment,
-      orderRequesting,
       orderedProduct,
-      // productLoader,
+      modalToggle,
+      orderRequesting,
       store,
       storeLocatorVisibility,
       intl,
@@ -86,48 +475,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       _handleModalClose,
       _handleProceed,
       _handleStoreLocator,
-      _stepWrapperRef,
-      _handleToBottom,
-      _handleChange } = this.props
-
-    const toggleDiscount = this._showDiscountPrice(
-      <Label className='padding__none color__grey orig-price' as='b' basic size='large'>
-        <FormattedMessage {...messages.peso} />
-        { orderedProduct.get('price') &&
-          parseFloat(orderedProduct.get('price')).toLocaleString() }
-      </Label>,
-      null
-    )
-
-    const labelOne = <label className='label-custom'>
-      <LabelTitle>
-        <Label as='span' basic size='big' className='color__secondary'>
-          <FormattedMessage {...messages.cashPrepaid} />
-        </Label>
-      </LabelTitle>
-      <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
-        <span className='total color__orange'>
-          <FormattedMessage {...messages.peso} />
-          { this._toggleOrigDiscountPrice(orderedProduct) }
-        </span>
-        { toggleDiscount(orderedProduct.get('discountPrice')) }
-      </LabelPrice>
-    </label>
-
-    const labelTwo = <label className='label-custom'>
-      <LabelTitle>
-        <Label as='span' basic size='big' className='color__secondary'>
-          <FormattedMessage {...messages.cashDelivery} />
-        </Label>
-      </LabelTitle>
-      <LabelPrice length={this._toggleOrigDiscountPrice(orderedProduct).length}>
-        <span className='total color__orange'>
-          <FormattedMessage {...messages.peso} />
-          { this._toggleOrigDiscountPrice(orderedProduct) }
-        </span>
-        { toggleDiscount(orderedProduct.get('discountPrice')) }
-      </LabelPrice>
-    </label>
+      _stepWrapperRef } = this.props
 
     return (
       <div>
@@ -178,28 +526,9 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                         </Label>
                         <SelectMethodWrapper checkHeight={orderedProduct.get('discountPrice') !== 0}>
                           <Form>
-                            <div className='payment-wrapper'>
-                              <ShowCodComponent
-                                radio
-                                isBlackListed={isBlackListed}
-                                name='cod'
-                                value='COD'
-                                label={labelTwo}
-                                checked={modePayment === 'COD'}
-                                onChange={_handleChange}
-                                onClick={_handleToBottom}
-                              />
-                              <Form.Field>
-                                <Checkbox
-                                  radio
-                                  className='margin__bottom-positive--20'
-                                  name='cash-prepaid'
-                                  value='CASH'
-                                  label={labelOne}
-                                  checked={modePayment === 'CASH'}
-                                  onChange={_handleChange}
-                                  />
-                              </Form.Field>
+                            <div className='payment-wrapper position__relative'>
+                              { this._displayPaymentOptions() }
+                              { this._handleMethodInfoBlock() }
                             </div>
                           </Form>
                         </SelectMethodWrapper>
@@ -217,9 +546,13 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                         <Label as='p' className='margin__top-positive--15 margin__bottom-positive--15 text__weight--500' size='huge'>
                           <FormattedMessage {...messages.chooseStore} />
                         </Label>
-                        <Label as='p' className='text__weight--400 margin__bottom-positive--20' size='large'>
-                          <FormattedMessage {...messages.defaultStore} />
-                        </Label>
+                        {
+                          storeLocatorVisibility &&
+                          <Label as='p' className='text__weight--400 margin__bottom-positive--20' size='large'>
+                            <FormattedMessage {...messages.defaultStore} />
+                          </Label>
+                        }
+
                         <StepWrapper innerRef={_stepWrapperRef} className='visibility' visibility={storeLocatorVisibility}>
                           <LocationButton id='scrollToAnimate' className='color__secondary border__two--light-grey' onClick={_handleStoreLocator} iconBg={NextIcon}>
                             <Label as='span' className='text__weight--700' basic size='large'>
@@ -231,6 +564,11 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                             </Label>
                           </LocationButton>
                         </StepWrapper>
+                        <CashPrepaidInfo className='visibility' visibility={storeLocatorVisibility}>
+                          <Label as='span' className='text__weight--700' basic size='large'>
+                            <FormattedMessage {...messages.payAtAny} />
+                          </Label>
+                        </CashPrepaidInfo>
                         <Label as='p' className='margin__none text__weight--400 margin__top-positive--20' size='large'>
                           <FormattedMessage
                             {...messages.cantFindStore}
@@ -277,7 +615,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                           { this._toggleOrigDiscountPrice(orderedProduct) }
                         </Label>
 
-                        { toggleDiscount(orderedProduct.get('discountPrice')) }
+                        { this._toggleDiscount(orderedProduct.get('discountPrice')) }
 
                         {
                           orderedProduct.get('size') &&
@@ -340,7 +678,7 @@ OrderSummary.propTypes = {
   storeLocatorVisibility: PropTypes.bool.isRequired,
   store: PropTypes.object.isRequired,
   intl: PropTypes.object.isRequired,
-  mobileNumbers: PropTypes.array.isRequired,
+  mobileNumbers: PropTypes.object.isRequired,
 
   _handleModalClose: PropTypes.func.isRequired,
   _handleProceed: PropTypes.func.isRequired,

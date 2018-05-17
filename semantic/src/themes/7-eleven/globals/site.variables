@@ -9,8 +9,8 @@
 @fontName          : 'Lato';
 @fontSmoothing     : antialiased;
 
-@headerFont        : @fontName, 'Roboto', sans-serif;
-@pageFont          : @fontName, 'Roboto', sans-serif;
+@headerFont        : @fontName, sans-serif;
+@pageFont          : @fontName, sans-serif;
 
 @googleFontName    : @fontName;
 @importGoogleFonts : false;

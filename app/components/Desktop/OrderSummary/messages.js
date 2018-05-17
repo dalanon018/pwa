@@ -103,5 +103,50 @@ export default defineMessages({
   size: {
     id: `${idSuffix}.size`,
     defaultMessage: 'Size: '
+  },
+
+  recentlyViewedStore: {
+    id: `${idSuffix}.recentlyViewedStore`,
+    defaultMessage: 'Recently Visited Store'
+  },
+  choosePointsTitle: {
+    id: `${idSuffix}.choosePointsTitle`,
+    defaultMessage: 'Choose how many points to use:'
+  },
+  currentPoints: {
+    id: `${idSuffix}.currentPoints`,
+    defaultMessage: 'Current Points: '
+  },
+  cashPoints: {
+    id: `${idSuffix}.cashPoints`,
+    defaultMessage: 'Points & Cash'
+  },
+  fullPoints: {
+    id: `${idSuffix}.fullPoints`,
+    defaultMessage: 'Full Points'
+  },
+  earnedPoints: {
+    id: `${idSuffix}.earnedPoints`,
+    defaultMessage: `Earn: {icon} {points}`
+  },
+  pointsTip: {
+    id: `${idSuffix}.pointsTip`,
+    defaultMessage: `Points will be earned once claimed.`
+  },
+  pointsOnlyTip: {
+    id: `${idSuffix}.pointsTip`,
+    defaultMessage: `This item can only be purchased using CLiQQ points.`
+  },
+  payAtAny: {
+    id: `${idSuffix}.payAtAny`,
+    defaultMessage: 'Pay at any 7-Eleven store near you! Once paid, you can claim the item after 24 hours at the same store.'
+  },
+  whatIs: {
+    id: `${idSuffix}.whatIs`,
+    defaultMessage: 'What is {title}?'
+  },
+  infoDescription: {
+    id: `${idSuffix}.infoDescription`,
+    defaultMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae augue sed lorem tincidunt ultrices. Proin purus elit, volutpat in nibh ut, mollis malesuada eros.'
   }
 })

@@ -27,13 +27,36 @@ const StepWrapper = styled.div`
   }
 `
 
+const CashPrepaidInfo = styled.div`
+  &.visibility {
+    display: ${({ visibility }) => !visibility ? 'block' : 'none'};
+    transition: all .3s ease;
+
+    span {
+      align-self: flex-start;
+      flex: none;
+    }
+  }
+
+  &:first-child {
+    border-top: 0;
+    margin-bottom: 0;
+  }
+`
+
 const DetailsWrapper = styled.div`
   padding: 0 15px;
 `
 
 const SelectMethodWrapper = styled.div`
-  padding: 0 14px;
   width: 100%;
+
+  .cliqq-plain-icon {
+    // width: 11px !important;
+    display: inline-block !important;
+    margin: -2px -5px 0;
+    transform: scale(0.45);
+  }
 
   .checkbox {
     border-radius: 5px;
@@ -164,15 +187,23 @@ const ProductDetails = styled.div`
   // }
 `
 
-const LabelTitle = styled.p`
-  font-family: 'Cabin';
+// const LabelTitle = styled.p`
+//   font-size: 14px;
+//   margin: 0;
+
+//   @media (min-width: 768px) {
+//     font-size: 16px;
+//     letter-spacing: 5px;
+//   }
+// `
+
+const LabelTitle = styled.div`
   font-size: 14px;
   margin: 0;
+  flex: 1;
 
-  @media (min-width: 768px) {
-    font-family: 'Cabin';
-    font-size: 16px;
-    letter-spacing: 5px;
+  img {
+    width: 28px;
   }
 `
 
@@ -185,7 +216,6 @@ const LabelPrice = styled.div`
 
   .total {
     width: 100%;
-    font-family: 'Roboto';
     font-size: 35px;
     font-weight: 700;
     letter-spacing: -2px;
@@ -201,7 +231,6 @@ const LabelPrice = styled.div`
     align-self: flex-end;
     font-size: 20px;
     width: 100%;
-    font-family: 'Roboto';
     font-weight: 700;
     line-height: initial;
     text-decoration: line-through;
@@ -218,7 +247,32 @@ const BlockWrapper = styled.div`
   }
 `
 
+const LabelFullPointsPrice = styled(LabelPrice)`
+  align-items: center;
+  flex-wrap: initial;
+  justify-content: flex-end;
+`
+
+const FullPointsWrapper = styled.div`
+  align-items: center;
+  display: flex;
+`
+
+const MethodTitle = styled.div`
+  margin-top: 10px;
+  padding: 0 14px;
+`
+
+const InfoBlock = styled.div`
+  position: absolute;
+  z-index: 1;
+  width: 300px;
+  top: 0;
+  right: -10px;
+`
+
 export {
+  MethodTitle,
   BottomWrapper,
   ButtonContainer,
   DetailsWrapper,
@@ -231,5 +285,9 @@ export {
   ReviewContainer,
   SelectMethodWrapper,
   StepWrapper,
-  BlockWrapper
+  BlockWrapper,
+  LabelFullPointsPrice,
+  FullPointsWrapper,
+  InfoBlock,
+  CashPrepaidInfo
 }

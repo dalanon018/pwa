@@ -66,7 +66,7 @@ describe('<OrderSummary />', () => {
     intl: {
       formatMessage: () => {}
     },
-    mobileNumbers: fromJS([])
+    mobileNumbers: fromJS({})
   }
 
   it('Expect to have unit tests specified', () => {
