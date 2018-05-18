@@ -5,6 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 // const CompressionPlugin = require('compression-webpack-plugin')
 const OfflinePlugin = require('offline-plugin')
 const BrotliPlugin = require('brotli-webpack-plugin')
+// const WebpackMonitor = require('webpack-monitor')
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = require('./webpack.base.babel')({
   // In production, we skip all hot-reloading stuff
@@ -24,6 +26,14 @@ module.exports = require('./webpack.base.babel')({
   },
 
   plugins: [
+    // new BundleAnalyzerPlugin(),
+    // new WebpackMonitor({
+    //   capture: true, // -> default 'true'
+    //   target: '../monitor/myStatsStore.json', // default -> '../monitor/stats.json'
+    //   launch: true, // -> default 'false'
+    //   port: 3030, // default -> 8081
+    //   excludeSourceMaps: true // default 'true'
+    // }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     // new webpack.optimize.CommonsChunkPlugin({
     //   name: 'vendor',
