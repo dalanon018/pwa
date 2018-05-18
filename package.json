@@ -69,7 +69,6 @@
           "modules": false
         }
       ],
-      "minify",
       "react",
       "stage-0"
     ],
