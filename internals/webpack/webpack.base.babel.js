@@ -6,7 +6,6 @@ const path = require('path')
 const webpack = require('webpack')
 const HappyPack = require('happypack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const StyleExtHtmlWebpackPlugin = require('style-ext-html-webpack-plugin')
 
 // Remove this line once the following warning goes away (it was meant for webpack loader authors not users):
 // 'DeprecationWarning: loaderUtils.parseQuery() received a non-string value which can be problematic,
@@ -27,21 +26,20 @@ module.exports = (options) => ({
         exclude: /node_modules/,
         loader: 'happypack/loader?id=jsx'
       },
-      {
-        // Preprocess our own .css files
-        // This is the place to add your own loaders (e.g. sass/less etc.)
-        // for a list of loaders, see https://webpack.js.org/loaders/#styling
-        test: /\.css$/,
-        exclude: /node_modules/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'happypack/loader?id=styles'
-        })
-      },
+      // {
+      //   // Preprocess our own .css files
+      //   // This is the place to add your own loaders (e.g. sass/less etc.)
+      //   // for a list of loaders, see https://webpack.js.org/loaders/#styling
+      //   test: /\.css$/,
+      //   exclude: /node_modules/,
+      //   use: ExtractTextPlugin.extract({
+      //     fallback: 'style-loader',
+      //     use: 'happypack/loader?id=styles'
+      //   })
+      // },
       {
         // Preprocess 3rd party .css files located in node_modules
         test: /\.css$/,
-        include: /node_modules/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: 'happypack/loader?id=styles'
@@ -103,7 +101,7 @@ module.exports = (options) => ({
 
     new ExtractTextPlugin('styles.css'),
     // make our style inline
-    new StyleExtHtmlWebpackPlugin(),
+    // new StyleExtHtmlWebpackPlugin(),
 
     new webpack.ProvidePlugin({
       // make fetch available
