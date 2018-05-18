@@ -15,13 +15,16 @@ import {
   partialRight
 } from 'ramda'
 import { noop } from 'lodash'
-import { FormattedMessage } from 'react-intl'
-import { Container, Grid, Header, Label, Button, Image, Checkbox } from 'semantic-ui-react'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import { Container, Grid, Label, Button, Image, Checkbox } from 'semantic-ui-react'
 
 import Countdown from 'components/Shared/Countdown'
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
+import SectionTitle from 'components/Shared/SectionTitle'
 
 import ReturnIcon from 'images/icons/receipts/return-icon-receipt.svg'
+import CliqqHand from 'images/cliqq-hand.png'
+import LogoBadge from 'images/711-logo.png'
 
 import { DateFormater } from 'utils/date' // DateFormater
 import { PhoneFormatter } from 'utils/string'
@@ -48,7 +51,8 @@ import {
   ScannerWrapper,
   PushNotificationWrapper,
   MatchCode,
-  PayCode
+  PayCode,
+  InfoWrapper
   // InstructionsWrapper
 } from './styled'
 
@@ -276,7 +280,7 @@ class Receipt extends React.PureComponent {
       })(
         <MatchCode>
           <div className='border-divider' />
-          <Label as='span' basic size='huge' className='color__secondary color__secondary background__light-grey'>
+          <Label as='span' basic size='big' className='color__secondary color__secondary'>
             {str && str.slice(-3)}
           </Label>
         </MatchCode>
@@ -363,47 +367,64 @@ class Receipt extends React.PureComponent {
 
   render () {
     const { show } = this.state
-    const { receipt, statuses } = this.props
+    const { receipt, statuses, intl } = this.props
 
     return (
       <Container className='padding__medium'>
-        <Header className='color__secondary long-title' as='h3'>
-          <FormattedMessage {...messages.desktopTitle} />
-        </Header>
         <ReceiptWrapper>
+          <div className='padding__horizontal--10'>
+            <Grid padded>
+              <Grid.Row className='padding__bottom--none'>
+                <Grid.Column>
+                  <SectionTitle title={intl.formatMessage(messages.desktopTitle)} />
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row>
+                <Grid.Column>
+                  <InfoWrapper className='background__teal'>
+                    <Image src={CliqqHand} className='cliqq-hand' alt='CLiQQ' />
+                    <Label className='text__wight--500 color__white text__align--center' as='span' basic size='medium'>
+                      <FormattedMessage {...messages.showReceiptLabel} />
+                    </Label>
+                    <Image src={LogoBadge} alt='CLiQQ' />
+                  </InfoWrapper>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </div>
           <ReceiptContainer className='background__white'>
-            <ReceiptHeader className='background__light-grey'>
+            <ReceiptHeader className='border_bottom__one--light-grey'>
               <CustomContainer>
                 <Grid>
                   <Grid.Row columns={2}>
-                    <Grid.Column floated='left' width={9} className='product-status'>
-                      <Label className='weight-400 color__secondary' as='span' basic size='small'>
+                    <Grid.Column floated='left' width={9} className='product-status margin__bottom-positive--20'>
+                      <Label className='weight-400' as='span' basic size='small'>
                         <FormattedMessage {...messages.statusLabel} />
                       </Label>
-                      <Label as='p' basic size='huge' color={this._handleColorStatus(statuses[receipt.get('status')])}>
+                      <Label as='p' basic size='large' color={this._handleColorStatus(statuses[receipt.get('status')])}>
                         { this._handleStatusTitle() }
                       </Label>
                     </Grid.Column>
                     <Grid.Column floated='right' textAlign='right' width={7}>
-                      <Label className='weight-400 color__secondary' as='span' basic size='small'>
+                      <Label className='weight-400' as='span' basic size='small'>
                         <FormattedMessage {...messages.paymentMethod} />
                       </Label>
-                      <Label as='p' basic size='large' className='color__secondary'>
+                      <Label as='p' basic size='large'>
                         <FormattedMessage {...messages[`${this._handleModePayment()}methodType`]} />
                       </Label>
                     </Grid.Column>
 
                     <Grid.Column floated='left' className='order-number' width={9}>
-                      <Label className='weight-400 color__secondary' as='span' basic size='small'>
+                      <Label className='weight-400' as='span' basic size='small'>
                         <FormattedMessage {...messages.trackingNumber} />
                       </Label>
-                      <Label as='p' basic size='big' className='color__secondary'>{receipt.get('trackingNumber')}</Label>
+                      <Label as='p' className='text__weight--500' basic size='large'>{receipt.get('trackingNumber')}</Label>
                     </Grid.Column>
                     <Grid.Column floated='right' textAlign='right' width={7}>
-                      <Label className='weight-400 color__secondary' as='span' basic size='small'>
+                      <Label className='weight-400' as='span' basic size='small'>
                         { this._handleDateString() }
                       </Label>
-                      <Label as='p' basic size='large' className='color__secondary'>{ this._handleDateValue()}</Label>
+                      <Label as='p' basic size='large'>{ this._handleDateValue()}</Label>
                     </Grid.Column>
                     <Grid.Column width={16}>
                       {this._handleMatchCode(receipt.get('trackingNumber'))}
@@ -413,18 +434,18 @@ class Receipt extends React.PureComponent {
               </CustomContainer>
             </ReceiptHeader>
             <ReceiptContent id='fadeMe' show={show}>
-              <Grid padded className='scan padding__14' centered textAlign='center'>
+              <Grid padded className='scan padding__30' centered textAlign='center'>
                 {
                   receipt.getIn(['products', 'brand'])
-                  ? <Label as='span' basic size='large' className='color__secondary'>{receipt.getIn(['products', 'brand', 'name'])}</Label>
+                  ? <Label className='no-margin-bottom color__grey' as='p' basic size='large'>{receipt.getIn(['products', 'brand', 'name'])}</Label>
                   : null
                 }
-                <Label as='p' basic size='large' className='color__secondary margin__none'>{receipt.getIn(['products', 'name'])}</Label>
-                <Label className='product-current-price text__roboto--bold' basic color='orange'>
+                <Label as='p' basic size='huge' className='text__weight--500 padding__horizontal--15'>{receipt.getIn(['products', 'name'])}</Label>
+                <Label className='padding__none base-price margin__bottom-positive--20' as='b' basic size='massive' color='orange'>
                   <FormattedMessage {...messages.peso} />
                   { parseFloat(receipt.get('amount')).toLocaleString() }
                 </Label>
-                <Label className='text__roboto--light color__secondary mobile-number' as='p' basic size='medium' >
+                <Label className='text__weight--400 color__secondary' as='p' basic size='medium' >
                   <FormattedMessage {...messages.mobileNumberLabel} />
 
                   <FormattedMessage {...messages.mobileNumberCode} />
@@ -468,7 +489,7 @@ class Receipt extends React.PureComponent {
                 <InstructionsWrapper>
                   <WarningDescription className='color__secondary'>
                     <Image src={ScreenshotIcon} />
-                    <Label className='text__roboto--light screenshot-label' as='span' size='large'>
+                    <Label className='screenshot-label' as='span' size='large'>
                       <FormattedMessage {...messages.instructionsLabel} />
                     </Label>
                   </WarningDescription>
@@ -482,10 +503,10 @@ class Receipt extends React.PureComponent {
           { this._handleButtonFunctionality() }
         </ButtonContainer>
 
-        { this._handlePushRegistrationUI() }
+        { /* this._handlePushRegistrationUI() */ }
       </Container>
     )
   }
 }
 
-export default Countdown(Receipt)
+export default Countdown(injectIntl(Receipt))

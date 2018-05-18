@@ -41,14 +41,14 @@ const PurchaseOrder = ({ status, modePayment, storeName, receipt, timer }) => {
   const currentStatus = status ? `${modePayment}${status}` : 'unknownStatus'
   return (
     <TimerWrapper>
-      <Label className='text__roboto--light color__secondary' as='p' basic size='medium'>
+      <Label className='text__weight--400' as='p' basic size='huge'>
         <ShowHeaderStatus {...{ currentStatus, status, storeName, timer }} />
       </Label>
       <HeaderOrder {...{ status }} >
         {
           (status === 'RESERVED') &&
           <Timer>
-            <p className='color__secondary'> { timer || '00:00:00'} </p>
+            <p className='color__grey'> { timer || '00:00:00'} </p>
           </Timer>
         }
       </HeaderOrder>

@@ -146,7 +146,7 @@ export default defineMessages({
   },
   viewActivity: {
     id: 'app.components.Receipt.viewActivity',
-    defaultMessage: 'View Your Activity'
+    defaultMessage: 'VIEW YOUR ACTIVITY'
   },
   goToHistory: {
     id: 'app.components.Receipt.goToHistory',
@@ -291,5 +291,9 @@ export default defineMessages({
   desktopTitle: {
     id: 'app.components.Receipt.desktopTitle',
     defaultMessage: 'Your Receipt'
+  },
+  showReceiptLabel: {
+    id: 'app.components.Receipt.showReceiptLabel',
+    defaultMessage: 'Show this receipt to the cashier through your mobile phone.'
   }
 })
