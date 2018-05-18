@@ -68,6 +68,7 @@
           "modules": false
         }
       ],
+      "minify",
       "react",
       "stage-0"
     ],
@@ -305,6 +306,7 @@
     "babel-plugin-transform-react-remove-prop-types": "0.4.5",
     "babel-plugin-transform-semantic-ui-react-imports": "1.3.1",
     "babel-preset-env": "1.5.1",
+    "babel-preset-minify": "@canary",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-0": "6.24.1",
     "brotli-webpack-plugin": "0.5.0",
@@ -326,6 +328,7 @@
     "exports-loader": "0.6.4",
     "extract-text-webpack-plugin": "3.0.0",
     "file-loader": "0.11.1",
+    "glob-all": "3.1.0",
     "gulp": "3.9.1",
     "happypack": "4.0.0",
     "html-loader": "0.4.5",
@@ -341,6 +344,8 @@
     "offline-plugin": "4.8.1",
     "plop": "1.8.0",
     "pre-commit": "1.2.2",
+    "purify-css": "1.2.5",
+    "purifycss-webpack": "0.7.0",
     "react-test-renderer": "15.6.1",
     "rimraf": "2.6.1",
     "semantic-ui": "2.2.13",
