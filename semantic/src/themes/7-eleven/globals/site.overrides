@@ -537,6 +537,9 @@ svg#barcode {
     &__14 {
       padding: 14px !important;
     }
+    &__30 {
+      padding: 30px !important;
+    }
     &__none {
       padding: 0 !important;
       &--horizontal {

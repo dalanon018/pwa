@@ -71,10 +71,7 @@ import {
 } from './actions'
 
 const ReceiptWrapper = styled.div`
-
-  @media (min-width: 768px) {
-    padding: 35px 30px;
-  }
+  position: relative;
 `
 /**
  * Currying for instead of using *ugly SWITCH statement
