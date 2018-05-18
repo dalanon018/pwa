@@ -54,6 +54,10 @@ export const STORE_LOCATOR = 'app/Buckets/STORE_LOCATOR'
 // REDIRECTING TO RECENT STORE
 export const RECENT_STORE_LOCATION = 'app/Buckets/RECENT_STORE_LOCATION'
 
+export const FAQ_URL = 'https://s3-ap-southeast-1.amazonaws.com/cliqq.shop/docs/faq.md'
+export const TERMS_URL = 'https://s3-ap-southeast-1.amazonaws.com/cliqq.shop/docs/terms.md'
+export const PRIVACY_URL = 'https://s3-ap-southeast-1.amazonaws.com/cliqq.shop/docs/privacy.md'
+
 export const HIDE_BACK_BUTTON = [
   '/',
   '/home',

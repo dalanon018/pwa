@@ -4,6 +4,10 @@ import { takeLatest } from 'redux-saga'
 import xhr from 'utils/xhr'
 
 import {
+  PRIVACY_URL
+} from 'containers/Buckets/constants'
+
+import {
   GET_MARKDOWN
 } from './constants'
 import {
@@ -14,7 +18,7 @@ export function * getMarkDown () {
   const headers = new Headers()
   headers.append('Content-Type', 'binary/octet-stream')
 
-  const url = 'https://s3-ap-southeast-1.amazonaws.com/cliqq.shop/docs/privacy.md'
+  const url = PRIVACY_URL
   const req = yield call(xhr, url, {
     method: 'GET',
     headers

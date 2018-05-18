@@ -48,6 +48,10 @@ import {
 } from 'containers/App/actions'
 
 import {
+  TERMS_URL
+} from 'containers/Buckets/constants'
+
+import {
   setLoyaltyTokenAction
 } from 'containers/Buckets/actions'
 
@@ -90,7 +94,7 @@ export function * getMarkDown () {
   const headers = new Headers()
   headers.append('Content-Type', 'binary/octet-stream')
 
-  const url = 'https://s3-ap-southeast-1.amazonaws.com/cliqq.shop/docs/terms.md'
+  const url = TERMS_URL
   const req = yield call(xhr, url, {
     method: 'GET',
     headers
