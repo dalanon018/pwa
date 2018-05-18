@@ -40,7 +40,7 @@ describe('<BrandPage />', () => {
     const renderedComponent = shallow(
       <BrandPage {...minProps} />
     )
-    expect(renderedComponent.find('div').length).toEqual(3)
+    expect(renderedComponent.find('div').length).toEqual(1)
   })
 
   it('should render a Waypoint', () => {
@@ -48,6 +48,6 @@ describe('<BrandPage />', () => {
       <BrandPage {...minProps} />
     )
 
-    expect(renderedComponent.find('Waypoint').length).toEqual(1)
+    expect(renderedComponent.find('Waypoint').length).toEqual(0)
   })
 })
