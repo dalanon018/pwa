@@ -6,11 +6,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const OfflinePlugin = require('offline-plugin')
 const BrotliPlugin = require('brotli-webpack-plugin')
 // const WebpackMonitor = require('webpack-monitor')
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = require('./webpack.base.babel')({
   // In production, we skip all hot-reloading stuff
   entry: {
-    vendor: ['react-dom', 'react', 'moment', 'styled-components', 'core-js', 'immutable', 'react-router-dom', 'redux'],
+    vendor: ['react-dom', 'react', 'moment', 'styled-components', 'core-js', 'immutable', 'react-router-dom', 'redux', 'showdown', 'lodash', 'ramda', 'semantic-ui-react'],
     app: path.join(process.cwd(), 'app/app.js')
   },
 
@@ -25,6 +26,7 @@ module.exports = require('./webpack.base.babel')({
   },
 
   plugins: [
+    // new BundleAnalyzerPlugin(),
     // new WebpackMonitor({
     //   capture: true, // -> default 'true'
     //   target: '../monitor/myStatsStore.json', // default -> '../monitor/stats.json'
@@ -40,8 +42,7 @@ module.exports = require('./webpack.base.babel')({
     //   async: true
     // }),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['common', 'vendor'],
-      minChunks: 2
+      minChunks: 6
     }),
     // Minify and optimize the index.html
     new HtmlWebpackPlugin({
