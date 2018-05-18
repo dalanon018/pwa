@@ -22,7 +22,7 @@ import {
   lt,
   path,
   prop,
-  // subtract,
+  subtract,
   when
  } from 'ramda'
 import { FormattedMessage } from 'react-intl'
@@ -35,10 +35,11 @@ import LocationIcon from 'images/icons/order-summary/select-store.png'
 import CliqqIcon from 'images/icons/cliqq.png'
 
 import Modal from 'components/Shared/PromptModal'
-import ListCollapse from 'components/Shared/ListCollapse'
+// import ListCollapse from 'components/Shared/ListCollapse'
 import PlainCard from 'components/Shared/PlainCard'
 import SectionTitle from 'components/Shared/SectionTitle'
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
+import RangeSlider from 'components/Shared/RangeSlider'
 // import { LoadingStateImage } from 'components/Shared/LoadingBlock'
 
 import { paramsImgix } from 'utils/image-stock'
@@ -51,7 +52,7 @@ import {
 
 import messages from './messages'
 import {
-  DetailsWrapper,
+  // DetailsWrapper,
   ButtonContainer,
   SelectMethodWrapper,
   ProductItem,
@@ -471,7 +472,11 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       storeLocatorVisibility,
       intl,
       mobileNumbers,
+      pointsModifierVisibility,
+      currentPoints,
+      usePoints,
 
+      _updateUsePoints,
       _handleModalClose,
       _handleProceed,
       _handleStoreLocator,
@@ -529,6 +534,23 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                             <div className='payment-wrapper position__relative'>
                               { this._displayPaymentOptions() }
                               { this._handleMethodInfoBlock() }
+
+                              <StepWrapper className='visibility' visibility={pointsModifierVisibility}>
+                                <Label as='p' className='color__grey text__weight--500' size='big' >
+                                  <FormattedMessage {...messages.choosePointsTitle} />
+                                </Label>
+                                <Label as='p' className='margin__none text__weight--400' size='large'>
+                                  <FormattedMessage {...messages.currentPoints} />
+                                  <Image src={CliqqIcon} className='cliqq-plain-icon' alt='CLiQQ' />
+                                  { subtract(currentPoints, usePoints) }
+                                </Label>
+                                <RangeSlider
+                                  usePoints={usePoints}
+                                  maxPoints={this._computeTotalPointsPrice()}
+                                  pointsModifier={_updateUsePoints}
+                                  currentPoints={currentPoints}
+                                />
+                              </StepWrapper>
                             </div>
                           </Form>
                         </SelectMethodWrapper>
@@ -628,22 +650,24 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                       </ProductDetails>
                     </ProductContainer>
 
-                    <DetailsWrapper>
-                      <ListCollapse title={
-                        <Label as='p' basic className='text__weight--400 margin__none' size='large'>
-                          <FormattedMessage {...messages.viewDetails} />
-                        </Label>
-                      } disableScroll>
-                        <div className='sub-title color__secondary'>
-                          <FormattedMessage {...messages.productDetailsTitle} />
-                        </div>
-                        <div className='margin__bottom-positive--10 text__roboto--light color__dark-grey' dangerouslySetInnerHTML={{__html: orderedProduct.get('details')}} />
-                        <div className='sub-title color__secondary'>
-                          <FormattedMessage {...messages.productDeliveryTitle} />
-                        </div>
-                        <div className='text__roboto--light color__dark-grey' dangerouslySetInnerHTML={{__html: orderedProduct.get('deliveryPromiseMessage')}} />
-                      </ListCollapse>
-                    </DetailsWrapper>
+                    {/*
+                      <DetailsWrapper>
+                        <ListCollapse title={
+                          <Label as='p' basic className='text__weight--400 margin__none' size='large'>
+                            <FormattedMessage {...messages.viewDetails} />
+                          </Label>
+                        } disableScroll>
+                          <div className='sub-title color__secondary'>
+                            <FormattedMessage {...messages.productDetailsTitle} />
+                          </div>
+                          <div className='margin__bottom-positive--10 text__roboto--light color__dark-grey' dangerouslySetInnerHTML={{__html: orderedProduct.get('details')}} />
+                          <div className='sub-title color__secondary'>
+                            <FormattedMessage {...messages.productDeliveryTitle} />
+                          </div>
+                          <div className='text__roboto--light color__dark-grey' dangerouslySetInnerHTML={{__html: orderedProduct.get('deliveryPromiseMessage')}} />
+                        </ListCollapse>
+                      </DetailsWrapper>
+                    */}
                   </div>
                 </PlainCard>
               </Grid.Column>

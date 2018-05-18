@@ -482,17 +482,21 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         desktopView={
           <div>
             <DesktopOrderSummary
-              ShowCodComponent={ShowCodComponent}
               _handleChange={this._handleChange}
               _handleModalClose={this._handleModalClose}
               _handleProceed={this._handleProceed}
               _handleStoreLocator={this._handleStoreLocator}
               _handleToBottom={this._handleToBottom}
               _stepWrapperRef={this._stepWrapperRef}
+              _updateUsePoints={this._updateUsePoints}
 
               errorMessage={errorMessage}
               isBlackListed={isBlackListed}
 
+              isDisabledPointsOptions={this._isDisabledPointsOptions()}
+              ShowCodComponent={ShowCodComponent}
+              currentPoints={currentPoints.get('points') || 0}
+              usePoints={usePoints}
               modalToggle={modalToggle}
               modePayment={modePayment}
               orderRequesting={orderRequesting}
@@ -502,6 +506,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
               storeLocatorVisibility={storeLocatorVisibility}
               intl={intl}
               mobileNumbers={mobileNumbers}
+              pointsModifierVisibility={pointsModifierVisibility}
             />
           </div>
         }
