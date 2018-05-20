@@ -12,9 +12,12 @@ import PropTypes from 'prop-types'
 import { Label, Image, Container } from 'semantic-ui-react'
 import ArrowIcon from 'images/icons/goto-icon.svg'
 import { push } from 'react-router-redux'
-import TimerWrapper from 'components/Desktop/TimerWrapper'
+import { FormattedMessage } from 'react-intl'
 
+import TimerWrapper from 'components/Desktop/TimerWrapper'
 import WindowWidth from 'components/Shared/WindowWidth'
+
+import messages from './messages'
 
 export const Wrapper = styled.div`
   align-items: center;
@@ -75,6 +78,26 @@ export class SectionTitle extends React.PureComponent {
   }
 
   _handleCustomText = () => {
+    const { linkLabel, itemCount } = this.props
+    let block
+
+    if (linkLabel) {
+      block = <Label data-cy='on-click' basic size={this._handleCustomTextSize()} className='color__primary text__weight--400 padding__none' onClick={this._handleGoTo}>
+        <LinkWrapper>
+          <span>{linkLabel || 'See All'}</span>
+          <Image src={ArrowIcon} alt='CLiQQ' />
+        </LinkWrapper>
+      </Label>
+    } else if (itemCount) {
+      block = <Label basic size='medium' className='color__grey text__weight--500 padding__none'>
+        <FormattedMessage values={{itemCount: itemCount}} {...messages.itemsFound} />
+      </Label>
+    }
+
+    return block
+  }
+
+  _handleCustomTextSize = () => {
     const { isDesktop } = this.state
 
     if (isDesktop) {
@@ -95,7 +118,6 @@ export class SectionTitle extends React.PureComponent {
   render () {
     const {
       title,
-      linkLabel,
       dataCy,
       promosLoading,
       promo
@@ -103,7 +125,7 @@ export class SectionTitle extends React.PureComponent {
     const { isDesktop } = this.state
 
     return (
-      <Container className={isDesktop ? 'padding__none' : 'padding__none--vertical'} data-cy={dataCy} >
+      <Container className={`${isDesktop ? 'padding__none' : 'padding__none--vertical'} height__inherit`} data-cy={dataCy} >
         <Wrapper>
           <TitleContainer>
             <div className='title'>
@@ -115,17 +137,7 @@ export class SectionTitle extends React.PureComponent {
               }
             </div>
           </TitleContainer>
-
-          {
-            linkLabel &&
-            <Label data-cy='on-click' basic size={this._handleCustomText()} className='color__primary text__weight--400 padding__none' onClick={this._handleGoTo}>
-              <LinkWrapper>
-                <span>{linkLabel || 'See All'}</span>
-                <Image src={ArrowIcon} alt='CLiQQ' />
-              </LinkWrapper>
-            </Label>
-          }
-
+          {this._handleCustomText()}
         </Wrapper>
       </Container>
     )

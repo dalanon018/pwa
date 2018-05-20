@@ -582,7 +582,7 @@ svg#barcode {
         padding-bottom: 5px !important;
       }
       &--10 {
-        padding-bottom: 10px;
+        padding-bottom: 10px !important;
       }
       &--15 {
         padding-bottom: 15px !important;
@@ -644,6 +644,9 @@ svg#barcode {
         &--30 {
           margin-top: 30px !important;
         }
+        &--50 {
+          margin-top: 50px !important;
+        }
       }
       &-negative {
         &--2 {
@@ -667,6 +670,9 @@ svg#barcode {
         }
         &--20 {
           margin-bottom: 20px !important;
+        }
+        &--30 {
+          margin-bottom: 30px !important;
         }
       }
     }

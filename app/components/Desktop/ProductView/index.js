@@ -190,7 +190,7 @@ class ProductView extends React.PureComponent {
     showElement: true
   }
 
-  _COLUMN_COUNT = 6
+  _COLUMN_COUNT = this.props.isFiveColumns ? 5 : this._COLUMN_COUNT
 
   _innerWindowScrollerRef = null
 

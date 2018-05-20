@@ -63,7 +63,7 @@ const ProductInfo = styled.div`
 
   @media (min-width: 767px) {
     .product-name {
-      min-height: 40px;
+      min-height: 35px;
     }
   }
 `

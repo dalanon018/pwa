@@ -6,13 +6,13 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import Waypoint from 'react-waypoint'
+// import styled from 'styled-components'
+// import Waypoint from 'react-waypoint'
 import queryString from 'query-string'
 
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push, replace } from 'react-router-redux'
 import { noop } from 'lodash'
@@ -29,7 +29,7 @@ import {
   when,
   complement
 } from 'ramda'
-import { Container, Grid } from 'semantic-ui-react'
+// import { Container, Grid } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
@@ -38,19 +38,21 @@ import { paramsImgix } from 'utils/image-stock'
 
 import MobileProductView from 'components/Mobile/ProductView'
 import DesktopProductView from 'components/Desktop/ProductView'
-
+import SectionTitle from 'components/Shared/SectionTitle'
 import MobileFooter from 'components/Mobile/Footer'
 
-import MobileBannerSlider from 'components/Mobile/BannerSlider'
-import SharedBannerSlider from 'components/Shared/BannerSlider'
+// import MobileBannerSlider from 'components/Mobile/BannerSlider'
+// import SharedBannerSlider from 'components/Shared/BannerSlider'
 
 import AccessView from 'components/Shared/AccessMobileDesktopView'
+import MobileBrandSection from 'components/Mobile/BrandSection'
+import DesktopBrandSection from 'components/Desktop/BrandSection'
 import WindowWidth from 'components/Shared/WindowWidth'
 import H3 from 'components/Shared/H3'
 import EmptyProducts from 'components/Shared/EmptyProductsBlock'
-import FilterTrigger from 'components/Mobile/FilterTrigger'
+// import FilterTrigger from 'components/Mobile/FilterTrigger'
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
-import { InfiniteLoading, InfiniteWrapper } from 'components/Shared/InfiniteLoading'
+import { InfiniteLoading } from 'components/Shared/InfiniteLoading'
 
 import {
   setPageTitleAction,
@@ -92,20 +94,20 @@ import {
 //   padding-bottom: 20px !important;
 // `
 
-const DesktopItemCount = styled.p`
-  font-family: Roboto;
-  font-size: 14px;
-  font-weight: 400;
-  margin-bottom: 20px;
-  text-align: center;
-`
+// const DesktopItemCount = styled.p`
+//   font-family: Roboto;
+//   font-size: 14px;
+//   font-weight: 400;
+//   margin-bottom: 20px;
+//   text-align: center;
+// `
 
-const DesktopTitle = styled.p`
-  font-size: 20px;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 0;
-`
+// const DesktopTitle = styled.p`
+//   font-size: 20px;
+//   font-weight: 700;
+//   text-align: center;
+//   margin-bottom: 0;
+// `
 
 export class BrandPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
@@ -203,7 +205,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           <MobileProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
         }
         desktopView={
-          <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
+          <DesktopProductView isFiveColumns changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
         }
       />
     )
@@ -283,13 +285,25 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     })
   }
 
-  _displayHeaderFeaturesProduct () {
-    const { productsFeatured } = this.props
+  _displayHeaderFeaturesProduct = () => {
+    const { productsFeatured, intl } = this.props
     if (productsFeatured.size) {
       return (
-        <H3>
-          <FormattedMessage {...messages.feature} />
-        </H3>
+        <AccessView
+          mobileView={
+            <H3>
+              <FormattedMessage {...messages.feature} />
+            </H3>
+          }
+          desktopView={
+            <div className='padding__horizontal--15'>
+              <SectionTitle
+                title={intl.formatMessage(messages.feature)}
+                itemCount={productsFeatured.size} />
+            </div>
+          }
+        />
+
       )
     }
 
@@ -316,7 +330,9 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
                   <MobileProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
                 }
                 desktopView={
-                  <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
+                  <div className='margin__bottom-positive--30'>
+                    <DesktopProductView isFiveColumns changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
+                  </div>
                 }
               />
             )}
@@ -329,8 +345,13 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     return displayFeatured(productsFeatured.size)
   }
 
-  _displayHeaderRegularProduct () {
-    const { lazyload, productsByBrands, totalCount } = this.props
+  _displayHeaderRegularProduct = () => {
+    const {
+      lazyload,
+      productsByBrands,
+      // totalCount,
+      intl
+    } = this.props
 
     if (lazyload && productsByBrands.size === 0) {
       return null
@@ -344,14 +365,10 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           </H3>
         }
         desktopView={
-          <div className='margin__vertical--30'>
-            <DesktopTitle>
-              <FormattedMessage {...messages.brandsTitle} />
-            </DesktopTitle>
-            <DesktopItemCount className='color__grey'>
-              { totalCount }
-              <FormattedMessage {...messages.items} />
-            </DesktopItemCount>
+          <div className='padding__horizontal--15'>
+            <SectionTitle
+              title={intl.formatMessage(messages.brandsTitle)}
+              itemCount={productsByBrands.size} />
           </div>
         }
       />
@@ -375,7 +392,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
                 <MobileProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} {...props} />
               }
               desktopView={
-                <DesktopProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} {...props} />
+                <DesktopProductView isFiveColumns changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} {...props} />
               }
             />
           )}
@@ -455,67 +472,52 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
 
     return (
       <div>
-        <Waypoint
-          onEnter={this._handleBannerAnimation(true)}
-          onLeave={this._handleBannerAnimation(false)}
-        >
-          <div>
-            <FilterTrigger
-              queryCategory={category}
-              requestFromFilter={this._requestFromFilter}
-              getFilterCategories={this._fetchFilteredCategories}
+        <AccessView
+          mobileView={
+            <MobileBrandSection
+              animateBanner={animateBanner}
+              brandImages={brandImages}
+              category={category}
               filterCategories={filterCategories}
               filterCategoriesLoading={filterCategoriesLoading}
               filtered={filtered}
-            />
-          </div>
-        </Waypoint>
-        <Container>
-          <Grid padded>
-            <Grid.Row className='padding__none--bottom'>
-              <Grid.Column>
-                <AccessView
-                  mobileView={
-                    <MobileBannerSlider
-                      curved
-                      isInfinite
-                      autoplay={animateBanner}
-                      results={productsByBrands}
-                      loader={loader}
-                      images={brandImages}
-                    />
-                  }
-                  desktopView={null}
-                />
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-          <AccessView
-            mobileView={null}
-            desktopView={
-              <SharedBannerSlider
-                isInfinite
-                autoplay={animateBanner}
-                results={productsByBrands}
-                loader={loader}
-                images={brandImages}
-            />
-            }
-          />
-          <div className='margin__top-positive--10'>
-            <InfiniteWrapper
-              hasMoreData={lazyload}
-              isLoading={loader}
-            >
-              { this._displayHeaderFeaturesProduct() }
-              { this._displayFeaturedProducts() }
+              lazyload={lazyload}
+              loader={loader}
+              productsByBrands={productsByBrands}
 
-              { this._displayHeaderRegularProduct() }
-              { this._displayEmptyLoadingIndicator() }
-              { this._displayRegularItems() }
-            </InfiniteWrapper>
-          </div>
-        </Container>
+              _displayEmptyLoadingIndicator={this._displayEmptyLoadingIndicator}
+              _displayFeaturedProducts={this._displayFeaturedProducts}
+              _displayHeaderFeaturesProduct={this._displayHeaderFeaturesProduct}
+              _displayHeaderRegularProduct={this._displayHeaderRegularProduct}
+              _displayRegularItems={this._displayRegularItems}
+              _fetchFilteredCategories={this._fetchFilteredCategories}
+              _handleBannerAnimation={this._handleBannerAnimation}
+              _requestFromFilter={this._requestFromFilter}
+          />
+        }
+          desktopView={
+            <DesktopBrandSection
+              animateBanner={animateBanner}
+              brandImages={brandImages}
+              category={category}
+              filterCategories={filterCategories}
+              filterCategoriesLoading={filterCategoriesLoading}
+              filtered={filtered}
+              lazyload={lazyload}
+              loader={loader}
+              productsByBrands={productsByBrands}
+
+              _displayEmptyLoadingIndicator={this._displayEmptyLoadingIndicator}
+              _displayFeaturedProducts={this._displayFeaturedProducts}
+              _displayHeaderFeaturesProduct={this._displayHeaderFeaturesProduct}
+              _displayHeaderRegularProduct={this._displayHeaderRegularProduct}
+              _displayRegularItems={this._displayRegularItems}
+              _fetchFilteredCategories={this._fetchFilteredCategories}
+              _handleBannerAnimation={this._handleBannerAnimation}
+              _requestFromFilter={this._requestFromFilter}
+          />
+          }
+      />
         <AccessView
           mobileView={<MobileFooter />}
           desktopView={null}
@@ -561,4 +563,4 @@ export default ReduxCompose(
   withReducer,
   withSaga,
   withConnect
-)(WindowWidth(BrandPage))
+)(WindowWidth(injectIntl(BrandPage)))

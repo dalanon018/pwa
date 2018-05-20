@@ -354,6 +354,7 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
                 handleMouseLeave={this._handleMouseLeave}
                 offset={offset}
                 _isFullPointsOnly={this._isFullPointsOnly()}
+                isProductPage
               />
             }
           />
