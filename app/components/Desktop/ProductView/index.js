@@ -190,7 +190,7 @@ class ProductView extends React.PureComponent {
     showElement: true
   }
 
-  _COLUMN_COUNT = this.props.isFiveColumns ? 5 : this._COLUMN_COUNT
+  _COLUMN_COUNT = this.props.isFiveColumns ? 5 : 6
 
   _innerWindowScrollerRef = null
 
@@ -276,6 +276,7 @@ class ProductView extends React.PureComponent {
     const { products, onRowsRendered, registerChild } = this.props
     const columnCount = this._COLUMN_COUNT
     const rowCount = Math.ceil(products.size / columnCount)
+    console.log(rowCount)
 
     return (
       <WindowScroller

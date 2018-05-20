@@ -5,6 +5,7 @@
 */
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Label, List } from 'semantic-ui-react'
 
@@ -12,7 +13,7 @@ import { FormattedMessage } from 'react-intl'
 import messages from './messages'
 
 const Wrapper = styled.div`
-  
+
 `
 
 const Header = styled.div`
@@ -31,9 +32,25 @@ const CategoriesContainer = styled.div`
   }
 `
 
+const requestBrandFilter = ({ fn, ...props }) => () => fn(props)
+
+const ListCategory = ({ category, onClick }) => (
+  <List.Item onClick={onClick}>
+    <Label basic size='large' className='text__weight--400 padding__vertical--none cursor__pointer padding__horizontal--none'>
+      {category.get('name')}
+    </Label>
+  </List.Item>
+)
+
+ListCategory.propTypes = {
+  category: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired
+}
+
 function FilterSection ({
   filterCategories,
-  filterCategoriesLoading
+  filterCategoriesLoading,
+  requestFromFilter
 }) {
   return (
     <Wrapper>
@@ -51,11 +68,14 @@ function FilterSection ({
             !filterCategoriesLoading &&
             filterCategories.map(category => {
               return (
-                <List.Item key={category.get('id')}>
-                  <Label basic size='large' className='text__weight--400 padding__vertical--none cursor__pointer padding__horizontal--none'>
-                    {category.get('name')}
-                  </Label>
-                </List.Item>
+                <ListCategory
+                  key={category.get('id')}
+                  onClick={requestBrandFilter({
+                    category: { id: category.get('id'), name: category.get('name') },
+                    fn: requestFromFilter
+                  })}
+                  category={category}
+                />
               )
             })
           }
@@ -66,7 +86,10 @@ function FilterSection ({
 }
 
 FilterSection.propTypes = {
-
+  filterCategories: PropTypes.object.isRequired,
+  filterCategoriesLoading: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+  requestFromFilter: PropTypes.func.isRequired
 }
 
 export default FilterSection
