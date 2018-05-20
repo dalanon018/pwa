@@ -14,6 +14,7 @@ import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
 import FontFaceObserver from 'fontfaceobserver'
 import createHistory from 'history/createBrowserHistory'
+import * as Runtime from 'offline-plugin/runtime'
 
 import '../semantic/dist/semantic.min.css'
 import 'slick-carousel/slick/slick.css'
@@ -125,5 +126,18 @@ if (process.env.NODE_ENV === 'production') {
   const Notification = require('utils/firebase-notification').default
   Notification.install()
 
-  require('offline-plugin/runtime').install() // eslint-disable-line global-require
+  // eslint-disable-line global-require
+  Runtime.install({
+    onUpdateReady: () => {
+      console.log('SW Event:', 'onUpdateReady')
+      // Tells to new SW to take control immediately
+      Runtime.applyUpdate()
+    }
+    // onUpdated: () => {
+    //   console.log('SW Event:', 'onUpdated')
+    //   // Reload the webpage to load into the new version
+    //   alert('browser need to update')
+    //   // window.location.reload()
+    // }
+  })
 }
