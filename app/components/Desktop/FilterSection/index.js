@@ -88,7 +88,6 @@ function FilterSection ({
 FilterSection.propTypes = {
   filterCategories: PropTypes.object.isRequired,
   filterCategoriesLoading: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired,
   requestFromFilter: PropTypes.func.isRequired
 }
 

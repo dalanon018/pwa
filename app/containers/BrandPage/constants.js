@@ -13,3 +13,5 @@ export const GET_FILTER_CATEGORIES = 'app/ProductsByCategory/GET_FILTER_CATEGORI
 export const SET_FILTER_CATEGORIES = 'app/ProductsByCategory/SET_FILTER_CATEGORIES'
 
 export const LIMIT_ITEMS = 12
+export const MOBILE_LIMIT_ITEMS = 12
+export const DESKTOP_LIMIT_ITEMS = 24
