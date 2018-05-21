@@ -91,7 +91,9 @@ import {
 } from './selectors'
 
 import {
-  LIMIT_ITEMS
+  LIMIT_ITEMS,
+  MOBILE_LIMIT_ITEMS,
+  DESKTOP_LIMIT_ITEMS
 } from './constants'
 
 const DesktopItemCount = styled.p`
@@ -166,13 +168,18 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     return `All ${name || 'Category'}`
   }
 
+  _limitIdentifier = () => {
+    const { isMobileDevice } = this.props
+    return isMobileDevice() ? MOBILE_LIMIT_ITEMS : DESKTOP_LIMIT_ITEMS
+  }
+
   _displayMoreProducts () {
-    const { pageOffset, limit } = this.state
+    const { pageOffset } = this.state
     const incrementOffset = pageOffset + 1
 
     this.setState({
       pageOffset: incrementOffset,
-      offset: (incrementOffset * limit)
+      offset: (incrementOffset * this._limitIdentifier())
     }, () => this._fetchProductByCategory(this.props))
   }
 
@@ -400,10 +407,10 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
    */
   _fetchProductByCategory (props) {
     const { getProductsByCategory, match: { params: { id } }, location: { search } } = props
-    const { offset, limit } = this.state
+    const { offset } = this.state
     const { brands } = queryString.parse(search)
 
-    getProductsByCategory({ offset, limit, id, brands })
+    getProductsByCategory({ offset, id, brands, limit: this._limitIdentifier() })
   }
 
   // if ID is different from previous prop then we assume this is a new loaded page

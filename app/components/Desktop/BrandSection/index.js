@@ -72,6 +72,7 @@ class BrandSection extends React.PureComponent {
                 <Grid.Row columns={2}>
                   <Grid.Column width={3}>
                     <FilterSection
+                      queryCategory={category}
                       requestFromFilter={_requestFromFilter}
                       filterCategories={filterCategories}
                       filterCategoriesLoading={filterCategoriesLoading}
