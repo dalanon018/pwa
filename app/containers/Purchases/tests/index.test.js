@@ -26,7 +26,10 @@ describe('<Purchases />', () => {
     setRouteName: () => {},
     setShowSearchIcon: () => {},
     setShowPointsIcon: () => {},
-    setShowActivityIcon: () => {}
+    setShowActivityIcon: () => {},
+    intl: {
+      formatMessage: () => {}
+    }
   }
 
   it('render without exploding', () => {

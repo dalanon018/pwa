@@ -5,7 +5,8 @@ import styled from 'styled-components'
 import {
   Grid,
   Image,
-  Label
+  Label,
+  Container
 } from 'semantic-ui-react'
 import {
   compose,
@@ -14,6 +15,7 @@ import {
 import { FormattedMessage } from 'react-intl'
 
 import Countdown from 'components/Shared/Countdown'
+import PlainCard from 'components/Shared/PlainCard'
 
 import { paramsImgix } from 'utils/image-stock'
 import { DateFormater } from 'utils/date' // DateFormater
@@ -28,20 +30,20 @@ import {
 import messages from './messages'
 
 const PurchaseWrapper = styled.div`
-  border-radius: 1px;
-  border: 1px solid #ebebeb;
+  // border-radius: 1px;
+  // border: 1px solid #ebebeb;
   display: flex;
   height: 100%;
   margin: 0 auto;
   min-height: 114px;
   width: 100%;
+  padding: 14px 30px;
 `
 
 const PurchaseInfo = styled.div`
   align-content: center;
   display: flex;
   flex-wrap: wrap;
-  padding: 14px 30px;
   width: 100%;
 
   .product-name {
@@ -49,51 +51,43 @@ const PurchaseInfo = styled.div`
   }
 `
 
-const StatusContainer = styled.div`
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  // min-width: 146px;
-  min-width: 170px;
-  padding: 10px;
-  position: relative;
-  // width: 146px;
-  width: 170px;
+// const StatusContainer = styled.div`
+//   align-items: center;
+//   display: flex;
+//   flex-wrap: wrap;
+//   // min-width: 146px;
+//   min-width: 170px;
+//   padding: 10px;
+//   position: relative;
+//   // width: 146px;
+//   width: 170px;
+// `
+
+const StatusWrapper = styled.div`
+  background-color: ${({status}) => status};
+  border-radius: 0 0 5px 5px;
+  padding: 3px 0;
+  text-align: center;
+  width: 100%;
+`
+
+const OtherInfo = styled.div`
+  width: 100%;
 
   .status-info {
-
+    margin-top: 10px;
     p {
       margin-bottom: 0;
     }
   }
 `
 
-const StatusWrapper = styled.div`
-  background-color: ${({status}) => status};
-  text-align: center;
-  width: 100%;
-  padding: 3px 0;
-`
-
-const OtherInfo = styled.div`
-  width: 100%;
-
-  .product-price {
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -2px;
-    margin: 0;
-  }
-`
-
 const ImageWrapper = styled.div`
   align-items: center;
-  border-right: 1px solid #ebebeb;
   display: flex;
   justify-content: center;
   min-width: 115px;
   width: 115px;
-
 `
 
 class Purchase extends React.PureComponent {
@@ -233,52 +227,56 @@ class Purchase extends React.PureComponent {
     return (
       <Grid.Row>
         <Grid.Column>
-          <PurchaseWrapper onClick={this._goToReceipt} className='cursor__pointer'>
-            <ImageWrapper>
-              <Image
-                src={(receipt.getIn(['products', 'image']) &&
-              `${paramsImgix(receipt.getIn(['products', 'image']), imgixOptions)}`) ||
-              paramsImgix(defaultImage, imgixOptions)} />
-            </ImageWrapper>
+          <Container className='padding__none'>
+            <PlainCard>
+              <PurchaseWrapper onClick={this._goToReceipt} className='cursor__pointer'>
+                <PurchaseInfo>
+                  <div>
+                    {
+                      receipt.getIn(['products', 'brand'])
+                      ? <Label as='span' basic size='big' className='text__weight--500 color__grey'>{receipt.getIn(['products', 'brand', 'name'])}</Label>
+                      : null
+                    }
+                    <Label as='p' basic size='huge' className='text__weight--500 product-name'>
+                      {this._productName(receipt.getIn(['products', 'name']))}
+                    </Label>
+                  </div>
+                  <OtherInfo>
+                    <Label className='text__weight--700' as='span' size='massive' basic color='orange'>
+                      <FormattedMessage {...messages.peso} />
+                      {parseFloat(receipt.get('amount')).toLocaleString()}
+                    </Label>
 
-            <PurchaseInfo>
-              <div>
-                {
-                  receipt.getIn(['products', 'brand'])
-                  ? <Label as='span' basic size='medium' className='color__secondary'>{receipt.getIn(['products', 'brand', 'name'])}</Label>
-                  : null
-                }
-                <Label as='p' basic size='medium' className='color__secondary product-name'>
-                  {this._productName(receipt.getIn(['products', 'name']))}
-                </Label>
-              </div>
-              <OtherInfo>
-                <Label className='product-price text__roboto' as='span' basic color='orange'>
-                  <FormattedMessage {...messages.peso} />
-                  {parseFloat(receipt.get('amount')).toLocaleString()}
-                </Label>
-              </OtherInfo>
-            </PurchaseInfo>
+                    <div className='status-info'>
+                      <Label as='span' basic size='large' className='text__weight--400'>
+                        { this._handleDateString() }
+                      </Label>
+                      <Label as='span' basic size='large' className='text__weight--500'>
+                        { this._handleDateValue() }
+                      </Label>
+                    </div>
+                  </OtherInfo>
+                </PurchaseInfo>
 
-            <StatusContainer>
-              <Label as='p' basic size='small' className='color__secondary margin__none'>
-                <FormattedMessage {...messages.status} />
-              </Label>
-              <StatusWrapper status={this._getColorStatus(currentStatus)}>
-                <Label as='span' basic size='medium' className='color__white'>
-                  { this._handleStatusTitle() }
-                </Label>
-              </StatusWrapper>
-              <div className='status-info'>
-                <Label as='span' basic size='small' className='color__secondary'>
-                  { this._handleDateString() }
-                </Label>
-                <Label as='span' basic size='small' className='color__secondary'>
-                  { this._handleDateValue() }
-                </Label>
-              </div>
-            </StatusContainer>
-          </PurchaseWrapper>
+                <PlainCard width={165}>
+                  <div>
+                    <ImageWrapper>
+                      <Image
+                        src={(receipt.getIn(['products', 'image']) &&
+                      `${paramsImgix(receipt.getIn(['products', 'image']), imgixOptions)}`) ||
+                      paramsImgix(defaultImage, imgixOptions)} />
+                    </ImageWrapper>
+                    <StatusWrapper status={this._getColorStatus(currentStatus)}>
+                      <Label as='span' basic size='large' className='color__white text__weight--500'>
+                        { this._handleStatusTitle() }
+                      </Label>
+                    </StatusWrapper>
+                  </div>
+                </PlainCard>
+
+              </PurchaseWrapper>
+            </PlainCard>
+          </Container>
         </Grid.Column>
       </Grid.Row>
     )

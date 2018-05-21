@@ -14,14 +14,13 @@ import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 import { Tab, Container } from 'semantic-ui-react'
-import { FormattedMessage } from 'react-intl'
+import { injectIntl } from 'react-intl'
 import messages from './messages'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
 import WindowWidth from 'components/Shared/WindowWidth'
-import H3 from 'components/Shared/H3'
 
 import { userIsAuthenticated } from 'containers/App/auth'
 import {
@@ -35,6 +34,8 @@ import { PURCHASES_NAME } from 'containers/Buckets/constants'
 
 import EmptyPurchase from './EmptyPurchases'
 import EntityPurchases from './EntityPurchases'
+import AccessView from 'components/Shared/AccessMobileDesktopView'
+import SectionTitle from 'components/Shared/SectionTitle'
 import reducer from './reducer'
 import saga from './saga'
 
@@ -62,11 +63,13 @@ const PurchaseWrapper = styled.div`
     .ui.tabular{
       background-color: transparent;
       display: inline-block;
-      padding: 0 10px 20px;
+      padding: 0 10px 5px;
+      border-bottom: 1px solid #E8E8E8;
+      margin-bottom: 20px;
   
       .item {
         cursor: pointer;
-        font-weight: 700;
+        font-weight: 400;
         margin-right: 40px;
         padding: 0 0 7px;
   
@@ -172,7 +175,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
   }
 
   render () {
-    const { activePurchases, completedPurchases, expiredPurchases, windowWidth } = this.props
+    const { activePurchases, completedPurchases, expiredPurchases, intl } = this.props
 
     const panes = [
       { menuItem: 'Active', render: () => <Tab.Pane>{this._handleShow(activePurchases)}</Tab.Pane> },
@@ -189,20 +192,39 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
               { name: 'description', content: 'List of barcodes' }
             ]}
           />
-          <Tab
-            onTabChange={this._onTabChange}
-            panes={panes}
+
+          <AccessView
+            mobileView={null}
+            desktopView={
+              <Container>
+                <div className='padding__medium'>
+                  <div className='padding__horizontal--10'>
+                    <SectionTitle title={intl.formatMessage(messages.header)} />
+                  </div>
+                </div>
+              </Container>
+            }
           />
 
-          <Container>
-            <div className={windowWidth >= 1024 && 'padding__medium'}>
-              {
-              windowWidth >= 1024 &&
-              <H3><FormattedMessage {...messages.header} /></H3>
+          <AccessView
+            mobileView={
+              <Tab
+                onTabChange={this._onTabChange}
+                panes={panes}
+                className='mobile-tab'
+              />
             }
-
-            </div>
-          </Container>
+            desktopView={
+              <Container className='padding__none--top'>
+                <div className='padding__medium'>
+                  <Tab
+                    onTabChange={this._onTabChange}
+                    panes={panes}
+                  />
+                </div>
+              </Container>
+            }
+          />
         </PurchaseWrapper>
       </div>
     )
@@ -238,4 +260,4 @@ export default ReduxCompose(
   withReducer,
   withSaga,
   withConnect
-)(WindowWidth(userIsAuthenticated(Purchases)))
+)(WindowWidth(userIsAuthenticated(injectIntl(Purchases))))
