@@ -86,7 +86,9 @@ import {
   selectFilterCategoriesLoading
 } from './selectors'
 import {
-  LIMIT_ITEMS
+  LIMIT_ITEMS,
+  MOBILE_LIMIT_ITEMS,
+  DESKTOP_LIMIT_ITEMS
 } from './constants'
 
 // const ContentWrapper = styled(Container)`
@@ -154,6 +156,11 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
     return images ? paramsImgix(images, options) : ''
   }
 
+  _limitIdentifier = () => {
+    const { isMobileDevice } = this.props
+    return isMobileDevice() ? MOBILE_LIMIT_ITEMS : DESKTOP_LIMIT_ITEMS
+  }
+
   _handlePageTitle = (nextProps) => {
     const { brands, match: { params: { id } } } = nextProps
 
@@ -171,12 +178,12 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   _displayMoreProducts = () => {
-    const { pageOffset, limit } = this.state
+    const { pageOffset } = this.state
     const incrementOffset = pageOffset + 1
 
     this.setState({
       pageOffset: incrementOffset,
-      offset: (incrementOffset * limit)
+      offset: (incrementOffset * this._limitIdentifier())
     }, () => this._fetchProductByBrands(this.props))
   }
 
@@ -272,11 +279,11 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
    */
   _fetchProductByBrands = (props) => {
     const { getProductsByBrands, match: { params: { id } }, location: { search } } = props
-    const { offset, limit } = this.state
+    const { offset } = this.state
     const { category } = queryString.parse(search)
 
     // since this data is change and we know exactly
-    getProductsByBrands({ offset, limit, id, category })
+    getProductsByBrands({ offset, id, category, limit: this._limitIdentifier() })
   }
 
   _handleBannerAnimation = (show) => () => {
