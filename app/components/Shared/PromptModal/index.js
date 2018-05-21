@@ -46,6 +46,8 @@ const ModalWrapper = styled.div`
 
   @media (min-width: 1024px) {
     background-color: #FFFFFF;
+    border-radius: 10px;
+    margin: 0 25px;
     padding: 30px 50px !important;
   }
 `
@@ -76,7 +78,7 @@ const CustomModal = styled(Modal)`
 const PrimaryButtonWrapper = styled.div`
   @media (min-width: 1024px) {
     margin-top: 10px;
-    padding: 0 110px;
+    padding: 0 90px;
   }
 `
 
@@ -116,21 +118,21 @@ function PromptModal ({
                 <Icon name={name} className='custom-icon' />
               </IconWrapper>
               <TitleHead>
-                <Label as='span' basic size='large' className='text__weight--700'>
+                <Label as='span' basic size='big' className='text__weight--700'>
                   WARNING
                 </Label>
               </TitleHead>
               <Content>
-                <CustomLabel className='text__weight--400' as='p' basic size='medium'>
+                <CustomLabel className='text__weight--400' as='p' basic size='large'>
                   <FormattedMessage {...messages.rated18} />
                 </CustomLabel>
-                <CustomLabel className='text__weight--400' as='p' basic size='medium'>
+                <CustomLabel className='text__weight--400' as='p' basic size='large'>
                   <FormattedMessage {...messages.confirm18} />
                 </CustomLabel>
                 <Button className='text__weight--700' primary fluid onClick={letIn}>
                   <FormattedMessage {...messages.im18} />
                 </Button>
-                <CustomLabel className='text__weight--700 plain-button' as='p' basic size='medium' onClick={close}>
+                <CustomLabel className='text__weight--700 plain-button' as='p' basic size='large' onClick={close}>
                   <FormattedMessage {...messages.not18} />
                 </CustomLabel>
               </Content>
@@ -144,12 +146,12 @@ function PromptModal ({
                 <Icon name={name} className='custom-icon' />
               </IconWrapper>
               <TitleHead>
-                <Label as='span' basic size='large' className='text__weight--700 margin__top-positive--10'>
+                <Label as='span' basic size='big' className='text__weight--700 margin__top-positive--10'>
                   {title}
                 </Label>
               </TitleHead>
               <Content>
-                <CustomLabel className='margin__bottom-positive--20 text__weight--400' as='p' basic size='small'>
+                <CustomLabel className='margin__bottom-positive--20 text__weight--400' as='p' basic size='large'>
                   {content}
                 </CustomLabel>
                 <PrimaryButtonWrapper>

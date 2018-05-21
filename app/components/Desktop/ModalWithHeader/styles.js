@@ -18,7 +18,7 @@ const ButtonWrapper = styled.div`
 `
 
 const BannerHeader = styled.div`
-  background: url(${props => props.background}) no-repeat top right / cover;
+  // background: url(${props => props.background}) no-repeat top right / cover;
   height: 62px;
   margin-bottom: 40px;
   position: relative;
@@ -29,7 +29,7 @@ const BannerHeader = styled.div`
   }
 
   @media (min-width: 768px) {
-    border-radius: 30px 30px 0 0;
+    border-radius: 10px 10px 0 0;
   }
 
   .image {
@@ -57,8 +57,8 @@ const BannerHeader = styled.div`
 
 const ModalContainer = styled.div`
   background-color: #FFFFFF;
-  border-radius: 30px;
-  margin: 0 230px;
+  border-radius: 10px !important;
+  margin: 0 240px;
   position: relative;
 
   .content {
@@ -69,27 +69,27 @@ const ModalContainer = styled.div`
     padding: 18px 45px !important;
   }
 
-  &:before {
-    background: url(${LeftDesign})no-repeat;
-    border-radius: 5px;
-    bottom: 0;
-    content: '';
-    height: 47px;
-    left: 0;
-    position: absolute;
-    width: 120px;
-  }
+  // &:before {
+  //   background: url(${LeftDesign})no-repeat;
+  //   border-radius: 5px;
+  //   bottom: 0;
+  //   content: '';
+  //   height: 47px;
+  //   left: 0;
+  //   position: absolute;
+  //   width: 120px;
+  // }
 
-  &:after {
-    background: url(${RightDesign})no-repeat;
-    border-radius: 5px;
-    bottom: 0;
-    content: '';
-    height: 44px;
-    position: absolute;
-    right: 0;
-    width: 106px;
-  }
+  // &:after {
+  //   background: url(${RightDesign})no-repeat;
+  //   border-radius: 5px;
+  //   bottom: 0;
+  //   content: '';
+  //   height: 44px;
+  //   position: absolute;
+  //   right: 0;
+  //   width: 106px;
+  // }
 `
 
 export {

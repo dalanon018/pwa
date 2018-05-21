@@ -72,35 +72,35 @@ export default defineMessages({
   },
   buttonReserved: {
     id: 'app.components.ModalWithHeader.buttonReserved',
-    defaultMessage: 'Thanks! I\'m on my way!'
+    defaultMessage: 'THANKS! I\'M ON MY WAY!'
   },
   buttonUnpaid: {
     id: 'app.components.ModalWithHeader.buttonUnpaid',
-    defaultMessage: 'Got It !'
+    defaultMessage: 'GOT IT!'
   },
   buttonConfirmed: {
     id: 'app.components.ModalWithHeader.buttonConfirmed',
-    defaultMessage: 'Awesome! Thanks'
+    defaultMessage: 'AWESOME! THANKS'
   },
   buttonIntransit: {
     id: 'app.components.ModalWithHeader.buttonIntransit',
-    defaultMessage: 'Cool! I\'m Excited'
+    defaultMessage: 'COOL! I\'M EXCITED'
   },
   buttonLostIntransit: {
     id: 'app.components.ModalWithHeader.buttonLostIntransit',
-    defaultMessage: 'No, thanks!'
+    defaultMessage: 'NO, THANKS!'
   },
   buttonDelivered: {
     id: 'app.components.ModalWithHeader.buttonDelivered',
-    defaultMessage: 'Awesome! Thanks'
+    defaultMessage: 'AWESOME! THANKS'
   },
   buttonClaimed: {
     id: 'app.components.ModalWithHeader.buttonClaimed',
-    defaultMessage: 'Awesome! Thanks'
+    defaultMessage: 'AWESOME! THANKS'
   },
   buttonUnclaimed: {
     id: 'app.components.ModalWithHeader.buttonUnclaimed',
-    defaultMessage: 'Got It !'
+    defaultMessage: 'GOT IT!'
   },
   secondaryRepurchaseButton: {
     id: 'app.components.ModalWithHeader.secondaryRepurchaseButton',

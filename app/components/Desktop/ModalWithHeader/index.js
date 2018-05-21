@@ -240,13 +240,14 @@ class ModalWithHeader extends React.PureComponent {
         <ModalContainer>
           <BannerHeader
             // background={ModalImages({ status: currentStatus }).banner}
+            className='background__fade-grey'
             iconBg={ModalImages({ status: currentStatus }).iconBg} >
             <span className='border__three-white'>
               <Image alt='CLiQQ' src={ModalImages({ status: currentStatus }).icon} />
             </span>
           </BannerHeader>
           <Modal.Content>
-            <Label className='weight-600 center margin__none' as='p' size='massive'>
+            <Label className='text__weight--700 center margin__none' as='p' size='huge'>
               <ModalTitle {...{ status: currentStatus, receipt }} />
             </Label>
             <DetailsWrapper>
