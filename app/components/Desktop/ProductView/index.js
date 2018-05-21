@@ -276,7 +276,6 @@ class ProductView extends React.PureComponent {
     const { products, onRowsRendered, registerChild } = this.props
     const columnCount = this._COLUMN_COUNT
     const rowCount = Math.ceil(products.size / columnCount)
-    console.log(rowCount)
 
     return (
       <WindowScroller
