@@ -7,9 +7,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Label, List, Checkbox } from 'semantic-ui-react'
 
+import { Label, List, Checkbox } from 'semantic-ui-react'
 import { FormattedMessage } from 'react-intl'
+import {
+  __,
+  assoc,
+  compose,
+  identity,
+  ifElse,
+  partial,
+  without
+} from 'ramda'
+
 import messages from './messages'
 
 const Header = styled.div`
@@ -53,7 +63,7 @@ const BrandsContainer = styled.div`
   }
 `
 
-const requestBrandFilter = ({ fn, ...props }) => () => fn(props)
+const requestRealtimeFilter = ({ fn, ...props }) => () => fn(props)
 
 const ListCategory = ({ category, onClick, queryCategory }) => {
   const isSelected = (queryCategory === category.get('id'))
@@ -67,24 +77,57 @@ const ListCategory = ({ category, onClick, queryCategory }) => {
   )
 }
 
-const ListBrand = ({ brand, onClick }) => {
-//   let label = <Label basic size='large' className='text__weight--400 padding__vertical--none cursor__pointer padding__horizontal--none'>
-//   {brand.get('name')}
-// </Label>
-  return (
-    <List.Item onClick={onClick}>
-      <Checkbox label={brand.get('name')} />
-    </List.Item>
-  )
-}
-
 ListCategory.propTypes = {
   category: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired
 }
 
+const brandCheckboxChange = ({
+  id,
+  queryBrands,
+  requestFromFilter
+ }) => (e, { checked }) => {
+   const concatBrands = (id) => [...queryBrands, id]
+   const removeBrands = (id) => without([id], queryBrands)
+   const updateRemoveQueryBrands = ifElse(
+      identity,
+      partial(concatBrands, [id]),
+      partial(removeBrands, [id])
+    )
+   const prepRequestFilter = compose(
+    requestRealtimeFilter,
+    assoc('brands', __, { fn: requestFromFilter, category: {} }),
+    updateRemoveQueryBrands
+   )(checked)
+
+   prepRequestFilter()
+ }
+
+const ListBrand = ({
+  brand,
+  queryBrands,
+  requestFromFilter
+}) => {
+  return (
+    <List.Item>
+      <Checkbox checked={(queryBrands.indexOf(brand.get('id')) > -1)} label={brand.get('name')} onChange={brandCheckboxChange({
+        id: brand.get('id'),
+        queryBrands,
+        requestFromFilter
+      })} />
+    </List.Item>
+  )
+}
+
+ListBrand.propTypes = {
+  brand: PropTypes.object.isRequired,
+  queryBrands: PropTypes.array,
+  requestFromFilter: PropTypes.func.isRequired
+}
+
 function FilterSection ({
   queryCategory,
+  queryBrands,
 
   filterCategories,
   filterCategoriesLoading,
@@ -111,8 +154,9 @@ function FilterSection ({
               return (
                 <ListCategory
                   key={category.get('id')}
-                  onClick={requestBrandFilter({
+                  onClick={requestRealtimeFilter({
                     category: { id: category.get('id'), name: category.get('name') },
+                    brands: [],
                     fn: requestFromFilter
                   })}
                   queryCategory={queryCategory}
@@ -136,10 +180,8 @@ function FilterSection ({
                 return (
                   <ListBrand
                     key={brand.get('id')}
-                    onClick={requestBrandFilter({
-                      brand: { id: brand.get('id'), name: brand.get('name') },
-                      fn: requestFromFilter
-                    })}
+                    queryBrands={queryBrands}
+                    requestFromFilter={requestFromFilter}
                     brand={brand}
                   />
                 )
@@ -154,6 +196,7 @@ function FilterSection ({
 
 FilterSection.propTypes = {
   queryCategory: PropTypes.string,
+  queryBrands: PropTypes.array,
   filterCategories: PropTypes.object.isRequired,
   filterCategoriesLoading: PropTypes.bool.isRequired,
   requestFromFilter: PropTypes.func.isRequired
