@@ -60,7 +60,7 @@ export function * initializeAppGlobals () {
 export function * getProduct (args) {
   const { payload: { offset, limit } } = args
   const token = yield getAccessToken()
-  const req = yield call(getRequestData, `${API_BASE_URL}//featured?offset=${offset}&limit=${limit}`, {
+  const req = yield call(getRequestData, `${API_BASE_URL}/productList/featured?offset=${offset}&limit=${limit}`, {
     method: 'GET',
     token: token.access_token
   })
