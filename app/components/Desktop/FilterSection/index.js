@@ -28,6 +28,10 @@ const CategoriesContainer = styled.div`
   }
 `
 
+const LabelSelected = styled(({ isSelected, ...props }) => <Label {...props} />)`
+  color: ${({ isSelected }) => isSelected ? '#FF4813' : 'inherit'}!important;
+`
+
 const BrandsContainer = styled.div`
   .ui.checkbox {
     &.box:before, label:before {
@@ -51,13 +55,17 @@ const BrandsContainer = styled.div`
 
 const requestBrandFilter = ({ fn, ...props }) => () => fn(props)
 
-const ListCategory = ({ category, onClick }) => (
-  <List.Item onClick={onClick}>
-    <Label basic size='large' className='text__weight--400 padding__vertical--none cursor__pointer padding__horizontal--none'>
-      {category.get('name')}
-    </Label>
-  </List.Item>
-)
+const ListCategory = ({ category, onClick, queryCategory }) => {
+  const isSelected = (queryCategory === category.get('id'))
+  const redirectPage = isSelected ? () => {} : onClick
+  return (
+    <List.Item onClick={redirectPage}>
+      <LabelSelected isSelected={isSelected} basic size='large' className='text__weight--400 padding__vertical--none cursor__pointer padding__horizontal--none'>
+        {category.get('name')}
+      </LabelSelected>
+    </List.Item>
+  )
+}
 
 const ListBrand = ({ brand, onClick }) => {
 //   let label = <Label basic size='large' className='text__weight--400 padding__vertical--none cursor__pointer padding__horizontal--none'>
@@ -76,6 +84,8 @@ ListCategory.propTypes = {
 }
 
 function FilterSection ({
+  queryCategory,
+
   filterCategories,
   filterCategoriesLoading,
   requestFromFilter,
@@ -105,6 +115,7 @@ function FilterSection ({
                     category: { id: category.get('id'), name: category.get('name') },
                     fn: requestFromFilter
                   })}
+                  queryCategory={queryCategory}
                   category={category}
                 />
               )
@@ -142,6 +153,7 @@ function FilterSection ({
 }
 
 FilterSection.propTypes = {
+  queryCategory: PropTypes.string,
   filterCategories: PropTypes.object.isRequired,
   filterCategoriesLoading: PropTypes.bool.isRequired,
   requestFromFilter: PropTypes.func.isRequired
