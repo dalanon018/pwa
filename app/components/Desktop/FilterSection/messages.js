@@ -13,5 +13,9 @@ export default defineMessages({
   categoriesLabel: {
     id: 'app.containers.BrandsPage.categoriesLabel',
     defaultMessage: 'Categories'
+  },
+  brandsLabel: {
+    id: 'app.containers.BrandsPage.brandsLabel',
+    defaultMessage: 'Brands'
   }
 })
