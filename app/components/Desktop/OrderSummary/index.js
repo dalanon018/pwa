@@ -147,7 +147,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     const { orderedProduct } = this.props
     if (orderedProduct.get('points')) {
       return (
-        <Label as='p' basic size='medium' className='text__weight--400 margin__none'>
+        <Label as='p' basic size='large' className='text__weight--400 margin__none'>
           <FormattedMessage
             {...messages.earnedPoints}
             values={{
@@ -178,11 +178,11 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
   _toggleDiscount = (discountPrice) => {
     const { orderedProduct } = this.props
     return toggleComponent(
-      <span className='strike color__grey'>
+      <Label as='span' basic size='big' className='strike text__weight--700 color__grey'>
         <FormattedMessage {...messages.peso} />
         { orderedProduct.get('price') &&
           parseFloat(orderedProduct.get('price')).toLocaleString() }
-      </span>,
+      </Label>,
       null
     )(discountPrice)
   }
@@ -232,7 +232,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         onMouseOver={e => this._handleShowMethodInfo(e)}
         onMouseOut={this._handleHideMethodInfo}>
         <LabelTitle>
-          <Label as='p' basic size='large' className='text__weight--500 margin__bottom-positive--5 method-title'>
+          <Label as='p' basic size='big' className='text__weight--500 margin__none method-title'>
             <FormattedMessage {...messages[label]} />
           </Label>
           { this._displayEarnPoints(mode, this._toggleOrigDiscountPrice()) }
@@ -256,7 +256,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         onMouseOver={e => this._handleShowMethodInfo(e)}
         onMouseOut={this._handleHideMethodInfo}>
         <LabelTitle>
-          <Label as='p' basic size='large' className='text__weight--500 margin__bottom-positive--5 method-title'>
+          <Label as='p' basic size='big' className='text__weight--500 margin__none method-title'>
             <FormattedMessage {...messages.cashPoints} />
           </Label>
           { this._displayEarnPoints(mode, this._computePricePoints()) }
@@ -280,7 +280,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         onMouseOver={e => this._handleShowMethodInfo(e)}
         onMouseOut={this._handleHideMethodInfo}>
         <LabelTitle>
-          <Label as='p' basic size='large' className='text__weight--500 margin__none method-title'>
+          <Label as='p' basic size='big' className='text__weight--500 margin__none method-title'>
             <FormattedMessage {...messages.fullPoints} />
           </Label>
         </LabelTitle>
