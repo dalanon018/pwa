@@ -570,6 +570,9 @@ svg#barcode {
       &--none {
         padding: 0 !important;
       }
+      &--20 {
+        padding-top: 20px !important;
+      }
       &--25 {
         padding-top: 25px;
       }

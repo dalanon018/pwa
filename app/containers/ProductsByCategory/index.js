@@ -11,7 +11,7 @@ import queryString from 'query-string'
 
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push, replace } from 'react-router-redux'
 import {
@@ -27,7 +27,6 @@ import {
   subtract,
   when
 } from 'ramda'
-import { Container } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
@@ -41,11 +40,13 @@ import H3 from 'components/Shared/H3'
 import H4 from 'components/Shared/H4'
 import EmptyProducts from 'components/Shared/EmptyProductsBlock'
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
-import FilterTrigger from 'components/Mobile/FilterTrigger'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 import Modal from 'components/Shared/PromptModal'
+import MobileCategorySection from 'components/Mobile/CategorySection'
+import DesktopCategorySection from 'components/Desktop/CategorySection'
+import SectionTitle from 'components/Shared/SectionTitle'
 
-import { InfiniteLoading, InfiniteWrapper } from 'components/Shared/InfiniteLoading'
+import { InfiniteLoading } from 'components/Shared/InfiniteLoading'
 
 import {
   setPageTitleAction,
@@ -92,49 +93,6 @@ import {
 import {
   LIMIT_ITEMS
 } from './constants'
-
-const ContentWrapper = styled(Container)`
-  padding-top: 20px !important;
-  padding-bottom: 20px !important;
-
-  h4.ui.header {
-    margin-top: 0 !important;
-  }
-
-  @media (min-width: 768px) {
-    .header-label {
-      padding-bottom: 20px;
-    }
-
-    .header-label span {
-      font-size: 20px;
-    }
-
-    .category-title {
-      font-size: 20px;
-    }
-
-    .num-item-label, .num-item-label span {
-      font-size: 17px;
-      letter-spacing: 3px;
-    }
-
-    .recent-label {
-      padding-bottom: 20px;
-      padding-top: 25px;
-    }
-
-    .recent-label span {
-      font-size: 20px;
-    }
-  }
-`
-
-const DesktopTitle = styled.p`
-  font-size: 20px;
-  font-weight: 700;
-  text-align: center;
-`
 
 const DesktopItemCount = styled.p`
   font-family: Roboto;
@@ -219,12 +177,23 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _displayHeaderFeaturesProduct () {
-    const { productsFeatured } = this.props
+    const { productsFeatured, intl } = this.props
     if (productsFeatured.size) {
       return (
-        <H3>
-          <FormattedMessage {...messages.feature} />
-        </H3>
+        <AccessView
+          mobileView={
+            <H3>
+              <FormattedMessage {...messages.feature} />
+            </H3>
+          }
+          desktopView={
+            <div className='padding__horizontal--15'>
+              <SectionTitle
+                title={intl.formatMessage(messages.feature)}
+                itemCount={productsFeatured.size} />
+            </div>
+          }
+        />
       )
     }
 
@@ -248,7 +217,7 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
                 <MobileProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
               }
               desktopView={
-                <DesktopProductView isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
+                <DesktopProductView isFiveColumns isMinor={this._handleRestrictAge()} over18={this.props.over18} changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
               }
             />
           )}
@@ -282,21 +251,32 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
   }
 
   _displayRecentlyViewedHeader () {
-    const { productsViewed, lazyload } = this.props
+    const { productsViewed, lazyload, intl } = this.props
 
     // we only show if items are not empty and not lazyloading
     if (productsViewed.size && !lazyload) {
       return (
-        <H3>
-          <FormattedMessage {...messages.viewed} />
-        </H3>
+        <AccessView
+          mobileView={
+            <H3>
+              <FormattedMessage {...messages.viewed} />
+            </H3>
+          }
+          desktopView={
+            <div className='padding__horizontal--15'>
+              <SectionTitle
+                title={intl.formatMessage(messages.viewed)}
+                itemCount={productsViewed.size} />
+            </div>
+          }
+        />
       )
     }
 
     return null
   }
 
-  _displayRecentlyViewedItems () {
+  _displayRecentlyViewedItems = () => {
     const { productsViewed, lazyload, changeRoute, loader, windowWidth } = this.props
     // we only show if items are not empty and not lazyloading
     if (productsViewed.size && !lazyload) {
@@ -579,55 +559,69 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
       <div>
         <AccessView
           mobileView={
-            <FilterTrigger
-              queryCategory={id}
-              queryBrands={this._getQueryBrands()}
-              requestFromFilter={this._requestFromFilter}
-              getFilterCategories={this._fetchFilteredCategories}
-              getFilterBrands={this._fetchFilteredBrands}
-              filterCategories={filterCategories}
+            <MobileCategorySection
               filterBrands={filterBrands}
-              filterCategoriesLoading={filterCategoriesLoading}
               filterBrandsLoading={filterBrandsLoading}
+              filterCategories={filterCategories}
+              filterCategoriesLoading={filterCategoriesLoading}
               filtered={filtered}
-            />
-          }
-          desktopView={null}
-        />
+              getFilterBrands={this._fetchFilteredBrands}
+              getFilterCategories={this._fetchFilteredCategories}
+              lazyload={lazyload}
+              loader={loader}
+              queryBrands={this._getQueryBrands()}
+              queryCategory={id}
+              requestFromFilter={this._requestFromFilter}
+              windowWidth={windowWidth}
 
-        <ContentWrapper>
-          <InfiniteWrapper
-            hasMoreData={lazyload}
-            isLoading={loader}
-          >
-            { this._displayHeaderFeaturesProduct() }
-            { this._displayFeaturesProduct() }
+              _displayEmptyLoadingIndicator={this._displayEmptyLoadingIndicator}
+              _displayFeaturesProduct={this._displayFeaturesProduct}
+              _displayHeaderFeaturesProduct={this._displayHeaderFeaturesProduct}
+              _displayNumberProducts={this._displayNumberProducts}
+              _displayRecentlyViewedHeader={this._displayRecentlyViewedHeader}
+              _displayRecentlyViewedItems={this._displayRecentlyViewedItems}
+              _displayRegularItems={this._displayRegularItems}
+              _handlePageTitle={this._handlePageTitle}
+          />
+        }
+          desktopView={
+            <DesktopCategorySection
+              filterBrands={filterBrands}
+              filterBrandsLoading={filterBrandsLoading}
+              filterCategories={filterCategories}
+              filterCategoriesLoading={filterCategoriesLoading}
+              filtered={filtered}
+              getFilterBrands={this._fetchFilteredBrands}
+              getFilterCategories={this._fetchFilteredCategories}
+              lazyload={lazyload}
+              loader={loader}
+              queryBrands={this._getQueryBrands()}
+              queryCategory={id}
+              requestFromFilter={this._requestFromFilter}
+              windowWidth={windowWidth}
 
-            {
-              windowWidth >= 1024
-              ? <DesktopTitle> {this._handlePageTitle()} </DesktopTitle>
-              : <H3 className='margin__none'> {this._handlePageTitle()} </H3>
-            }
-
-            { this._displayNumberProducts() }
-            { this._displayEmptyLoadingIndicator() }
-            { this._displayRegularItems() }
-
-            { this._displayRecentlyViewedHeader() }
-            { this._displayRecentlyViewedItems() }
-          </InfiniteWrapper>
-        </ContentWrapper>
+              _displayEmptyLoadingIndicator={this._displayEmptyLoadingIndicator}
+              _displayFeaturesProduct={this._displayFeaturesProduct}
+              _displayHeaderFeaturesProduct={this._displayHeaderFeaturesProduct}
+              _displayNumberProducts={this._displayNumberProducts}
+              _displayRecentlyViewedHeader={this._displayRecentlyViewedHeader}
+              _displayRecentlyViewedItems={this._displayRecentlyViewedItems}
+              _displayRegularItems={this._displayRegularItems}
+              _handlePageTitle={this._handlePageTitle}
+          />
+        }
+      />
         <AccessView
           mobileView={<MobileFooter />}
           desktopView={null}
-        />
+      />
         <Modal
           open={this._handleRestrictAge() && !togglePrompt && !over18}
           name='warning'
           close={this._handleClosePrompt}
           isCategory={isCategory}
           letIn={this._handleOver18}
-        />
+      />
       </div>
     )
   }
@@ -678,4 +672,4 @@ export default ReduxCompose(
   withReducer,
   withSaga,
   withConnect
-)(WindowWidth(ProductsByCategory))
+)(WindowWidth(injectIntl(ProductsByCategory)))
