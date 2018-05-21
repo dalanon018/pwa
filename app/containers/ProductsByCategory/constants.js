@@ -24,3 +24,5 @@ export const SET_OVER18 = 'app/ProductsByCategory/SET_OVER18'
 export const SUBMIT_OVER18 = 'app/ProductsByCategory/SUBMIT_OVER18'
 
 export const LIMIT_ITEMS = 12
+export const MOBILE_LIMIT_ITEMS = 12
+export const DESKTOP_LIMIT_ITEMS = 24
