@@ -112,28 +112,31 @@ function FilterSection ({
           }
         </List>
       </CategoriesContainer>
-      <BrandsContainer>
-        <Label basic size='large' className='color__grey text__weight--500 padding__none--bottom padding__horizontal--none'>
-          <FormattedMessage {...messages.brandsLabel} />
-        </Label>
-        <List>
-          {
-            !filterBrandsLoading &&
-            filterBrands.map(brand => {
-              return (
-                <ListBrand
-                  key={brand.get('id')}
-                  onClick={requestBrandFilter({
-                    brand: { id: brand.get('id'), name: brand.get('name') },
-                    fn: requestFromFilter
-                  })}
-                  brand={brand}
-                />
-              )
-            })
-          }
-        </List>
-      </BrandsContainer>
+      {
+        filterBrands &&
+        <BrandsContainer>
+          <Label basic size='large' className='color__grey text__weight--500 padding__none--bottom padding__horizontal--none'>
+            <FormattedMessage {...messages.brandsLabel} />
+          </Label>
+          <List>
+            {
+              !filterBrandsLoading &&
+              filterBrands.map(brand => {
+                return (
+                  <ListBrand
+                    key={brand.get('id')}
+                    onClick={requestBrandFilter({
+                      brand: { id: brand.get('id'), name: brand.get('name') },
+                      fn: requestFromFilter
+                    })}
+                    brand={brand}
+                  />
+                )
+              })
+            }
+          </List>
+        </BrandsContainer>
+      }
     </div>
   )
 }

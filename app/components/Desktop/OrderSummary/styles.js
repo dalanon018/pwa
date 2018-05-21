@@ -172,30 +172,13 @@ const ProductDetails = styled.div`
     margin-left: 10px;
   }
 
-  // .base-price {
-  //   font-family: 'Roboto';
-  //   font-size: 35px !important;
-  //   letter-spacing: -2px;
-  //   margin-right: 10px;
-  // }
-
-  // .orig-price {
-  //   font-family: 'Roboto';
-  //   font-size: 20px !important;
-  //   letter-spacing: -2px;
-  //   text-decoration: line-through;
-  // }
+  .strike {
+    align-self: flex-end;
+    letter-spacing: -2px;
+    margin-left: 10px;
+    text-decoration: line-through;
+  }
 `
-
-// const LabelTitle = styled.p`
-//   font-size: 14px;
-//   margin: 0;
-
-//   @media (min-width: 768px) {
-//     font-size: 16px;
-//     letter-spacing: 5px;
-//   }
-// `
 
 const LabelTitle = styled.div`
   font-size: 14px;
@@ -210,9 +193,10 @@ const LabelTitle = styled.div`
 const LabelPrice = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-end;
+  line-height: normal;
   margin-top: 5px;
   text-align: right;
-  line-height: normal;
 
   .total {
     width: 100%;
@@ -229,7 +213,6 @@ const LabelPrice = styled.div`
   }
   .strike {
     align-self: flex-end;
-    font-size: 20px;
     width: 100%;
     font-weight: 700;
     line-height: initial;
@@ -271,6 +254,10 @@ const InfoBlock = styled.div`
   right: -10px;
 `
 
+const PointsPlusCash = styled.div`
+  display: flex;
+`
+
 export {
   MethodTitle,
   BottomWrapper,
@@ -289,5 +276,6 @@ export {
   LabelFullPointsPrice,
   FullPointsWrapper,
   InfoBlock,
-  CashPrepaidInfo
+  CashPrepaidInfo,
+  PointsPlusCash
 }
