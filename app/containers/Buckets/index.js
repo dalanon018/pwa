@@ -178,7 +178,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     registerPush: PropTypes.func.isRequired,
     getRegisteredPush: PropTypes.func.isRequired,
     loyaltyToken: PropTypes.string,
-    currentPoints: PropTypes.number,
+    currentPoints: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
     getLoyaltyToken: PropTypes.func.isRequired,
     removeLoyaltyToken: PropTypes.func.isRequired,
     getCurrentPoints: PropTypes.func.isRequired
