@@ -150,9 +150,9 @@ function FilterSection ({
           <FormattedMessage {...messages.categoriesLabel} />
         </Label>
         <List>
+          { filterCategoriesLoading && <LoadingIndicator /> }
           {
-            !filterCategoriesLoading
-            ? filterCategories.map(category => {
+            filterCategories.size ? filterCategories.map(category => {
               return (
                 <ListCategory
                   key={category.get('id')}
@@ -165,7 +165,7 @@ function FilterSection ({
                   category={category}
                 />
               )
-            }) : <LoadingIndicator />
+            }) : ''
           }
         </List>
       </CategoriesContainer>
@@ -176,9 +176,9 @@ function FilterSection ({
             <FormattedMessage {...messages.brandsLabel} />
           </Label>
           <List>
+            { filterBrandsLoading && <LoadingIndicator /> }
             {
-              !filterBrandsLoading
-              ? filterBrands.map(brand => {
+              filterBrands.size ? filterBrands.map(brand => {
                 return (
                   <ListBrand
                     key={brand.get('id')}
@@ -187,7 +187,7 @@ function FilterSection ({
                     brand={brand}
                   />
                 )
-              }) : <LoadingIndicator />
+              }) : ''
             }
           </List>
         </BrandsContainer>
