@@ -20,6 +20,8 @@ import {
   without
 } from 'ramda'
 
+import LoadingIndicator from 'components/Shared/LoadingIndicator'
+
 import messages from './messages'
 
 const Header = styled.div`
@@ -149,8 +151,8 @@ function FilterSection ({
         </Label>
         <List>
           {
-            !filterCategoriesLoading &&
-            filterCategories.map(category => {
+            !filterCategoriesLoading
+            ? filterCategories.map(category => {
               return (
                 <ListCategory
                   key={category.get('id')}
@@ -163,7 +165,7 @@ function FilterSection ({
                   category={category}
                 />
               )
-            })
+            }) : <LoadingIndicator />
           }
         </List>
       </CategoriesContainer>
@@ -175,8 +177,8 @@ function FilterSection ({
           </Label>
           <List>
             {
-              !filterBrandsLoading &&
-              filterBrands.map(brand => {
+              !filterBrandsLoading
+              ? filterBrands.map(brand => {
                 return (
                   <ListBrand
                     key={brand.get('id')}
@@ -185,7 +187,7 @@ function FilterSection ({
                     brand={brand}
                   />
                 )
-              })
+              }) : <LoadingIndicator />
             }
           </List>
         </BrandsContainer>
