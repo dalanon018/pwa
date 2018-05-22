@@ -7,45 +7,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import moment from 'moment'
 
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
-import { push } from 'react-router-redux'
 import { noop } from 'lodash'
 import {
   allPass,
-  always,
   complement,
   compose,
   cond,
   equals,
   ifElse,
-  multiply,
   partial,
   propOr
 } from 'ramda'
-import { Container, Label, Image, Grid } from 'semantic-ui-react'
 
 import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
-import { calculateConversionPointsToCash } from 'utils/calculation'
 
-import OrderTip from 'components/Mobile/OrderTip'
-import PlainCard from 'components/Shared/PlainCard'
-import MobileTransactions from 'components/Mobile/PointsHistory'
-
-import MobileFooter from 'components/Mobile/Footer'
+import MobileWalletSection from 'components/Mobile/WalletSection'
+import DesktopWalletSection from 'components/Desktop/WalletSection'
 
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 import EmptyProducts from 'components/Shared/EmptyProductsBlock'
 import LoadingIndicator from 'components/Shared/LoadingIndicator'
-import { InfiniteWrapper } from 'components/Shared/InfiniteLoading'
 import { userIsAuthenticated } from 'containers/App/auth'
-
-import CliqqIcon from 'images/icons/cliqq.png'
 
 import {
   setPageTitleAction,
@@ -80,11 +68,6 @@ import {
   LIMIT_ITEMS
 } from './constants'
 
-const ContentWrapper = styled(Container)`
-  padding-top: 20px !important;
-  padding-bottom: 20px !important;
-`
-
 const DesktopItemCount = styled.p`
   font-family: Roboto;
   font-size: 14px;
@@ -100,53 +83,8 @@ const DesktopTitle = styled.p`
   margin-bottom: 0;
 `
 
-const PointsPreviewWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  overflow: hidden;
-  padding: 30px 14px;
-  position: relative;
-  width: 100%;
-  z-index: 2;
-
-  &:before {
-    border-color: transparent transparent transparent #F9F9F9;
-    border-style: solid;
-    border-width: 170px 0 0 335px;
-    bottom: 0;
-    content: '';
-    height: 0;
-    height: 100%;
-    left: 0;
-    opacity: 0.7;
-    position: absolute;
-    width: 0;
-    z-index: -1;
-  }
-`
-
-const UserPointsWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-
-  img {
-    width: 35px;
-  }
-
-  .my-points {
-    font-size: 36px !important;
-    line-height: inherit;
-    margin-left: 8px;
-  }
-`
-
 export class WalletPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
-    changeRoute: PropTypes.func.isRequired,
     getWallet: PropTypes.func.isRequired,
     getMobileNumber: PropTypes.func.isRequired,
     resetWallet: PropTypes.func.isRequired,
@@ -238,7 +176,7 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
     }
   }
 
-  _displayHeaderTransactions () {
+  _displayHeaderTransactions = () => {
     const { lazyload, transactions, transactionsCount } = this.props
 
     if (lazyload && transactions.size === 0) {
@@ -263,69 +201,6 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
         }
       />
     )
-  }
-
-  _displayTransactionsItems = () => {
-    const { transactions, changeRoute, transactionsLoading, lazyload, wallet } = this.props
-    const currentPoints = ifElse(
-      compose(equals(0), propOr(0, 'size')),
-      always(0),
-      (wallet) => multiply(1, wallet.get('currentPoints')) // multiply to convert automatically to parseFloat
-    )(wallet)
-
-    if (lazyload === false) {
-      // const getLatestTransaction = transactions.first() && transactions.first().get('datetime')
-      return (
-        <div>
-          <Container className='padding__none--vertical'>
-            <Grid padded>
-              <Grid.Row className='padding__none--vertical'>
-                {
-                  <PlainCard>
-                    <PointsPreviewWrapper className='text__align--center'>
-                      <Label as='p' className='text__weight--500' size='large' >
-                        <FormattedMessage {...messages.currentPoints} />
-                      </Label>
-                      <UserPointsWrapper>
-                        <Image src={CliqqIcon} alt='CLiQQ' />
-                        <Label as='span' className='my-points color__teal text__weight--700' size='massive' >
-                          { currentPoints.toLocaleString() }
-                        </Label>
-                      </UserPointsWrapper>
-                      <Label as='p' className='color__grey text__weight--400' size='medium' >
-                        <FormattedMessage
-                          {...messages.asOf}
-                          values={{date: moment().format('LL')}} />
-                      </Label>
-                      {
-                        currentPoints ? (
-                          <div>
-                            <Label as='div' className='text__weight--500 margin__top-positive--20 padding__none' size='large' >
-                              <FormattedMessage
-                                {...messages.worthPointsCash}
-                                values={{
-                                  amount: calculateConversionPointsToCash({points: currentPoints})
-                                }}
-                              />
-                            </Label>
-                            <Label as='div' className='text__weight--500 padding__none' size='large' >
-                              <FormattedMessage {...messages.worthPointsCashSub} />
-                            </Label>
-                          </div>
-                        ) : null
-                      }
-                    </PointsPreviewWrapper>
-                  </PlainCard>
-                }
-              </Grid.Row>
-            </Grid>
-          </Container>
-          <MobileTransactions changeRoute={changeRoute} loader={transactionsLoading} wallet={wallet} transactions={transactions} />
-        </div>
-      )
-    }
-
-    return null
   }
 
   componentDidMount () {
@@ -358,31 +233,33 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
   }
 
   render () {
-    const { transactionsLoading, lazyload } = this.props
+    const { transactionsLoading, lazyload, transactions, wallet, intl } = this.props
 
     return (
-      <div>
-        <ContentWrapper>
-          <div>
-            <InfiniteWrapper
-              hasMoreData={lazyload}
-              isLoading={transactionsLoading}
-            >
+      <AccessView
+        mobileView={
+          <MobileWalletSection
+            lazyload={lazyload}
+            transactions={transactions}
+            transactionsLoading={transactionsLoading}
+            wallet={wallet}
 
-              { this._displayHeaderTransactions() }
-              { this._displayEmptyLoadingIndicator() }
-              { this._displayTransactionsItems() }
-            </InfiniteWrapper>
-          </div>
-        </ContentWrapper>
+            _displayHeaderTransactions={this._displayHeaderTransactions}
+            _displayEmptyLoadingIndicator={this._displayEmptyLoadingIndicator}
+          />
+        }
+        desktopView={
+          <DesktopWalletSection
+            lazyload={lazyload}
+            transactions={transactions}
+            transactionsLoading={transactionsLoading}
+            wallet={wallet}
+            intl={intl}
 
-        <OrderTip />
-
-        <AccessView
-          mobileView={<MobileFooter />}
-          desktopView={null}
-        />
-      </div>
+            _displayEmptyLoadingIndicator={this._displayEmptyLoadingIndicator}
+          />
+        }
+      />
     )
   }
 }
@@ -406,7 +283,6 @@ function mapDispatchToProps (dispatch) {
     getWallet: payload => dispatch(getWalletAction(payload)),
     getMobileNumber: () => (dispatch(getMobileNumberAction())),
     resetWallet: () => dispatch(resetWalletTransactionsAction()),
-    changeRoute: (url) => dispatch(push(url)),
     dispatch
   }
 }

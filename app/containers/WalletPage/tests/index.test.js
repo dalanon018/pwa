@@ -38,10 +38,10 @@ describe('<WalletPage />', () => {
     }
   }
 
-  it('should render a div', () => {
+  it('should not render a div', () => {
     const renderedComponent = shallow(
       <WalletPage {...minProps} />
     )
-    expect(renderedComponent.find('div').length).toEqual(3)
+    expect(renderedComponent.find('div').length).toEqual(0)
   })
 })

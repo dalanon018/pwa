@@ -298,7 +298,10 @@ class HeaderNav extends PureComponent {
     showActivityIcon: PropTypes.bool.isRequired,
     changeRoute: PropTypes.func.isRequired,
     loyaltyToken: PropTypes.string,
-    currentPoints: PropTypes.number
+    currentPoints: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ])
   }
 
   state = {

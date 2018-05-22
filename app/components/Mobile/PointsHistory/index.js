@@ -40,7 +40,6 @@ export const AdjustedPoints = styled.div`
 `
 
 function PointsHistory ({
-  changeRoute,
   loader,
   transactions
 }) {
@@ -110,7 +109,6 @@ function PointsHistory ({
 }
 
 PointsHistory.propTypes = {
-  changeRoute: PropTypes.func,
   loader: PropTypes.bool,
   transactions: PropTypes.object
 }
