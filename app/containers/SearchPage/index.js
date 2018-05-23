@@ -22,6 +22,7 @@ import injectReducer from 'utils/injectReducer'
 
 import MobileSearchResult from 'components/Mobile/ProductView'
 import DesktopSearchResult from 'components/Desktop/SearchResult'
+import SectionTitle from 'components/Shared/SectionTitle'
 
 import H3 from 'components/Shared/H3'
 import WindowWidth from 'components/Shared/WindowWidth'
@@ -52,7 +53,6 @@ import {
   setMobileNumbersAction,
   setProductHandlersDefaultAction
 } from './actions'
-import { Label } from 'semantic-ui-react'
 
 const SearchListWrapper = styled.div`
   display: flex;
@@ -69,9 +69,8 @@ const DesktopHeader = styled.div`
   text-align: center;
   margin-bottom: -10px !important;
 
-  h3 {
-    font-size: 20px !important;
-    padding: 0 !important;
+  > div {
+    padding: 0 20px !important;
   }
 `
 
@@ -127,7 +126,7 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
   }
 
   _displayProduct () {
-    const { product, changeRoute, windowWidth, searchValue } = this.props
+    const { product, changeRoute, windowWidth, searchValue, intl } = this.props
     const stickyFooter = document.getElementsByTagName('footer')[0]
     const isEmpty = product.size === 0
 
@@ -144,10 +143,9 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
             {
               !isEmpty &&
               <DesktopHeader>
-                <Label as='h3' className='color__secondary'>
-                  <FormattedMessage {...messages.header} />
-                  <span>for '{searchValue}'</span>
-                </Label>
+                <SectionTitle
+                  title={`${intl.formatMessage(messages.header)} for '${searchValue}'`}
+                  itemCount={product.size} />
               </DesktopHeader>
             }
 
