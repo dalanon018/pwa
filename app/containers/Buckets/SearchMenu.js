@@ -103,20 +103,28 @@ const SearchContainer = styled.div`
   padding: 0 5px;
 `
 
+// const SearchInput = styled(Input)`
+//   font-size: 18px;
+//   letter-spacing: 1px;
+//   margin: 0 5px;
+//   width: 100%;
+
+//   input {
+//     border-radius: 4.5px !important;
+//     border: 0 !important;
+//   }
+
+//   @media (min-width: 1024px) {
+//     margin: 0;
+//   }
+// `
+
 const SearchInput = styled(Input)`
+  border: 0;
   font-size: 18px;
   letter-spacing: 1px;
   margin: 0 5px;
   width: 100%;
-
-  input {
-    border-radius: 4.5px !important;
-    border: 0 !important;
-  }
-
-  @media (min-width: 1024px) {
-    margin: 0;
-  }
 `
 
 const ImageIcon = styled(Image)`
@@ -133,16 +141,27 @@ const InputContainer = styled.div`
   width: 100%;
 
   .magnifier {
+    margin: 0;
     position: absolute;
     right: 0;
     top: 8px;
-    margin: 0;
-  }
 
-  @media (min-width: 1024px) {
-    .magnifier {
-      top: 9.5px !important;
-    }
+    @media (min-width: 1024px) {
+      align-items: center;
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      right: -4px;
+      top: 0;
+
+      &.icon {
+        background-color: #ff4813;
+        border-radius: 0 10px 10px 0;
+        color: #FFFFFF;
+        font-size: 22px;
+        padding: 0px 26px !important;
+      }
+    } 
   }
 
   @media (max-width: 767px) {
@@ -280,13 +299,13 @@ class SearchMenu extends PureComponent {
         desktopView={
           <InputContainer>
             <SearchInput
-              className='color__secondary border__none'
+              className='border__none search-textfield'
               ref={this._inputReference}
               onChange={this._handleOnchange}
               onKeyPress={this._handleKeyPress}
               placeholder={intl.formatMessage(messages.searchPlaceHolder)}
             />
-            <Icon className='magnifier cursor__pointer' name='search' onClick={this._handlePressSearch} />
+            <Icon className='magnifier search icon cursor__pointer' name='search' onClick={this._handlePressSearch} />
           </InputContainer>
         }
       />
