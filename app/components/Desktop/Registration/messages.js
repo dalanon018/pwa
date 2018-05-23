@@ -42,7 +42,7 @@ export default defineMessages({
   },
   buttonLabelAgree: {
     id: `${idSuffix}.buttonLabelAgree`,
-    defaultMessage: 'Yes, I Agree'
+    defaultMessage: 'YES, I AGREE'
   },
   successResendCode: {
     id: `${idSuffix}.successResendCode`,

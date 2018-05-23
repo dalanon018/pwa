@@ -97,11 +97,12 @@ const ContentWrapper = styled.div`
 
 const BoxWrapper = styled.div`
   background-color: #FFFFFF;
+  border-radius: 10px;
   border: 2px solid #EBEBEB;
   min-height: 360px;
   padding: 30px;
-  width: 100%;
   position: relative;
+  width: 100%;
 
   &:before {
     background: url(${BoxBorder}) no-repeat;
