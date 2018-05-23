@@ -88,11 +88,13 @@ const TermsConditionsWrapper = styled.div`
 
 const ButtonWrapper = styled.div`
   bottom: 0;
+  display: flex;
+  justify-content: center;
   left: 0;
+  padding: 10px 15px;
   position: ${props => props.toggle ? 'fixed' : 'static'};
   width: 100%;
   z-index: 1;
-  padding: 0 !important;
 
   .ui.button.primary {
     padding: 16px 40px !important;
@@ -160,11 +162,12 @@ const ContentWrapper = styled.div`
 
 const BoxWrapper = styled.div`
   background-color: #FFFFFF;
+  border-radius: 10px;
   border: 2px solid #EBEBEB;
   min-height: 360px;
   padding: 30px;
-  width: 100%;
   position: relative;
+  width: 100%;
 
   &:before {
     background: url(${BoxBorder}) no-repeat;

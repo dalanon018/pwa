@@ -136,10 +136,12 @@ export class PopupVerification extends React.PureComponent {
                 <BoxWrapper>
                   <PopupContent>
                     <TextWrapper>
-                      <Label as='p' basic size='huge' className='color__secondary'>
+                      <Label as='p' basic size='massive' className='text__weight--500'>
                         <FormattedMessage {...messages.register} />
                       </Label>
-                      <Label as='p' basic color='grey' size='medium'><FormattedMessage {...messages.label} /></Label>
+                      <Label as='p' basic className='color__grey text__weight--400' size='big'>
+                        <FormattedMessage {...messages.label} />
+                      </Label>
                     </TextWrapper>
 
                     <InputWrapper>

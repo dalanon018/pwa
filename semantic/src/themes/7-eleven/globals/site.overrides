@@ -697,10 +697,10 @@ svg#barcode {
     &__left {
       &-positive {
         &--10 {
-          margin-left: 10px;
+          margin-left: 10px !important;
         }
         &--20 {
-          margin-left: 20px;
+          margin-left: 20px !important;
         }
         &--30 {
           margin-left: 30px !important;

@@ -79,14 +79,16 @@ function Registration ({
               <ImageLogo alt='logo' src={MainLogo} />
               <BoxWrapper>
                 <TextWrapper>
-                  <Label as='p' basic size='huge' className='color__secondary'>
+                  <Label as='p' basic size='massive' className='text__weight--500'>
                     <FormattedMessage {...messages.register} />
                   </Label>
-                  <Label as='p' basic color='grey' size='medium'><FormattedMessage {...messages.label} /></Label>
+                  <Label as='p' basic className='color__grey text__weight--400' size='big'>
+                    <FormattedMessage {...messages.label} />
+                  </Label>
                 </TextWrapper>
 
                 <InputWrapper>
-                  <Label as='span' basic color='grey' size='massive'>
+                  <Label as='span' basic className='color__grey text__weight--700' size='massive'>
                     <FormattedMessage {...messages.phonePrefix} />
                   </Label>
 
@@ -103,12 +105,12 @@ function Registration ({
                   checked={check}
                   name='checkbox'
                   label={(
-                    <span className='checkbox-label'>
+                    <Label as='span' basic className='checkbox-label margin__left-positive--10 color__grey text__weight--500' size='large'>
                       <FormattedMessage {...messages.checkTermsLabel} />
-                      <A key={0} onClick={_toggleTerms}>
+                      <A className='color__primary' key={0} onClick={_toggleTerms}>
                         <FormattedMessage {...messages.checkTermsLink} />
                       </A>
-                    </span>
+                    </Label>
                   )}
                 />
                 <Button
@@ -177,8 +179,8 @@ function Registration ({
             <LoadingStateInfo loading={loadingMarkdown} count='4'>
               <div className='animation-fade tc-content color__grey' dangerouslySetInnerHTML={{__html: markdown}} />
             </LoadingStateInfo>
-            <ButtonWrapper toggle={toggleTerms}>
-              <Button primary fluid onClick={_agreeAction}><FormattedMessage {...messages.buttonLabelAgree} /></Button>
+            <ButtonWrapper className='background__white box__shadow--primary' toggle={toggleTerms}>
+              <Button primary onClick={_agreeAction}><FormattedMessage {...messages.buttonLabelAgree} /></Button>
             </ButtonWrapper>
           </Grid>
         </div>
