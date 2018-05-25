@@ -74,7 +74,9 @@ import {
 } from './actions'
 
 import {
-  HIDE_BACK_BUTTON
+  HIDE_BACK_BUTTON,
+  HIDE_HEADER_POINTS_ELEMENT,
+  HIDE_HEADER_MOBILE_ELEMENT
 } from './constants'
 
 import {
@@ -189,7 +191,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
   state = {
     toggleSidebar: false,
-    categoryToggle: false
+    categoryToggle: false,
+    showLogout: false,
+    hideHeaderMobile: false,
+    hideHeaderPoints: false
   }
 
   _lastY
@@ -314,8 +319,53 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     return shouldHide(HIDE_BACK_BUTTON)
   }
 
+  _handleHideHeaderPointsElement = () => {
+    const { location: { pathname } } = this.props
+
+    const shouldHide = RCompose(
+      complement(isEmpty),
+      filter(both(complement(isNil), complement(isEmpty))),
+      map(RCompose(
+        partialRight(match, [pathname]),
+        PathToRegexp
+      ))
+    )
+
+    this.setState({hideHeaderPoints: shouldHide(HIDE_HEADER_POINTS_ELEMENT)})
+  }
+
+  _handleHideHeaderMobileNumberElement = () => {
+    const { location: { pathname } } = this.props
+
+    const shouldHide = RCompose(
+      complement(isEmpty),
+      filter(both(complement(isNil), complement(isEmpty))),
+      map(RCompose(
+        partialRight(match, [pathname]),
+        PathToRegexp
+      ))
+    )
+
+    this.setState({hideHeaderMobile: shouldHide(HIDE_HEADER_MOBILE_ELEMENT)})
+  }
+
+  _handleToggleLogout = () => {
+    this.setState(prevState => ({showLogout: !prevState.showLogout}))
+  }
+
+  _handleCloseLogout = () => this.setState({showLogout: false})
+
+  _handlePageClick = () => {
+    const { windowWidth } = this.props
+
+    if (windowWidth >= 1024) {
+      this._handleCloseLogout()
+    }
+  }
+
   _displayHeader = () => {
     const { pageTitle, showSearchIcon, showPointsIcon, showActivityIcon, changeRoute, location: { pathname }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen, productCategories, brands, loyaltyToken, currentPoints, removeLoyaltyToken, mobileNumbers } = this.props
+    const { hideHeaderMobile, hideHeaderPoints } = this.state
     /**
      * we have to identify if we should display backbutton
      */
@@ -351,6 +401,9 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
               signOut={removeLoyaltyToken}
               mobileNumbers={mobileNumbers}
               currentPoints={currentPoints}
+              showLogout={this.state.showLogout}
+              hideHeaderMobile={hideHeaderMobile}
+              hideHeaderPoints={hideHeaderPoints}
 
               clearSearchNav={setProductSearchList}
               searchProductNav={searchProduct}
@@ -359,6 +412,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
               leftButtonActionNav={this._handleLeftButtonAction}
               _toggleCategoryDrop={this._toggleCategoryDrop}
               categoryToggle={this.state.categoryToggle}
+              _handleToggleLogout={this._handleToggleLogout}
             />
           }
         />
@@ -401,9 +455,13 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
               signOut={removeLoyaltyToken}
               mobileNumbers={mobileNumbers}
               currentPoints={currentPoints}
+              showLogout={this.state.showLogout}
+              hideHeaderMobile={hideHeaderMobile}
+              hideHeaderPoints={hideHeaderPoints}
 
               _toggleCategoryDrop={this._toggleCategoryDrop}
               categoryToggle={this.state.categoryToggle}
+              _handleToggleLogout={this._handleToggleLogout}
             />
           }
         />
@@ -527,6 +585,9 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     )
 
     getCurrentPoints(loyaltyToken)
+
+    this._handleHideHeaderPointsElement()
+    this._handleHideHeaderMobileNumberElement()
   }
 
   render () {
@@ -540,6 +601,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
         <BackgroundLay toggle={categoryToggle} onClick={this._toggleCategoryDrop} />
         { this._displayHeader() }
         <MainContent
+          onClick={this._handlePageClick}
           routeName={mobileFilterMargin}
           media={windowWidth}
           toggleSidebar={toggleSidebar} >

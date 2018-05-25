@@ -199,7 +199,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
               <Container>
                 <div className='padding__medium'>
                   <div className='padding__horizontal--10'>
-                    <SectionTitle title={intl.formatMessage(messages.header)} />
+                    <SectionTitle colorGrey title={intl.formatMessage(messages.header)} />
                   </div>
                 </div>
               </Container>

@@ -107,10 +107,6 @@ const MainNav = styled.div`
   padding: 87px 15px 0;
   position: relative;
   z-index: 2;
-
-  .label {
-    cursor: pointer;
-  }
 `
 
 const MenuWrapper = styled.div`
@@ -253,13 +249,11 @@ const SubCategoryList = styled.div`
 `
 
 const CurrentPointsContainer = styled.div`
+  ${props => props.hidden && 'visibility: hidden;'}
   align-items: center;
   display: flex;
-  justify-content: center;
-
-  .label {
-    flex-grow: 1;
-  }
+  justify-content: flex-end;
+  min-width: 220px;
 
   img {
     margin: 0 5px 0 10px;
@@ -308,27 +302,28 @@ class HeaderNav extends PureComponent {
     activeItem: null,
     windowHeightOffset: 0,
     subCategoryToggle: false,
-    logout: false,
     subCategory: [],
     categoryId: ''
   }
 
-  _handleShowLogoutButton = () => {
-    const { isSignIn, mobileNumbers } = this.props
+  _handleSignOut = () => {
+    const { signOut } = this.props
+    signOut()
+  }
 
-    const toggleLogout = () => {
-      this.setState(prevState => ({logout: !prevState.logout}))
-    }
+  _handleShowLogoutButton = () => {
+    const { isSignIn, mobileNumbers, _handleToggleLogout, showLogout } = this.props
 
     const toggleComponent = ifElse(
       identity,
       () => (
         <SignOutWrapper>
           <Label as='p' className='margin__none text__weight--500' basic size='large'>
-            Signed in: <span className='color__primary cursor__pointer' onClick={toggleLogout}>{mobileNumbers.toJS().pop()}</span>
+            <FormattedMessage {...messages.signedIn} />
+            <span className='color__primary cursor__pointer' onClick={() => _handleToggleLogout()}>{mobileNumbers.toJS().pop()}</span>
           </Label>
           {
-              this.state.logout &&
+            showLogout &&
               <LogoutWrapper className='box__shadow--primary cursor__pointer' onClick={this._handleSignOut}>
                 <div>
                   <Image alt='help' size='mini' src={Logout} />
@@ -344,11 +339,6 @@ class HeaderNav extends PureComponent {
     )
 
     return toggleComponent(isSignIn)
-  }
-
-  _handleSignOut = () => {
-    const { signOut } = this.props
-    signOut()
   }
 
   _handleBrandsMenu = () => {
@@ -437,9 +427,9 @@ class HeaderNav extends PureComponent {
   }
 
   _toggleDisplayCurrentPoints = () => {
-    const { isSignIn, currentPoints } = this.props
+    const { isSignIn, currentPoints, changeRoute, hideHeaderPoints } = this.props
     return toggleComponent(
-      <CurrentPointsContainer>
+      <CurrentPointsContainer hidden={hideHeaderPoints}>
         <div>
           <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
             <FormattedMessage {...messages.currentCliqqPointsLabel} />
@@ -448,13 +438,13 @@ class HeaderNav extends PureComponent {
         <div>
           <Image src={CliqqLogo} alt='CLiQQ' />
         </div>
-        <div>
+        <div className='cursor__pointer' onClick={() => changeRoute('/wallet')}>
           <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
             {currentPoints}
           </Label>
         </div>
       </CurrentPointsContainer>,
-      null
+      <CurrentPointsContainer />
     )(isSignIn)
   }
 
@@ -476,29 +466,29 @@ class HeaderNav extends PureComponent {
         <MenusContainer arrowToggle={categoryToggle}>
           <CategoryDrop onClick={_toggleCategoryDrop}>
             <Image src={CategoryDock} alt='CLiQQ' />
-            <Label as='p' className='margin__none text__weight--500 color__white category-menu' basic size='large'>
+            <Label as='p' className='margin__none text__weight--500 color__white category-menu cursor__pointer' basic size='large'>
               <FormattedMessage {...messages.categoriesMenu} />
             </Label>
           </CategoryDrop>
           <div>
             <List horizontal className='width__full list-wrapper'>
               <List.Item onClick={goToPage('flash-deals')}>
-                <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
+                <Label as='p' className='margin__none text__weight--500 color__white cursor__pointer' basic size='large'>
                   <FormattedMessage {...messages.flashDealsMenu} />
                 </Label>
               </List.Item>
               <List.Item onClick={goToPage('purchases')}>
-                <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
+                <Label as='p' className='margin__none text__weight--500 color__white cursor__pointer' basic size='large'>
                   <FormattedMessage {...messages.myActivitiesMenu} />
                 </Label>
               </List.Item>
               <List.Item onClick={goToPage('wallet')}>
-                <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
+                <Label as='p' className='margin__none text__weight--500 color__white cursor__pointer' basic size='large'>
                   <FormattedMessage {...messages.pointsBalanceMenu} />
                 </Label>
               </List.Item>
               <List.Item onClick={goToPage('brands')}>
-                <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
+                <Label as='p' className='margin__none text__weight--500 color__white cursor__pointer' basic size='large'>
                   <FormattedMessage {...messages.brandsMenu} />
                 </Label>
               </List.Item>
@@ -573,7 +563,7 @@ class HeaderNav extends PureComponent {
   // }
 
   render () {
-    const { changeRoute, showActivityIcon, currentRoute, clearSearchNav, searchProductNav, hideBackButtonNav, _handleSearchInputValueNav, leftButtonActionNav } = this.props
+    const { changeRoute, showActivityIcon, currentRoute, clearSearchNav, searchProductNav, hideBackButtonNav, _handleSearchInputValueNav, leftButtonActionNav, hideHeaderMobile } = this.props
 
     const homeRoute = currentRoute === 'home'
     const pathname = window.location.pathname.split('/')[1] === 'search'
@@ -625,7 +615,7 @@ class HeaderNav extends PureComponent {
                   <Grid.Column width={4} textAlign='right'>
                     <OptionsWrapper>
                       { ActivitiesToggle(showActivityIcon) }
-                      { this._handleShowLogoutButton() }
+                      { !hideHeaderMobile && this._handleShowLogoutButton() }
                     </OptionsWrapper>
                   </Grid.Column>
                 </Grid.Row>

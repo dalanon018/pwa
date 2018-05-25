@@ -198,11 +198,6 @@ class ProductView extends React.PureComponent {
     this._innerWindowScrollerRef = ref
   }
 
-  _identifyColumnCount = () => {
-    const { windowWidth } = this.props
-    return windowWidth > 991 ? 6 : 4
-  }
-
   _productEntity = ({ index, isScrolling, key, style }) => {
     const { products, isMinor, over18, changeRoute } = this.props
     const columnCount = this._COLUMN_COUNT

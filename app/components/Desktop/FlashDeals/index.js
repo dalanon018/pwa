@@ -6,7 +6,7 @@
 
 import React from 'react'
 import styled from 'styled-components'
-import { Container, Grid } from 'semantic-ui-react'
+import { Container } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 
 import DesktopProductView from 'components/Desktop/ProductView'
@@ -25,16 +25,12 @@ function FlashDeals ({
 }) {
   return (
     <Container>
-      <Grid container>
-        <Grid.Row>
-          <DesktopProductView
-            virtualized={false}
-            changeRoute={changeRoute}
-            loader={promosLoading}
-            products={promo.get('productList')}
-            windowWidth={windowWidth} />
-        </Grid.Row>
-      </Grid>
+      <DesktopProductView
+        // virtualized={false}
+        changeRoute={changeRoute}
+        loader={promosLoading}
+        products={promo.get('productList')}
+        windowWidth={windowWidth} />
     </Container>
   )
 }

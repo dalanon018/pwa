@@ -90,7 +90,8 @@ export default defineMessages({
   },
   earnPoints: {
     id: `${idSuffix}.earnPoints`,
-    defaultMessage: 'Points will be earned once claimed. How do I earn points?'
+    defaultMessage: 'Points will be earned once claimed.'
+    // How do I earn points?
   },
   registeredMobile: {
     id: `${idSuffix}.registeredMobile`,

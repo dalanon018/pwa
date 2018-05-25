@@ -68,7 +68,8 @@ import {
   LabelPrice,
   LabelTitle,
   BlockWrapper,
-  InfoBlock
+  InfoBlock,
+  StoreLocatorRow
 } from './styles'
 
 const toggleComponent = (component1, component2) => ifElse(
@@ -488,7 +489,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
           <Grid padded>
             <Grid.Row className='padding__bottom--none'>
               <Grid.Column>
-                <SectionTitle title={intl.formatMessage(messages.orderSummary)} />
+                <SectionTitle colorGrey title={intl.formatMessage(messages.orderSummary)} />
               </Grid.Column>
             </Grid.Row>
           </Grid>
@@ -558,7 +559,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                     </BlockWrapper>
                   </PlainCard>
                 </Grid.Row>
-                <Grid.Row className='margin__bottom-positive--20'>
+                <StoreLocatorRow className='margin__bottom-positive--20' visibility={storeLocatorVisibility}>
                   <PlainCard borderRadius alignLeft>
                     <BlockWrapper>
                       <div>
@@ -591,7 +592,8 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                             <FormattedMessage {...messages.payAtAny} />
                           </Label>
                         </CashPrepaidInfo>
-                        <Label as='p' className='margin__none text__weight--400 margin__top-positive--20' size='large'>
+                        {/*
+                          <Label as='p' className='margin__none text__weight--400 margin__top-positive--20' size='large'>
                           <FormattedMessage
                             {...messages.cantFindStore}
                             values={{storeLocator: (
@@ -603,6 +605,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                             )}}
                           />
                         </Label>
+                        */}
                       </div>
                     </BlockWrapper>
                   </PlainCard>
@@ -614,7 +617,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                       </Button>
                     </ButtonContainer>
                   </BottomWrapper>
-                </Grid.Row>
+                </StoreLocatorRow>
               </Grid.Column>
               {/* ----------------------------------- */}
               <Grid.Column width={5}>

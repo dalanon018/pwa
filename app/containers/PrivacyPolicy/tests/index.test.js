@@ -16,7 +16,10 @@ describe('<PrivacyPolicy />', () => {
     getMarkDown: () => {},
     setRouteName: () => {},
     dispatch: () => {},
-    loading: false
+    loading: false,
+    intl: {
+      formatMessage: () => {}
+    }
   }
   it('render without exploding', () => {
     const renderComponent = wrapper(minProps)

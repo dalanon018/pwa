@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import {
-  Grid
+  Grid,
+  List
 } from 'semantic-ui-react'
 
 const Wrapper = styled.footer`
@@ -133,6 +134,35 @@ const FooterSocialMediaWrapper = styled.div`
   // align-self: flex-end;
 `
 
+const IconItem = styled.div`
+  &.fb-icon {
+    background: url(${props => props.icon})no-repeat 2px 0 / cover;
+    height: 44px;
+    width: 53px;
+  }
+
+  &.ig-icon {
+    background: url(${props => props.icon})no-repeat -69px 0 / cover;
+    height: 44px;
+    margin-left: 5px;
+    width: 52px;
+
+    @media (min-width: 375px) {
+      margin-left: 0;
+    }
+  }
+
+  &.mail-icon {
+    background: url(${props => props.icon})no-repeat -139px 0 / cover;
+    height: 44px;
+    width: 51px;
+  }
+`
+
+const CustomItem = styled(List.Item)`
+  margin: 0 15px !important;
+`
+
 export {
   AppInfo,
   CopyRight,
@@ -142,5 +172,7 @@ export {
   FooterColumnWrapper,
   FooterColumnTitle,
   FooterColumnAdjusterFlex,
-  FooterSocialMediaWrapper
+  FooterSocialMediaWrapper,
+  IconItem,
+  CustomItem
 }

@@ -11,7 +11,7 @@ import Waypoint from 'react-waypoint'
 
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { push } from 'react-router-redux'
 import { noop } from 'lodash'
@@ -35,11 +35,12 @@ import { paramsImgix } from 'utils/image-stock'
 
 import MobileProductView from 'components/Mobile/ProductView'
 import DesktopProductView from 'components/Desktop/ProductView'
+import SectionTitle from 'components/Shared/SectionTitle'
 
 import MobileFooter from 'components/Mobile/Footer'
 
 import MobileBannerSlider from 'components/Mobile/BannerSlider'
-import SharedBannerSlider from 'components/Shared/BannerSlider'
+import DesktopBannerSlider from 'components/Desktop/BannerSlider'
 
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 import WindowWidth from 'components/Shared/WindowWidth'
@@ -256,14 +257,25 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
     )
   }
 
-  _displayFeaturedItems = () => { // TODO: For refactor
-    const { changeRoute, productsLoading, lazyload, windowWidth, productsCount, productsFeatured } = this.props
+  _displayFeaturedItems = () => { // TODO: For refactor, disabled
+    const { changeRoute, productsLoading, lazyload, windowWidth, productsCount, productsFeatured, intl } = this.props
 
     return (
       <div>
-        <H3>
-          <FormattedMessage {...messages.feature} />
-        </H3>
+        <AccessView
+          mobileView={
+            <H3>
+              <FormattedMessage {...messages.feature} />
+            </H3>
+          }
+          desktopView={
+            <div className='padding__horizontal--15'>
+              <SectionTitle
+                title={intl.formatMessage(messages.feature)}
+                itemCount={productsFeatured.size} />
+            </div>
+          }
+        />
         <InfiniteLoading
           results={productsFeatured}
           hasMoreData={lazyload}
@@ -293,13 +305,26 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
   }
 
   _displayItems = () => {
-    const { allProducts, changeRoute, productsLoading, lazyload, windowWidth, productsCount } = this.props
+    const { allProducts, changeRoute, productsLoading, lazyload, windowWidth, productsCount, intl, promo } = this.props
 
     return (
       <div className='margin__top-positive--30'>
-        <H3>
-          <FormattedMessage {...messages.promoProductsTitle} />
-        </H3>
+        <AccessView
+          mobileView={
+            <H3>
+              <FormattedMessage {...messages.promoProductsTitle} />
+            </H3>
+          }
+          desktopView={
+            <div className='padding__horizontal--15'>
+              <SectionTitle
+                promo={promo}
+                promosLoading={productsLoading}
+                title={intl.formatMessage(messages.promoProductsTitle)}
+                itemCount={allProducts.size} />
+            </div>
+          }
+        />
         <InfiniteLoading
           results={allProducts}
           hasMoreData={lazyload}
@@ -416,12 +441,14 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
           <AccessView
             mobileView={null}
             desktopView={
-              <SharedBannerSlider
-                isInfinite
-                autoplay={animateBanner}
-                loader={productsLoading}
-                images={promoImages}
-            />
+              <div className='padding__horizontal--10'>
+                <DesktopBannerSlider
+                  isInfinite
+                  autoplay={animateBanner}
+                  loader={productsLoading}
+                  images={promoImages}
+                />
+              </div>
             }
           />
           <div>
@@ -429,7 +456,6 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
               hasMoreData={lazyload}
               isLoading={productsLoading}
             >
-              { this._displayHeaderProduct() }
               { this._displayEmptyLoadingIndicator() }
               { this._displayItems() }
             </InfiniteWrapper>
@@ -476,4 +502,4 @@ export default ReduxCompose(
   withReducer,
   withSaga,
   withConnect
-)(WindowWidth(PromoProductsPage))
+)(WindowWidth(injectIntl(PromoProductsPage)))

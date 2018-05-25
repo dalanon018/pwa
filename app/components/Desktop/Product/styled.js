@@ -46,7 +46,10 @@ export const ProductWrapper = styled(AnimateDiv)`
   }
 `
 export const ProductImageSlider = styled.div`
-
+  .slick-slider {
+    z-index: 1;
+  }
+  
   img {
     width: 60%;
   }

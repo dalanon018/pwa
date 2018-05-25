@@ -49,6 +49,7 @@ import DesktopFlashDeals from 'components/Desktop/FlashDeals'
 import BrandCarousel from 'components/Mobile/BrandCarousel'
 import FlashDealBanner from 'components/Shared/FlashDealBanner'
 import FeaturedBrands from 'components/Desktop/FeaturedBrands'
+import PointsBannerAds from 'components/Desktop/PointsBannerAds'
 
 import WindowWidth from 'components/Shared/WindowWidth'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
@@ -363,6 +364,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
     const mobileBannerImages = range(1, 10).map(i => paramsImgix(`https://cliqqshop.imgix.net/PWA/banners/E3-banner${i}.jpg`, imgixOptions))
     const desktopBannerImages = range(1, 10).map(i => paramsImgix(`https://cliqqshop.imgix.net/PWA/banners/E3-banner${i}.jpg`, imgixOptions))
+    const firstPromoCode = promos.first() && promos.first().get('promoCode')
 
     return (
       <div>
@@ -460,11 +462,14 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             }
           />
 
-          <SectionTitle
-            dataCy='feature-brands'
-            title={intl.formatMessage(messages.browseBrands)}
-            linkLabel={intl.formatMessage(messages.moreBrands)}
-            link='/brands/' />
+          <div className={`${windowWidth >= 1024 && 'padding__horizontal--10 margin__top-positive--30'}`}>
+            <SectionTitle
+              colorGrey
+              dataCy='feature-brands'
+              title={intl.formatMessage(messages.browseBrands)}
+              linkLabel={intl.formatMessage(messages.moreBrands)}
+              link='/brands/' />
+          </div>
 
           {/*
             <BrandSlider
@@ -500,12 +505,15 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         />
 
         <Container>
-          <div className='margin__bottom-positive--5 margin__top-positive--10'>
+          <div className={`${windowWidth >= 1024 && 'margin__top-positive--10 padding__horizontal--10'}`}>
             <SectionTitle
+              colorGrey
+              noMarginBottom
               promo={promos.first()}
+              linkLabel='See All'
               promosLoading={promosLoading}
               title={intl.formatMessage(messages.flashDeals)}
-              link={`/flash-deals`} />
+              link={windowWidth >= 1024 ? 'promos/' + firstPromoCode : '/flash-deals'} />
           </div>
         </Container>
 
@@ -550,13 +558,16 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
         <AccessView
           mobileView={<PointAds changeRoute={changeRoute} />}
-          desktopView={null}
+          desktopView={<PointsBannerAds changeRoute={changeRoute} />}
         />
 
         <Container>
-          <SectionTitle
-            title={intl.formatMessage(messages.featureProduct)}
-            link='/products-featured' />
+          <div className={`${windowWidth >= 1024 && 'padding__horizontal--10 margin__top-positive--20'}`}>
+            <SectionTitle
+              colorGrey
+              title={intl.formatMessage(messages.featureProduct)}
+              link='/products-featured' />
+          </div>
 
           <InfiniteWrapper
             hasMoreData={lazyload}

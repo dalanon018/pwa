@@ -169,28 +169,28 @@ const BoxWrapper = styled.div`
   position: relative;
   width: 100%;
 
-  &:before {
-    background: url(${BoxBorder}) no-repeat;
-    bottom: 0;
-    content: '';
-    height: 90%;
-    left: -60px;
-    position: absolute;
-    width: 96px;
-    z-index: -1;
-  }
+  // &:before {
+  //   background: url(${BoxBorder}) no-repeat;
+  //   bottom: 0;
+  //   content: '';
+  //   height: 90%;
+  //   left: -60px;
+  //   position: absolute;
+  //   width: 96px;
+  //   z-index: -1;
+  // }
 
-  &:after {
-    background: url(${BoxBorder}) no-repeat;
-    top: 0;
-    content: '';
-    height: 90%;
-    right: -60px;
-    position: absolute;
-    width: 96px;
-    transform: scale(-1, -1);
-    z-index: -1;
-  }
+  // &:after {
+  //   background: url(${BoxBorder}) no-repeat;
+  //   top: 0;
+  //   content: '';
+  //   height: 90%;
+  //   right: -60px;
+  //   position: absolute;
+  //   width: 96px;
+  //   transform: scale(-1, -1);
+  //   z-index: -1;
+  // }
 `
 
 const ImageLogo = styled.img`
