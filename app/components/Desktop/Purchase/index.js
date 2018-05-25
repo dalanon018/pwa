@@ -87,7 +87,12 @@ const ImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   min-width: 115px;
-  width: 115px;
+  // width: 115px;
+
+  img {
+    border-radius: 5px 5px 0 0;
+    width: 100%;
+  }
 `
 
 class Purchase extends React.PureComponent {
@@ -259,7 +264,7 @@ class Purchase extends React.PureComponent {
                 </PurchaseInfo>
 
                 <PlainCard width={165}>
-                  <div>
+                  <div className='width__full'>
                     <ImageWrapper>
                       <Image
                         src={(receipt.getIn(['products', 'image']) &&
