@@ -25,7 +25,7 @@ export const Wrapper = styled.div`
   justify-content: space-between;
 
   @media (min-width: 1024px) {
-    margin-bottom: 20px;
+    ${props => !props.noMarginBottom && 'margin-bottom: 20px;'}
   }
 `
 
@@ -83,8 +83,8 @@ export class SectionTitle extends React.PureComponent {
 
     if (linkLabel) {
       block = <Label data-cy='on-click' basic size={this._handleCustomTextSize()} className='color__primary text__weight--400 padding__none' onClick={this._handleGoTo}>
-        <LinkWrapper>
-          <span>{linkLabel || 'See All'}</span>
+        <LinkWrapper className='cursor__pointer'>
+          <span>{linkLabel}</span>
           <Image src={ArrowIcon} alt='CLiQQ' />
         </LinkWrapper>
       </Label>
@@ -120,13 +120,14 @@ export class SectionTitle extends React.PureComponent {
       title,
       dataCy,
       promosLoading,
-      promo
+      promo,
+      noMarginBottom
     } = this.props
     const { isDesktop } = this.state
 
     return (
       <Container className={`${isDesktop ? 'padding__none' : 'padding__none--vertical'} height__inherit`} data-cy={dataCy} >
-        <Wrapper>
+        <Wrapper noMarginBottom={noMarginBottom}>
           <TitleContainer>
             <div className='title'>
               <Label basic size={this._handleTitleSize()} className='color__grey text__weight--500 padding__none'>{title}</Label>
