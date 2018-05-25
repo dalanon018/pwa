@@ -13,7 +13,7 @@ import { Switch, Route } from 'react-router-dom'
 
 import Buckets from 'containers/Buckets/Loadable'
 import LoginPage from 'containers/LoginPage/Loadable'
-import UserAgentRouter from 'components/Shared/UserAgentRouter'
+// import UserAgentRouter from 'components/Shared/UserAgentRouter'
 
 const AppWrapper = styled.div`
   display: block;
@@ -26,7 +26,7 @@ const BodyWrapper = styled.div`
   display: flex;
   height: 100%;
   flex-direction: column;
-  
+
   @media (min-width: 767px) {
     max-width: inherit;
   }
@@ -52,4 +52,4 @@ function App () {
   )
 }
 
-export default UserAgentRouter(App)
+export default App
