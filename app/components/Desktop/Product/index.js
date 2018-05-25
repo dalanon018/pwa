@@ -198,7 +198,8 @@ const Product = ({
                 </AffixWrapper>
               </LeftColumnWrapper>
             </Grid.Column>
-            <CustomGrid className={hover && 'active'}>
+            <CustomGrid>
+              {/* className={hover && 'active'} */}
               <DetailsWrapper id='right-column-preview'>
                 <LoadingStateInfo>
                   {

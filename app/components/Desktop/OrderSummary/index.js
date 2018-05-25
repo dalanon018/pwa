@@ -592,7 +592,8 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                             <FormattedMessage {...messages.payAtAny} />
                           </Label>
                         </CashPrepaidInfo>
-                        <Label as='p' className='margin__none text__weight--400 margin__top-positive--20' size='large'>
+                        {/*
+                          <Label as='p' className='margin__none text__weight--400 margin__top-positive--20' size='large'>
                           <FormattedMessage
                             {...messages.cantFindStore}
                             values={{storeLocator: (
@@ -604,6 +605,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                             )}}
                           />
                         </Label>
+                        */}
                       </div>
                     </BlockWrapper>
                   </PlainCard>

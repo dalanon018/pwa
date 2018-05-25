@@ -65,7 +65,7 @@ const SelectMethodWrapper = styled.div`
     padding: 18px 15px;
     position: relative;
     // width: 100%;
-    min-width: 335px;
+    min-width: 351px;
 
     &.checked {
       border: 1px solid #FF4813;
