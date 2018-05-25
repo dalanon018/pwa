@@ -258,6 +258,10 @@ const PointsPlusCash = styled.div`
   display: flex;
 `
 
+const StoreLocatorRow = styled.div`
+  display: ${props => props.visibility ? 'block' : 'none'};
+`
+
 export {
   MethodTitle,
   BottomWrapper,
@@ -277,5 +281,6 @@ export {
   FullPointsWrapper,
   InfoBlock,
   CashPrepaidInfo,
-  PointsPlusCash
+  PointsPlusCash,
+  StoreLocatorRow
 }

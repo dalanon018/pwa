@@ -56,6 +56,7 @@ export default defineMessages({
   },
   pointsInfo: {
     id: 'app.containers.WalletSection.pointsInfo',
-    defaultMessage: 'Check all the points you have used and earned here. How do I earn points?'
+    defaultMessage: 'Check all the points you have used and earned here.'
+    // How do I earn points?
   }
 })

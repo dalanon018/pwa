@@ -47,7 +47,7 @@ export const LeftWrapper = styled.div`
 export const ArrowUp = styled.div`
   border-color: transparent transparent #229D90 transparent;
   border-style: solid;
-  border-width: 0 10px 12px 10px;
+  border-width: 0 8px 10px 8px;
   height: 0;
   margin-right: 30px;
   width: 0;
@@ -56,7 +56,7 @@ export const ArrowUp = styled.div`
 export const ArrowDown = styled.div`
   border-color: #FF4813 transparent transparent transparent;
   border-style: solid;
-  border-width: 12px 10px 0 10px;
+  border-width: 10px 8px 0 8px;
   height: 0;
   margin-right: 30px;
   width: 0;
