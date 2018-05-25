@@ -71,6 +71,17 @@ export const HIDE_BACK_BUTTON = [
   '/wallet'
 ]
 
+export const HIDE_HEADER_POINTS_ELEMENT = [
+  '/brands',
+  '/purchases',
+  '/wallet',
+  '/product/:id'
+]
+
+export const HIDE_HEADER_MOBILE_ELEMENT = [
+  '/review'
+]
+
 export const PAYMENTS_OPTIONS = {
   COD: 'COD',
   CASH: 'CASH',

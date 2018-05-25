@@ -121,9 +121,16 @@ export class FlashDealsLanding extends React.PureComponent { // eslint-disable-l
             }
           </Grid>
         </Container>
-        <div className='margin__bottom-positive--20'>
-          <OrderTip />
-        </div>
+
+        <AccessView
+          mobileView={
+            <div className='margin__bottom-positive--20'>
+              <OrderTip />
+            </div>
+          }
+          desktopView={null}
+        />
+
         <AccessView
           mobileView={<MobileFooter />}
           desktopView={null}

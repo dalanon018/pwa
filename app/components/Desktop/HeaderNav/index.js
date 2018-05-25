@@ -252,6 +252,7 @@ const CurrentPointsContainer = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
+  ${props => props.hidden && 'visibility: hidden;'}
 
   img {
     margin: 0 5px 0 10px;
@@ -425,9 +426,9 @@ class HeaderNav extends PureComponent {
   }
 
   _toggleDisplayCurrentPoints = () => {
-    const { isSignIn, currentPoints, changeRoute } = this.props
+    const { isSignIn, currentPoints, changeRoute, hideHeaderPoints } = this.props
     return toggleComponent(
-      <CurrentPointsContainer>
+      <CurrentPointsContainer hidden={hideHeaderPoints}>
         <div>
           <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
             <FormattedMessage {...messages.currentCliqqPointsLabel} />
@@ -561,7 +562,7 @@ class HeaderNav extends PureComponent {
   // }
 
   render () {
-    const { changeRoute, showActivityIcon, currentRoute, clearSearchNav, searchProductNav, hideBackButtonNav, _handleSearchInputValueNav, leftButtonActionNav } = this.props
+    const { changeRoute, showActivityIcon, currentRoute, clearSearchNav, searchProductNav, hideBackButtonNav, _handleSearchInputValueNav, leftButtonActionNav, hideHeaderMobile } = this.props
 
     const homeRoute = currentRoute === 'home'
     const pathname = window.location.pathname.split('/')[1] === 'search'
@@ -613,7 +614,7 @@ class HeaderNav extends PureComponent {
                   <Grid.Column width={4} textAlign='right'>
                     <OptionsWrapper>
                       { ActivitiesToggle(showActivityIcon) }
-                      { this._handleShowLogoutButton() }
+                      { !hideHeaderMobile && this._handleShowLogoutButton() }
                     </OptionsWrapper>
                   </Grid.Column>
                 </Grid.Row>
