@@ -89,7 +89,7 @@ export class SectionTitle extends React.PureComponent {
         </LinkWrapper>
       </Label>
     } else if (itemCount) {
-      block = <Label basic size='medium' className='color__grey text__weight--500 padding__none'>
+      block = <Label basic size={this._handleCustomTextSize()} className='color__grey text__weight--500 padding__none'>
         <FormattedMessage values={{itemCount: itemCount}} {...messages.itemsFound} />
       </Label>
     }
@@ -121,7 +121,8 @@ export class SectionTitle extends React.PureComponent {
       dataCy,
       promosLoading,
       promo,
-      noMarginBottom
+      noMarginBottom,
+      colorGrey
     } = this.props
     const { isDesktop } = this.state
 
@@ -130,7 +131,7 @@ export class SectionTitle extends React.PureComponent {
         <Wrapper noMarginBottom={noMarginBottom}>
           <TitleContainer>
             <div className='title'>
-              <Label basic size={this._handleTitleSize()} className='color__grey text__weight--500 padding__none'>{title}</Label>
+              <Label basic size={this._handleTitleSize()} className={`${colorGrey && 'color__grey'} text__weight--500 padding__none`}>{title}</Label>
             </div>
             <div>
               {

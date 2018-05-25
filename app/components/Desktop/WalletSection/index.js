@@ -132,7 +132,7 @@ class WalletSection extends React.PureComponent {
               </Grid.Row>
               <Grid.Row>
                 <div className='margin__top-positive--20'>
-                  <SectionTitle title={intl.formatMessage(messages.walletTransactionsTitle)} />
+                  <SectionTitle colorGrey title={intl.formatMessage(messages.walletTransactionsTitle)} />
                 </div>
                 <Label as='p' className='text__weight--400 margin__top-negative--10 margin__bottom--none' basic size='large' >
                   <FormattedMessage {...messages.pointsInfo} />

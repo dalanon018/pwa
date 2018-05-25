@@ -464,6 +464,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
           <div className={`${windowWidth >= 1024 && 'padding__horizontal--10 margin__top-positive--30'}`}>
             <SectionTitle
+              colorGrey
               dataCy='feature-brands'
               title={intl.formatMessage(messages.browseBrands)}
               linkLabel={intl.formatMessage(messages.moreBrands)}
@@ -506,6 +507,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         <Container>
           <div className={`${windowWidth >= 1024 && 'margin__top-positive--10 padding__horizontal--10'}`}>
             <SectionTitle
+              colorGrey
               noMarginBottom
               promo={promos.first()}
               linkLabel='See All'
@@ -562,6 +564,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         <Container>
           <div className={`${windowWidth >= 1024 && 'padding__horizontal--10 margin__top-positive--20'}`}>
             <SectionTitle
+              colorGrey
               title={intl.formatMessage(messages.featureProduct)}
               link='/products-featured' />
           </div>

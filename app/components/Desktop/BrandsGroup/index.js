@@ -123,7 +123,7 @@ function BrandsGroup ({
   return (
     <Container>
       <div className='padding__medium'>
-        <SectionTitle title={intl && intl.formatMessage(messages.header)} />
+        <SectionTitle colorGrey title={intl && intl.formatMessage(messages.header)} />
         {_handleNavAnchor()}
         {
           brands.size === 0

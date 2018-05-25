@@ -107,10 +107,6 @@ const MainNav = styled.div`
   padding: 87px 15px 0;
   position: relative;
   z-index: 2;
-
-  .label {
-    cursor: pointer;
-  }
 `
 
 const MenuWrapper = styled.div`
@@ -256,10 +252,6 @@ const CurrentPointsContainer = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
-
-  .label {
-    flex-grow: 1;
-  }
 
   img {
     margin: 0 5px 0 10px;
@@ -437,7 +429,7 @@ class HeaderNav extends PureComponent {
   }
 
   _toggleDisplayCurrentPoints = () => {
-    const { isSignIn, currentPoints } = this.props
+    const { isSignIn, currentPoints, changeRoute } = this.props
     return toggleComponent(
       <CurrentPointsContainer>
         <div>
@@ -448,7 +440,7 @@ class HeaderNav extends PureComponent {
         <div>
           <Image src={CliqqLogo} alt='CLiQQ' />
         </div>
-        <div>
+        <div className='cursor__pointer' onClick={() => changeRoute('/wallet')}>
           <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
             {currentPoints}
           </Label>
@@ -476,29 +468,29 @@ class HeaderNav extends PureComponent {
         <MenusContainer arrowToggle={categoryToggle}>
           <CategoryDrop onClick={_toggleCategoryDrop}>
             <Image src={CategoryDock} alt='CLiQQ' />
-            <Label as='p' className='margin__none text__weight--500 color__white category-menu' basic size='large'>
+            <Label as='p' className='margin__none text__weight--500 color__white category-menu cursor__pointer' basic size='large'>
               <FormattedMessage {...messages.categoriesMenu} />
             </Label>
           </CategoryDrop>
           <div>
             <List horizontal className='width__full list-wrapper'>
               <List.Item onClick={goToPage('flash-deals')}>
-                <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
+                <Label as='p' className='margin__none text__weight--500 color__white cursor__pointer' basic size='large'>
                   <FormattedMessage {...messages.flashDealsMenu} />
                 </Label>
               </List.Item>
               <List.Item onClick={goToPage('purchases')}>
-                <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
+                <Label as='p' className='margin__none text__weight--500 color__white cursor__pointer' basic size='large'>
                   <FormattedMessage {...messages.myActivitiesMenu} />
                 </Label>
               </List.Item>
               <List.Item onClick={goToPage('wallet')}>
-                <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
+                <Label as='p' className='margin__none text__weight--500 color__white cursor__pointer' basic size='large'>
                   <FormattedMessage {...messages.pointsBalanceMenu} />
                 </Label>
               </List.Item>
               <List.Item onClick={goToPage('brands')}>
-                <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
+                <Label as='p' className='margin__none text__weight--500 color__white cursor__pointer' basic size='large'>
                   <FormattedMessage {...messages.brandsMenu} />
                 </Label>
               </List.Item>

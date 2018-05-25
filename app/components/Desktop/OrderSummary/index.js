@@ -488,7 +488,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
           <Grid padded>
             <Grid.Row className='padding__bottom--none'>
               <Grid.Column>
-                <SectionTitle title={intl.formatMessage(messages.orderSummary)} />
+                <SectionTitle colorGrey title={intl.formatMessage(messages.orderSummary)} />
               </Grid.Column>
             </Grid.Row>
           </Grid>

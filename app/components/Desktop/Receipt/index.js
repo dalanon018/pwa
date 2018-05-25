@@ -376,7 +376,7 @@ class Receipt extends React.PureComponent {
             <Grid padded>
               <Grid.Row className='padding__bottom--none'>
                 <Grid.Column>
-                  <SectionTitle title={intl.formatMessage(messages.desktopTitle)} />
+                  <SectionTitle colorGrey title={intl.formatMessage(messages.desktopTitle)} />
                 </Grid.Column>
               </Grid.Row>
               <Grid.Row>
