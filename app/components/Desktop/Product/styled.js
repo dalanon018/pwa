@@ -49,7 +49,7 @@ export const ProductImageSlider = styled.div`
   .slick-slider {
     z-index: 1;
   }
-  
+
   img {
     width: 60%;
   }
@@ -92,6 +92,26 @@ export const ProductPriceWrapper = styled(AnimateDiv)`
     letter-spacing: -2px;
     text-decoration: line-through;
     margin-left: 10px;
+  }
+`
+
+export const FullPointsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+
+  img {
+    width: 32px !important;
+    height: 32px !important;
+    margin-right: 5px!important;
+  }
+
+  .product-price {
+    // font-size: 2.714286rem !important;
+    font-size: 30px !important;
+    letter-spacing: -2px;
+    padding: 0;
   }
 `
 

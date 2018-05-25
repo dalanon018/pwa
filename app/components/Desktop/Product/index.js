@@ -26,6 +26,7 @@ import CliQQPlainLogo from 'images/icons/cliqq.png'
 import { fbShare } from 'utils/fb-share'
 import { paramsImgix } from 'utils/image-stock'
 import { calculateEarnPoints } from 'utils/calculation'
+import { toggleOrigDiscountPrice, computeTotalPointsPrice } from 'utils/product'
 
 import ProductSlider from 'components/Desktop/BannerSlider'
 // import ListCollapse from 'components/Shared/ListCollapse'
@@ -44,6 +45,7 @@ import {
   ProductDetails,
   ProductMainContent,
   ProductPriceWrapper,
+  FullPointsWrapper,
   ProductWrapper,
   SocialContainer,
   ShareWrapper,
@@ -56,7 +58,7 @@ import {
   PointsInfo
 } from './styled'
 
-const showDiscountPrice = (component1, component2) => (condition) => ifElse(
+const toggleComponent = (component1, component2) => (condition) => ifElse(
   identity,
   () => component1,
   () => component2
@@ -74,6 +76,68 @@ const updateParamsImages = (images, opt = {}) => {
   }
 
   return images ? paramsImgix(images, options) : ''
+}
+
+const getHighestPointsEarn = (product) => {
+  const amount = product.get('discountPrice') || product.get('price')
+
+  return `${calculateEarnPoints({
+    multiplier: parseFloat(product.getIn(['points', 'multiplier'])),
+    percentage: parseFloat(product.getIn(['points', 'method', 'cash'])),
+    amount: parseFloat(amount)
+  })} CLiQQ Points`
+}
+
+const DisplayProductPointsPrice = ({ entity }) => {
+  return (
+    <FullPointsWrapper>
+      <Image src={CliQQPlainLogo} className='cliqq-plain-icon' alt='CLiQQ' />
+      <Label as='b' basic size='big' className='product-price color__primary text__weight--700'>
+        { computeTotalPointsPrice(entity) }
+      </Label>
+    </FullPointsWrapper>
+  )
+}
+
+const DisplayProductPrice = ({ entity }) => {
+  const toggleDiscount = toggleComponent(
+    <Label className='product-discount' as='span' basic size='huge' color='grey'>
+      <FormattedMessage {...messages.peso} />
+      { entity.get('price') &&
+        parseFloat(entity.get('price')).toLocaleString() }
+    </Label>,
+    null
+  )
+
+  return (
+    <ProductPriceWrapper>
+      <Label className='product-price' as='b' basic size='massive' color='orange'>
+        <FormattedMessage {...messages.peso} />
+        { toggleOrigDiscountPrice(entity) }
+      </Label>
+      { toggleDiscount(entity.get('discountPrice')) }
+    </ProductPriceWrapper>
+  )
+}
+
+export const ToggleFullPoints = ({ isFullPointsOnly, ...rest }) => {
+  return toggleComponent(
+    <DisplayProductPointsPrice {...rest} />,
+    <DisplayProductPrice {...rest} />
+  )(isFullPointsOnly)
+}
+
+export const ToggleEarnPoints = ({ entity, isFullPointsOnly }) => {
+  return toggleComponent(
+    <PointsInfo>
+      <Image src={CliQQPlainLogo} alt='CLiQQ' />
+      <Label as='span' basic size='medium' className='text__weight--400'>
+        <FormattedMessage
+          {...messages.earnPoints}
+          values={{points: <span className='color__primary'>{getHighestPointsEarn(entity)}</span>}} />
+      </Label>
+    </PointsInfo>
+  , null)(!isFullPointsOnly && !!entity.get('points'))
 }
 
 const Product = ({
@@ -101,7 +165,8 @@ const Product = ({
   onSizeChange,
   hover,
   offset,
-  isProductPage
+  isProductPage,
+  _isFullPointsOnly
 }) => {
   const FacebookIcon = generateShareIcon('facebook')
   const TwitterIcon = generateShareIcon('twitter')
@@ -111,15 +176,6 @@ const Product = ({
   const productSliders = product.get('sliders') ? product.get('sliders').toArray().map(updateParamsImages) : []
   // we need to add our main image to sliders
   const productImages = [updateParamsImages(product.get('image'))].concat(productSliders)
-
-  const toggleDiscount = showDiscountPrice(
-    <Label className='product-discount' as='span' basic size='huge' color='grey'>
-      <FormattedMessage {...messages.peso} />
-      { product.get('price') &&
-        parseFloat(product.get('price')).toLocaleString() }
-    </Label>,
-    null
-  )
 
   const _handleMailTo = () => {
     if (!isMobile) {
@@ -131,16 +187,6 @@ const Product = ({
 
   const fbShareAction = () => {
     return fbShare(product)
-  }
-
-  const getHighestPointsEarn = () => {
-    const amount = product.get('discountPrice') || product.get('price')
-
-    return `${calculateEarnPoints({
-      multiplier: parseFloat(product.getIn(['points', 'multiplier'])),
-      percentage: parseFloat(product.getIn(['points', 'method', 'cash'])),
-      amount: parseFloat(amount)
-    })} CLiQQ Points`
   }
 
   return (
@@ -208,13 +254,10 @@ const Product = ({
                     : null
                   }
                   <Label as='p' className='text__weight--500' basic size='huge'>{product.get('title')}</Label>
-                  <ProductPriceWrapper>
-                    <Label className='product-price' as='b' basic size='massive' color='orange'>
-                      <FormattedMessage {...messages.peso} />
-                      { origPrice(product) }
-                    </Label>
-                    { toggleDiscount(product.get('discountPrice')) }
-                  </ProductPriceWrapper>
+                  <ToggleFullPoints
+                    isFullPointsOnly={_isFullPointsOnly}
+                    entity={product}
+                  />
                 </LoadingStateInfo>
 
                 <div>
@@ -238,17 +281,10 @@ const Product = ({
                     </ButtonContainer>
                   </LoadingStateInfo>
 
-                  {
-                    product.get('points') &&
-                    <PointsInfo>
-                      <Image src={CliQQPlainLogo} alt='CLiQQ' />
-                      <Label as='span' basic size='large' className='text__weight--400'>
-                        <FormattedMessage
-                          {...messages.earnPoints}
-                          values={{points: <span className='color__primary'>{getHighestPointsEarn()}</span>}} />
-                      </Label>
-                    </PointsInfo>
-                  }
+                  <ToggleEarnPoints
+                    entity={product}
+                    isFullPointsOnly={_isFullPointsOnly}
+                  />
                 </ProductMainContent>
 
                 <ProductDetails>
