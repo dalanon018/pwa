@@ -257,7 +257,7 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
     )
   }
 
-  _displayFeaturedItems = () => { // TODO: For refactor
+  _displayFeaturedItems = () => { // TODO: For refactor, disabled
     const { changeRoute, productsLoading, lazyload, windowWidth, productsCount, productsFeatured, intl } = this.props
 
     return (
@@ -305,7 +305,7 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
   }
 
   _displayItems = () => {
-    const { allProducts, changeRoute, productsLoading, lazyload, windowWidth, productsCount, intl } = this.props
+    const { allProducts, changeRoute, productsLoading, lazyload, windowWidth, productsCount, intl, promo } = this.props
 
     return (
       <div className='margin__top-positive--30'>
@@ -318,6 +318,8 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
           desktopView={
             <div className='padding__horizontal--15'>
               <SectionTitle
+                promo={promo}
+                promosLoading={productsLoading}
                 title={intl.formatMessage(messages.promoProductsTitle)}
                 itemCount={allProducts.size} />
             </div>
