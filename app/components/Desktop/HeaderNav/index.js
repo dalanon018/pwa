@@ -249,10 +249,11 @@ const SubCategoryList = styled.div`
 `
 
 const CurrentPointsContainer = styled.div`
+  ${props => props.hidden && 'visibility: hidden;'}
   align-items: center;
   display: flex;
-  justify-content: center;
-  ${props => props.hidden && 'visibility: hidden;'}
+  justify-content: flex-end;
+  min-width: 220px;
 
   img {
     margin: 0 5px 0 10px;
@@ -443,7 +444,7 @@ class HeaderNav extends PureComponent {
           </Label>
         </div>
       </CurrentPointsContainer>,
-      null
+      <CurrentPointsContainer />
     )(isSignIn)
   }
 

@@ -30,6 +30,7 @@ import injectReducer from 'utils/injectReducer'
 import MobileRegistration from 'components/Mobile/Registration'
 import DesktopRegistration from 'components/Desktop/Registration'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
+import WindowWidth from 'components/Shared/WindowWidth'
 
 import { userIsNotAuthenticated } from 'containers/App/auth'
 import { setAuthenticatingAction } from 'containers/App/actions'
@@ -144,7 +145,15 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
   }
 
   _handleDisable = () => {
-    if (this.state.value.length === 10 && this.state.value.charAt(0) === '9') {
+    const isDesktop = () => {
+      if (this.props.windowWidth >= 1024) {
+        return this.state.check === true
+      }
+
+      return true
+    }
+
+    if (this.state.value.length === 10 && this.state.value.charAt(0) === '9' && isDesktop()) {
       // this.state.check === true ---removed
       this.setState({
         disabledButton: false
@@ -481,4 +490,4 @@ export default ReduxCompose(
   withReducer,
   withSaga,
   withConnect
-)(AuthLoader(userIsNotAuthenticated(LoginPage)))
+)(WindowWidth(AuthLoader(userIsNotAuthenticated(LoginPage))))
