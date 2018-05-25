@@ -10,7 +10,7 @@ import showdown from 'showdown'
 
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
-import { injectIntl, FormattedMessage } from 'react-intl'
+import { injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { Container, Grid } from 'semantic-ui-react'
 
@@ -20,7 +20,7 @@ import injectReducer from 'utils/injectReducer'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 import MobileFooter from 'components/Mobile/Footer'
 import OrderTip from 'components/Mobile/OrderTip'
-import H1 from 'components/Shared/H1'
+import SectionTitle from 'components/Shared/SectionTitle'
 
 import { LoadingStateInfo } from 'components/Shared/LoadingBlock'
 import {
@@ -56,7 +56,7 @@ export class FaqPage extends React.PureComponent { // eslint-disable-line react/
   }
 
   render () {
-    const { markdown, loader } = this.props
+    const { markdown, loader, intl } = this.props
     const converter = new showdown.Converter()
     const html = converter.makeHtml(markdown)
     // const filteredHtml = html.replace('{{< img src="../img/device_widget.png" alt="widget" >}}', `<img src='https://cliqq.imgix.net/000CE.png?w=175&h=175&fit=clamp'>`)
@@ -78,9 +78,7 @@ export class FaqPage extends React.PureComponent { // eslint-disable-line react/
                 <div className='padding__medium'>
                   <Grid padded>
                     <LoadingStateInfo loading={loader} count='4'>
-                      <H1 className='padding__top--25 padding__none--horizontal color__secondary'>
-                        <FormattedMessage {...messages.header} />
-                      </H1>
+                      <SectionTitle title={intl.formatMessage(messages.header)} />
                       <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
                     </LoadingStateInfo>
                   </Grid>
@@ -89,7 +87,11 @@ export class FaqPage extends React.PureComponent { // eslint-disable-line react/
             </div>
           }
         />
-        <OrderTip />
+        <AccessView
+          mobileView={<OrderTip />}
+          desktopView={null}
+        />
+
         <AccessView
           mobileView={<MobileFooter />}
           desktopView={null}

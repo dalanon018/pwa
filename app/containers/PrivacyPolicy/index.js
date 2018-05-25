@@ -10,7 +10,7 @@ import showdown from 'showdown'
 
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
-import { injectIntl, FormattedMessage } from 'react-intl'
+import { injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { Container, Grid } from 'semantic-ui-react'
 
@@ -19,8 +19,8 @@ import injectReducer from 'utils/injectReducer'
 
 import MobileFooter from 'components/Mobile/Footer'
 import OrderTip from 'components/Mobile/OrderTip'
-import H1 from 'components/Shared/H1'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
+import SectionTitle from 'components/Shared/SectionTitle'
 
 import { LoadingStateInfo } from 'components/Shared/LoadingBlock'
 import {
@@ -56,7 +56,7 @@ export class PrivacyPolicy extends React.PureComponent { // eslint-disable-line 
   }
 
   render () {
-    const { markdown, loader } = this.props
+    const { markdown, loader, intl } = this.props
     const converter = new showdown.Converter()
     const html = converter.makeHtml(markdown)
     return (
@@ -77,9 +77,7 @@ export class PrivacyPolicy extends React.PureComponent { // eslint-disable-line 
                 <div className='padding__medium'>
                   <Grid padded>
                     <LoadingStateInfo loading={loader} count='4'>
-                      <H1 className='padding__top--25 padding__none--horizontal color__secondary'>
-                        <FormattedMessage {...messages.header} />
-                      </H1>
+                      <SectionTitle title={intl.formatMessage(messages.header)} />
                       <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
                     </LoadingStateInfo>
                   </Grid>
@@ -88,7 +86,11 @@ export class PrivacyPolicy extends React.PureComponent { // eslint-disable-line 
             </div>
           }
         />
-        <OrderTip />
+        <AccessView
+          mobileView={<OrderTip />}
+          desktopView={null}
+        />
+
         <AccessView
           mobileView={<MobileFooter />}
           desktopView={null}

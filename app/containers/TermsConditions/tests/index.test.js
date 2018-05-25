@@ -16,7 +16,10 @@ describe('<TermsConditions />', () => {
     getMarkDown: () => {},
     setRouteName: () => {},
     dispatch: () => {},
-    loader: false
+    loader: false,
+    intl: {
+      formatMessage: () => {}
+    }
   }
   it('render without exploding', () => {
     const renderComponent = wrapper(minProps)
