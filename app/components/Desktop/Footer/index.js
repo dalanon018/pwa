@@ -14,13 +14,14 @@ import {
 
 import A from 'components/Shared/A'
 
-import FacebookIcon from 'images/icons/facebook-icon.svg'
-import TwitterIcon from 'images/icons/twitter-icon.svg'
-import EmailIcon from 'images/icons/email-icon.svg'
+// import FacebookIcon from 'images/icons/facebook-icon.svg'
+// import TwitterIcon from 'images/icons/twitter-icon.svg'
+// import EmailIcon from 'images/icons/email-icon.svg'
+
 import DeliveryIcon from 'images/icons/delivery-icon.svg'
 import ReturnIcon from 'images/icons/return-icon.svg'
-
 import FooterBackground from 'images/backgrounds/footer-background.svg'
+import SocialIconsSprite from 'images/icons/social-icons.svg'
 
 import {
   AppInfo,
@@ -31,7 +32,9 @@ import {
   FooterColumnWrapper,
   // FooterColumnTitle,
   FooterColumnAdjusterFlex,
-  FooterSocialMediaWrapper
+  FooterSocialMediaWrapper,
+  IconItem,
+  CustomItem
 } from './Wrapper'
 import messages from './messages'
 
@@ -157,6 +160,25 @@ export class Footer extends React.PureComponent {
                   </Label>
                   <SocialIcons>
                     <List horizontal>
+                      <CustomItem>
+                        <A rel='noopener' href='https://www.facebook.com/cliqqshop/' target='_blank'>
+                          <IconItem className='fb-icon' icon={SocialIconsSprite} />
+                        </A>
+                      </CustomItem>
+                      <CustomItem>
+                        <A rel='noopener' href='https://www.instagram.com/cliqqshop/' target='_blank'>
+                          <IconItem className='ig-icon' icon={SocialIconsSprite} />
+                        </A>
+                      </CustomItem>
+                      <CustomItem>
+                        <A href='mailto:cliqqshopinfo@7-eleven.com.ph'>
+                          <IconItem className='mail-icon' icon={SocialIconsSprite} />
+                        </A>
+                      </CustomItem>
+                    </List>
+
+                    {/*
+                      <List horizontal>
                       <List.Item>
                         <A rel='noopener' href='https://www.facebook.com/711philippines' target='_blank'>
                           <Image alt='CLiQQ' src={FacebookIcon} />
@@ -173,6 +195,7 @@ export class Footer extends React.PureComponent {
                         </A>
                       </List.Item>
                     </List>
+                    */}
                   </SocialIcons>
                 </FooterSocialMediaWrapper>
               </FooterColumnWrapper>

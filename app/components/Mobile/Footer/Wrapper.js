@@ -56,14 +56,14 @@ const IconItem = styled.div`
   &.fb-icon {
     background: url(${props => props.icon})no-repeat 2px 0 / cover;
     height: 44px;
-    width: 46px;
+    width: 53px;
   }
 
-  &.twitter-icon {
+  &.ig-icon {
     background: url(${props => props.icon})no-repeat -69px 0 / cover;
     height: 44px;
     margin-left: 5px;
-    width: 47px;
+    width: 52px;
 
     @media (min-width: 375px) {
       margin-left: 0;
@@ -73,7 +73,7 @@ const IconItem = styled.div`
   &.mail-icon {
     background: url(${props => props.icon})no-repeat -139px 0 / cover;
     height: 44px;
-    width: 50px;
+    width: 51px;
   }
 `
 

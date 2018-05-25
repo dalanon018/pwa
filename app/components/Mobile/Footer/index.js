@@ -51,17 +51,17 @@ export class Footer extends React.PureComponent {
             <SocialIcons>
               <List horizontal>
                 <CustomItem>
-                  <A rel='noopener' href='https://www.facebook.com/711philippines' target='_blank'>
+                  <A rel='noopener' href='https://www.facebook.com/cliqqshop/' target='_blank'>
                     <IconItem className='fb-icon' icon={SocialIconsSprite} />
                   </A>
                 </CustomItem>
                 <CustomItem>
-                  <A rel='noopener' href='https://twitter.com/711philippines?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor' target='_blank'>
-                    <IconItem className='twitter-icon' icon={SocialIconsSprite} />
+                  <A rel='noopener' href='https://www.instagram.com/cliqqshop/' target='_blank'>
+                    <IconItem className='ig-icon' icon={SocialIconsSprite} />
                   </A>
                 </CustomItem>
                 <CustomItem>
-                  <A href='mailto:cliqqsupport@7-eleven.com.ph'>
+                  <A href='mailto:cliqqshopinfo@7-eleven.com.ph'>
                     <IconItem className='mail-icon' icon={SocialIconsSprite} />
                   </A>
                 </CustomItem>
