@@ -37,5 +37,9 @@ export default defineMessages({
   currentCliqqPointsLabel: {
     id: 'app.components.HeaderNav.currentCliqqPointsLabel',
     defaultMessage: 'Current CLiQQ Points:'
+  },
+  signedIn: {
+    id: 'app.components.HeaderNav.signedIn',
+    defaultMessage: 'Signed in: '
   }
 })

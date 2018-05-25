@@ -300,27 +300,28 @@ class HeaderNav extends PureComponent {
     activeItem: null,
     windowHeightOffset: 0,
     subCategoryToggle: false,
-    logout: false,
     subCategory: [],
     categoryId: ''
   }
 
-  _handleShowLogoutButton = () => {
-    const { isSignIn, mobileNumbers } = this.props
+  _handleSignOut = () => {
+    const { signOut } = this.props
+    signOut()
+  }
 
-    const toggleLogout = () => {
-      this.setState(prevState => ({logout: !prevState.logout}))
-    }
+  _handleShowLogoutButton = () => {
+    const { isSignIn, mobileNumbers, _handleToggleLogout, showLogout } = this.props
 
     const toggleComponent = ifElse(
       identity,
       () => (
         <SignOutWrapper>
           <Label as='p' className='margin__none text__weight--500' basic size='large'>
-            Signed in: <span className='color__primary cursor__pointer' onClick={toggleLogout}>{mobileNumbers.toJS().pop()}</span>
+            <FormattedMessage {...messages.signedIn} />
+            <span className='color__primary cursor__pointer' onClick={() => _handleToggleLogout()}>{mobileNumbers.toJS().pop()}</span>
           </Label>
           {
-              this.state.logout &&
+            showLogout &&
               <LogoutWrapper className='box__shadow--primary cursor__pointer' onClick={this._handleSignOut}>
                 <div>
                   <Image alt='help' size='mini' src={Logout} />
@@ -336,11 +337,6 @@ class HeaderNav extends PureComponent {
     )
 
     return toggleComponent(isSignIn)
-  }
-
-  _handleSignOut = () => {
-    const { signOut } = this.props
-    signOut()
   }
 
   _handleBrandsMenu = () => {

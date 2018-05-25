@@ -189,7 +189,8 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
 
   state = {
     toggleSidebar: false,
-    categoryToggle: false
+    categoryToggle: false,
+    showLogout: false
   }
 
   _lastY
@@ -314,6 +315,20 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     return shouldHide(HIDE_BACK_BUTTON)
   }
 
+  _handleToggleLogout = () => {
+    this.setState(prevState => ({showLogout: !prevState.showLogout}))
+  }
+
+  _handleCloseLogout = () => this.setState({showLogout: false})
+
+  _handlePageClick = () => {
+    const { windowWidth } = this.props
+
+    if (windowWidth >= 1024) {
+      this._handleCloseLogout()
+    }
+  }
+
   _displayHeader = () => {
     const { pageTitle, showSearchIcon, showPointsIcon, showActivityIcon, changeRoute, location: { pathname }, routeName, searchProduct, setProductSearchList, intl, headerMenuFullScreen, productCategories, brands, loyaltyToken, currentPoints, removeLoyaltyToken, mobileNumbers } = this.props
     /**
@@ -351,6 +366,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
               signOut={removeLoyaltyToken}
               mobileNumbers={mobileNumbers}
               currentPoints={currentPoints}
+              showLogout={this.state.showLogout}
 
               clearSearchNav={setProductSearchList}
               searchProductNav={searchProduct}
@@ -359,6 +375,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
               leftButtonActionNav={this._handleLeftButtonAction}
               _toggleCategoryDrop={this._toggleCategoryDrop}
               categoryToggle={this.state.categoryToggle}
+              _handleToggleLogout={this._handleToggleLogout}
             />
           }
         />
@@ -401,9 +418,11 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
               signOut={removeLoyaltyToken}
               mobileNumbers={mobileNumbers}
               currentPoints={currentPoints}
+              showLogout={this.state.showLogout}
 
               _toggleCategoryDrop={this._toggleCategoryDrop}
               categoryToggle={this.state.categoryToggle}
+              _handleToggleLogout={this._handleToggleLogout}
             />
           }
         />
@@ -540,6 +559,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
         <BackgroundLay toggle={categoryToggle} onClick={this._toggleCategoryDrop} />
         { this._displayHeader() }
         <MainContent
+          onClick={this._handlePageClick}
           routeName={mobileFilterMargin}
           media={windowWidth}
           toggleSidebar={toggleSidebar} >
