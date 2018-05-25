@@ -489,6 +489,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
               _handleToBottom={this._handleToBottom}
               _stepWrapperRef={this._stepWrapperRef}
               _updateUsePoints={this._updateUsePoints}
+              _isFullPointsOnly={this._isFullPointsOnly()}
 
               errorMessage={errorMessage}
               isBlackListed={isBlackListed}
