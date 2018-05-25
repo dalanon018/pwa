@@ -26,7 +26,10 @@ describe('<PromoProductsPage />', () => {
     allProducts: fromJS([]),
     productsRegular: fromJS([]),
     productsFeatured: fromJS([]),
-    brands: fromJS([])
+    brands: fromJS([]),
+    intl: {
+      formatMessage: () => {}
+    }
   }
 
   it('should render a div', () => {
