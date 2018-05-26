@@ -212,7 +212,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
           <MobileProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
         }
         desktopView={
-          <DesktopProductView isFiveColumns changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
+          <DesktopProductView columns={5} changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} />
         }
       />
     )
@@ -338,7 +338,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
                 }
                 desktopView={
                   <div className='margin__bottom-positive--30'>
-                    <DesktopProductView isFiveColumns changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
+                    <DesktopProductView columns={5} changeRoute={changeRoute} loader={loader} products={productsFeatured} windowWidth={windowWidth} {...props} />
                   </div>
                 }
               />
@@ -399,7 +399,7 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
                 <MobileProductView changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} {...props} />
               }
               desktopView={
-                <DesktopProductView isFiveColumns changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} {...props} />
+                <DesktopProductView columns={5} changeRoute={changeRoute} loader={loader} products={productsByBrands} windowWidth={windowWidth} {...props} />
               }
             />
           )}
