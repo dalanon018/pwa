@@ -176,16 +176,19 @@ const DefaultState = () => {
 }
 
 class ProductView extends React.PureComponent {
+  static defaultProps = {
+    columns: 6
+  }
+
   static propTypes = {
     showElement: PropTypes.bool,
-    products: PropTypes.object.isRequired
+    products: PropTypes.object.isRequired,
+    scrollToAlignment: PropTypes.string
   }
 
   state = {
     showElement: true
   }
-
-  _COLUMN_COUNT = this.props.isFiveColumns ? 5 : 6
 
   _innerWindowScrollerRef = null
 
@@ -194,9 +197,8 @@ class ProductView extends React.PureComponent {
   }
 
   _productEntity = ({ index, isScrolling, key, style }) => {
-    const { products, isMinor, over18, changeRoute } = this.props
-    const columnCount = this._COLUMN_COUNT
-
+    const { products, isMinor, over18, changeRoute, columns } = this.props
+    const columnCount = columns
     const fromIndex = index * columnCount
     const toIndex = fromIndex + columnCount
     const render = range(fromIndex, toIndex).map((rangeIndex) =>
@@ -237,8 +239,8 @@ class ProductView extends React.PureComponent {
   }
 
   _loadingState = () => {
-    const { loader } = this.props
-    const columnCount = this._COLUMN_COUNT
+    const { loader, columns } = this.props
+    const columnCount = columns
     return (
       <Grid
         padded
@@ -263,8 +265,8 @@ class ProductView extends React.PureComponent {
   }
 
   _virtualizedElement = () => {
-    const { products, onRowsRendered, registerChild } = this.props
-    const columnCount = this._COLUMN_COUNT
+    const { products, onRowsRendered, registerChild, scrollToAlignment = 'start', columns } = this.props
+    const columnCount = columns
     const rowCount = Math.ceil(products.size / columnCount)
 
     return (
@@ -284,7 +286,7 @@ class ProductView extends React.PureComponent {
                     rowHeight={300}
                     rowCount={rowCount}
                     rowRenderer={this._productEntity}
-                    scrollToAlignment='center'
+                    scrollToAlignment={scrollToAlignment}
                     scrollTop={scrollTop}
                     overscanRowCount={4}
                 />
