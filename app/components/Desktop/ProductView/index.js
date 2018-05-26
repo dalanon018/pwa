@@ -6,13 +6,13 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import LazyLoad from 'react-lazyload'
+// import LazyLoad from 'react-lazyload'
 
 import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller'
 import List from 'react-virtualized/dist/commonjs/List'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 
-import { CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer'
+// import { CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer'
 import {
   allPass,
   both,
@@ -56,11 +56,11 @@ const imgixOptions = {
   lossless: 0
 }
 
-const cache = new CellMeasurerCache({
-  minHeight: 300,
-  fixedWidth: true,
-  fixedHeight: true
-})
+// const cache = new CellMeasurerCache({
+//   minHeight: 300,
+//   fixedWidth: true,
+//   fixedHeight: true
+// })
 
 const _toggleOrigDiscountPrice = (product) => {
   const showPrice = toggleOrigDiscountPrice(product)
@@ -143,17 +143,12 @@ const ProductEntityInfo = ({ entity, isMinor, over18, changeRoute }) => {
       {togglePromoTag()}
       <ImageWrapper>
         <ImageContent>
-          <LazyLoad
-            height={300}
-            offset={300}
-            placeholder={<LoadingIndicator />}
-        >
-            {
+
+          {
             !isMinor || over18
             ? <Image alt={entity.get('title')} src={(entity.get('image') && `${paramsImgix(entity.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
             : <Image alt='CLiQQ' src={imageStock('Brands-Default.jpg', imgixOptions)} className='empty-image' />
           }
-          </LazyLoad>
         </ImageContent>
       </ImageWrapper>
       <ProductInfo brandName={entity.get('brand')}>
@@ -181,16 +176,19 @@ const DefaultState = () => {
 }
 
 class ProductView extends React.PureComponent {
+  static defaultProps = {
+    columns: 6
+  }
+
   static propTypes = {
     showElement: PropTypes.bool,
-    products: PropTypes.object.isRequired
+    products: PropTypes.object.isRequired,
+    scrollToAlignment: PropTypes.string
   }
 
   state = {
     showElement: true
   }
-
-  _COLUMN_COUNT = this.props.isFiveColumns ? 5 : 6
 
   _innerWindowScrollerRef = null
 
@@ -199,9 +197,8 @@ class ProductView extends React.PureComponent {
   }
 
   _productEntity = ({ index, isScrolling, key, style }) => {
-    const { products, isMinor, over18, changeRoute } = this.props
-    const columnCount = this._COLUMN_COUNT
-
+    const { products, isMinor, over18, changeRoute, columns } = this.props
+    const columnCount = columns
     const fromIndex = index * columnCount
     const toIndex = fromIndex + columnCount
     const render = range(fromIndex, toIndex).map((rangeIndex) =>
@@ -242,8 +239,8 @@ class ProductView extends React.PureComponent {
   }
 
   _loadingState = () => {
-    const { loader } = this.props
-    const columnCount = this._COLUMN_COUNT
+    const { loader, columns } = this.props
+    const columnCount = columns
     return (
       <Grid
         padded
@@ -268,8 +265,8 @@ class ProductView extends React.PureComponent {
   }
 
   _virtualizedElement = () => {
-    const { products, onRowsRendered, registerChild } = this.props
-    const columnCount = this._COLUMN_COUNT
+    const { products, onRowsRendered, registerChild, scrollToAlignment = 'start', columns } = this.props
+    const columnCount = columns
     const rowCount = Math.ceil(products.size / columnCount)
 
     return (
@@ -286,12 +283,12 @@ class ProductView extends React.PureComponent {
                     onRowsRendered={onRowsRendered}
                     height={height}
                     width={width}
-                    rowHeight={cache.rowHeight}
+                    rowHeight={300}
                     rowCount={rowCount}
                     rowRenderer={this._productEntity}
-                    scrollToAlignment='start'
+                    scrollToAlignment={scrollToAlignment}
                     scrollTop={scrollTop}
-                    overscanRowCount={2}
+                    overscanRowCount={6}
                 />
                 </div>
               )
