@@ -288,7 +288,7 @@ class ProductView extends React.PureComponent {
                     rowRenderer={this._productEntity}
                     scrollToAlignment={scrollToAlignment}
                     scrollTop={scrollTop}
-                    overscanRowCount={4}
+                    overscanRowCount={6}
                 />
                 </div>
               )
