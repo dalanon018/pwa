@@ -6,7 +6,7 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import LazyLoad from 'react-lazyload'
+// import LazyLoad from 'react-lazyload'
 
 import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller'
 import List from 'react-virtualized/dist/commonjs/List'
@@ -143,17 +143,12 @@ const ProductEntityInfo = ({ entity, isMinor, over18, changeRoute }) => {
       {togglePromoTag()}
       <ImageWrapper>
         <ImageContent>
-          <LazyLoad
-            height={300}
-            offset={300}
-            placeholder={<LoadingIndicator />}
-        >
-            {
+
+          {
             !isMinor || over18
             ? <Image alt={entity.get('title')} src={(entity.get('image') && `${paramsImgix(entity.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
             : <Image alt='CLiQQ' src={imageStock('Brands-Default.jpg', imgixOptions)} className='empty-image' />
           }
-          </LazyLoad>
         </ImageContent>
       </ImageWrapper>
       <ProductInfo brandName={entity.get('brand')}>
@@ -291,7 +286,7 @@ class ProductView extends React.PureComponent {
                     rowRenderer={this._productEntity}
                     scrollToAlignment='center'
                     scrollTop={scrollTop}
-                    overscanRowCount={2}
+                    overscanRowCount={4}
                 />
                 </div>
               )
