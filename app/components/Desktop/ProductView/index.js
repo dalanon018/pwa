@@ -12,7 +12,7 @@ import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller'
 import List from 'react-virtualized/dist/commonjs/List'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 
-import { CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer'
+// import { CellMeasurerCache } from 'react-virtualized/dist/commonjs/CellMeasurer'
 import {
   allPass,
   both,
@@ -56,11 +56,11 @@ const imgixOptions = {
   lossless: 0
 }
 
-const cache = new CellMeasurerCache({
-  minHeight: 300,
-  fixedWidth: true,
-  fixedHeight: true
-})
+// const cache = new CellMeasurerCache({
+//   minHeight: 300,
+//   fixedWidth: true,
+//   fixedHeight: true
+// })
 
 const _toggleOrigDiscountPrice = (product) => {
   const showPrice = toggleOrigDiscountPrice(product)
@@ -286,10 +286,10 @@ class ProductView extends React.PureComponent {
                     onRowsRendered={onRowsRendered}
                     height={height}
                     width={width}
-                    rowHeight={cache.rowHeight}
+                    rowHeight={300}
                     rowCount={rowCount}
                     rowRenderer={this._productEntity}
-                    scrollToAlignment='start'
+                    scrollToAlignment='center'
                     scrollTop={scrollTop}
                     overscanRowCount={2}
                 />
