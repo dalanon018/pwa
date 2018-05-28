@@ -67,9 +67,9 @@ const BrandsContainer = styled.div`
 
 const requestRealtimeFilter = ({ fn, ...props }) => () => fn(props)
 
-const ListCategory = ({ category, onClick, queryCategory }) => {
+const ListCategory = ({ category, onClick, queryCategory, itemsLoading }) => {
   const isSelected = (queryCategory === category.get('id'))
-  const redirectPage = isSelected ? () => {} : onClick
+  const redirectPage = (isSelected || itemsLoading) ? () => {} : onClick
   return (
     <List.Item onClick={redirectPage}>
       <LabelSelected isSelected={isSelected} basic size='large' className='text__weight--400 padding__vertical--none cursor__pointer padding__horizontal--none'>
@@ -81,16 +81,25 @@ const ListCategory = ({ category, onClick, queryCategory }) => {
 
 ListCategory.propTypes = {
   category: PropTypes.object.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  itemsLoading: PropTypes.bool.isRequired
 }
 
 const brandCheckboxChange = ({
   id,
   queryBrands,
-  requestFromFilter
- }) => (e, { checked }) => {
+  requestFromFilter,
+  itemsLoading
+ }) => (evt, { checked }) => {
    const concatBrands = (id) => [...queryBrands, id]
    const removeBrands = (id) => without([id], queryBrands)
+
+   // it item is loading we should not allow them to check brands since its still loading and will mess up the data that should be updated.
+   if (itemsLoading) {
+     evt.preventDefault()
+     return
+   }
+
    const updateRemoveQueryBrands = ifElse(
       identity,
       partial(concatBrands, [id]),
@@ -108,14 +117,16 @@ const brandCheckboxChange = ({
 const ListBrand = ({
   brand,
   queryBrands,
-  requestFromFilter
+  requestFromFilter,
+  itemsLoading
 }) => {
   return (
     <List.Item>
       <Checkbox checked={(queryBrands.indexOf(brand.get('id')) > -1)} label={brand.get('name')} onChange={brandCheckboxChange({
         id: brand.get('id'),
         queryBrands,
-        requestFromFilter
+        requestFromFilter,
+        itemsLoading
       })} />
     </List.Item>
   )
@@ -124,10 +135,13 @@ const ListBrand = ({
 ListBrand.propTypes = {
   brand: PropTypes.object.isRequired,
   queryBrands: PropTypes.array,
-  requestFromFilter: PropTypes.func.isRequired
+  requestFromFilter: PropTypes.func.isRequired,
+  itemsLoading: PropTypes.bool.isRequired
 }
 
 function FilterSection ({
+  itemsLoading,
+
   queryCategory,
   queryBrands,
 
@@ -163,6 +177,7 @@ function FilterSection ({
                   })}
                   queryCategory={queryCategory}
                   category={category}
+                  itemsLoading={itemsLoading}
                 />
               )
             }) : ''
@@ -185,6 +200,7 @@ function FilterSection ({
                     queryBrands={queryBrands}
                     requestFromFilter={requestFromFilter}
                     brand={brand}
+                    itemsLoading={itemsLoading}
                   />
                 )
               }) : ''
@@ -197,10 +213,13 @@ function FilterSection ({
 }
 
 FilterSection.propTypes = {
+  itemsLoading: PropTypes.bool.isRequired,
   queryCategory: PropTypes.string,
   queryBrands: PropTypes.array,
   filterCategories: PropTypes.object.isRequired,
   filterCategoriesLoading: PropTypes.bool.isRequired,
+  filterBrands: PropTypes.object,
+  filterBrandsLoading: PropTypes.bool,
   requestFromFilter: PropTypes.func.isRequired
 }
 
