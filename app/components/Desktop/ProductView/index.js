@@ -184,6 +184,7 @@ class ProductView extends React.PureComponent {
   static propTypes = {
     showElement: PropTypes.bool,
     products: PropTypes.object.isRequired,
+    columns: PropTypes.number,
     scrollToAlignment: PropTypes.string
   }
 
