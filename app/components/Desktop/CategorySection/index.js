@@ -81,6 +81,8 @@ function CategorySection ({
             <Grid.Column width={3}>
               <div className='padding__top--20'>
                 <FilterSection
+                  itemsLoading={loader}
+
                   queryCategory={queryCategory}
                   queryBrands={queryBrands}
                   requestFromFilter={requestFromFilter}
