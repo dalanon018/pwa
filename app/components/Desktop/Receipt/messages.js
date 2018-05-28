@@ -86,6 +86,47 @@ export default defineMessages({
     id: 'app.components.Receipt.CODUNCLAIMED',
     defaultMessage: 'Follow us on Social Media for all the latest updates!'
   },
+  // POINTS
+  POINTS_CASHRESERVED: {
+    id: 'app.components.Receipt.POINTS_CASHRESERVED',
+    defaultMessage: 'Please wait for an SMS telling you that your order is in the store'
+  },
+  POINTS_CASHRESERVEDEXPIRED: {
+    id: 'app.components.Receipt.POINTS_CASHRESERVEDEXPIRED',
+    defaultMessage: 'Oops! You seem to be offline at the moment!'
+  },
+  POINTS_CASHUNPAID: {
+    id: 'app.components.Receipt.POINTS_CASHUNPAID',
+    defaultMessage: 'This item has expired. Would you like to repurchase it?'
+  },
+  POINTS_CASHPROCESSING: {
+    id: 'app.components.Receipt.POINTS_CASHPROCESSING',
+    defaultMessage: 'Please wait for an SMS telling you that your order is in the store'
+  },
+  POINTS_CASHCONFIRMED: {
+    id: 'app.components.Receipt.POINTS_CASHCONFIRMED',
+    defaultMessage: 'Please wait for an SMS telling you that your order is in the store'
+  },
+  POINTS_CASHINTRANSIT: {
+    id: 'app.components.Receipt.POINTS_CASHINTRANSIT',
+    defaultMessage: 'Please wait for an SMS telling you that your order is in the store'
+  },
+  POINTS_CASHLOSTINTRANSIT: {
+    id: 'app.components.Receipt.POINTS_CASHLOSTINTRANSIT',
+    defaultMessage: 'Follow us on Social Media for all the latest updates!'
+  },
+  POINTS_CASHDELIVERED: {
+    id: 'app.components.Receipt.POINTS_CASHDELIVERED',
+    defaultMessage: 'Please go to {storeName} and pay for your item at the cashier.'
+  },
+  POINTS_CASHCLAIMED: {
+    id: 'app.components.Receipt.POINTS_CASHCLAIMED',
+    defaultMessage: ' '
+  },
+  POINTS_CASHUNCLAIMED: {
+    id: 'app.components.Receipt.POINTS_CASHUNCLAIMED',
+    defaultMessage: 'Follow us on Social Media for all the latest updates!'
+  },
   unknownStatus: {
     id: 'app.components.Receipt.unknownStatus',
     defaultMessage: ' ' // this one needs atleast a character that is why we have space, else it will return warning
@@ -108,11 +149,18 @@ export default defineMessages({
     id: 'app.components.Receipt.receiptInfoMessagePaid',
     defaultMessage: 'Please wait for an SMS telling you that your order is in the store'
   },
+  // CASH
   receiptInfoMessageCASHDelivered: {
     id: 'app.components.Receipt.receiptInfoMessagePaid',
     defaultMessage: 'Your item is now ready for pick up at {storeName}'
   },
+  // COD
   receiptInfoMessageCODDelivered: {
+    id: 'app.components.Receipt.receiptInfoMessagePaid',
+    defaultMessage: 'Please go to {storeName} and pay for your item at the cashier.'
+  },
+  // POINTS
+  receiptInfoMessagePOINTS_CASHDelivered: {
     id: 'app.components.Receipt.receiptInfoMessagePaid',
     defaultMessage: 'Please go to {storeName} and pay for your item at the cashier.'
   },
@@ -168,13 +216,20 @@ export default defineMessages({
     id: 'app.components.Receipt.paymentMethod',
     defaultMessage: 'Method of Payment:'
   },
+  // CASH
   CASHmethodType: {
     id: 'app.components.Receipt.CASHmethodType',
     defaultMessage: 'Cash Prepaid'
   },
+  // COD
   CODmethodType: {
     id: 'app.components.Receipt.CODmethodType',
     defaultMessage: 'Cash on Delivery'
+  },
+  // POINTS
+  POINTS_CASHmethodType: {
+    id: 'app.components.Receipt.POINTS_CASHmethodType',
+    defaultMessage: 'Points and Cash'
   },
   statusLabel: {
     id: 'app.components.Receipt.statusLabel',
@@ -268,12 +323,60 @@ export default defineMessages({
     id: 'app.components.Receipt.dateCODUNCLAIMED',
     defaultMessage: 'Date Expired'
   },
+  // POINTS
+  datePOINTS_CASHRESERVED: {
+    id: 'app.components.Receipt.datePOINTS_CASHRESERVED',
+    defaultMessage: 'Date Ordered'
+  },
+  datePOINTS_CASHRESERVEDEXPIRED: {
+    id: 'app.components.Receipt.datePOINTS_CASHRESERVEDEXPIRED',
+    defaultMessage: 'Valid Until'
+  },
+  datePOINTS_CASHUNPAID: {
+    id: 'app.components.Receipt.datePOINTS_CASHUNPAID',
+    defaultMessage: 'Date Expired'
+  },
+  datePOINTS_CASHPROCESSING: {
+    id: 'app.components.Receipt.datePOINTS_CASHPROCESSING',
+    defaultMessage: 'Date Ordered'
+  },
+  datePOINTS_CASHCONFIRMED: {
+    id: 'app.components.Receipt.datePOINTS_CASHCONFIRMED',
+    defaultMessage: 'Date Ordered'
+  },
+  datePOINTS_CASHINTRANSIT: {
+    id: 'app.components.Receipt.datePOINTS_CASHINTRANSIT',
+    defaultMessage: 'Date In-transit'
+  },
+  datePOINTS_CASHLOSTINTRANSIT: {
+    id: 'app.components.Receipt.datePOINTS_CASHLOSTINTRANSIT',
+    defaultMessage: 'Date Unserved'
+  },
+  datePOINTS_CASHDELIVERED: {
+    id: 'app.components.Receipt.dateDELIVERED',
+    defaultMessage: 'Date Delivered'
+  },
+  datePOINTS_CASHCLAIMED: {
+    id: 'app.components.Receipt.datePOINTS_CASHCLAIMED',
+    defaultMessage: 'Date Claimed'
+  },
+  datePOINTS_CASHUNCLAIMED: {
+    id: 'app.components.Receipt.datePOINTS_CASHUNCLAIMED',
+    defaultMessage: 'Date Expired'
+  },
+  // CASH
   dateCASHFieldDefault: {
     id: 'app.components.Receipt.dateCASHFieldDefault',
     defaultMessage: 'Date'
   },
+  // COD
   dateCODFieldDefault: {
     id: 'app.components.Receipt.dateCODFieldDefault',
+    defaultMessage: 'Date'
+  },
+  // POINTS_CASH
+  datePOINTS_CASHFieldDefault: {
+    id: 'app.components.Receipt.datePOINTS_CASHFieldDefault',
     defaultMessage: 'Date'
   },
   pushNotifLabel: {
