@@ -7,6 +7,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 // import LazyLoad from 'react-lazyload'
+import Waypoint from 'react-waypoint'
 
 import WindowScroller from 'react-virtualized/dist/commonjs/WindowScroller'
 import List from 'react-virtualized/dist/commonjs/List'
@@ -177,18 +178,18 @@ const DefaultState = () => {
 
 class ProductView extends React.PureComponent {
   static defaultProps = {
-    columns: 6
+    columns: 6,
+    scrollToAlignment: 'start'
   }
 
   static propTypes = {
     showElement: PropTypes.bool,
     products: PropTypes.object.isRequired,
+    columns: PropTypes.number,
     scrollToAlignment: PropTypes.string
   }
 
-  state = {
-    showElement: true
-  }
+  updateWindowScroller = false
 
   _innerWindowScrollerRef = null
 
@@ -228,14 +229,16 @@ class ProductView extends React.PureComponent {
     )
   }
 
-  _handleShowList = (show) => () => {
-    this.setState({
-      showElement: show
-    }, () => {
+  handleUpdateWindowScrollerPosition = () => {
+    // means we haven't update the scroller
+    // this will cause incorrect showing of the items inside the windowScroller since the items on top changes.
+    // so we need to call it manually, after that we dont need to call this again.
+    if (this.updateWindowScroller === false) {
       if (this._innerWindowScrollerRef) {
         this._innerWindowScrollerRef.updatePosition()
+        this.updateWindowScroller = true
       }
-    })
+    }
   }
 
   _loadingState = () => {
@@ -265,7 +268,7 @@ class ProductView extends React.PureComponent {
   }
 
   _virtualizedElement = () => {
-    const { products, onRowsRendered, registerChild, scrollToAlignment = 'start', columns } = this.props
+    const { products, onRowsRendered, registerChild, scrollToAlignment, columns } = this.props
     const columnCount = columns
     const rowCount = Math.ceil(products.size / columnCount)
 
@@ -299,14 +302,6 @@ class ProductView extends React.PureComponent {
     )
   }
 
-  componentDidMount () {
-    // default to true
-    const { showElement = true } = this.props
-    this.setState({
-      showElement
-    })
-  }
-
   render () {
     const {
       virtualized = true,
@@ -329,9 +324,14 @@ class ProductView extends React.PureComponent {
     ])
 
     return (
-      <div>
-        { ProductRender(virtualized) }
-      </div>
+      <Waypoint
+        bottomOffset='-200px'
+        onEnter={this.handleUpdateWindowScrollerPosition}
+      >
+        <div>
+          { ProductRender(virtualized) }
+        </div>
+      </Waypoint>
     )
   }
 }
