@@ -609,15 +609,14 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                       </div>
                     </BlockWrapper>
                   </PlainCard>
-
-                  <BottomWrapper>
-                    <ButtonContainer>
-                      <Button onClick={_handleProceed} primary loading={orderRequesting}>
-                        <FormattedMessage {...messages.proceedNext} />
-                      </Button>
-                    </ButtonContainer>
-                  </BottomWrapper>
                 </StoreLocatorRow>
+                <BottomWrapper>
+                  <ButtonContainer>
+                    <Button onClick={_handleProceed} primary loading={orderRequesting}>
+                      <FormattedMessage {...messages.proceedNext} />
+                    </Button>
+                  </ButtonContainer>
+                </BottomWrapper>
               </Grid.Column>
               {/* ----------------------------------- */}
               <Grid.Column width={5}>
