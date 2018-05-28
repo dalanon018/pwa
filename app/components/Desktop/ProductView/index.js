@@ -177,7 +177,8 @@ const DefaultState = () => {
 
 class ProductView extends React.PureComponent {
   static defaultProps = {
-    columns: 6
+    columns: 6,
+    scrollToAlignment: 'start'
   }
 
   static propTypes = {
@@ -265,7 +266,7 @@ class ProductView extends React.PureComponent {
   }
 
   _virtualizedElement = () => {
-    const { products, onRowsRendered, registerChild, scrollToAlignment = 'start', columns } = this.props
+    const { products, onRowsRendered, registerChild, scrollToAlignment, columns } = this.props
     const columnCount = columns
     const rowCount = Math.ceil(products.size / columnCount)
 
