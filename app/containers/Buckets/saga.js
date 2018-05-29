@@ -71,7 +71,7 @@ import {
 } from 'containers/App/actions'
 
 import {
-  setPurchasesAction
+  setLocalPurchasesAction
 } from 'containers/Purchases/actions'
 
 import {
@@ -339,7 +339,7 @@ function * updateReceiptSnapShot (orders, receiptId) {
 
     // we have to update the purchase list
     const transform = yield orders.map((data) => transformEachEntity(transformOrder, data))
-    yield put(setPurchasesAction(transform))
+    yield put(setLocalPurchasesAction(transform))
 
     updatedReceipts = updatedReceipts.concat(receiptTransform)
   }

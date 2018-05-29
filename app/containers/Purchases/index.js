@@ -36,11 +36,13 @@ import EmptyPurchase from './EmptyPurchases'
 import EntityPurchases from './EntityPurchases'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 import SectionTitle from 'components/Shared/SectionTitle'
+import LoadingIndicator from 'components/Shared/LoadingIndicator'
 import reducer from './reducer'
 import saga from './saga'
 
 import {
-  selectLoader,
+  selectLocalLoader,
+  selectApiLoader,
   selectActivePurchases,
   selectCompletedPurchases,
   selectExpiredPurchases
@@ -58,7 +60,7 @@ const PurchaseWrapper = styled.div`
       }
     }
   }
-  
+
   @media (min-width: 1024px) {
     .ui.tabular{
       background-color: transparent;
@@ -66,13 +68,13 @@ const PurchaseWrapper = styled.div`
       padding: 0 10px 5px;
       border-bottom: 1px solid #E8E8E8;
       margin-bottom: 20px;
-  
+
       .item {
         cursor: pointer;
         font-weight: 400;
         margin-right: 40px;
         padding: 0 0 7px;
-  
+
         &:last-child {
           margin-right: 0;
         }
@@ -83,7 +85,8 @@ const PurchaseWrapper = styled.div`
 
 export class Purchases extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
-    loading: PropTypes.bool.isRequired,
+    localLoading: PropTypes.bool.isRequired,
+    apiLoading: PropTypes.bool.isRequired,
     activePurchases: PropTypes.oneOfType([
       PropTypes.array.isRequired,
       PropTypes.object.isRequired
@@ -126,9 +129,8 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
 
   _handleShow = (entity) => {
     const { activePane } = this.state
-    const { loading, changeRoute, windowWidth } = this.props
+    const { apiLoading, changeRoute, windowWidth } = this.props
     const stickyFooter = document.getElementsByTagName('footer')[0]
-
     if (stickyFooter) {
       if (entity.size === 0) {
         stickyFooter.classList.contains('sticky') &&
@@ -144,8 +146,12 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
       }
     }
 
-    if (loading === false && entity.size === 0) {
+    if (apiLoading === false && entity.size === 0) {
       return <EmptyPurchase active={activePane} />
+    } else {
+      if (apiLoading === true) {
+        return <LoadingIndicator />
+      }
     }
 
     return (
@@ -235,7 +241,8 @@ const mapStateToProps = createStructuredSelector({
   activePurchases: selectActivePurchases(),
   completedPurchases: selectCompletedPurchases(),
   expiredPurchases: selectExpiredPurchases(),
-  loading: selectLoader()
+  localLoading: selectLocalLoader(),
+  apiLoading: selectApiLoader()
 })
 
 function mapDispatchToProps (dispatch) {
