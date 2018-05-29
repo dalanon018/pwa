@@ -79,7 +79,7 @@ InfiniteWrapperProxy.propTypes = {
     PropTypes.func,
     PropTypes.array,
     PropTypes.object
-  ]).isRequired
+  ])
 }
 
 export default InfiniteWrapperProxy
