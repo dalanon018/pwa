@@ -376,7 +376,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
     const mobileBannerImages = range(1, 10).map(i => paramsImgix(`https://cliqqshop.imgix.net/PWA/banners/E3-banner${i}.jpg`, imgixOptions))
     const desktopBannerImages = range(1, 10).map(i => paramsImgix(`https://cliqqshop.imgix.net/PWA/banners/E3-banner${i}.jpg`, imgixOptions))
-    const firstPromoCode = promos.first() && promos.first().get('promoCode')
+    // const firstPromoCode = promos.first() && promos.first().get('promoCode')
 
     return (
       <div>
@@ -525,7 +525,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               linkLabel='See All'
               promosLoading={promosLoading}
               title={intl.formatMessage(messages.flashDeals)}
-              link={windowWidth >= 1024 ? 'promos/' + firstPromoCode : '/flash-deals'} />
+              // link={windowWidth >= 1024 ? 'promos/' + firstPromoCode : '/flash-deals'}
+              link={'/flash-deals'} />
           </div>
         </Container>
 
