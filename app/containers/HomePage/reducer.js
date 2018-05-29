@@ -9,6 +9,7 @@ import { isEmpty } from 'lodash'
 import {
   GET_FEATURED_PRODUCTS,
   SET_FEATURED_PRODUCTS,
+  CLEAR_FEATURED_PRODUCTS,
 
   SET_PRODUCTS_COUNT,
 
@@ -53,6 +54,11 @@ function homePageReducer (state = initialState, action) {
 
     case SET_PRODUCTS_COUNT:
       return state.set('totalCount', fromJS(action.payload))
+
+    case CLEAR_FEATURED_PRODUCTS:
+      return state.set('product', fromJS([]))
+      .set('totalCount', 0)
+      .set('loading', false)
 
     case GET_PROMOS:
       return state.set('promosLoading', true)

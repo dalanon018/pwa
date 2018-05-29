@@ -8,6 +8,7 @@ import {
   DEFAULT_ACTION,
   GET_FEATURED_PRODUCTS,
   SET_FEATURED_PRODUCTS,
+  CLEAR_FEATURED_PRODUCTS,
 
   SET_PRODUCTS_COUNT,
 
@@ -36,6 +37,12 @@ export function setFeaturedProductsAction (payload) {
   return {
     type: SET_FEATURED_PRODUCTS,
     payload
+  }
+}
+
+export function clearFeaturedProductsAction () {
+  return {
+    type: CLEAR_FEATURED_PRODUCTS
   }
 }
 

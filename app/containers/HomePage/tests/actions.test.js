@@ -2,6 +2,7 @@
 import {
   getFeaturedProductsAction,
   setFeaturedProductsAction,
+  clearFeaturedProductsAction,
   setProductsCountsAction,
 
   getPromosAction,
@@ -14,6 +15,7 @@ import {
 import {
   GET_FEATURED_PRODUCTS,
   SET_FEATURED_PRODUCTS,
+  CLEAR_FEATURED_PRODUCTS,
 
   SET_PRODUCTS_COUNT,
 
@@ -42,6 +44,13 @@ describe('HomePage actions', () => {
       payload
     }
     expect(setFeaturedProductsAction(payload)).toEqual(expected)
+  })
+
+  it('should call clearFeaturedProductsAction', () => {
+    const expected = {
+      type: CLEAR_FEATURED_PRODUCTS
+    }
+    expect(clearFeaturedProductsAction()).toEqual(expected)
   })
 
   it('should call setProductsCountsAction', () => {
