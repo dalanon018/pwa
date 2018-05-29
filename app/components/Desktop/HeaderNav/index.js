@@ -312,7 +312,12 @@ class HeaderNav extends PureComponent {
   }
 
   _handleShowLogoutButton = () => {
-    const { isSignIn, mobileNumbers, _handleToggleLogout, showLogout } = this.props
+    const { isSignIn, mobileNumbers, _handleToggleLogout, showLogout, _toggleCategoryHide } = this.props
+
+    const clickAction = () => {
+      _handleToggleLogout()
+      _toggleCategoryHide()
+    }
 
     const toggleComponent = ifElse(
       identity,
@@ -320,7 +325,7 @@ class HeaderNav extends PureComponent {
         <SignOutWrapper>
           <Label as='p' className='margin__none text__weight--500' basic size='large'>
             <FormattedMessage {...messages.signedIn} />
-            <span className='color__primary cursor__pointer' onClick={() => _handleToggleLogout()}>{mobileNumbers.toJS().pop()}</span>
+            <span className='color__primary cursor__pointer' onClick={clickAction}>{mobileNumbers.toJS().pop()}</span>
           </Label>
           {
             showLogout &&
@@ -339,6 +344,13 @@ class HeaderNav extends PureComponent {
     )
 
     return toggleComponent(isSignIn)
+  }
+
+  _handleGoToPage = (slug) => () => {
+    const { changeRoute, _toggleCategoryHide, _handleToggleLogout } = this.props
+    changeRoute(`/${slug}`)
+    _toggleCategoryHide()
+    _handleToggleLogout()
   }
 
   _handleBrandsMenu = () => {
@@ -449,16 +461,12 @@ class HeaderNav extends PureComponent {
   }
 
   _mainNavHeader = () => {
-    const { categories, changeRoute, categoryToggle, _toggleCategoryDrop } = this.props
+    const { categories, changeRoute, categoryToggle, _toggleCategoryDrop, _toggleCategoryHide } = this.props
     const { subCategoryToggle, subCategory } = this.state
 
     const gotToProduct = (id) => () => {
       changeRoute(`/products-category/${id}`)
-      _toggleCategoryDrop()
-    }
-
-    const goToPage = (slug) => () => {
-      changeRoute(`/${slug}`)
+      _toggleCategoryHide()
     }
 
     return (
@@ -472,22 +480,22 @@ class HeaderNav extends PureComponent {
           </CategoryDrop>
           <div>
             <List horizontal className='width__full list-wrapper'>
-              <List.Item onClick={goToPage('flash-deals')}>
+              <List.Item onClick={this._handleGoToPage('flash-deals')}>
                 <Label as='p' className='margin__none text__weight--500 color__white cursor__pointer' basic size='large'>
                   <FormattedMessage {...messages.flashDealsMenu} />
                 </Label>
               </List.Item>
-              <List.Item onClick={goToPage('purchases')}>
+              <List.Item onClick={this._handleGoToPage('purchases')}>
                 <Label as='p' className='margin__none text__weight--500 color__white cursor__pointer' basic size='large'>
                   <FormattedMessage {...messages.myActivitiesMenu} />
                 </Label>
               </List.Item>
-              <List.Item onClick={goToPage('wallet')}>
+              <List.Item onClick={this._handleGoToPage('wallet')}>
                 <Label as='p' className='margin__none text__weight--500 color__white cursor__pointer' basic size='large'>
                   <FormattedMessage {...messages.pointsBalanceMenu} />
                 </Label>
               </List.Item>
-              <List.Item onClick={goToPage('brands')}>
+              <List.Item onClick={this._handleGoToPage('brands')}>
                 <Label as='p' className='margin__none text__weight--500 color__white cursor__pointer' basic size='large'>
                   <FormattedMessage {...messages.brandsMenu} />
                 </Label>
@@ -563,14 +571,14 @@ class HeaderNav extends PureComponent {
   // }
 
   render () {
-    const { changeRoute, showActivityIcon, currentRoute, clearSearchNav, searchProductNav, hideBackButtonNav, _handleSearchInputValueNav, leftButtonActionNav, hideHeaderMobile } = this.props
+    const { showActivityIcon, currentRoute, clearSearchNav, searchProductNav, hideBackButtonNav, _handleSearchInputValueNav, leftButtonActionNav, hideHeaderMobile } = this.props
 
     const homeRoute = currentRoute === 'home'
     const pathname = window.location.pathname.split('/')[1] === 'search'
 
     const ActivitiesToggle = toggleComponent(
       <ActivitiesIcon marginLeft={homeRoute}>
-        <Image alt='Activities' src={BarcodeImage} size='mini' onClick={changeRoute.bind(this, '/purchases')} />
+        <Image alt='Activities' src={BarcodeImage} size='mini' onClick={this._handleGoToPage('purchases')} />
       </ActivitiesIcon>,
       null
     )
@@ -585,7 +593,7 @@ class HeaderNav extends PureComponent {
                 <Grid.Row columns={4} verticalAlign='middle'>
                   <Grid.Column width={4}>
                     <LogoWrapper>
-                      <Image alt='CLiQQ' src={MainLogo} onClick={changeRoute.bind(this, '/')} />
+                      <Image alt='CLiQQ' src={MainLogo} onClick={this._handleGoToPage('')} />
                     </LogoWrapper>
                   </Grid.Column>
                   <Grid.Column width={8}>
@@ -604,7 +612,7 @@ class HeaderNav extends PureComponent {
                           aria-label='search'
                           name='search'
                           fluid
-                          onClick={changeRoute.bind(this, '/search')}
+                          onClick={this._handleGoToPage('search')}
                           placeholder={this.props.intl.formatMessage(messages.searchPlaceHolder)}
                           icon='search'
                           className='search-textfield'
