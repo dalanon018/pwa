@@ -135,6 +135,16 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
     })
   }
 
+  _entityComponent = ({ entity, changeRoute, windowWidth }) => {
+    return (
+      <EntityPurchases
+        entity={entity}
+        changeRoute={changeRoute}
+        windowWidth={windowWidth}
+      />
+    )
+  }
+
   _handleShow = (entity) => {
     const { activePane } = this.state
     const { apiLoading, changeRoute, windowWidth } = this.props
@@ -156,17 +166,10 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
     }
 
     const isEntityEmpty = () => equals(0, entity.size)
-
     const componentWillLoad = cond([
       [both(equals(false), isEntityEmpty), () => <EmptyPurchase active={activePane} />],
       [identity, () => <LoadingIndicator />],
-      [T, () => (
-        <EntityPurchases
-          entity={entity}
-          changeRoute={changeRoute}
-          windowWidth={windowWidth}
-        />
-      )]
+      [T, () => this._entityComponent({ entity, changeRoute, windowWidth })]
     ])
 
     return componentWillLoad(apiLoading)
