@@ -263,6 +263,8 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
 
     this._handleCountOffset()
     this._handleStickyFooter()
+
+    window.scrollTo(0, 0)
   }
 
   componentWillUnmount () {
