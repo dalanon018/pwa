@@ -77,7 +77,7 @@ export class PrivacyPolicy extends React.PureComponent { // eslint-disable-line 
                 <div className='padding__medium'>
                   <Grid padded>
                     <LoadingStateInfo loading={loader} count='4'>
-                      <SectionTitle title={intl.formatMessage(messages.header)} />
+                      <SectionTitle title={intl.formatMessage(messages.header)} centered />
                       <div className='animation-fade color__secondary' dangerouslySetInnerHTML={{__html: html}} />
                     </LoadingStateInfo>
                   </Grid>
