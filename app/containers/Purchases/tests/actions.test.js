@@ -1,13 +1,15 @@
 
 import {
   getApiPurchasesAction,
-  setPurchasesAction,
+  setLocalPurchasesAction,
+  setApiPurchasesAction,
   getStoragePurchasesAction
 } from '../actions'
 import {
   GET_API_PURCHASES,
   GET_LOCAL_PURCHASES,
-  SET_PURCHASES
+  SET_LOCAL_PURCHASES,
+  SET_API_PURCHASES
 } from '../constants'
 
 describe('Purchases actions', () => {
@@ -33,15 +35,27 @@ describe('Purchases actions', () => {
     })
   })
 
-  describe('setPurchases', () => {
-    it('it should return purchases', () => {
+  describe('setLocalPurchasesAction', () => {
+    it('it should return purchases for local request', () => {
       const payload = ['order1', 'order2', 'order3']
       const expectedResult = {
-        type: SET_PURCHASES,
+        type: SET_LOCAL_PURCHASES,
         payload
       }
 
-      expect(setPurchasesAction(payload)).toEqual(expectedResult)
+      expect(setLocalPurchasesAction(payload)).toEqual(expectedResult)
+    })
+  })
+
+  describe('setApiPurchasesAction', () => {
+    it('it should return purchases for local request', () => {
+      const payload = ['order1', 'order2', 'order3']
+      const expectedResult = {
+        type: SET_API_PURCHASES,
+        payload
+      }
+
+      expect(setApiPurchasesAction(payload)).toEqual(expectedResult)
     })
   })
 })

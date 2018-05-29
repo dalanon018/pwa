@@ -3,7 +3,8 @@ import purchasesReducer from '../reducer'
 import { fromJS } from 'immutable'
 
 import {
-  setPurchasesAction
+  setLocalPurchasesAction,
+  setApiPurchasesAction
 } from '../actions'
 
 describe('Purchases Reducer', () => {
@@ -11,7 +12,8 @@ describe('Purchases Reducer', () => {
   beforeEach(() => {
     state = fromJS({
       purchases: [],
-      loading: false
+      apiRequestLoading: false,
+      localRequestLoading: false
     })
   })
 
@@ -20,11 +22,19 @@ describe('Purchases Reducer', () => {
     expect(purchasesReducer(undefined, {})).toEqual(expectedResult)
   })
 
-  it('should update barcodes', () => {
+  it('should update local purchases', () => {
     const payload = fromJS(['order1', 'order2', 'order3'])
 
     const expectedResult = state.set('purchases', payload)
 
-    expect(purchasesReducer(state, setPurchasesAction(payload))).toEqual(expectedResult)
+    expect(purchasesReducer(state, setLocalPurchasesAction(payload))).toEqual(expectedResult)
+  })
+
+  it('should update api  purchases', () => {
+    const payload = fromJS(['order1', 'order2', 'order3'])
+
+    const expectedResult = state.set('purchases', payload)
+
+    expect(purchasesReducer(state, setApiPurchasesAction(payload))).toEqual(expectedResult)
   })
 })
