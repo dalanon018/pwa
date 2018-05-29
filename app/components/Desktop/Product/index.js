@@ -32,6 +32,7 @@ import ProductSlider from 'components/Desktop/BannerSlider'
 // import ListCollapse from 'components/Shared/ListCollapse'
 import PromptModal from 'components/Shared/PromptModal'
 import LightBox from 'components/Shared/LightBox'
+import TimerWrapper from 'components/Desktop/TimerWrapper'
 
 import { LoadingStateInfo } from 'components/Shared/LoadingBlock'
 import AffixWrapper from 'components/Shared/Affix'
@@ -217,6 +218,11 @@ const Product = ({
                       </Label>
                     }
                   </ProductImageSlider>
+
+                  {
+                    product.get('promo') &&
+                    <TimerWrapper promo={product.get('promo')} centered />
+                  }
 
                   <SocialContainer>
                     <Label className='share-item text__weight--500' as='p' basic size='large'>
