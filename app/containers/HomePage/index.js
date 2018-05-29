@@ -235,6 +235,8 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         </InfiniteLoading>
       )
     }
+
+    return null
   }
 
   _handleDefaultCategoryIcon = (key) => {
