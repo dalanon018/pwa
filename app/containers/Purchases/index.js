@@ -137,7 +137,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
         stickyFooter.classList.contains('sticky') &&
         stickyFooter.classList.remove('sticky')
 
-        entity.size <= 2 &&
+        entity.size <= 1 &&
         stickyFooter.classList.add('sticky')
       } else {
         stickyFooter.classList.add('sticky')
