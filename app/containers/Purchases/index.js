@@ -9,6 +9,14 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
 
+import {
+  T,
+  both,
+  cond,
+  equals,
+  identity
+} from 'ramda'
+
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
@@ -131,6 +139,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
     const { activePane } = this.state
     const { apiLoading, changeRoute, windowWidth } = this.props
     const stickyFooter = document.getElementsByTagName('footer')[0]
+
     if (stickyFooter) {
       if (entity.size === 0) {
         stickyFooter.classList.contains('sticky') &&
@@ -146,21 +155,21 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
       }
     }
 
-    if (apiLoading === false && entity.size === 0) {
-      return <EmptyPurchase active={activePane} />
-    } else {
-      if (apiLoading === true) {
-        return <LoadingIndicator />
-      }
-    }
+    const isEntityEmpty = () => equals(0, entity.size)
 
-    return (
-      <EntityPurchases
-        entity={entity}
-        changeRoute={changeRoute}
-        windowWidth={windowWidth}
-      />
-    )
+    const componentWillLoad = cond([
+      [both(equals(false), isEntityEmpty), () => <EmptyPurchase active={activePane} />],
+      [identity, () => <LoadingIndicator />],
+      [T, () => (
+        <EntityPurchases
+          entity={entity}
+          changeRoute={changeRoute}
+          windowWidth={windowWidth}
+        />
+      )]
+    ])
+
+    return componentWillLoad(apiLoading)
   }
 
   componentWillMount () {
