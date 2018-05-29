@@ -134,7 +134,7 @@ export class Footer extends React.PureComponent {
                   <List>
                     <List.Item onClick={this._handleFaqRoute}>
                       <Label as='span' size='large' className='text__weight--400'>
-                        <FormattedMessage {...messages.returnPolicy} />
+                        <FormattedMessage {...messages.faq} />
                       </Label>
 
                     </List.Item>

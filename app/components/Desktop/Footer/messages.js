@@ -26,7 +26,7 @@ export default defineMessages({
   },
   faq: {
     id: `${idSuffix}.faq.message`,
-    defaultMessage: `Frequently Asked Questions`
+    defaultMessage: `FAQs`
   },
   termsConditions: {
     id: `${idSuffix}.termsConditions.message`,
