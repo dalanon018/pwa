@@ -18,9 +18,14 @@ const selectBarcodeListsDomain = () => (state) => state.get('purchases')
  * Default selector used by BarcodeLists
  */
 
-const selectLoader = () => createSelector(
+const selectLocalLoader = () => createSelector(
   selectBarcodeListsDomain(),
-  (substate) => substate.get('loading')
+  (substate) => substate.get('localRequestLoading')
+)
+
+const selectApiLoader = () => createSelector(
+  selectBarcodeListsDomain(),
+  (substate) => substate.get('apiRequestLoading')
 )
 
 const selectPurchases = () => createSelector(
@@ -54,7 +59,8 @@ const selectExpiredPurchases = () => createSelector(
 
 export {
   selectPurchases,
-  selectLoader,
+  selectLocalLoader,
+  selectApiLoader,
   selectActivePurchases,
   selectCompletedPurchases,
   selectExpiredPurchases

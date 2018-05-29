@@ -13,7 +13,8 @@ const wrapper = (props = {}, enzyme = shallow) => enzyme(
 
 describe('<Purchases />', () => {
   const minProps = {
-    loading: false,
+    localLoading: false,
+    apiLoading: false,
     purchases: fromJS([]),
     activePurchases: fromJS([]),
     completedPurchases: fromJS([]),

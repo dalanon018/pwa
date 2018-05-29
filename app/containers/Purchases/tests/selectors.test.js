@@ -1,7 +1,9 @@
 import { fromJS } from 'immutable'
 
 import {
-  selectPurchases
+  selectPurchases,
+  selectLocalLoader,
+  selectApiLoader
 } from '../selectors'
 
 describe('Purchases Selectors', () => {
@@ -16,6 +18,34 @@ describe('Purchases Selectors', () => {
         }
       })
       expect(selectPurchasesSelectors(mockedState)).toEqual(purchases)
+    })
+  })
+
+  describe('selectLocalLoader', () => {
+    const selectLocalLoaderSelectors = selectLocalLoader()
+
+    it('should get sector', () => {
+      const localRequestLoading = false
+      const mockedState = fromJS({
+        purchases: {
+          localRequestLoading
+        }
+      })
+      expect(selectLocalLoaderSelectors(mockedState)).toEqual(localRequestLoading)
+    })
+  })
+
+  describe('selectApiLoader', () => {
+    const selectApiLoaderSelectors = selectApiLoader()
+
+    it('should get sector', () => {
+      const apiRequestLoading = false
+      const mockedState = fromJS({
+        purchases: {
+          apiRequestLoading
+        }
+      })
+      expect(selectApiLoaderSelectors(mockedState)).toEqual(apiRequestLoading)
     })
   })
 })

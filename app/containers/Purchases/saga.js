@@ -32,7 +32,8 @@ import {
 } from './constants'
 
 import {
-  setPurchasesAction
+  setLocalPurchasesAction,
+  setApiPurchasesAction
 } from './actions'
 
 import {
@@ -145,7 +146,7 @@ export function * getApiPurchases () {
 
     const transform = yield allOrders.map(transformEachEntity)
 
-    yield put(setPurchasesAction(transform))
+    yield put(setApiPurchasesAction(transform))
   } else {
     yield put(setNetworkErrorAction(500))
   }
@@ -154,7 +155,7 @@ export function * getApiPurchases () {
 export function * getLocalPurchases () {
   const response = yield * getOrderList()
   const transform = yield response.map(transformEachEntity)
-  yield put(setPurchasesAction(transform))
+  yield put(setLocalPurchasesAction(transform))
 }
 
 export function * getApiPurchasesSaga () {

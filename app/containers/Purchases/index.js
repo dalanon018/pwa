@@ -9,6 +9,14 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
 
+import {
+  T,
+  both,
+  cond,
+  equals,
+  identity
+} from 'ramda'
+
 import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
@@ -36,11 +44,13 @@ import EmptyPurchase from './EmptyPurchases'
 import EntityPurchases from './EntityPurchases'
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 import SectionTitle from 'components/Shared/SectionTitle'
+import LoadingIndicator from 'components/Shared/LoadingIndicator'
 import reducer from './reducer'
 import saga from './saga'
 
 import {
-  selectLoader,
+  selectLocalLoader,
+  selectApiLoader,
   selectActivePurchases,
   selectCompletedPurchases,
   selectExpiredPurchases
@@ -58,7 +68,7 @@ const PurchaseWrapper = styled.div`
       }
     }
   }
-  
+
   @media (min-width: 1024px) {
     .ui.tabular{
       background-color: transparent;
@@ -66,13 +76,13 @@ const PurchaseWrapper = styled.div`
       padding: 0 10px 5px;
       border-bottom: 1px solid #E8E8E8;
       margin-bottom: 20px;
-  
+
       .item {
         cursor: pointer;
         font-weight: 400;
         margin-right: 40px;
         padding: 0 0 7px;
-  
+
         &:last-child {
           margin-right: 0;
         }
@@ -83,7 +93,8 @@ const PurchaseWrapper = styled.div`
 
 export class Purchases extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
-    loading: PropTypes.bool.isRequired,
+    localLoading: PropTypes.bool.isRequired,
+    apiLoading: PropTypes.bool.isRequired,
     activePurchases: PropTypes.oneOfType([
       PropTypes.array.isRequired,
       PropTypes.object.isRequired
@@ -126,7 +137,7 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
 
   _handleShow = (entity) => {
     const { activePane } = this.state
-    const { loading, changeRoute, windowWidth } = this.props
+    const { apiLoading, changeRoute, windowWidth } = this.props
     const stickyFooter = document.getElementsByTagName('footer')[0]
 
     if (stickyFooter) {
@@ -144,17 +155,21 @@ export class Purchases extends React.PureComponent { // eslint-disable-line reac
       }
     }
 
-    if (loading === false && entity.size === 0) {
-      return <EmptyPurchase active={activePane} />
-    }
+    const isEntityEmpty = () => equals(0, entity.size)
 
-    return (
-      <EntityPurchases
-        entity={entity}
-        changeRoute={changeRoute}
-        windowWidth={windowWidth}
-      />
-    )
+    const componentWillLoad = cond([
+      [both(equals(false), isEntityEmpty), () => <EmptyPurchase active={activePane} />],
+      [identity, () => <LoadingIndicator />],
+      [T, () => (
+        <EntityPurchases
+          entity={entity}
+          changeRoute={changeRoute}
+          windowWidth={windowWidth}
+        />
+      )]
+    ])
+
+    return componentWillLoad(apiLoading)
   }
 
   componentWillMount () {
@@ -235,7 +250,8 @@ const mapStateToProps = createStructuredSelector({
   activePurchases: selectActivePurchases(),
   completedPurchases: selectCompletedPurchases(),
   expiredPurchases: selectExpiredPurchases(),
-  loading: selectLoader()
+  localLoading: selectLocalLoader(),
+  apiLoading: selectApiLoader()
 })
 
 function mapDispatchToProps (dispatch) {
