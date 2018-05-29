@@ -208,6 +208,10 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     ))
   }
 
+  _toggleCategoryHide = () => {
+    this.setState({categoryToggle: false})
+  }
+
   _reactNotificationRef = (ref) => {
     this._notificationRef = ref
   }
@@ -411,6 +415,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
               _handleSearchInputValueNav={this._handleSearchInputValue}
               leftButtonActionNav={this._handleLeftButtonAction}
               _toggleCategoryDrop={this._toggleCategoryDrop}
+              _toggleCategoryHide={this._toggleCategoryHide}
               categoryToggle={this.state.categoryToggle}
               _handleToggleLogout={this._handleToggleLogout}
             />
@@ -460,6 +465,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
               hideHeaderPoints={hideHeaderPoints}
 
               _toggleCategoryDrop={this._toggleCategoryDrop}
+              _toggleCategoryHide={this._toggleCategoryHide}
               categoryToggle={this.state.categoryToggle}
               _handleToggleLogout={this._handleToggleLogout}
             />

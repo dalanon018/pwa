@@ -217,7 +217,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
               values={{title: toggleTitle}}
             />
           </Label>
-          <Label as='p' basic size='large' className='text__weight--400 margin__bottom-positive--5'>
+          <Label as='p' basic size='large' className='text__weight--400 color__grey margin__bottom-positive--5'>
             <FormattedMessage {...messages.infoDescription} />
           </Label>
         </InfoBlock>
@@ -523,7 +523,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                       <div>
                         <Image className='icon' src={WalletIcon} alt='CLiQQ' />
                       </div>
-                      <div>
+                      <div className='width__full'>
                         <Label as='p' className='margin__top-positive--15 margin__bottom-positive--15 text__weight--500' size='huge'>
                           <FormattedMessage {...messages.methodPayment} />
                         </Label>
@@ -533,8 +533,16 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                         <SelectMethodWrapper checkHeight={orderedProduct.get('discountPrice') !== 0}>
                           <Form>
                             <div className='payment-wrapper position__relative'>
-                              { this._displayPaymentOptions() }
-                              { this._handleMethodInfoBlock() }
+                              <Grid>
+                                <Grid.Row columns={2}>
+                                  <Grid.Column width={9}>
+                                    { this._displayPaymentOptions() }
+                                  </Grid.Column>
+                                  <Grid.Column width={7}>
+                                    { this._handleMethodInfoBlock() }
+                                  </Grid.Column>
+                                </Grid.Row>
+                              </Grid>
 
                               <StepWrapper className='visibility' visibility={pointsModifierVisibility}>
                                 <Label as='p' className='color__grey text__weight--500' size='big' >

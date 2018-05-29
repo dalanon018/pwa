@@ -64,8 +64,7 @@ const SelectMethodWrapper = styled.div`
     height: 100%;
     padding: 18px 15px;
     position: relative;
-    // width: 100%;
-    min-width: 351px;
+    width: 100%;
 
     &.checked {
       border: 1px solid #FF4813;
@@ -99,6 +98,10 @@ const SelectMethodWrapper = styled.div`
       justify-content: space-between;
       padding-left: 35px !important;
       position: relative;
+    }
+
+    @media (min-width: 1100px) {
+      width: 100%;
     }
   }
 
@@ -224,6 +227,7 @@ const BlockWrapper = styled.div`
   display: flex;
   padding: 20px 30px;
   align-items: ${props => props.verticalCentered ? 'center' : 'flex-start'};
+  width: 100%;
 
   .icon {
     margin-right: 20px;
@@ -247,11 +251,11 @@ const MethodTitle = styled.div`
 `
 
 const InfoBlock = styled.div`
-  position: absolute;
-  z-index: 1;
-  width: 300px;
-  top: 0;
-  right: -10px;
+  // position: absolute;
+  // z-index: 1;
+  // width: 300px;
+  // top: 0;
+  // right: -10px;
 `
 
 const PointsPlusCash = styled.div`

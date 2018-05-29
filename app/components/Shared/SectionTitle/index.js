@@ -22,7 +22,7 @@ import messages from './messages'
 export const Wrapper = styled.div`
   align-items: center;
   display: flex;
-  justify-content: space-between;
+  justify-content: ${props => props.centered ? 'center' : 'space-between'};
 
   @media (min-width: 1024px) {
     ${props => !props.noMarginBottom && 'margin-bottom: 20px;'}
@@ -122,13 +122,14 @@ export class SectionTitle extends React.PureComponent {
       promosLoading,
       promo,
       noMarginBottom,
-      colorGrey
+      colorGrey,
+      centered
     } = this.props
     const { isDesktop } = this.state
 
     return (
       <Container className={`${isDesktop ? 'padding__none' : 'padding__none--vertical'} height__inherit`} data-cy={dataCy} >
-        <Wrapper noMarginBottom={noMarginBottom}>
+        <Wrapper noMarginBottom={noMarginBottom} centered={centered}>
           <TitleContainer>
             <div className='title'>
               <Label basic size={this._handleTitleSize()} className={`${colorGrey && 'color__grey'} text__weight--500 padding__none`}>{title}</Label>
