@@ -80,6 +80,7 @@ import saga from './saga'
 
 import {
   getFeaturedProductsAction,
+  clearFeaturedProductsAction,
   getPromosAction,
   getBannersAction
 } from './actions'
@@ -332,6 +333,15 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
     )
 
     shouldUpdateBanners(banners)
+  }
+
+  componentWillUnmount () {
+    /**
+     * we need to clear the products on unmount.
+     * since state of this component is refreshed
+     *  offset for products featured is not retain. that is why there are multiple same products seen in different places.
+     */
+    this.props.clearFeaturedProducts()
   }
 
   render () {
@@ -610,6 +620,7 @@ function mapDispatchToProps (dispatch) {
     setShowPointsIcon: (payload) => dispatch(setShowPointsIconAction(payload)),
     setShowActivityIcon: (payload) => dispatch(setShowActivityIconAction(payload)),
     getProduct: payload => dispatch(getFeaturedProductsAction(payload)),
+    clearFeaturedProducts: () => dispatch(clearFeaturedProductsAction()),
     getPromos: payload => dispatch(getPromosAction(payload)),
     getBanners: payload => dispatch(getBannersAction(payload)),
     changeRoute: (url) => dispatch(push(url)),
