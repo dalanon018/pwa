@@ -100,14 +100,7 @@ class Purchase extends React.PureComponent {
 
   _defaultModePayment = DEFAULT_METHOD_PAYMENT
 
-  constructor () {
-    super()
-
-    this._goToReceipt = this._goToReceipt.bind(this)
-    this._getColorStatus = this._getColorStatus.bind(this)
-  }
-
-  _goToReceipt () {
+  _goToReceipt = () => {
     const { receipt, changeRoute } = this.props
     changeRoute(`/purchases/${receipt.get('trackingNumber')}`)
   }
@@ -116,7 +109,7 @@ class Purchase extends React.PureComponent {
    * Main component for identifying color
    * @param {*} param0
    */
-  _getColorStatus (status) {
+  _getColorStatus = (status) => {
     return switchFn({
       RESERVED: '#FFB70B',
       UNPAID: '#FF4813',
