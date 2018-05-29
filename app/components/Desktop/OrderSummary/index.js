@@ -81,7 +81,8 @@ const toggleComponent = (component1, component2) => ifElse(
 class OrderSummary extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function+
   state = {
     toggleInfo: false,
-    toggleTitle: ''
+    toggleTitle: '',
+    mousePosition: 0
   }
   /**
    * we need to find a way if we already initialize our points else
@@ -196,21 +197,35 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
   _handleShowMethodInfo = e => {
     const title = e.target.closest('div > .method-title > span') && e.target.closest('div > .method-title > span').innerText
+    let topPosition
+
+    switch (title) {
+      case 'Cash Prepaid':
+        topPosition = 105
+        break
+      case 'Points & Cash':
+        topPosition = 215
+        break
+      default:
+        topPosition = 0
+        break
+    }
 
     this.setState({
       toggleInfo: true,
-      toggleTitle: title
+      toggleTitle: title,
+      mousePosition: topPosition
     })
   }
 
   _handleHideMethodInfo = () => this.setState({toggleInfo: false})
 
   _handleMethodInfoBlock = (title, description) => {
-    const { toggleInfo, toggleTitle } = this.state
+    const { toggleInfo, toggleTitle, mousePosition } = this.state
     // return false
     if (toggleInfo && toggleTitle) {
       return (
-        <InfoBlock>
+        <InfoBlock top={mousePosition}>
           <Label as='p' basic size='large' className='text__weight--700 margin__bottom-positive--5'>
             <FormattedMessage
               {...messages.whatIs}

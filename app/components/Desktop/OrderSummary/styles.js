@@ -251,11 +251,11 @@ const MethodTitle = styled.div`
 `
 
 const InfoBlock = styled.div`
-  // position: absolute;
-  // z-index: 1;
+  position: absolute;
+  z-index: 1;
   // width: 300px;
-  // top: 0;
-  // right: -10px;
+  top: ${props => props.top}px;
+  right: -10px;
 `
 
 const PointsPlusCash = styled.div`
