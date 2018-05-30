@@ -48,6 +48,10 @@ export const LinkWrapper = styled.div`
     margin-top: 3px;
     vertical-align: middle;
     width: 6px;
+
+    @media (min-width: 1024px) {
+      margin-top: 5px;
+    }
   }
 `
 
@@ -123,7 +127,8 @@ export class SectionTitle extends React.PureComponent {
       promo,
       noMarginBottom,
       colorGrey,
-      centered
+      centered,
+      timerTitle
     } = this.props
     const { isDesktop } = this.state
 
@@ -136,7 +141,7 @@ export class SectionTitle extends React.PureComponent {
             </div>
             <div>
               {
-                isDesktop && !promosLoading && promo && <TimerWrapper promo={promo} />
+                isDesktop && !promosLoading && promo && <TimerWrapper promo={promo} timerTitle={timerTitle} />
               }
             </div>
           </TitleContainer>

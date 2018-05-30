@@ -22,14 +22,22 @@ export const Wrapper = styled.div`
   ${
     props => props.centered
     ? `
-      border-radius: 3px;
+      border-radius: 5px;
       display: flex;
       justify-content: center;
       margin: 20px auto;
       width: 240px;
     `
     : `
-    border-radius: 5px;
+    ${
+      props.timerTitle
+      ? 'border-radius: 5px;'
+      : `border-radius: 5px 0 0 5px;
+      bottom: 12px;
+      position: absolute;
+      right: 0;
+      z-index: 1;`
+    }
     `
   }
 `
@@ -49,9 +57,9 @@ export const LabelWrapper = styled.div`
   }
 `
 
-function TimerWrapper ({ promo, centered }) {
+function TimerWrapper ({ promo, centered, timerTitle }) {
   return (
-    <Wrapper className='background__primary' centered={centered}>
+    <Wrapper className='background__primary' centered={centered} timerTitle={timerTitle}>
       <ContentWrapper>
         <LabelWrapper>
           <Label as='span' size='mini' className='color__white text__weight--400 margin__top-positive--3'>
