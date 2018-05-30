@@ -347,10 +347,10 @@ class HeaderNav extends PureComponent {
   }
 
   _handleGoToPage = (slug) => () => {
-    const { changeRoute, _toggleCategoryHide, _handleToggleLogout } = this.props
+    const { changeRoute, _toggleCategoryHide, _handleCloseLogout } = this.props
     changeRoute(`/${slug}`)
     _toggleCategoryHide()
-    _handleToggleLogout()
+    _handleCloseLogout()
   }
 
   _handleBrandsMenu = () => {
@@ -439,7 +439,13 @@ class HeaderNav extends PureComponent {
   }
 
   _toggleDisplayCurrentPoints = () => {
-    const { isSignIn, currentPoints, changeRoute, hideHeaderPoints } = this.props
+    const { isSignIn, currentPoints, changeRoute, hideHeaderPoints, _handleCloseLogout, _toggleCategoryHide } = this.props
+    const goToWalletPage = () => {
+      changeRoute('/wallet')
+      _handleCloseLogout()
+      _toggleCategoryHide()
+    }
+
     return toggleComponent(
       <CurrentPointsContainer hidden={hideHeaderPoints}>
         <div>
@@ -450,7 +456,7 @@ class HeaderNav extends PureComponent {
         <div>
           <Image src={CliqqLogo} alt='CLiQQ' />
         </div>
-        <div className='cursor__pointer' onClick={() => changeRoute('/wallet')}>
+        <div className='cursor__pointer' onClick={goToWalletPage}>
           <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
             {currentPoints}
           </Label>
@@ -461,7 +467,13 @@ class HeaderNav extends PureComponent {
   }
 
   _mainNavHeader = () => {
-    const { categories, changeRoute, categoryToggle, _toggleCategoryDrop, _toggleCategoryHide } = this.props
+    const {
+      categories,
+      changeRoute,
+      categoryToggle,
+      _toggleCategoryDrop,
+      _toggleCategoryHide,
+      _handleCloseLogout } = this.props
     const { subCategoryToggle, subCategory } = this.state
 
     const gotToProduct = (id) => () => {
@@ -469,10 +481,15 @@ class HeaderNav extends PureComponent {
       _toggleCategoryHide()
     }
 
+    const toggleCategory = () => {
+      _toggleCategoryDrop()
+      _handleCloseLogout()
+    }
+
     return (
       <MenuWrapper className='position__relative'>
         <MenusContainer arrowToggle={categoryToggle}>
-          <CategoryDrop onClick={_toggleCategoryDrop}>
+          <CategoryDrop onClick={toggleCategory}>
             <Image src={CategoryDock} alt='CLiQQ' />
             <Label as='p' className='margin__none text__weight--500 color__white category-menu cursor__pointer' basic size='large'>
               <FormattedMessage {...messages.categoriesMenu} />
