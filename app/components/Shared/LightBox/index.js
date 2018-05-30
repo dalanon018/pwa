@@ -20,6 +20,7 @@ const LightBoxWrapper = styled.div`
   top: 0;
   width: 100%;
   z-index: 999;
+  overflow: auto;
 
   ul.slick-dots {
     position: absolute;
@@ -42,8 +43,10 @@ const ImageWrapper = styled.div`
   left: 50%;
   // padding: 30px;
   position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  // top: 50%;
+  // transform: translate(-50%, -50%);
+  top: 30px;
+  transform: translate(-50%);
   width: 95%;
 
   img {
@@ -52,7 +55,7 @@ const ImageWrapper = styled.div`
   }
 
   @media (min-width: 1024px) {
-    height: 650px;
+    // height: 650px;
     padding: 30px;
     width: 650px;
   }
