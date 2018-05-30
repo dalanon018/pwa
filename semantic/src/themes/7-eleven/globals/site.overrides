@@ -714,6 +714,9 @@ svg#barcode {
       }
     }
     &__horizontal {
+      &--10 {
+        margin: 0 10px;
+      }
       &--14 {
         margin: 0 14px;
       }

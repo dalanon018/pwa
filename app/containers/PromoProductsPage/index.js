@@ -271,6 +271,7 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
           desktopView={
             <div className='padding__horizontal--15'>
               <SectionTitle
+                timerTitle
                 title={intl.formatMessage(messages.feature)}
                 itemCount={productsFeatured.size} />
             </div>
@@ -318,6 +319,7 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
           desktopView={
             <div className='padding__horizontal--15'>
               <SectionTitle
+                timerTitle
                 promo={promo}
                 promosLoading={productsLoading}
                 title={intl.formatMessage(messages.promoProductsTitle)}

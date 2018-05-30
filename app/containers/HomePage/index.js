@@ -521,9 +521,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             <SectionTitle
               colorGrey
               noMarginBottom
-              promo={promos.first()}
+              // promo={promos.first()}
               linkLabel='See All'
-              promosLoading={promosLoading}
+              // promosLoading={promosLoading}
               title={intl.formatMessage(messages.flashDeals)}
               // link={windowWidth >= 1024 ? 'promos/' + firstPromoCode : '/flash-deals'}
               link={'/flash-deals'} />
