@@ -214,7 +214,10 @@ function FilterSection ({
 
 FilterSection.propTypes = {
   itemsLoading: PropTypes.bool.isRequired,
-  queryCategory: PropTypes.string,
+  queryCategory: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]).isRequired,
   queryBrands: PropTypes.array,
   filterCategories: PropTypes.object.isRequired,
   filterCategoriesLoading: PropTypes.bool.isRequired,
