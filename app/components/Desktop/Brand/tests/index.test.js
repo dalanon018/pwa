@@ -27,4 +27,9 @@ describe('<Brand />', () => {
       renderComponent.length
     ).toEqual(1)
   })
+
+  it('should not render a div', () => {
+    const renderedComponent = wrapper(minProps)
+    expect(renderedComponent.find('div').length).toEqual(0)
+  })
 })
