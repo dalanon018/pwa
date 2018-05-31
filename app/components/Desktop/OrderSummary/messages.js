@@ -146,8 +146,16 @@ export default defineMessages({
     id: `${idSuffix}.whatIs`,
     defaultMessage: 'What is {title}?'
   },
-  infoDescription: {
-    id: `${idSuffix}.infoDescription`,
-    defaultMessage: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae augue sed lorem tincidunt ultrices. Proin purus elit, volutpat in nibh ut, mollis malesuada eros.'
+  codDescription: {
+    id: `${idSuffix}.codDescription`,
+    defaultMessage: 'Pay only when your item arrives and you go to the 7-Eleven store to collect it. This gives you time to prepare your budget!'
+  },
+  prepaidDescription: {
+    id: `${idSuffix}.prepaidDescription`,
+    defaultMessage: 'Pay at the cashier immediately after ordering. This applies to kiosk orders and can be applied with website orders.'
+  },
+  pointsCashDescription: {
+    id: `${idSuffix}.pointsCashDescription`,
+    defaultMessage: 'Save money by combining your points and cash to shop. Try it now!'
   }
 })
