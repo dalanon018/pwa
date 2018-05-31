@@ -130,7 +130,10 @@ CategorySection.propTypes = {
   getFilterCategories: PropTypes.func.isRequired,
   lazyload: PropTypes.bool.isRequired,
   loader: PropTypes.bool.isRequired,
-  queryBrands: PropTypes.object.isRequired,
+  queryBrands: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]).isRequired,
   queryCategory: PropTypes.string.isRequired,
   requestFromFilter: PropTypes.func.isRequired,
 
