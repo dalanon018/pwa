@@ -24,11 +24,11 @@ import LoadingIndicator from 'components/Shared/LoadingIndicator'
 
 import messages from './messages'
 
-const Header = styled.div`
+export const Header = styled.div`
   padding-bottom: 10px;
 `
 
-const CategoriesContainer = styled.div`
+export const CategoriesContainer = styled.div`
   padding-bottom: 10px;
 
   .item {
@@ -40,11 +40,11 @@ const CategoriesContainer = styled.div`
   }
 `
 
-const LabelSelected = styled(({ isSelected, ...props }) => <Label {...props} />)`
+export const LabelSelected = styled(({ isSelected, ...props }) => <Label {...props} />)`
   color: ${({ isSelected }) => isSelected ? '#FF4813' : 'inherit'}!important;
 `
 
-const BrandsContainer = styled.div`
+export const BrandsContainer = styled.div`
   .ui.checkbox {
     &.box:before, label:before {
       border-radius: 0;
@@ -214,8 +214,14 @@ function FilterSection ({
 
 FilterSection.propTypes = {
   itemsLoading: PropTypes.bool.isRequired,
-  queryCategory: PropTypes.string,
-  queryBrands: PropTypes.array,
+  queryCategory: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]).isRequired,
+  queryBrands: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]).isRequired,
   filterCategories: PropTypes.object.isRequired,
   filterCategoriesLoading: PropTypes.bool.isRequired,
   filterBrands: PropTypes.object,

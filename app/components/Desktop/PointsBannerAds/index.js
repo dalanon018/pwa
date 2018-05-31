@@ -6,6 +6,7 @@
 
 import React from 'react'
 import { Container, Image } from 'semantic-ui-react'
+import PropTypes from 'prop-types'
 // import styled from 'styled-components';
 
 import PlainCard from 'components/Shared/PlainCard'
@@ -24,7 +25,7 @@ function PointsBannerAds ({ changeRoute }) {
 }
 
 PointsBannerAds.propTypes = {
-
+  changeRoute: PropTypes.func.isRequired
 }
 
 export default PointsBannerAds
