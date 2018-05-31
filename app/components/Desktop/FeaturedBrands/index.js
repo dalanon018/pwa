@@ -6,6 +6,7 @@
 
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { Image } from 'semantic-ui-react'
 import { range } from 'lodash'
 
@@ -13,7 +14,7 @@ import { imageStock } from 'utils/image-stock'
 
 import BrandsContainer from 'components/Shared/PlainCard'
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   align-items: center;
   display: flex;
 
@@ -22,7 +23,7 @@ const Wrapper = styled.div`
   }
 `
 
-const ImageWrapper = styled.div`
+export const ImageWrapper = styled.div`
   height: 100%;
 
   &:last-child {
@@ -65,7 +66,11 @@ function FeaturedBrands ({ brands, loader, changeRoute }) {
 const DefaultState = () => <Image src={imageStock('Brands-Default.jpg', imgixOptions)} alt='CLiQQ' />
 
 FeaturedBrands.propTypes = {
-
+  brands: PropTypes.object.isRequired,
+  changeRoute: PropTypes.func.isRequired,
+  DefaultState: PropTypes.func,
+  loader: PropTypes.bool.isRequired,
+  imgixOptions: PropTypes.object
 }
 
 export default FeaturedBrands
