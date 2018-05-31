@@ -34,4 +34,9 @@ describe('<Category />', () => {
       renderComponent.find(DefaultState).length
     ).toBeGreaterThan(0)
   })
+
+  it('should not render a div', () => {
+    const renderedComponent = wrapper(Category, minProps)
+    expect(renderedComponent.find('div').length).toEqual(0)
+  })
 })
