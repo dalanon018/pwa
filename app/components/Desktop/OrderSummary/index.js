@@ -204,32 +204,36 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       case 'Cash on Delivery':
         infoClass = {
           topPosition: 0,
-          infoDescription: messages.codDescription.defaultMessage
+          infoDescription: messages.codDescription.defaultMessage,
+          disableInfo: false
         }
         break
       case 'Cash Prepaid':
         infoClass = {
           topPosition: 105,
-          infoDescription: messages.prepaidDescription.defaultMessage
+          infoDescription: messages.prepaidDescription.defaultMessage,
+          disableInfo: false
         }
         break
       case 'Points & Cash':
         infoClass = {
           topPosition: 215,
-          infoDescription: messages.pointsCashDescription.defaultMessage
+          infoDescription: messages.pointsCashDescription.defaultMessage,
+          disableInfo: false
         }
         break
       default:
         infoClass = {
           topPosition: 0,
-          infoDescription: ''
+          infoDescription: '',
+          disableInfo: true
         }
         break
     }
 
     this.setState({
       toggleInfo: true,
-      toggleTitle: title,
+      toggleTitle: infoClass.disableInfo ? null : title,
       mousePosition: infoClass.topPosition,
       methodDescription: infoClass.infoDescription
     })
