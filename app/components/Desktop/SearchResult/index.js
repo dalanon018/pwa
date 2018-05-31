@@ -6,6 +6,7 @@
 
 import React from 'react'
 import { Container } from 'semantic-ui-react'
+import PropTypes from 'prop-types'
 
 import ProductView from 'components/Desktop/ProductView'
 
@@ -18,7 +19,8 @@ function SearchResult ({ product, changeRoute, windowWidth }) {
 }
 
 SearchResult.propTypes = {
-
+  product: PropTypes.object.isRequired,
+  changeRoute: PropTypes.func.isRequired
 }
 
 export default SearchResult
