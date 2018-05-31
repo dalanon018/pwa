@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { injectIntl, FormattedMessage } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 
 import {
   Image,
@@ -25,7 +25,7 @@ import Logout from 'images/icons/drawer/signout.svg'
 import SearchMenu from 'containers/Buckets/SearchMenu'
 // import { FLASH_DEALS_LANDING_PAGE } from '../../../containers/Buckets/constants'
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   background-color: #FFFFFF;
   display: block;
   position: fixed;
@@ -52,12 +52,12 @@ const Wrapper = styled.div`
   }
 `
 
-const ImageLogo = styled.img`
+export const ImageLogo = styled.img`
   width: 80px;
   height: 35px;
 `
 
-const ActivitiesIcon = styled.div`
+export const ActivitiesIcon = styled.div`
   margin-left: ${props => props.marginLeft ? 0 : 20}px;
 
   img {
@@ -73,7 +73,7 @@ const ActivitiesIcon = styled.div`
   }
 `
 
-const SearchInput = styled(Input)`
+export const SearchInput = styled(Input)`
   border: 0;
   font-size: 18px;
   letter-spacing: 1px;
@@ -81,7 +81,7 @@ const SearchInput = styled(Input)`
   width: 100%;
 `
 
-const PageTitle = styled.div`
+export const PageTitle = styled.div`
   h1 {
     &.long-title {
       font-size: 18px;
@@ -90,26 +90,26 @@ const PageTitle = styled.div`
   }
 `
 
-const SearchWrapper = styled.div`
+export const SearchWrapper = styled.div`
   padding-right: 10px;
   padding-left: 10px;
 `
 
-const LogoWrapper = styled.div`
+export const LogoWrapper = styled.div`
   img {
     cursor: pointer;
     width: 100px;
   }
 `
 
-const MainNav = styled.div`
+export const MainNav = styled.div`
   // margin-top: 87px;
   padding: 87px 15px 0;
   position: relative;
   z-index: 2;
 `
 
-const MenuWrapper = styled.div`
+export const MenuWrapper = styled.div`
   font-weight: 600;
 
   .list-wrapper {
@@ -119,7 +119,7 @@ const MenuWrapper = styled.div`
   }
 `
 
-const SignOutWrapper = styled.div`
+export const SignOutWrapper = styled.div`
   display: inline-block;
   margin-left: 40px;
   position: relative;
@@ -129,13 +129,13 @@ const SignOutWrapper = styled.div`
     width: 21px !important;
   }
 `
-const OptionsWrapper = styled.div`
+export const OptionsWrapper = styled.div`
   align-items: center;
   display: flex;
   justify-content: flex-end;
 `
 
-const MagicBlock = styled.div`
+export const MagicBlock = styled.div`
   height: 100vh;
   left: 0;
   position: fixed;
@@ -144,7 +144,7 @@ const MagicBlock = styled.div`
   z-index: 1;
 `
 
-const MenusContainer = styled.div`
+export const MenusContainer = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
@@ -172,7 +172,7 @@ const MenusContainer = styled.div`
   }
 `
 
-const CategoryDrop = styled.div`
+export const CategoryDrop = styled.div`
   align-items: center;
   cursor: pointer;
   display: flex;
@@ -182,7 +182,7 @@ const CategoryDrop = styled.div`
   }
 `
 
-const CategoryListsWrapper = styled.div`
+export const CategoryListsWrapper = styled.div`
   display: flex;
   height: ${props => props.toggle ? '500px' : '0'};
   left: 0;
@@ -225,7 +225,7 @@ const CategoryListsWrapper = styled.div`
   }
 `
 
-const CategoryList = styled.div`
+export const CategoryList = styled.div`
   border-right: 1px solid #e8e8e8;
   direction: rtl;
   overflow-y: auto;
@@ -235,7 +235,7 @@ const CategoryList = styled.div`
   z-index: 3;
 `
 
-const SubCategoryList = styled.div`
+export const SubCategoryList = styled.div`
   direction: rtl;
   height: 100%;
   left: ${props => props.toggle ? '250px' : '0'};
@@ -248,7 +248,7 @@ const SubCategoryList = styled.div`
   z-index: 2;
 `
 
-const CurrentPointsContainer = styled.div`
+export const CurrentPointsContainer = styled.div`
   ${props => props.hidden && 'visibility: hidden;'}
   align-items: center;
   display: flex;
@@ -261,7 +261,7 @@ const CurrentPointsContainer = styled.div`
   }
 `
 
-const LogoutWrapper = styled.div`
+export const LogoutWrapper = styled.div`
   align-items: center;
   background: #FFFFFF;
   display: flex;
@@ -295,7 +295,23 @@ class HeaderNav extends PureComponent {
     currentPoints: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
-    ])
+    ]),
+
+    _handleSignOut: PropTypes.func,
+    _handleShowLogoutButton: PropTypes.func,
+    _handleGoToPage: PropTypes.func,
+    _handleBrandsMenu: PropTypes.func,
+    _handleCloseBrands: PropTypes.func,
+    _handleColumnSize: PropTypes.func,
+    _handleGotoSearch: PropTypes.func,
+    _updateScrollPosition: PropTypes.func,
+    _handleUniqueHeader: PropTypes.func,
+    _handleEnterChildren: PropTypes.func,
+    _handleLeaveChildren: PropTypes.func,
+    _handleStayChildren: PropTypes.func,
+    _handleHasArrow: PropTypes.func,
+    _toggleDisplayCurrentPoints: PropTypes.func,
+    _mainNavHeader: PropTypes.func
   }
 
   state = {
@@ -659,4 +675,4 @@ class HeaderNav extends PureComponent {
   }
 }
 
-export default injectIntl(HeaderNav)
+export default HeaderNav
