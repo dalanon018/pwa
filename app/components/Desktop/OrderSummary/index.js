@@ -82,7 +82,8 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
   state = {
     toggleInfo: false,
     toggleTitle: '',
-    mousePosition: 0
+    mousePosition: 0,
+    methodDescription: ''
   }
   /**
    * we need to find a way if we already initialize our points else
@@ -197,31 +198,47 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
   _handleShowMethodInfo = e => {
     const title = e.target.closest('div > .method-title > span') && e.target.closest('div > .method-title > span').innerText
-    let topPosition
+    let infoClass
 
     switch (title) {
+      case 'Cash on Delivery':
+        infoClass = {
+          topPosition: 0,
+          infoDescription: messages.codDescription.defaultMessage
+        }
+        break
       case 'Cash Prepaid':
-        topPosition = 105
+        infoClass = {
+          topPosition: 105,
+          infoDescription: messages.prepaidDescription.defaultMessage
+        }
         break
       case 'Points & Cash':
-        topPosition = 215
+        infoClass = {
+          topPosition: 215,
+          infoDescription: messages.pointsCashDescription.defaultMessage
+        }
         break
       default:
-        topPosition = 0
+        infoClass = {
+          topPosition: 0,
+          infoDescription: ''
+        }
         break
     }
 
     this.setState({
       toggleInfo: true,
       toggleTitle: title,
-      mousePosition: topPosition
+      mousePosition: infoClass.topPosition,
+      methodDescription: infoClass.infoDescription
     })
   }
 
   _handleHideMethodInfo = () => this.setState({toggleInfo: false})
 
   _handleMethodInfoBlock = (title, description) => {
-    const { toggleInfo, toggleTitle, mousePosition } = this.state
+    const { toggleInfo, toggleTitle, mousePosition, methodDescription } = this.state
     // return false
     if (toggleInfo && toggleTitle) {
       return (
@@ -233,7 +250,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
             />
           </Label>
           <Label as='p' basic size='large' className='text__weight--400 color__grey margin__bottom-positive--5'>
-            <FormattedMessage {...messages.infoDescription} />
+            {methodDescription}
           </Label>
         </InfoBlock>
       )
