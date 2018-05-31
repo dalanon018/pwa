@@ -22,6 +22,11 @@ describe('<BrandsGroup />', () => {
     ).toEqual(1)
   })
 
+  it('should render eight div\'s', () => {
+    const renderedComponent = wrapper(BrandsGroup, minProps)
+    expect(renderedComponent.find('div').length).toEqual(8)
+  })
+
   it('NavWrapper should render', () => {
     const renderComponent = shallow(<NavWrapper />)
     expect(
