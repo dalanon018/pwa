@@ -6,6 +6,7 @@
 
 import React from 'react'
 import Recaptcha from 'react-google-recaptcha'
+import PropTypes from 'prop-types'
 
 import { FormattedMessage } from 'react-intl'
 import messages from './messages'
@@ -70,6 +71,21 @@ function Registration ({
   _executeCaptcha,
   _agreeAction
 }) {
+  console.log(
+    typeof loadingMarkdown,
+    typeof submissionLoader,
+    typeof history,
+    typeof value,
+    typeof check,
+    typeof markdown,
+    typeof toggleTerms,
+    typeof verificationToggle,
+    typeof disabledButton,
+    typeof errModalToggle,
+    typeof errModalName,
+    typeof errorTitle,
+    typeof errorMessage
+  )
   return (
     <div>
       <RegistrationWrapper>
@@ -190,7 +206,35 @@ function Registration ({
 }
 
 Registration.propTypes = {
+  loadingMarkdown: PropTypes.bool.isRequired,
+  submissionLoader: PropTypes.bool.isRequired,
+  history: PropTypes.object.isRequired,
+  value: PropTypes.string.isRequired,
+  check: PropTypes.bool.isRequired,
+  markdown: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool
+  ]).isRequired,
+  toggleTerms: PropTypes.bool.isRequired,
+  verificationToggle: PropTypes.bool.isRequired,
+  disabledButton: PropTypes.bool.isRequired,
+  errModalToggle: PropTypes.bool.isRequired,
+  errModalName: PropTypes.string.isRequired,
+  errorTitle: PropTypes.string.isRequired,
+  errorMessage: PropTypes.string.isRequired,
 
+  _handleInput: PropTypes.func.isRequired,
+  _toggleTerms: PropTypes.func.isRequired,
+  _handlePaste: PropTypes.func,
+  _handleCheck: PropTypes.func.isRequired,
+  _handleSubmit: PropTypes.func.isRequired,
+  _handleErrModalClose: PropTypes.func.isRequired,
+  _handleSubmitVerification: PropTypes.func.isRequired,
+  _closePopupSlide: PropTypes.func.isRequired,
+  _executeResendCode: PropTypes.func.isRequired,
+  _recaptchaRef: PropTypes.func.isRequired,
+  _executeCaptcha: PropTypes.func.isRequired,
+  _agreeAction: PropTypes.func.isRequired
 }
 
 export default Registration
