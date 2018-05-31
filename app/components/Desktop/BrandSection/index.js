@@ -5,13 +5,12 @@
 */
 
 import React from 'react'
-// import PropTypes from 'prop-types'
-import Waypoint from 'react-waypoint'
+import PropTypes from 'prop-types'
+// import Waypoint from 'react-waypoint'
 import { Container, Grid } from 'semantic-ui-react'
 
 import BannerSlider from 'components/Desktop/BannerSlider'
 
-import FilterTrigger from 'components/Mobile/FilterTrigger'
 import { InfiniteWrapper } from 'components/Shared/InfiniteLoading'
 import FilterSection from 'components/Desktop/FilterSection'
 
@@ -23,7 +22,7 @@ class BrandSection extends React.PureComponent {
       category,
       filterCategories,
       filterCategoriesLoading,
-      filtered,
+      // filtered,
       lazyload,
       loader,
       productsByBrands,
@@ -33,14 +32,15 @@ class BrandSection extends React.PureComponent {
       _displayHeaderFeaturesProduct,
       _displayHeaderRegularProduct,
       _displayRegularItems,
-      _handleBannerAnimation,
-      _requestFromFilter,
-      _fetchFilteredCategories
+      // _handleBannerAnimation,
+      _requestFromFilter
+      // _fetchFilteredCategories
     } = this.props
 
     return (
       <div>
-        <Waypoint
+        {/*
+          <Waypoint
           onEnter={() => _handleBannerAnimation(true)}
           onLeave={() => _handleBannerAnimation(false)}
         >
@@ -55,6 +55,7 @@ class BrandSection extends React.PureComponent {
             />
           </div>
         </Waypoint>
+        */}
         <Container>
           <BannerSlider
             isInfinite
@@ -98,7 +99,27 @@ class BrandSection extends React.PureComponent {
 }
 
 BrandSection.propTypes = {
+  animateBanner: PropTypes.bool.isRequired,
+  brandImages: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]).isRequired,
+  category: PropTypes.object,
+  filterCategories: PropTypes.object,
+  filterCategoriesLoading: PropTypes.bool,
+  // filtered: PropTypes.bool.isRequired,
+  lazyload: PropTypes.bool.isRequired,
+  loader: PropTypes.bool.isRequired,
+  productsByBrands: PropTypes.object,
 
+  _displayEmptyLoadingIndicator: PropTypes.func.isRequired,
+  _displayFeaturedProducts: PropTypes.func.isRequired,
+  _displayHeaderFeaturesProduct: PropTypes.func.isRequired,
+  _displayHeaderRegularProduct: PropTypes.func.isRequired,
+  _displayRegularItems: PropTypes.func.isRequired,
+  // _handleBannerAnimation: PropTypes.func.isRequired,
+  _requestFromFilter: PropTypes.func.isRequired
+  // _fetchFilteredCategories: PropTypes.func.isRequired
 }
 
 export default BrandSection
