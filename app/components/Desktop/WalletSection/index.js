@@ -5,7 +5,7 @@
 */
 
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import moment from 'moment'
 
@@ -33,12 +33,12 @@ import Banner from 'images/wallet-banner.jpg'
 
 import messages from './messages'
 
-const ContentWrapper = styled(Container)`
+export const ContentWrapper = styled(Container)`
   padding-top: 0 !important;
   padding-bottom: 20px !important;
 `
 
-const PointsPreviewWrapper = styled.div`
+export const PointsPreviewWrapper = styled.div`
   align-items: center;
   background: url(${props => props.background})no-repeat center center / cover;
   border-radius: 10px;
@@ -52,7 +52,7 @@ const PointsPreviewWrapper = styled.div`
   // z-index: 2;
 `
 
-const UserPointsWrapper = styled.div`
+export const UserPointsWrapper = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
@@ -174,7 +174,12 @@ class WalletSection extends React.PureComponent {
 }
 
 WalletSection.propTypes = {
-
+  lazyload: PropTypes.bool.isRequired,
+  transactions: PropTypes.object.isRequired,
+  wallet: PropTypes.object.isRequired,
+  transactionsLoading: PropTypes.bool.isRequired,
+  _displayEmptyLoadingIndicator: PropTypes.func.isRequired,
+  _displayTransactionsItems: PropTypes.func
 }
 
 export default WalletSection
