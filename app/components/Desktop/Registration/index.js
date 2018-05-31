@@ -71,21 +71,6 @@ function Registration ({
   _executeCaptcha,
   _agreeAction
 }) {
-  console.log(
-    typeof loadingMarkdown,
-    typeof submissionLoader,
-    typeof history,
-    typeof value,
-    typeof check,
-    typeof markdown,
-    typeof toggleTerms,
-    typeof verificationToggle,
-    typeof disabledButton,
-    typeof errModalToggle,
-    typeof errModalName,
-    typeof errorTitle,
-    typeof errorMessage
-  )
   return (
     <div>
       <RegistrationWrapper>
