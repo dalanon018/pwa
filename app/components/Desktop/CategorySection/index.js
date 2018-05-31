@@ -6,13 +6,14 @@
 
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 import { Container, Grid } from 'semantic-ui-react'
 
 import { InfiniteWrapper } from 'components/Shared/InfiniteLoading'
 import FilterSection from 'components/Desktop/FilterSection'
 
-const ContentWrapper = styled(Container)`
+export const ContentWrapper = styled(Container)`
   padding-top: 20px !important;
   padding-bottom: 20px !important;
 
@@ -120,7 +121,27 @@ function CategorySection ({
 }
 
 CategorySection.propTypes = {
+  filterBrands: PropTypes.object.isRequired,
+  filterBrandsLoading: PropTypes.bool.isRequired,
+  filterCategories: PropTypes.object.isRequired,
+  filterCategoriesLoading: PropTypes.bool.isRequired,
+  filtered: PropTypes.bool.isRequired,
+  getFilterBrands: PropTypes.func.isRequired,
+  getFilterCategories: PropTypes.func.isRequired,
+  lazyload: PropTypes.bool.isRequired,
+  loader: PropTypes.bool.isRequired,
+  queryBrands: PropTypes.object.isRequired,
+  queryCategory: PropTypes.string.isRequired,
+  requestFromFilter: PropTypes.func.isRequired,
 
+  _displayEmptyLoadingIndicator: PropTypes.func.isRequired,
+  _displayFeaturesProduct: PropTypes.func.isRequired,
+  _displayHeaderFeaturesProduct: PropTypes.func.isRequired,
+  _displayNumberProducts: PropTypes.func.isRequired,
+  _displayRecentlyViewedHeader: PropTypes.func.isRequired,
+  _displayRecentlyViewedItems: PropTypes.func.isRequired,
+  _displayRegularItems: PropTypes.func.isRequired,
+  _handlePageTitle: PropTypes.func.isRequired
 }
 
 export default CategorySection
