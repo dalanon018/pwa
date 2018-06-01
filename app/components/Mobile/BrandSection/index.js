@@ -111,7 +111,10 @@ class BrandSection extends React.PureComponent {
 
 BrandSection.propTypes = {
   animateBanner: PropTypes.bool.isRequired,
-  brandImages: PropTypes.object.isRequired,
+  brandImages: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]).isRequired,
   category: PropTypes.object,
   filterCategories: PropTypes.object.isRequired,
   filterCategoriesLoading: PropTypes.bool.isRequired,
