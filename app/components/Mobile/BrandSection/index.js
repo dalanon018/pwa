@@ -5,7 +5,7 @@
 */
 
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 // import styled from 'styled-components'
 import Waypoint from 'react-waypoint'
 
@@ -110,7 +110,24 @@ class BrandSection extends React.PureComponent {
 }
 
 BrandSection.propTypes = {
+  animateBanner: PropTypes.bool.isRequired,
+  brandImages: PropTypes.object.isRequired,
+  category: PropTypes.object,
+  filterCategories: PropTypes.object.isRequired,
+  filterCategoriesLoading: PropTypes.bool.isRequired,
+  filtered: PropTypes.bool.isRequired,
+  lazyload: PropTypes.bool.isRequired,
+  loader: PropTypes.bool.isRequired,
+  productsByBrands: PropTypes.object.isRequired,
 
+  _displayEmptyLoadingIndicator: PropTypes.func.isRequired,
+  _displayFeaturedProducts: PropTypes.func.isRequired,
+  _displayHeaderFeaturesProduct: PropTypes.func.isRequired,
+  _displayHeaderRegularProduct: PropTypes.func.isRequired,
+  _displayRegularItems: PropTypes.func.isRequired,
+  _handleBannerAnimation: PropTypes.func.isRequired,
+  _requestFromFilter: PropTypes.func.isRequired,
+  _fetchFilteredCategories: PropTypes.func.isRequired
 }
 
 export default BrandSection
