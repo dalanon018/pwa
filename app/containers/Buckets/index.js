@@ -144,7 +144,7 @@ const BackgroundLay = styled.div`
   position: fixed;
   transition: .1s ease;
   width: 100%;
-  z-index: 1;
+  z-index: 2;
 `
 
 export class Buckets extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function

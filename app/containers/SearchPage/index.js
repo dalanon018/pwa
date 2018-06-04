@@ -135,8 +135,8 @@ export class SearchPage extends React.PureComponent { // eslint-disable-line rea
         stickyFooter.classList.contains('sticky') &&
         stickyFooter.classList.remove('sticky')
 
-        product.size <= 6 &&
-        stickyFooter.classList.add('sticky')
+        // product.size <= 6 &&
+        // stickyFooter.classList.add('sticky')
 
         return (
           <div>
