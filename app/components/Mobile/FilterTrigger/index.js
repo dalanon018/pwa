@@ -63,10 +63,7 @@ class FilterTrigger extends React.PureComponent {
     requestFromFilter: PropTypes.func.isRequired,
     filterCategories: PropTypes.object.isRequired,
     filterCategoriesLoading: PropTypes.bool.isRequired,
-    queryCategory: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object
-    ]),
+    queryCategory: PropTypes.string,
     getFilterBrands: PropTypes.func,
     filterBrands: PropTypes.object,
     filterBrandsLoading: PropTypes.bool
