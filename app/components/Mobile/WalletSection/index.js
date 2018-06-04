@@ -5,7 +5,7 @@
 */
 
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import moment from 'moment'
 
@@ -33,12 +33,12 @@ import CliqqIcon from 'images/icons/cliqq.png'
 
 import messages from './messages'
 
-const ContentWrapper = styled(Container)`
+export const ContentWrapper = styled(Container)`
   padding-top: 20px !important;
   padding-bottom: 20px !important;
 `
 
-const PointsPreviewWrapper = styled.div`
+export const PointsPreviewWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
@@ -65,7 +65,7 @@ const PointsPreviewWrapper = styled.div`
   }
 `
 
-const UserPointsWrapper = styled.div`
+export const UserPointsWrapper = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
@@ -186,7 +186,14 @@ class WalletSection extends React.PureComponent {
 }
 
 WalletSection.propTypes = {
+  lazyload: PropTypes.bool.isRequired,
+  transactions: PropTypes.object.isRequired,
+  transactionsLoading: PropTypes.bool.isRequired,
+  wallet: PropTypes.object.isRequired,
 
+  _displayHeaderTransactions: PropTypes.func.isRequired,
+  _displayEmptyLoadingIndicator: PropTypes.func.isRequired,
+  _displayTransactionsItems: PropTypes.func
 }
 
 export default WalletSection

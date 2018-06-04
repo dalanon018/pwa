@@ -7,17 +7,18 @@
 import React from 'react'
 import { List, Icon, Label } from 'semantic-ui-react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
-const CustomIcon = styled(Icon)`
+export const CustomIcon = styled(Icon)`
   font-size: 16px !important;
 `
-const Title = styled(Label)`
+export const Title = styled(Label)`
   font-size: 18px;
 `
-const Content = styled.p`
+export const Content = styled.p`
   font-size: 14px;
 `
-const CustomItem = styled(List.Item)`
+export const CustomItem = styled(List.Item)`
   padding: 10px !important;
   position: relative;
 
@@ -31,7 +32,7 @@ const CustomItem = styled(List.Item)`
   }
 `
 
-const ItemWrapper = styled.div`
+export const ItemWrapper = styled.div`
   left: 0;
   margin-left: 14px;
   position: absolute;
@@ -39,7 +40,7 @@ const ItemWrapper = styled.div`
   transform: translate(0, -50%);
 `
 
-const _productTitle = (title, windowWidth) => {
+export const _productTitle = (title, windowWidth) => {
   let maxChar = 40
 
   switch (true) {
@@ -90,7 +91,8 @@ function SearchResult ({ product, changeRoute, windowWidth }) {
 }
 
 SearchResult.propTypes = {
-
+  product: PropTypes.object,
+  changeRoute: PropTypes.func
 }
 
 export default SearchResult

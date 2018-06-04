@@ -93,7 +93,10 @@ export const DefaultState = ({
 BannerSlider.propTypes = {
   loader: PropTypes.bool.isRequired,
   isInfinite: PropTypes.bool,
-  images: PropTypes.array.isRequired,
+  images: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]),
   slidesToShow: PropTypes.number
 }
 
