@@ -274,12 +274,13 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   }
 
   componentWillReceiveProps (nextProps) {
-    const { product, productSuccess, productError } = nextProps
+    const { product, productSuccess, productError, isMobileDevice } = nextProps
 
-    const stickyFooter = document.getElementsByTagName('footer')[0]
-
-    stickyFooter.classList.contains('sticky') &&
-    stickyFooter.classList.remove('sticky')
+    if (!isMobileDevice()) {
+      const stickyFooter = document.getElementsByTagName('footer')[0]
+      stickyFooter.classList.contains('sticky') &&
+      stickyFooter.classList.remove('sticky')
+    }
 
     const triggerFBEventProduct = when(
       compose(complement(equals(0)), prop('size')),
