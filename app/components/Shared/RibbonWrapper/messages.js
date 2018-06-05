@@ -9,5 +9,9 @@ export default defineMessages({
   off: {
     id: 'app.components.RibbonWrapper.header',
     defaultMessage: 'OFF'
+  },
+  peso: {
+    id: `app.components.RibbonWrapper.peso`,
+    defaultMessage: '₱ '
   }
 })

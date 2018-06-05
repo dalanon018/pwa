@@ -88,6 +88,7 @@ class RibbonWrapper extends React.PureComponent {
       <Wrapper offsetRight={rightSpace && offsetRight}>
         <div className='ribbon-tag background__gold'>
           <Label as='b' className={`color__white padding__none text__weight--${isDesktop ? '700' : '500'}`} basic size={`${isDesktop ? 'large' : 'small'}`}>
+            {!isEmpty(percentage) && percentage.get('type') === 'PERCENTAGE' ? '' : <FormattedMessage {...messages.peso} />}
             {!isEmpty(percentage) && percentage.get('amount')}
             {!isEmpty(percentage) && percentage.get('type') === 'PERCENTAGE' ? '%' : ''}
           </Label>
