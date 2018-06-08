@@ -8,11 +8,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
-import { injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { createStructuredSelector } from 'reselect'
 import { compose } from 'redux'
 import { push } from 'react-router-redux'
-import { Grid, Container, Image } from 'semantic-ui-react'
+import { Grid, Container, Image, Label } from 'semantic-ui-react'
 
 import FlashDealItem from 'components/Shared/PlainCard'
 import OrderTip from 'components/Mobile/OrderTip'
@@ -63,14 +63,23 @@ export class FlashDealsLanding extends React.PureComponent { // eslint-disable-l
     }
   }
 
-  _handleDefaultState = () => {
+  _handleDefaultState = isEmpty => {
     return (
-      <Grid.Row>
+      <Grid.Row columns={1}>
         <Grid.Column>
           <FlashDealItem borderRadius height={120}>
             <Image className='height__inherit' src={imageStock('Slider-Default.jpg', this._handleImgixOptions())} alt='CLiQQ' />
           </FlashDealItem>
         </Grid.Column>
+
+        {
+          isEmpty &&
+          <Grid.Column textAlign='center'>
+            <Label as='p' className='text__weight--500 color__light-grey margin__vertical--30' basic size='massive' >
+              <FormattedMessage {...messages.emptyLabel} />
+            </Label>
+          </Grid.Column>
+        }
       </Grid.Row>
     )
   }
@@ -100,8 +109,8 @@ export class FlashDealsLanding extends React.PureComponent { // eslint-disable-l
         <Container>
           <Grid padded>
             {
-              promosLoading
-              ? this._handleDefaultState()
+              promos.size === 0 || promosLoading
+              ? this._handleDefaultState(promos.size === 0)
               : promos.map(promo => {
                 return (
                   <Grid.Row key={promo.get('id')}>
