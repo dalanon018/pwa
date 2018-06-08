@@ -12,6 +12,6 @@ export default defineMessages({
   },
   emptyLabel: {
     id: 'app.containers.FlashDealsLanding.emptyLabel',
-    defaultMessage: 'NO PROMO AT THIS TIME'
+    defaultMessage: 'WE DON\'T HAVE ANY NEW FLASH DEALS RIGHT NOW'
   }
 })

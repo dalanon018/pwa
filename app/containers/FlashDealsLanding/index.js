@@ -66,18 +66,17 @@ export class FlashDealsLanding extends React.PureComponent { // eslint-disable-l
   _handleDefaultState = isEmpty => {
     return (
       <Grid.Row columns={1}>
-        <Grid.Column>
-          <FlashDealItem borderRadius height={120}>
-            <Image className='height__inherit' src={imageStock('Slider-Default.jpg', this._handleImgixOptions())} alt='CLiQQ' />
-          </FlashDealItem>
-        </Grid.Column>
-
         {
-          isEmpty &&
-          <Grid.Column textAlign='center'>
+          isEmpty
+          ? <Grid.Column textAlign='center'>
             <Label as='p' className='text__weight--500 color__light-grey margin__vertical--30' basic size='massive' >
               <FormattedMessage {...messages.emptyLabel} />
             </Label>
+          </Grid.Column>
+          : <Grid.Column>
+            <FlashDealItem borderRadius height={120}>
+              <Image className='height__inherit' src={imageStock('Slider-Default.jpg', this._handleImgixOptions())} alt='CLiQQ' />
+            </FlashDealItem>
           </Grid.Column>
         }
       </Grid.Row>
