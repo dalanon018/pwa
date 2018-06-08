@@ -14,7 +14,7 @@ export function * getMarkDown () {
   const headers = new Headers()
   headers.append('Content-Type', 'binary/octet-stream')
 
-  const url = 'https://storage.googleapis.com/cliqqshop/docs/faq.md'
+  const url = 'https://s3-ap-southeast-1.amazonaws.com/cliqq.shop/docs/faq.md'
   const req = yield call(xhr, url, {
     method: 'GET',
     headers
