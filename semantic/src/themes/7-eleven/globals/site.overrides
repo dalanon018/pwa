@@ -729,7 +729,10 @@ svg#barcode {
         margin: 20px 0 !important;
       }
       &--30 {
-        margin: 30px 0;
+        margin: 30px 0 !important;
+      }
+      &--40 {
+        margin: 40px 0 !important;
       }
     }
   }
