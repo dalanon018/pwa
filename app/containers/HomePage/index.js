@@ -516,19 +516,22 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           desktopView={null}
         />
 
-        <Container>
-          <div className={`${windowWidth >= 1024 && 'margin__top-positive--10 padding__horizontal--10'}`}>
-            <SectionTitle
-              colorGrey
-              noMarginBottom
-              // promo={promos.first()}
-              linkLabel='See All'
-              // promosLoading={promosLoading}
-              title={intl.formatMessage(messages.flashDeals)}
-              // link={windowWidth >= 1024 ? 'promos/' + firstPromoCode : '/flash-deals'}
-              link={'/flash-deals'} />
-          </div>
-        </Container>
+        {
+          promos.size >= 1 &&
+          <Container>
+            <div className={`${windowWidth >= 1024 && 'margin__top-positive--10 padding__horizontal--10'}`}>
+              <SectionTitle
+                colorGrey
+                noMarginBottom
+                // promo={promos.first()}
+                linkLabel='See All'
+                // promosLoading={promosLoading}
+                title={intl.formatMessage(messages.flashDeals)}
+                // link={windowWidth >= 1024 ? 'promos/' + firstPromoCode : '/flash-deals'}
+                link={'/flash-deals'} />
+            </div>
+          </Container>
+        }
 
         <AccessView
           mobileView={

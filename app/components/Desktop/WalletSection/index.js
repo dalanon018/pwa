@@ -130,14 +130,17 @@ class WalletSection extends React.PureComponent {
                   </PlainCard>
                 }
               </Grid.Row>
-              <Grid.Row>
-                <div className='margin__top-positive--20'>
-                  <SectionTitle colorGrey title={intl.formatMessage(messages.walletTransactionsTitle)} />
-                </div>
-                <Label as='p' className='text__weight--400 margin__top-negative--10 margin__bottom--none' basic size='large' >
-                  <FormattedMessage {...messages.pointsInfo} />
-                </Label>
-              </Grid.Row>
+              {
+                transactions.size > 0 && !transactionsLoading &&
+                <Grid.Row>
+                  <div className='margin__top-positive--20'>
+                    <SectionTitle colorGrey title={intl.formatMessage(messages.walletTransactionsTitle)} />
+                  </div>
+                  <Label as='p' className='text__weight--400 margin__top-negative--10 margin__bottom--none' basic size='large' >
+                    <FormattedMessage {...messages.pointsInfo} />
+                  </Label>
+                </Grid.Row>
+              }
             </Grid>
           </Container>
           <PointsHistory loader={transactionsLoading} transactions={transactions} />
@@ -163,8 +166,8 @@ class WalletSection extends React.PureComponent {
               hasMoreData={lazyload}
               isLoading={transactionsLoading}
             >
-              { _displayEmptyLoadingIndicator() }
               { this._displayTransactionsItems() }
+              { _displayEmptyLoadingIndicator() }
             </InfiniteWrapper>
           </div>
         </ContentWrapper>

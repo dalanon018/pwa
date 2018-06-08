@@ -131,14 +131,17 @@ export const ToggleFullPoints = ({ isFullPointsOnly, ...rest }) => {
   )(isFullPointsOnly)
 }
 
-export const ToggleEarnPoints = ({ entity, isFullPointsOnly }) => {
+export const ToggleEarnPoints = ({ entity, isFullPointsOnly, changeRoute }) => {
   return toggleComponent(
     <PointsInfo>
       <Image src={CliQQPlainLogo} alt='CLiQQ' />
       <Label as='span' basic size='medium' className='text__weight--400'>
         <FormattedMessage
           {...messages.earnPoints}
-          values={{points: <span className='color__primary'>{getHighestPointsEarn(entity)}</span>}} />
+          values={{
+            points: <span className='color__primary'>{getHighestPointsEarn(entity)}</span>,
+            termsConditions: <span className='color__primary' onClick={() => changeRoute('/terms-conditions')}><FormattedMessage {...messages.applyTermsConditions} /></span>
+          }} />
       </Label>
     </PointsInfo>
   , null)(!isFullPointsOnly && !!entity.get('points'))
@@ -256,6 +259,7 @@ const Product = ({
                 <ToggleEarnPoints
                   entity={product}
                   isFullPointsOnly={_isFullPointsOnly}
+                  changeRoute={changeRoute}
                 />
 
                 <SocialContainer>
