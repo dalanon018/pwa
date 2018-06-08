@@ -88,6 +88,10 @@ export default defineMessages({
   },
   earnPoints: {
     id: 'app.containers.ProductPage.earnPoints',
-    defaultMessage: 'Earn {points} when you claim this!'
+    defaultMessage: 'Earn {points} when you claim this! {termsConditions} shall apply.'
+  },
+  applyTermsConditions: {
+    id: 'app.containers.ProductPage.applyTermsConditions',
+    defaultMessage: 'Terms and Conditions'
   }
 })

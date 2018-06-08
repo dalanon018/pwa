@@ -32,9 +32,9 @@ describe('<WalletSection />', () => {
     ).toEqual(1)
   })
 
-  it('should render four div\'s', () => {
+  it('should render three div\'s', () => {
     const renderedComponent = wrapper(WalletSection, minProps)
-    expect(renderedComponent.find('div').length).toEqual(4)
+    expect(renderedComponent.find('div').length).toEqual(3)
   })
 
   it('should render ContentWrapper', () => {

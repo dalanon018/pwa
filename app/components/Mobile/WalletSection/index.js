@@ -171,8 +171,8 @@ class WalletSection extends React.PureComponent {
             >
 
               { _displayHeaderTransactions() }
-              { _displayEmptyLoadingIndicator() }
               { this._displayTransactionsItems() }
+              { _displayEmptyLoadingIndicator() }
             </InfiniteWrapper>
           </div>
         </ContentWrapper>
