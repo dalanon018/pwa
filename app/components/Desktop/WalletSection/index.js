@@ -76,7 +76,8 @@ class WalletSection extends React.PureComponent {
       lazyload,
       transactions,
       transactionsLoading,
-      wallet
+      wallet,
+      changeRoute
     } = this.props
 
     const currentPoints = ifElse(
@@ -136,8 +137,12 @@ class WalletSection extends React.PureComponent {
                   <div className='margin__top-positive--20'>
                     <SectionTitle colorGrey title={intl.formatMessage(messages.walletTransactionsTitle)} />
                   </div>
-                  <Label as='p' className='text__weight--400 margin__top-negative--10 margin__bottom--none' basic size='large' >
-                    <FormattedMessage {...messages.pointsInfo} />
+                  <Label as='p' className='text__weight--400 margin__top-negative--10 margin__bottom--none cursor__pointer' basic size='large' >
+                    <FormattedMessage
+                      {...messages.pointsInfo}
+                      values={{
+                        termsConditions: <span className='color__primary' onClick={() => changeRoute('/terms-conditions')}><FormattedMessage {...messages.applyTermsConditions} /></span>
+                      }} />
                   </Label>
                 </Grid.Row>
               }

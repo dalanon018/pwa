@@ -7,7 +7,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-
+import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl'
@@ -233,7 +233,7 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
   }
 
   render () {
-    const { transactionsLoading, lazyload, transactions, wallet, intl } = this.props
+    const { transactionsLoading, lazyload, transactions, wallet, intl, changeRoute } = this.props
 
     return (
       <AccessView
@@ -244,6 +244,7 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
             transactionsLoading={transactionsLoading}
             wallet={wallet}
 
+            changeRoute={changeRoute}
             _displayHeaderTransactions={this._displayHeaderTransactions}
             _displayEmptyLoadingIndicator={this._displayEmptyLoadingIndicator}
           />
@@ -256,6 +257,7 @@ export class WalletPage extends React.PureComponent { // eslint-disable-line rea
             wallet={wallet}
             intl={intl}
 
+            changeRoute={changeRoute}
             _displayEmptyLoadingIndicator={this._displayEmptyLoadingIndicator}
           />
         }
@@ -283,6 +285,7 @@ function mapDispatchToProps (dispatch) {
     getWallet: payload => dispatch(getWalletAction(payload)),
     getMobileNumber: () => (dispatch(getMobileNumberAction())),
     resetWallet: () => dispatch(resetWalletTransactionsAction()),
+    changeRoute: (url) => dispatch(push(url)),
     dispatch
   }
 }

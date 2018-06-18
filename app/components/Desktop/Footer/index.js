@@ -171,7 +171,7 @@ export class Footer extends React.PureComponent {
                         </A>
                       </CustomItem>
                       <CustomItem>
-                        <A href='mailto:cliqqshopinfo@7-eleven.com.ph'>
+                        <A href='mailto:cliqqshop@7-eleven.com.ph'>
                           <IconItem className='mail-icon' icon={SocialIconsSprite} />
                         </A>
                       </CustomItem>

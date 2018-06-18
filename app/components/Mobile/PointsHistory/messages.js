@@ -25,5 +25,14 @@ export default defineMessages({
   youBought: {
     id: 'app.containers.WalletPage.youBought',
     defaultMessage: 'You bought {item}'
+  },
+  pointsInfo: {
+    id: 'app.containers.WalletSection.pointsInfo',
+    defaultMessage: 'Check all the points you have used and earned here. {termsConditions} shall apply.'
+    // How do I earn points?
+  },
+  applyTermsConditions: {
+    id: 'app.containers.ProductPage.applyTermsConditions',
+    defaultMessage: 'Terms and Conditions'
   }
 })

@@ -41,7 +41,8 @@ export const AdjustedPoints = styled.div`
 
 function PointsHistory ({
   loader,
-  transactions
+  transactions,
+  changeRoute
 }) {
   return (
     <div>
@@ -52,6 +53,13 @@ function PointsHistory ({
             <Grid.Row>
               <Label as='p' className='color__grey text__weight--500 text__align--left' size='large' >
                 <FormattedMessage {...messages.walletTransactionsTitle} />
+              </Label>
+              <Label as='p' className='text__weight--400' basic size='small' >
+                <FormattedMessage
+                  {...messages.pointsInfo}
+                  values={{
+                    termsConditions: <span className='color__primary' onClick={() => changeRoute('/terms-conditions')}><FormattedMessage {...messages.applyTermsConditions} /></span>
+                  }} />
               </Label>
               <PlainCard>
                 {
