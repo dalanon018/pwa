@@ -88,7 +88,8 @@ class WalletSection extends React.PureComponent {
       lazyload,
       transactions,
       transactionsLoading,
-      wallet
+      wallet,
+      changeRoute
     } = this.props
 
     const currentPoints = ifElse(
@@ -144,7 +145,7 @@ class WalletSection extends React.PureComponent {
               </Grid.Row>
             </Grid>
           </Container>
-          <PointsHistory loader={transactionsLoading} transactions={transactions} />
+          <PointsHistory loader={transactionsLoading} transactions={transactions} changeRoute={changeRoute} />
         </div>
       )
     }
