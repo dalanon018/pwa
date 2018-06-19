@@ -48,6 +48,8 @@ export const CATEGORIES_KEY = 'boilerplate/App/CATEGORIES_KEY'
 export const BRANDS_KEY = 'boilerplate/App/BRANDS_KEY'
 export const STORE_LOCATIONS_KEY = 'boilerplate/App/STORE_LOCATIONS_KEY'
 export const LOYALTY_TOKEN_KEY = 'boilerplate/App/LOYALTY_TOKEN_KEY'
+export const VERIFICATION_CODE_KEY = 'boilerplate/App/VERIFICATION_CODE_KEY'
+
 /**
  * this key is for us to save the last selected method before going to map
  * since we dont have holder for what payment they selected going back to
