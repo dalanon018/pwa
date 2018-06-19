@@ -41,6 +41,9 @@ import { FbEventTracking } from 'utils/seo'
 import { switchFn } from 'utils/logicHelper'
 import { fnQueryObject } from 'utils/http'
 import { isFullPointsOnly } from 'utils/payment'
+import {
+  handleErrorMessage
+} from 'utils/errorHandling'
 
 import WindowWidth from 'components/Shared/WindowWidth'
 
@@ -328,10 +331,17 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     }
   }
 
-  _handleErrorMessage = switchFn({
-    400: <FormattedMessage {...messages.emptyQuantity} />,
-    500: <FormattedMessage {...messages.errorSubmission} />
-  })(<FormattedMessage {...messages.errorSubmission} />)
+  _handleErrorMessage = (code) => {
+    return handleErrorMessage({
+      code,
+      errors: {
+        VERIFICATION_EXPIRES: <FormattedMessage {...messages.errorVeriTokenExpired} />,
+        EMPTY_QUANTITY: <FormattedMessage {...messages.emptyQuantity} />,
+        ERROR_SUBMISSION: <FormattedMessage {...messages.errorSubmission} />
+      },
+      defaultError: <FormattedMessage {...messages.errorSubmission} />
+    })
+  }
 
   _handleSubmissionError (code) {
     if (this.submitting) {

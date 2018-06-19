@@ -22,8 +22,12 @@ import { takeLatest } from 'redux-saga'
 import request from 'utils/request'
 import { getItem, setItem, removeItem } from 'utils/localStorage'
 import { Pad } from 'utils/string'
+import { DateDifferece, AddDate } from 'utils/date'
 import { transformSubmitOrderPayload } from 'utils/transforms'
 import { calculatePricePoints, toggleOrigDiscountPrice } from 'utils/product'
+import {
+  ERROR_CODES
+} from 'utils/errorHandling'
 
 import {
   GET_ORDER_PRODUCT,
@@ -54,7 +58,8 @@ import {
   MOBILE_NUMBERS_KEY,
   ORDERED_LIST_KEY,
   STORE_LOCATIONS_KEY,
-  LAST_SELECTED_METHOD
+  LAST_SELECTED_METHOD,
+  VERIFICATION_CODE_KEY
 } from 'containers/App/constants'
 
 import {
@@ -70,6 +75,7 @@ import {
 import {
   getAccessToken
 } from 'containers/Buckets/saga'
+import {switchFn} from '../../utils/logicHelper'
 
 /**
  * // eventually we will use this to transform the data from response of the order.
@@ -188,11 +194,52 @@ export function * getLastSelectedMethod () {
   yield put(setLastSelectedMethodAction(lastMethod))
 }
 
+export function * requestLoyaltyToken () {
+  const verification = yield call(getItem, VERIFICATION_CODE_KEY)
+  try {
+    const token = yield getAccessToken()
+    const req = yield call(request, `${MOBILE_REGISTRATION_URL}/loyalty/cliqqshop/authorization`, {
+      method: 'POST',
+      token: token.access_token,
+      body: JSON.stringify({ verification })
+    })
+    const getLoyaltyToken = prop('loyaltyToken')
+    // the normal expiration is 2 hour
+    const expiry = AddDate(120)
+    const loyaltyToken = Object.assign({}, {
+      token: getLoyaltyToken(req),
+      expiry
+    })
+
+    yield call(setItem, LOYALTY_TOKEN_KEY, loyaltyToken)
+
+    return loyaltyToken
+  } catch (e) {
+    throw new Error(ERROR_CODES.VERIFICATION_EXPIRES)
+  }
+}
+
+export function * getLoyaltyToken () {
+  const loyaltyToken = yield call(getItem, LOYALTY_TOKEN_KEY)
+  // if we have token then we simply need to check if token is still valid
+  if (!isEmpty(loyaltyToken) && loyaltyToken) {
+    const { expiry } = loyaltyToken
+    if (DateDifferece(moment(), expiry) <= 0) {
+      return yield requestLoyaltyToken()
+    }
+
+    return loyaltyToken
+  }
+
+  return yield requestLoyaltyToken()
+}
+
 export function * requestOrderToken (mobile) {
   const mobileNumber = `0${mobile}`
-  const loyaltyToken = yield call(getItem, LOYALTY_TOKEN_KEY)
 
+  const loyaltyToken = yield getLoyaltyToken()
   const token = yield getAccessToken()
+
   const getOrderToken = yield call(request, `${MOBILE_REGISTRATION_URL}/loyalty/cliqqshop/auth_kong`, {
     method: 'POST',
     token: token.access_token,
@@ -262,11 +309,14 @@ export function * submitOrder (args) {
 
       yield put(successOrderAction(orderResponse))
     } else {
-      yield put(errorOrderAction(400))
+      yield put(errorOrderAction(ERROR_CODES.EMPTY_QUANTITY))
     }
   } catch (e) {
-    // yield put(setNetworkErrorAction(e.message))
-    yield put(errorOrderAction(500))
+    const exceptionHander = switchFn({
+      VERIFICATION_EXPIRES: ERROR_CODES[e.message]
+    })(ERROR_CODES.ERROR_SUBMISSION)
+
+    yield put(errorOrderAction(exceptionHander(e.message)))
   }
 }
 

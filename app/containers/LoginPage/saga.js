@@ -38,7 +38,8 @@ import {
   API_BASE_URL,
   MOBILE_REGISTRATION_URL,
   LOYALTY_TOKEN_KEY,
-  MOBILE_NUMBERS_KEY
+  MOBILE_NUMBERS_KEY,
+  VERIFICATION_CODE_KEY
 } from 'containers/App/constants'
 
 import {
@@ -154,7 +155,8 @@ export function * verificationCode (args) {
       body: JSON.stringify({ verification })
     })
     const getLoyaltyToken = prop('loyaltyToken')
-    const expiry = AddDate(1, 'years')
+    // the normal expiration is 2 hour
+    const expiry = AddDate(120)
     const loyaltyToken = Object.assign({}, {
       token: getLoyaltyToken(req),
       expiry
@@ -164,6 +166,9 @@ export function * verificationCode (args) {
     yield call(setItem, LOYALTY_TOKEN_KEY, loyaltyToken)
     yield put(successVerificationCodeAction())
     yield put(setLoyaltyTokenAction(getLoyaltyToken(req)))
+
+    // we will set up also the verification code since we should be able to renew our token after 2 hours of its expiration
+    yield call(setItem, VERIFICATION_CODE_KEY, verification)
     // set up a login
     yield put(setCurrentSessionAction(getLoyaltyToken(req)))
     // we need to fetch the current points
