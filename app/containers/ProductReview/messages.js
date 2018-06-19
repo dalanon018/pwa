@@ -60,6 +60,10 @@ export default defineMessages({
     id: `${idSuffix}.errorNoMobileProduct`,
     defaultMessage: 'There is a problem with submission. Please make sure you are online and that you are logged in using your mobile number.'
   },
+  errorVeriTokenExpired: {
+    id: `${idSuffix}.errorNoMobileProduct`,
+    defaultMessage: 'Verification Expired! Please re-login to renew the token. Thanks!'
+  },
   emptyQuantity: {
     id: `${idSuffix}.errorSubmission`,
     defaultMessage: 'Sorry the item is currently OUT OF STOCK.'
