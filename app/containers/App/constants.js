@@ -29,6 +29,7 @@ export const OATH_RESPONSE_TYPE = process.env.OATH_RESPONSE_TYPE
 export const OATH_GRANT_TYPE = process.env.OATH_GRANT_TYPE
 export const RECAPTCHA_SITE_KEY = process.env.RECAPTCHA_SITE_KEY
 export const FB_SHARE_ID = process.env.FB_SHARE_ID
+export const GOOGLE_APIS_URL = process.env.GOOGLE_APIS_URL
 
 // so we can disable functions that for production only
 export const ENVIROMENT = process.env.NODE_ENV
