@@ -100,6 +100,10 @@ export default defineMessages({
     id: `${idSuffix}.couponPromptDescriptionWarning`,
     defaultMessage: 'It seems you don\'t enter any Code.'
   },
+  couponPromptDescriptionError: {
+    id: `${idSuffix}.couponPromptDescriptionError`,
+    defaultMessage: 'Invalid coupon'
+  },
   couponButtonLabelApply: {
     id: `${idSuffix}.couponButtonLabelApply`,
     defaultMessage: 'APPLY'
