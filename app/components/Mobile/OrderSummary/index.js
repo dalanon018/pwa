@@ -561,7 +561,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                 <Grid.Column className='padding__horizontal--14'>
                   <Label as='p' className='color__grey text__weight--500' size='large' >
                     {
-                      couponApplied
+                      couponApplied && couponCode.length >= 1
                       ? <FormattedMessage {...messages.couponAppliedLabel} />
                       : <FormattedMessage {...messages.addCouponCodeLabel} />
                     }
@@ -570,6 +570,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                     <Form.Group>
                       <Form.Input
                         value={couponCode}
+                        disabled={couponApplied && couponCode.length >= 1}
                         onChange={e => _handleCouponEntry(e)}
                         width={9}
                         placeholder='Enter Code here'

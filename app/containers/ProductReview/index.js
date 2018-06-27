@@ -591,7 +591,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
         <CouponPrompt
           open={couponPrompt}
-          name='checkmark'
+          name={couponApplied ? 'checkmark' : 'warning'}
           title={couponPromptTitle}
           content={couponPromptDescription}
           close={this._handleCouponClose}
