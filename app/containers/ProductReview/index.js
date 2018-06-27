@@ -12,17 +12,20 @@ import {
   __,
   always,
   both,
+  complement,
   compose,
   contains,
   either,
   equals,
   identity,
   ifElse,
+  is,
   partial,
   prop,
   propOr,
   toLower,
-  toUpper
+  toUpper,
+  when
  } from 'ramda'
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
@@ -80,7 +83,8 @@ import {
   getStoreAction,
   getBlackListAction,
   getCurrentPointsAction,
-  getLastSelectedMethodAction
+  getLastSelectedMethodAction,
+  submitCouponAction
 } from './actions'
 
 import {
@@ -95,7 +99,11 @@ import {
   selectBlackListed,
   selectCurrentPoints,
   selectCurrentPointsLoading,
-  selectLastSelectedMethod
+  selectLastSelectedMethod,
+  selectCouponApplied,
+  selectCouponLoader,
+  selectCouponSuccess,
+  selectCouponError
 } from './selectors'
 
 import {
@@ -168,18 +176,13 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
    */
   submitting = false
 
+  /**
+   * Native handler for submitting coupon
+   */
+  couponRequest = false
+
   constructor () {
     super()
-
-    this._handleChange = this._handleChange.bind(this)
-    this._handleModalClose = this._handleModalClose.bind(this)
-    this._handleToBottom = this._handleToBottom.bind(this)
-    this._handleProceed = this._handleProceed.bind(this)
-    this._handleStoreLocator = this._handleStoreLocator.bind(this)
-    this._handleDoneFetchOrderNoProductNorMobile = this._handleDoneFetchOrderNoProductNorMobile.bind(this)
-    this._handleSubmissionSuccess = this._handleSubmissionSuccess.bind(this)
-    this._handleSubmissionError = this._handleSubmissionError.bind(this)
-    this._handleErrorMessage = this._handleErrorMessage.bind(this)
 
     scrollPolyfill.polyfill()
   }
@@ -203,15 +206,16 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   _shouldRedirectAccessFromURL = () => {
-    const { orderFail, changeRoute } = this.props
+    const { changeRoute, orderedProduct } = this.props
     // if orderFail size === 0  || submitting == false then means its not submission error
     // its safe to redirect the user.
-    if (orderFail.size === 0 && Boolean(this.submitting) === false) {
+    // user get here directly w/o ordering
+    if (orderedProduct.size === 0) {
       changeRoute('/')
     }
   }
 
-  _handleModalClose () {
+  _handleModalClose = () => {
     this.setState({
       modalToggle: false
     })
@@ -263,7 +267,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     [PAYMENTS_OPTIONS.FULL_POINTS]: PAYMENTS_OPTIONS.POINTS
   })(modePayment)(modePayment)
 
-  _handleProceed () {
+  _handleProceed = () => {
     const { mobileNumber, orderedProduct, submitOrder } = this.props
     const { modePayment, store, usePoints } = this.state
     const isShouldHaveStore = both(
@@ -322,7 +326,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     this.props.recentStoreLocation(queryParams)
   }
 
-  _handleDoneFetchOrderNoProductNorMobile () {
+  _handleDoneFetchOrderNoProductNorMobile = () => {
     this.setState({
       modalToggle: true,
       errorMessage: <FormattedMessage {...messages.errorHeader} />,
@@ -330,7 +334,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     })
   }
 
-  _handleSubmissionSuccess (success) {
+  _handleSubmissionSuccess = (success) => {
     const { changeRoute } = this.props
     if (this.submitting) {
       changeRoute(`/purchases/${success.get('trackingNumber')}`)
@@ -344,13 +348,14 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       errors: {
         VERIFICATION_EXPIRES: <FormattedMessage {...messages.errorVeriTokenExpired} />,
         EMPTY_QUANTITY: <FormattedMessage {...messages.emptyQuantity} />,
-        ERROR_SUBMISSION: <FormattedMessage {...messages.errorSubmission} />
+        ERROR_SUBMISSION: <FormattedMessage {...messages.errorSubmission} />,
+        COUPON_INVALID: <FormattedMessage {...messages.couponPromptDescriptionError} />
       },
       defaultError: <FormattedMessage {...messages.errorSubmission} />
     })
   }
 
-  _handleSubmissionError (code) {
+  _handleSubmissionError = (code) => {
     if (this.submitting) {
       this.setState({
         modalToggle: true,
@@ -359,6 +364,22 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       })
       this.submitting = false
     }
+  }
+
+  _handleCouponError = (code) => {
+    const shouldTriggerError = when(
+      both(always(this.couponRequest), complement(is(Boolean))),
+      (code) => {
+        this.setState({
+          modalToggle: true,
+          errorMessage: this._handleErrorMessage(code),
+          errorContent: ''
+        })
+        this.couponRequest = false
+      }
+    )
+
+    shouldTriggerError(code)
   }
 
   _isDisabledPointsOptions = () => {
@@ -414,55 +435,16 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     })
   }
 
-  _handleCouponReset = () => {
-    const { intl } = this.props
-
-    if (this.state.couponApplied) {
-      this.setState({
-        couponCode: '',
-        couponApplied: false,
-        couponPromptTitle: intl.formatMessage(messages.couponRemoveLabelTitle),
-        couponPromptDescription: intl.formatMessage(messages.couponRemoveLabelDescription),
-        couponSubmitText: intl.formatMessage(messages.couponButtonLabelApply)
-      })
-    }
-  }
-
-  _handleCouponLabelSetter = () => {
-    const { intl } = this.props
+  _handleSubmitCoupon = () => {
+    const { mobileNumber, orderedProduct, submitCoupon } = this.props
     const { couponCode } = this.state
 
-    let title = ''
-    let description = ''
-    let buttonLabel = ''
-    let isApplied = false
-
-    if (couponCode.length >= 1) {
-      title = intl.formatMessage(messages.couponPromptTitleSuccess)
-      description = intl.formatMessage(messages.couponPromptDescriptionSuccess)
-      buttonLabel = intl.formatMessage(messages.couponButtonLabelRemove)
-      isApplied = true
-    } else {
-      title = intl.formatMessage(messages.couponPromptTitleWarning)
-      description = intl.formatMessage(messages.couponPromptDescriptionWarning)
-      buttonLabel = intl.formatMessage(messages.couponButtonLabelApply)
-    }
-
-    return {title, description, buttonLabel, isApplied}
-  }
-
-  _handleSubmitCoupon = () => {
-    const {title, description, buttonLabel, isApplied} = this._handleCouponLabelSetter()
-
-    this.setState({
-      couponPrompt: true,
-      couponPromptTitle: title,
-      couponPromptDescription: description,
-      couponSubmitText: buttonLabel,
-      couponApplied: isApplied
+    this.couponRequest = true
+    submitCoupon({
+      mobileNumber,
+      orderedProduct,
+      couponCode
     })
-
-    this._handleCouponReset()
   }
 
   _handleCouponClose = () => {
@@ -494,7 +476,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   componentWillReceiveProps (nextProps) {
-    const { orderedProduct, productLoader, mobileNumber, mobileLoader, orderSuccess, orderFail } = nextProps
+    const { orderedProduct, productLoader, mobileNumber, mobileLoader, orderSuccess, orderFail, couponError } = nextProps
     const { store } = this.state
 
     if (!isEmpty(store)) {
@@ -519,6 +501,11 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     ifElse(
       isEntityEmpty, noop, this._handleSubmissionError
     )(orderFail)
+
+    // handle once done applying and theres error
+    ifElse(
+      isEntityEmpty, noop, this._handleCouponError
+    )(couponError)
 
     this._handleStoreVisible(nextProps)
   }
@@ -631,7 +618,11 @@ const mapStateToProps = createStructuredSelector({
   isBlackListed: selectBlackListed(),
   currentPoints: selectCurrentPoints(),
   currentPointsLoading: selectCurrentPointsLoading(),
-  mobileNumbers: selectMobileNumbers()
+  mobileNumbers: selectMobileNumbers(),
+  couponApplied: selectCouponApplied(),
+  couponLoader: selectCouponLoader(),
+  couponSuccess: selectCouponSuccess(),
+  couponError: selectCouponError()
 })
 
 function mapDispatchToProps (dispatch) {
@@ -650,6 +641,7 @@ function mapDispatchToProps (dispatch) {
     recentStoreLocation: (payload) => dispatch(recentStoreLocationAction(payload)),
     getCurrentPoints: () => dispatch(getCurrentPointsAction()),
     setHandlersDefault: () => dispatch(setOrderHandlersDefaultAction()),
+    submitCoupon: (payload) => dispatch(submitCouponAction(payload)),
     changeRoute: (url) => dispatch(replace(url)),
     pushRoute: (url) => dispatch(push(url)),
     dispatch
