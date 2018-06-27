@@ -25,7 +25,10 @@ import {
 
   SET_BLACKLIST,
 
-  SET_LAST_SELECTED_METHOD
+  SET_LAST_SELECTED_METHOD,
+
+  COUPON_SUBMIT,
+  COUPON_RESULT
 } from './constants'
 
 const initialState = fromJS({
@@ -40,7 +43,11 @@ const initialState = fromJS({
   storeLocation: {},
   currentPoints: {},
   currentPointsLoading: false,
-  isBlackListed: true
+  isBlackListed: true,
+  couponApplied: false,
+  couponLoader: false,
+  couponSuccess: false,
+  couponError: false
 })
 
 function productReviewReducer (state = initialState, action) {
@@ -95,6 +102,21 @@ function productReviewReducer (state = initialState, action) {
     case SET_BLACKLIST:
       return state
         .set('isBlackListed', action.payload)
+
+    case COUPON_SUBMIT:
+      return state
+        .set('couponLoader', true)
+        .set('couponApplied', false)
+        .set('couponSuccess', false)
+        .set('couponError', false)
+    case COUPON_RESULT: {
+      const { couponApplied, couponSuccess, couponError } = action.payload
+      return state
+        .set('couponLoader', false)
+        .set('couponApplied', couponApplied)
+        .set('couponSuccess', couponSuccess)
+        .set('couponError', couponError)
+    }
 
     default:
       return state

@@ -73,6 +73,26 @@ const selectCurrentPointsLoading = () => createSelector(
   (substate) => substate.get('currentPointsLoading')
 )
 
+const selectCouponApplied = () => createSelector(
+  selectProductReviewDomain(),
+  (substate) => substate.get('couponApplied')
+)
+
+const selectCouponLoader = () => createSelector(
+  selectProductReviewDomain(),
+  (substate) => substate.get('couponLoader')
+)
+
+const selectCouponSuccess = () => createSelector(
+  selectProductReviewDomain(),
+  (substate) => substate.get('couponSuccess')
+)
+
+const selectCouponError = () => createSelector(
+  selectProductReviewDomain(),
+  (substate) => substate.get('couponError')
+)
+
 export {
   selectOrderProduct,
   selectMobileNumber,
@@ -85,5 +105,9 @@ export {
   selectBlackListed,
   selectCurrentPoints,
   selectCurrentPointsLoading,
-  selectLastSelectedMethod
+  selectLastSelectedMethod,
+  selectCouponApplied,
+  selectCouponLoader,
+  selectCouponSuccess,
+  selectCouponError
 }
