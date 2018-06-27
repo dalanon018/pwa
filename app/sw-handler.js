@@ -2,7 +2,8 @@ const CACHE_NAME = '7-eleven-v0.0.0'
 const API_REQUESTS_URL = [
   'https://apidemo.cliqq.net:8443',
   'https://cliqqshop.imgix.net',
-  'https://gw.cliqq.net:8443'
+  'https://gw.cliqq.net:8443',
+  'https://storage.googleapis.com'
 
 ]
 // eslint-disable-line
