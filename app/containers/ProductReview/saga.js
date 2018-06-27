@@ -4,6 +4,8 @@ import moment from 'moment'
 import {
   always,
   compose,
+  complement,
+  dissoc,
   gt,
   identity,
   ifElse,
@@ -11,6 +13,7 @@ import {
   isEmpty,
   map,
   prop,
+  propEq,
   propOr,
   uniq,
   when
@@ -30,13 +33,14 @@ import {
 } from 'utils/errorHandling'
 
 import {
-  GET_ORDER_PRODUCT,
-  GET_MOBILE_NUMBER,
-  ORDER_SUBMIT,
-  GET_STORE,
+  COUPON_SUBMIT,
   GET_BLACKLIST,
   GET_CURRENT_POINTS,
-  GET_LAST_SELECTED_METHOD
+  GET_LAST_SELECTED_METHOD,
+  GET_MOBILE_NUMBER,
+  GET_ORDER_PRODUCT,
+  GET_STORE,
+  ORDER_SUBMIT
 } from './constants'
 
 import {
@@ -47,18 +51,19 @@ import {
   errorOrderAction,
   setBlackListAction,
   setCurrentPointsAction,
-  setLastSelectedMethodAction
+  setLastSelectedMethodAction,
+  resultCouponAction
 } from './actions'
 
 import {
   API_BASE_URL,
-  MOBILE_REGISTRATION_URL,
-  LOYALTY_TOKEN_KEY,
   CURRENT_PRODUCT_KEY,
+  LAST_SELECTED_METHOD,
+  LOYALTY_TOKEN_KEY,
   MOBILE_NUMBERS_KEY,
+  MOBILE_REGISTRATION_URL,
   ORDERED_LIST_KEY,
   STORE_LOCATIONS_KEY,
-  LAST_SELECTED_METHOD,
   VERIFICATION_CODE_KEY
 } from 'containers/App/constants'
 
@@ -252,7 +257,7 @@ export function * requestOrderToken (mobile) {
   return getPropAccessToken(getOrderToken)
 }
 
-// Special case for promo paylaod
+// Special case for promo payload
 function promoPayload (orderedProduct) {
   const promoCode = orderedProduct.getIn(['promo', 'promoCode'])
 
@@ -363,6 +368,47 @@ export function * getCurrentPoints () {
   }
 }
 
+function * couponPayloadCreator ({orderedProduct, mobileNumber, couponCode}) {
+  // we remove the totalPrice that not really needed if promo code exist
+  return dissoc('totalPrice', {
+    ...promoPayload(orderedProduct),
+    cliqqCode: orderedProduct.get('cliqqCode').first(),
+    quantity: 1,
+    deviceOrigin: 'PWA',
+    mobileNumber: `0${mobileNumber}`,
+    couponCode
+  })
+}
+
+export function * submitCoupon (args) {
+  const { payload: { orderedProduct, mobileNumber, couponCode } } = args
+  const isSuccess = complement(propEq('statusCode', '404'))
+  const postPayload = yield couponPayloadCreator({orderedProduct, mobileNumber, couponCode})
+
+  const token = yield getAccessToken()
+  const req = yield call(request, `${API_BASE_URL}/orderValidation`, {
+    method: 'POST',
+    body: JSON.stringify(postPayload),
+    token: token.access_token
+  })
+
+  if (isSuccess(req)) {
+    // const currentPoints = compose(
+    //   when(gt(0), always(0)),
+    //   propOr(0, 'currentPoints')
+    // )
+    // const points = parseInt(currentPoints(req))
+    // yield put(HeaderPointsAction(points))
+    // yield put(setCurrentPointsAction({ points }))
+  } else {
+    yield put(resultCouponAction({
+      couponApplied: false,
+      couponSuccess: false,
+      couponError: ERROR_CODES.COUPON_INVALID
+    }))
+  }
+}
+
 export function * getOrderProductSaga () {
   yield * takeLatest(GET_ORDER_PRODUCT, getOrderProduct)
 }
@@ -390,6 +436,10 @@ export function * getLastSelectedMethodSaga () {
   yield * takeLatest(GET_LAST_SELECTED_METHOD, getLastSelectedMethod)
 }
 
+export function * submitCouponSaga () {
+  yield * takeLatest(COUPON_SUBMIT, submitCoupon)
+}
+
 export function * productReviewSagas () {
   const watcher = yield [
     fork(getOrderProductSaga),
@@ -400,6 +450,8 @@ export function * productReviewSagas () {
     fork(getStoreLocationSaga),
     fork(getCurrentPointsSaga),
     fork(getLastSelectedMethodSaga),
+
+    fork(submitCouponSaga),
 
     fork(submitOrderSaga)
   ]
