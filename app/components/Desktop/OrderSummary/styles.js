@@ -266,6 +266,25 @@ const StoreLocatorRow = styled.div`
   display: ${props => props.visibility ? 'block' : 'none'};
 `
 
+const CouponContainer = styled.div`
+  .fields {
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap !important;
+    justify-content: space-between;
+
+    .custom-input {
+      input {
+        border: 2px solid #F0F0F0 !important;
+      }
+    }
+
+    button {
+      border-radius: 2px !important;
+    }
+  }
+`
+
 export {
   MethodTitle,
   BottomWrapper,
@@ -286,5 +305,6 @@ export {
   InfoBlock,
   CashPrepaidInfo,
   PointsPlusCash,
-  StoreLocatorRow
+  StoreLocatorRow,
+  CouponContainer
 }

@@ -157,5 +157,13 @@ export default defineMessages({
   pointsCashDescription: {
     id: `${idSuffix}.pointsCashDescription`,
     defaultMessage: 'Save money by combining your points and cash to shop. Try it now!'
+  },
+  addCouponCodeLabel: {
+    id: `${idSuffix}.addCouponCodeLabel`,
+    defaultMessage: `Apply a Discount Coupon Code`
+  },
+  couponAppliedLabel: {
+    id: `${idSuffix}.couponAppliedLabel`,
+    defaultMessage: 'Discount Coupon Code Applied'
   }
 })
