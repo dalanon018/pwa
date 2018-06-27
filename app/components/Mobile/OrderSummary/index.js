@@ -61,7 +61,8 @@ import {
   LabelPrice,
   LabelFullPointsPrice,
   FullPointsWrapper,
-  LabelTitle
+  LabelTitle,
+  CouponContainer
 } from './styles'
 
 const toggleComponent = (component1, component2) => ifElse(
@@ -418,12 +419,17 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       storeLocatorVisibility,
       pointsModifierVisibility,
       store,
+      couponCode,
+      couponSubmitText,
+      couponApplied,
 
       _isFullPointsOnly,
       _updateUsePoints,
       _handleStoreLocator,
       _handleRecentStore,
-      _stepWrapperRef
+      _stepWrapperRef,
+      _handleCouponEntry,
+      _handleSubmitCoupon
     } = this.props
 
     const brandLogo = orderedProduct.get('brandLogo') ? (
@@ -547,6 +553,36 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
             </Grid>
           </CustomGrid>
         </div>
+
+        <CouponContainer className='background__white box__shadow--primary margin__top-positive--10'>
+          <CustomGrid>
+            <Grid padded>
+              <Grid.Row>
+                <Grid.Column className='padding__horizontal--14'>
+                  <Label as='p' className='color__grey text__weight--500' size='large' >
+                    {
+                      couponApplied
+                      ? <FormattedMessage {...messages.couponAppliedLabel} />
+                      : <FormattedMessage {...messages.addCouponCodeLabel} />
+                    }
+                  </Label>
+                  <Form onSubmit={_handleSubmitCoupon}>
+                    <Form.Group>
+                      <Form.Input
+                        value={couponCode}
+                        onChange={e => _handleCouponEntry(e)}
+                        width={9}
+                        placeholder='Enter Code here'
+                        name='coupon'
+                        className='custom-input' />
+                      <Button content={couponSubmitText} className='background__teal color__white' />
+                    </Form.Group>
+                  </Form>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </CustomGrid>
+        </CouponContainer>
 
         <ButtonContainer>
           <Button onClick={this._handleProceedFactory} primary fluid loading={orderRequesting} className='text__weight--700'>

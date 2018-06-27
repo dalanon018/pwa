@@ -49,6 +49,7 @@ import WindowWidth from 'components/Shared/WindowWidth'
 
 import MobileOrderSummary from 'components/Mobile/OrderSummary'
 import DesktopOrderSummary from 'components/Desktop/OrderSummary'
+import CouponPrompt from 'components/Shared/PromptModal'
 
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 
@@ -153,7 +154,13 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     pointsModifierVisibility: false,
     modalToggle: false,
     errorMessage: '',
-    errorContent: ''
+    errorContent: '',
+    couponCode: '',
+    couponPrompt: false,
+    couponPromptTitle: '',
+    couponPromptDescription: '',
+    couponSubmitText: '',
+    couponApplied: false
   }
 
   /**
@@ -400,6 +407,56 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     selectQuery(query)
   }
 
+  _handleCouponEntry = e => {
+    this.setState({
+      couponCode: e.target.value.toUpperCase(),
+      couponSubmitText: this.props.intl.formatMessage(messages.couponButtonLabelApply)
+    })
+  }
+
+  _handleSubmitCoupon = () => {
+    const { intl } = this.props
+    const { couponCode, couponSubmitText } = this.state
+
+    let title = ''
+    let description = ''
+    let buttonLabel = ''
+    let isApplied = false
+
+    if (couponCode.length >= 1) {
+      title = intl.formatMessage(messages.couponPromptTitleSuccess)
+      description = intl.formatMessage(messages.couponPromptDescriptionSuccess)
+      buttonLabel = intl.formatMessage(messages.couponButtonLabelRemove)
+      isApplied = true
+    } else {
+      title = intl.formatMessage(messages.couponPromptTitleWarning)
+      description = intl.formatMessage(messages.couponPromptDescriptionWarning)
+      buttonLabel = intl.formatMessage(messages.couponButtonLabelApply)
+    }
+
+    this.setState({
+      couponPrompt: true,
+      couponPromptTitle: title,
+      couponPromptDescription: description,
+      couponSubmitText: buttonLabel,
+      couponApplied: isApplied
+    }, () => {
+      if (couponSubmitText === 'REMOVE') {
+        this.setState({
+          couponCode: '',
+          couponApplied: false,
+          couponPromptTitle: intl.formatMessage(messages.couponRemoveLabelTitle),
+          couponPromptDescription: intl.formatMessage(messages.couponRemoveLabelDescription),
+          couponSubmitText: intl.formatMessage(messages.couponButtonLabelApply)
+        })
+      }
+    })
+  }
+
+  _handleCouponClose = () => {
+    this.setState({couponPrompt: false})
+  }
+
   componentWillUnmount () {
     this.props.setHandlersDefault()
   }
@@ -420,6 +477,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     this.props.setShowActivityIcon(false)
 
     this._handleStoreVisible(this.props)
+
+    this.setState({couponSubmitText: this.props.intl.formatMessage(messages.couponButtonLabelApply)})
   }
 
   componentWillReceiveProps (nextProps) {
@@ -454,60 +513,35 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
 
   render () {
     const { currentPoints, orderedProduct, orderRequesting, isBlackListed, productLoader, intl, mobileNumbers } = this.props
-    const { errorMessage, errorContent, modePayment, modalToggle, storeLocatorVisibility, pointsModifierVisibility, store, usePoints } = this.state
+    const { errorMessage, errorContent, modePayment, modalToggle, storeLocatorVisibility, pointsModifierVisibility, store, usePoints, couponCode, couponPrompt, couponPromptTitle, couponPromptDescription, couponSubmitText, couponApplied } = this.state
+
     return (
-      <AccessView
-        mobileView={
-          <MobileOrderSummary
-            isDisabledPointsOptions={this._isDisabledPointsOptions()}
-            currentPoints={currentPoints.get('points') || 0}
-            usePoints={usePoints}
-            ShowCodComponent={ShowCodComponent}
-            _handleChange={this._handleChange}
-            _handleModalClose={this._handleModalClose}
-            _handleProceed={this._handleProceed}
-            _handleNotEnoughFullPointsProceed={this._handleNotEnoughFullPointsProceed}
-            _handleNotEnoughFullPointsCloseModal={this._handleNotEnoughFullPointsCloseModal}
-            _handleStoreLocator={this._handleStoreLocator}
-            _handleRecentStore={this._handleRecentStore}
-            _handleToBottom={this._handleToBottom}
-            _stepWrapperRef={this._stepWrapperRef}
-            _updateUsePoints={this._updateUsePoints}
-            _isFullPointsOnly={this._isFullPointsOnly()}
-
-            errorMessage={errorMessage}
-            errorContent={errorContent}
-            isBlackListed={isBlackListed}
-
-            modalToggle={modalToggle}
-            modePayment={modePayment}
-            orderRequesting={orderRequesting}
-            orderedProduct={orderedProduct}
-            productLoader={productLoader}
-            store={store}
-            storeLocatorVisibility={storeLocatorVisibility}
-            pointsModifierVisibility={pointsModifierVisibility}
-          />
-        }
-        desktopView={
-          <div>
-            <DesktopOrderSummary
+      <div>
+        <AccessView
+          mobileView={
+            <MobileOrderSummary
+              isDisabledPointsOptions={this._isDisabledPointsOptions()}
+              currentPoints={currentPoints.get('points') || 0}
+              usePoints={usePoints}
+              ShowCodComponent={ShowCodComponent}
               _handleChange={this._handleChange}
               _handleModalClose={this._handleModalClose}
               _handleProceed={this._handleProceed}
+              _handleNotEnoughFullPointsProceed={this._handleNotEnoughFullPointsProceed}
+              _handleNotEnoughFullPointsCloseModal={this._handleNotEnoughFullPointsCloseModal}
               _handleStoreLocator={this._handleStoreLocator}
+              _handleRecentStore={this._handleRecentStore}
               _handleToBottom={this._handleToBottom}
               _stepWrapperRef={this._stepWrapperRef}
               _updateUsePoints={this._updateUsePoints}
               _isFullPointsOnly={this._isFullPointsOnly()}
+              _handleCouponEntry={this._handleCouponEntry}
+              _handleSubmitCoupon={this._handleSubmitCoupon}
 
               errorMessage={errorMessage}
+              errorContent={errorContent}
               isBlackListed={isBlackListed}
 
-              isDisabledPointsOptions={this._isDisabledPointsOptions()}
-              ShowCodComponent={ShowCodComponent}
-              currentPoints={currentPoints.get('points') || 0}
-              usePoints={usePoints}
               modalToggle={modalToggle}
               modePayment={modePayment}
               orderRequesting={orderRequesting}
@@ -515,13 +549,54 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
               productLoader={productLoader}
               store={store}
               storeLocatorVisibility={storeLocatorVisibility}
-              intl={intl}
-              mobileNumbers={mobileNumbers}
               pointsModifierVisibility={pointsModifierVisibility}
+              couponCode={couponCode}
+              couponSubmitText={couponSubmitText}
+              couponApplied={couponApplied}
             />
-          </div>
-        }
-      />
+          }
+          desktopView={
+            <div>
+              <DesktopOrderSummary
+                _handleChange={this._handleChange}
+                _handleModalClose={this._handleModalClose}
+                _handleProceed={this._handleProceed}
+                _handleStoreLocator={this._handleStoreLocator}
+                _handleToBottom={this._handleToBottom}
+                _stepWrapperRef={this._stepWrapperRef}
+                _updateUsePoints={this._updateUsePoints}
+                _isFullPointsOnly={this._isFullPointsOnly()}
+
+                errorMessage={errorMessage}
+                isBlackListed={isBlackListed}
+
+                isDisabledPointsOptions={this._isDisabledPointsOptions()}
+                ShowCodComponent={ShowCodComponent}
+                currentPoints={currentPoints.get('points') || 0}
+                usePoints={usePoints}
+                modalToggle={modalToggle}
+                modePayment={modePayment}
+                orderRequesting={orderRequesting}
+                orderedProduct={orderedProduct}
+                productLoader={productLoader}
+                store={store}
+                storeLocatorVisibility={storeLocatorVisibility}
+                intl={intl}
+                mobileNumbers={mobileNumbers}
+                pointsModifierVisibility={pointsModifierVisibility}
+              />
+            </div>
+          }
+        />
+
+        <CouponPrompt
+          open={couponPrompt}
+          name='checkmark'
+          title={couponPromptTitle}
+          content={couponPromptDescription}
+          close={this._handleCouponClose}
+        />
+      </div>
     )
   }
 }

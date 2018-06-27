@@ -83,5 +83,38 @@ export default defineMessages({
   peso: {
     id: `${idSuffix}.peso`,
     defaultMessage: '₱ '
+  },
+  couponPromptTitleSuccess: {
+    id: `${idSuffix}.couponPromptTitleSuccess`,
+    defaultMessage: 'Coupon Code Applied!'
+  },
+  couponPromptTitleWarning: {
+    id: `${idSuffix}.couponPromptTitleWarning`,
+    defaultMessage: 'Something went wrong'
+  },
+  couponPromptDescriptionSuccess: {
+    id: `${idSuffix}.couponPromptDescriptionSuccess`,
+    defaultMessage: 'Your item has now been successfully discounted.'
+  },
+  couponPromptDescriptionWarning: {
+    id: `${idSuffix}.couponPromptDescriptionWarning`,
+    defaultMessage: 'It seems you don\'t enter any Code.'
+  },
+  couponButtonLabelApply: {
+    id: `${idSuffix}.couponButtonLabelApply`,
+    defaultMessage: 'APPLY'
+  },
+  couponButtonLabelRemove: {
+    id: `${idSuffix}.couponButtonLabelRemove`,
+    defaultMessage: 'REMOVE'
+  },
+  couponRemoveLabelTitle: {
+    id: `${idSuffix}.couponRemoveLabelTitle`,
+    defaultMessage: 'Coupon removed'
+  },
+  couponRemoveLabelDescription: {
+    id: `${idSuffix}.couponRemoveLabelDescription`,
+    defaultMessage: 'Item is now on original price again.'
   }
+
 })
