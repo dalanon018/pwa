@@ -392,6 +392,10 @@ const CouponContainer = styled.div`
         border: 2px solid #F0F0F0 !important;
       }
     }
+
+    button {
+      border-radius: 2px !important;
+    }
   }
 `
 
