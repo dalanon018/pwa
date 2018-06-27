@@ -380,6 +380,25 @@ const FullPointsWrapper = styled.div`
   display: flex;
 `
 
+const CouponContainer = styled.div`
+  .fields {
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap !important;
+    justify-content: space-between;
+
+    .custom-input {
+      input {
+        border: 2px solid #F0F0F0 !important;
+      }
+    }
+
+    button {
+      border-radius: 2px !important;
+    }
+  }
+`
+
 export {
   ButtonContainer,
   CustomGrid,
@@ -395,5 +414,6 @@ export {
   ReviewContainer,
   SelectMethodWrapper,
   StepHead,
-  StepWrapper
+  StepWrapper,
+  CouponContainer
 }

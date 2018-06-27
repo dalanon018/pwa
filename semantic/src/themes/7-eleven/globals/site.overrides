@@ -221,6 +221,9 @@ input.input-field {
   &__three-white {
     border: 3px solid @white !important;
   }
+  &__one--light-grey {
+    border: 1px solid @lightGrey !important;
+  }
   &__two--light-grey {
     border: 2px solid @lightGrey !important;
   }
@@ -620,11 +623,14 @@ svg#barcode {
       &--10 {
         padding: 0 10px;
       }
+      &--14 {
+        padding: 0 14px !important;
+      }
       &--15 {
         padding: 0 15px !important;
       }
       &--20 {
-        padding: 0 20px;
+        padding: 0 20px !important;
       }
     }
     &__vertical {

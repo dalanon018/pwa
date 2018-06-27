@@ -105,8 +105,15 @@ export default defineMessages({
     defaultMessage: `Points will be earned once claimed.`
   },
   pointsOnlyTip: {
-    id: `${idSuffix}.pointsTip`,
+    id: `${idSuffix}.pointsOnlyTip`,
     defaultMessage: `This item can only be purchased using CLiQQ points.`
+  },
+  addCouponCodeLabel: {
+    id: `${idSuffix}.addCouponCodeLabel`,
+    defaultMessage: `Apply a Discount Coupon Code`
+  },
+  couponAppliedLabel: {
+    id: `${idSuffix}.couponAppliedLabel`,
+    defaultMessage: 'Discount Coupon Code Applied'
   }
-
 })

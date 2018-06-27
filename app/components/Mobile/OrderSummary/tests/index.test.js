@@ -137,6 +137,6 @@ describe('<OrderSummary />', () => {
 
   it('renders one <CustomGrid/> styled component', () => {
     const ShallowedWrapper = shallow(<OrderSummary {...minProps} />)
-    expect(ShallowedWrapper.find(CustomGrid)).toHaveLength(1)
+    expect(ShallowedWrapper.find(CustomGrid)).toHaveLength(2)
   })
 })
