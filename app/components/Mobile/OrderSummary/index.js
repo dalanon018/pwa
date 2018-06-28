@@ -413,9 +413,12 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       orderedProduct,
       orderRequesting,
       productLoader,
-      errorMessage,
-      errorContent,
+
+      modalIcon,
+      modalMessage,
+      modalContent,
       modalToggle,
+
       storeLocatorVisibility,
       pointsModifierVisibility,
       store,
@@ -599,9 +602,9 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
         <Modal
           open={modalToggle}
-          name='warning'
-          title={errorMessage}
-          content={errorContent}
+          name={modalIcon}
+          title={modalMessage}
+          content={modalContent}
           close={this._handleCloseModalFactory}
         />
       </ProductReviewWrapper>
@@ -618,11 +621,12 @@ OrderSummary.propTypes = {
   isBlackListed: PropTypes.bool.isRequired,
   productLoader: PropTypes.bool.isRequired,
   ShowCodComponent: PropTypes.func.isRequired,
-  errorMessage: PropTypes.oneOfType([
+  modalIcon: PropTypes.string.isRequired,
+  modalMessage: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.string
   ]).isRequired,
-  errorContent: PropTypes.oneOfType([
+  modalContent: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.string
   ]).isRequired,

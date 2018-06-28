@@ -160,8 +160,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     storeLocatorVisibility: true,
     pointsModifierVisibility: false,
     modalToggle: false,
-    errorMessage: '',
-    errorContent: '',
+    modalIcon: 'warning',
+    modalMessage: '',
+    modalContent: '',
     couponCode: '',
     couponPrompt: false,
     couponPromptTitle: '',
@@ -248,8 +249,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   _handleNotEnoughFullPointsProceed = () => {
     this.setState({
       modalToggle: true,
-      errorMessage: <FormattedMessage {...messages.notEnoughFullPointsTitle} />,
-      errorContent: <FormattedMessage {...messages.notEnoughFullPointsContent} />
+      modalIcon: 'warning',
+      modalMessage: <FormattedMessage {...messages.notEnoughFullPointsTitle} />,
+      modalContent: <FormattedMessage {...messages.notEnoughFullPointsContent} />
     })
   }
 
@@ -301,8 +303,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       submissionOrder,
       () => this.setState({
         modalToggle: true,
-        errorMessage: <FormattedMessage {...messages.storeEmpty} />,
-        errorContent: ''
+        modalIcon: 'warning',
+        modalMessage: <FormattedMessage {...messages.storeEmpty} />,
+        modalContent: ''
       })
     )
 
@@ -328,8 +331,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   _handleDoneFetchOrderNoProductNorMobile = () => {
     this.setState({
       modalToggle: true,
-      errorMessage: <FormattedMessage {...messages.errorHeader} />,
-      errorContent: ''
+      modalIcon: 'warning',
+      modalMessage: <FormattedMessage {...messages.errorHeader} />,
+      modalContent: ''
     })
   }
 
@@ -358,8 +362,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     if (this.submitting) {
       this.setState({
         modalToggle: true,
-        errorMessage: this._handleErrorMessage(code),
-        errorContent: ''
+        modalIcon: 'warning',
+        modalMessage: this._handleErrorMessage(code),
+        modalContent: ''
       })
       this.submitting = false
     }
@@ -371,14 +376,32 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       (code) => {
         this.setState({
           modalToggle: true,
-          errorMessage: this._handleErrorMessage(code),
-          errorContent: ''
+          modalIcon: 'warning',
+          modalMessage: this._handleErrorMessage(code),
+          modalContent: ''
         })
         this.couponRequest = false
       }
     )
 
     shouldTriggerError(code)
+  }
+
+  _handleCouponSuccess = (code) => {
+    const shouldTriggerSuccess = when(
+      both(always(this.couponRequest), identity),
+      (code) => {
+        this.setState({
+          modalIcon: 'checkmark',
+          modalToggle: true,
+          modalContent: <FormattedMessage {...messages.couponPromptDescriptionSuccess} />,
+          modalMessage: <FormattedMessage {...messages.couponPromptTitleSuccess} />
+        })
+        this.couponRequest = false
+      }
+    )
+
+    shouldTriggerSuccess(code)
   }
 
   _isDisabledPointsOptions = () => {
@@ -476,7 +499,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   componentWillReceiveProps (nextProps) {
-    const { orderedProduct, productLoader, mobileNumber, mobileLoader, orderSuccess, orderFail, couponError } = nextProps
+    const { orderedProduct, productLoader, mobileNumber, mobileLoader, orderSuccess, orderFail, couponSuccess, couponError } = nextProps
     const { store } = this.state
 
     if (!isEmpty(store)) {
@@ -507,12 +530,16 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       isEntityEmpty, noop, this._handleCouponError
     )(couponError)
 
+    ifElse(
+      isEntityEmpty, noop, this._handleCouponSuccess
+    )(couponSuccess)
+
     this._handleStoreVisible(nextProps)
   }
 
   render () {
     const { currentPoints, orderedProduct, orderRequesting, isBlackListed, productLoader, intl, mobileNumbers, couponApplied, couponLoader } = this.props
-    const { errorMessage, errorContent, modePayment, modalToggle, storeLocatorVisibility, pointsModifierVisibility, store, usePoints, couponCode, couponSubmitText } = this.state
+    const { modalIcon, modalMessage, modalContent, modePayment, modalToggle, storeLocatorVisibility, pointsModifierVisibility, store, usePoints, couponCode, couponSubmitText } = this.state
 
     return (
       <div>
@@ -537,11 +564,12 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
               _handleCouponEntry={this._handleCouponEntry}
               _handleSubmitCoupon={this._handleSubmitCoupon}
 
-              errorMessage={errorMessage}
-              errorContent={errorContent}
-              isBlackListed={isBlackListed}
-
               modalToggle={modalToggle}
+              modalIcon={modalIcon}
+              modalMessage={modalMessage}
+              modalContent={modalContent}
+
+              isBlackListed={isBlackListed}
               modePayment={modePayment}
               orderRequesting={orderRequesting}
               orderedProduct={orderedProduct}
@@ -570,14 +598,16 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                 _handleCouponEntry={this._handleCouponEntry}
                 _handleSubmitCoupon={this._handleSubmitCoupon}
 
-                errorMessage={errorMessage}
+                modalToggle={modalToggle}
+                modalIcon={modalIcon}
+                modalMessage={modalMessage}
+                modalContent={modalContent}
                 isBlackListed={isBlackListed}
 
                 isDisabledPointsOptions={this._isDisabledPointsOptions()}
                 ShowCodComponent={ShowCodComponent}
                 currentPoints={currentPoints.get('points') || 0}
                 usePoints={usePoints}
-                modalToggle={modalToggle}
                 modePayment={modePayment}
                 orderRequesting={orderRequesting}
                 orderedProduct={orderedProduct}

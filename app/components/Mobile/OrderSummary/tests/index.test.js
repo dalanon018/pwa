@@ -68,8 +68,9 @@ describe('<OrderSummary />', () => {
     orderSuccess: fromJS({}),
     orderFail: fromJS({}),
     mobileNumber: '999999999',
-    errorMessage: '',
-    errorContent: '',
+    modalIcon: '',
+    modalMessage: '',
+    modalContent: '',
     _isFullPointsOnly: false,
     orderRequesting: false,
     store: { name: 'Quezon City', id: 1 }
