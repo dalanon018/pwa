@@ -57,9 +57,9 @@ export const STORE_LOCATOR = 'app/Buckets/STORE_LOCATOR'
 // REDIRECTING TO RECENT STORE
 export const RECENT_STORE_LOCATION = 'app/Buckets/RECENT_STORE_LOCATION'
 
-export const FAQ_URL = 'https://storage.googleapis.com/cliqqshop/docs/faq.md'
-export const TERMS_URL = 'https://storage.googleapis.com/cliqqshop/docs/terms.md'
-export const PRIVACY_URL = 'https://storage.googleapis.com/cliqqshop/docs/privacy.md'
+export const FAQ_URL = `${process.env.GOOGLE_APIS_URL}/docs/faq.md`
+export const TERMS_URL = `${process.env.GOOGLE_APIS_URL}/docs/terms.md`
+export const PRIVACY_URL = `${process.env.GOOGLE_APIS_URL}/docs/privacy.md`
 
 export const HIDE_BACK_BUTTON = [
   '/',

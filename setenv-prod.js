@@ -58,5 +58,5 @@ if (env === 'production') {
   console.log(`RECAPTCHA_SITE_KEY=6Lfk5jkUAAAAAEAlugSVRXieKv3B9H3vFs4M8ZGd`)
   console.log(`FB_SHARE_ID=157843328155932`)
 
-  console.log(`GOOGLE_APIS_URL=https://storage.googleapis.com/cliqqshop/config`)
+  console.log(`GOOGLE_APIS_URL=https://storage.googleapis.com/cliqqshop`)
 }
