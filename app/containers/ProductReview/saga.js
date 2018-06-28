@@ -3,6 +3,7 @@ import moment from 'moment'
 
 import {
   always,
+  assoc,
   compose,
   complement,
   dissoc,
@@ -26,7 +27,7 @@ import request from 'utils/request'
 import { getItem, setItem, removeItem } from 'utils/localStorage'
 import { Pad } from 'utils/string'
 import { DateDifferece, AddDate } from 'utils/date'
-import { transformSubmitOrderPayload } from 'utils/transforms'
+import { transformSubmitOrderPayload, transformCoupon } from 'utils/transforms'
 import { calculatePricePoints, toggleOrigDiscountPrice } from 'utils/product'
 import {
   ERROR_CODES
@@ -380,6 +381,11 @@ function * couponPayloadCreator ({orderedProduct, mobileNumber, couponCode}) {
   })
 }
 
+function updateOrderProductCouponPrice ({ orderedProduct, coupon }) {
+  const couponPrice = compose(parseInt, propOr(0, 'PHP'))
+  return assoc('couponPrice', couponPrice(coupon), { ...orderedProduct.toJS() })
+}
+
 export function * submitCoupon (args) {
   const { payload: { orderedProduct, mobileNumber, couponCode } } = args
   const isSuccess = complement(propEq('statusCode', '404'))
@@ -392,21 +398,30 @@ export function * submitCoupon (args) {
     token: token.access_token
   })
 
+  let couponApplied = false
+  let couponSuccess = false
+  let couponError = false
+
   if (isSuccess(req)) {
-    // const currentPoints = compose(
-    //   when(gt(0), always(0)),
-    //   propOr(0, 'currentPoints')
-    // )
-    // const points = parseInt(currentPoints(req))
-    // yield put(HeaderPointsAction(points))
-    // yield put(setCurrentPointsAction({ points }))
+    const coupon = yield transformCoupon(req)
+    const updateOrderProduct = compose(
+      put,
+      setOrderProductAction,
+      updateOrderProductCouponPrice
+    )
+
+    couponApplied = true
+    couponSuccess = true
+    yield updateOrderProduct({ orderedProduct, coupon })
   } else {
-    yield put(resultCouponAction({
-      couponApplied: false,
-      couponSuccess: false,
-      couponError: ERROR_CODES.COUPON_INVALID
-    }))
+    couponError = ERROR_CODES.COUPON_INVALID
   }
+
+  yield put(resultCouponAction({
+    couponApplied,
+    couponSuccess,
+    couponError
+  }))
 }
 
 export function * getOrderProductSaga () {
