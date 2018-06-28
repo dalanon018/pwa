@@ -423,7 +423,6 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       pointsModifierVisibility,
       store,
       couponCode,
-      couponSubmitText,
       couponApplied,
       couponLoader,
 
@@ -583,7 +582,11 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                       <Button
                         disabled={(couponCode.length === 0) || couponLoader}
                         loading={couponLoader}
-                        content={couponSubmitText}
+                        content={
+                          couponApplied
+                          ? <FormattedMessage {...messages.couponButtonLabelRemove} />
+                          : <FormattedMessage {...messages.couponButtonLabelApply} />
+                        }
                         className='background__teal color__white'
                       />
                     </Form.Group>
