@@ -53,7 +53,7 @@ import {
   APP_BASE_URL,
   BRANDS_KEY,
   CATEGORIES_KEY,
-  // GOOGLE_APIS_URL,
+  GOOGLE_APIS_URL,
   LAST_SELECTED_METHOD,
   LOYALTY_TOKEN_KEY,
   MOBILE_NUMBERS_KEY,
@@ -112,13 +112,12 @@ function * transformEachEntity (transform, entity) {
 }
 
 function * requestCategories () {
-  const token = yield getAccessToken()
+  // const token = yield getAccessToken()
   const dbResource = yield call(getItem, CATEGORIES_KEY)
-  const req = yield call(getRequestData, `${API_BASE_URL}/categories`, {
-    method: 'GET',
-    token: token.access_token
+  const req = yield call(getRequestData, `${GOOGLE_APIS_URL}/config/categories.json`, {
+    method: 'GET'
+    // token: token.access_token
   })
-
   if (!isEmpty(req)) {
     const getResults = propOr([], 'categoryList')
     const isObjectNotEqual = (data) => !isEqual(dbResource, data)
@@ -140,11 +139,11 @@ function * requestCategories () {
 }
 
 function * requestBrands () {
-  const token = yield getAccessToken()
+  // const token = yield getAccessToken()
   const dbResource = yield call(getItem, BRANDS_KEY)
-  const req = yield call(getRequestData, `${API_BASE_URL}/brands`, {
-    method: 'GET',
-    token: token.access_token
+  const req = yield call(getRequestData, `${GOOGLE_APIS_URL}/config/brands.json`, {
+    method: 'GET'
+    // token: token.access_token
   })
 
   if (!isEmpty(req)) {
