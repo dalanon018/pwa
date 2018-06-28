@@ -28,7 +28,8 @@ import {
   SET_LAST_SELECTED_METHOD,
 
   COUPON_SUBMIT,
-  COUPON_RESULT
+  COUPON_RESULT,
+  COUPON_REMOVE
 } from './constants'
 
 const initialState = fromJS({
@@ -109,6 +110,11 @@ function productReviewReducer (state = initialState, action) {
         .set('couponApplied', false)
         .set('couponSuccess', false)
         .set('couponError', false)
+
+    case COUPON_REMOVE:
+      return state
+        .set('couponLoader', true)
+
     case COUPON_RESULT: {
       const { couponApplied, couponSuccess, couponError } = action.payload
       return state

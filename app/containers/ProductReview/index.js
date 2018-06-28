@@ -83,7 +83,8 @@ import {
   getBlackListAction,
   getCurrentPointsAction,
   getLastSelectedMethodAction,
-  submitCouponAction
+  submitCouponAction,
+  removeCouponAction
 } from './actions'
 
 import {
@@ -470,6 +471,11 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     })
   }
 
+  _handleRemoveCoupon = () => {
+    const { orderedProduct, removeCoupon } = this.props
+    removeCoupon({ orderedProduct })
+  }
+
   _handleCouponClose = () => {
     this.setState({couponPrompt: false})
   }
@@ -561,8 +567,10 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
               _stepWrapperRef={this._stepWrapperRef}
               _updateUsePoints={this._updateUsePoints}
               _isFullPointsOnly={this._isFullPointsOnly()}
+
               _handleCouponEntry={this._handleCouponEntry}
               _handleSubmitCoupon={this._handleSubmitCoupon}
+              _handleRemoveCoupon={this._handleRemoveCoupon}
 
               modalToggle={modalToggle}
               modalIcon={modalIcon}
@@ -664,6 +672,7 @@ function mapDispatchToProps (dispatch) {
     getCurrentPoints: () => dispatch(getCurrentPointsAction()),
     setHandlersDefault: () => dispatch(setOrderHandlersDefaultAction()),
     submitCoupon: (payload) => dispatch(submitCouponAction(payload)),
+    removeCoupon: (payload) => dispatch(removeCouponAction(payload)),
     changeRoute: (url) => dispatch(replace(url)),
     pushRoute: (url) => dispatch(push(url)),
     dispatch

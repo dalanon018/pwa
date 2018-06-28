@@ -432,7 +432,8 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       _handleRecentStore,
       _stepWrapperRef,
       _handleCouponEntry,
-      _handleSubmitCoupon
+      _handleSubmitCoupon,
+      _handleRemoveCoupon
     } = this.props
 
     const brandLogo = orderedProduct.get('brandLogo') ? (
@@ -569,11 +570,11 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                       : <FormattedMessage {...messages.addCouponCodeLabel} />
                     }
                   </Label>
-                  <Form onSubmit={_handleSubmitCoupon}>
+                  <Form onSubmit={couponApplied ? _handleRemoveCoupon : _handleSubmitCoupon}>
                     <Form.Group>
                       <Form.Input
                         value={couponCode}
-                        disabled={couponApplied && couponCode.length >= 1}
+                        disabled={((couponApplied && couponCode.length >= 1) || couponLoader)}
                         onChange={e => _handleCouponEntry(e)}
                         width={9}
                         placeholder='Enter Code here'

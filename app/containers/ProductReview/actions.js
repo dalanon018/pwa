@@ -30,9 +30,10 @@ import {
   SET_LAST_SELECTED_METHOD,
 
   COUPON_SUBMIT,
-  COUPON_RESULT
+  COUPON_RESULT,
   // COUPON_SUCCESS,
-  // COUPON_ERROR,
+  // COUPON_ERROR,,
+  COUPON_REMOVE
 } from './constants'
 
 export function getOrderProductAction () {
@@ -150,6 +151,13 @@ export function submitCouponAction (payload) {
 export function resultCouponAction (payload) {
   return {
     type: COUPON_RESULT,
+    payload
+  }
+}
+
+export function removeCouponAction (payload) {
+  return {
+    type: COUPON_REMOVE,
     payload
   }
 }

@@ -35,6 +35,7 @@ import {
 
 import {
   COUPON_SUBMIT,
+  COUPON_REMOVE,
   GET_BLACKLIST,
   GET_CURRENT_POINTS,
   GET_LAST_SELECTED_METHOD,
@@ -424,6 +425,23 @@ export function * submitCoupon (args) {
   }))
 }
 
+export function * removeCoupon (args) {
+  const { payload: { orderedProduct } } = args
+  const updateOrderProduct = compose(
+    put,
+    setOrderProductAction,
+    updateOrderProductCouponPrice
+  )
+  // set ordered product and make the couponPrice 0
+  yield updateOrderProduct({ orderedProduct, coupon: {} })
+
+  yield put(resultCouponAction({
+    couponApplied: false,
+    couponSuccess: false,
+    couponError: false
+  }))
+}
+
 export function * getOrderProductSaga () {
   yield * takeLatest(GET_ORDER_PRODUCT, getOrderProduct)
 }
@@ -455,6 +473,10 @@ export function * submitCouponSaga () {
   yield * takeLatest(COUPON_SUBMIT, submitCoupon)
 }
 
+export function * removeCouponSaga () {
+  yield * takeLatest(COUPON_REMOVE, removeCoupon)
+}
+
 export function * productReviewSagas () {
   const watcher = yield [
     fork(getOrderProductSaga),
@@ -467,6 +489,7 @@ export function * productReviewSagas () {
     fork(getLastSelectedMethodSaga),
 
     fork(submitCouponSaga),
+    fork(removeCouponSaga),
 
     fork(submitOrderSaga)
   ]
