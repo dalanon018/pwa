@@ -68,6 +68,9 @@ describe('<OrderSummary />', () => {
     orderSuccess: fromJS({}),
     orderFail: fromJS({}),
     mobileNumber: '999999999',
+    couponCode: '',
+    couponApplied: false,
+    couponLoader: false,
     modalIcon: '',
     modalMessage: '',
     modalContent: '',
@@ -75,10 +78,6 @@ describe('<OrderSummary />', () => {
     orderRequesting: false,
     store: { name: 'Quezon City', id: 1 }
   }
-
-  it('Expect to have unit tests specified', () => {
-    expect(true).toEqual(true)
-  })
 
   it('render without exploding', () => {
     const renderComponent = wrapper(minProps)

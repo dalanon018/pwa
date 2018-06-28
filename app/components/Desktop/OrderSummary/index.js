@@ -790,6 +790,9 @@ OrderSummary.propTypes = {
   isBlackListed: PropTypes.bool.isRequired,
   productLoader: PropTypes.bool.isRequired,
   ShowCodComponent: PropTypes.func.isRequired,
+  couponCode: PropTypes.string,
+  couponApplied: PropTypes.bool.isRequired,
+  couponLoader: PropTypes.bool.isRequired,
   modalIcon: PropTypes.string.isRequired,
   modalMessage: PropTypes.oneOfType([
     PropTypes.object,

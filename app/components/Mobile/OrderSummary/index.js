@@ -626,6 +626,9 @@ OrderSummary.propTypes = {
   productLoader: PropTypes.bool.isRequired,
   ShowCodComponent: PropTypes.func.isRequired,
   modalIcon: PropTypes.string.isRequired,
+  couponCode: PropTypes.string,
+  couponApplied: PropTypes.bool.isRequired,
+  couponLoader: PropTypes.bool.isRequired,
   modalMessage: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.string
