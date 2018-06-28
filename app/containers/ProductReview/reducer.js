@@ -85,6 +85,10 @@ function productReviewReducer (state = initialState, action) {
         .set('orderProduct', fromJS({}))
         .set('submissionSuccess', fromJS({}))
         .set('submissionError', fromJS({}))
+        .set('couponApplied', false)
+        .set('couponLoader', false)
+        .set('couponSuccess', false)
+        .set('couponError', false)
 
     case SET_STORE:
       return state.set('storeLocation', fromJS(action.payload))
