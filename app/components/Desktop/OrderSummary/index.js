@@ -69,7 +69,8 @@ import {
   LabelTitle,
   BlockWrapper,
   InfoBlock,
-  StoreLocatorRow
+  StoreLocatorRow,
+  CouponContainer
 } from './styles'
 
 const toggleComponent = (component1, component2) => ifElse(
@@ -512,12 +513,17 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       pointsModifierVisibility,
       currentPoints,
       usePoints,
+      couponCode,
+      couponSubmitText,
+      couponApplied,
 
       _updateUsePoints,
       _handleModalClose,
       _handleProceed,
       _handleStoreLocator,
-      _stepWrapperRef } = this.props
+      _stepWrapperRef,
+      _handleCouponEntry,
+      _handleSubmitCoupon } = this.props
 
     return (
       <div>
@@ -654,6 +660,37 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                     </BlockWrapper>
                   </PlainCard>
                 </StoreLocatorRow>
+                <Grid.Row className='margin__bottom-positive--20'>
+                  <PlainCard borderRadius alignLeft>
+                    <BlockWrapper>
+                      <div>
+                        <Image className='icon' src={LocationIcon} alt='CLiQQ' />
+                      </div>
+                      <CouponContainer>
+                        <Label as='p' className='margin__top-positive--15 margin__bottom-positive--15 text__weight--500' size='huge'>
+                          {
+                            couponApplied && couponCode.length >= 1
+                            ? <FormattedMessage {...messages.couponAppliedLabel} />
+                            : <FormattedMessage {...messages.addCouponCodeLabel} />
+                          }
+                        </Label>
+
+                        <Form onSubmit={_handleSubmitCoupon}>
+                          <Form.Group>
+                            <Form.Input
+                              value={couponCode}
+                              disabled={couponApplied && couponCode.length >= 1}
+                              onChange={e => _handleCouponEntry(e)}
+                              placeholder='Enter Code here'
+                              name='coupon'
+                              className='custom-input' />
+                            <Button content={couponSubmitText} className='background__teal color__white' />
+                          </Form.Group>
+                        </Form>
+                      </CouponContainer>
+                    </BlockWrapper>
+                  </PlainCard>
+                </Grid.Row>
                 <BottomWrapper>
                   <ButtonContainer>
                     <Button onClick={_handleProceed} primary loading={orderRequesting}>

@@ -414,9 +414,23 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     })
   }
 
-  _handleSubmitCoupon = () => {
+  _handleCouponReset = () => {
     const { intl } = this.props
-    const { couponCode, couponSubmitText } = this.state
+
+    if (this.state.couponApplied) {
+      this.setState({
+        couponCode: '',
+        couponApplied: false,
+        couponPromptTitle: intl.formatMessage(messages.couponRemoveLabelTitle),
+        couponPromptDescription: intl.formatMessage(messages.couponRemoveLabelDescription),
+        couponSubmitText: intl.formatMessage(messages.couponButtonLabelApply)
+      })
+    }
+  }
+
+  _handleCouponLabelSetter = () => {
+    const { intl } = this.props
+    const { couponCode } = this.state
 
     let title = ''
     let description = ''
@@ -434,23 +448,21 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       buttonLabel = intl.formatMessage(messages.couponButtonLabelApply)
     }
 
+    return {title, description, buttonLabel, isApplied}
+  }
+
+  _handleSubmitCoupon = () => {
+    const {title, description, buttonLabel, isApplied} = this._handleCouponLabelSetter()
+
     this.setState({
       couponPrompt: true,
       couponPromptTitle: title,
       couponPromptDescription: description,
       couponSubmitText: buttonLabel,
       couponApplied: isApplied
-    }, () => {
-      if (couponSubmitText === 'REMOVE') {
-        this.setState({
-          couponCode: '',
-          couponApplied: false,
-          couponPromptTitle: intl.formatMessage(messages.couponRemoveLabelTitle),
-          couponPromptDescription: intl.formatMessage(messages.couponRemoveLabelDescription),
-          couponSubmitText: intl.formatMessage(messages.couponButtonLabelApply)
-        })
-      }
     })
+
+    this._handleCouponReset()
   }
 
   _handleCouponClose = () => {
@@ -566,6 +578,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                 _stepWrapperRef={this._stepWrapperRef}
                 _updateUsePoints={this._updateUsePoints}
                 _isFullPointsOnly={this._isFullPointsOnly()}
+                _handleCouponEntry={this._handleCouponEntry}
+                _handleSubmitCoupon={this._handleSubmitCoupon}
 
                 errorMessage={errorMessage}
                 isBlackListed={isBlackListed}
@@ -584,6 +598,9 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                 intl={intl}
                 mobileNumbers={mobileNumbers}
                 pointsModifierVisibility={pointsModifierVisibility}
+                couponCode={couponCode}
+                couponSubmitText={couponSubmitText}
+                couponApplied={couponApplied}
               />
             </div>
           }
