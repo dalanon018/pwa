@@ -61,3 +61,12 @@ export const LAST_SELECTED_METHOD = 'boilerplate/App/LAST_SELECTED_METHOD'
 
 // ONCE REGISTERED THIS IS THE KEY NAME
 export const REGISTERED_PUSH = 'boilerplate/App/REGISTERED_PUSH'
+
+export const MIN_BROWSER_VERSIONS = {
+  chrome: '60',
+  edge: '13',
+  firefox: '60',
+  ie: '10',
+  opera: '10',
+  safari: '10'
+}
