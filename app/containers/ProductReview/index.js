@@ -440,6 +440,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     const { couponCode } = this.state
 
     this.couponRequest = true
+
     submitCoupon({
       mobileNumber,
       orderedProduct,
