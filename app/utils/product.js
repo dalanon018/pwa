@@ -11,7 +11,7 @@ import {
  * @param {*} product
  */
 export const toggleOrigDiscountPrice = (product) => {
-  const price = product.get('discountPrice') || product.get('price')
+  const price = product.get('couponPrice') || product.get('discountPrice') || product.get('price')
   return price || 0
 }
 
