@@ -6,7 +6,11 @@ import {
   selectStoreLocation,
   selectBlackListed,
   selectCurrentPoints,
-  selectCurrentPointsLoading
+  selectCurrentPointsLoading,
+  selectCouponApplied,
+  selectCouponLoader,
+  selectCouponSuccess,
+  selectCouponError
 } from '../selectors'
 
 describe('ProductReview Selectors', () => {
@@ -94,6 +98,62 @@ describe('ProductReview Selectors', () => {
         }
       })
       expect(selectCurrentPointsLoadingSelectors(mockedState)).toEqual(currentPointsLoading)
+    })
+  })
+
+  describe('selectCouponApplied', () => {
+    const selectCouponAppliedSelectors = selectCouponApplied()
+
+    it('should get couponApplied', () => {
+      const couponApplied = true
+      const mockedState = fromJS({
+        productReview: {
+          couponApplied
+        }
+      })
+      expect(selectCouponAppliedSelectors(mockedState)).toEqual(couponApplied)
+    })
+  })
+
+  describe('selectCouponLoader', () => {
+    const selectCouponLoaderSelectors = selectCouponLoader()
+
+    it('should get couponLoader', () => {
+      const couponLoader = true
+      const mockedState = fromJS({
+        productReview: {
+          couponLoader
+        }
+      })
+      expect(selectCouponLoaderSelectors(mockedState)).toEqual(couponLoader)
+    })
+  })
+
+  describe('selectCouponSuccess', () => {
+    const selectCouponSuccessSelectors = selectCouponSuccess()
+
+    it('should get couponSuccess', () => {
+      const couponSuccess = true
+      const mockedState = fromJS({
+        productReview: {
+          couponSuccess
+        }
+      })
+      expect(selectCouponSuccessSelectors(mockedState)).toEqual(couponSuccess)
+    })
+  })
+
+  describe('selectCouponError', () => {
+    const selectCouponErrorSelectors = selectCouponError()
+
+    it('should get couponError', () => {
+      const couponError = true
+      const mockedState = fromJS({
+        productReview: {
+          couponError
+        }
+      })
+      expect(selectCouponErrorSelectors(mockedState)).toEqual(couponError)
     })
   })
 })

@@ -12,7 +12,10 @@ import {
   getBlackListAction,
   setBlackListAction,
   getCurrentPointsAction,
-  setCurrentPointsAction
+  setCurrentPointsAction,
+  submitCouponAction,
+  resultCouponAction,
+  removeCouponAction
 } from '../actions'
 
 import {
@@ -33,7 +36,11 @@ import {
   SET_CURRENT_POINTS,
 
   GET_BLACKLIST,
-  SET_BLACKLIST
+  SET_BLACKLIST,
+
+  COUPON_SUBMIT,
+  COUPON_RESULT,
+  COUPON_REMOVE
 } from '../constants'
 
 describe('ProductsReview actions', () => {
@@ -190,6 +197,35 @@ describe('ProductsReview actions', () => {
         payload
       }
       expect(setCurrentPointsAction(payload)).toEqual(expectedResult)
+    })
+  })
+
+  describe('Coupon Actions', () => {
+    it('should submitCouponAction', () => {
+      const payload = {}
+      const expectedResult = {
+        type: COUPON_SUBMIT,
+        payload
+      }
+      expect(submitCouponAction(payload)).toEqual(expectedResult)
+    })
+
+    it('should resultCouponAction', () => {
+      const payload = {}
+      const expectedResult = {
+        type: COUPON_RESULT,
+        payload
+      }
+      expect(resultCouponAction(payload)).toEqual(expectedResult)
+    })
+
+    it('should removeCouponAction', () => {
+      const payload = {}
+      const expectedResult = {
+        type: COUPON_REMOVE,
+        payload
+      }
+      expect(removeCouponAction(payload)).toEqual(expectedResult)
     })
   })
 })

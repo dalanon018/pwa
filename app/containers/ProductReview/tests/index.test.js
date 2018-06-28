@@ -25,6 +25,9 @@ describe('<ProductReview />', () => {
     getCurrentPoints: () => {},
     pushRoute: () => {},
     changeRoute: () => {},
+    intl: {
+      formatMessage: () => {}
+    },
     isBlackListed: false,
     loader: false,
     orderedProduct: fromJS({
@@ -44,10 +47,14 @@ describe('<ProductReview />', () => {
     mobileLoader: false,
     orderSuccess: fromJS({}),
     orderFail: fromJS({}),
-    mobileNumber: '999999999',
+    mobileNumbers: fromJS({}),
     orderRequesting: false,
     currentPoints: fromJS({ points: 0 }),
-    currentPointsLoading: false
+    currentPointsLoading: false,
+    couponApplied: false,
+    couponLoader: false,
+    couponSuccess: false,
+    couponError: false
   }
 
   it('render without exploding', () => {
