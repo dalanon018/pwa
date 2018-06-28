@@ -1,7 +1,10 @@
 
 import {
-  multiply,
+  contains,
   divide,
+  ifElse,
+  multiply,
+  partialRight,
   subtract
 } from 'ramda'
 
@@ -14,6 +17,26 @@ export const EARN_POINTS__MAPPER = {
   POINTS: 'poc'
 }
 
+export const USE_POINTS_IDENTIFIER = [
+  'POINTS'
+]
+
+/**
+ * We need to return if the amount should we calculate it from is including the usePoints or just the regular price object
+ * @param {*} param0
+ */
+export const amountIdentifierPointsPrice = ({ orderedProduct, usePoints, modePayment }) => {
+  const amountIdentifier = ifElse(
+    partialRight(contains, [USE_POINTS_IDENTIFIER]),
+    () => calculatePricePoints({
+      product: orderedProduct,
+      usePoints
+    }),
+    () => toggleOrigDiscountPrice(orderedProduct)
+  )
+
+  return amountIdentifier(modePayment)
+}
 /**
  * helper on which of the property use for the price
  * // so we can expand this.

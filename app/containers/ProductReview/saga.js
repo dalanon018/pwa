@@ -28,7 +28,7 @@ import { getItem, setItem, removeItem } from 'utils/localStorage'
 import { Pad } from 'utils/string'
 import { DateDifferece, AddDate } from 'utils/date'
 import { transformSubmitOrderPayload, transformCoupon } from 'utils/transforms'
-import { EARN_POINTS__MAPPER, calculatePricePoints, toggleOrigDiscountPrice } from 'utils/product'
+import { EARN_POINTS__MAPPER, calculatePricePoints, toggleOrigDiscountPrice, amountIdentifierPointsPrice } from 'utils/product'
 import { calculateEarnPoints } from 'utils/calculation'
 
 import {
@@ -287,7 +287,7 @@ function * createPostPayload ({ orderedProduct, mobileNumber, modePayment, store
     epbPointsCredit: calculateEarnPoints({
       multiplier: orderedProduct.getIn(['points', 'multiplier']),
       method: orderedProduct.getIn(['points', 'method', EARN_POINTS__MAPPER[modePayment]]).toObject(),
-      amount: toggleOrigDiscountPrice(orderedProduct)
+      amount: amountIdentifierPointsPrice({orderedProduct, usePoints, modePayment})
     }),
     cliqqCode: orderedProduct.get('cliqqCode').first(),
     multiplier: orderedProduct.getIn(['points', 'multiplier']),
