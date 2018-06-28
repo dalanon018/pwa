@@ -52,7 +52,6 @@ import WindowWidth from 'components/Shared/WindowWidth'
 
 import MobileOrderSummary from 'components/Mobile/OrderSummary'
 import DesktopOrderSummary from 'components/Desktop/OrderSummary'
-import CouponPrompt from 'components/Shared/PromptModal'
 
 import AccessView from 'components/Shared/AccessMobileDesktopView'
 
@@ -512,8 +511,8 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   render () {
-    const { currentPoints, orderedProduct, orderRequesting, isBlackListed, productLoader, intl, mobileNumbers, couponLoader } = this.props
-    const { errorMessage, errorContent, modePayment, modalToggle, storeLocatorVisibility, pointsModifierVisibility, store, usePoints, couponCode, couponPrompt, couponPromptTitle, couponPromptDescription, couponSubmitText, couponApplied } = this.state
+    const { currentPoints, orderedProduct, orderRequesting, isBlackListed, productLoader, intl, mobileNumbers, couponApplied, couponLoader } = this.props
+    const { errorMessage, errorContent, modePayment, modalToggle, storeLocatorVisibility, pointsModifierVisibility, store, usePoints, couponCode, couponSubmitText } = this.state
 
     return (
       <div>
@@ -594,14 +593,6 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
               />
             </div>
           }
-        />
-
-        <CouponPrompt
-          open={couponPrompt}
-          name={couponApplied ? 'checkmark' : 'warning'}
-          title={couponPromptTitle}
-          content={couponPromptDescription}
-          close={this._handleCouponClose}
         />
       </div>
     )
