@@ -285,8 +285,8 @@ function * createPostPayload ({ orderedProduct, mobileNumber, modePayment, store
     ...promoPayload(orderedProduct),
     ...couponPayload({ orderedProduct, couponCode }),
     epbPointsCredit: calculateEarnPoints({
-      multiplier: parseFloat(orderedProduct.getIn(['points', 'multiplier'])),
-      percentage: parseFloat(orderedProduct.getIn(['points', 'method', EARN_POINTS__MAPPER[modePayment]])),
+      multiplier: orderedProduct.getIn(['points', 'multiplier']),
+      method: orderedProduct.getIn(['points', 'method', EARN_POINTS__MAPPER[modePayment]]).toObject(),
       amount: toggleOrigDiscountPrice(orderedProduct)
     }),
     cliqqCode: orderedProduct.get('cliqqCode').first(),

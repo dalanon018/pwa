@@ -83,9 +83,9 @@ const getHighestPointsEarn = (product) => {
   const amount = product.get('discountPrice') || product.get('price')
 
   return `${calculateEarnPoints({
-    multiplier: parseFloat(product.getIn(['points', 'multiplier'])),
-    percentage: parseFloat(product.getIn(['points', 'method', 'cash'])),
-    amount: parseFloat(amount)
+    multiplier: product.getIn(['points', 'multiplier']),
+    method: product.getIn(['points', 'method', 'cash']).toObject(),
+    amount: amount
   })} CLiQQ Points`
 }
 

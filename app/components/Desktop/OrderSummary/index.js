@@ -109,8 +109,8 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
   _getPointsEarn = (mode, amount) => {
     const { orderedProduct } = this.props
     return `${calculateEarnPoints({
-      multiplier: parseFloat(orderedProduct.getIn(['points', 'multiplier'])),
-      percentage: parseFloat(orderedProduct.getIn(['points', 'method', mode])),
+      multiplier: orderedProduct.getIn(['points', 'multiplier']),
+      method: orderedProduct.getIn(['points', 'method', mode]).toObject(),
       amount: amount
     })}`
   }
