@@ -22,7 +22,11 @@ describe('productReviewReducer', () => {
       storeLocation: {},
       currentPoints: {},
       currentPointsLoading: false,
-      isBlackListed: true
+      isBlackListed: true,
+      couponApplied: false,
+      couponLoader: false,
+      couponSuccess: false,
+      couponError: false
     })
   })
 

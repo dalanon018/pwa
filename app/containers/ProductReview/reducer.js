@@ -25,7 +25,11 @@ import {
 
   SET_BLACKLIST,
 
-  SET_LAST_SELECTED_METHOD
+  SET_LAST_SELECTED_METHOD,
+
+  COUPON_SUBMIT,
+  COUPON_RESULT,
+  COUPON_REMOVE
 } from './constants'
 
 const initialState = fromJS({
@@ -40,7 +44,11 @@ const initialState = fromJS({
   storeLocation: {},
   currentPoints: {},
   currentPointsLoading: false,
-  isBlackListed: true
+  isBlackListed: true,
+  couponApplied: false,
+  couponLoader: false,
+  couponSuccess: false,
+  couponError: false
 })
 
 function productReviewReducer (state = initialState, action) {
@@ -77,6 +85,10 @@ function productReviewReducer (state = initialState, action) {
         .set('orderProduct', fromJS({}))
         .set('submissionSuccess', fromJS({}))
         .set('submissionError', fromJS({}))
+        .set('couponApplied', false)
+        .set('couponLoader', false)
+        .set('couponSuccess', false)
+        .set('couponError', false)
 
     case SET_STORE:
       return state.set('storeLocation', fromJS(action.payload))
@@ -95,6 +107,26 @@ function productReviewReducer (state = initialState, action) {
     case SET_BLACKLIST:
       return state
         .set('isBlackListed', action.payload)
+
+    case COUPON_SUBMIT:
+      return state
+        .set('couponLoader', true)
+        .set('couponApplied', false)
+        .set('couponSuccess', false)
+        .set('couponError', false)
+
+    case COUPON_REMOVE:
+      return state
+        .set('couponLoader', true)
+
+    case COUPON_RESULT: {
+      const { couponApplied, couponSuccess, couponError } = action.payload
+      return state
+        .set('couponLoader', false)
+        .set('couponApplied', couponApplied)
+        .set('couponSuccess', couponSuccess)
+        .set('couponError', couponError)
+    }
 
     default:
       return state

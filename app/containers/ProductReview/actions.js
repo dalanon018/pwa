@@ -27,7 +27,13 @@ import {
   SET_BLACKLIST,
 
   GET_LAST_SELECTED_METHOD,
-  SET_LAST_SELECTED_METHOD
+  SET_LAST_SELECTED_METHOD,
+
+  COUPON_SUBMIT,
+  COUPON_RESULT,
+  // COUPON_SUCCESS,
+  // COUPON_ERROR,,
+  COUPON_REMOVE
 } from './constants'
 
 export function getOrderProductAction () {
@@ -134,3 +140,38 @@ export function setBlackListAction (payload) {
     payload
   }
 }
+
+export function submitCouponAction (payload) {
+  return {
+    type: COUPON_SUBMIT,
+    payload
+  }
+}
+
+export function resultCouponAction (payload) {
+  return {
+    type: COUPON_RESULT,
+    payload
+  }
+}
+
+export function removeCouponAction (payload) {
+  return {
+    type: COUPON_REMOVE,
+    payload
+  }
+}
+
+// export function successCouponAction (payload) {
+//   return {
+//     type: COUPON_SUCCESS,
+//     payload
+//   }
+// }
+
+// export function errorCouponAction (payload) {
+//   return {
+//     type: COUPON_ERROR,
+//     payload
+//   }
+// }

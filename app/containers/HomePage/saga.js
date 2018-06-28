@@ -33,7 +33,8 @@ import {
 } from './actions'
 
 import {
-  API_BASE_URL
+  API_BASE_URL,
+  GOOGLE_APIS_URL
 } from 'containers/App/constants'
 
 import {
@@ -109,7 +110,7 @@ export function * getPromos (args) {
 }
 
 export function * getBanners () {
-  const req = yield call(xhr, `https://storage.googleapis.com/cliqqshop/config/banners.json`, {
+  const req = yield call(xhr, `${GOOGLE_APIS_URL}/config/banners.json`, {
     method: 'GET',
     content: 'application/json'
   })

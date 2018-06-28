@@ -28,6 +28,8 @@ if (env === 'production') {
   console.log(`RECAPTCHA_SITE_KEY=${process.env.RECAPTCHA_SITE_KEY}`)
   console.log(`FB_SHARE_ID=${process.env.FB_SHARE_ID}`)
 
+  console.log(`GOOGLE_APIS_URL=${process.env.GOOGLE_APIS_URL}`)
+
 } else {
   console.log(`TOKEN_URL=https://gw.cliqq.net:8443/accounts/oauth2/token`)
   console.log(`API_BASE_URL=https://gw.cliqq.net:8443/ecms/api/v1`)
@@ -55,4 +57,6 @@ if (env === 'production') {
 
   console.log(`RECAPTCHA_SITE_KEY=6Lfk5jkUAAAAAEAlugSVRXieKv3B9H3vFs4M8ZGd`)
   console.log(`FB_SHARE_ID=157843328155932`)
+
+  console.log(`GOOGLE_APIS_URL=https://storage.googleapis.com/cliqqshop`)
 }

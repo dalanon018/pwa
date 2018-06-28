@@ -84,11 +84,12 @@ const updateParamsImages = (images, opt = {}) => {
 
 const getHighestPointsEarn = (product) => {
   const amount = product.get('discountPrice') || product.get('price')
-
-  return `${calculateEarnPoints({
-    multiplier: parseFloat(product.getIn(['points', 'multiplier'])),
-    percentage: parseFloat(product.getIn(['points', 'method', 'cash'])),
-    amount: parseFloat(amount)
+  const method = product.getIn(['points', 'method', 'cash'])
+  // ensure product and method is not empty
+  return (product.size && method.size) && `${calculateEarnPoints({
+    multiplier: product.getIn(['points', 'multiplier']),
+    method: method.toObject(),
+    amount: amount
   })} CLiQQ Points`
 }
 

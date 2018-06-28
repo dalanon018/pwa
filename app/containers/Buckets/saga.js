@@ -53,6 +53,8 @@ import {
   APP_BASE_URL,
   BRANDS_KEY,
   CATEGORIES_KEY,
+  GOOGLE_APIS_URL,
+  LAST_SELECTED_METHOD,
   LOYALTY_TOKEN_KEY,
   MOBILE_NUMBERS_KEY,
   OATH_CLIENT_ID,
@@ -62,7 +64,6 @@ import {
   ORDERED_LIST_KEY,
   REGISTERED_PUSH,
   STORE_LOCATOR_URL,
-  LAST_SELECTED_METHOD,
   TOKEN_URL
 } from 'containers/App/constants'
 
@@ -79,20 +80,19 @@ import {
 } from 'containers/ReceiptPage/actions'
 
 import {
-  GET_PRODUCT_CATEGORIES,
+  COD_PAYMENT,
   GET_BRANDS,
-  GET_MOBILE_NUMBERS,
-  GET_RECEIPT_UPDATED,
-  STATUSES,
-  REGISTER_PUSH,
-  GET_REGISTED_PUSH,
-  GET_LOYALTY_TOKEN,
   GET_CURRENT_POINTS,
-  REMOVE_LOYALTY_TOKEN,
-  STORE_LOCATOR,
+  GET_LOYALTY_TOKEN,
+  GET_MOBILE_NUMBERS,
+  GET_PRODUCT_CATEGORIES,
+  GET_RECEIPT_UPDATED,
+  GET_REGISTED_PUSH,
   RECENT_STORE_LOCATION,
-
-  COD_PAYMENT
+  REGISTER_PUSH,
+  REMOVE_LOYALTY_TOKEN,
+  STATUSES,
+  STORE_LOCATOR
 } from './constants'
 
 import {
@@ -112,13 +112,12 @@ function * transformEachEntity (transform, entity) {
 }
 
 function * requestCategories () {
-  const token = yield getAccessToken()
+  // const token = yield getAccessToken()
   const dbResource = yield call(getItem, CATEGORIES_KEY)
-  const req = yield call(getRequestData, `${API_BASE_URL}/categories`, {
-    method: 'GET',
-    token: token.access_token
+  const req = yield call(getRequestData, `${GOOGLE_APIS_URL}/config/categories.json`, {
+    method: 'GET'
+    // token: token.access_token
   })
-
   if (!isEmpty(req)) {
     const getResults = propOr([], 'categoryList')
     const isObjectNotEqual = (data) => !isEqual(dbResource, data)
@@ -140,11 +139,11 @@ function * requestCategories () {
 }
 
 function * requestBrands () {
-  const token = yield getAccessToken()
+  // const token = yield getAccessToken()
   const dbResource = yield call(getItem, BRANDS_KEY)
-  const req = yield call(getRequestData, `${API_BASE_URL}/brands`, {
-    method: 'GET',
-    token: token.access_token
+  const req = yield call(getRequestData, `${GOOGLE_APIS_URL}/config/brands.json`, {
+    method: 'GET'
+    // token: token.access_token
   })
 
   if (!isEmpty(req)) {

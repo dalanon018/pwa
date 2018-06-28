@@ -101,7 +101,15 @@ const mockData = {
   'image': 'https://cliqq.imgix.net/000A4.png',
   'brandLogo': 'https://cliqq.imgix.net/test/category/product-assets/brand-logo.png',
   'sliders': [],
-  'size': 'M'
+  'size': 'M',
+  points: {
+    multiplier: '0.2',
+    method: {
+      cod: {},
+      cash: {},
+      poc: {}
+    }
+  }
 }
 
 describe('<Product />', () => {

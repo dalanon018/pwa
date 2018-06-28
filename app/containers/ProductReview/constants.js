@@ -29,4 +29,9 @@ export const SET_ORDER_HANDLER_DEFAULT = 'app/ProductReview/SET_ORDER_HANDLER_DE
 export const GET_BLACKLIST = 'app/ProductReview/GET_BLACKLIST'
 export const SET_BLACKLIST = 'app/ProductReview/SET_BLACKLIST'
 
+//
+export const COUPON_SUBMIT = 'app/ProductReview/COUPON_SUBMIT'
+export const COUPON_RESULT = 'app/ProductReview/COUPON_RESULT'
+export const COUPON_REMOVE = 'app/ProductReview/COUPON_REMOVE'
+
 export const ALLOWED_POINTS = 10

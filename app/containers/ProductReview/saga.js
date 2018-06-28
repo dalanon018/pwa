@@ -3,7 +3,10 @@ import moment from 'moment'
 
 import {
   always,
+  assoc,
   compose,
+  complement,
+  dissoc,
   gt,
   identity,
   ifElse,
@@ -11,6 +14,7 @@ import {
   isEmpty,
   map,
   prop,
+  propEq,
   propOr,
   uniq,
   when
@@ -23,20 +27,24 @@ import request from 'utils/request'
 import { getItem, setItem, removeItem } from 'utils/localStorage'
 import { Pad } from 'utils/string'
 import { DateDifferece, AddDate } from 'utils/date'
-import { transformSubmitOrderPayload } from 'utils/transforms'
-import { calculatePricePoints, toggleOrigDiscountPrice } from 'utils/product'
+import { transformSubmitOrderPayload, transformCoupon } from 'utils/transforms'
+import { EARN_POINTS__MAPPER, calculatePricePoints, toggleOrigDiscountPrice, amountIdentifierPointsPrice } from 'utils/product'
+import { calculateEarnPoints } from 'utils/calculation'
+
 import {
   ERROR_CODES
 } from 'utils/errorHandling'
 
 import {
-  GET_ORDER_PRODUCT,
-  GET_MOBILE_NUMBER,
-  ORDER_SUBMIT,
-  GET_STORE,
+  COUPON_SUBMIT,
+  COUPON_REMOVE,
   GET_BLACKLIST,
   GET_CURRENT_POINTS,
-  GET_LAST_SELECTED_METHOD
+  GET_LAST_SELECTED_METHOD,
+  GET_MOBILE_NUMBER,
+  GET_ORDER_PRODUCT,
+  GET_STORE,
+  ORDER_SUBMIT
 } from './constants'
 
 import {
@@ -47,18 +55,19 @@ import {
   errorOrderAction,
   setBlackListAction,
   setCurrentPointsAction,
-  setLastSelectedMethodAction
+  setLastSelectedMethodAction,
+  resultCouponAction
 } from './actions'
 
 import {
   API_BASE_URL,
-  MOBILE_REGISTRATION_URL,
-  LOYALTY_TOKEN_KEY,
   CURRENT_PRODUCT_KEY,
+  LAST_SELECTED_METHOD,
+  LOYALTY_TOKEN_KEY,
   MOBILE_NUMBERS_KEY,
+  MOBILE_REGISTRATION_URL,
   ORDERED_LIST_KEY,
   STORE_LOCATIONS_KEY,
-  LAST_SELECTED_METHOD,
   VERIFICATION_CODE_KEY
 } from 'containers/App/constants'
 
@@ -252,7 +261,7 @@ export function * requestOrderToken (mobile) {
   return getPropAccessToken(getOrderToken)
 }
 
-// Special case for promo paylaod
+// Special case for promo payload
 function promoPayload (orderedProduct) {
   const promoCode = orderedProduct.getIn(['promo', 'promoCode'])
 
@@ -262,12 +271,24 @@ function promoPayload (orderedProduct) {
   } : {}
 }
 
-export function * submitOrder (args) {
-  const { payload: { orderedProduct, mobileNumber, modePayment, store, usePoints } } = args
+// Special case for coupon payload
+function couponPayload ({ orderedProduct, couponCode }) {
+  return couponCode ? {
+    totalPrice: toggleOrigDiscountPrice(orderedProduct),
+    couponCode
+  } : {}
+}
+
+function * createPostPayload ({ orderedProduct, mobileNumber, modePayment, store, usePoints, couponCode }) {
   const loyaltyToken = yield call(getItem, LOYALTY_TOKEN_KEY)
-  const completeMobile = `0${mobileNumber}`
-  const postPayload = transformSubmitOrderPayload({
+  return transformSubmitOrderPayload({
     ...promoPayload(orderedProduct),
+    ...couponPayload({ orderedProduct, couponCode }),
+    epbPointsCredit: calculateEarnPoints({
+      multiplier: orderedProduct.getIn(['points', 'multiplier']),
+      method: orderedProduct.getIn(['points', 'method', EARN_POINTS__MAPPER[modePayment]]).toObject(),
+      amount: amountIdentifierPointsPrice({orderedProduct, usePoints, modePayment})
+    }),
     cliqqCode: orderedProduct.get('cliqqCode').first(),
     multiplier: orderedProduct.getIn(['points', 'multiplier']),
     amount: calculatePricePoints({
@@ -276,11 +297,16 @@ export function * submitOrder (args) {
     }),
     quantity: 1,
     deviceOrigin: 'PWA',
-    mobileNumber: completeMobile,
+    mobileNumber: `0${mobileNumber}`,
     deliveryLocationId: Pad(store.id),
     loyaltyToken: loyaltyToken.token,
     usePoints
   })
+}
+
+export function * submitOrder (args) {
+  const { payload: { orderedProduct, mobileNumber, modePayment, store, usePoints, couponCode } } = args
+  const postPayload = yield * createPostPayload({ orderedProduct, mobileNumber, modePayment, store, usePoints, couponCode })
   try {
     const token = yield requestOrderToken(mobileNumber)
     const order = yield call(request, `${API_BASE_URL}/orders`, {
@@ -288,7 +314,6 @@ export function * submitOrder (args) {
       body: JSON.stringify(postPayload(modePayment)),
       token
     })
-
     const isError = propOr(null, 'statusCode')
 
     // right now e have to emulate the response data
@@ -363,6 +388,78 @@ export function * getCurrentPoints () {
   }
 }
 
+function * couponPayloadCreator ({orderedProduct, mobileNumber, couponCode}) {
+  // we remove the totalPrice that not really needed if promo code exist
+  return dissoc('totalPrice', {
+    ...promoPayload(orderedProduct),
+    cliqqCode: orderedProduct.get('cliqqCode').first(),
+    quantity: 1,
+    deviceOrigin: 'PWA',
+    mobileNumber: `0${mobileNumber}`,
+    couponCode
+  })
+}
+
+function updateOrderProductCouponPrice ({ orderedProduct, coupon }) {
+  const couponPrice = compose(parseInt, propOr(0, 'PHP'))
+  return assoc('couponPrice', couponPrice(coupon), { ...orderedProduct.toJS() })
+}
+
+export function * submitCoupon (args) {
+  const { payload: { orderedProduct, mobileNumber, couponCode } } = args
+  const isSuccess = complement(propEq('statusCode', '404'))
+  const postPayload = yield couponPayloadCreator({orderedProduct, mobileNumber, couponCode})
+
+  const token = yield getAccessToken()
+  const req = yield call(request, `${API_BASE_URL}/orderValidation`, {
+    method: 'POST',
+    body: JSON.stringify(postPayload),
+    token: token.access_token
+  })
+
+  let couponApplied = false
+  let couponSuccess = false
+  let couponError = false
+
+  if (isSuccess(req)) {
+    const coupon = yield transformCoupon(req)
+    const updateOrderProduct = compose(
+      put,
+      setOrderProductAction,
+      updateOrderProductCouponPrice
+    )
+
+    couponApplied = true
+    couponSuccess = true
+    yield updateOrderProduct({ orderedProduct, coupon })
+  } else {
+    couponError = ERROR_CODES.COUPON_INVALID
+  }
+
+  yield put(resultCouponAction({
+    couponApplied,
+    couponSuccess,
+    couponError
+  }))
+}
+
+export function * removeCoupon (args) {
+  const { payload: { orderedProduct } } = args
+  const updateOrderProduct = compose(
+    put,
+    setOrderProductAction,
+    updateOrderProductCouponPrice
+  )
+  // set ordered product and make the couponPrice 0
+  yield updateOrderProduct({ orderedProduct, coupon: {} })
+
+  yield put(resultCouponAction({
+    couponApplied: false,
+    couponSuccess: false,
+    couponError: false
+  }))
+}
+
 export function * getOrderProductSaga () {
   yield * takeLatest(GET_ORDER_PRODUCT, getOrderProduct)
 }
@@ -390,6 +487,14 @@ export function * getLastSelectedMethodSaga () {
   yield * takeLatest(GET_LAST_SELECTED_METHOD, getLastSelectedMethod)
 }
 
+export function * submitCouponSaga () {
+  yield * takeLatest(COUPON_SUBMIT, submitCoupon)
+}
+
+export function * removeCouponSaga () {
+  yield * takeLatest(COUPON_REMOVE, removeCoupon)
+}
+
 export function * productReviewSagas () {
   const watcher = yield [
     fork(getOrderProductSaga),
@@ -400,6 +505,9 @@ export function * productReviewSagas () {
     fork(getStoreLocationSaga),
     fork(getCurrentPointsSaga),
     fork(getLastSelectedMethodSaga),
+
+    fork(submitCouponSaga),
+    fork(removeCouponSaga),
 
     fork(submitOrderSaga)
   ]

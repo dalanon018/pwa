@@ -205,8 +205,14 @@ Registration.propTypes = {
   disabledButton: PropTypes.bool.isRequired,
   errModalToggle: PropTypes.bool.isRequired,
   errModalName: PropTypes.string.isRequired,
-  errorTitle: PropTypes.string.isRequired,
-  errorMessage: PropTypes.string.isRequired,
+  errorTitle: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]),
+  errorMessage: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]),
 
   _handleInput: PropTypes.func.isRequired,
   _toggleTerms: PropTypes.func.isRequired,

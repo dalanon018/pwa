@@ -33,6 +33,7 @@ describe('<OrderSummary />', () => {
     _handleToBottom: () => {},
     _handleChange: () => {},
     ShowCodComponent: () => <div />,
+    _updateUsePoints: () => {},
     modePayment: 'cod',
     modalToggle: false,
     labelOne: '',
@@ -54,13 +55,20 @@ describe('<OrderSummary />', () => {
       'shipping': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dictum eros nec sagittis pretium. Phasellus consectetur metus sed interdum fringilla.',
       'barcode': '718037806839'
     }),
+    usePoints: 0,
+    currentPoints: 0,
+    couponCode: '',
+    couponApplied: false,
+    couponLoader: false,
     brandLogo: null,
     productLoader: false,
     mobileLoader: false,
     orderSuccess: fromJS({}),
     orderFail: fromJS({}),
     mobileNumber: '999999999',
-    errorMessage: '',
+    modalIcon: '',
+    modalMessage: '',
+    modalContent: '',
     orderRequesting: false,
     store: { name: 'Quezon City', id: 1 },
     intl: {
@@ -68,10 +76,6 @@ describe('<OrderSummary />', () => {
     },
     mobileNumbers: fromJS({})
   }
-
-  it('Expect to have unit tests specified', () => {
-    expect(true).toEqual(true)
-  })
 
   it('render without exploding', () => {
     const renderComponent = wrapper(minProps)

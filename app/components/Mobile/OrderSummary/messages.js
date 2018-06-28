@@ -115,5 +115,13 @@ export default defineMessages({
   couponAppliedLabel: {
     id: `${idSuffix}.couponAppliedLabel`,
     defaultMessage: 'Discount Coupon Code Applied'
+  },
+  couponButtonLabelApply: {
+    id: `${idSuffix}.couponButtonLabelApply`,
+    defaultMessage: 'APPLY'
+  },
+  couponButtonLabelRemove: {
+    id: `${idSuffix}.couponButtonLabelRemove`,
+    defaultMessage: 'REMOVE'
   }
 })
