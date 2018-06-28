@@ -28,7 +28,9 @@ import { getItem, setItem, removeItem } from 'utils/localStorage'
 import { Pad } from 'utils/string'
 import { DateDifferece, AddDate } from 'utils/date'
 import { transformSubmitOrderPayload, transformCoupon } from 'utils/transforms'
-import { calculatePricePoints, toggleOrigDiscountPrice } from 'utils/product'
+import { EARN_POINTS__MAPPER, calculatePricePoints, toggleOrigDiscountPrice } from 'utils/product'
+import { calculateEarnPoints } from 'utils/calculation'
+
 import {
   ERROR_CODES
 } from 'utils/errorHandling'
@@ -269,12 +271,24 @@ function promoPayload (orderedProduct) {
   } : {}
 }
 
-export function * submitOrder (args) {
-  const { payload: { orderedProduct, mobileNumber, modePayment, store, usePoints } } = args
+// Special case for coupon payload
+function couponPayload ({ orderedProduct, couponCode }) {
+  return couponCode ? {
+    totalPrice: toggleOrigDiscountPrice(orderedProduct),
+    couponCode
+  } : {}
+}
+
+function * createPostPayload ({ orderedProduct, mobileNumber, modePayment, store, usePoints, couponCode }) {
   const loyaltyToken = yield call(getItem, LOYALTY_TOKEN_KEY)
-  const completeMobile = `0${mobileNumber}`
-  const postPayload = transformSubmitOrderPayload({
+  return transformSubmitOrderPayload({
     ...promoPayload(orderedProduct),
+    ...couponPayload({ orderedProduct, couponCode }),
+    epbPointsCredit: calculateEarnPoints({
+      multiplier: parseFloat(orderedProduct.getIn(['points', 'multiplier'])),
+      percentage: parseFloat(orderedProduct.getIn(['points', 'method', EARN_POINTS__MAPPER[modePayment]])),
+      amount: toggleOrigDiscountPrice(orderedProduct)
+    }),
     cliqqCode: orderedProduct.get('cliqqCode').first(),
     multiplier: orderedProduct.getIn(['points', 'multiplier']),
     amount: calculatePricePoints({
@@ -283,11 +297,16 @@ export function * submitOrder (args) {
     }),
     quantity: 1,
     deviceOrigin: 'PWA',
-    mobileNumber: completeMobile,
+    mobileNumber: `0${mobileNumber}`,
     deliveryLocationId: Pad(store.id),
     loyaltyToken: loyaltyToken.token,
     usePoints
   })
+}
+
+export function * submitOrder (args) {
+  const { payload: { orderedProduct, mobileNumber, modePayment, store, usePoints, couponCode } } = args
+  const postPayload = yield * createPostPayload({ orderedProduct, mobileNumber, modePayment, store, usePoints, couponCode })
   try {
     const token = yield requestOrderToken(mobileNumber)
     const order = yield call(request, `${API_BASE_URL}/orders`, {
@@ -295,7 +314,6 @@ export function * submitOrder (args) {
       body: JSON.stringify(postPayload(modePayment)),
       token
     })
-
     const isError = propOr(null, 'statusCode')
 
     // right now e have to emulate the response data

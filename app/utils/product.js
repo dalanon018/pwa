@@ -6,6 +6,15 @@ import {
 } from 'ramda'
 
 /**
+ * API response is the value  and what we use is the key
+ */
+export const EARN_POINTS__MAPPER = {
+  COD: 'cod',
+  CASH: 'cash',
+  POINTS: 'poc'
+}
+
+/**
  * helper on which of the property use for the price
  * // so we can expand this.
  * @param {*} product
