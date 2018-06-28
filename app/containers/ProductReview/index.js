@@ -151,8 +151,14 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     changeRoute: PropTypes.func.isRequired,
     couponApplied: PropTypes.bool.isRequired,
     couponLoader: PropTypes.bool.isRequired,
-    couponSuccess: PropTypes.bool.isRequired,
-    couponError: PropTypes.bool.isRequired
+    couponSuccess: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool
+    ]).isRequired,
+    couponError: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool
+    ]).isRequired
   }
 
   showStoreLocator = [PAYMENTS_OPTIONS.COD, PAYMENTS_OPTIONS.POINTS, PAYMENTS_OPTIONS.FULL_POINTS]
