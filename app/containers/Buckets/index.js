@@ -632,67 +632,65 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     const mobileFilterMargin = routeName === 'productsByCategory' || routeName === 'brandPage' || routeName === 'purchases'
 
     return (
-      <div>
-        <Wrapper toggleSidebar={toggleSidebar}>
-          <BackgroundLay toggle={categoryToggle} onClick={this._toggleCategoryDrop} />
-          { this._displayHeader() }
-          <MainContent
-            onClick={this._handlePageClick}
-            routeName={mobileFilterMargin}
-            media={windowWidth}
-            toggleSidebar={toggleSidebar} >
-            <Switch>
-              <Route exact path='/' component={HomePage} />
-              <Route path='/product/:id' component={ProductPage} />
-              <Route path='/categories' component={CategoryLanding} />
-              <Route exact path='/brands' component={BrandLanding} />
-              <Route exact path='/flash-deals' component={FlashDealsLanding} />
-              <Route path='/review' component={ReviewPage} />
-              <Route exact path='/purchases' component={PurchaseListPage} />
-              <Route exact path='/purchases/:trackingNumber' component={ReceiptPage} />
-              <Route exact path='/products-category/:id' component={ProductsByCategoryPage} />
-              <Route exact path='/products-featured' component={ProductsByFeaturedPage} />
-              <Route path='/brands/:id' component={BrandsPage} />
-              <Route exact path='/search' component={SearchPage} />
-              <Route exact path='/promos/:id' component={PromoProductsPage} />
-              <Route exact path='/wallet' component={WalletPage} />
-              <Route exact path='/recent-store' component={RecentStorePage} />
+      <Wrapper toggleSidebar={toggleSidebar}>
+        <BackgroundLay toggle={categoryToggle} onClick={this._toggleCategoryDrop} />
+        { this._displayHeader() }
+        <MainContent
+          onClick={this._handlePageClick}
+          routeName={mobileFilterMargin}
+          media={windowWidth}
+          toggleSidebar={toggleSidebar} >
+          <Switch>
+            <Route exact path='/' component={HomePage} />
+            <Route path='/product/:id' component={ProductPage} />
+            <Route path='/categories' component={CategoryLanding} />
+            <Route exact path='/brands' component={BrandLanding} />
+            <Route exact path='/flash-deals' component={FlashDealsLanding} />
+            <Route path='/review' component={ReviewPage} />
+            <Route exact path='/purchases' component={PurchaseListPage} />
+            <Route exact path='/purchases/:trackingNumber' component={ReceiptPage} />
+            <Route exact path='/products-category/:id' component={ProductsByCategoryPage} />
+            <Route exact path='/products-featured' component={ProductsByFeaturedPage} />
+            <Route path='/brands/:id' component={BrandsPage} />
+            <Route exact path='/search' component={SearchPage} />
+            <Route exact path='/promos/:id' component={PromoProductsPage} />
+            <Route exact path='/wallet' component={WalletPage} />
+            <Route exact path='/recent-store' component={RecentStorePage} />
 
-              <Route exact path='/terms-conditions' component={TermsPage} />
-              <Route exact path='/privacy-policy' component={PrivacyPage} />
-              <Route exact path='/faq' component={FaqPage} />
+            <Route exact path='/terms-conditions' component={TermsPage} />
+            <Route exact path='/privacy-policy' component={PrivacyPage} />
+            <Route exact path='/faq' component={FaqPage} />
 
-              <Route path='/offline' component={OfflinePage} />
-              <Route path='' component={NotFound} />
-            </Switch>
-            <AccessView
-              mobileView={null}
-              desktopView={<DesktopFooter />}
-            />
-          </MainContent>
-          <div
-            className='sidebar-wrapper' >
-            <SidebarMenu
-              isSignIn={!!loyaltyToken}
-              signOut={removeLoyaltyToken}
-              changeRoute={this._handleChangeRouteFromSideBar}
-              categories={productCategories}
-              brands={brands}
-              toggleSidebar={toggleSidebar}
-              toggleAction={this._handleCloseSidebarClickPusher}
-            />
-          </div>
-          { this._handleShownModal() }
-          <Modal
-            open={toggleError}
-            name='warning'
-            title={<FormattedMessage {...messages.errorHeader} />}
-            content={this._toggleErrorMessage(toggleMessage)}
-            close={this._handleNetworkErrorMessage}
+            <Route path='/offline' component={OfflinePage} />
+            <Route path='' component={NotFound} />
+          </Switch>
+          <AccessView
+            mobileView={null}
+            desktopView={<DesktopFooter />}
           />
-          <ReactNotification ref={this._reactNotificationRef} />
-        </Wrapper>
-      </div>
+        </MainContent>
+        <div
+          className='sidebar-wrapper' >
+          <SidebarMenu
+            isSignIn={!!loyaltyToken}
+            signOut={removeLoyaltyToken}
+            changeRoute={this._handleChangeRouteFromSideBar}
+            categories={productCategories}
+            brands={brands}
+            toggleSidebar={toggleSidebar}
+            toggleAction={this._handleCloseSidebarClickPusher}
+          />
+        </div>
+        { this._handleShownModal() }
+        <Modal
+          open={toggleError}
+          name='warning'
+          title={<FormattedMessage {...messages.errorHeader} />}
+          content={this._toggleErrorMessage(toggleMessage)}
+          close={this._handleNetworkErrorMessage}
+        />
+        <ReactNotification ref={this._reactNotificationRef} />
+      </Wrapper>
     )
   }
 }
