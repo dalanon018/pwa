@@ -85,7 +85,7 @@ const updateParamsImages = (images, opt = {}) => {
 const getHighestPointsEarn = (product) => {
   const amount = product.get('discountPrice') || product.get('price')
 
-  return `${calculateEarnPoints({
+  return product.size && `${calculateEarnPoints({
     multiplier: product.getIn(['points', 'multiplier']),
     method: product.getIn(['points', 'method', 'cash']).toObject(),
     amount: amount
