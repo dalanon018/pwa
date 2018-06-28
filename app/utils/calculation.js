@@ -8,7 +8,6 @@ import {
 } from 'ramda'
 
 export const calculateEarnPoints = ({ method, multiplier, amount }) => {
-  console.log({method})
   const calculateEarn = ifElse(
     propEq('type', 'percentage'),
     compose(
@@ -21,13 +20,6 @@ export const calculateEarnPoints = ({ method, multiplier, amount }) => {
   )
 
   return calculateEarn(method)
-    // Math.floor(
-    //   multiply(
-    //     multiplier,
-    //     multiply(amount, prop('value')
-    //     )
-    //   )
-    // ),
 }
 
 export const calculateConversionPointsToCash = ({ points, multiplier = '0.20' }) => {
