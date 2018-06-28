@@ -110,7 +110,7 @@ export function * getPromos (args) {
 }
 
 export function * getBanners () {
-  const req = yield call(xhr, `${GOOGLE_APIS_URL}/banners.json`, {
+  const req = yield call(xhr, `${GOOGLE_APIS_URL}/config/banners.json`, {
     method: 'GET',
     content: 'application/json'
   })
