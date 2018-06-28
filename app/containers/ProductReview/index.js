@@ -512,7 +512,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   }
 
   render () {
-    const { currentPoints, orderedProduct, orderRequesting, isBlackListed, productLoader, intl, mobileNumbers } = this.props
+    const { currentPoints, orderedProduct, orderRequesting, isBlackListed, productLoader, intl, mobileNumbers, couponLoader } = this.props
     const { errorMessage, errorContent, modePayment, modalToggle, storeLocatorVisibility, pointsModifierVisibility, store, usePoints, couponCode, couponPrompt, couponPromptTitle, couponPromptDescription, couponSubmitText, couponApplied } = this.state
 
     return (
@@ -550,9 +550,11 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
               store={store}
               storeLocatorVisibility={storeLocatorVisibility}
               pointsModifierVisibility={pointsModifierVisibility}
+
               couponCode={couponCode}
               couponSubmitText={couponSubmitText}
               couponApplied={couponApplied}
+              couponLoader={couponLoader}
             />
           }
           desktopView={

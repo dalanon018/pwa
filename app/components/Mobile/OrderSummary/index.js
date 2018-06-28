@@ -422,6 +422,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       couponCode,
       couponSubmitText,
       couponApplied,
+      couponLoader,
 
       _isFullPointsOnly,
       _updateUsePoints,
@@ -576,7 +577,12 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                         placeholder='Enter Code here'
                         name='coupon'
                         className='custom-input' />
-                      <Button disabled={(couponCode.length === 0)} content={couponSubmitText} className='background__teal color__white' />
+                      <Button
+                        disabled={(couponCode.length === 0) || couponLoader}
+                        loading={couponLoader}
+                        content={couponSubmitText}
+                        className='background__teal color__white'
+                      />
                     </Form.Group>
                   </Form>
                 </Grid.Column>
