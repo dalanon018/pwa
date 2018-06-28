@@ -605,6 +605,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                 _isFullPointsOnly={this._isFullPointsOnly()}
                 _handleCouponEntry={this._handleCouponEntry}
                 _handleSubmitCoupon={this._handleSubmitCoupon}
+                _handleRemoveCoupon={this._handleRemoveCoupon}
 
                 modalToggle={modalToggle}
                 modalIcon={modalIcon}
@@ -625,8 +626,10 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
                 intl={intl}
                 mobileNumbers={mobileNumbers}
                 pointsModifierVisibility={pointsModifierVisibility}
+
                 couponCode={couponCode}
                 couponApplied={couponApplied}
+                couponLoader={couponLoader}
               />
             </div>
           }

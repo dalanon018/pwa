@@ -502,7 +502,9 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
   render () {
     const {
-      errorMessage,
+      modalIcon,
+      modalContent,
+      modalMessage,
       orderedProduct,
       modalToggle,
       orderRequesting,
@@ -513,8 +515,9 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       pointsModifierVisibility,
       currentPoints,
       usePoints,
+
+      couponLoader,
       couponCode,
-      couponSubmitText,
       couponApplied,
 
       _updateUsePoints,
@@ -523,7 +526,9 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       _handleStoreLocator,
       _stepWrapperRef,
       _handleCouponEntry,
-      _handleSubmitCoupon } = this.props
+      _handleSubmitCoupon,
+      _handleRemoveCoupon
+    } = this.props
 
     return (
       <div>
@@ -675,16 +680,25 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                           }
                         </Label>
 
-                        <Form onSubmit={_handleSubmitCoupon}>
+                        <Form onSubmit={couponApplied ? _handleRemoveCoupon : _handleSubmitCoupon}>
                           <Form.Group>
                             <Form.Input
                               value={couponCode}
-                              disabled={couponApplied && couponCode.length >= 1}
+                              disabled={((couponApplied && couponCode.length >= 1) || couponLoader)}
                               onChange={e => _handleCouponEntry(e)}
                               placeholder='Enter Code here'
                               name='coupon'
                               className='custom-input' />
-                            <Button content={couponSubmitText} className='background__teal color__white' />
+                            <Button
+                              disabled={(couponCode.length === 0) || couponLoader}
+                              loading={couponLoader}
+                              className='background__teal color__white'
+                              content={
+                                couponApplied
+                                ? <FormattedMessage {...messages.couponButtonLabelRemove} />
+                                : <FormattedMessage {...messages.couponButtonLabelApply} />
+                              }
+                            />
                           </Form.Group>
                         </Form>
                       </CouponContainer>
@@ -759,9 +773,9 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         </Container>
         <Modal
           open={modalToggle}
-          name='warning'
-          title={errorMessage}
-          content=''
+          name={modalIcon}
+          title={modalMessage}
+          content={modalContent}
           close={_handleModalClose}
         />
       </div>
@@ -776,7 +790,12 @@ OrderSummary.propTypes = {
   isBlackListed: PropTypes.bool.isRequired,
   productLoader: PropTypes.bool.isRequired,
   ShowCodComponent: PropTypes.func.isRequired,
-  errorMessage: PropTypes.oneOfType([
+  modalIcon: PropTypes.string.isRequired,
+  modalMessage: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.string
+  ]).isRequired,
+  modalContent: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.string
   ]).isRequired,
