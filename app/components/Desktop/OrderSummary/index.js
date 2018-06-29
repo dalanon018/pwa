@@ -17,6 +17,7 @@ import {
   compose,
   cond,
   divide,
+  equals,
   identity,
   ifElse,
   lt,
@@ -470,7 +471,20 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     )(_isFullPointsOnly)
   }
 
+  _checkShouldUpdateUsePoints = (props) => {
+    const usePoints = prop('usePoints')
+    const maxPoints = this._computeTotalPointsPrice(props)
+
+    const shouldUpdateUsePoints = when(
+      compose(lt(maxPoints), usePoints),
+      () => props._updateUsePoints(maxPoints)
+    )
+
+    shouldUpdateUsePoints(props)
+  }
+
   componentWillReceiveProps (nextProps) {
+    const { couponApplied } = this.props
     // when not yet initialize
     const initializeStartingUsePoints = when(
       allPass([
@@ -495,9 +509,15 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
         props._updateUsePoints(this._computeTotalPointsPrice(props))
       }
     )
+
+    const updateUsePointsOnPromoApplied = when(
+      compose(complement, equals(couponApplied), prop('couponApplied')),
+      this._checkShouldUpdateUsePoints
+    )
     // we will be using this.props since we are having issue with other deps that use the this.props
     initializeStartingUsePoints(this.props)
     shouldSelectFullPoints(nextProps)
+    updateUsePointsOnPromoApplied(nextProps)
   }
 
   render () {
