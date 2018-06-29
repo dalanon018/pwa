@@ -62,6 +62,8 @@ import {
   LocationButton,
   CashPrepaidInfo,
   FullPointsWrapper,
+  ProductPriceWrapper,
+  FullPointsSideBarWrapper,
   ProductContainer,
   ProductDetails,
   LabelFullPointsPrice,
@@ -178,6 +180,36 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     ])()
     this._pointsInitialized = true
     return _updateUsePoints(Math.ceil(points))
+  }
+
+  _displayProductPointsPrice = ({ entity }) => {
+    return (
+      <FullPointsSideBarWrapper>
+        <Image src={CliqqIcon} className='cliqq-plain-icon' alt='CLiQQ' />
+        <Label as='b' basic size='big' className='product-price color__primary text__weight--700'>
+          { computeTotalPointsPrice(entity) }
+        </Label>
+      </FullPointsSideBarWrapper>
+    )
+  }
+
+  _displayProductPrice = ({ entity }) => {
+    return (
+      <ProductPriceWrapper>
+        <Label className='padding__none base-price' as='b' basic size='massive' color='orange'>
+          <FormattedMessage {...messages.peso} />
+          { this._toggleOrigDiscountPrice(entity) }
+        </Label>
+        { this._toggleDiscount(entity.get('discountPrice')) }
+      </ProductPriceWrapper>
+    )
+  }
+
+  _toggleFullPoints = ({ isFullPointsOnly, ...rest }) => {
+    return toggleComponent(
+      this._displayProductPointsPrice(rest),
+      this._displayProductPrice(rest)
+    )(isFullPointsOnly)
   }
 
   _toggleDiscount = (discountPrice) => {
@@ -543,6 +575,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       couponCode,
       couponApplied,
 
+      _isFullPointsOnly,
       _updateUsePoints,
       _handleModalClose,
       _handleProceed,
@@ -752,12 +785,12 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                         }
                         <Label as='p' basic size='huge' className='text__weight--500 padding__horizontal--15'>{orderedProduct.get('title')}</Label>
 
-                        <Label className='padding__none base-price' as='b' basic size='massive' color='orange'>
-                          <FormattedMessage {...messages.peso} />
-                          { this._toggleOrigDiscountPrice(orderedProduct) }
-                        </Label>
-
-                        { this._toggleDiscount(orderedProduct.get('discountPrice')) }
+                        {
+                          this._toggleFullPoints({
+                            isFullPointsOnly: _isFullPointsOnly,
+                            entity: orderedProduct
+                          })
+                        }
 
                         {
                           orderedProduct.get('size') &&

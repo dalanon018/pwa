@@ -4,7 +4,7 @@ import { Button } from 'semantic-ui-react'
 
 const ProductItem = styled.div`
   margin-bottom: 20px;
-  
+
   .image {
     margin: 0 auto;
     width: 200px;
@@ -285,6 +285,28 @@ const CouponContainer = styled.div`
   }
 `
 
+const ProductPriceWrapper = styled.div`
+
+`
+
+const FullPointsSideBarWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & img {
+    width: 34px !important;
+    height: 34px !important;
+    margin-right: 5px !important;
+  }
+
+  & b {
+    padding: 0 !important;
+    font-size: 34px !important;
+  }
+
+`
+
 export {
   MethodTitle,
   BottomWrapper,
@@ -301,7 +323,9 @@ export {
   StepWrapper,
   BlockWrapper,
   LabelFullPointsPrice,
+  ProductPriceWrapper,
   FullPointsWrapper,
+  FullPointsSideBarWrapper,
   InfoBlock,
   CashPrepaidInfo,
   PointsPlusCash,
