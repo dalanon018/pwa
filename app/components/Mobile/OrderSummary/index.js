@@ -167,15 +167,18 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
   }
 
   _toggleDiscount = (discountPrice) => {
-    const { orderedProduct } = this.props
-    return toggleComponent(
+    const { orderedProduct, couponApplied } = this.props
+
+    const price = couponApplied ? (discountPrice || orderedProduct.get('price')) : orderedProduct.get('price')
+    const discountedPrice = toggleComponent(
       <span className='strike color__grey'>
         <FormattedMessage {...messages.peso} />
-        { orderedProduct.get('price') &&
-          parseFloat(orderedProduct.get('price')).toLocaleString() }
+        { price && parseFloat(price).toLocaleString() }
       </span>,
       null
-    )(discountPrice)
+    )
+
+    return discountedPrice(couponApplied || discountPrice)
   }
 
   _renderRegularPaymentOptions = ({ mode, label }) => {
