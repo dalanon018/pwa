@@ -13,6 +13,7 @@ import { Switch, Route } from 'react-router-dom'
 
 import Buckets from 'containers/Buckets/Loadable'
 import LoginPage from 'containers/LoginPage/Loadable'
+import BrowserCheck from 'components/Shared/BrowserCheck'
 // import UserAgentRouter from 'components/Shared/UserAgentRouter'
 
 const AppWrapper = styled.div`
@@ -32,7 +33,7 @@ const BodyWrapper = styled.div`
   }
 `
 
-function App () {
+export function App () {
   return (
     <AppWrapper>
       <BodyWrapper>
@@ -44,7 +45,6 @@ function App () {
         </Helmet>
         <Switch>
           <Route exact path='/login' component={LoginPage} />
-
           <Route path='/' component={Buckets} />
         </Switch>
       </BodyWrapper>
@@ -52,4 +52,4 @@ function App () {
   )
 }
 
-export default App
+export default BrowserCheck(App)
