@@ -13,7 +13,7 @@ import { Switch, Route } from 'react-router-dom'
 
 import Buckets from 'containers/Buckets/Loadable'
 import LoginPage from 'containers/LoginPage/Loadable'
-// import BrowserCheck from 'components/Shared/BrowserCheck'
+import BrowserCheck from 'components/Shared/BrowserCheck'
 // import UserAgentRouter from 'components/Shared/UserAgentRouter'
 
 const AppWrapper = styled.div`
@@ -52,4 +52,4 @@ export function App () {
   )
 }
 
-export default App
+export default BrowserCheck(App)

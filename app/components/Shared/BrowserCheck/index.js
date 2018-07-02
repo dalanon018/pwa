@@ -9,7 +9,7 @@ import BrowserSupport, { detectBrowser } from 'react-browser-support'
 import { MIN_BROWSER_VERSIONS } from 'containers/App/constants'
 
 export default function BrowserCheck (Component) {
-  class BrowserCheckComponent extends React.PureComponent {
+  class BrowserCheckComponent extends React.Component {
     state = {
       browser: {}
     }
