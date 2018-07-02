@@ -46,6 +46,10 @@ import { transformCategory, transformBrand, transformOrder } from 'utils/transfo
 import { getItem, setItem, removeItem } from 'utils/localStorage'
 import { DateDifferece, AddDate } from 'utils/date'
 import { getBrowserInfo, fnSearchParams } from 'utils/http'
+import {
+  ERROR_CODES,
+  storageHandlingError
+} from 'utils/errorHandling'
 
 import {
   ACCESS_TOKEN_KEY,
@@ -134,7 +138,7 @@ function * requestCategories () {
       getResults
     )(req)
   } else {
-    yield put(setNetworkErrorAction(500))
+    yield put(setNetworkErrorAction(ERROR_CODES.NETWORK_ERROR))
   }
 }
 
@@ -162,7 +166,7 @@ function * requestBrands () {
       getResults
     )(req)
   } else {
-    yield put(setNetworkErrorAction(500))
+    yield put(setNetworkErrorAction(ERROR_CODES.NETWORK_ERROR))
   }
 }
 
@@ -211,7 +215,7 @@ export function * requestAccessToken () {
 
     return token
   } catch (e) {
-    yield put(setNetworkErrorAction('Please make sure you have internet connection.'))
+    yield put(setNetworkErrorAction(storageHandlingError(e)))
   }
 
   return {}
@@ -389,7 +393,7 @@ export function * registerPushNotification (payload) {
     yield call(setItem, REGISTERED_PUSH, token)
     yield put(setRegisteredPushAction(token))
   } catch (e) {
-    yield put(setNetworkErrorAction('Please make sure you have internet connection to order a product.'))
+    yield put(setNetworkErrorAction(ERROR_CODES.NETWORK_ERROR))
     yield put(setRegisteredPushAction(false))
   }
 }

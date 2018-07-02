@@ -50,6 +50,14 @@ export default defineMessages({
     id: 'app.containers.Bucket.failedFetch',
     defaultMessage: 'Failed to process request, Please check your internet connection.'
   },
+  quotaExceedError: {
+    id: 'app.containers.Bucket.quotaExceedError',
+    defaultMessage: 'In Order to use this site, There should be enough free space.'
+  },
+  quotaExceedTitle: {
+    id: 'app.containers.Bucket.quotaExceedError',
+    defaultMessage: 'Insufficient Free space.'
+  },
   search: {
     id: 'app.containers.Bucket.search',
     defaultMessage: 'Search'
