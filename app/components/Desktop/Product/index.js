@@ -11,11 +11,6 @@ import {
   generateShareIcon
 } from 'react-share'
 
-import {
-  identity,
-  ifElse
-} from 'ramda'
-
 import { FormattedMessage } from 'react-intl'
 import { Image, Label, Button, Icon, Grid, Container } from 'semantic-ui-react'
 
@@ -27,6 +22,7 @@ import { fbShare } from 'utils/fb-share'
 import { paramsImgix } from 'utils/image-stock'
 import { calculateEarnPoints } from 'utils/calculation'
 import { toggleOrigDiscountPrice, computeTotalPointsPrice } from 'utils/product'
+import { ToggleComponent } from 'utils/logicHelper'
 
 import ProductSlider from 'components/Desktop/BannerSlider'
 // import ListCollapse from 'components/Shared/ListCollapse'
@@ -58,12 +54,6 @@ import {
   CustomRow,
   PointsInfo
 } from './styled'
-
-const toggleComponent = (component1, component2) => (condition) => ifElse(
-  identity,
-  () => component1,
-  () => component2
-)(condition)
 
 const updateParamsImages = (images, opt = {}) => {
   const options = {
@@ -102,7 +92,7 @@ const DisplayProductPointsPrice = ({ entity }) => {
 }
 
 const DisplayProductPrice = ({ entity }) => {
-  const toggleDiscount = toggleComponent(
+  const toggleDiscount = ToggleComponent(
     <Label className='product-discount' as='span' basic size='huge' color='grey'>
       <FormattedMessage {...messages.peso} />
       { entity.get('price') &&
@@ -123,14 +113,14 @@ const DisplayProductPrice = ({ entity }) => {
 }
 
 export const ToggleFullPoints = ({ isFullPointsOnly, ...rest }) => {
-  return toggleComponent(
+  return ToggleComponent(
     <DisplayProductPointsPrice {...rest} />,
     <DisplayProductPrice {...rest} />
   )(isFullPointsOnly)
 }
 
 export const ToggleEarnPoints = ({ entity, isFullPointsOnly, changeRoute }) => {
-  return toggleComponent(
+  return ToggleComponent(
     <PointsInfo>
       <Image src={CliQQPlainLogo} alt='CLiQQ' />
       <Label as='span' basic size='medium' className='text__weight--400'>

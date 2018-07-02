@@ -9,12 +9,13 @@ import {
   Input
 } from 'semantic-ui-react'
 
-import { ifElse, identity } from 'ramda'
 import BarcodeImage from 'images/icons/barcode-header.svg'
 import messages from './messages'
 import SearchImage from 'images/icons/search-header.svg'
 import CliqqIcon from 'images/icons/cliqq.png'
 import MainLogo from 'images/cliqq-logo.svg'
+
+import { ToggleComponent } from 'utils/logicHelper'
 
 export const Wrapper = styled.div`
   display: block;
@@ -196,14 +197,6 @@ export const CustomRow = styled(Grid.Row)`
   padding: 5px 0 !important;
 `
 
-const toggleComponent = (componentA, componentB) => (condition) => {
-  return ifElse(
-    identity,
-    () => componentA,
-    () => componentB
-  )(condition)
-}
-
 export default class MainMenu extends PureComponent {
   static propTypes= {
     pageTitle: PropTypes.string,
@@ -266,7 +259,7 @@ export default class MainMenu extends PureComponent {
       </PageTitle>
     )
 
-    const ShowSearchInputLogo = toggleComponent(
+    const ShowSearchInputLogo = ToggleComponent(
       <SearchContainer data-cy='search-button' onClick={this._handleGotoSearch}>
         <ImageLogo alt='logo' src={MainLogo} onClick={changeRoute.bind(this, '/')} />
         <SearchInput
@@ -324,17 +317,17 @@ export default class MainMenu extends PureComponent {
 
     const homeRoute = currentRoute === 'home'
 
-    const SearchToggle = toggleComponent(
+    const SearchToggle = ToggleComponent(
       <Image alt='CLiQQ' src={SearchImage} size='small' onClick={changeRoute.bind(this, '/search')} />,
       null
     )
 
-    const PointsToggle = toggleComponent(
+    const PointsToggle = ToggleComponent(
       <Image alt='CLiQQ' src={CliqqIcon} size='small' onClick={changeRoute.bind(this, '/wallet')} />,
       null
     )
 
-    const ActivitiesToggle = toggleComponent(
+    const ActivitiesToggle = ToggleComponent(
       <ActivitiesIcon marginLeft={homeRoute}>
         <Image alt='Activities' src={BarcodeImage} size='mini' onClick={changeRoute.bind(this, '/purchases')} />
       </ActivitiesIcon>,

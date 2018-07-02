@@ -9,11 +9,12 @@ import {
   Input
 } from 'semantic-ui-react'
 
-import { ifElse, identity } from 'ramda'
 import BarcodeImage from 'images/icons/barcode-header.svg'
 import messages from './messages'
 import SearchImage from 'images/icons/search-header.svg'
 import MainLogo from 'images/cliqq-logo.svg'
+
+import { ToggleComponent } from 'utils/logicHelper'
 
 const Wrapper = styled.div`
   display: block;
@@ -163,15 +164,6 @@ const PageTitle = styled.div`
     }
   }
 `
-
-const toggleComponent = (componentA, componentB) => (condition) => {
-  return ifElse(
-    identity,
-    () => componentA,
-    () => componentB
-  )(condition)
-}
-
 export default class MainMenu extends PureComponent {
   static propTypes= {
     pageTitle: PropTypes.string,
@@ -218,14 +210,14 @@ export default class MainMenu extends PureComponent {
       return <Header className='color__secondary' as='h1'> { pageTitle } </Header>
     }
 
-    const TitleToggle = toggleComponent(
+    const TitleToggle = ToggleComponent(
       <ImageLogo alt='logo' src={MainLogo} onClick={changeRoute.bind(this, '/')} />,
       <PageTitle>
         {pageTitleParsed()}
       </PageTitle>
     )
 
-    const ShowSearchInputLogo = toggleComponent(
+    const ShowSearchInputLogo = ToggleComponent(
       <SearchInput
         className='color__secondary'
         icon='search'
@@ -262,12 +254,12 @@ export default class MainMenu extends PureComponent {
 
     const homeRoute = currentRoute === 'home'
 
-    const SearchToggle = toggleComponent(
+    const SearchToggle = ToggleComponent(
       <Image alt='CLiQQ' src={SearchImage} size='mini' onClick={changeRoute.bind(this, '/search')} />,
       null
     )
 
-    const ActivitiesToggle = toggleComponent(
+    const ActivitiesToggle = ToggleComponent(
       <ActiviesIcon marginLeft={homeRoute}>
         <Image alt='Activities' src={BarcodeImage} size='mini' onClick={changeRoute.bind(this, '/purchases')} />
       </ActiviesIcon>,

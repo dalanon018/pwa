@@ -115,7 +115,10 @@ BrandSection.propTypes = {
     PropTypes.array,
     PropTypes.object
   ]).isRequired,
-  category: PropTypes.object,
+  category: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]),
   filterCategories: PropTypes.object.isRequired,
   filterCategoriesLoading: PropTypes.bool.isRequired,
   filtered: PropTypes.bool.isRequired,

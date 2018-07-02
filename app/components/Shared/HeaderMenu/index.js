@@ -9,7 +9,6 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-import { ifElse, identity } from 'ramda'
 import {
   Image,
   Grid
@@ -20,6 +19,8 @@ import Search from 'images/icons/search-header.svg'
 import Hamburger from 'images/icons/hamburger-header.svg'
 import Barcode from 'images/icons/barcode-header.svg'
 import Logo from 'images/cliqq-logo.svg'
+
+import { ToggleComponent } from 'utils/logicHelper'
 
 const InlineImage = styled(Image)`
   display: inline-block !important;
@@ -41,27 +42,20 @@ const Wrapper = styled(Grid)`
   }
 `
 
-const toggleComponent = (componentA, componentB) => (condition) => {
-  return ifElse(
-    identity,
-    () => componentA,
-    () => componentB
-  )(condition)
-}
 function HeaderMenu ({ showBack, hideSearch, hideBarcode }) {
-  const MenuToggle = toggleComponent(
+  const MenuToggle = ToggleComponent(
     <Link to='/'>
       <Image alt='hamburger' src={Hamburger} size='mini' />
     </Link>,
     <Image alt='back-button' src={Back} size='mini' />
   )
 
-  const SearchToggle = toggleComponent(
+  const SearchToggle = ToggleComponent(
     null,
     <InlineImage alt='activities' src={Search} size='mini' />
   )
 
-  const ActivitiesToggle = toggleComponent(
+  const ActivitiesToggle = ToggleComponent(
     null,
     <InlineImage alt='activities' src={Barcode} size='mini' />
   )

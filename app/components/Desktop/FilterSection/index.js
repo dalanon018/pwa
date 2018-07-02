@@ -217,7 +217,7 @@ FilterSection.propTypes = {
   queryCategory: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object
-  ]).isRequired,
+  ]),
   queryBrands: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.object

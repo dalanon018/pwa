@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { fromJS } from 'immutable'
 
 import HeaderNav, {
   Wrapper,
@@ -34,6 +35,7 @@ describe('<HeaderNav />', () => {
     changeRoute: () => {},
     loyaltyToken: 'qwerty',
     currentPoints: 123,
+    mobileNumbers: fromJS([]),
 
     _handleSignOut: () => {},
     _handleShowLogoutButton: () => {},

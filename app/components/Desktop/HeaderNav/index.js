@@ -13,7 +13,6 @@ import {
   Label
 } from 'semantic-ui-react'
 
-import { ifElse, identity } from 'ramda'
 import BarcodeImage from 'images/icons/barcode-header.svg'
 import messages from './messages'
 import MainLogo from 'images/cliqq-logo.svg'
@@ -23,6 +22,8 @@ import CategoryDock from 'images/icons/category-dock.svg'
 import Logout from 'images/icons/drawer/signout.svg'
 
 import SearchMenu from 'containers/Buckets/SearchMenu'
+
+import { ToggleComponent } from 'utils/logicHelper'
 // import { FLASH_DEALS_LANDING_PAGE } from '../../../containers/Buckets/constants'
 
 export const Wrapper = styled.div`
@@ -278,14 +279,6 @@ export const LogoutWrapper = styled.div`
   }
 `
 
-const toggleComponent = (componentA, componentB) => (condition) => {
-  return ifElse(
-    identity,
-    () => componentA,
-    () => componentB
-  )(condition)
-}
-
 class HeaderNav extends PureComponent {
   static propTypes= {
     pageTitle: PropTypes.string,
@@ -335,31 +328,29 @@ class HeaderNav extends PureComponent {
       _toggleCategoryHide()
     }
 
-    const toggleComponent = ifElse(
-      identity,
-      () => (
-        <SignOutWrapper>
-          <Label as='p' className='margin__none text__weight--500' basic size='large'>
-            <FormattedMessage {...messages.signedIn} />
-            <span className='color__primary cursor__pointer' onClick={clickAction}>{mobileNumbers.toJS().pop()}</span>
-          </Label>
-          {
-            showLogout &&
-              <LogoutWrapper className='box__shadow--primary cursor__pointer' onClick={this._handleSignOut}>
-                <div>
-                  <Image alt='help' size='mini' src={Logout} />
-                </div>
-                <div>
-                  <Label as='p' className='margin__none text__weight--500' basic size='large'>Logout</Label>
-                </div>
-              </LogoutWrapper>
-          }
-        </SignOutWrapper>
-      ),
-      () => null
+    const shouldShowLogoutButton = ToggleComponent(
+      <SignOutWrapper>
+        <Label as='p' className='margin__none text__weight--500' basic size='large'>
+          <FormattedMessage {...messages.signedIn} />
+          <span className='color__primary cursor__pointer' onClick={clickAction}>{mobileNumbers.toJS().pop()}</span>
+        </Label>
+        {
+          showLogout &&
+            <LogoutWrapper className='box__shadow--primary cursor__pointer' onClick={this._handleSignOut}>
+              <div>
+                <Image alt='help' size='mini' src={Logout} />
+              </div>
+              <div>
+                <Label as='p' className='margin__none text__weight--500' basic size='large'>Logout</Label>
+              </div>
+            </LogoutWrapper>
+        }
+      </SignOutWrapper>
+      ,
+      null
     )
 
-    return toggleComponent(isSignIn)
+    return shouldShowLogoutButton(isSignIn)
   }
 
   _handleGoToPage = (slug) => () => {
@@ -407,14 +398,14 @@ class HeaderNav extends PureComponent {
       return <Header className='color__secondary' as='h1'> { pageTitle } </Header>
     }
 
-    const TitleToggle = toggleComponent(
+    const TitleToggle = ToggleComponent(
       <ImageLogo alt='logo' src={MainLogo} onClick={changeRoute.bind(this, '/')} />,
       <PageTitle>
         {pageTitleParsed()}
       </PageTitle>
     )
 
-    const ShowSearchInputLogo = toggleComponent(
+    const ShowSearchInputLogo = ToggleComponent(
       <SearchInput
         className='color__secondary'
         icon='search'
@@ -462,7 +453,7 @@ class HeaderNav extends PureComponent {
       _toggleCategoryHide()
     }
 
-    return toggleComponent(
+    return ToggleComponent(
       <CurrentPointsContainer hidden={hideHeaderPoints}>
         <div>
           <Label as='p' className='margin__none text__weight--500 color__white' basic size='large'>
@@ -609,7 +600,7 @@ class HeaderNav extends PureComponent {
     const homeRoute = currentRoute === 'home'
     const pathname = window.location.pathname.split('/')[1] === 'search'
 
-    const ActivitiesToggle = toggleComponent(
+    const ActivitiesToggle = ToggleComponent(
       <ActivitiesIcon marginLeft={homeRoute}>
         <Image alt='Activities' src={BarcodeImage} size='mini' onClick={this._handleGoToPage('purchases')} />
       </ActivitiesIcon>,
