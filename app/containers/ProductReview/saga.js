@@ -29,7 +29,7 @@ import { Pad } from 'utils/string'
 import { DateDifferece, AddDate } from 'utils/date'
 import { transformSubmitOrderPayload, transformCoupon } from 'utils/transforms'
 import { EARN_POINTS__MAPPER, calculatePricePoints, toggleOrigDiscountPrice, amountIdentifierPointsPrice } from 'utils/product'
-import { calculateEarnPoints } from 'utils/calculation'
+import { computationEarnPointsRaw } from 'utils/calculation'
 
 import {
   ERROR_CODES
@@ -284,7 +284,7 @@ function * createPostPayload ({ orderedProduct, mobileNumber, modePayment, store
   return transformSubmitOrderPayload({
     ...promoPayload(orderedProduct),
     ...couponPayload({ orderedProduct, couponCode }),
-    epbPointsCredit: calculateEarnPoints({
+    epbPointsCredit: computationEarnPointsRaw({
       multiplier: orderedProduct.getIn(['points', 'multiplier']),
       method: orderedProduct.getIn(['points', 'method', EARN_POINTS__MAPPER[modePayment]]).toObject(),
       amount: amountIdentifierPointsPrice({orderedProduct, usePoints, modePayment})
