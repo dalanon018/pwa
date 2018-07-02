@@ -33,6 +33,7 @@ import NextIcon from 'images/icons/greater-than-icon.svg'
 import MobileIcon from 'images/icons/order-summary/register.png'
 import WalletIcon from 'images/icons/order-summary/payment-method.png'
 import LocationIcon from 'images/icons/order-summary/select-store.png'
+import CouponIcon from 'images/icons/order-summary/coupon.png'
 import CliqqIcon from 'images/icons/cliqq.png'
 
 import Modal from 'components/Shared/PromptModal'
@@ -725,7 +726,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                   <PlainCard borderRadius alignLeft>
                     <BlockWrapper>
                       <div>
-                        <Image className='icon' src={LocationIcon} alt='CLiQQ' />
+                        <Image className='icon' src={CouponIcon} alt='CLiQQ' />
                       </div>
                       <CouponContainer>
                         <Label as='p' className='margin__top-positive--15 margin__bottom-positive--15 text__weight--500' size='huge'>
