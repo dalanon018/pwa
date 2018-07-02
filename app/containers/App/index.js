@@ -33,25 +33,23 @@ const BodyWrapper = styled.div`
   }
 `
 
-export class App extends React.PureComponent {
-  render () {
-    return (
-      <AppWrapper>
-        <BodyWrapper>
-          <Helmet
-            titleTemplate='%s - 7-Eleven CLiQQ'
-            defaultTitle='7-Eleven CLiQQ'
-          >
-            <meta name='description' content='7-11 CLiQQ e-commerce website' />
-          </Helmet>
-          <Switch>
-            <Route exact path='/login' component={LoginPage} />
-            <Route path='/' component={Buckets} />
-          </Switch>
-        </BodyWrapper>
-      </AppWrapper>
-    )
-  }
+export function App () {
+  return (
+    <AppWrapper>
+      <BodyWrapper>
+        <Helmet
+          titleTemplate='%s - 7-Eleven CLiQQ'
+          defaultTitle='7-Eleven CLiQQ'
+        >
+          <meta name='description' content='7-11 CLiQQ e-commerce website' />
+        </Helmet>
+        <Switch>
+          <Route exact path='/login' component={LoginPage} />
+          <Route path='/' component={Buckets} />
+        </Switch>
+      </BodyWrapper>
+    </AppWrapper>
+  )
 }
 
 export default BrowserCheck(App)
