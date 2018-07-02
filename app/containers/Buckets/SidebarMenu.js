@@ -7,7 +7,6 @@ import {
   Label,
   List
 } from 'semantic-ui-react'
-import { identity, ifElse } from 'ramda'
 
 import messages from './messages'
 
@@ -18,6 +17,8 @@ import Categories from 'images/icons/drawer/categories.svg'
 import Points from 'images/icons/drawer/points.svg'
 import Logout from 'images/icons/drawer/signout.svg'
 import Close from 'images/icons/drawer/close.svg'
+
+import { ToggleComponent } from 'utils/logicHelper'
 
 const SidebarContainer = styled.div`
   height: 100vh;
@@ -73,22 +74,19 @@ class SidebarMenu extends React.PureComponent {
   _handleShowLogoutButton = () => {
     const { isSignIn } = this.props
 
-    const toggleComponent = ifElse(
-      identity,
-      () => (
-        <ListWrapper onClick={this._handleSignOut}>
-          <Image alt='CLiQQ' size='mini' src={Logout} />
-          <List.Content>
-            <Label as='p' className='margin__none text__weight--500' size='huge'>
-              <FormattedMessage {...messages.menuLogout} />
-            </Label>
-          </List.Content>
-        </ListWrapper>
-      ),
-      () => null
+    const showLogout = ToggleComponent(
+      <ListWrapper onClick={this._handleSignOut}>
+        <Image alt='CLiQQ' size='mini' src={Logout} />
+        <List.Content>
+          <Label as='p' className='margin__none text__weight--500' size='huge'>
+            <FormattedMessage {...messages.menuLogout} />
+          </Label>
+        </List.Content>
+      </ListWrapper>,
+      null
     )
 
-    return toggleComponent(isSignIn)
+    return showLogout(isSignIn)
   }
 
   render () {

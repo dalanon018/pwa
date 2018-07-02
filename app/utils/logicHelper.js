@@ -1,10 +1,21 @@
+import {
+  identity,
+  ifElse
+} from 'ramda'
 /**
  * Currying for instead of using *ugly SWITCH statement
  * @param {*} cases
  */
-const switchFn = cases => defaultCase => key =>
+export const switchFn = cases => defaultCase => key =>
 key in cases ? cases[key] : defaultCase
 
-export {
-  switchFn
-}
+/**
+ * easier way to toggle component
+ * @param {*} component1
+ * @param {*} component2
+ */
+export const ToggleComponent = (component1, component2) => ifElse(
+  identity,
+  () => component1,
+  () => component2
+)

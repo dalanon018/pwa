@@ -42,6 +42,7 @@ import LocationIcon from 'images/icons/location-icon.svg'
 import { paramsImgix } from 'utils/image-stock'
 import { calculateEarnPoints } from 'utils/calculation'
 import { toggleOrigDiscountPrice, computeTotalPointsPrice, calculatePricePoints } from 'utils/product'
+import { ToggleComponent } from 'utils/logicHelper'
 
 import {
   PAYMENTS_OPTIONS
@@ -65,12 +66,6 @@ import {
   LabelTitle,
   CouponContainer
 } from './styles'
-
-const toggleComponent = (component1, component2) => ifElse(
-  identity,
-  () => component1,
-  () => component2
-)
 
 class OrderSummary extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
@@ -170,7 +165,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     const { orderedProduct, couponApplied } = this.props
 
     const price = couponApplied ? (discountPrice || orderedProduct.get('price')) : orderedProduct.get('price')
-    const discountedPrice = toggleComponent(
+    const discountedPrice = ToggleComponent(
       <span className='strike color__grey'>
         <FormattedMessage {...messages.peso} />
         { price && parseFloat(price).toLocaleString() }
@@ -246,7 +241,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
   _codCheckOptionFactory = () => {
     const { ShowCodComponent, isBlackListed, modePayment, _handleChange, _handleToBottom, _isFullPointsOnly } = this.props
-    return toggleComponent(
+    return ToggleComponent(
       <ShowCodComponent
         radio
         isBlackListed={isBlackListed}
@@ -263,7 +258,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
   _cashCheckOptionFactory = () => {
     const { modePayment, _handleChange, _isFullPointsOnly } = this.props
-    return toggleComponent(
+    return ToggleComponent(
       <Checkbox
         radio
         className='margin__vertical--10'
@@ -280,7 +275,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
   _pointsCashCheckOptionFactory = () => {
     const { isDisabledPointsOptions, modePayment, _handleChange, _isFullPointsOnly } = this.props
 
-    return toggleComponent(
+    return ToggleComponent(
       <Checkbox
         radio
         disabled={isDisabledPointsOptions}
@@ -303,7 +298,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
   _fullPointsCheckOptionFactory = () => {
     const { modePayment, _handleChange, _isFullPointsOnly } = this.props
 
-    return toggleComponent(
+    return ToggleComponent(
       <Checkbox
         radio
         disabled={this._disabledFullPointsOption()}
@@ -323,7 +318,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
    */
   _displayPaymentOptions = () => {
     const { orderedProduct } = this.props
-    return toggleComponent(
+    return ToggleComponent(
       <div>
         { this._codCheckOptionFactory() }
         { this._cashCheckOptionFactory() }
@@ -368,7 +363,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
   _displayCurrentPointsFullPoints = () => {
     const { currentPoints, _isFullPointsOnly } = this.props
-    return toggleComponent(
+    return ToggleComponent(
       <MethodTitle>
         <Label as='p' className='margin__none text__weight--400' size='medium'>
           <FormattedMessage {...messages.currentPoints} />

@@ -34,6 +34,7 @@ import ParagraphImage from 'images/test-images/short-paragraph.png'
 import { imageStock, paramsImgix } from 'utils/image-stock'
 import { toggleOrigDiscountPrice } from 'utils/product'
 import { isFullPointsOnly } from 'utils/payment'
+import { ToggleComponent } from 'utils/logicHelper'
 
 import EmptyDataBlock from 'components/Shared/EmptyDataBlock'
 import RibbonWrapper from 'components/Shared/RibbonWrapper'
@@ -112,13 +113,14 @@ const _displayProductPrice = (entity) => {
 }
 
 const _toggleFullPointsOnly = (entity) => {
-  const toggleComponent = ifElse(
-    (product) => isFullPointsOnly({ identifier: product.get('title') }),
+  const fullPointsOnly = ToggleComponent(
     _displayFullPointsPrice,
     _displayProductPrice
   )
 
-  return toggleComponent(entity)
+  return fullPointsOnly(
+    isFullPointsOnly({ identifier: entity.get('title') })
+  )
 }
 
 const ProductEntityInfo = ({ entity, isMinor, over18, changeRoute }) => {
