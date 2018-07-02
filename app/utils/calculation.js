@@ -16,7 +16,10 @@ export const calculateEarnPoints = ({ method, multiplier, amount }) => {
       multiply(amount),
       prop('value')
     ),
-    prop('value')
+    compose(
+      Math.floor,
+      prop('value')
+    )
   )
 
   return calculateEarn(method)
