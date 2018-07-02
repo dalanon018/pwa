@@ -35,7 +35,11 @@ import injectSaga from 'utils/injectSaga'
 import injectReducer from 'utils/injectReducer'
 
 import { isMobileDevice } from 'utils/http'
-import { switchFn } from 'utils/logicHelper'
+import {
+  ERROR_CODES,
+  handleErrorMessage
+} from 'utils/errorHandling'
+
 import {
   ENVIROMENT
 } from 'containers/App/constants'
@@ -225,6 +229,16 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
         level: 'success'
       })
     , 2000)
+
+  _displayQuotaExceedError= () =>
+    setTimeout(() =>
+    this._notificationRef && this._notificationRef.addNotification({
+      title: <FormattedMessage {...messages.quotaExceedTitle} />,
+      message: <FormattedMessage {...messages.quotaExceedError} />,
+      autoDismiss: 0,
+      level: 'error'
+    })
+  , 2000)
 
   _goToHome = () => {
     const { changeRoute } = this.props
@@ -543,9 +557,16 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
     registerPush(currentToken)
   }
 
-  _toggleErrorMessage = (statusCode) => switchFn({
-    500: <FormattedMessage {...messages.failedFetch} />
-  })(statusCode)(statusCode)
+  _toggleErrorMessage = (code) => {
+    return handleErrorMessage({
+      code,
+      errors: {
+        QUOTA_EXCEED_ERROR: <FormattedMessage {...messages.quotaExceedError} />,
+        NETWORK_ERROR: <FormattedMessage {...messages.failedFetch} />
+      },
+      defaultError: <FormattedMessage {...messages.failedFetch} />
+    })
+  }
 
   _handleRemoveStickyFooter = () => {
     const stickyFooter = document.getElementsByTagName('footer')[0]
@@ -575,7 +596,7 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
   }
 
   componentWillReceiveProps (nextProps) {
-    const { mobileNumbers, isRegisteredPush, loyaltyToken } = nextProps
+    const { mobileNumbers, isRegisteredPush, loyaltyToken, toggleMessage } = nextProps
     /**
      * whenever theres new mobile number we have to listen for all the order
      */
@@ -592,7 +613,13 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
       () => this.props.getCurrentPoints()
     )
 
+    const showQuotaExceedError = when(
+      equals(ERROR_CODES.QUOTA_EXCEED_ERROR),
+      this._displayQuotaExceedError
+    )
+
     getCurrentPoints(loyaltyToken)
+    showQuotaExceedError(toggleMessage)
 
     this._handleHideHeaderPointsElement()
     this._handleHideHeaderMobileNumberElement()
