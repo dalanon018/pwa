@@ -402,7 +402,11 @@ function * couponPayloadCreator ({orderedProduct, mobileNumber, couponCode}) {
 
 function updateOrderProductCouponPrice ({ orderedProduct, coupon }) {
   const couponPrice = compose(parseInt, propOr(0, 'PHP'))
-  return assoc('couponPrice', couponPrice(coupon), { ...orderedProduct.toJS() })
+  const offlineProduct = propOr(false, 'offlineproduct')
+  return compose(
+    assoc('offlineProduct', !!offlineProduct(coupon)),
+    assoc('couponPrice', couponPrice(coupon))
+  )({ ...orderedProduct.toJS() })
 }
 
 export function * submitCoupon (args) {

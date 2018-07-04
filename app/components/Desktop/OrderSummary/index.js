@@ -45,7 +45,7 @@ import RangeSlider from 'components/Shared/RangeSlider'
 // import { LoadingStateImage } from 'components/Shared/LoadingBlock'
 
 import { paramsImgix } from 'utils/image-stock'
-import { toggleOrigDiscountPrice, computeTotalPointsPrice, calculatePricePoints } from 'utils/product'
+import { priceStrikeThroughDisplay, toggleOrigDiscountPrice, computeTotalPointsPrice, calculatePricePoints } from 'utils/product'
 import { calculateEarnPoints } from 'utils/calculation'
 import { ToggleComponent } from 'utils/logicHelper'
 
@@ -211,7 +211,13 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
   _toggleDiscount = (discountPrice) => {
     const { orderedProduct, couponApplied } = this.props
 
-    const price = couponApplied ? (discountPrice || orderedProduct.get('price')) : orderedProduct.get('price')
+    const price = priceStrikeThroughDisplay({
+      discountPrice,
+      couponApplied,
+      product: orderedProduct,
+      computedPrice: this._computePricePoints()
+    })
+
     const discountedPrice = ToggleComponent(
       <Label as='span' basic size='big' className='strike text__weight--700 color__grey'>
         <FormattedMessage {...messages.peso} />

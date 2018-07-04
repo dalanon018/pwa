@@ -13,6 +13,10 @@ const Schema = {
     name: 'cliqqCode',
     type: STRING
   },
+  offlineproduct: {
+    name: 'offlineproduct',
+    type: STRING
+  },
   multiplier: {
     name: 'multiplier',
     type: STRING

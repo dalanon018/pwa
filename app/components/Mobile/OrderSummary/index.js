@@ -41,7 +41,7 @@ import LocationIcon from 'images/icons/location-icon.svg'
 
 import { paramsImgix } from 'utils/image-stock'
 import { calculateEarnPoints } from 'utils/calculation'
-import { toggleOrigDiscountPrice, computeTotalPointsPrice, calculatePricePoints } from 'utils/product'
+import { priceStrikeThroughDisplay, toggleOrigDiscountPrice, computeTotalPointsPrice, calculatePricePoints } from 'utils/product'
 import { ToggleComponent } from 'utils/logicHelper'
 
 import {
@@ -163,8 +163,13 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
 
   _toggleDiscount = (discountPrice) => {
     const { orderedProduct, couponApplied } = this.props
+    const price = priceStrikeThroughDisplay({
+      discountPrice,
+      couponApplied,
+      product: orderedProduct,
+      computedPrice: this._computePricePoints()
+    })
 
-    const price = couponApplied ? (discountPrice || orderedProduct.get('price')) : orderedProduct.get('price')
     const discountedPrice = ToggleComponent(
       <span className='strike color__grey'>
         <FormattedMessage {...messages.peso} />
