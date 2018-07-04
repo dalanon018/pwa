@@ -37,13 +37,17 @@ export const amountIdentifierPointsPrice = ({ orderedProduct, usePoints, modePay
 
   return amountIdentifier(modePayment)
 }
+
+export const shouldApplyCouponPrice = (product) => {
+  return (product.get('offlineProduct') === false) && product.get('couponPrice')
+}
 /**
  * helper on which of the property use for the price
  * // so we can expand this.
  * @param {*} product
  */
 export const toggleOrigDiscountPrice = (product) => {
-  const price = product.get('couponPrice') || product.get('discountPrice') || product.get('price')
+  const price = shouldApplyCouponPrice(product) || product.get('discountPrice') || product.get('price')
   return price || 0
 }
 
