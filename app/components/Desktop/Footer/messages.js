@@ -42,7 +42,7 @@ export default defineMessages({
   },
   storeDelivery: {
     id: `${idSuffix}.storeDelivery`,
-    defaultMessage: `1 Day In-Store Delivery`
+    defaultMessage: `In-Store delivery`
   },
   freeShippingDelivery: {
     id: `${idSuffix}.freeShippingDelivery`,
