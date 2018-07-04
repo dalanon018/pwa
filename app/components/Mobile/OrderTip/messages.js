@@ -8,7 +8,7 @@ import { defineMessages } from 'react-intl'
 export default defineMessages({
   storeDelivery: {
     id: 'app.components.OrderTip.storeDelivery',
-    defaultMessage: '1 Day In-Store Delivery'
+    defaultMessage: 'In-Store delivery'
   },
   returnPolicy: {
     id: 'app.components.OrderTip.returnPolicy',

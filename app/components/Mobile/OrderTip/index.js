@@ -74,7 +74,7 @@ export class OrderTip extends React.PureComponent {
                 <FlexContainer>
                   <Image alt='CLiQQ' src={DeliveryIcon} />
                   <Label as='span' size='medium' className='color__secondary text__weight--500 custom-label'>
-                    1 Day In-Store<br />Delivery
+                    In-Store<br />Delivery
                   </Label>
                 </FlexContainer>
                 <Label as='span' size='small' className='color__grey text__weight--400'>
