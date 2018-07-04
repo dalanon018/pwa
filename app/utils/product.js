@@ -38,6 +38,14 @@ export const amountIdentifierPointsPrice = ({ orderedProduct, usePoints, modePay
   return amountIdentifier(modePayment)
 }
 
+/**
+ * This will toggle what price strike through will display
+ * @param {} param0
+ */
+export const priceStrikeThroughDisplay = ({ discountPrice, product, computedPrice, couponApplied }) => {
+  return (couponApplied && (discountPrice !== computedPrice)) ? (discountPrice || product.get('price')) : product.get('price')
+}
+
 export const shouldApplyCouponPrice = (product) => {
   return (product.get('offlineProduct') === false) && product.get('couponPrice')
 }
