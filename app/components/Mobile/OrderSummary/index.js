@@ -178,7 +178,8 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       null
     )
 
-    return discountedPrice(couponApplied || discountPrice)
+    // we should only trigger the toggling if it is not offline Product
+    return !orderedProduct.get('offlineProduct') && discountedPrice((couponApplied) || discountPrice)
   }
 
   _renderRegularPaymentOptions = ({ mode, label }) => {
