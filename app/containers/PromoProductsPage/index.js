@@ -84,6 +84,12 @@ import {
 const ContentWrapper = styled(Container)`
   padding-top: 20px !important;
   padding-bottom: 20px !important;
+
+  .products-container {
+    @media (min-width: 1024px) {
+      margin-top: 30px !important;
+    }
+  }
 `
 
 const DesktopItemCount = styled.p`
@@ -309,7 +315,7 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
     const { allProducts, changeRoute, productsLoading, lazyload, windowWidth, productsCount, intl, promo } = this.props
 
     return (
-      <div className='margin__top-positive--30'>
+      <div className='products-container'>
         <AccessView
           mobileView={
             <H3>
@@ -429,6 +435,7 @@ export class PromoProductsPage extends React.PureComponent { // eslint-disable-l
                           images={promoImages}
                           promo={promo}
                           isPromo
+                          curved
                         />
                       </Grid.Column>
                     </Grid.Row>
