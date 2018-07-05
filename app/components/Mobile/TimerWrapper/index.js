@@ -50,6 +50,10 @@ export const LabelWrapper = styled.div`
 
   span.label {
     line-height: 12px;
+
+    &.mini {
+      margin-top: 5px;
+    }
   }
 `
 

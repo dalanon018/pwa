@@ -31,11 +31,20 @@ const Wrapper = styled.div`
     height: 38px;
     justify-content: center;
     line-height: 14px;
+    min-width: 49px;
     padding: 4px;
     position: relative;
     text-align: center;
     vertical-align: middle;
-    width: 40px;
+    width: 100%;
+
+    .small {
+      line-height: 20px;
+    }
+
+    .mini {
+      margin-top: -4px !important;
+    }
 
     span {
       line-height: 8px;
