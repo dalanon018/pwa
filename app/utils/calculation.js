@@ -38,7 +38,7 @@ export const computationEarnPointsRaw = ({ method, multiplier, amount }) => {
   return calculateRaw(method)
 }
 
-export const calculateConversionPointsToCash = ({ points, multiplier = '0.20' }) => {
+export const calculateConversionPointsToCash = ({ points, multiplier = '0.50' }) => {
   return Math.floor(
     divide(points, multiplier)
   )
