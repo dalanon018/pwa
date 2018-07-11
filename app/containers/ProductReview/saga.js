@@ -437,7 +437,7 @@ export function * submitCoupon (args) {
     couponSuccess = true
     yield updateOrderProduct({ orderedProduct, coupon })
   } else {
-    couponError = propOr('default', 'statusCode', req)
+    couponError = propOr('default', 'message', req)
   }
 
   yield put(resultCouponAction({
