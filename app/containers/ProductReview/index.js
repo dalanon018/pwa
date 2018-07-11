@@ -45,7 +45,8 @@ import { switchFn } from 'utils/logicHelper'
 import { fnQueryObject } from 'utils/http'
 import { isFullPointsOnly } from 'utils/payment'
 import {
-  handleErrorMessage
+  handleErrorMessage,
+  sevenElevenCouponPromoErrorHandling
 } from 'utils/errorHandling'
 
 import WindowWidth from 'components/Shared/WindowWidth'
@@ -370,6 +371,10 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     })
   }
 
+  _handleCouponErrorMessage =(code) => {
+    return sevenElevenCouponPromoErrorHandling({code})
+  }
+
   _handleSubmissionError = (code) => {
     if (this.submitting) {
       this.setState({
@@ -389,7 +394,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         this.setState({
           modalToggle: true,
           modalIcon: 'warning',
-          modalMessage: this._handleErrorMessage(code),
+          modalMessage: this._handleCouponErrorMessage(code),
           modalContent: ''
         })
         this.couponRequest = false
