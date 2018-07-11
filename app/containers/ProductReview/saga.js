@@ -30,6 +30,7 @@ import { DateDifferece, AddDate } from 'utils/date'
 import { transformSubmitOrderPayload, transformCoupon } from 'utils/transforms'
 import { EARN_POINTS__MAPPER, calculatePricePoints, toggleOrigDiscountPrice, amountIdentifierPointsPrice } from 'utils/product'
 import { computationEarnPointsRaw } from 'utils/calculation'
+import { getRandomInt } from 'utils/numbers'
 
 import {
   ERROR_CODES
@@ -85,6 +86,10 @@ import {
   getAccessToken
 } from 'containers/Buckets/saga'
 import {switchFn} from '../../utils/logicHelper'
+
+function * sleep (ms) {
+  yield new Promise(resolve => setTimeout(resolve, ms))
+}
 
 /**
  * // eventually we will use this to transform the data from response of the order.
@@ -308,6 +313,10 @@ export function * submitOrder (args) {
   const { payload: { orderedProduct, mobileNumber, modePayment, store, usePoints, couponCode } } = args
   const postPayload = yield * createPostPayload({ orderedProduct, mobileNumber, modePayment, store, usePoints, couponCode })
   try {
+    const randomSleep = getRandomInt(100, 2000)
+
+    yield * sleep(randomSleep)
+
     const token = yield requestOrderToken(mobileNumber)
     const order = yield call(request, `${API_BASE_URL}/orders`, {
       method: 'POST',
