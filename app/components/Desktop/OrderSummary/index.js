@@ -175,7 +175,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       [T, always(currentPoints)]
     ])()
     this._pointsInitialized = true
-    return _updateUsePoints(Math.ceil(points))
+     return _updateUsePoints(Math.ceil(points))
   }
 
   _displayProductPointsPrice = ({ entity }) => {
@@ -379,6 +379,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       <ShowCodComponent
         radio
         isBlackListed={isBlackListed}
+
         name='cod'
         value={PAYMENTS_OPTIONS.COD}
         label={this._renderRegularPaymentOptions({ mode: 'cod', label: 'cashDelivery' })}
@@ -512,6 +513,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
   _checkShouldUpdateUsePoints = (props) => {
     const usePoints = prop('usePoints')
     const maxPoints = this._computeTotalPointsPrice(props)
+
 
     const shouldUpdateUsePoints = when(
       compose(lt(maxPoints), usePoints),

@@ -19,7 +19,6 @@ import { setItem, getItem } from 'utils/localStorage'
 import {
   GET_PRODUCT,
   SET_CURRENT_PRODUCT
-
 } from './constants'
 import {
   setProductAction,
@@ -75,27 +74,25 @@ export function * updateLastViewedItems (args) {
 }
 
 export function * getProduct (payload) {
-  // const req = productFixture
   const { payload: { id } } = payload
   const token = yield getAccessToken()
   const req = yield call(getRequestData, `${API_BASE_URL}/products/${id}?deviceOrigin=PWA`, {
     method: 'GET',
     token: token.access_token
   })
+    if (!isEmpty(req)) {
+      // we will use the txt file we got
+      const transform = yield transformEachEntity(req)
+      // since we have the cliqqcode of the item we can save this last viewed items.
+      yield * updateLastViewedItems({
+        payload: transform
+      })
 
-  if (!isEmpty(req)) {
-    // we will use the txt file we got
-    const transform = yield transformEachEntity(req)
-    // since we have the cliqqcode of the item we can save this last viewed items.
-    yield * updateLastViewedItems({
-      payload: transform
-    })
-
-    yield put(setProductAction(transform))
-  } else {
-    yield put(setNetworkErrorAction(500))
+      yield put(setProductAction(transform))
+    } else {
+      yield put(setNetworkErrorAction(500))
+    }
   }
-}
 
 export function * setCurrentProduct (args) {
   const { payload } = args

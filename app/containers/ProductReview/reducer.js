@@ -29,7 +29,15 @@ import {
 
   COUPON_SUBMIT,
   COUPON_RESULT,
-  COUPON_REMOVE
+  COUPON_REMOVE,
+
+  //for email api
+  SET_EMAIL,
+  GET_EMAIL,
+
+  //for Store Delivery message
+  GET_STORE_DELIVERY_MESSAGE,
+  SET_STORE_DELIVERY_MESSAGE
 } from './constants'
 
 const initialState = fromJS({
@@ -48,7 +56,10 @@ const initialState = fromJS({
   couponApplied: false,
   couponLoader: false,
   couponSuccess: false,
-  couponError: false
+  couponError: false,
+  emailAddress: null,
+  modePayment: null,
+  storeDeliveryMessageLoading: false
 })
 
 function productReviewReducer (state = initialState, action) {
@@ -127,6 +138,23 @@ function productReviewReducer (state = initialState, action) {
         .set('couponSuccess', couponSuccess)
         .set('couponError', couponError)
     }
+
+    //for email api
+    case GET_EMAIL:
+      return state.set('mobileLoading', true)
+    case SET_EMAIL:
+      return state
+        .set('mobileNumber', fromJS(action.payload))
+        .set('emailAddress', action.payload)
+        .set('mobileLoading', false)
+
+    //for email api
+    case GET_STORE_DELIVERY_MESSAGE:
+      return state.set('storeDeliveryMessageLoading', true)
+    case SET_STORE_DELIVERY_MESSAGE:
+      return state
+        .set('modePayment', fromJS(action.payload))
+        .set('storeDeliveryMessageLoading', false)
 
     default:
       return state

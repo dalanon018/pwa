@@ -38,7 +38,6 @@ import {
 
 import {
   API_BASE_URL,
-
   ORDERED_LIST_KEY,
   MOBILE_NUMBERS_KEY
 } from 'containers/App/constants'
@@ -165,6 +164,7 @@ export function * getApiPurchasesSaga () {
 export function * getLocalPurchasesSaga () {
   yield * takeLatest(GET_LOCAL_PURCHASES, getLocalPurchases)
 }
+
 
 // All sagas to be loaded
 export function * purchasesSagas () {

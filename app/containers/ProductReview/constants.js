@@ -29,9 +29,17 @@ export const SET_ORDER_HANDLER_DEFAULT = 'app/ProductReview/SET_ORDER_HANDLER_DE
 export const GET_BLACKLIST = 'app/ProductReview/GET_BLACKLIST'
 export const SET_BLACKLIST = 'app/ProductReview/SET_BLACKLIST'
 
+// Email for 1.6 release
+export const GET_EMAIL = 'app/ProductReview/GET_EMAIL'
+export const SET_EMAIL = 'app/ProductReview/SET_EMAIL'
+
 //
 export const COUPON_SUBMIT = 'app/ProductReview/COUPON_SUBMIT'
 export const COUPON_RESULT = 'app/ProductReview/COUPON_RESULT'
 export const COUPON_REMOVE = 'app/ProductReview/COUPON_REMOVE'
 
-export const ALLOWED_POINTS = 10
+export const ALLOWED_POINTS = 20
+
+//for Store Delivery message
+export const GET_STORE_DELIVERY_MESSAGE = 'app/ProductReview/GET_STORE_DELIVERY_MESSAGE'
+export const SET_STORE_DELIVERY_MESSAGE = 'app/ProductReview/SET_STORE_DELIVERY_MESSAGE'

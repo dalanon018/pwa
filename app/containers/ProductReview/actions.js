@@ -33,7 +33,15 @@ import {
   COUPON_RESULT,
   // COUPON_SUCCESS,
   // COUPON_ERROR,,
-  COUPON_REMOVE
+  COUPON_REMOVE,
+
+  //for email api
+  GET_EMAIL,
+  SET_EMAIL,
+
+  //for store delivery message
+  GET_STORE_DELIVERY_MESSAGE,
+  SET_STORE_DELIVERY_MESSAGE
 } from './constants'
 
 export function getOrderProductAction () {
@@ -175,3 +183,31 @@ export function removeCouponAction (payload) {
 //     payload
 //   }
 // }
+
+//for email api
+export function getEmailAction () {
+  return {
+    type: GET_EMAIL
+  }
+}
+
+export function setEmailAction (payload) {
+  return {
+    type: SET_EMAIL,
+    payload
+  }
+}
+
+//for store delivery message
+export function getStoreDeliveryMessageAction () {
+  return {
+    type: GET_STORE_DELIVERY_MESSAGE
+  }
+}
+
+export function setStoreDeliveryMessageAction (payload) {
+  return {
+    type: SET_STORE_DELIVERY_MESSAGE,
+    payload
+  }
+}

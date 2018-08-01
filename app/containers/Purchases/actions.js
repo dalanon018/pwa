@@ -9,7 +9,6 @@ import {
   GET_LOCAL_PURCHASES,
   SET_LOCAL_PURCHASES,
   SET_API_PURCHASES
-
 } from './constants'
 
 export function getApiPurchasesAction (payload) {
@@ -21,7 +20,7 @@ export function getApiPurchasesAction (payload) {
 
 export function getStoragePurchasesAction () {
   return {
-    type: GET_LOCAL_PURCHASES
+    type: GET_LOCAL_PURCHASES,
   }
 }
 

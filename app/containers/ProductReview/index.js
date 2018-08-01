@@ -85,7 +85,9 @@ import {
   getCurrentPointsAction,
   getLastSelectedMethodAction,
   submitCouponAction,
-  removeCouponAction
+  removeCouponAction,
+  getEmailAction,
+  getStoreDeliveryMessageAction
 } from './actions'
 
 import {
@@ -152,6 +154,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     changeRoute: PropTypes.func.isRequired,
     couponApplied: PropTypes.bool.isRequired,
     couponLoader: PropTypes.bool.isRequired,
+    getEmail: PropTypes.func.isRequired,
     couponSuccess: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.bool
@@ -241,11 +244,11 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       storeLocatorVisibility: (this.showStoreLocator.indexOf(value)) !== -1,
       pointsModifierVisibility: value === this.showPointsModifier
     })
+    console.log(`${value}` )
   }
 
   _handleToBottom = () => {
     const { windowWidth } = this.props
-
     windowWidth <= 1024 &&
     setTimeout(() => {
       // parentScrollTo.scrollTo(0, ChildTop)
@@ -309,6 +312,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         usePoints,
         ...(couponApplied ? { couponCode } : {})
       })
+
     }
 
     const proceedOrder = ifElse(
@@ -500,17 +504,22 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     this.props.setHandlersDefault()
   }
 
+  componentWillMount () {
+    this.setState({ALLOWED_POINTS: product.get('poc')})
+  }
+
   componentDidMount () {
-    const { getLastSelectedMethod, getCurrentPoints, getOrderProduct, getMobileNumber, getStore, getBlackList, setRouteName } = this.props
+    const { getLastSelectedMethod, getCurrentPoints, getOrderProduct, getMobileNumber, getStore, getBlackList, setRouteName, getEmail, getStoreDeliveryMessage } = this.props
 
     setRouteName(PRODUCTREVIEW_NAME)
     getOrderProduct()
     getCurrentPoints()
     getMobileNumber()
+    getEmail()
     getBlackList()
     getStore()
+    //getStoreDeliveryMessage()
     getLastSelectedMethod()
-
     this.props.setPageTitle('Review Order')
     this.props.setShowSearchIcon(false)
     this.props.setShowActivityIcon(false)
@@ -605,6 +614,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
               couponCode={couponCode}
               couponApplied={couponApplied}
               couponLoader={couponLoader}
+
             />
           }
           desktopView={
@@ -694,6 +704,8 @@ function mapDispatchToProps (dispatch) {
     removeCoupon: (payload) => dispatch(removeCouponAction(payload)),
     changeRoute: (url) => dispatch(replace(url)),
     pushRoute: (url) => dispatch(push(url)),
+    getEmail: (payload) => dispatch(getEmailAction(payload)),
+    getStoreDeliveryMessage: (payload) => dispatch(getStoreDeliveryMessageAction(payload)),
     dispatch
   }
 }
