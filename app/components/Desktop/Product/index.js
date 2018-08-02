@@ -132,7 +132,7 @@ export const ToggleEarnPoints = ({ entity, isFullPointsOnly, changeRoute }) => {
           }} />
       </Label>
     </PointsInfo>
-  , null)(!isFullPointsOnly && !!entity.get('points'))
+    , null)(!isFullPointsOnly && !!entity.get('points'))
 }
 
 const Product = ({
@@ -250,8 +250,8 @@ const Product = ({
                 <LoadingStateInfo>
                   {
                     product.get('brand')
-                    ? <Label onClick={changeRoute.bind(this, `/brands/${product.getIn(['brand', 'code'])}`)} className='color__grey no-margin-bottom brand-title' as='p' basic size='large'>{product.getIn(['brand', 'name'])}</Label>
-                    : null
+                      ? <Label onClick={changeRoute.bind(this, `/brands/${product.getIn(['brand', 'code'])}`)} className='color__grey no-margin-bottom brand-title' as='p' basic size='large'>{product.getIn(['brand', 'name'])}</Label>
+                      : null
                   }
                   <Label as='p' className='text__weight--500' basic size='huge'>{product.get('title')}</Label>
                   <ToggleFullPoints
@@ -329,17 +329,17 @@ const Product = ({
                 </DeliveryPolicy>
                 {
                   product.get('additionalDetails')
-                  ? <div>
-                    <Label as='p' className='margin__none text__weight--500' size='big' >
-                      <FormattedMessage {...messages.additionalInfo} />
-                    </Label>
-                    <div>
-                      <Label className='text__weight--400 color__grey' as='p' basic size='large'>
-                        <span dangerouslySetInnerHTML={{__html: product.get('additionalDetails')}} />
+                    ? <div>
+                      <Label as='p' className='margin__none text__weight--500' size='big' >
+                        <FormattedMessage {...messages.additionalInfo} />
                       </Label>
+                      <div>
+                        <Label className='text__weight--400 color__grey' as='p' basic size='large'>
+                          <span dangerouslySetInnerHTML={{__html: product.get('additionalDetails')}} />
+                        </Label>
+                      </div>
                     </div>
-                  </div>
-                  : ''
+                    : ''
                 }
               </DetailsWrapper>
             </CustomGrid>

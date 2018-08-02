@@ -33,9 +33,9 @@ describe('productsByCategoryReducer', () => {
     const currentState = state.get('productsByCategory').toJS()
     const mergeState = currentState.concat(payload)
     const expectedResult = state
-                            .set('productsByCategory', fromJS(mergeState))
-                            .set('loading', false)
-                            .set('lazyload', false)
+      .set('productsByCategory', fromJS(mergeState))
+      .set('loading', false)
+      .set('lazyload', false)
 
     expect(productsByCategoryReducer(state, setProductsByCategoryAction(payload))).toEqual(expectedResult)
   })
@@ -43,7 +43,7 @@ describe('productsByCategoryReducer', () => {
   it('should update totalCount', () => {
     const payload = 10
     const expectedResult = state
-                            .set('totalCount', payload)
+      .set('totalCount', payload)
     expect(productsByCategoryReducer(state, setProductsCountsAction(payload))).toEqual(expectedResult)
   })
 })

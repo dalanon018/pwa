@@ -500,8 +500,8 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
               _fetchFilteredCategories={this._fetchFilteredCategories}
               _handleBannerAnimation={this._handleBannerAnimation}
               _requestFromFilter={this._requestFromFilter}
-          />
-        }
+            />
+          }
           desktopView={
             <DesktopBrandSection
               animateBanner={animateBanner}
@@ -522,9 +522,9 @@ export class BrandPage extends React.PureComponent { // eslint-disable-line reac
               _fetchFilteredCategories={this._fetchFilteredCategories}
               _handleBannerAnimation={this._handleBannerAnimation}
               _requestFromFilter={this._requestFromFilter}
-          />
+            />
           }
-      />
+        />
         <AccessView
           mobileView={<MobileFooter />}
           desktopView={null}

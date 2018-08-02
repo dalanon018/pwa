@@ -22,9 +22,9 @@ export const Wrapper = styled.div`
 
   img {
     ${
-      props => !props.noImageRadius
-      ? `border-radius: ${props.borderRadius && props.isDesktop ? '10px' : '4px'};` : null
-    }
+  props => !props.noImageRadius
+    ? `border-radius: ${props.borderRadius && props.isDesktop ? '10px' : '4px'};` : null
+}
     height: inherit;
   }
 `

@@ -134,9 +134,9 @@ const Wrapper = styled.div`
 
 const MainContent = styled.div`
   margin-top: ${
-    props => props.media >= 1024 ? '20px'
+  props => props.media >= 1024 ? '20px'
     : props.routeName ? '89px' : '50px'
-  };
+};
   width: 100%;
 `
 
@@ -228,17 +228,17 @@ export class Buckets extends React.PureComponent { // eslint-disable-line react/
         autoDismiss: 0,
         level: 'success'
       })
-    , 2000)
+      , 2000)
 
   _displayQuotaExceedError= () =>
     setTimeout(() =>
-    this._notificationRef && this._notificationRef.addNotification({
-      title: <FormattedMessage {...messages.quotaExceedTitle} />,
-      message: <FormattedMessage {...messages.quotaExceedError} />,
-      autoDismiss: 0,
-      level: 'error'
-    })
-  , 2000)
+      this._notificationRef && this._notificationRef.addNotification({
+        title: <FormattedMessage {...messages.quotaExceedTitle} />,
+        message: <FormattedMessage {...messages.quotaExceedError} />,
+        autoDismiss: 0,
+        level: 'error'
+      })
+      , 2000)
 
   _goToHome = () => {
     const { changeRoute } = this.props

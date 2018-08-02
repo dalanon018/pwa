@@ -34,14 +34,14 @@ function Promo ({
       <Countdown endDate={(moment().add(1, 'hours').valueOf() / 1000)} />
       {
         loader ? <DefaultState loader={loader} />
-        : <List>
-          <List.Item>
-            <Image alt='CLiQQ' src={SamplePromo} />
-          </List.Item>
-          <List.Item>
-            <Image alt='CLiQQ' src={SamplePromo} />
-          </List.Item>
-        </List>
+          : <List>
+            <List.Item>
+              <Image alt='CLiQQ' src={SamplePromo} />
+            </List.Item>
+            <List.Item>
+              <Image alt='CLiQQ' src={SamplePromo} />
+            </List.Item>
+          </List>
       }
     </PromoWrapper>
   )

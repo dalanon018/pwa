@@ -202,14 +202,14 @@ export class ProductsByFeatured extends React.PureComponent { // eslint-disable-
     if (totalCount) {
       return (
         windowWidth >= 1024
-        ? <DesktopItemCount className='color__grey'>
-          { totalCount }
-          <FormattedMessage {...messages.items} />
-        </DesktopItemCount>
-        : <H4 className='color__grey'>
-          { totalCount }
-          <FormattedMessage {...messages.items} />
-        </H4>
+          ? <DesktopItemCount className='color__grey'>
+            { totalCount }
+            <FormattedMessage {...messages.items} />
+          </DesktopItemCount>
+          : <H4 className='color__grey'>
+            { totalCount }
+            <FormattedMessage {...messages.items} />
+          </H4>
       )
     }
 
@@ -373,12 +373,12 @@ export class ProductsByFeatured extends React.PureComponent { // eslint-disable-
           >
             {
               windowWidth >= 1024
-              ? <DesktopTitle>
-                <FormattedMessage {...messages.headerTitle} />
-              </DesktopTitle>
-              : <H3 className='margin__none'>
-                <FormattedMessage {...messages.headerTitle} />
-              </H3>
+                ? <DesktopTitle>
+                  <FormattedMessage {...messages.headerTitle} />
+                </DesktopTitle>
+                : <H3 className='margin__none'>
+                  <FormattedMessage {...messages.headerTitle} />
+                </H3>
             }
 
             { this._displayNumberProducts() }

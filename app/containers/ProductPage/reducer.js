@@ -40,8 +40,8 @@ function productPageReducer (state = initialState, action) {
 
     case SET_PRODUCT:
       return state
-          .set('product', fromJS(action.payload))
-          .set('loading', false)
+        .set('product', fromJS(action.payload))
+        .set('loading', false)
 
     case SET_PRODUCT_HANDLER_DEFAULT:
       return state

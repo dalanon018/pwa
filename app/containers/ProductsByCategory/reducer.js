@@ -50,8 +50,8 @@ function productsByCategoryReducer (state = initialState, action) {
       return state
         .set('productsByCategory', concatState)
         .set('loading', false)
-         // we will toggle to true lazyload if only items are not empty and payload is greater that the limit
-         .set('lazyload', (!isEmpty(action.payload) && LIMIT_ITEMS <= action.payload.length))
+      // we will toggle to true lazyload if only items are not empty and payload is greater that the limit
+        .set('lazyload', (!isEmpty(action.payload) && LIMIT_ITEMS <= action.payload.length))
     }
     case RESET_PRODUCTS_CATEGORY:
       return state

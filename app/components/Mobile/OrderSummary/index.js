@@ -24,7 +24,7 @@ import {
   prop,
   subtract,
   when
- } from 'ramda'
+} from 'ramda'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Label, Form, Checkbox, Image, Button } from 'semantic-ui-react'
 
@@ -482,8 +482,8 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
               </div>
               {
                 orderedProduct.get('brand')
-                ? <Label className='no-margin-bottom color__grey margin__none' as='p' basic size='large'>{orderedProduct.getIn(['brand', 'name'])}</Label>
-                : null
+                  ? <Label className='no-margin-bottom color__grey margin__none' as='p' basic size='large'>{orderedProduct.getIn(['brand', 'name'])}</Label>
+                  : null
               }
               <Label className='padding__horizontal--15' as='p' basic size='big'>{orderedProduct.get('title')}</Label>
             </ProductItem>
@@ -549,16 +549,16 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                         <LocationButton id='scrollToAnimate' onClick={_handleRecentStore} className='color__secondary border__two--light-grey' fluid nextIcon={NextIcon} locationIcon={LocationIcon}>
                           {
                             store && isEmpty(store)
-                            ? <span className='margin__left-positive--20'>
-                              <Label as='span' className='text__weight--500' size='large' >
-                                <FormattedMessage {...messages.recentlyViewedStore} />
-                              </Label>
-                            </span>
-                            : <span className='margin__left-positive--20'>
-                              <Label as='span' className='text__weight--500' size='large' >
-                                {store.id} {store.name}
-                              </Label>
-                            </span>
+                              ? <span className='margin__left-positive--20'>
+                                <Label as='span' className='text__weight--500' size='large' >
+                                  <FormattedMessage {...messages.recentlyViewedStore} />
+                                </Label>
+                              </span>
+                              : <span className='margin__left-positive--20'>
+                                <Label as='span' className='text__weight--500' size='large' >
+                                  {store.id} {store.name}
+                                </Label>
+                              </span>
                           }
                         </LocationButton>
                         <Label as='p' className='margin__none text__weight--400 margin__top-positive--10' size='medium'>
@@ -590,8 +590,8 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                   <Label as='p' className='color__grey text__weight--500' size='large' >
                     {
                       couponApplied && couponCode.length >= 1
-                      ? <FormattedMessage {...messages.couponAppliedLabel} />
-                      : <FormattedMessage {...messages.addCouponCodeLabel} />
+                        ? <FormattedMessage {...messages.couponAppliedLabel} />
+                        : <FormattedMessage {...messages.addCouponCodeLabel} />
                     }
                   </Label>
                   <Form onSubmit={couponApplied ? _handleRemoveCoupon : _handleSubmitCoupon}>
@@ -609,8 +609,8 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                         loading={couponLoader}
                         content={
                           couponApplied
-                          ? <FormattedMessage {...messages.couponButtonLabelRemove} />
-                          : <FormattedMessage {...messages.couponButtonLabelApply} />
+                            ? <FormattedMessage {...messages.couponButtonLabelRemove} />
+                            : <FormattedMessage {...messages.couponButtonLabelApply} />
                         }
                         className='background__teal color__white'
                       />

@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
   padding: 5px 10px;
 
   ${
-    props => props.centered
+  props => props.centered
     ? `
       border-radius: 3px;
       display: flex;
@@ -35,7 +35,7 @@ export const Wrapper = styled.div`
     right: 0;
     z-index: 1;
     `
-  }
+}
 `
 
 export const ContentWrapper = styled.div`

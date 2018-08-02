@@ -10,7 +10,7 @@ import {
   prop,
   replace,
   split
- } from 'ramda'
+} from 'ramda'
 
 // import stores from 'fixtures/stores.json'
 import { getRequestData } from 'utils/offline-request'

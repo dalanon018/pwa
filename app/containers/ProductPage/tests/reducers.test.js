@@ -36,8 +36,8 @@ describe('Products Reducer', () => {
 
   it('should reset the handlers to default success = false, error = false', () => {
     const expectedResult = state
-                            .set('requestProductSuccess', false)
-                            .set('requestProductError', false)
+      .set('requestProductSuccess', false)
+      .set('requestProductError', false)
 
     expect(productsReducer(state, setProductHandlersDefaultAction())).toEqual(expectedResult)
   })

@@ -29,8 +29,8 @@ describe('productsByBrandsReducer', () => {
     const currentState = state.get('productsByBrands').toJS()
     const mergeState = currentState.concat(payload)
     const expectedResult = state
-                            .set('productsByBrands', fromJS(mergeState))
-                            .set('lazyload', false)
+      .set('productsByBrands', fromJS(mergeState))
+      .set('lazyload', false)
 
     expect(productsByBrandsReducer(state, setProductsByBrandsAction(payload))).toEqual(expectedResult)
   })

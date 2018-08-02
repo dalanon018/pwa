@@ -69,12 +69,12 @@ class SlideShow extends React.PureComponent {
               <div key={index} onClick={this._handleLightBox(index)}>
                 {
                   (typeof item === 'string'
-                  ? <div className='position__relative'>
-                    { !isHome && percentage && <RibbonWrapper rightSpace percentage={percentage} /> }
-                    { isPromo && <TimerWrapper promo={promo} /> }
-                    <Image className='slick-image-handler' alt='CLiQQ' src={item} />
-                  </div>
-                  : '')
+                    ? <div className='position__relative'>
+                      { !isHome && percentage && <RibbonWrapper rightSpace percentage={percentage} /> }
+                      { isPromo && <TimerWrapper promo={promo} /> }
+                      <Image className='slick-image-handler' alt='CLiQQ' src={item} />
+                    </div>
+                    : '')
                 }
               </div>
             )

@@ -13,13 +13,13 @@ import styled from 'styled-components'
 const EmptyDataBlockWrapper = styled.div`
   ${props =>
     props.pageTrigger === 'productPage'
-    ? `position: absolute;
+      ? `position: absolute;
     top: 50%;
     width: 100%;
     transform: translate(-50%, -50%);
     left: 50%;`
-    : 'position: relative;'
-  }
+      : 'position: relative;'
+}
 
   // not included on sorting
   animation:fadeIn ease-in 1;

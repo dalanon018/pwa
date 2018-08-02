@@ -209,7 +209,7 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
     })
   }
 
-/**
+  /**
  * Handling happy flow and success process
  */
 
@@ -265,7 +265,7 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
     this.resendCodeSuccessSubmission = false
   }
 
-/**
+  /**
  * ------------------------------------
  * Handling Error on Process
  * -----------------------------------
@@ -348,16 +348,16 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
 
     const setMarkdownContent = ifElse(complement(equals('')), this._setMarkDownContent, noop)
 
-      // handle recaptcha validation  is success
+    // handle recaptcha validation  is success
     const handleRecaptchaValidationSuccess = ifElse(both(equals(true), () => this.recaptchaSuccessSubmission),
       this._handleRecaptchaValidationSuccess, noop)
-     // handle Recaptcha validation is error
+    // handle Recaptcha validation is error
     const handleRecaptchaValidationError = ifElse(both(complement(equals(null)), () => this.recaptchaSuccessSubmission),
-     this._handleErrorRecaptchaValidation, noop)
+      this._handleErrorRecaptchaValidation, noop)
 
     // handle if mobile registration is success
     const handleSuccessMobileRegistration = ifElse(both(equals(true), () => this.mobileSuccessSubmission),
-    this._handleSuccessMobileRegistration, noop)
+      this._handleSuccessMobileRegistration, noop)
 
     // handle if mobile registration is error
     const handleErrorMobileRegistration = ifElse(both(complement(equals(null)), () => this.mobileSuccessSubmission), this._handleErrorMobileRegistration, noop)
@@ -365,7 +365,7 @@ export class LoginPage extends React.PureComponent { // eslint-disable-line reac
     // handle if resend verification code is successful note that we use the same  functionality for mobileRegistration where it send the code to the number entered.
     const handleSuccessResendVerificationCode = ifElse(both(equals(true), () => this.resendCodeSuccessSubmission), this._handleSuccessResendVerificationCode, noop)
 
-        // handle if verification code is error
+    // handle if verification code is error
     const handleErrorVerificationCode = ifElse(both(complement(equals(null)), () => this.successVerificationSubmission), this._handleErrorVerificationCode, noop)
 
     usePrevMobile(mobileNumbers)

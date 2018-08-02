@@ -82,19 +82,19 @@ function PointsHistory ({
                           <div>
                             {
                               transaction.get('type') === 'plus'
-                              ? <ArrowUp /> : <ArrowDown />
+                                ? <ArrowUp /> : <ArrowDown />
                             }
                           </div>
                           <div>
                             <Label as='p' basic className='margin__none text__weight--500' size='large' >
                               {
                                 transaction.get('type') === 'plus'
-                                ? <FormattedMessage
-                                  {...messages.youClaimed}
-                                  values={{item: transaction.getIn(['product', 'name'])}} />
-                                : <FormattedMessage
-                                  {...messages.youBought}
-                                  values={{item: transaction.getIn(['product', 'name'])}} />
+                                  ? <FormattedMessage
+                                    {...messages.youClaimed}
+                                    values={{item: transaction.getIn(['product', 'name'])}} />
+                                  : <FormattedMessage
+                                    {...messages.youBought}
+                                    values={{item: transaction.getIn(['product', 'name'])}} />
                               }
                             </Label>
                             <Label as='p' basic className='color__grey text__weight--400 margin__top-positive--10 margin__bottom--none' size='large' >

@@ -69,7 +69,7 @@ describe('Buckets Reducer', () => {
   it('should set the loyaltyToken', () => {
     const payload = '123131312'
     const expectedResult = state
-                            .set('loyaltyToken', payload)
+      .set('loyaltyToken', payload)
 
     expect(bucketsReducer(state, setLoyaltyTokenAction(payload))).toEqual(expectedResult)
   })

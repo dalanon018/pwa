@@ -90,29 +90,29 @@ const brandCheckboxChange = ({
   queryBrands,
   requestFromFilter,
   itemsLoading
- }) => (evt, { checked }) => {
-   const concatBrands = (id) => [...queryBrands, id]
-   const removeBrands = (id) => without([id], queryBrands)
+}) => (evt, { checked }) => {
+  const concatBrands = (id) => [...queryBrands, id]
+  const removeBrands = (id) => without([id], queryBrands)
 
-   // it item is loading we should not allow them to check brands since its still loading and will mess up the data that should be updated.
-   if (itemsLoading) {
-     evt.preventDefault()
-     return
-   }
+  // it item is loading we should not allow them to check brands since its still loading and will mess up the data that should be updated.
+  if (itemsLoading) {
+    evt.preventDefault()
+    return
+  }
 
-   const updateRemoveQueryBrands = ifElse(
-      identity,
-      partial(concatBrands, [id]),
-      partial(removeBrands, [id])
-    )
-   const prepRequestFilter = compose(
+  const updateRemoveQueryBrands = ifElse(
+    identity,
+    partial(concatBrands, [id]),
+    partial(removeBrands, [id])
+  )
+  const prepRequestFilter = compose(
     requestRealtimeFilter,
     assoc('brands', __, { fn: requestFromFilter, category: {} }),
     updateRemoveQueryBrands
-   )(checked)
+  )(checked)
 
-   prepRequestFilter()
- }
+  prepRequestFilter()
+}
 
 const ListBrand = ({
   brand,

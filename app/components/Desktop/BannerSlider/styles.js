@@ -18,10 +18,10 @@ const BannerSliderWrapper = styled.div`
     padding-bottom: ${props => props.isLowerdots ? '15px' : '0'};
     overflow: ${props => props.hover && 'inherit'};
     ${
-      props =>
-      (!props.active && props.toggleLightBox) &&
+  props =>
+    (!props.active && props.toggleLightBox) &&
       'width: 350px; margin: 0 auto;'
-    }
+}
     
   }
 
@@ -62,8 +62,8 @@ const BannerSliderWrapper = styled.div`
 
   .slick-dots {
     ${
-      props => props.isProductPage
-      ? `
+  props => props.isProductPage
+    ? `
         align-content: baseline;
         bottom: inherit;
         display: ${props => props.active ? 'none' : 'flex'} !important;
@@ -90,7 +90,7 @@ const BannerSliderWrapper = styled.div`
           }
         }
       `
-      : `
+    : `
         bottom: 10px;
         
         li {
@@ -108,7 +108,7 @@ const BannerSliderWrapper = styled.div`
           }
         }
       `
-    }
+}
   }
 `
 

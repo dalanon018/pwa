@@ -41,7 +41,7 @@ describe('productReviewReducer', () => {
       name: 'test1'
     })
     const expectedResult = state
-                            .set('orderProduct', payload)
+      .set('orderProduct', payload)
 
     expect(productReviewReducer(state, setOrderProductAction(payload))).toEqual(expectedResult)
   })
@@ -49,7 +49,7 @@ describe('productReviewReducer', () => {
   it('should update mobileNumber', () => {
     const payload = '999999999'
     const expectedResult = state
-                            .set('mobileNumber', payload)
+      .set('mobileNumber', payload)
 
     expect(productReviewReducer(state, setMobileNumberAction(payload))).toEqual(expectedResult)
   })

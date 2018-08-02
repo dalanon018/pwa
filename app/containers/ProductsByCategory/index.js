@@ -243,14 +243,14 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
     if (product.size) {
       return (
         windowWidth >= 1024
-        ? <DesktopItemCount className='color__grey'>
-          { displayTotalCount(totalCount) }
-          <FormattedMessage {...messages.items} />
-        </DesktopItemCount>
-        : <H4 className='color__grey'>
-          { displayTotalCount(totalCount) }
-          <FormattedMessage {...messages.items} />
-        </H4>
+          ? <DesktopItemCount className='color__grey'>
+            { displayTotalCount(totalCount) }
+            <FormattedMessage {...messages.items} />
+          </DesktopItemCount>
+          : <H4 className='color__grey'>
+            { displayTotalCount(totalCount) }
+            <FormattedMessage {...messages.items} />
+          </H4>
       )
     }
 
@@ -589,8 +589,8 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
               _displayRecentlyViewedItems={this._displayRecentlyViewedItems}
               _displayRegularItems={this._displayRegularItems}
               _handlePageTitle={this._handlePageTitle}
-          />
-        }
+            />
+          }
           desktopView={
             <DesktopCategorySection
               filterBrands={filterBrands}
@@ -615,20 +615,20 @@ export class ProductsByCategory extends React.PureComponent { // eslint-disable-
               _displayRecentlyViewedItems={this._displayRecentlyViewedItems}
               _displayRegularItems={this._displayRegularItems}
               _handlePageTitle={this._handlePageTitle}
-          />
-        }
-      />
+            />
+          }
+        />
         <AccessView
           mobileView={<MobileFooter />}
           desktopView={null}
-      />
+        />
         <Modal
           open={this._handleRestrictAge() && !togglePrompt && !over18}
           name='warning'
           close={this._handleClosePrompt}
           isCategory={isCategory}
           letIn={this._handleOver18}
-      />
+        />
       </div>
     )
   }

@@ -79,7 +79,7 @@ const ReturnInfo = ({ returnable, actionButton }) => (
         <FormattedMessage
           {...messages[`returnPolicyDescriptionWarning${returnable}`]}
           values={{ actionButton }}
-          />
+        />
       </Label>
     </section>
   </WarningDescription>
@@ -414,8 +414,8 @@ class Receipt extends React.PureComponent {
               <Grid padded className='scan padding__14' centered textAlign='center'>
                 {
                   receipt.getIn(['products', 'brand'])
-                  ? <Label as='span' basic size='large' className='color__grey text__weight--400'>{receipt.getIn(['products', 'brand', 'name'])}</Label>
-                  : null
+                    ? <Label as='span' basic size='large' className='color__grey text__weight--400'>{receipt.getIn(['products', 'brand', 'name'])}</Label>
+                    : null
                 }
                 <Label as='p' basic size='big' className='margin__none text__weight--400'>{receipt.getIn(['products', 'name'])}</Label>
                 <Label className='product-current-price color__primary text__weight--700' basic as='p'>

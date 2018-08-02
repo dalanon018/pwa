@@ -19,9 +19,9 @@ const getTotalPrice = ({ price, discountPrice }) => {
  * @param {*} cases
  */
 const identifyCalculation = cases => dafultFn => key =>
- key in cases ? cases[key] : dafultFn
+  key in cases ? cases[key] : dafultFn
 
- /**
+/**
   * Gettting amount percentage
   * @param {*} product
   */
@@ -32,7 +32,7 @@ export const calculatePercentage = getTotalPrice
   * @param {*} product
   */
 const calculateAmount = ({ price, discountPrice }) =>
-   subtract(price, discountPrice)
+  subtract(price, discountPrice)
 
 /**
  * Main component for getting the price

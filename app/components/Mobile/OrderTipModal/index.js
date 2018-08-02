@@ -78,7 +78,7 @@ export const BannerHeader = styled.div`
         width: 0;
       }
       `
-    }
+}
   }
 `
 
@@ -123,8 +123,8 @@ function OrderTipModal ({intl, toggle, close, bannerMap, changeRoute}) { // esli
             <Label className='text__weight--400 center' as='p' size='medium'>
               {
                 bannerMap
-                ? <FormattedMessage {...messages.descriptionTwo} />
-                : <FormattedMessage {...messages.descriptionOne} />
+                  ? <FormattedMessage {...messages.descriptionTwo} />
+                  : <FormattedMessage {...messages.descriptionOne} />
               }
             </Label>
           </DetailsWrapper>

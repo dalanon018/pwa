@@ -46,8 +46,7 @@ import {
   GET_ORDER_PRODUCT,
   GET_STORE,
   ORDER_SUBMIT,
-  GET_EMAIL,
-  GET_STORE_DELIVERY_MESSAGE
+  GET_EMAIL
 } from './constants'
 
 import {
@@ -60,8 +59,7 @@ import {
   setCurrentPointsAction,
   setLastSelectedMethodAction,
   resultCouponAction,
-  setEmailAction,
-  setStoreDeliveryMessageAction
+  setEmailAction
 } from './actions'
 
 import {
@@ -252,10 +250,10 @@ export function * getLoyaltyToken () {
   return yield requestLoyaltyToken()
 }
 
-//export function * requestOrderToken (mobile) {
+// export function * requestOrderToken (mobile) {
 export function * requestOrderToken () {
-  //console.log(`${mobile}`)
-  //const mobileNumber = `0${mobile}`
+  // console.log(`${mobile}`)
+  // const mobileNumber = `0${mobile}`
   const mobile = yield call(getItem, MOBILE_NUMBERS_KEY)
   const mobileNumbers = Array.isArray(mobile) ? mobile.pop() : null
   const mobileNumber = `0${mobileNumbers}`
@@ -320,16 +318,16 @@ function * createPostPayload ({ orderedProduct, mobileNumber, modePayment, store
 export function * submitOrder (args) {
   const mobile = yield call(getItem, MOBILE_NUMBERS_KEY)
   const mobileNumbers = Array.isArray(mobile) ? mobile.pop() : null
-  //const mobileNumber = `0${mobileNumbers}`
+  // const mobileNumber = `0${mobileNumbers}`
   var { payload: { orderedProduct, mobileNumber, modePayment, store, usePoints, couponCode } } = args
-  var mobileNumber = `${mobileNumbers}`
+  mobileNumber = `${mobileNumbers}`
   var postPayload = yield * createPostPayload({ orderedProduct, mobileNumber, modePayment, store, usePoints, couponCode })
   try {
     const randomSleep = getRandomInt(100, 2000)
 
     yield * sleep(randomSleep)
 
-    //trying to create a new array since the mobile number array is being nullified
+    // trying to create a new array since the mobile number array is being nullified
 
     const token = yield requestOrderToken(mobileNumber)
     const order = yield call(request, `${API_BASE_URL}/orders`, {
@@ -367,8 +365,6 @@ export function * submitOrder (args) {
     yield put(errorOrderAction(exceptionHander(e.message)))
   }
 }
-
-
 
 export function * getIsBlackList () {
   const token = yield getAccessToken()
@@ -489,24 +485,25 @@ export function * removeCoupon (args) {
   }))
 }
 
-export function * getEmail() {
+export function * getEmail () {
   const mobile = yield call(getItem, MOBILE_NUMBERS_KEY)
   const mobileNumbers = Array.isArray(mobile) ? mobile.pop() : null
   const mobileNumber = `0${mobileNumbers}`
   const token = yield getAccessToken()
   try {
-  const req = yield call(request, `${API_BASE_URL}/customers/`, {
-    method: 'POST',
-    body: JSON.stringify({
-      mobileNumber,
-      //replace this with ${emailAddress} after implementing the UI for email
-      emailAddress: 'adrian@apollo.com.ph'
-    }),
-    token: token.access_token
-  })
-  yield put(setEmailAction(mobileNumber,emailAddress))
+    const req = yield call(request, `${API_BASE_URL}/customers/`, {
+      method: 'POST',
+      body: JSON.stringify({
+        mobileNumber,
+        // replace this with ${emailAddress} after implementing the UI for email
+        emailAddress: 'adrian@apollo.com.ph'
+      }),
+      token: token.access_token
+    })
+    // yield put(setEmailAction(mobileNumber, emailAddress))
+    yield put(setEmailAction(req))
   } catch (e) {
-      console.log('error on email Api', e)
+    console.log('error on email Api', e)
     // no email inserted
     yield (put(setEmailAction(null)))
   }
@@ -574,8 +571,8 @@ export function * productReviewSagas () {
     fork(removeCouponSaga),
 
     fork(submitOrderSaga),
-    fork(getEmailSaga),
-    //fork(getStoreDeliveryMessageSaga)
+    fork(getEmailSaga)
+    // fork(getStoreDeliveryMessageSaga)
   ]
   yield take(LOCATION_CHANGE)
   yield watcher.map(task => cancel(task))

@@ -26,7 +26,7 @@ import {
   toLower,
   toUpper,
   when
- } from 'ramda'
+} from 'ramda'
 import { connect } from 'react-redux'
 import { compose as ReduxCompose } from 'redux'
 import { replace, push } from 'react-router-redux'
@@ -86,8 +86,7 @@ import {
   getLastSelectedMethodAction,
   submitCouponAction,
   removeCouponAction,
-  getEmailAction,
-  getStoreDeliveryMessageAction
+  getEmailAction
 } from './actions'
 
 import {
@@ -244,7 +243,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
       storeLocatorVisibility: (this.showStoreLocator.indexOf(value)) !== -1,
       pointsModifierVisibility: value === this.showPointsModifier
     })
-    console.log(`${value}` )
+    console.log(`${value}`)
   }
 
   _handleToBottom = () => {
@@ -312,7 +311,6 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
         usePoints,
         ...(couponApplied ? { couponCode } : {})
       })
-
     }
 
     const proceedOrder = ifElse(
@@ -433,7 +431,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
   _handleStoreVisible = (props) => {
     const { location: { search }, previousStore, lastSelectedMethod } = props
     const { store } = this.state
-     // handle populating store details
+    // handle populating store details
     const populateFromStorage = ifElse(
       isEmpty,
       () => this.setState({
@@ -504,12 +502,17 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     this.props.setHandlersDefault()
   }
 
-  componentWillMount () {
-    this.setState({ALLOWED_POINTS: product.get('poc')})
-  }
+  // componentWillMount () {
+  //   this.setState({ALLOWED_POINTS: product.get('poc')})
+  // }
+
+  // _handleSetMinimumPoints = () => {
+  //   const { product } = this.props
+  //   return isFullPointsOnly({ ALLOWED_POINTS: product.get('poc') })
+  // }
 
   componentDidMount () {
-    const { getLastSelectedMethod, getCurrentPoints, getOrderProduct, getMobileNumber, getStore, getBlackList, setRouteName, getEmail, getStoreDeliveryMessage } = this.props
+    const { getLastSelectedMethod, getCurrentPoints, getOrderProduct, getMobileNumber, getStore, getBlackList, setRouteName, getEmail } = this.props
 
     setRouteName(PRODUCTREVIEW_NAME)
     getOrderProduct()
@@ -518,7 +521,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
     getEmail()
     getBlackList()
     getStore()
-    //getStoreDeliveryMessage()
+    // getStoreDeliveryMessage()
     getLastSelectedMethod()
     this.props.setPageTitle('Review Order')
     this.props.setShowSearchIcon(false)
@@ -592,7 +595,7 @@ export class ProductReview extends React.PureComponent { // eslint-disable-line 
               _stepWrapperRef={this._stepWrapperRef}
               _updateUsePoints={this._updateUsePoints}
               _isFullPointsOnly={this._isFullPointsOnly()}
-
+              _handleSetMinimumPoints={this._handleSetMinimumPoints}
               _handleCouponEntry={this._handleCouponEntry}
               _handleSubmitCoupon={this._handleSubmitCoupon}
               _handleRemoveCoupon={this._handleRemoveCoupon}
@@ -705,7 +708,6 @@ function mapDispatchToProps (dispatch) {
     changeRoute: (url) => dispatch(replace(url)),
     pushRoute: (url) => dispatch(push(url)),
     getEmail: (payload) => dispatch(getEmailAction(payload)),
-    getStoreDeliveryMessage: (payload) => dispatch(getStoreDeliveryMessageAction(payload)),
     dispatch
   }
 }

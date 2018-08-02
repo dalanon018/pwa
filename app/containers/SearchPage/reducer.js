@@ -30,8 +30,8 @@ function searchPageReducer (state = initialState, action) {
 
     case SET_SEARCH_PRODUCT:
       return state
-              .set('product', fromJS(action.payload))
-              .set('loading', false)
+        .set('product', fromJS(action.payload))
+        .set('loading', false)
     case SET_PRODUCT_SUCCESS:
       return state
         .set('requestProductSuccess', true)

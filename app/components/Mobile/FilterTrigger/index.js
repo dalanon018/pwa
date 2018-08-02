@@ -100,7 +100,7 @@ class FilterTrigger extends React.PureComponent {
 
   _findCategory = ({ value, props = this.props }) => {
     const { filterCategories } = props
-     // each request we have to reset our selected brand and toggle brand since we expect different data
+    // each request we have to reset our selected brand and toggle brand since we expect different data
     const foundCategory = filterCategories.find((category) => category.get('id') === value)
     return foundCategory ? foundCategory.toObject() : {}
   }
@@ -206,8 +206,8 @@ class FilterTrigger extends React.PureComponent {
         <Wrapper className='background__fade-grey' onClick={this._handleToggleDrawer}>
           {
             filtered
-            ? <Image src={FilteredIcon} alt='CLiQQ' />
-            : <Image src={FilterIcon} alt='CLiQQ' />
+              ? <Image src={FilteredIcon} alt='CLiQQ' />
+              : <Image src={FilterIcon} alt='CLiQQ' />
           }
           <Label basic as='span' size='medium' className='color__primary text__weight--400'>
             <FormattedMessage {...messages.header} />

@@ -28,8 +28,8 @@ function FlashDealBanner ({
     <BannerCard borderRadius width={width} height={height}>
       {
         !promosLoading
-        ? <Image className='width__full' src={image} alt='CLiQQ' />
-        : <Image className='width__full' src={imageStock('Slider-Default.jpg', imgixOptions)} alt='CLiQQ' />
+          ? <Image className='width__full' src={image} alt='CLiQQ' />
+          : <Image className='width__full' src={imageStock('Slider-Default.jpg', imgixOptions)} alt='CLiQQ' />
       }
     </BannerCard>
   )

@@ -70,12 +70,12 @@ function PointsHistory ({
                           <Label as='p' basic className='margin__none text__weight--400' size='small' >
                             {
                               transaction.get('type') === 'plus'
-                              ? <FormattedMessage
-                                {...messages.youClaimed}
-                                values={{item: transaction.getIn(['product', 'name'])}} />
-                              : <FormattedMessage
-                                {...messages.youBought}
-                                values={{item: transaction.getIn(['product', 'name'])}} />
+                                ? <FormattedMessage
+                                  {...messages.youClaimed}
+                                  values={{item: transaction.getIn(['product', 'name'])}} />
+                                : <FormattedMessage
+                                  {...messages.youBought}
+                                  values={{item: transaction.getIn(['product', 'name'])}} />
                             }
                           </Label>
                           <Label as='p' basic className='color__grey text__weight--400 margin__top-positive--10' size='mini' >
@@ -84,24 +84,24 @@ function PointsHistory ({
                         </div>
                         {
                           transaction.get('type') === 'plus'
-                          ? <AdjustedPoints className='text__align--right'>
-                            <Label as='p' basic className='color__teal margin__none text__weight--700' size='huge' >
+                            ? <AdjustedPoints className='text__align--right'>
+                              <Label as='p' basic className='color__teal margin__none text__weight--700' size='huge' >
                               +
-                            </Label>
-                            <Image src={CliqqIcon} alt='CLiQQ' />
-                            <Label as='p' basic className='color__teal margin__none text__weight--700' size='huge' >
-                              {transaction.get('points') && parseFloat(transaction.get('points')).toLocaleString()}
-                            </Label>
-                          </AdjustedPoints>
-                          : <AdjustedPoints className='text__align--right'>
-                            <Label as='p' basic className='color__primary margin__none text__weight--700' size='huge' >
+                              </Label>
+                              <Image src={CliqqIcon} alt='CLiQQ' />
+                              <Label as='p' basic className='color__teal margin__none text__weight--700' size='huge' >
+                                {transaction.get('points') && parseFloat(transaction.get('points')).toLocaleString()}
+                              </Label>
+                            </AdjustedPoints>
+                            : <AdjustedPoints className='text__align--right'>
+                              <Label as='p' basic className='color__primary margin__none text__weight--700' size='huge' >
                               -
-                            </Label>
-                            <Image src={CliqqIcon} alt='CLiQQ' />
-                            <Label as='p' basic className='color__primary margin__none text__weight--700' size='huge' >
-                              {transaction.get('points') && parseFloat(transaction.get('points')).toLocaleString()}
-                            </Label>
-                          </AdjustedPoints>
+                              </Label>
+                              <Image src={CliqqIcon} alt='CLiQQ' />
+                              <Label as='p' basic className='color__primary margin__none text__weight--700' size='huge' >
+                                {transaction.get('points') && parseFloat(transaction.get('points')).toLocaleString()}
+                              </Label>
+                            </AdjustedPoints>
                         }
                       </PointsHistoryWrapper>
                     )

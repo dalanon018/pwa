@@ -22,8 +22,8 @@ const ButtonWrapper = styled.div`
 
   @media (min-width: 768px) {
     ${
-      props => props.desktopLayout
-      ? `
+  props => props.desktopLayout
+    ? `
         text-align: left;
 
         .custom-button {
@@ -32,8 +32,8 @@ const ButtonWrapper = styled.div`
           width: 100%;
         }
       `
-      : ''
-    }
+    : ''
+}
   }
 `
 

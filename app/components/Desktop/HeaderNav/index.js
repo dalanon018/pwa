@@ -165,10 +165,10 @@ export const MenusContainer = styled.div`
       margin-left: 10px;
 
       ${
-        props => props.arrowToggle
-        ? 'transform: rotate(-135deg);margin-top: 3px;'
-        : 'transform: rotate(45deg);'
-      }
+  props => props.arrowToggle
+    ? 'transform: rotate(-135deg);margin-top: 3px;'
+    : 'transform: rotate(45deg);'
+}
     }
   }
 `
@@ -624,23 +624,23 @@ class HeaderNav extends PureComponent {
                     <SearchWrapper>
                       {
                         pathname
-                        ? <SearchMenu
-                          clearSearch={clearSearchNav}
-                          searchProduct={searchProductNav}
-                          hideBackButton={hideBackButtonNav}
-                          _handleSearchInputValue={_handleSearchInputValueNav}
-                          leftButtonAction={leftButtonActionNav}
-                          className='search-textfield'
-                        />
-                        : <Input
-                          aria-label='search'
-                          name='search'
-                          fluid
-                          onClick={this._handleGoToPage('search')}
-                          placeholder={this.props.intl.formatMessage(messages.searchPlaceHolder)}
-                          icon='search'
-                          className='search-textfield'
-                        />
+                          ? <SearchMenu
+                            clearSearch={clearSearchNav}
+                            searchProduct={searchProductNav}
+                            hideBackButton={hideBackButtonNav}
+                            _handleSearchInputValue={_handleSearchInputValueNav}
+                            leftButtonAction={leftButtonActionNav}
+                            className='search-textfield'
+                          />
+                          : <Input
+                            aria-label='search'
+                            name='search'
+                            fluid
+                            onClick={this._handleGoToPage('search')}
+                            placeholder={this.props.intl.formatMessage(messages.searchPlaceHolder)}
+                            icon='search'
+                            className='search-textfield'
+                          />
                       }
                     </SearchWrapper>
                   </Grid.Column>

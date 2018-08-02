@@ -78,17 +78,17 @@ function BrandSlider ({ brands, loader, changeRoute }) {
         <BrandsContainer>
           <BrandsWrapper size={brands.size ? brands.size : 4}>
             {
-            loader ? range(4).map((_, index) => <SliderItem key={index}><DefaultState /></SliderItem>)
-            : brands.map((brand, index) => {
-              return (
-                <SliderItem key={index} onClick={goToBrand(brand.get('id'))}>
-                  <PlainCard width={94} height={94}>
-                    <Image src={brand.get('logo') !== '' ? brand.get('logo') : imageStock('Brands-Default.jpg', imgixOptions)} alt='CLiQQ' />
-                  </PlainCard>
-                </SliderItem>
-              )
-            })
-          }
+              loader ? range(4).map((_, index) => <SliderItem key={index}><DefaultState /></SliderItem>)
+                : brands.map((brand, index) => {
+                  return (
+                    <SliderItem key={index} onClick={goToBrand(brand.get('id'))}>
+                      <PlainCard width={94} height={94}>
+                        <Image src={brand.get('logo') !== '' ? brand.get('logo') : imageStock('Brands-Default.jpg', imgixOptions)} alt='CLiQQ' />
+                      </PlainCard>
+                    </SliderItem>
+                  )
+                })
+            }
           </BrandsWrapper>
         </BrandsContainer>
       </Wrapper>

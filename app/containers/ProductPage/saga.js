@@ -80,19 +80,19 @@ export function * getProduct (payload) {
     method: 'GET',
     token: token.access_token
   })
-    if (!isEmpty(req)) {
-      // we will use the txt file we got
-      const transform = yield transformEachEntity(req)
-      // since we have the cliqqcode of the item we can save this last viewed items.
-      yield * updateLastViewedItems({
-        payload: transform
-      })
+  if (!isEmpty(req)) {
+    // we will use the txt file we got
+    const transform = yield transformEachEntity(req)
+    // since we have the cliqqcode of the item we can save this last viewed items.
+    yield * updateLastViewedItems({
+      payload: transform
+    })
 
-      yield put(setProductAction(transform))
-    } else {
-      yield put(setNetworkErrorAction(500))
-    }
+    yield put(setProductAction(transform))
+  } else {
+    yield put(setNetworkErrorAction(500))
   }
+}
 
 export function * setCurrentProduct (args) {
   const { payload } = args

@@ -22,7 +22,7 @@ export const userIsAuthenticated = connectedRouterRedirect({
   authenticatedSelector: (state) => state.getIn(['global', 'session']) !== null,
   // The url to redirect user to if they fail
   redirectPath: '/login',
- // A nice display name for this check
+  // A nice display name for this check
   wrapperDisplayName: 'UserIsAuthenticated'
 
 })

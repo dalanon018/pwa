@@ -52,17 +52,17 @@ function Brand ({ brands, loader, changeRoute }) {
       <Grid padded columns='4'>
         {
           loader ? range(4).map((_, index) => <DefaultState key={index} />)
-          : brands.valueSeq().map((brand) => (
-            <Grid.Column
-              key={brand.get('id')}
-              onClick={goToBrand(brand.get('id'))}
+            : brands.valueSeq().map((brand) => (
+              <Grid.Column
+                key={brand.get('id')}
+                onClick={goToBrand(brand.get('id'))}
               >
-              <BrandWrapper>
-                <Image alt={brand.get('name')} src={paramsImgix(imageShow(brand.get('background')), imgixOptions)} />
-              </BrandWrapper>
-            </Grid.Column>
+                <BrandWrapper>
+                  <Image alt={brand.get('name')} src={paramsImgix(imageShow(brand.get('background')), imgixOptions)} />
+                </BrandWrapper>
+              </Grid.Column>
             )
-          )
+            )
         }
       </Grid>
     </BrandContainer>

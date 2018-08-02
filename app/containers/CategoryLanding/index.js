@@ -85,7 +85,7 @@ export class CategoryLanding extends React.PureComponent { // eslint-disable-lin
         <Helmet
           title='Category Page'
           meta={[
-          { name: 'description', content: '7-eleven CLiQQ Category Page' }
+            { name: 'description', content: '7-eleven CLiQQ Category Page' }
           ]}
         />
         <Container>
@@ -100,8 +100,8 @@ export class CategoryLanding extends React.PureComponent { // eslint-disable-lin
                           <ImageWrapper>
                             {
                               category.get('background')
-                              ? <Image src={category.get('background')} alt='CLiQQ' />
-                              : <Image src={imageStock('Brands-Default.jpg', imgixOptions)} />
+                                ? <Image src={category.get('background')} alt='CLiQQ' />
+                                : <Image src={imageStock('Brands-Default.jpg', imgixOptions)} />
                             }
                           </ImageWrapper>
                           <Label basic as='span' size='medium' className='text__weight--400 margin__top-positive--10'>

@@ -78,7 +78,7 @@ const ReceiptWrapper = styled.div`
  * @param {*} cases
  */
 const identifyBackground = cases => defaultColor => key =>
- key in cases ? cases[key] : defaultColor
+  key in cases ? cases[key] : defaultColor
 
 const isDoneRequesting = (loader) => () => (loader === false)
 

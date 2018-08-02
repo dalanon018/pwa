@@ -75,7 +75,7 @@ const IS_DELIVERY_DONE = []
  * @param {*} cases
  */
 const identifyActiveImage = images => image => key =>
- key in images ? images[key] : image
+  key in images ? images[key] : image
 
 const Connector = ({ current, isDone }) => {
   return (

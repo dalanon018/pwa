@@ -7,7 +7,7 @@ import {
  * @param {*} cases
  */
 export const switchFn = cases => defaultCase => key =>
-key in cases ? cases[key] : defaultCase
+  key in cases ? cases[key] : defaultCase
 
 /**
  * easier way to toggle component

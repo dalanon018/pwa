@@ -131,7 +131,7 @@ function bucketsReducer (state = initialState, action) {
 
     case SET_CURRENT_POINTS:
       return state
-          .set('currentPoints', action.payload)
+        .set('currentPoints', action.payload)
 
     case SET_LIGHTBOX_IMAGE:
       return state

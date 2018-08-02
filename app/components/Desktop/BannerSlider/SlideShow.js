@@ -80,7 +80,7 @@ class SlideShow extends React.PureComponent {
     return (
       <Slider
         {...settings}
-        >
+      >
         { images && this._handleSlides(images) }
       </Slider>
     )

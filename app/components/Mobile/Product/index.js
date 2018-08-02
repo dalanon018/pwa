@@ -135,7 +135,7 @@ export const ToggleEarnPoints = ({ entity, isFullPointsOnly, changeRoute }) => {
           }} />
       </Label>
     </PointsInfo>
-  , null)(!isFullPointsOnly && !!entity.get('points'))
+    , null)(!isFullPointsOnly && !!entity.get('points'))
 }
 
 const Product = ({
@@ -225,8 +225,8 @@ const Product = ({
             <LoadingStateInfo loading={loading} center>
               {
                 product.get('brand')
-                ? <Label className='no-margin-bottom color__grey' as='p' basic size='large'>{product.getIn(['brand', 'name'])}</Label>
-                : null
+                  ? <Label className='no-margin-bottom color__grey' as='p' basic size='large'>{product.getIn(['brand', 'name'])}</Label>
+                  : null
               }
               <Label as='p' basic size='big' className='padding__horizontal--15'>{product.get('title')}</Label>
               <ToggleFullPoints
@@ -332,18 +332,18 @@ const Product = ({
             </ListCollapse>
             {
               product.get('additionalDetails')
-              ? <ListCollapse title={
-                <Label as='p' className='margin__none' size='large' >
-                  <FormattedMessage {...messages.additionalInfo} />
-                </Label>
-              }>
-                <CollapseContent>
-                  <Label as='p' color='grey' basic size='medium'>
-                    <span dangerouslySetInnerHTML={{__html: product.get('additionalDetails')}} />
+                ? <ListCollapse title={
+                  <Label as='p' className='margin__none' size='large' >
+                    <FormattedMessage {...messages.additionalInfo} />
                   </Label>
-                </CollapseContent>
-              </ListCollapse>
-              : ''
+                }>
+                  <CollapseContent>
+                    <Label as='p' color='grey' basic size='medium'>
+                      <span dangerouslySetInnerHTML={{__html: product.get('additionalDetails')}} />
+                    </Label>
+                  </CollapseContent>
+                </ListCollapse>
+                : ''
             }
 
             <ButtonContainer className='background__white'>

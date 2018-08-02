@@ -9,7 +9,7 @@ import {
   join,
   toPairs,
   partialRight
-  } from 'ramda'
+} from 'ramda'
 
 export const fnSearchParams = (params) => compose(
   concat('?'),

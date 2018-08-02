@@ -66,16 +66,16 @@ function BrandCarousel ({brands, loader, changeRoute}) {
       <Slider {...settings}>
         {
           loader ? range(8).map((_, index) => <SliderItem key={index}><DefaultState /></SliderItem>)
-          : brands && brands.map((brand, index) => {
-            return (
-              <CarouselEntity
-                key={index}
-                index={index}
-                brand={brand}
-                goToBrand={goToBrand}
-              />
-            )
-          })
+            : brands && brands.map((brand, index) => {
+              return (
+                <CarouselEntity
+                  key={index}
+                  index={index}
+                  brand={brand}
+                  goToBrand={goToBrand}
+                />
+              )
+            })
         }
       </Slider>
     </Container>

@@ -48,7 +48,7 @@ function BannerSlider ({
     isPromo={isPromo}
     promo={promo}
     isProductPage={isProductPage}
-    />
+  />
 }
 
 const imgixOptions = {

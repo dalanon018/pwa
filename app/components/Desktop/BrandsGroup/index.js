@@ -43,10 +43,10 @@ const scroll = (id) => () => {
   let el = document.getElementById(id)
   let headerHeight = 100
 
- // scroll to your element
+  // scroll to your element
   el.scrollIntoView(true)
 
- // now account for fixed header
+  // now account for fixed header
   let scrolledY = window.scrollY
 
   if (scrolledY) {
@@ -82,16 +82,16 @@ function BrandsGroup ({
     return (
       <NavWrapper className='border_bottom__one--light-grey'>
         {
-         toPairs(groupBrands).map(([title, item], key) => {
-           return (
-             <div key={key}>
-               <Label as='a' onClick={scroll(`${title + key}`)} basic size='big' className='padding__none text__weight--400'>
-                 { title }
-               </Label>
-             </div>
-           )
-         })
-       }
+          toPairs(groupBrands).map(([title, item], key) => {
+            return (
+              <div key={key}>
+                <Label as='a' onClick={scroll(`${title + key}`)} basic size='big' className='padding__none text__weight--400'>
+                  { title }
+                </Label>
+              </div>
+            )
+          })
+        }
       </NavWrapper>
     )
   }
@@ -127,45 +127,45 @@ function BrandsGroup ({
         {_handleNavAnchor()}
         {
           brands.size === 0
-          ? _handleDefaultState()
-          : toPairs(groupBrands).map(([title, item], key) => {
-            const chunkItem = chunk(item, 5)
-            return (
-              <div key={key}>
-                <div>
-                  <Grid padded>
-                    <Grid.Row columns={2}>
-                      <Grid.Column className='padding__left--none' width={1}>
-                        <Label id={`${title + key}`} as='span' basic size='big' className='text__weight--400'>
-                          { title }
-                        </Label>
-                      </Grid.Column>
-                      <Grid.Column width={15}>
-                        <Grid>
-                          <Grid.Row columns={6} stretched verticalAlign='top'>
-                            {
-                              chunkItem.map((entity, key) => (
-                                entity.map((data, index) => (
-                                  <Grid.Column key={index} className='padding__bottom--15'>
-                                    <div className='cursor__pointer' onClick={goToBrand(data.get('id'))}>
-                                      <BrandItem borderRadius height={120}>
-                                        <Image className='height__inherit' src={data.get('logo') ? data.get('logo') : imageStock('Brands-Default.jpg', imgixOptions)} alt={data.get('name')} />
-                                      </BrandItem>
-                                      <Label as='p' basic size='large' className='margin__top-positive--10 text__weight--400 text__align--center'>{data.get('name')}</Label>
-                                    </div>
-                                  </Grid.Column>
+            ? _handleDefaultState()
+            : toPairs(groupBrands).map(([title, item], key) => {
+              const chunkItem = chunk(item, 5)
+              return (
+                <div key={key}>
+                  <div>
+                    <Grid padded>
+                      <Grid.Row columns={2}>
+                        <Grid.Column className='padding__left--none' width={1}>
+                          <Label id={`${title + key}`} as='span' basic size='big' className='text__weight--400'>
+                            { title }
+                          </Label>
+                        </Grid.Column>
+                        <Grid.Column width={15}>
+                          <Grid>
+                            <Grid.Row columns={6} stretched verticalAlign='top'>
+                              {
+                                chunkItem.map((entity, key) => (
+                                  entity.map((data, index) => (
+                                    <Grid.Column key={index} className='padding__bottom--15'>
+                                      <div className='cursor__pointer' onClick={goToBrand(data.get('id'))}>
+                                        <BrandItem borderRadius height={120}>
+                                          <Image className='height__inherit' src={data.get('logo') ? data.get('logo') : imageStock('Brands-Default.jpg', imgixOptions)} alt={data.get('name')} />
+                                        </BrandItem>
+                                        <Label as='p' basic size='large' className='margin__top-positive--10 text__weight--400 text__align--center'>{data.get('name')}</Label>
+                                      </div>
+                                    </Grid.Column>
+                                  ))
                                 ))
-                              ))
-                            }
-                          </Grid.Row>
-                        </Grid>
-                      </Grid.Column>
-                    </Grid.Row>
-                  </Grid>
+                              }
+                            </Grid.Row>
+                          </Grid>
+                        </Grid.Column>
+                      </Grid.Row>
+                    </Grid>
+                  </div>
                 </div>
-              </div>
-            )
-          })
+              )
+            })
         }
       </div>
     </Container>

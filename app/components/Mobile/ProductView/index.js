@@ -127,8 +127,8 @@ const ProductEntityInfo = ({ entity, isMinor, over18, changeRoute }) => {
   }
 
   const goToProduct = () => !isMinor || over18
-  ? changeRoute(`/product/${entity.get('cliqqCode').first()}`)
-  : changeRoute('/')
+    ? changeRoute(`/product/${entity.get('cliqqCode').first()}`)
+    : changeRoute('/')
 
   const togglePromoTag = () => {
     const discountInfo = entity.get('discountInfo')
@@ -147,12 +147,12 @@ const ProductEntityInfo = ({ entity, isMinor, over18, changeRoute }) => {
             height={300}
             offset={300}
             placeholder={<LoadingIndicator />}
-        >
+          >
             {
-            !isMinor || over18
-            ? <Image alt={entity.get('title')} src={(entity.get('image') && `${paramsImgix(entity.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
-            : <Image alt='CLiQQ' src={imageStock('Brands-Default.jpg', imgixOptions)} className='empty-image' />
-          }
+              !isMinor || over18
+                ? <Image alt={entity.get('title')} src={(entity.get('image') && `${paramsImgix(entity.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
+                : <Image alt='CLiQQ' src={imageStock('Brands-Default.jpg', imgixOptions)} className='empty-image' />
+            }
           </LazyLoad>
         </ImageContent>
       </ImageWrapper>
@@ -213,9 +213,9 @@ class ProductView extends React.PureComponent {
             isMinor={isMinor}
             over18={over18}
             changeRoute={changeRoute}
-        />
+          />
         </Grid.Column>
-    ))
+      ))
 
     return (
       <Grid

@@ -28,8 +28,8 @@ describe('walletPageReducer', () => {
     const currentState = state.get('transactions')
     const mergeState = currentState.concat(fromJS(payload))
     const expectedResult = state
-                          .set('transactions', mergeState)
-                          .set('lazyload', false)
+      .set('transactions', mergeState)
+      .set('lazyload', false)
 
     expect(walletPageReducer(state, setWalletTransactionsAction(payload))).toEqual(expectedResult)
   })

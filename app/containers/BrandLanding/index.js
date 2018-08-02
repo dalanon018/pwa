@@ -85,7 +85,7 @@ export class BrandLanding extends React.PureComponent { // eslint-disable-line r
   // function to detect when scroollbar reaches the bottom of page
   _whenScrlBottom = () => {
     // http://coursesweb.net/javascript/
-    let windowHeight = (this.innerHeight) ? this.innerHeight : document.body.clientHeight    // gets window height
+    let windowHeight = (this.innerHeight) ? this.innerHeight : document.body.clientHeight // gets window height
 
     // gets current vertical scrollbar position
     let scrollPosition = window.pageYOffset ? window.pageYOffset : document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop
@@ -120,7 +120,7 @@ export class BrandLanding extends React.PureComponent { // eslint-disable-line r
         <Helmet
           title='Brands Page'
           meta={[
-          { name: 'description', content: '7-eleven CliQQ brands page' }
+            { name: 'description', content: '7-eleven CliQQ brands page' }
           ]}
         />
         {this._handleGrouping()}

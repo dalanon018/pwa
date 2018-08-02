@@ -25,7 +25,7 @@ import {
   prop,
   subtract,
   when
- } from 'ramda'
+} from 'ramda'
 import { FormattedMessage } from 'react-intl'
 import { Grid, Label, Form, Checkbox, Image, Button, Container } from 'semantic-ui-react'
 
@@ -175,7 +175,7 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
       [T, always(currentPoints)]
     ])()
     this._pointsInitialized = true
-     return _updateUsePoints(Math.ceil(points))
+    return _updateUsePoints(Math.ceil(points))
   }
 
   _displayProductPointsPrice = ({ entity }) => {
@@ -514,7 +514,6 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
     const usePoints = prop('usePoints')
     const maxPoints = this._computeTotalPointsPrice(props)
 
-
     const shouldUpdateUsePoints = when(
       compose(lt(maxPoints), usePoints),
       () => props._updateUsePoints(maxPoints)
@@ -697,8 +696,8 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                             <Label as='span' className='text__weight--700' basic size='large'>
                               {
                                 store && isEmpty(store)
-                                ? <FormattedMessage {...messages.findStore} />
-                                : <span>{store.id} {store.name}</span>
+                                  ? <FormattedMessage {...messages.findStore} />
+                                  : <span>{store.id} {store.name}</span>
                               }
                             </Label>
                           </LocationButton>
@@ -736,8 +735,8 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                         <Label as='p' className='margin__top-positive--15 margin__bottom-positive--15 text__weight--500' size='huge'>
                           {
                             couponApplied && couponCode.length >= 1
-                            ? <FormattedMessage {...messages.couponAppliedLabel} />
-                            : <FormattedMessage {...messages.addCouponCodeLabel} />
+                              ? <FormattedMessage {...messages.couponAppliedLabel} />
+                              : <FormattedMessage {...messages.addCouponCodeLabel} />
                           }
                         </Label>
 
@@ -756,8 +755,8 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                               className='background__teal color__white'
                               content={
                                 couponApplied
-                                ? <FormattedMessage {...messages.couponButtonLabelRemove} />
-                                : <FormattedMessage {...messages.couponButtonLabelApply} />
+                                  ? <FormattedMessage {...messages.couponButtonLabelRemove} />
+                                  : <FormattedMessage {...messages.couponButtonLabelApply} />
                               }
                             />
                           </Form.Group>
@@ -785,8 +784,8 @@ class OrderSummary extends React.PureComponent { // eslint-disable-line react/pr
                       <ProductDetails>
                         {
                           orderedProduct.get('brand')
-                          ? <Label className='no-margin-bottom color__grey' as='p' basic size='large'>{orderedProduct.getIn(['brand', 'name'])}</Label>
-                          : null
+                            ? <Label className='no-margin-bottom color__grey' as='p' basic size='large'>{orderedProduct.getIn(['brand', 'name'])}</Label>
+                            : null
                         }
                         <Label as='p' basic size='huge' className='text__weight--500 padding__horizontal--15'>{orderedProduct.get('title')}</Label>
 

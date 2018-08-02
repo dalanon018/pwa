@@ -55,8 +55,8 @@ describe('LoginPage Reducer', () => {
 
   it('should update submissionLoader to false if successMobileRegistrationAction', () => {
     const expectedResult = state
-    .set('submissionLoader', false)
-    .set('mobileRegistrationSuccess', true)
+      .set('submissionLoader', false)
+      .set('mobileRegistrationSuccess', true)
 
     expect(loginPageReducer(undefined, successMobileRegistrationAction())).toEqual(expectedResult)
   })

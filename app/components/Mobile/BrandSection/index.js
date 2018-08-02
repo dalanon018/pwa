@@ -87,7 +87,7 @@ class BrandSection extends React.PureComponent {
                 results={productsByBrands}
                 loader={loader}
                 images={brandImages}
-            />
+              />
             }
           />
           <div className='margin__top-positive--10'>

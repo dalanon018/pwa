@@ -175,10 +175,10 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   _shouldDisplayHeader = (component) => ifElse(
-      identity,
-      () => component,
-      () => null
-    )
+    identity,
+    () => component,
+    () => null
+  )
 
   _handleFeaturedItemsWaypointEnter = () => {
     this.setState({
@@ -231,7 +231,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               desktopView={<DesktopProductView showElement={false} changeRoute={changeRoute} loader={featuredProductsLoader} products={featuredProducts} windowWidth={windowWidth} {...props} />}
             />
 
-        }
+          }
         </InfiniteLoading>
       )
     }
@@ -383,9 +383,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
         <Helmet
           title='Home Page'
           meta={[
-          { name: 'description', content: '7-eleven CliQQ home page' }
+            { name: 'description', content: '7-eleven CliQQ home page' }
           ]}
-      />
+        />
 
         <Container>
           <AccessView
@@ -393,30 +393,30 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
               <CategoryIconsWrapper>
                 {
                   categoryNavLoader ? range(4).map((_, index) => this._handleDefaultCategoryIcon(index))
-                  : featuredCategories.map((category, index) => {
-                    return (
-                      <CategoryItem key={index} onClick={() => changeRoute(`/products-category/${category.get('id')}?name=${category.get('name')}`)}>
-                        <Image src={category.get('icon') !== '' ? category.get('icon') : imageStock('mobile-category-icon-default.png')} alt='CLiQQ' />
-                        <Label basic size='tiny' className='item-label text__weight--400'>
-                          {this._handleCategoryName(category.get('name'))}
-                        </Label>
-                      </CategoryItem>
-                    )
-                  })
+                    : featuredCategories.map((category, index) => {
+                      return (
+                        <CategoryItem key={index} onClick={() => changeRoute(`/products-category/${category.get('id')}?name=${category.get('name')}`)}>
+                          <Image src={category.get('icon') !== '' ? category.get('icon') : imageStock('mobile-category-icon-default.png')} alt='CLiQQ' />
+                          <Label basic size='tiny' className='item-label text__weight--400'>
+                            {this._handleCategoryName(category.get('name'))}
+                          </Label>
+                        </CategoryItem>
+                      )
+                    })
                 }
                 <CategoryItem onClick={() => changeRoute(`/categories/`)}>
                   {
                     !categoryNavLoader
-                    ? <span>
-                      <Image src={MoreCategoriesIcon} alt='CLiQQ' />
-                      <Label basic size='tiny' className='item-label text__weight--400'>
+                      ? <span>
+                        <Image src={MoreCategoriesIcon} alt='CLiQQ' />
+                        <Label basic size='tiny' className='item-label text__weight--400'>
                         More
-                      </Label>
-                    </span>
-                    : <span>
-                      <Image src={imageStock('mobile-category-icon-default.png')} alt='CLiQQ' />
-                      <CustomHr />
-                    </span>
+                        </Label>
+                      </span>
+                      : <span>
+                        <Image src={imageStock('mobile-category-icon-default.png')} alt='CLiQQ' />
+                        <CustomHr />
+                      </span>
                   }
 
                 </CategoryItem>
@@ -452,25 +452,25 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
             mobileView={null}
             desktopView={
               promos.size > 1
-              ? <Container>
-                <Grid>
-                  <Grid.Row columns={this._handleDesktopPromoCount()}>
-                    <Grid.Column>
-                      {
-                        promos.slice(0, 3).map(promo => (
-                          <FlashDealBanner
-                            key={promo.get('promoCode')}
-                            image={promo.get('background')}
-                            promosLoading={promosLoading}
-                            width={null}
-                            height={130}
-                          />
-                        ))
-                      }
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              </Container> : null
+                ? <Container>
+                  <Grid>
+                    <Grid.Row columns={this._handleDesktopPromoCount()}>
+                      <Grid.Column>
+                        {
+                          promos.slice(0, 3).map(promo => (
+                            <FlashDealBanner
+                              key={promo.get('promoCode')}
+                              image={promo.get('background')}
+                              promosLoading={promosLoading}
+                              width={null}
+                              height={130}
+                            />
+                          ))
+                        }
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+                </Container> : null
             }
           />
 
@@ -547,7 +547,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                     promosCount={promosCount}
                     intl={intl}
                   />
-                  )
+                )
                 )
               }
             </div>
@@ -565,7 +565,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                     promosCount={promosCount}
                     intl={intl}
                   />
-                  )
+                )
                 )
               }
             </div>

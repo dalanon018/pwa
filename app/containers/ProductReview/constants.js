@@ -40,6 +40,6 @@ export const COUPON_REMOVE = 'app/ProductReview/COUPON_REMOVE'
 
 export const ALLOWED_POINTS = 20
 
-//for Store Delivery message
+// for Store Delivery message
 export const GET_STORE_DELIVERY_MESSAGE = 'app/ProductReview/GET_STORE_DELIVERY_MESSAGE'
 export const SET_STORE_DELIVERY_MESSAGE = 'app/ProductReview/SET_STORE_DELIVERY_MESSAGE'

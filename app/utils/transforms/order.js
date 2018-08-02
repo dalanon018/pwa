@@ -132,7 +132,7 @@ const addProductObject = (data) => {
 
 const adjustModePayment = (data) => {
   const updateModePayment = (data, property) =>
-      assoc('modePayment', modePayment(property), data)
+    assoc('modePayment', modePayment(property), data)
 
   return compose(
     partial(updateModePayment, [data]),

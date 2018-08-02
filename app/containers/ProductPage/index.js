@@ -70,7 +70,7 @@ import {
   getProductAction,
   setProductAction,
   setCurrentProductAction,
-  setProductHandlersDefaultAction,
+  setProductHandlersDefaultAction
 } from './actions'
 
 export class ProductPage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
@@ -276,11 +276,11 @@ export class ProductPage extends React.PureComponent { // eslint-disable-line re
   componentWillReceiveProps (nextProps) {
     const { product, productSuccess, productError, isMobileDevice } = nextProps
 
-    // if (!isMobileDevice()) {
-    //   const stickyFooter = document.getElementsByTagName('footer')[0]
-    //    stickyFooter.classList.contains('sticky') &&
-    //    stickyFooter.classList.remove('sticky')
-    // }
+    if (!isMobileDevice()) {
+      const stickyFooter = document.getElementsByTagName('footer')[0]
+      stickyFooter.classList.contains('sticky') &&
+       stickyFooter.classList.remove('sticky')
+    }
 
     const triggerFBEventProduct = when(
       compose(complement(equals(0)), prop('size')),

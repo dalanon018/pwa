@@ -35,11 +35,11 @@ import {
   // COUPON_ERROR,,
   COUPON_REMOVE,
 
-  //for email api
+  // for email api
   GET_EMAIL,
   SET_EMAIL,
 
-  //for store delivery message
+  // for store delivery message
   GET_STORE_DELIVERY_MESSAGE,
   SET_STORE_DELIVERY_MESSAGE
 } from './constants'
@@ -184,7 +184,7 @@ export function removeCouponAction (payload) {
 //   }
 // }
 
-//for email api
+// for email api
 export function getEmailAction () {
   return {
     type: GET_EMAIL
@@ -198,7 +198,7 @@ export function setEmailAction (payload) {
   }
 }
 
-//for store delivery message
+// for store delivery message
 export function getStoreDeliveryMessageAction () {
   return {
     type: GET_STORE_DELIVERY_MESSAGE

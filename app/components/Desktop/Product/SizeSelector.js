@@ -65,7 +65,7 @@ function SizeSelector ({ product, onSizeChange }) {
           product.get('association').map((productSize) => (
             <Form.Field
               key={productSize.get('size')}
-              >
+            >
               <StyledCheckBox
                 radio
                 className='margin__bottom-positive--20'
@@ -74,7 +74,7 @@ function SizeSelector ({ product, onSizeChange }) {
                 label={productSize.get('size')}
                 checked={productSize.get('size') === selectedSize}
                 onChange={onSizeChange}
-                  />
+              />
             </Form.Field>
           ))
         }

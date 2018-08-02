@@ -32,7 +32,7 @@ function BannerSlider ({
     isLowerdots={isLowerdots || false}
     slidesToShow={slidesToShow || 1}
     autoplay={autoplay}
-    />
+  />
 }
 
 const imgixOptions = {

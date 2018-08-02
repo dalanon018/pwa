@@ -30,9 +30,9 @@ describe('<SizeSelector />', () => {
         'isFeatured': true,
         'images': [{
           'imageUrl': 'https://cliqq.imgix.net/test/category/product-assets/brand-logo.png', 'imageType': 'BRAND_LOGO'},
-          {'imageUrl': 'http://i.dailymail.co.uk/i/pix/2015/05/07/16/286A073200000578-0-image-a-2_1431013568311.jpg', 'imageType': 'BACKGROUND'},
-          {'imageUrl': 'http://ph-live-01.slatic.net/cms/category_banner/02152016/kendall.jpg', 'imageType': 'SLIDER'},
-          {'imageUrl': 'http://ph-live-02.slatic.net/cms/category_banner/02152016/lucky.jpg', 'imageType': 'SLIDER'}
+        {'imageUrl': 'http://i.dailymail.co.uk/i/pix/2015/05/07/16/286A073200000578-0-image-a-2_1431013568311.jpg', 'imageType': 'BACKGROUND'},
+        {'imageUrl': 'http://ph-live-01.slatic.net/cms/category_banner/02152016/kendall.jpg', 'imageType': 'SLIDER'},
+        {'imageUrl': 'http://ph-live-02.slatic.net/cms/category_banner/02152016/lucky.jpg', 'imageType': 'SLIDER'}
         ]
       },
       'uom': {

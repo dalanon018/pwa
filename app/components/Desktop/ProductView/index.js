@@ -128,8 +128,8 @@ const ProductEntityInfo = ({ entity, isMinor, over18, changeRoute }) => {
   }
 
   const goToProduct = () => !isMinor || over18
-  ? changeRoute(`/product/${entity.get('cliqqCode').first()}`)
-  : changeRoute('/')
+    ? changeRoute(`/product/${entity.get('cliqqCode').first()}`)
+    : changeRoute('/')
 
   const togglePromoTag = () => {
     const discountInfo = entity.get('discountInfo')
@@ -147,8 +147,8 @@ const ProductEntityInfo = ({ entity, isMinor, over18, changeRoute }) => {
 
           {
             !isMinor || over18
-            ? <Image alt={entity.get('title')} src={(entity.get('image') && `${paramsImgix(entity.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
-            : <Image alt='CLiQQ' src={imageStock('Brands-Default.jpg', imgixOptions)} className='empty-image' />
+              ? <Image alt={entity.get('title')} src={(entity.get('image') && `${paramsImgix(entity.get('image'), imgixOptions)}`) || imageStock('Brands-Default.jpg', imgixOptions)} />
+              : <Image alt='CLiQQ' src={imageStock('Brands-Default.jpg', imgixOptions)} className='empty-image' />
           }
         </ImageContent>
       </ImageWrapper>
@@ -212,9 +212,9 @@ class ProductView extends React.PureComponent {
             isMinor={isMinor}
             over18={over18}
             changeRoute={changeRoute}
-        />
+          />
         </Grid.Column>
-    ))
+      ))
 
     return (
       <Grid
@@ -292,7 +292,7 @@ class ProductView extends React.PureComponent {
                     scrollToAlignment={scrollToAlignment}
                     scrollTop={scrollTop}
                     overscanRowCount={6}
-                />
+                  />
                 </div>
               )
             }}

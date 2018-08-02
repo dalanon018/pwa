@@ -31,11 +31,11 @@ import {
   COUPON_RESULT,
   COUPON_REMOVE,
 
-  //for email api
+  // for email api
   SET_EMAIL,
   GET_EMAIL,
 
-  //for Store Delivery message
+  // for Store Delivery message
   GET_STORE_DELIVERY_MESSAGE,
   SET_STORE_DELIVERY_MESSAGE
 } from './constants'
@@ -112,8 +112,8 @@ function productReviewReducer (state = initialState, action) {
 
     case SET_CURRENT_POINTS:
       return state
-          .set('currentPoints', fromJS(action.payload))
-          .set('currentPointsLoading', false)
+        .set('currentPoints', fromJS(action.payload))
+        .set('currentPointsLoading', false)
 
     case SET_BLACKLIST:
       return state
@@ -139,7 +139,7 @@ function productReviewReducer (state = initialState, action) {
         .set('couponError', couponError)
     }
 
-    //for email api
+    // for email api
     case GET_EMAIL:
       return state.set('mobileLoading', true)
     case SET_EMAIL:
@@ -148,7 +148,7 @@ function productReviewReducer (state = initialState, action) {
         .set('emailAddress', action.payload)
         .set('mobileLoading', false)
 
-    //for email api
+    // for email api
     case GET_STORE_DELIVERY_MESSAGE:
       return state.set('storeDeliveryMessageLoading', true)
     case SET_STORE_DELIVERY_MESSAGE:

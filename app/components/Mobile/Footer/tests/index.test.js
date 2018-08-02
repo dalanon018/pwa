@@ -9,7 +9,7 @@ import {
   CopyRight,
   IconItem,
   CustomItem
- } from '../Wrapper'
+} from '../Wrapper'
 
 const wrapper = (props = {}, enzyme = shallow) => shallow(
   <Footer {...props} />

@@ -60,70 +60,70 @@ function loginPageReducer (state = initialState, action) {
 
     case SET_PRODUCT_HANDLER_DEFAULT:
       return state
-      .set('requestProductSuccess', false)
-      .set('requestProductError', false)
+        .set('requestProductSuccess', false)
+        .set('requestProductError', false)
 
     case REQUEST_MOBILE_REGISTRATION:
       return state
-      .set('mobileRegistrationSuccess', false)
-      .set('mobileRegistrationError', null)
-      .set('submissionLoader', true)
+        .set('mobileRegistrationSuccess', false)
+        .set('mobileRegistrationError', null)
+        .set('submissionLoader', true)
 
     case SUCCESS_MOBILE_REGISTRATION:
       return state
-      .set('mobileRegistrationSuccess', true)
-      .set('mobileRegistrationError', null)
-      .set('submissionLoader', false)
+        .set('mobileRegistrationSuccess', true)
+        .set('mobileRegistrationError', null)
+        .set('submissionLoader', false)
 
     case ERROR_MOBILE_REGISTRATION:
       return state
-      .set('mobileRegistrationError', action.payload)
-      .set('mobileRegistrationSuccess', false)
-      .set('submissionLoader', false)
+        .set('mobileRegistrationError', action.payload)
+        .set('mobileRegistrationSuccess', false)
+        .set('submissionLoader', false)
 
     case SUCCESS_VERIFICATION_CODE:
       return state
-      .set('verificationCodeSuccess', true)
-      .set('verificationCodeError', null)
-      .set('submissionLoader', false)
+        .set('verificationCodeSuccess', true)
+        .set('verificationCodeError', null)
+        .set('submissionLoader', false)
 
     case ERROR_VERIFICATION_CODE:
       return state
-      .set('verificationCodeSuccess', false)
-      .set('verificationCodeError', action.payload)
-      .set('submissionLoader', false)
+        .set('verificationCodeSuccess', false)
+        .set('verificationCodeError', action.payload)
+        .set('submissionLoader', false)
 
     case REQUEST_VERIFICATION_CODE:
       return state
-      .set('verificationCode', action.payload)
-      .set('submissionLoader', true)
+        .set('verificationCode', action.payload)
+        .set('submissionLoader', true)
 
     case RESET_SUBMISSION:
       return state
-      .set('mobileRegistrationSuccess', false)
-      .set('mobileRegistrationError', null)
-      .set('verificationCode', false)
-      .set('verificationCodeSuccess', false)
-      .set('verificationCodeError', null)
-      .set('recaptchaValidationSuccess', null)
-      .set('recaptchaValidationError', null)
-      .set('submissionLoader', false)
+        .set('mobileRegistrationSuccess', false)
+        .set('mobileRegistrationError', null)
+        .set('verificationCode', false)
+        .set('verificationCodeSuccess', false)
+        .set('verificationCodeError', null)
+        .set('recaptchaValidationSuccess', null)
+        .set('recaptchaValidationError', null)
+        .set('submissionLoader', false)
 
     case REQUEST_RECAPTCHA_VALIDATION:
       return state
-      .set('submissionLoader', true)
+        .set('submissionLoader', true)
 
     case SUCCESS_RECAPTCHA_VALIDATION:
       return state
-      .set('recaptchaValidationSuccess', true)
-      .set('recaptchaValidationError', null)
-      .set('submissionLoader', false)
+        .set('recaptchaValidationSuccess', true)
+        .set('recaptchaValidationError', null)
+        .set('submissionLoader', false)
 
     case ERROR_RECAPTCHA_VALIDATION:
       return state
-      .set('recaptchaValidationSuccess', null)
-      .set('recaptchaValidationError', action.payload)
-      .set('submissionLoader', false)
+        .set('recaptchaValidationSuccess', null)
+        .set('recaptchaValidationError', action.payload)
+        .set('submissionLoader', false)
 
     default:
       return state

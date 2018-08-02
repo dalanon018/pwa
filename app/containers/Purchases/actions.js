@@ -20,7 +20,7 @@ export function getApiPurchasesAction (payload) {
 
 export function getStoragePurchasesAction () {
   return {
-    type: GET_LOCAL_PURCHASES,
+    type: GET_LOCAL_PURCHASES
   }
 }
 

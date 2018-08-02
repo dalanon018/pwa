@@ -17,22 +17,22 @@ class Notification {
 
   refreshToken (cb, currentToken) {
     this._Firebase.messaging().getToken()
-    .then((token) => {
-      return currentToken !== token ? cb(null, token) : cb(new Error('Same Token'))
-    })
-    .catch((e) => {
-      console.log('error refresh token', e)
-      return cb(e)
-    })
+      .then((token) => {
+        return currentToken !== token ? cb(null, token) : cb(new Error('Same Token'))
+      })
+      .catch((e) => {
+        console.log('error refresh token', e)
+        return cb(e)
+      })
   }
 
   requestPermission (cb) {
     this._Firebase.messaging().requestPermission()
-    .then(() => this.refreshToken(cb))
-    .catch((e) => {
-      console.log('error permission', e)
-      return cb(e)
-    })
+      .then(() => this.refreshToken(cb))
+      .catch((e) => {
+        console.log('error permission', e)
+        return cb(e)
+      })
   }
 
   install (cb) {
@@ -46,7 +46,7 @@ class Notification {
         // we will only register the 1st one since thats our service worker
         this._Firebase.messaging().useServiceWorker(registrations[0])
       })
-      .catch((e) => console.log('Registration failed error:', e))
+        .catch((e) => console.log('Registration failed error:', e))
     }
   }
 }

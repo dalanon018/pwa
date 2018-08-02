@@ -31,7 +31,7 @@ export const NULL = (en) => typeof en === 'object'
  */
 export const ValidateSchema = (schema, response) => {
   return new Promise((resolve, reject) => {
-     // first we need to omit things that not inluded on our schma
+    // first we need to omit things that not inluded on our schma
     const ommited = Object.keys(response).filter((resp) => !schema[resp])
     const finalResponse = omit(response, ommited)
 
@@ -50,22 +50,22 @@ export const ValidateSchema = (schema, response) => {
  * @param {*} cases
  */
 export const SwitchFn = cases => defaultCase => key =>
- key in cases ? cases[key] : defaultCase
+  key in cases ? cases[key] : defaultCase
 
 /**
  * function that will simply check if properties Exist
  */
 export const PropertiesExists = curry((props, data) => compose(
-    compose(all, equals(true)),
-    map((property) => compose(complement(isNil), prop(property))(data))
-  )(props)
+  compose(all, equals(true)),
+  map((property) => compose(complement(isNil), prop(property))(data))
+)(props)
 )
 
 /**
 * Function that switching our functions
 */
 export const mapKeys = curry((fn, obj) =>
- fromPairs(map(adjust(fn, 0), toPairs(obj)))
+  fromPairs(map(adjust(fn, 0), toPairs(obj)))
 )
 
 /**

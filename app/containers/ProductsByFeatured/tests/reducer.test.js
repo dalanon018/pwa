@@ -28,9 +28,9 @@ describe('productsByFeaturedReducer', () => {
     const currentState = state.get('products').toJS()
     const mergeState = currentState.concat(payload)
     const expectedResult = state
-                            .set('products', fromJS(mergeState))
-                            .set('loading', false)
-                            .set('lazyload', false)
+      .set('products', fromJS(mergeState))
+      .set('loading', false)
+      .set('lazyload', false)
 
     expect(productsByFeaturedReducer(state, setProductsByFeaturedAction(payload))).toEqual(expectedResult)
   })
@@ -38,7 +38,7 @@ describe('productsByFeaturedReducer', () => {
   it('should update totalCount', () => {
     const payload = 10
     const expectedResult = state
-                            .set('totalCount', payload)
+      .set('totalCount', payload)
     expect(productsByFeaturedReducer(state, setProductsCountsAction(payload))).toEqual(expectedResult)
   })
 })

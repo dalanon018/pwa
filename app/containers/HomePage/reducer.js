@@ -57,8 +57,8 @@ function homePageReducer (state = initialState, action) {
 
     case CLEAR_FEATURED_PRODUCTS:
       return state.set('product', fromJS([]))
-      .set('totalCount', 0)
-      .set('loading', false)
+        .set('totalCount', 0)
+        .set('loading', false)
 
     case GET_PROMOS:
       return state.set('promosLoading', true)

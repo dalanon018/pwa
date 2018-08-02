@@ -319,12 +319,12 @@ function * updateReceiptSnapShot (orders, receiptId) {
 
   // we need to make sure that we will not include if it belongs to the same grouping
   const isStatusUpdated = ifElse(
-   both(
-     complement(partial(isEmpty, [order])),
-     complement(equals(STATUSES[order.status]))
+    both(
+      complement(partial(isEmpty, [order])),
+      complement(equals(STATUSES[order.status]))
     ),
-   T,
-   F
+    T,
+    F
   )
 
   // we need to be very careful that status should not be empty

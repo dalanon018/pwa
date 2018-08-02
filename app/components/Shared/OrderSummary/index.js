@@ -62,8 +62,8 @@ const OrderSummary = ({
           <Image alt='CLiQQ' src={_updateParamsImages(orderedProduct.get('image'))} />
           {
             orderedProduct.get('brand')
-            ? <Label as='span' basic size='big' className='color__secondary'>{orderedProduct.getIn(['brand', 'name'])}</Label>
-            : null
+              ? <Label as='span' basic size='big' className='color__secondary'>{orderedProduct.getIn(['brand', 'name'])}</Label>
+              : null
           }
           <Label as='p' basic size='big' className='color__secondary'>{orderedProduct.get('title')}</Label>
         </ProductItem>
@@ -105,7 +105,7 @@ const OrderSummary = ({
                     label={labelOne}
                     checked={modePayment === 'CASH'}
                     onChange={_handleChange}
-                    />
+                  />
                 </Form.Field>
                 <ShowCodComponent
                   radio
@@ -132,8 +132,8 @@ const OrderSummary = ({
         <LocationButton id='scrollToAnimate' className='color__secondary border__two--light-grey' onClick={_handleStoreLocator} fluid iconBg={NextIcon}>
           {
             store && isEmpty(store)
-            ? <FormattedMessage {...messages.findStore} />
-            : <span>{store.id} {store.name}</span>
+              ? <FormattedMessage {...messages.findStore} />
+              : <span>{store.id} {store.name}</span>
           }
         </LocationButton>
       </StepWrapper>

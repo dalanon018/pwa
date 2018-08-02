@@ -27,8 +27,8 @@ describe('promoProductsPageReducer', () => {
     const currentState = state.get('products')
     const mergeState = currentState.concat(fromJS(payload))
     const expectedResult = state
-                          .set('products', mergeState)
-                          .set('lazyload', false)
+      .set('products', mergeState)
+      .set('lazyload', false)
 
     expect(promoProductsPageReducer(state, setPromoProductsAction(payload))).toEqual(expectedResult)
   })

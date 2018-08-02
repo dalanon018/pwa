@@ -46,7 +46,7 @@ function BannerSlider ({
     slidesToShow={slidesToShow || 1}
     autoplay={autoplay}
     isProductPage={isProductPage}
-    />
+  />
 }
 
 const imgixOptions = {

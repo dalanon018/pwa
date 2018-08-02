@@ -45,10 +45,10 @@ const scroll = (id) => () => {
   let el = document.getElementById(id)
   const headerHeight = 60
 
- // scroll to your element
+  // scroll to your element
   el.scrollIntoView(true)
 
- // now account for fixed header
+  // now account for fixed header
   let scrolledY = window.scrollY
 
   if (scrolledY) {
@@ -79,16 +79,16 @@ function BrandsGroup ({
     return (
       <NavWrapper className='background__white' bottomScroll={bottomScroll}>
         {
-         toPairs(groupBrands).map(([title, item], key) => {
-           return (
-             <div key={key}>
-               <Label as='a' onClick={scroll(`${title + key}`)} basic size='mini' className='padding__none text__weight--500'>
-                 { title }
-               </Label>
-             </div>
-           )
-         })
-       }
+          toPairs(groupBrands).map(([title, item], key) => {
+            return (
+              <div key={key}>
+                <Label as='a' onClick={scroll(`${title + key}`)} basic size='mini' className='padding__none text__weight--500'>
+                  { title }
+                </Label>
+              </div>
+            )
+          })
+        }
       </NavWrapper>
     )
   }
@@ -125,45 +125,45 @@ function BrandsGroup ({
       {_handleNavAnchor()}
       {
         brands.size === 0
-        ? _handleDefaultState()
-        : toPairs(groupBrands).map(([title, item], key) => {
-          const chunkItem = chunk(item, 5)
-          return (
-            <div key={key}>
-              <Container className='padding__none--vertical'>
-                <Grid padded>
-                  <Grid.Row>
-                    <Grid.Column>
-                      <Label id={`${title + key}`} as='span' basic size='large' className='text__weight--500'>
-                        { title }
-                      </Label>
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              </Container>
-              <GroupWrapper className='background__white'>
-                <Grid padded>
-                  <Grid.Row columns={3} stretched verticalAlign='top'>
-                    {
-                      chunkItem.map((entity, key) => (
-                        entity.map((data, index) => (
-                          <Grid.Column key={index} className='padding__bottom--15'>
-                            <div onClick={goToBrand(data.get('id'))}>
-                              <BrandItem borderRadius height={windowWidth >= 767 ? 200 : 90}>
-                                <Image className='height__inherit' src={data.get('logo') ? data.get('logo') : imageStock('Brands-Default.jpg', imgixOptions)} alt={data.get('name')} />
-                              </BrandItem>
-                              <Label as='p' basic size='medium' className='margin__top-positive--10 text__weight--400'>{data.get('name')}</Label>
-                            </div>
-                          </Grid.Column>
+          ? _handleDefaultState()
+          : toPairs(groupBrands).map(([title, item], key) => {
+            const chunkItem = chunk(item, 5)
+            return (
+              <div key={key}>
+                <Container className='padding__none--vertical'>
+                  <Grid padded>
+                    <Grid.Row>
+                      <Grid.Column>
+                        <Label id={`${title + key}`} as='span' basic size='large' className='text__weight--500'>
+                          { title }
+                        </Label>
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+                </Container>
+                <GroupWrapper className='background__white'>
+                  <Grid padded>
+                    <Grid.Row columns={3} stretched verticalAlign='top'>
+                      {
+                        chunkItem.map((entity, key) => (
+                          entity.map((data, index) => (
+                            <Grid.Column key={index} className='padding__bottom--15'>
+                              <div onClick={goToBrand(data.get('id'))}>
+                                <BrandItem borderRadius height={windowWidth >= 767 ? 200 : 90}>
+                                  <Image className='height__inherit' src={data.get('logo') ? data.get('logo') : imageStock('Brands-Default.jpg', imgixOptions)} alt={data.get('name')} />
+                                </BrandItem>
+                                <Label as='p' basic size='medium' className='margin__top-positive--10 text__weight--400'>{data.get('name')}</Label>
+                              </div>
+                            </Grid.Column>
+                          ))
                         ))
-                      ))
-                    }
-                  </Grid.Row>
-                </Grid>
-              </GroupWrapper>
-            </div>
-          )
-        })
+                      }
+                    </Grid.Row>
+                  </Grid>
+                </GroupWrapper>
+              </div>
+            )
+          })
       }
     </div>
   )

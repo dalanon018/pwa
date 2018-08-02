@@ -68,16 +68,16 @@ export class FlashDealsLanding extends React.PureComponent { // eslint-disable-l
       <Grid.Row columns={1}>
         {
           isEmpty
-          ? <Grid.Column textAlign='center'>
-            <Label as='p' className='text__weight--500 color__light-grey margin__vertical--30' basic size='massive' >
-              <FormattedMessage {...messages.emptyLabel} />
-            </Label>
-          </Grid.Column>
-          : <Grid.Column>
-            <FlashDealItem borderRadius height={120}>
-              <Image className='height__inherit' src={imageStock('Slider-Default.jpg', this._handleImgixOptions())} alt='CLiQQ' />
-            </FlashDealItem>
-          </Grid.Column>
+            ? <Grid.Column textAlign='center'>
+              <Label as='p' className='text__weight--500 color__light-grey margin__vertical--30' basic size='massive' >
+                <FormattedMessage {...messages.emptyLabel} />
+              </Label>
+            </Grid.Column>
+            : <Grid.Column>
+              <FlashDealItem borderRadius height={120}>
+                <Image className='height__inherit' src={imageStock('Slider-Default.jpg', this._handleImgixOptions())} alt='CLiQQ' />
+              </FlashDealItem>
+            </Grid.Column>
         }
       </Grid.Row>
     )
@@ -102,30 +102,30 @@ export class FlashDealsLanding extends React.PureComponent { // eslint-disable-l
         <Helmet
           title='Flash Deals Page'
           meta={[
-          { name: 'description', content: '7-eleven CliQQ flash deals page' }
+            { name: 'description', content: '7-eleven CliQQ flash deals page' }
           ]}
         />
         <Container>
           <Grid padded>
             {
               promos.size === 0 || promosLoading
-              ? this._handleDefaultState(promos.size === 0)
-              : promos.map(promo => {
-                return (
-                  <Grid.Row key={promo.get('id')}>
-                    <Grid.Column onClick={() => changeRoute(`/promos/${promo.get('promoCode')}`)}>
-                      <FlashDealItem borderRadius height={120}>
-                        {
-                          promo.get('background')
-                          ? <Image className='height__inherit' src={promo.get('background')} alt='CLiQQ' />
-                          : <Image className='height__inherit' src={imageStock('Slider-Default.jpg', this._handleImgixOptions())} alt='CLiQQ' />
-                        }
+                ? this._handleDefaultState(promos.size === 0)
+                : promos.map(promo => {
+                  return (
+                    <Grid.Row key={promo.get('id')}>
+                      <Grid.Column onClick={() => changeRoute(`/promos/${promo.get('promoCode')}`)}>
+                        <FlashDealItem borderRadius height={120}>
+                          {
+                            promo.get('background')
+                              ? <Image className='height__inherit' src={promo.get('background')} alt='CLiQQ' />
+                              : <Image className='height__inherit' src={imageStock('Slider-Default.jpg', this._handleImgixOptions())} alt='CLiQQ' />
+                          }
 
-                      </FlashDealItem>
-                    </Grid.Column>
-                  </Grid.Row>
-                )
-              })
+                        </FlashDealItem>
+                      </Grid.Column>
+                    </Grid.Row>
+                  )
+                })
             }
           </Grid>
         </Container>

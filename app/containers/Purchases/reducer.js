@@ -26,12 +26,12 @@ function purchasesReducer (state = initialState, action) {
       return state.set('apiRequestLoading', true)
     case SET_LOCAL_PURCHASES:
       return state
-          .set('purchases', fromJS(action.payload))
-          .set('localRequestLoading', false)
+        .set('purchases', fromJS(action.payload))
+        .set('localRequestLoading', false)
     case SET_API_PURCHASES:
       return state
-          .set('purchases', fromJS(action.payload))
-          .set('apiRequestLoading', false)
+        .set('purchases', fromJS(action.payload))
+        .set('apiRequestLoading', false)
 
     default:
       return state

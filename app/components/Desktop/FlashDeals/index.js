@@ -42,8 +42,8 @@ function FlashDeals ({
         <PlainCard height='160'>
           {
             !promosLoading && promo.get('background')
-            ? <Image className='height__inherit' src={promo.get('background')} />
-            : <Image className='height__inherit' src={imageStock('Slider-Default.jpg', imgixOptions)} />
+              ? <Image className='height__inherit' src={promo.get('background')} />
+              : <Image className='height__inherit' src={imageStock('Slider-Default.jpg', imgixOptions)} />
           }
         </PlainCard>
       </BannerWrapper>

@@ -34,8 +34,8 @@ const mockData = {
   'details': '100 grams',
   'title': 'HT Banana Chips',
   'priceList': [
-      {'amount': 60, 'currency': 'PHP'},
-      {'amount': 50, 'currency': 'LPTS'}
+    {'amount': 60, 'currency': 'PHP'},
+    {'amount': 50, 'currency': 'LPTS'}
   ],
   'returnPolicy': 'Due to final clearance and hygienic purposes, returns, exchange and refunds may not be provided for Health & Beauty Products, Jewelries, Home Care Products and Lingerie. For any concerns, kindly send an email to our Customer Service Team at cliqqsupport@7-eleven.com.ph.',
   'returnable': false,

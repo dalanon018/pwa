@@ -22,8 +22,8 @@ function recentStorePageReducer (state = initialState, action) {
 
     case SET_VISITED_STORES:
       return state
-          .set('visitedStores', fromJS(action.payload))
-          .set('visitedStoresLoading', false)
+        .set('visitedStores', fromJS(action.payload))
+        .set('visitedStoresLoading', false)
     default:
       return state
   }

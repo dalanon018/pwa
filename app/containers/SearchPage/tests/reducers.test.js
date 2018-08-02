@@ -37,8 +37,8 @@ describe('Buckets Reducer', () => {
 
   it('should reset the handlers to default success = false, error = false', () => {
     const expectedResult = state
-                            .set('requestProductSuccess', false)
-                            .set('requestProductError', false)
+      .set('requestProductSuccess', false)
+      .set('requestProductError', false)
 
     expect(productSearchReducer(state, setProductHandlersDefaultAction())).toEqual(expectedResult)
   })

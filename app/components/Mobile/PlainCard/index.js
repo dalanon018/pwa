@@ -21,9 +21,9 @@ export const Wrapper = styled.div`
 
   img {
     ${
-      props => props.borderRadius &&
+  props => props.borderRadius &&
       'border-radius: 3px;'
-    }
+}
   }
 `
 

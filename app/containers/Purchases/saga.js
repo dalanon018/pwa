@@ -165,7 +165,6 @@ export function * getLocalPurchasesSaga () {
   yield * takeLatest(GET_LOCAL_PURCHASES, getLocalPurchases)
 }
 
-
 // All sagas to be loaded
 export function * purchasesSagas () {
   const watcher = yield [

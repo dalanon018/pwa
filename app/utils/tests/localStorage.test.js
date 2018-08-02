@@ -1,7 +1,7 @@
 import { getItem, setItem, removeItem } from '../localStorage'
 
 describe('localStorage', () => {
-   /**
+  /**
    * Mocking local storage
    */
   function storageMock () {

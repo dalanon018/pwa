@@ -94,8 +94,8 @@ class InfiniteLoaderProxy extends React.Component { // eslint-disable-line react
   render () {
     const { isLoading, loadMoreData, rowCount } = this.props
     const loadMoreRows = isLoading
-        ? () => {}
-        : loadMoreData
+      ? () => {}
+      : loadMoreData
     return (
       <ScrollContent>
         <InfiniteLoader
